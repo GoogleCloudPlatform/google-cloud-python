@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.support_v2._compat import transcode_request
 from google.cloud.support_v2.types import (
     support_event_subscription,
     support_event_subscription_service,
@@ -637,21 +638,18 @@ class SupportEventSubscriptionServiceRestTransport(
             """
 
             http_options = _BaseSupportEventSubscriptionServiceRestTransport._BaseCreateSupportEventSubscription._get_http_options()
-
             request, metadata = self._interceptor.pre_create_support_event_subscription(
                 request, metadata
             )
-            transcoded_request = _BaseSupportEventSubscriptionServiceRestTransport._BaseCreateSupportEventSubscription._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSupportEventSubscriptionServiceRestTransport._BaseCreateSupportEventSubscription._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSupportEventSubscriptionServiceRestTransport._BaseCreateSupportEventSubscription._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSupportEventSubscriptionServiceRestTransport._BaseCreateSupportEventSubscription,
+                    "_BaseCreateSupportEventSubscription__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -811,17 +809,18 @@ class SupportEventSubscriptionServiceRestTransport(
             """
 
             http_options = _BaseSupportEventSubscriptionServiceRestTransport._BaseDeleteSupportEventSubscription._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_support_event_subscription(
                 request, metadata
             )
-            transcoded_request = _BaseSupportEventSubscriptionServiceRestTransport._BaseDeleteSupportEventSubscription._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSupportEventSubscriptionServiceRestTransport._BaseDeleteSupportEventSubscription._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSupportEventSubscriptionServiceRestTransport._BaseDeleteSupportEventSubscription,
+                    "_BaseDeleteSupportEventSubscription__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -963,23 +962,20 @@ class SupportEventSubscriptionServiceRestTransport(
             """
 
             http_options = _BaseSupportEventSubscriptionServiceRestTransport._BaseExpungeSupportEventSubscription._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_expunge_support_event_subscription(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSupportEventSubscriptionServiceRestTransport._BaseExpungeSupportEventSubscription._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSupportEventSubscriptionServiceRestTransport._BaseExpungeSupportEventSubscription._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSupportEventSubscriptionServiceRestTransport._BaseExpungeSupportEventSubscription._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSupportEventSubscriptionServiceRestTransport._BaseExpungeSupportEventSubscription,
+                    "_BaseExpungeSupportEventSubscription__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1099,17 +1095,18 @@ class SupportEventSubscriptionServiceRestTransport(
             """
 
             http_options = _BaseSupportEventSubscriptionServiceRestTransport._BaseGetSupportEventSubscription._get_http_options()
-
             request, metadata = self._interceptor.pre_get_support_event_subscription(
                 request, metadata
             )
-            transcoded_request = _BaseSupportEventSubscriptionServiceRestTransport._BaseGetSupportEventSubscription._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSupportEventSubscriptionServiceRestTransport._BaseGetSupportEventSubscription._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSupportEventSubscriptionServiceRestTransport._BaseGetSupportEventSubscription,
+                    "_BaseGetSupportEventSubscription__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1256,17 +1253,18 @@ class SupportEventSubscriptionServiceRestTransport(
             """
 
             http_options = _BaseSupportEventSubscriptionServiceRestTransport._BaseListSupportEventSubscriptions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_support_event_subscriptions(
                 request, metadata
             )
-            transcoded_request = _BaseSupportEventSubscriptionServiceRestTransport._BaseListSupportEventSubscriptions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSupportEventSubscriptionServiceRestTransport._BaseListSupportEventSubscriptions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSupportEventSubscriptionServiceRestTransport._BaseListSupportEventSubscriptions,
+                    "_BaseListSupportEventSubscriptions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1426,23 +1424,20 @@ class SupportEventSubscriptionServiceRestTransport(
             """
 
             http_options = _BaseSupportEventSubscriptionServiceRestTransport._BaseUndeleteSupportEventSubscription._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_undelete_support_event_subscription(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSupportEventSubscriptionServiceRestTransport._BaseUndeleteSupportEventSubscription._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSupportEventSubscriptionServiceRestTransport._BaseUndeleteSupportEventSubscription._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSupportEventSubscriptionServiceRestTransport._BaseUndeleteSupportEventSubscription._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSupportEventSubscriptionServiceRestTransport._BaseUndeleteSupportEventSubscription,
+                    "_BaseUndeleteSupportEventSubscription__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1603,21 +1598,18 @@ class SupportEventSubscriptionServiceRestTransport(
             """
 
             http_options = _BaseSupportEventSubscriptionServiceRestTransport._BaseUpdateSupportEventSubscription._get_http_options()
-
             request, metadata = self._interceptor.pre_update_support_event_subscription(
                 request, metadata
             )
-            transcoded_request = _BaseSupportEventSubscriptionServiceRestTransport._BaseUpdateSupportEventSubscription._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSupportEventSubscriptionServiceRestTransport._BaseUpdateSupportEventSubscription._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSupportEventSubscriptionServiceRestTransport._BaseUpdateSupportEventSubscription._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSupportEventSubscriptionServiceRestTransport._BaseUpdateSupportEventSubscription,
+                    "_BaseUpdateSupportEventSubscription__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

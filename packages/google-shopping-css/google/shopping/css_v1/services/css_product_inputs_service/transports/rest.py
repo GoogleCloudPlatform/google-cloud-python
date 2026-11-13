@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.css_v1._compat import transcode_request
 from google.shopping.css_v1.types import css_product_inputs
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -363,17 +364,18 @@ class CssProductInputsServiceRestTransport(_BaseCssProductInputsServiceRestTrans
             """
 
             http_options = _BaseCssProductInputsServiceRestTransport._BaseDeleteCssProductInput._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_css_product_input(
                 request, metadata
             )
-            transcoded_request = _BaseCssProductInputsServiceRestTransport._BaseDeleteCssProductInput._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCssProductInputsServiceRestTransport._BaseDeleteCssProductInput._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCssProductInputsServiceRestTransport._BaseDeleteCssProductInput,
+                    "_BaseDeleteCssProductInput__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -481,21 +483,18 @@ class CssProductInputsServiceRestTransport(_BaseCssProductInputsServiceRestTrans
             """
 
             http_options = _BaseCssProductInputsServiceRestTransport._BaseInsertCssProductInput._get_http_options()
-
             request, metadata = self._interceptor.pre_insert_css_product_input(
                 request, metadata
             )
-            transcoded_request = _BaseCssProductInputsServiceRestTransport._BaseInsertCssProductInput._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCssProductInputsServiceRestTransport._BaseInsertCssProductInput._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCssProductInputsServiceRestTransport._BaseInsertCssProductInput._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCssProductInputsServiceRestTransport._BaseInsertCssProductInput,
+                    "_BaseInsertCssProductInput__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -640,21 +639,18 @@ class CssProductInputsServiceRestTransport(_BaseCssProductInputsServiceRestTrans
             """
 
             http_options = _BaseCssProductInputsServiceRestTransport._BaseUpdateCssProductInput._get_http_options()
-
             request, metadata = self._interceptor.pre_update_css_product_input(
                 request, metadata
             )
-            transcoded_request = _BaseCssProductInputsServiceRestTransport._BaseUpdateCssProductInput._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCssProductInputsServiceRestTransport._BaseUpdateCssProductInput._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCssProductInputsServiceRestTransport._BaseUpdateCssProductInput._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCssProductInputsServiceRestTransport._BaseUpdateCssProductInput,
+                    "_BaseUpdateCssProductInput__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

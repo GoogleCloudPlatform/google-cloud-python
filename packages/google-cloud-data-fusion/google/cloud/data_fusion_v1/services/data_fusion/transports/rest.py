@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.data_fusion_v1._compat import transcode_request
 from google.cloud.data_fusion_v1.types import datafusion
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -683,23 +684,16 @@ class DataFusionRestTransport(_BaseDataFusionRestTransport):
             http_options = (
                 _BaseDataFusionRestTransport._BaseCreateInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_instance(request, metadata)
-            transcoded_request = _BaseDataFusionRestTransport._BaseCreateInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseDataFusionRestTransport._BaseCreateInstance._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataFusionRestTransport._BaseCreateInstance._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataFusionRestTransport._BaseCreateInstance,
+                    "_BaseCreateInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -838,17 +832,16 @@ class DataFusionRestTransport(_BaseDataFusionRestTransport):
             http_options = (
                 _BaseDataFusionRestTransport._BaseDeleteInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_instance(request, metadata)
-            transcoded_request = _BaseDataFusionRestTransport._BaseDeleteInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataFusionRestTransport._BaseDeleteInstance._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataFusionRestTransport._BaseDeleteInstance,
+                    "_BaseDeleteInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -983,19 +976,16 @@ class DataFusionRestTransport(_BaseDataFusionRestTransport):
             http_options = (
                 _BaseDataFusionRestTransport._BaseGetInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_instance(request, metadata)
-            transcoded_request = (
-                _BaseDataFusionRestTransport._BaseGetInstance._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataFusionRestTransport._BaseGetInstance._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataFusionRestTransport._BaseGetInstance,
+                    "_BaseGetInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1132,17 +1122,18 @@ class DataFusionRestTransport(_BaseDataFusionRestTransport):
             """
 
             http_options = _BaseDataFusionRestTransport._BaseListAvailableVersions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_available_versions(
                 request, metadata
             )
-            transcoded_request = _BaseDataFusionRestTransport._BaseListAvailableVersions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataFusionRestTransport._BaseListAvailableVersions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataFusionRestTransport._BaseListAvailableVersions,
+                    "_BaseListAvailableVersions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1283,19 +1274,16 @@ class DataFusionRestTransport(_BaseDataFusionRestTransport):
             http_options = (
                 _BaseDataFusionRestTransport._BaseListInstances._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_instances(request, metadata)
-            transcoded_request = (
-                _BaseDataFusionRestTransport._BaseListInstances._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataFusionRestTransport._BaseListInstances._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataFusionRestTransport._BaseListInstances,
+                    "_BaseListInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1438,21 +1426,18 @@ class DataFusionRestTransport(_BaseDataFusionRestTransport):
             http_options = (
                 _BaseDataFusionRestTransport._BaseRestartInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_restart_instance(
                 request, metadata
             )
-            transcoded_request = _BaseDataFusionRestTransport._BaseRestartInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataFusionRestTransport._BaseRestartInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataFusionRestTransport._BaseRestartInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataFusionRestTransport._BaseRestartInstance,
+                    "_BaseRestartInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1595,23 +1580,16 @@ class DataFusionRestTransport(_BaseDataFusionRestTransport):
             http_options = (
                 _BaseDataFusionRestTransport._BaseUpdateInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_instance(request, metadata)
-            transcoded_request = _BaseDataFusionRestTransport._BaseUpdateInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseDataFusionRestTransport._BaseUpdateInstance._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataFusionRestTransport._BaseUpdateInstance._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataFusionRestTransport._BaseUpdateInstance,
+                    "_BaseUpdateInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

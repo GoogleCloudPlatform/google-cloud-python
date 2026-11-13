@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-chronicle",
-    "version": "0.6.2"
+    "version": "0.6.4"
   },
   "snippets": [
     {
@@ -6604,6 +6604,2270 @@
         }
       ],
       "title": "chronicle_v1_generated_featured_content_native_dashboard_service_list_featured_content_native_dashboards_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.create_feed",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.CreateFeed",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "CreateFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.CreateFeedRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "feed",
+            "type": "google.cloud.chronicle_v1.types.Feed"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.Feed",
+        "shortName": "create_feed"
+      },
+      "description": "Sample for CreateFeed",
+      "file": "chronicle_v1_generated_feeds_service_create_feed_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_CreateFeed_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_create_feed_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.create_feed",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.CreateFeed",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "CreateFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.CreateFeedRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "feed",
+            "type": "google.cloud.chronicle_v1.types.Feed"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.Feed",
+        "shortName": "create_feed"
+      },
+      "description": "Sample for CreateFeed",
+      "file": "chronicle_v1_generated_feeds_service_create_feed_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_CreateFeed_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_create_feed_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.delete_feed",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.DeleteFeed",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "DeleteFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.DeleteFeedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_feed"
+      },
+      "description": "Sample for DeleteFeed",
+      "file": "chronicle_v1_generated_feeds_service_delete_feed_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_DeleteFeed_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_delete_feed_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.delete_feed",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.DeleteFeed",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "DeleteFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.DeleteFeedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_feed"
+      },
+      "description": "Sample for DeleteFeed",
+      "file": "chronicle_v1_generated_feeds_service_delete_feed_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_DeleteFeed_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_delete_feed_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.disable_feed",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.DisableFeed",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "DisableFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.DisableFeedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.Feed",
+        "shortName": "disable_feed"
+      },
+      "description": "Sample for DisableFeed",
+      "file": "chronicle_v1_generated_feeds_service_disable_feed_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_DisableFeed_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_disable_feed_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.disable_feed",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.DisableFeed",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "DisableFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.DisableFeedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.Feed",
+        "shortName": "disable_feed"
+      },
+      "description": "Sample for DisableFeed",
+      "file": "chronicle_v1_generated_feeds_service_disable_feed_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_DisableFeed_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_disable_feed_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.enable_feed",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.EnableFeed",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "EnableFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.EnableFeedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.Feed",
+        "shortName": "enable_feed"
+      },
+      "description": "Sample for EnableFeed",
+      "file": "chronicle_v1_generated_feeds_service_enable_feed_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_EnableFeed_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_enable_feed_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.enable_feed",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.EnableFeed",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "EnableFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.EnableFeedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.Feed",
+        "shortName": "enable_feed"
+      },
+      "description": "Sample for EnableFeed",
+      "file": "chronicle_v1_generated_feeds_service_enable_feed_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_EnableFeed_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_enable_feed_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.fetch_service_account_for_customer",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.FetchServiceAccountForCustomer",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "FetchServiceAccountForCustomer"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.FetchServiceAccountForCustomerRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.FeedServiceAccount",
+        "shortName": "fetch_service_account_for_customer"
+      },
+      "description": "Sample for FetchServiceAccountForCustomer",
+      "file": "chronicle_v1_generated_feeds_service_fetch_service_account_for_customer_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_FetchServiceAccountForCustomer_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_fetch_service_account_for_customer_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.fetch_service_account_for_customer",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.FetchServiceAccountForCustomer",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "FetchServiceAccountForCustomer"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.FetchServiceAccountForCustomerRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.FeedServiceAccount",
+        "shortName": "fetch_service_account_for_customer"
+      },
+      "description": "Sample for FetchServiceAccountForCustomer",
+      "file": "chronicle_v1_generated_feeds_service_fetch_service_account_for_customer_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_FetchServiceAccountForCustomer_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_fetch_service_account_for_customer_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.generate_secret",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.GenerateSecret",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "GenerateSecret"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.GenerateSecretRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.GenerateSecretResponse",
+        "shortName": "generate_secret"
+      },
+      "description": "Sample for GenerateSecret",
+      "file": "chronicle_v1_generated_feeds_service_generate_secret_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_GenerateSecret_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_generate_secret_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.generate_secret",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.GenerateSecret",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "GenerateSecret"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.GenerateSecretRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.GenerateSecretResponse",
+        "shortName": "generate_secret"
+      },
+      "description": "Sample for GenerateSecret",
+      "file": "chronicle_v1_generated_feeds_service_generate_secret_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_GenerateSecret_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_generate_secret_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.get_feed_pack",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.GetFeedPack",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "GetFeedPack"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.GetFeedPackRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.FeedPack",
+        "shortName": "get_feed_pack"
+      },
+      "description": "Sample for GetFeedPack",
+      "file": "chronicle_v1_generated_feeds_service_get_feed_pack_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_GetFeedPack_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_get_feed_pack_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.get_feed_pack",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.GetFeedPack",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "GetFeedPack"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.GetFeedPackRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.FeedPack",
+        "shortName": "get_feed_pack"
+      },
+      "description": "Sample for GetFeedPack",
+      "file": "chronicle_v1_generated_feeds_service_get_feed_pack_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_GetFeedPack_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_get_feed_pack_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.get_feed",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.GetFeed",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "GetFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.GetFeedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.Feed",
+        "shortName": "get_feed"
+      },
+      "description": "Sample for GetFeed",
+      "file": "chronicle_v1_generated_feeds_service_get_feed_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_GetFeed_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_get_feed_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.get_feed",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.GetFeed",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "GetFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.GetFeedRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.Feed",
+        "shortName": "get_feed"
+      },
+      "description": "Sample for GetFeed",
+      "file": "chronicle_v1_generated_feeds_service_get_feed_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_GetFeed_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_get_feed_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.import_push_logs",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.ImportPushLogs",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "ImportPushLogs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.ImportPushLogsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api.httpbody_pb2.HttpBody",
+        "shortName": "import_push_logs"
+      },
+      "description": "Sample for ImportPushLogs",
+      "file": "chronicle_v1_generated_feeds_service_import_push_logs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_ImportPushLogs_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_import_push_logs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.import_push_logs",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.ImportPushLogs",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "ImportPushLogs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.ImportPushLogsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api.httpbody_pb2.HttpBody",
+        "shortName": "import_push_logs"
+      },
+      "description": "Sample for ImportPushLogs",
+      "file": "chronicle_v1_generated_feeds_service_import_push_logs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_ImportPushLogs_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_import_push_logs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.list_feed_packs",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.ListFeedPacks",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "ListFeedPacks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.ListFeedPacksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.services.feeds_service.pagers.ListFeedPacksAsyncPager",
+        "shortName": "list_feed_packs"
+      },
+      "description": "Sample for ListFeedPacks",
+      "file": "chronicle_v1_generated_feeds_service_list_feed_packs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_ListFeedPacks_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_list_feed_packs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.list_feed_packs",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.ListFeedPacks",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "ListFeedPacks"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.ListFeedPacksRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.services.feeds_service.pagers.ListFeedPacksPager",
+        "shortName": "list_feed_packs"
+      },
+      "description": "Sample for ListFeedPacks",
+      "file": "chronicle_v1_generated_feeds_service_list_feed_packs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_ListFeedPacks_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_list_feed_packs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.list_feed_source_type_schemas",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.ListFeedSourceTypeSchemas",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "ListFeedSourceTypeSchemas"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.ListFeedSourceTypeSchemasRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.services.feeds_service.pagers.ListFeedSourceTypeSchemasAsyncPager",
+        "shortName": "list_feed_source_type_schemas"
+      },
+      "description": "Sample for ListFeedSourceTypeSchemas",
+      "file": "chronicle_v1_generated_feeds_service_list_feed_source_type_schemas_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_ListFeedSourceTypeSchemas_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_list_feed_source_type_schemas_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.list_feed_source_type_schemas",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.ListFeedSourceTypeSchemas",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "ListFeedSourceTypeSchemas"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.ListFeedSourceTypeSchemasRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.services.feeds_service.pagers.ListFeedSourceTypeSchemasPager",
+        "shortName": "list_feed_source_type_schemas"
+      },
+      "description": "Sample for ListFeedSourceTypeSchemas",
+      "file": "chronicle_v1_generated_feeds_service_list_feed_source_type_schemas_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_ListFeedSourceTypeSchemas_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_list_feed_source_type_schemas_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.list_feeds",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.ListFeeds",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "ListFeeds"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.ListFeedsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.services.feeds_service.pagers.ListFeedsAsyncPager",
+        "shortName": "list_feeds"
+      },
+      "description": "Sample for ListFeeds",
+      "file": "chronicle_v1_generated_feeds_service_list_feeds_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_ListFeeds_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_list_feeds_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.list_feeds",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.ListFeeds",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "ListFeeds"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.ListFeedsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.services.feeds_service.pagers.ListFeedsPager",
+        "shortName": "list_feeds"
+      },
+      "description": "Sample for ListFeeds",
+      "file": "chronicle_v1_generated_feeds_service_list_feeds_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_ListFeeds_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_list_feeds_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.list_log_type_schemas",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.ListLogTypeSchemas",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "ListLogTypeSchemas"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.ListLogTypeSchemasRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.services.feeds_service.pagers.ListLogTypeSchemasAsyncPager",
+        "shortName": "list_log_type_schemas"
+      },
+      "description": "Sample for ListLogTypeSchemas",
+      "file": "chronicle_v1_generated_feeds_service_list_log_type_schemas_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_ListLogTypeSchemas_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_list_log_type_schemas_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.list_log_type_schemas",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.ListLogTypeSchemas",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "ListLogTypeSchemas"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.ListLogTypeSchemasRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.services.feeds_service.pagers.ListLogTypeSchemasPager",
+        "shortName": "list_log_type_schemas"
+      },
+      "description": "Sample for ListLogTypeSchemas",
+      "file": "chronicle_v1_generated_feeds_service_list_log_type_schemas_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_ListLogTypeSchemas_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_list_log_type_schemas_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient",
+          "shortName": "FeedsServiceAsyncClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceAsyncClient.update_feed",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.UpdateFeed",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "UpdateFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.UpdateFeedRequest"
+          },
+          {
+            "name": "feed",
+            "type": "google.cloud.chronicle_v1.types.Feed"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.Feed",
+        "shortName": "update_feed"
+      },
+      "description": "Sample for UpdateFeed",
+      "file": "chronicle_v1_generated_feeds_service_update_feed_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_UpdateFeed_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_update_feed_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.chronicle_v1.FeedsServiceClient",
+          "shortName": "FeedsServiceClient"
+        },
+        "fullName": "google.cloud.chronicle_v1.FeedsServiceClient.update_feed",
+        "method": {
+          "fullName": "google.cloud.chronicle.v1.FeedsService.UpdateFeed",
+          "service": {
+            "fullName": "google.cloud.chronicle.v1.FeedsService",
+            "shortName": "FeedsService"
+          },
+          "shortName": "UpdateFeed"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.chronicle_v1.types.UpdateFeedRequest"
+          },
+          {
+            "name": "feed",
+            "type": "google.cloud.chronicle_v1.types.Feed"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.chronicle_v1.types.Feed",
+        "shortName": "update_feed"
+      },
+      "description": "Sample for UpdateFeed",
+      "file": "chronicle_v1_generated_feeds_service_update_feed_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chronicle_v1_generated_FeedsService_UpdateFeed_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chronicle_v1_generated_feeds_service_update_feed_sync.py"
     },
     {
       "canonical": true,

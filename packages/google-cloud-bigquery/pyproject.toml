@@ -37,6 +37,7 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Operating System :: OS Independent",
   "Topic :: Internet",
 ]
@@ -52,14 +53,14 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-Repository = "https://github.com/googleapis/python-bigquery"
+Repository = "https://github.com/googleapis/google-cloud-python/tree/main/packages/google-cloud-bigquery"
 
 [project.optional-dependencies]
 # bqstorage had a period where it was a required dependency, and has been
 # moved back to optional due to bloat.  See
 # https://github.com/googleapis/python-bigquery/issues/1196 for more background.
 bqstorage = [
-  "google-cloud-bigquery-storage >= 2.29.0, < 3.0.0",
+  "google-cloud-bigquery-storage >= 2.43.0, < 3.0.0",
   # Due to an issue in pip's dependency resolver, the `grpc` extra is not
   # installed, even though `google-cloud-bigquery-storage` specifies it
   # as `google-api-core[grpc]`. We thus need to explicitly specify it here.

@@ -154,6 +154,11 @@
               "methods": [
                 "update_reservation"
               ]
+            },
+            "UpdateReservationGroup": {
+              "methods": [
+                "update_reservation_group"
+              ]
             }
           }
         },
@@ -304,6 +309,11 @@
               "methods": [
                 "update_reservation"
               ]
+            },
+            "UpdateReservationGroup": {
+              "methods": [
+                "update_reservation_group"
+              ]
             }
           }
         },
@@ -453,6 +463,11 @@
             "UpdateReservation": {
               "methods": [
                 "update_reservation"
+              ]
+            },
+            "UpdateReservationGroup": {
+              "methods": [
+                "update_reservation_group"
               ]
             }
           }

@@ -34,10 +34,20 @@ class PolylineDetails(proto.Message):
     associated metadata.
 
     Attributes:
+        tunnel_info (MutableSequence[google.maps.routing_v2.types.PolylineDetails.TunnelInfo]):
+            Tunnel details along the polyline. This field is populated
+            if the request specifies the ``avoid_tunnels`` route
+            modifier and the resultant route fails to avoid them, OR if
+            ``TUNNEL_INFO_ON_POLYLINE`` is specified in
+            ``extra_computations`` and the route contains tunnels.
         flyover_info (MutableSequence[google.maps.routing_v2.types.PolylineDetails.FlyoverInfo]):
             Flyover details along the polyline.
         narrow_road_info (MutableSequence[google.maps.routing_v2.types.PolylineDetails.NarrowRoadInfo]):
             Narrow road details along the polyline.
+        bridge_info (MutableSequence[google.maps.routing_v2.types.PolylineDetails.BridgeInfo]):
+            Bridge details along the polyline.
+        skyway_info (MutableSequence[google.maps.routing_v2.types.PolylineDetails.SkywayInfo]):
+            Skyway details along the polyline.
     """
 
     class RoadFeatureState(proto.Enum):
@@ -89,6 +99,75 @@ class PolylineDetails(proto.Message):
             optional=True,
         )
 
+    class TunnelInfo(proto.Message):
+        r"""Encapsulates information about tunnels along the polyline.
+
+        Attributes:
+            tunnel_presence (google.maps.routing_v2.types.PolylineDetails.RoadFeatureState):
+                Denotes whether a tunnel exists for a given
+                stretch of the polyline.
+            polyline_point_index (google.maps.routing_v2.types.PolylineDetails.PolylinePointIndex):
+                The location of tunnel related information
+                along the polyline.
+        """
+
+        tunnel_presence: "PolylineDetails.RoadFeatureState" = proto.Field(
+            proto.ENUM,
+            number=1,
+            enum="PolylineDetails.RoadFeatureState",
+        )
+        polyline_point_index: "PolylineDetails.PolylinePointIndex" = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message="PolylineDetails.PolylinePointIndex",
+        )
+
+    class BridgeInfo(proto.Message):
+        r"""Encapsulates information about bridges along the polyline.
+
+        Attributes:
+            bridge_presence (google.maps.routing_v2.types.PolylineDetails.RoadFeatureState):
+                Denotes whether a bridge exists for a given
+                stretch of the polyline.
+            polyline_point_index (google.maps.routing_v2.types.PolylineDetails.PolylinePointIndex):
+                The location of bridge related information
+                along the polyline.
+        """
+
+        bridge_presence: "PolylineDetails.RoadFeatureState" = proto.Field(
+            proto.ENUM,
+            number=1,
+            enum="PolylineDetails.RoadFeatureState",
+        )
+        polyline_point_index: "PolylineDetails.PolylinePointIndex" = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message="PolylineDetails.PolylinePointIndex",
+        )
+
+    class SkywayInfo(proto.Message):
+        r"""Encapsulates information about skyways along the polyline.
+
+        Attributes:
+            skyway_presence (google.maps.routing_v2.types.PolylineDetails.RoadFeatureState):
+                Denotes whether a skyway exists for a given
+                stretch of the polyline.
+            polyline_point_index (google.maps.routing_v2.types.PolylineDetails.PolylinePointIndex):
+                The location of skyway related information
+                along the polyline.
+        """
+
+        skyway_presence: "PolylineDetails.RoadFeatureState" = proto.Field(
+            proto.ENUM,
+            number=1,
+            enum="PolylineDetails.RoadFeatureState",
+        )
+        polyline_point_index: "PolylineDetails.PolylinePointIndex" = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message="PolylineDetails.PolylinePointIndex",
+        )
+
     class FlyoverInfo(proto.Message):
         r"""Encapsulates information about flyovers along the polyline.
 
@@ -136,6 +215,11 @@ class PolylineDetails(proto.Message):
             message="PolylineDetails.PolylinePointIndex",
         )
 
+    tunnel_info: MutableSequence[TunnelInfo] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=8,
+        message=TunnelInfo,
+    )
     flyover_info: MutableSequence[FlyoverInfo] = proto.RepeatedField(
         proto.MESSAGE,
         number=12,
@@ -145,6 +229,16 @@ class PolylineDetails(proto.Message):
         proto.MESSAGE,
         number=13,
         message=NarrowRoadInfo,
+    )
+    bridge_info: MutableSequence[BridgeInfo] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=14,
+        message=BridgeInfo,
+    )
+    skyway_info: MutableSequence[SkywayInfo] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=15,
+        message=SkywayInfo,
     )
 
 

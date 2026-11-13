@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dialogflowcx_v3._compat import transcode_request
 from google.cloud.dialogflowcx_v3.types import playbook
 from google.cloud.dialogflowcx_v3.types import playbook as gcdc_playbook
 
@@ -1018,25 +1019,16 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseCreatePlaybook._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_playbook(request, metadata)
-            transcoded_request = (
-                _BasePlaybooksRestTransport._BaseCreatePlaybook._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BasePlaybooksRestTransport._BaseCreatePlaybook._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlaybooksRestTransport._BaseCreatePlaybook._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseCreatePlaybook,
+                    "_BaseCreatePlaybook__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1175,21 +1167,18 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             """
 
             http_options = _BasePlaybooksRestTransport._BaseCreatePlaybookVersion._get_http_options()
-
             request, metadata = self._interceptor.pre_create_playbook_version(
                 request, metadata
             )
-            transcoded_request = _BasePlaybooksRestTransport._BaseCreatePlaybookVersion._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePlaybooksRestTransport._BaseCreatePlaybookVersion._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlaybooksRestTransport._BaseCreatePlaybookVersion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseCreatePlaybookVersion,
+                    "_BaseCreatePlaybookVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1323,19 +1312,16 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseDeletePlaybook._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_playbook(request, metadata)
-            transcoded_request = (
-                _BasePlaybooksRestTransport._BaseDeletePlaybook._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlaybooksRestTransport._BaseDeletePlaybook._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseDeletePlaybook,
+                    "_BaseDeletePlaybook__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1432,17 +1418,18 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             """
 
             http_options = _BasePlaybooksRestTransport._BaseDeletePlaybookVersion._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_playbook_version(
                 request, metadata
             )
-            transcoded_request = _BasePlaybooksRestTransport._BaseDeletePlaybookVersion._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlaybooksRestTransport._BaseDeletePlaybookVersion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseDeletePlaybookVersion,
+                    "_BaseDeletePlaybookVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1549,25 +1536,16 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseExportPlaybook._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_export_playbook(request, metadata)
-            transcoded_request = (
-                _BasePlaybooksRestTransport._BaseExportPlaybook._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BasePlaybooksRestTransport._BaseExportPlaybook._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlaybooksRestTransport._BaseExportPlaybook._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseExportPlaybook,
+                    "_BaseExportPlaybook__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1714,19 +1692,16 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseGetPlaybook._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_playbook(request, metadata)
-            transcoded_request = (
-                _BasePlaybooksRestTransport._BaseGetPlaybook._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlaybooksRestTransport._BaseGetPlaybook._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseGetPlaybook,
+                    "_BaseGetPlaybook__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1865,17 +1840,18 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseGetPlaybookVersion._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_playbook_version(
                 request, metadata
             )
-            transcoded_request = _BasePlaybooksRestTransport._BaseGetPlaybookVersion._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlaybooksRestTransport._BaseGetPlaybookVersion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseGetPlaybookVersion,
+                    "_BaseGetPlaybookVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2016,25 +1992,16 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseImportPlaybook._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_import_playbook(request, metadata)
-            transcoded_request = (
-                _BasePlaybooksRestTransport._BaseImportPlaybook._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BasePlaybooksRestTransport._BaseImportPlaybook._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlaybooksRestTransport._BaseImportPlaybook._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseImportPlaybook,
+                    "_BaseImportPlaybook__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2172,19 +2139,16 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseListPlaybooks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_playbooks(request, metadata)
-            transcoded_request = (
-                _BasePlaybooksRestTransport._BaseListPlaybooks._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlaybooksRestTransport._BaseListPlaybooks._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseListPlaybooks,
+                    "_BaseListPlaybooks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2321,17 +2285,18 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             """
 
             http_options = _BasePlaybooksRestTransport._BaseListPlaybookVersions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_playbook_versions(
                 request, metadata
             )
-            transcoded_request = _BasePlaybooksRestTransport._BaseListPlaybookVersions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlaybooksRestTransport._BaseListPlaybookVersions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseListPlaybookVersions,
+                    "_BaseListPlaybookVersions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2471,21 +2436,18 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             """
 
             http_options = _BasePlaybooksRestTransport._BaseRestorePlaybookVersion._get_http_options()
-
             request, metadata = self._interceptor.pre_restore_playbook_version(
                 request, metadata
             )
-            transcoded_request = _BasePlaybooksRestTransport._BaseRestorePlaybookVersion._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePlaybooksRestTransport._BaseRestorePlaybookVersion._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlaybooksRestTransport._BaseRestorePlaybookVersion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseRestorePlaybookVersion,
+                    "_BaseRestorePlaybookVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2639,25 +2601,16 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseUpdatePlaybook._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_playbook(request, metadata)
-            transcoded_request = (
-                _BasePlaybooksRestTransport._BaseUpdatePlaybook._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BasePlaybooksRestTransport._BaseUpdatePlaybook._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlaybooksRestTransport._BaseUpdatePlaybook._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseUpdatePlaybook,
+                    "_BaseUpdatePlaybook__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2898,19 +2851,16 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BasePlaybooksRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlaybooksRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3042,19 +2992,16 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BasePlaybooksRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlaybooksRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3183,19 +3130,18 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BasePlaybooksRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlaybooksRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3302,19 +3248,16 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BasePlaybooksRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlaybooksRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3446,19 +3389,16 @@ class PlaybooksRestTransport(_BasePlaybooksRestTransport):
             http_options = (
                 _BasePlaybooksRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BasePlaybooksRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlaybooksRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlaybooksRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

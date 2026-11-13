@@ -26,6 +26,12 @@ from google.cloud.dialogflow_v2.services.answer_records.async_client import (
 from google.cloud.dialogflow_v2.services.answer_records.client import (
     AnswerRecordsClient,
 )
+from google.cloud.dialogflow_v2.services.companion_agents.async_client import (
+    CompanionAgentsAsyncClient,
+)
+from google.cloud.dialogflow_v2.services.companion_agents.client import (
+    CompanionAgentsClient,
+)
 from google.cloud.dialogflow_v2.services.contexts.async_client import (
     ContextsAsyncClient,
 )
@@ -160,6 +166,16 @@ from google.cloud.dialogflow_v2.types.audio_config import (
 )
 from google.cloud.dialogflow_v2.types.ces_app import CesAppSpec
 from google.cloud.dialogflow_v2.types.ces_tool import CesToolSpec
+from google.cloud.dialogflow_v2.types.companion_agent import (
+    CompanionAgent,
+    CreateCompanionAgentRequest,
+    DeleteCompanionAgentRequest,
+    GetCompanionAgentRequest,
+    GuidanceInstruction,
+    ListCompanionAgentsRequest,
+    ListCompanionAgentsResponse,
+    UpdateCompanionAgentRequest,
+)
 from google.cloud.dialogflow_v2.types.context import (
     Context,
     CreateContextRequest,
@@ -348,6 +364,13 @@ from google.cloud.dialogflow_v2.types.generator_evaluation import (
     ListGeneratorEvaluationsResponse,
     SummarizationEvaluationMetrics,
 )
+from google.cloud.dialogflow_v2.types.grounding import (
+    GroundingChunk,
+    GroundingMetadata,
+    GroundingSupport,
+    SearchEntryPoint,
+    Segment,
+)
 from google.cloud.dialogflow_v2.types.human_agent_assistant_event import (
     HumanAgentAssistantEvent,
 )
@@ -385,11 +408,16 @@ from google.cloud.dialogflow_v2.types.participant import (
     AssistQueryParameters,
     AudioInput,
     AutomatedAgentReply,
+    BidiStreamingAnalyzeContentRequest,
+    BidiStreamingAnalyzeContentResponse,
+    CancelQuery,
+    CompanionSuggestion,
     CreateParticipantRequest,
     DatastoreResponseReason,
     DialogflowAssistAnswer,
     DtmfParameters,
     FaqAnswer,
+    GenerateCompanionSuggestionsResponse,
     GenerateSuggestionsResponse,
     GetParticipantRequest,
     IngestedContextReferenceDebugInfo,
@@ -403,10 +431,13 @@ from google.cloud.dialogflow_v2.types.participant import (
     MessageAnnotation,
     OutputAudio,
     Participant,
+    ResponseMessage,
     ServiceLatency,
     SmartReplyAnswer,
     StreamingAnalyzeContentRequest,
     StreamingAnalyzeContentResponse,
+    StreamingReactiveCompanionSuggestionsRequest,
+    StreamingReactiveCompanionSuggestionsResponse,
     SuggestArticlesRequest,
     SuggestArticlesResponse,
     SuggestFaqAnswersRequest,
@@ -417,6 +448,8 @@ from google.cloud.dialogflow_v2.types.participant import (
     SuggestKnowledgeAssistResponse,
     SuggestSmartRepliesRequest,
     SuggestSmartRepliesResponse,
+    ToolCallEvents,
+    ToolCallSuggestion,
     UpdateParticipantRequest,
 )
 from google.cloud.dialogflow_v2.types.session import (
@@ -451,6 +484,8 @@ from google.cloud.dialogflow_v2.types.sip_trunk import (
     GetSipTrunkRequest,
     ListSipTrunksRequest,
     ListSipTrunksResponse,
+    ProbeDetails,
+    SipHostname,
     SipTrunk,
     UpdateSipTrunkRequest,
 )
@@ -489,6 +524,8 @@ __all__ = (
     "AgentsAsyncClient",
     "AnswerRecordsClient",
     "AnswerRecordsAsyncClient",
+    "CompanionAgentsClient",
+    "CompanionAgentsAsyncClient",
     "ContextsClient",
     "ContextsAsyncClient",
     "ConversationDatasetsClient",
@@ -565,6 +602,14 @@ __all__ = (
     "TelephonyDtmf",
     "CesAppSpec",
     "CesToolSpec",
+    "CompanionAgent",
+    "CreateCompanionAgentRequest",
+    "DeleteCompanionAgentRequest",
+    "GetCompanionAgentRequest",
+    "GuidanceInstruction",
+    "ListCompanionAgentsRequest",
+    "ListCompanionAgentsResponse",
+    "UpdateCompanionAgentRequest",
     "Context",
     "CreateContextRequest",
     "DeleteAllContextsRequest",
@@ -730,6 +775,11 @@ __all__ = (
     "ListGeneratorEvaluationsRequest",
     "ListGeneratorEvaluationsResponse",
     "SummarizationEvaluationMetrics",
+    "GroundingChunk",
+    "GroundingMetadata",
+    "GroundingSupport",
+    "SearchEntryPoint",
+    "Segment",
     "HumanAgentAssistantEvent",
     "BatchDeleteIntentsRequest",
     "BatchUpdateIntentsRequest",
@@ -758,10 +808,15 @@ __all__ = (
     "AssistQueryParameters",
     "AudioInput",
     "AutomatedAgentReply",
+    "BidiStreamingAnalyzeContentRequest",
+    "BidiStreamingAnalyzeContentResponse",
+    "CancelQuery",
+    "CompanionSuggestion",
     "CreateParticipantRequest",
     "DialogflowAssistAnswer",
     "DtmfParameters",
     "FaqAnswer",
+    "GenerateCompanionSuggestionsResponse",
     "GenerateSuggestionsResponse",
     "GetParticipantRequest",
     "IngestedContextReferenceDebugInfo",
@@ -775,10 +830,13 @@ __all__ = (
     "MessageAnnotation",
     "OutputAudio",
     "Participant",
+    "ResponseMessage",
     "ServiceLatency",
     "SmartReplyAnswer",
     "StreamingAnalyzeContentRequest",
     "StreamingAnalyzeContentResponse",
+    "StreamingReactiveCompanionSuggestionsRequest",
+    "StreamingReactiveCompanionSuggestionsResponse",
     "SuggestArticlesRequest",
     "SuggestArticlesResponse",
     "SuggestFaqAnswersRequest",
@@ -789,6 +847,8 @@ __all__ = (
     "SuggestKnowledgeAssistResponse",
     "SuggestSmartRepliesRequest",
     "SuggestSmartRepliesResponse",
+    "ToolCallEvents",
+    "ToolCallSuggestion",
     "UpdateParticipantRequest",
     "DatastoreResponseReason",
     "CloudConversationDebuggingInfo",
@@ -818,6 +878,8 @@ __all__ = (
     "GetSipTrunkRequest",
     "ListSipTrunksRequest",
     "ListSipTrunksResponse",
+    "ProbeDetails",
+    "SipHostname",
     "SipTrunk",
     "UpdateSipTrunkRequest",
     "CreateToolRequest",

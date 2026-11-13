@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.retail_v2alpha._compat import transcode_request
 from google.cloud.retail_v2alpha.types import (
     export_config,
     import_config,
@@ -1049,21 +1050,18 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             """
 
             http_options = _BaseProductServiceRestTransport._BaseAddFulfillmentPlaces._get_http_options()
-
             request, metadata = self._interceptor.pre_add_fulfillment_places(
                 request, metadata
             )
-            transcoded_request = _BaseProductServiceRestTransport._BaseAddFulfillmentPlaces._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductServiceRestTransport._BaseAddFulfillmentPlaces._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseAddFulfillmentPlaces._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseAddFulfillmentPlaces,
+                    "_BaseAddFulfillmentPlaces__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1203,21 +1201,18 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             """
 
             http_options = _BaseProductServiceRestTransport._BaseAddLocalInventories._get_http_options()
-
             request, metadata = self._interceptor.pre_add_local_inventories(
                 request, metadata
             )
-            transcoded_request = _BaseProductServiceRestTransport._BaseAddLocalInventories._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductServiceRestTransport._BaseAddLocalInventories._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseAddLocalInventories._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseAddLocalInventories,
+                    "_BaseAddLocalInventories__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1358,19 +1353,16 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             http_options = (
                 _BaseProductServiceRestTransport._BaseCreateProduct._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_product(request, metadata)
-            transcoded_request = _BaseProductServiceRestTransport._BaseCreateProduct._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductServiceRestTransport._BaseCreateProduct._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseCreateProduct._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseCreateProduct,
+                    "_BaseCreateProduct__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1505,15 +1497,16 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             http_options = (
                 _BaseProductServiceRestTransport._BaseDeleteProduct._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_product(request, metadata)
-            transcoded_request = _BaseProductServiceRestTransport._BaseDeleteProduct._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseDeleteProduct._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseDeleteProduct,
+                    "_BaseDeleteProduct__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1620,19 +1613,16 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             http_options = (
                 _BaseProductServiceRestTransport._BaseExportProducts._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_export_products(request, metadata)
-            transcoded_request = _BaseProductServiceRestTransport._BaseExportProducts._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductServiceRestTransport._BaseExportProducts._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseExportProducts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseExportProducts,
+                    "_BaseExportProducts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1772,17 +1762,16 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             http_options = (
                 _BaseProductServiceRestTransport._BaseGetProduct._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_product(request, metadata)
-            transcoded_request = _BaseProductServiceRestTransport._BaseGetProduct._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProductServiceRestTransport._BaseGetProduct._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseGetProduct,
+                    "_BaseGetProduct__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1922,19 +1911,16 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             http_options = (
                 _BaseProductServiceRestTransport._BaseImportProducts._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_import_products(request, metadata)
-            transcoded_request = _BaseProductServiceRestTransport._BaseImportProducts._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductServiceRestTransport._BaseImportProducts._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseImportProducts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseImportProducts,
+                    "_BaseImportProducts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2074,15 +2060,16 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             http_options = (
                 _BaseProductServiceRestTransport._BaseListProducts._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_products(request, metadata)
-            transcoded_request = _BaseProductServiceRestTransport._BaseListProducts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseListProducts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseListProducts,
+                    "_BaseListProducts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2225,19 +2212,16 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             http_options = (
                 _BaseProductServiceRestTransport._BasePurgeProducts._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_purge_products(request, metadata)
-            transcoded_request = _BaseProductServiceRestTransport._BasePurgeProducts._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductServiceRestTransport._BasePurgeProducts._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BasePurgeProducts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BasePurgeProducts,
+                    "_BasePurgeProducts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2377,21 +2361,18 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             """
 
             http_options = _BaseProductServiceRestTransport._BaseRemoveFulfillmentPlaces._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_fulfillment_places(
                 request, metadata
             )
-            transcoded_request = _BaseProductServiceRestTransport._BaseRemoveFulfillmentPlaces._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductServiceRestTransport._BaseRemoveFulfillmentPlaces._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseRemoveFulfillmentPlaces._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseRemoveFulfillmentPlaces,
+                    "_BaseRemoveFulfillmentPlaces__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2533,21 +2514,18 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             """
 
             http_options = _BaseProductServiceRestTransport._BaseRemoveLocalInventories._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_local_inventories(
                 request, metadata
             )
-            transcoded_request = _BaseProductServiceRestTransport._BaseRemoveLocalInventories._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductServiceRestTransport._BaseRemoveLocalInventories._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseRemoveLocalInventories._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseRemoveLocalInventories,
+                    "_BaseRemoveLocalInventories__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2690,19 +2668,16 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             http_options = (
                 _BaseProductServiceRestTransport._BaseSetInventory._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_inventory(request, metadata)
-            transcoded_request = _BaseProductServiceRestTransport._BaseSetInventory._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductServiceRestTransport._BaseSetInventory._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseSetInventory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseSetInventory,
+                    "_BaseSetInventory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2843,19 +2818,16 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             http_options = (
                 _BaseProductServiceRestTransport._BaseUpdateProduct._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_product(request, metadata)
-            transcoded_request = _BaseProductServiceRestTransport._BaseUpdateProduct._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductServiceRestTransport._BaseUpdateProduct._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseUpdateProduct._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseUpdateProduct,
+                    "_BaseUpdateProduct__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3113,15 +3085,16 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             http_options = (
                 _BaseProductServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseProductServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3253,15 +3226,16 @@ class ProductServiceRestTransport(_BaseProductServiceRestTransport):
             http_options = (
                 _BaseProductServiceRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseProductServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

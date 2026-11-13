@@ -26,6 +26,7 @@ from google.cloud.spanner_v1 import (
     TransactionOptions,
 )
 from google.cloud.spanner_v1._async.batch import Batch, MutationGroups, _BatchBase
+from google.cloud.spanner_v1._helpers import _make_list_value_pb, _make_value_pb
 from google.cloud.spanner_v1.keyset import KeySet
 
 TABLE_NAME = "citizens"
@@ -48,6 +49,33 @@ class Test_BatchBase(unittest.IsolatedAsyncioTestCase):
         base = self._make_one(session)
         self.assertIs(base._session, session)
         self.assertEqual(len(base._mutations), 0)
+
+    def test_resource_info_with_database(self):
+        session = mock.Mock()
+        mock_db = mock.Mock(spec=["_resource_info"])
+        mock_db._resource_info = {"project": "p", "instance": "i", "database": "d"}
+        session._database = mock_db
+        base = self._make_one(session)
+        self.assertEqual(base._resource_info, mock_db._resource_info)
+
+    def test_resource_info_fallback(self):
+        session = mock.Mock()
+        mock_db = mock.Mock(spec=["_instance", "database_id"])
+        mock_db._instance = mock.Mock(spec=["_client", "instance_id"])
+        mock_db._instance.instance_id = "i"
+        mock_db._instance._client = mock.Mock(spec=["project"])
+        mock_db._instance._client.project = "p"
+        mock_db.database_id = "d"
+        session._database = mock_db
+        base = self._make_one(session)
+        self.assertEqual(
+            base._resource_info,
+            {"project": "p", "instance": "i", "database": "d"},
+        )
+
+    def test_resource_info_none(self):
+        base = self._make_one(None)
+        self.assertIsNone(base._resource_info)
 
     def test_insert(self):
         session = mock.Mock()
@@ -84,6 +112,28 @@ class Test_BatchBase(unittest.IsolatedAsyncioTestCase):
         base.delete(TABLE_NAME, keyset=keyset)
         self.assertEqual(len(base._mutations), 1)
         self.assertEqual(base._mutations[0].delete.table, TABLE_NAME)
+
+    def test_send(self):
+        queue = "TestQueue"
+        key = [2]
+        payload = "Hello, Queues!"
+        session = mock.Mock()
+        base = self._make_one(session)
+        base.send(queue=queue, key=key, payload=payload)
+        self.assertEqual(len(base._mutations), 1)
+        self.assertEqual(base._mutations[0].send.queue, queue)
+        self.assertEqual(base._mutations[0].send._pb.payload, _make_value_pb(payload))
+        self.assertEqual(base._mutations[0].send._pb.key, _make_list_value_pb(key))
+
+    def test_ack(self):
+        queue = "TestQueue"
+        key = [2]
+        session = mock.Mock()
+        base = self._make_one(session)
+        base.ack(queue=queue, key=key)
+        self.assertEqual(len(base._mutations), 1)
+        self.assertEqual(base._mutations[0].ack.queue, queue)
+        self.assertEqual(base._mutations[0].ack._pb.key, _make_list_value_pb(key))
 
 
 class TestBatch(unittest.IsolatedAsyncioTestCase):
@@ -235,6 +285,33 @@ class TestMutationGroups(unittest.IsolatedAsyncioTestCase):
         session._database.database_id = "database"
 
         return session
+
+    def test_resource_info_with_database(self):
+        session = mock.Mock()
+        mock_db = mock.Mock(spec=["_resource_info"])
+        mock_db._resource_info = {"project": "p", "instance": "i", "database": "d"}
+        session._database = mock_db
+        groups = self._make_one(session)
+        self.assertEqual(groups._resource_info, mock_db._resource_info)
+
+    def test_resource_info_fallback(self):
+        session = mock.Mock()
+        mock_db = mock.Mock(spec=["_instance", "database_id"])
+        mock_db._instance = mock.Mock(spec=["_client", "instance_id"])
+        mock_db._instance.instance_id = "i"
+        mock_db._instance._client = mock.Mock(spec=["project"])
+        mock_db._instance._client.project = "p"
+        mock_db.database_id = "d"
+        session._database = mock_db
+        groups = self._make_one(session)
+        self.assertEqual(
+            groups._resource_info,
+            {"project": "p", "instance": "i", "database": "d"},
+        )
+
+    def test_resource_info_none(self):
+        groups = self._make_one(None)
+        self.assertIsNone(groups._resource_info)
 
     async def test_batch_write_ok(self):
         session = self._make_session()

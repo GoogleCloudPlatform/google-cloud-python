@@ -340,6 +340,8 @@ class AgentAssistantFeedback(proto.Message):
             Optional. Feedback for knowledge search.
         knowledge_assist_feedback (google.cloud.dialogflow_v2.types.AgentAssistantFeedback.KnowledgeAssistFeedback):
             Optional. Feedback for knowledge assist.
+        companion_feedback (google.cloud.dialogflow_v2.types.AgentAssistantFeedback.CompanionFeedback):
+            Optional. Feedback for companion agent.
     """
 
     class AnswerRelevance(proto.Enum):
@@ -479,6 +481,9 @@ class AgentAssistantFeedback(proto.Message):
             number=2,
         )
 
+    class CompanionFeedback(proto.Message):
+        r"""Feedback for companion agent."""
+
     answer_relevance: AnswerRelevance = proto.Field(
         proto.ENUM,
         number=1,
@@ -509,6 +514,11 @@ class AgentAssistantFeedback(proto.Message):
         number=6,
         message=KnowledgeAssistFeedback,
     )
+    companion_feedback: CompanionFeedback = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message=CompanionFeedback,
+    )
 
 
 class AgentAssistantRecord(proto.Message):
@@ -538,6 +548,15 @@ class AgentAssistantRecord(proto.Message):
             Output only. The generator suggestion.
 
             This field is a member of `oneof`_ ``answer``.
+        companion_suggestion (google.cloud.dialogflow_v2.types.CompanionSuggestion):
+            Output only. The companion suggestion.
+
+            This field is a member of `oneof`_ ``answer``.
+        reactive_companion_suggestion (google.cloud.dialogflow_v2.types.StreamingReactiveCompanionSuggestionsResponse.ReactiveModeResponse):
+            Output only. The reactive companion
+            suggestion.
+
+            This field is a member of `oneof`_ ``answer``.
     """
 
     article_suggestion_answer: participant.ArticleAnswer = proto.Field(
@@ -563,6 +582,18 @@ class AgentAssistantRecord(proto.Message):
         number=8,
         oneof="answer",
         message=generator.GeneratorSuggestion,
+    )
+    companion_suggestion: participant.CompanionSuggestion = proto.Field(
+        proto.MESSAGE,
+        number=9,
+        oneof="answer",
+        message=participant.CompanionSuggestion,
+    )
+    reactive_companion_suggestion: participant.StreamingReactiveCompanionSuggestionsResponse.ReactiveModeResponse = proto.Field(
+        proto.MESSAGE,
+        number=10,
+        oneof="answer",
+        message=participant.StreamingReactiveCompanionSuggestionsResponse.ReactiveModeResponse,
     )
 
 

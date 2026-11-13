@@ -35,6 +35,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dataplex_v1._compat import transcode_request
 from google.cloud.dataplex_v1.types import resources, service, tasks
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1934,23 +1935,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseCancelJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_job(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseCancelJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseDataplexServiceRestTransport._BaseCancelJob._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataplexServiceRestTransport._BaseCancelJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseCancelJob,
+                    "_BaseCancelJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2057,19 +2051,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseCreateAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_asset(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseCreateAsset._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataplexServiceRestTransport._BaseCreateAsset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseCreateAsset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseCreateAsset,
+                    "_BaseCreateAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2208,19 +2199,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseCreateLake._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_lake(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseCreateLake._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataplexServiceRestTransport._BaseCreateLake._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseCreateLake._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseCreateLake,
+                    "_BaseCreateLake__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2359,19 +2347,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseCreateTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_task(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseCreateTask._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataplexServiceRestTransport._BaseCreateTask._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseCreateTask._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseCreateTask,
+                    "_BaseCreateTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2510,19 +2495,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseCreateZone._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_zone(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseCreateZone._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataplexServiceRestTransport._BaseCreateZone._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseCreateZone._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseCreateZone,
+                    "_BaseCreateZone__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2660,15 +2642,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseDeleteAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_asset(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseDeleteAsset._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseDeleteAsset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseDeleteAsset,
+                    "_BaseDeleteAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2805,15 +2788,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseDeleteLake._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_lake(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseDeleteLake._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseDeleteLake._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseDeleteLake,
+                    "_BaseDeleteLake__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2950,15 +2934,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseDeleteTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_task(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseDeleteTask._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseDeleteTask._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseDeleteTask,
+                    "_BaseDeleteTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3095,15 +3080,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseDeleteZone._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_zone(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseDeleteZone._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseDeleteZone._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseDeleteZone,
+                    "_BaseDeleteZone__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3240,19 +3226,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseGetAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_asset(request, metadata)
-            transcoded_request = (
-                _BaseDataplexServiceRestTransport._BaseGetAsset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataplexServiceRestTransport._BaseGetAsset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseGetAsset,
+                    "_BaseGetAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3390,19 +3373,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseGetJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_job(request, metadata)
-            transcoded_request = (
-                _BaseDataplexServiceRestTransport._BaseGetJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataplexServiceRestTransport._BaseGetJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseGetJob,
+                    "_BaseGetJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3554,19 +3534,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseGetLake._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_lake(request, metadata)
-            transcoded_request = (
-                _BaseDataplexServiceRestTransport._BaseGetLake._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataplexServiceRestTransport._BaseGetLake._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseGetLake,
+                    "_BaseGetLake__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3702,19 +3679,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseGetTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_task(request, metadata)
-            transcoded_request = (
-                _BaseDataplexServiceRestTransport._BaseGetTask._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataplexServiceRestTransport._BaseGetTask._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseGetTask,
+                    "_BaseGetTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3858,19 +3832,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseGetZone._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_zone(request, metadata)
-            transcoded_request = (
-                _BaseDataplexServiceRestTransport._BaseGetZone._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataplexServiceRestTransport._BaseGetZone._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseGetZone,
+                    "_BaseGetZone__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4004,17 +3975,18 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             """
 
             http_options = _BaseDataplexServiceRestTransport._BaseListAssetActions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_asset_actions(
                 request, metadata
             )
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseListAssetActions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseListAssetActions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseListAssetActions,
+                    "_BaseListAssetActions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4150,15 +4122,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseListAssets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_assets(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseListAssets._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseListAssets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseListAssets,
+                    "_BaseListAssets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4294,19 +4267,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseListJobs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_jobs(request, metadata)
-            transcoded_request = (
-                _BaseDataplexServiceRestTransport._BaseListJobs._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataplexServiceRestTransport._BaseListJobs._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseListJobs,
+                    "_BaseListJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4440,17 +4410,18 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             """
 
             http_options = _BaseDataplexServiceRestTransport._BaseListLakeActions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_lake_actions(
                 request, metadata
             )
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseListLakeActions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseListLakeActions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseListLakeActions,
+                    "_BaseListLakeActions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4586,17 +4557,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseListLakes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_lakes(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseListLakes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataplexServiceRestTransport._BaseListLakes._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseListLakes,
+                    "_BaseListLakes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4732,17 +4702,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseListTasks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_tasks(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseListTasks._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataplexServiceRestTransport._BaseListTasks._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseListTasks,
+                    "_BaseListTasks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4876,17 +4845,18 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             """
 
             http_options = _BaseDataplexServiceRestTransport._BaseListZoneActions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_zone_actions(
                 request, metadata
             )
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseListZoneActions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseListZoneActions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseListZoneActions,
+                    "_BaseListZoneActions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5022,17 +4992,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseListZones._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_zones(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseListZones._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataplexServiceRestTransport._BaseListZones._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseListZones,
+                    "_BaseListZones__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5169,25 +5138,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseRunTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_run_task(request, metadata)
-            transcoded_request = (
-                _BaseDataplexServiceRestTransport._BaseRunTask._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseDataplexServiceRestTransport._BaseRunTask._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDataplexServiceRestTransport._BaseRunTask._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseRunTask,
+                    "_BaseRunTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5328,19 +5288,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseUpdateAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_asset(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseUpdateAsset._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataplexServiceRestTransport._BaseUpdateAsset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseUpdateAsset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseUpdateAsset,
+                    "_BaseUpdateAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5479,19 +5436,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseUpdateLake._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_lake(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseUpdateLake._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataplexServiceRestTransport._BaseUpdateLake._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseUpdateLake._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseUpdateLake,
+                    "_BaseUpdateLake__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5630,19 +5584,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseUpdateTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_task(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseUpdateTask._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataplexServiceRestTransport._BaseUpdateTask._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseUpdateTask._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseUpdateTask,
+                    "_BaseUpdateTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5781,19 +5732,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseUpdateZone._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_zone(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseUpdateZone._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataplexServiceRestTransport._BaseUpdateZone._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseUpdateZone._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseUpdateZone,
+                    "_BaseUpdateZone__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6133,15 +6081,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6273,15 +6222,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6413,15 +6363,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6554,19 +6505,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataplexServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6699,21 +6647,18 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             """
 
             http_options = _BaseDataplexServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataplexServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6842,21 +6787,18 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             """
 
             http_options = _BaseDataplexServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataplexServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6959,17 +6901,18 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             """
 
             http_options = _BaseDataplexServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7076,15 +7019,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             http_options = (
                 _BaseDataplexServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7214,15 +7158,16 @@ class DataplexServiceRestTransport(_BaseDataplexServiceRestTransport):
             """
 
             http_options = _BaseDataplexServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseDataplexServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataplexServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataplexServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

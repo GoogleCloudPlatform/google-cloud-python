@@ -71,7 +71,7 @@ class DlpServiceAsyncClient:
     platform that works on text, images, and Google Cloud storage
     repositories. To learn more about concepts and find how-to
     guides see
-    https://cloud.google.com/sensitive-data-protection/docs/.
+    https://docs.cloud.google.com/sensitive-data-protection/docs/.
     """
 
     _client: DlpServiceClient
@@ -89,6 +89,8 @@ class DlpServiceAsyncClient:
     )
     connection_path = staticmethod(DlpServiceClient.connection_path)
     parse_connection_path = staticmethod(DlpServiceClient.parse_connection_path)
+    content_policy_path = staticmethod(DlpServiceClient.content_policy_path)
+    parse_content_policy_path = staticmethod(DlpServiceClient.parse_content_policy_path)
     deidentify_template_path = staticmethod(DlpServiceClient.deidentify_template_path)
     parse_deidentify_template_path = staticmethod(
         DlpServiceClient.parse_deidentify_template_path
@@ -357,9 +359,9 @@ class DlpServiceAsyncClient:
         may change over time as detectors are updated.
 
         For how to guides, see
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-images
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-images
         and
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-text,
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-text,
 
         .. code-block:: python
 
@@ -445,7 +447,7 @@ class DlpServiceAsyncClient:
         r"""Redacts potentially sensitive info from an image.
         This method has limits on input size, processing time,
         and output size. See
-        https://cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images
+        https://docs.cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images
         to learn more.
 
         When no InfoTypes or CustomInfoTypes are specified in
@@ -542,7 +544,7 @@ class DlpServiceAsyncClient:
         r"""De-identifies potentially sensitive info from a
         ContentItem. This method has limits on input size and
         output size. See
-        https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data
+        https://docs.cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data
         to learn more.
 
         When no InfoTypes or CustomInfoTypes are specified in
@@ -633,7 +635,7 @@ class DlpServiceAsyncClient:
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> dlp.ReidentifyContentResponse:
         r"""Re-identifies content that has been de-identified. See
-        https://cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example
+        https://docs.cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example
         to learn more.
 
         .. code-block:: python
@@ -720,7 +722,7 @@ class DlpServiceAsyncClient:
     ) -> dlp.ListInfoTypesResponse:
         r"""Returns a list of the sensitive information types
         that the DLP API supports. See
-        https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+        https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference
         to learn more.
 
         .. code-block:: python
@@ -833,7 +835,7 @@ class DlpServiceAsyncClient:
         r"""Creates an InspectTemplate for reusing frequently
         used configuration for inspecting content, images, and
         storage. See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
         to learn more.
 
         .. code-block:: python
@@ -872,7 +874,7 @@ class DlpServiceAsyncClient:
                 The format of this value varies depending on the scope
                 of the request (project or organization) and whether you
                 have `specified a processing
-                location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+                location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
                 - Projects scope, location specified:
                   ``projects/{project_id}/locations/{location_id}``
@@ -917,7 +919,7 @@ class DlpServiceAsyncClient:
                 data to be detected) to be used anywhere
                 you otherwise would normally specify
                 InspectConfig. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
                 to learn more.
 
         """
@@ -985,7 +987,7 @@ class DlpServiceAsyncClient:
     ) -> dlp.InspectTemplate:
         r"""Updates the InspectTemplate.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
         to learn more.
 
         .. code-block:: python
@@ -1054,7 +1056,7 @@ class DlpServiceAsyncClient:
                 data to be detected) to be used anywhere
                 you otherwise would normally specify
                 InspectConfig. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
                 to learn more.
 
         """
@@ -1122,7 +1124,7 @@ class DlpServiceAsyncClient:
     ) -> dlp.InspectTemplate:
         r"""Gets an InspectTemplate.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
         to learn more.
 
         .. code-block:: python
@@ -1179,7 +1181,7 @@ class DlpServiceAsyncClient:
                 data to be detected) to be used anywhere
                 you otherwise would normally specify
                 InspectConfig. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
                 to learn more.
 
         """
@@ -1243,7 +1245,7 @@ class DlpServiceAsyncClient:
     ) -> pagers.ListInspectTemplatesAsyncPager:
         r"""Lists InspectTemplates.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
         to learn more.
 
         .. code-block:: python
@@ -1283,7 +1285,7 @@ class DlpServiceAsyncClient:
                 The format of this value varies depending on the scope
                 of the request (project or organization) and whether you
                 have `specified a processing
-                location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+                location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
                 - Projects scope, location specified:
                   ``projects/{project_id}/locations/{location_id}``
@@ -1394,7 +1396,7 @@ class DlpServiceAsyncClient:
     ) -> None:
         r"""Deletes an InspectTemplate.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
         to learn more.
 
         .. code-block:: python
@@ -1500,7 +1502,7 @@ class DlpServiceAsyncClient:
         r"""Creates a DeidentifyTemplate for reusing frequently
         used configuration for de-identifying content, images,
         and storage. See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
         to learn more.
 
         .. code-block:: python
@@ -1539,7 +1541,7 @@ class DlpServiceAsyncClient:
                 The format of this value varies depending on the scope
                 of the request (project or organization) and whether you
                 have `specified a processing
-                location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+                location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
                 - Projects scope, location specified:
                   ``projects/{project_id}/locations/{location_id}``
@@ -1582,7 +1584,7 @@ class DlpServiceAsyncClient:
                 DeidentifyTemplates contains
                 instructions on how to de-identify
                 content. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
                 to learn more.
 
         """
@@ -1650,7 +1652,7 @@ class DlpServiceAsyncClient:
     ) -> dlp.DeidentifyTemplate:
         r"""Updates the DeidentifyTemplate.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
         to learn more.
 
         .. code-block:: python
@@ -1717,7 +1719,7 @@ class DlpServiceAsyncClient:
                 DeidentifyTemplates contains
                 instructions on how to de-identify
                 content. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
                 to learn more.
 
         """
@@ -1785,7 +1787,7 @@ class DlpServiceAsyncClient:
     ) -> dlp.DeidentifyTemplate:
         r"""Gets a DeidentifyTemplate.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
         to learn more.
 
         .. code-block:: python
@@ -1840,7 +1842,7 @@ class DlpServiceAsyncClient:
                 DeidentifyTemplates contains
                 instructions on how to de-identify
                 content. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
                 to learn more.
 
         """
@@ -1904,7 +1906,7 @@ class DlpServiceAsyncClient:
     ) -> pagers.ListDeidentifyTemplatesAsyncPager:
         r"""Lists DeidentifyTemplates.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
         to learn more.
 
         .. code-block:: python
@@ -1944,7 +1946,7 @@ class DlpServiceAsyncClient:
                 The format of this value varies depending on the scope
                 of the request (project or organization) and whether you
                 have `specified a processing
-                location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+                location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
                 - Projects scope, location specified:
                   ``projects/{project_id}/locations/{location_id}``
@@ -2055,7 +2057,7 @@ class DlpServiceAsyncClient:
     ) -> None:
         r"""Deletes a DeidentifyTemplate.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
         to learn more.
 
         .. code-block:: python
@@ -2161,7 +2163,7 @@ class DlpServiceAsyncClient:
         r"""Creates a job trigger to run DLP actions such as
         scanning storage for sensitive information on a set
         schedule. See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
         to learn more.
 
         .. code-block:: python
@@ -2202,7 +2204,7 @@ class DlpServiceAsyncClient:
 
                 The format of this value varies depending on whether you
                 have `specified a processing
-                location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+                location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
                 - Projects scope, location specified:
                   ``projects/{project_id}/locations/{location_id}``
@@ -2238,7 +2240,7 @@ class DlpServiceAsyncClient:
             google.cloud.dlp_v2.types.JobTrigger:
                 Contains a configuration to make API
                 calls on a repeating basis. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
                 to learn more.
 
         """
@@ -2306,7 +2308,7 @@ class DlpServiceAsyncClient:
     ) -> dlp.JobTrigger:
         r"""Updates a job trigger.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
         to learn more.
 
         .. code-block:: python
@@ -2370,7 +2372,7 @@ class DlpServiceAsyncClient:
             google.cloud.dlp_v2.types.JobTrigger:
                 Contains a configuration to make API
                 calls on a repeating basis. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
                 to learn more.
 
         """
@@ -2553,7 +2555,7 @@ class DlpServiceAsyncClient:
     ) -> dlp.JobTrigger:
         r"""Gets a job trigger.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
         to learn more.
 
         .. code-block:: python
@@ -2605,7 +2607,7 @@ class DlpServiceAsyncClient:
             google.cloud.dlp_v2.types.JobTrigger:
                 Contains a configuration to make API
                 calls on a repeating basis. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
                 to learn more.
 
         """
@@ -2669,7 +2671,7 @@ class DlpServiceAsyncClient:
     ) -> pagers.ListJobTriggersAsyncPager:
         r"""Lists job triggers.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
         to learn more.
 
         .. code-block:: python
@@ -2707,7 +2709,7 @@ class DlpServiceAsyncClient:
 
                 The format of this value varies depending on whether you
                 have `specified a processing
-                location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+                location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
                 - Projects scope, location specified:
                   ``projects/{project_id}/locations/{location_id}``
@@ -2814,7 +2816,7 @@ class DlpServiceAsyncClient:
     ) -> None:
         r"""Deletes a job trigger.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
         to learn more.
 
         .. code-block:: python
@@ -3086,7 +3088,7 @@ class DlpServiceAsyncClient:
 
                    The generated data profiles are retained according to
                    the [data retention policy]
-                   (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
+                   (https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
 
         """
         # Create or coerce a protobuf request object.
@@ -3223,7 +3225,7 @@ class DlpServiceAsyncClient:
 
                    The generated data profiles are retained according to
                    the [data retention policy]
-                   (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
+                   (https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
 
         """
         # Create or coerce a protobuf request object.
@@ -3344,7 +3346,7 @@ class DlpServiceAsyncClient:
 
                    The generated data profiles are retained according to
                    the [data retention policy]
-                   (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
+                   (https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
 
         """
         # Create or coerce a protobuf request object.
@@ -3646,9 +3648,9 @@ class DlpServiceAsyncClient:
     ) -> dlp.DlpJob:
         r"""Creates a new job to inspect storage or calculate
         risk metrics. See
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
         and
-        https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+        https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
         to learn more.
 
         When no InfoTypes or CustomInfoTypes are specified in
@@ -3694,7 +3696,7 @@ class DlpServiceAsyncClient:
 
                 The format of this value varies depending on whether you
                 have `specified a processing
-                location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+                location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
                 - Projects scope, location specified:
                   ``projects/{project_id}/locations/{location_id}``
@@ -3806,9 +3808,9 @@ class DlpServiceAsyncClient:
     ) -> pagers.ListDlpJobsAsyncPager:
         r"""Lists DlpJobs that match the specified filter in the
         request. See
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
         and
-        https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+        https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
         to learn more.
 
         .. code-block:: python
@@ -3847,7 +3849,7 @@ class DlpServiceAsyncClient:
 
                 The format of this value varies depending on whether you
                 have `specified a processing
-                location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+                location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
                 - Projects scope, location specified:
                   ``projects/{project_id}/locations/{location_id}``
@@ -3954,9 +3956,9 @@ class DlpServiceAsyncClient:
     ) -> dlp.DlpJob:
         r"""Gets the latest state of a long-running DlpJob.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
         and
-        https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+        https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
         to learn more.
 
         .. code-block:: python
@@ -4072,9 +4074,9 @@ class DlpServiceAsyncClient:
         that the client is no longer interested in the DlpJob
         result. The job will be canceled if possible.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
         and
-        https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+        https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
         to learn more.
 
         .. code-block:: python
@@ -4177,9 +4179,9 @@ class DlpServiceAsyncClient:
         DlpJob. The server makes a best effort to cancel the
         DlpJob, but success is not guaranteed.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
         and
-        https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+        https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
         to learn more.
 
         .. code-block:: python
@@ -4258,7 +4260,7 @@ class DlpServiceAsyncClient:
     ) -> dlp.StoredInfoType:
         r"""Creates a pre-built stored infoType to be used for
         inspection. See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
         to learn more.
 
         .. code-block:: python
@@ -4297,7 +4299,7 @@ class DlpServiceAsyncClient:
                 The format of this value varies depending on the scope
                 of the request (project or organization) and whether you
                 have `specified a processing
-                location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+                location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
                 - Projects scope, location specified:
                   ``projects/{project_id}/locations/{location_id}``
@@ -4407,7 +4409,7 @@ class DlpServiceAsyncClient:
         r"""Updates the stored infoType by creating a new
         version. The existing version will continue to be used
         until the new version is ready. See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
         to learn more.
 
         .. code-block:: python
@@ -4544,7 +4546,7 @@ class DlpServiceAsyncClient:
     ) -> dlp.StoredInfoType:
         r"""Gets a stored infoType.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
         to learn more.
 
         .. code-block:: python
@@ -4661,7 +4663,7 @@ class DlpServiceAsyncClient:
     ) -> pagers.ListStoredInfoTypesAsyncPager:
         r"""Lists stored infoTypes.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
         to learn more.
 
         .. code-block:: python
@@ -4701,7 +4703,7 @@ class DlpServiceAsyncClient:
                 The format of this value varies depending on the scope
                 of the request (project or organization) and whether you
                 have `specified a processing
-                location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+                location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
                 - Projects scope, location specified:
                   ``projects/{project_id}/locations/{location_id}``
@@ -4808,7 +4810,7 @@ class DlpServiceAsyncClient:
     ) -> None:
         r"""Deletes a stored infoType.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
         to learn more.
 
         .. code-block:: python
@@ -6965,6 +6967,605 @@ class DlpServiceAsyncClient:
 
         # Done; return the response.
         return response
+
+    async def create_content_policy(
+        self,
+        request: Optional[Union[dlp.CreateContentPolicyRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        content_policy: Optional[dlp.ContentPolicy] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> dlp.ContentPolicy:
+        r"""Create a ContentPolicy.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import dlp_v2
+
+            async def sample_create_content_policy():
+                # Create a client
+                client = dlp_v2.DlpServiceAsyncClient()
+
+                # Initialize request argument(s)
+                content_policy = dlp_v2.ContentPolicy()
+                content_policy.rules.action.return_verdict = "BLOCK"
+
+                request = dlp_v2.CreateContentPolicyRequest(
+                    parent="parent_value",
+                    content_policy=content_policy,
+                )
+
+                # Make the request
+                response = await client.create_content_policy(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.dlp_v2.types.CreateContentPolicyRequest, dict]]):
+                The request object. Request message for
+                CreateContentPolicy.
+            parent (:class:`str`):
+                Required. Parent resource name.
+
+                The format of this value varies depending on the scope
+                of the request (project):
+
+                - Projects scope:
+                  ``projects/{project_id}/locations/{location_id}``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            content_policy (:class:`google.cloud.dlp_v2.types.ContentPolicy`):
+                Required. The content_policy resource.
+                This corresponds to the ``content_policy`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.dlp_v2.types.ContentPolicy:
+                A policy to apply to content based on
+                its inspection findings.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, content_policy]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, dlp.CreateContentPolicyRequest):
+            request = dlp.CreateContentPolicyRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+        if content_policy is not None:
+            request.content_policy = content_policy
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.create_content_policy
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_content_policy(
+        self,
+        request: Optional[Union[dlp.UpdateContentPolicyRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        content_policy: Optional[dlp.ContentPolicy] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> dlp.ContentPolicy:
+        r"""Update a ContentPolicy.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import dlp_v2
+
+            async def sample_update_content_policy():
+                # Create a client
+                client = dlp_v2.DlpServiceAsyncClient()
+
+                # Initialize request argument(s)
+                content_policy = dlp_v2.ContentPolicy()
+                content_policy.rules.action.return_verdict = "BLOCK"
+
+                request = dlp_v2.UpdateContentPolicyRequest(
+                    name="name_value",
+                    content_policy=content_policy,
+                )
+
+                # Make the request
+                response = await client.update_content_policy(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.dlp_v2.types.UpdateContentPolicyRequest, dict]]):
+                The request object. Request message for
+                UpdateContentPolicy.
+            name (:class:`str`):
+                Required. Resource name in the format:
+                ``projects/{project}/locations/{location}/contentPolicies/{content_policy}``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            content_policy (:class:`google.cloud.dlp_v2.types.ContentPolicy`):
+                Required. The content_policy with new values for the
+                relevant fields.
+
+                This corresponds to the ``content_policy`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. Mask to control which
+                fields get updated.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.dlp_v2.types.ContentPolicy:
+                A policy to apply to content based on
+                its inspection findings.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, content_policy, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, dlp.UpdateContentPolicyRequest):
+            request = dlp.UpdateContentPolicyRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+        if content_policy is not None:
+            request.content_policy = content_policy
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_content_policy
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_content_policy(
+        self,
+        request: Optional[Union[dlp.GetContentPolicyRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> dlp.ContentPolicy:
+        r"""Get a ContentPolicy.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import dlp_v2
+
+            async def sample_get_content_policy():
+                # Create a client
+                client = dlp_v2.DlpServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = dlp_v2.GetContentPolicyRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_content_policy(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.dlp_v2.types.GetContentPolicyRequest, dict]]):
+                The request object. Request message for GetContentPolicy.
+            name (:class:`str`):
+                Required. Resource name in the format:
+                ``projects/{project}/locations/{location}/contentPolicies/{content_policy}``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.dlp_v2.types.ContentPolicy:
+                A policy to apply to content based on
+                its inspection findings.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, dlp.GetContentPolicyRequest):
+            request = dlp.GetContentPolicyRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_content_policy
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_content_policies(
+        self,
+        request: Optional[Union[dlp.ListContentPoliciesRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListContentPoliciesAsyncPager:
+        r"""Lists ContentPolicies in a parent.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import dlp_v2
+
+            async def sample_list_content_policies():
+                # Create a client
+                client = dlp_v2.DlpServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = dlp_v2.ListContentPoliciesRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_content_policies(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.dlp_v2.types.ListContentPoliciesRequest, dict]]):
+                The request object. Request message for
+                ListContentPolicies.
+            parent (:class:`str`):
+                Required. Resource name of the project, for example,
+                ``projects/project-id/locations/asia``.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.dlp_v2.services.dlp_service.pagers.ListContentPoliciesAsyncPager:
+                Response message for
+                ListContentPolicies.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, dlp.ListContentPoliciesRequest):
+            request = dlp.ListContentPoliciesRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_content_policies
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListContentPoliciesAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def delete_content_policy(
+        self,
+        request: Optional[Union[dlp.DeleteContentPolicyRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> None:
+        r"""Delete a ContentPolicy.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import dlp_v2
+
+            async def sample_delete_content_policy():
+                # Create a client
+                client = dlp_v2.DlpServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = dlp_v2.DeleteContentPolicyRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                await client.delete_content_policy(request=request)
+
+        Args:
+            request (Optional[Union[google.cloud.dlp_v2.types.DeleteContentPolicyRequest, dict]]):
+                The request object. Request message for
+                DeleteContentPolicy.
+            name (:class:`str`):
+                Required. Resource name of the ContentPolicy to be
+                deleted, in the format:
+                ``projects/{project}/locations/{location}/contentPolicies/{content_policy}``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, dlp.DeleteContentPolicyRequest):
+            request = dlp.DeleteContentPolicyRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.delete_content_policy
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
     async def __aenter__(self) -> "DlpServiceAsyncClient":
         return self

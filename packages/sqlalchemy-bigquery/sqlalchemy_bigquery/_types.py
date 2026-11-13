@@ -17,9 +17,9 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-from google.cloud.bigquery.schema import SchemaField
 import sqlalchemy.types
 import sqlalchemy.util
+from google.cloud.bigquery.schema import SchemaField
 
 try:
     from .geography import GEOGRAPHY

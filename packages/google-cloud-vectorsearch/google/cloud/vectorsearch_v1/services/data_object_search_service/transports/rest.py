@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.vectorsearch_v1._compat import transcode_request
 from google.cloud.vectorsearch_v1.types import data_object_search_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -619,21 +620,18 @@ class DataObjectSearchServiceRestTransport(_BaseDataObjectSearchServiceRestTrans
             """
 
             http_options = _BaseDataObjectSearchServiceRestTransport._BaseAggregateDataObjects._get_http_options()
-
             request, metadata = self._interceptor.pre_aggregate_data_objects(
                 request, metadata
             )
-            transcoded_request = _BaseDataObjectSearchServiceRestTransport._BaseAggregateDataObjects._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataObjectSearchServiceRestTransport._BaseAggregateDataObjects._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataObjectSearchServiceRestTransport._BaseAggregateDataObjects._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataObjectSearchServiceRestTransport._BaseAggregateDataObjects,
+                    "_BaseAggregateDataObjects__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -777,21 +775,18 @@ class DataObjectSearchServiceRestTransport(_BaseDataObjectSearchServiceRestTrans
             """
 
             http_options = _BaseDataObjectSearchServiceRestTransport._BaseBatchSearchDataObjects._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_search_data_objects(
                 request, metadata
             )
-            transcoded_request = _BaseDataObjectSearchServiceRestTransport._BaseBatchSearchDataObjects._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataObjectSearchServiceRestTransport._BaseBatchSearchDataObjects._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataObjectSearchServiceRestTransport._BaseBatchSearchDataObjects._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataObjectSearchServiceRestTransport._BaseBatchSearchDataObjects,
+                    "_BaseBatchSearchDataObjects__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -933,21 +928,18 @@ class DataObjectSearchServiceRestTransport(_BaseDataObjectSearchServiceRestTrans
             """
 
             http_options = _BaseDataObjectSearchServiceRestTransport._BaseQueryDataObjects._get_http_options()
-
             request, metadata = self._interceptor.pre_query_data_objects(
                 request, metadata
             )
-            transcoded_request = _BaseDataObjectSearchServiceRestTransport._BaseQueryDataObjects._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataObjectSearchServiceRestTransport._BaseQueryDataObjects._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataObjectSearchServiceRestTransport._BaseQueryDataObjects._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataObjectSearchServiceRestTransport._BaseQueryDataObjects,
+                    "_BaseQueryDataObjects__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1091,21 +1083,18 @@ class DataObjectSearchServiceRestTransport(_BaseDataObjectSearchServiceRestTrans
             """
 
             http_options = _BaseDataObjectSearchServiceRestTransport._BaseSearchDataObjects._get_http_options()
-
             request, metadata = self._interceptor.pre_search_data_objects(
                 request, metadata
             )
-            transcoded_request = _BaseDataObjectSearchServiceRestTransport._BaseSearchDataObjects._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataObjectSearchServiceRestTransport._BaseSearchDataObjects._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataObjectSearchServiceRestTransport._BaseSearchDataObjects._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataObjectSearchServiceRestTransport._BaseSearchDataObjects,
+                    "_BaseSearchDataObjects__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1296,15 +1285,16 @@ class DataObjectSearchServiceRestTransport(_BaseDataObjectSearchServiceRestTrans
             """
 
             http_options = _BaseDataObjectSearchServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseDataObjectSearchServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataObjectSearchServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataObjectSearchServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1435,15 +1425,16 @@ class DataObjectSearchServiceRestTransport(_BaseDataObjectSearchServiceRestTrans
             """
 
             http_options = _BaseDataObjectSearchServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseDataObjectSearchServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataObjectSearchServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataObjectSearchServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1574,21 +1565,18 @@ class DataObjectSearchServiceRestTransport(_BaseDataObjectSearchServiceRestTrans
             """
 
             http_options = _BaseDataObjectSearchServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDataObjectSearchServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataObjectSearchServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataObjectSearchServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataObjectSearchServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1694,17 +1682,18 @@ class DataObjectSearchServiceRestTransport(_BaseDataObjectSearchServiceRestTrans
             """
 
             http_options = _BaseDataObjectSearchServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDataObjectSearchServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataObjectSearchServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataObjectSearchServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1812,15 +1801,16 @@ class DataObjectSearchServiceRestTransport(_BaseDataObjectSearchServiceRestTrans
             """
 
             http_options = _BaseDataObjectSearchServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseDataObjectSearchServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataObjectSearchServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataObjectSearchServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1951,15 +1941,16 @@ class DataObjectSearchServiceRestTransport(_BaseDataObjectSearchServiceRestTrans
             """
 
             http_options = _BaseDataObjectSearchServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseDataObjectSearchServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataObjectSearchServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataObjectSearchServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

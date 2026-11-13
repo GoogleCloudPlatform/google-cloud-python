@@ -4,6 +4,95 @@
 
 [1]: https://pypi.org/project/google-cloud-bigtable/#history
 
+## [2.50.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.50.1...google-cloud-bigtable-v2.50.2) (2026-10-22)
+
+
+### Bug Fixes
+
+* **bigtable:** preserve resource labels on batcher metrics ([#18712](https://github.com/googleapis/google-cloud-python/issues/18712)) ([f18cc6b](https://github.com/googleapis/google-cloud-python/commit/f18cc6b4086a3a1ea38c5bd45ccca79d927185ab))
+* **bigtable:** resolve O(n^2) bottleneck in ReadRowsQuery.add_range ([#18706](https://github.com/googleapis/google-cloud-python/issues/18706)) ([5ac7cc6](https://github.com/googleapis/google-cloud-python/commit/5ac7cc6b1168fa674340e11598bc6e5866a53c16))
+
+## [2.50.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.50.0...google-cloud-bigtable-v2.50.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* **bigtable:** avoid hang when batcher not closed on process exit ([#18610](https://github.com/googleapis/google-cloud-python/issues/18610)) ([7674c91](https://github.com/googleapis/google-cloud-python/commit/7674c91a81a984e01166f72a8895cb18c8a8216b))
+* **bigtable:** fix authentication scopes for metrics exporter ([#18609](https://github.com/googleapis/google-cloud-python/issues/18609)) ([722d34e](https://github.com/googleapis/google-cloud-python/commit/722d34e519dbb8305c4a48ac83790078f5ff9d57))
+
+## [2.50.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.49.0...google-cloud-bigtable-v2.50.0) (2026-10-08)
+
+
+### Features
+
+* update API sources and regenerate ([#18593](https://github.com/googleapis/google-cloud-python/issues/18593)) ([d0505e8](https://github.com/googleapis/google-cloud-python/commit/d0505e8bc7615f2c649d3e25ebc7e3ccca45f22b))
+
+## [2.49.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.48.0...google-cloud-bigtable-v2.49.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+* update API sources and regenerate ([#18513](https://github.com/googleapis/google-cloud-python/issues/18513)) ([7d7adca](https://github.com/googleapis/google-cloud-python/commit/7d7adcaee688603077ea53abec678130045c20ed))
+
+## [2.48.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.47.0...google-cloud-bigtable-v2.48.0) (2026-09-29)
+
+
+### Features
+
+* **bigtable:** Reroute Mutations Batcher to use data client ([#18200](https://github.com/googleapis/google-cloud-python/issues/18200)) ([0b488a3](https://github.com/googleapis/google-cloud-python/commit/0b488a395542e9c76f535e82a7298fabaee8f4af))
+* declare Python3.15 support ([05b0c34](https://github.com/googleapis/google-cloud-python/commit/05b0c342683b2b0e1b8dccd201ec86ec89612edc))
+
+## [2.47.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.46.0...google-cloud-bigtable-v2.47.0) (2026-09-24)
+
+
+### Features
+
+* update API sources and regenerate ([#18446](https://github.com/googleapis/google-cloud-python/issues/18446)) ([54f1019](https://github.com/googleapis/google-cloud-python/commit/54f10190a4ab7b3772010bf9006de55266f74da9))
+
+## [2.46.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.45.0...google-cloud-bigtable-v2.46.0) (2026-09-17)
+
+
+### Features
+
+* **bigtable:** Rerouted RowSet and RowRange to use ReadRows from data client ([#18196](https://github.com/googleapis/google-cloud-python/issues/18196)) ([1857302](https://github.com/googleapis/google-cloud-python/commit/1857302d5c602087b9a782c62694c33013eb77ea))
+* Rerouted ReadRows to data client ([#18198](https://github.com/googleapis/google-cloud-python/issues/18198)) ([934cd2d](https://github.com/googleapis/google-cloud-python/commit/934cd2da82be8b835192baa222e3a2ab5aa4b8d1))
+* update API sources and regenerate ([#18396](https://github.com/googleapis/google-cloud-python/issues/18396)) ([e9f8e59](https://github.com/googleapis/google-cloud-python/commit/e9f8e590b7b395e660cc5437535166dfb920d246))
+* update API sources and regenerate. ([e9f8e59](https://github.com/googleapis/google-cloud-python/commit/e9f8e590b7b395e660cc5437535166dfb920d246))
+
+
+### Bug Fixes
+
+* **bigtable:** Added rst_stream exception handling for ReadRows. ([#18197](https://github.com/googleapis/google-cloud-python/issues/18197)) ([f30df60](https://github.com/googleapis/google-cloud-python/commit/f30df60eda27810cec277663dff532a158c999f3))
+
+## [2.45.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.44.0...google-cloud-bigtable-v2.45.0) (2026-09-14)
+
+
+### Features
+
+* **bigtable:** Rerouted MutateRows to use the data client ([#18195](https://github.com/googleapis/google-cloud-python/issues/18195)) ([3bbcbdf](https://github.com/googleapis/google-cloud-python/commit/3bbcbdf1a62dd10ab96f72e5c8198cffe9174ac7))
+
+## [2.44.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.43.0...google-cloud-bigtable-v2.44.0) (2026-09-03)
+
+
+### Features
+
+* **bigtable:** Rerouted CheckAndMutateRows and ReadModifyWriteRows to data client ([#18190](https://github.com/googleapis/google-cloud-python/issues/18190)) ([990f86e](https://github.com/googleapis/google-cloud-python/commit/990f86e45df15c594e82d19d6fe482f12d128430))
+* **bigtable:** Rerouted DirectRow.commit to use mutate_row ([#18191](https://github.com/googleapis/google-cloud-python/issues/18191)) ([7126a54](https://github.com/googleapis/google-cloud-python/commit/7126a548e4231ae5f5e49599d53d84a94b9302ca))
+* update API sources and regenerate ([#18267](https://github.com/googleapis/google-cloud-python/issues/18267)) ([813a5c1](https://github.com/googleapis/google-cloud-python/commit/813a5c17cbe42b3a8386e7ad7475a3d7ada33842))
+
+## [2.43.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.42.0...google-cloud-bigtable-v2.43.0) (2026-08-21)
+
+
+### Features
+
+* update sources and regenerate ([#18164](https://github.com/googleapis/google-cloud-python/issues/18164)) ([5ff8274](https://github.com/googleapis/google-cloud-python/commit/5ff8274ac2eb9375e918dff68303d3abdc3e6d6f))
+
+
+### Documentation
+
+* **handwritten:** centralize CONTRIBUTING.rst pointers ([#17642](https://github.com/googleapis/google-cloud-python/issues/17642)) ([23b9499](https://github.com/googleapis/google-cloud-python/commit/23b94994bd5251493b81d91657d1f79a5d3c4b97))
+
 ## [2.42.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.41.0...google-cloud-bigtable-v2.42.0) (2026-08-19)
 
 

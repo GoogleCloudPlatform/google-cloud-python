@@ -482,7 +482,7 @@ class CloudBuildAsyncClient:
             self._client._transport.create_build
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)$"
@@ -651,7 +651,7 @@ class CloudBuildAsyncClient:
             self._client._transport.get_build
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/builds/[^/]+$"
@@ -784,7 +784,7 @@ class CloudBuildAsyncClient:
             self._client._transport.list_builds
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)$"
@@ -952,7 +952,7 @@ class CloudBuildAsyncClient:
             self._client._transport.cancel_build
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/builds/[^/]+$"
@@ -1148,7 +1148,7 @@ class CloudBuildAsyncClient:
             self._client._transport.retry_build
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/builds/[^/]+$"
@@ -1319,7 +1319,7 @@ class CloudBuildAsyncClient:
             self._client._transport.approve_build
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/builds/[^/]+$"
@@ -1468,7 +1468,7 @@ class CloudBuildAsyncClient:
             self._client._transport.create_build_trigger
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)$"
@@ -1608,7 +1608,7 @@ class CloudBuildAsyncClient:
             self._client._transport.get_build_trigger
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/triggers/[^/]+$"
@@ -1729,7 +1729,7 @@ class CloudBuildAsyncClient:
             self._client._transport.list_build_triggers
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)$"
@@ -1868,7 +1868,7 @@ class CloudBuildAsyncClient:
             self._client._transport.delete_build_trigger
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/triggers/[^/]+$"
@@ -2005,7 +2005,7 @@ class CloudBuildAsyncClient:
             self._client._transport.update_build_trigger
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/triggers/[^/]+$"
@@ -2178,7 +2178,7 @@ class CloudBuildAsyncClient:
             self._client._transport.run_build_trigger
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/triggers/[^/]+$"
@@ -2441,7 +2441,7 @@ class CloudBuildAsyncClient:
             self._client._transport.create_worker_pool
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)$"
@@ -2581,7 +2581,7 @@ class CloudBuildAsyncClient:
             self._client._transport.get_worker_pool
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/workerPools/[^/]+$"
@@ -2714,7 +2714,7 @@ class CloudBuildAsyncClient:
             self._client._transport.delete_worker_pool
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/workerPools/[^/]+$"
@@ -2873,7 +2873,7 @@ class CloudBuildAsyncClient:
             self._client._transport.update_worker_pool
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/workerPools/[^/]+$"
@@ -3003,7 +3003,7 @@ class CloudBuildAsyncClient:
             self._client._transport.list_worker_pools
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)$"
@@ -3134,7 +3134,7 @@ class CloudBuildAsyncClient:
             self._client._transport.get_default_service_account
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/defaultServiceAccount$"

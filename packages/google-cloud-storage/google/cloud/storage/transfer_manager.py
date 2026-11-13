@@ -1383,6 +1383,8 @@ def _reduce_client(cl):
     client_info = cl._initial_client_info
     client_options = cl._initial_client_options
     extra_headers = getattr(cl, "_extra_headers", {})
+    enable_metrics = getattr(cl, "_enable_metrics", None)
+    enable_debug_metrics = getattr(cl, "_enable_debug_metrics", None)
 
     return _LazyClient, (
         client_object_id,
@@ -1392,6 +1394,8 @@ def _reduce_client(cl):
         client_info,
         client_options,
         extra_headers,
+        enable_metrics,
+        enable_debug_metrics,
     )
 
 
@@ -1453,6 +1457,13 @@ def _digest_ordered_checksum_and_size_pairs(checksum_and_size_pairs):
     return crc_digest
 
 
+# Number of positional Client constructor arguments passed after `id` by
+# `_reduce_client`: (project, credentials, _http, client_info, client_options).
+# Trailing items in `args` correspond to `extra_headers` and keyword-only
+# `enable_metrics` and `enable_debug_metrics` parameters.
+_REDUCE_CLIENT_POS_ARGS = 5
+
+
 class _LazyClient:
     """An object that will transform into either a cached or a new Client"""
 
@@ -1461,6 +1472,17 @@ class _LazyClient:
         if cached_client:
             return cached_client
         else:
+            if len(args) > _REDUCE_CLIENT_POS_ARGS:
+                kwargs.setdefault("extra_headers", args[_REDUCE_CLIENT_POS_ARGS])
+                if len(args) > _REDUCE_CLIENT_POS_ARGS + 1:
+                    kwargs.setdefault(
+                        "enable_metrics", args[_REDUCE_CLIENT_POS_ARGS + 1]
+                    )
+                if len(args) > _REDUCE_CLIENT_POS_ARGS + 2:
+                    kwargs.setdefault(
+                        "enable_debug_metrics", args[_REDUCE_CLIENT_POS_ARGS + 2]
+                    )
+                args = args[:_REDUCE_CLIENT_POS_ARGS]
             cached_client = Client(*args, **kwargs)
             _cached_clients[id] = cached_client
             return cached_client

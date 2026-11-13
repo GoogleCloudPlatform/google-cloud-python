@@ -28,6 +28,7 @@ from google.cloud.aio._cross_sync import CrossSync
 from google.cloud.spanner_v1._helpers import (
     _metadata_with_leader_aware_routing,
     _metadata_with_prefix,
+    _resource_info_from_database,
 )
 from google.cloud.spanner_v1._opentelemetry_tracing import (
     add_span_event,
@@ -81,8 +82,7 @@ class AbstractSessionPool(object):
                     by the pool.
 
     :type database_role: str
-    :param database_role: (Optional) user-assigned database_role for the session.
-    """
+    :param database_role: (Optional) user-assigned database_role for the session."""
 
     _database = None
 
@@ -95,13 +95,7 @@ class AbstractSessionPool(object):
     @property
     def _resource_info(self):
         """Resource information for metrics labels."""
-        if self._database is None:
-            return None
-        return {
-            "project": self._database._instance._client.project,
-            "instance": self._database._instance.instance_id,
-            "database": self._database.database_id,
-        }
+        return _resource_info_from_database(self._database)
 
     @property
     def labels(self):
@@ -224,8 +218,7 @@ class FixedSizePool(AbstractSessionPool):
                     by the pool.
 
     :type database_role: str
-    :param database_role: (Optional) user-assigned database_role for the session.
-    """
+    :param database_role: (Optional) user-assigned database_role for the session."""
 
     DEFAULT_SIZE = 10
     DEFAULT_TIMEOUT = 10
@@ -441,8 +434,7 @@ class BurstyPool(AbstractSessionPool):
                     by the pool.
 
     :type database_role: str
-    :param database_role: (Optional) user-assigned database_role for the session.
-    """
+    :param database_role: (Optional) user-assigned database_role for the session."""
 
     def __init__(self, target_size=10, labels=None, database_role=None):
         super(BurstyPool, self).__init__(labels=labels, database_role=database_role)
@@ -556,8 +548,7 @@ class PingingPool(FixedSizePool):
                     by the pool.
 
     :type database_role: str
-    :param database_role: (Optional) user-assigned database_role for the session.
-    """
+    :param database_role: (Optional) user-assigned database_role for the session."""
 
     def __init__(
         self,
@@ -767,8 +758,7 @@ class TransactionPingingPool(PingingPool):
                     by the pool.
 
     :type database_role: str
-    :param database_role: (Optional) user-assigned database_role for the session.
-    """
+    :param database_role: (Optional) user-assigned database_role for the session."""
 
     def __init__(
         self,

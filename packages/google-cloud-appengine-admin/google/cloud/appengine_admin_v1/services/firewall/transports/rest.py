@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.appengine_admin_v1._compat import transcode_request
 from google.cloud.appengine_admin_v1.types import appengine, firewall
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -545,21 +546,18 @@ class FirewallRestTransport(_BaseFirewallRestTransport):
             """
 
             http_options = _BaseFirewallRestTransport._BaseBatchUpdateIngressRules._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_ingress_rules(
                 request, metadata
             )
-            transcoded_request = _BaseFirewallRestTransport._BaseBatchUpdateIngressRules._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseFirewallRestTransport._BaseBatchUpdateIngressRules._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFirewallRestTransport._BaseBatchUpdateIngressRules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFirewallRestTransport._BaseBatchUpdateIngressRules,
+                    "_BaseBatchUpdateIngressRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -703,21 +701,18 @@ class FirewallRestTransport(_BaseFirewallRestTransport):
             http_options = (
                 _BaseFirewallRestTransport._BaseCreateIngressRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_ingress_rule(
                 request, metadata
             )
-            transcoded_request = _BaseFirewallRestTransport._BaseCreateIngressRule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseFirewallRestTransport._BaseCreateIngressRule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFirewallRestTransport._BaseCreateIngressRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFirewallRestTransport._BaseCreateIngressRule,
+                    "_BaseCreateIngressRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -850,17 +845,18 @@ class FirewallRestTransport(_BaseFirewallRestTransport):
             http_options = (
                 _BaseFirewallRestTransport._BaseDeleteIngressRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_ingress_rule(
                 request, metadata
             )
-            transcoded_request = _BaseFirewallRestTransport._BaseDeleteIngressRule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFirewallRestTransport._BaseDeleteIngressRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFirewallRestTransport._BaseDeleteIngressRule,
+                    "_BaseDeleteIngressRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -966,21 +962,18 @@ class FirewallRestTransport(_BaseFirewallRestTransport):
             http_options = (
                 _BaseFirewallRestTransport._BaseGetIngressRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_ingress_rule(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseFirewallRestTransport._BaseGetIngressRule._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFirewallRestTransport._BaseGetIngressRule._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFirewallRestTransport._BaseGetIngressRule,
+                    "_BaseGetIngressRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1116,19 +1109,18 @@ class FirewallRestTransport(_BaseFirewallRestTransport):
             http_options = (
                 _BaseFirewallRestTransport._BaseListIngressRules._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_ingress_rules(
                 request, metadata
             )
-            transcoded_request = _BaseFirewallRestTransport._BaseListIngressRules._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFirewallRestTransport._BaseListIngressRules._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFirewallRestTransport._BaseListIngressRules,
+                    "_BaseListIngressRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1271,21 +1263,18 @@ class FirewallRestTransport(_BaseFirewallRestTransport):
             http_options = (
                 _BaseFirewallRestTransport._BaseUpdateIngressRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_ingress_rule(
                 request, metadata
             )
-            transcoded_request = _BaseFirewallRestTransport._BaseUpdateIngressRule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseFirewallRestTransport._BaseUpdateIngressRule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFirewallRestTransport._BaseUpdateIngressRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFirewallRestTransport._BaseUpdateIngressRule,
+                    "_BaseUpdateIngressRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -1,0 +1,2468 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.maps.mapmanagement.v2",
+        "version": "v2"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-maps-mapmanagement",
+    "version": "0.1.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.create_map_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.CreateMapConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "CreateMapConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.CreateMapConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "map_config",
+            "type": "google.maps.mapmanagement_v2.types.MapConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.MapConfig",
+        "shortName": "create_map_config"
+      },
+      "description": "Sample for CreateMapConfig",
+      "file": "mapmanagement_v2_generated_map_management_create_map_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_CreateMapConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_create_map_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.create_map_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.CreateMapConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "CreateMapConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.CreateMapConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "map_config",
+            "type": "google.maps.mapmanagement_v2.types.MapConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.MapConfig",
+        "shortName": "create_map_config"
+      },
+      "description": "Sample for CreateMapConfig",
+      "file": "mapmanagement_v2_generated_map_management_create_map_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_CreateMapConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_create_map_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.create_map_context_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.CreateMapContextConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "CreateMapContextConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.CreateMapContextConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "map_context_config",
+            "type": "google.maps.mapmanagement_v2.types.MapContextConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.MapContextConfig",
+        "shortName": "create_map_context_config"
+      },
+      "description": "Sample for CreateMapContextConfig",
+      "file": "mapmanagement_v2_generated_map_management_create_map_context_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_CreateMapContextConfig_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_create_map_context_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.create_map_context_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.CreateMapContextConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "CreateMapContextConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.CreateMapContextConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "map_context_config",
+            "type": "google.maps.mapmanagement_v2.types.MapContextConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.MapContextConfig",
+        "shortName": "create_map_context_config"
+      },
+      "description": "Sample for CreateMapContextConfig",
+      "file": "mapmanagement_v2_generated_map_management_create_map_context_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_CreateMapContextConfig_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_create_map_context_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.create_style_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.CreateStyleConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "CreateStyleConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.CreateStyleConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "style_config",
+            "type": "google.maps.mapmanagement_v2.types.StyleConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.StyleConfig",
+        "shortName": "create_style_config"
+      },
+      "description": "Sample for CreateStyleConfig",
+      "file": "mapmanagement_v2_generated_map_management_create_style_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_CreateStyleConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_create_style_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.create_style_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.CreateStyleConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "CreateStyleConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.CreateStyleConfigRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "style_config",
+            "type": "google.maps.mapmanagement_v2.types.StyleConfig"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.StyleConfig",
+        "shortName": "create_style_config"
+      },
+      "description": "Sample for CreateStyleConfig",
+      "file": "mapmanagement_v2_generated_map_management_create_style_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_CreateStyleConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_create_style_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.delete_map_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.DeleteMapConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "DeleteMapConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.DeleteMapConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "force",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_map_config"
+      },
+      "description": "Sample for DeleteMapConfig",
+      "file": "mapmanagement_v2_generated_map_management_delete_map_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_DeleteMapConfig_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_delete_map_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.delete_map_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.DeleteMapConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "DeleteMapConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.DeleteMapConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "force",
+            "type": "bool"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_map_config"
+      },
+      "description": "Sample for DeleteMapConfig",
+      "file": "mapmanagement_v2_generated_map_management_delete_map_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_DeleteMapConfig_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_delete_map_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.delete_map_context_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.DeleteMapContextConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "DeleteMapContextConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.DeleteMapContextConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_map_context_config"
+      },
+      "description": "Sample for DeleteMapContextConfig",
+      "file": "mapmanagement_v2_generated_map_management_delete_map_context_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_DeleteMapContextConfig_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_delete_map_context_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.delete_map_context_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.DeleteMapContextConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "DeleteMapContextConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.DeleteMapContextConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_map_context_config"
+      },
+      "description": "Sample for DeleteMapContextConfig",
+      "file": "mapmanagement_v2_generated_map_management_delete_map_context_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_DeleteMapContextConfig_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_delete_map_context_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.delete_style_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.DeleteStyleConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "DeleteStyleConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.DeleteStyleConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_style_config"
+      },
+      "description": "Sample for DeleteStyleConfig",
+      "file": "mapmanagement_v2_generated_map_management_delete_style_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_DeleteStyleConfig_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_delete_style_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.delete_style_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.DeleteStyleConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "DeleteStyleConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.DeleteStyleConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_style_config"
+      },
+      "description": "Sample for DeleteStyleConfig",
+      "file": "mapmanagement_v2_generated_map_management_delete_style_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_DeleteStyleConfig_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_delete_style_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.get_map_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.GetMapConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "GetMapConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.GetMapConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.MapConfig",
+        "shortName": "get_map_config"
+      },
+      "description": "Sample for GetMapConfig",
+      "file": "mapmanagement_v2_generated_map_management_get_map_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_GetMapConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_get_map_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.get_map_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.GetMapConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "GetMapConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.GetMapConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.MapConfig",
+        "shortName": "get_map_config"
+      },
+      "description": "Sample for GetMapConfig",
+      "file": "mapmanagement_v2_generated_map_management_get_map_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_GetMapConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_get_map_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.get_map_context_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.GetMapContextConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "GetMapContextConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.GetMapContextConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.MapContextConfig",
+        "shortName": "get_map_context_config"
+      },
+      "description": "Sample for GetMapContextConfig",
+      "file": "mapmanagement_v2_generated_map_management_get_map_context_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_GetMapContextConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_get_map_context_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.get_map_context_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.GetMapContextConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "GetMapContextConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.GetMapContextConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.MapContextConfig",
+        "shortName": "get_map_context_config"
+      },
+      "description": "Sample for GetMapContextConfig",
+      "file": "mapmanagement_v2_generated_map_management_get_map_context_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_GetMapContextConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_get_map_context_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.get_style_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.GetStyleConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "GetStyleConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.GetStyleConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.StyleConfig",
+        "shortName": "get_style_config"
+      },
+      "description": "Sample for GetStyleConfig",
+      "file": "mapmanagement_v2_generated_map_management_get_style_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_GetStyleConfig_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_get_style_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.get_style_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.GetStyleConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "GetStyleConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.GetStyleConfigRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.StyleConfig",
+        "shortName": "get_style_config"
+      },
+      "description": "Sample for GetStyleConfig",
+      "file": "mapmanagement_v2_generated_map_management_get_style_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_GetStyleConfig_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_get_style_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.list_map_configs",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.ListMapConfigs",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "ListMapConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.ListMapConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.services.map_management.pagers.ListMapConfigsAsyncPager",
+        "shortName": "list_map_configs"
+      },
+      "description": "Sample for ListMapConfigs",
+      "file": "mapmanagement_v2_generated_map_management_list_map_configs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_ListMapConfigs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_list_map_configs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.list_map_configs",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.ListMapConfigs",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "ListMapConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.ListMapConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.services.map_management.pagers.ListMapConfigsPager",
+        "shortName": "list_map_configs"
+      },
+      "description": "Sample for ListMapConfigs",
+      "file": "mapmanagement_v2_generated_map_management_list_map_configs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_ListMapConfigs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_list_map_configs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.list_map_context_configs",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.ListMapContextConfigs",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "ListMapContextConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.ListMapContextConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.services.map_management.pagers.ListMapContextConfigsAsyncPager",
+        "shortName": "list_map_context_configs"
+      },
+      "description": "Sample for ListMapContextConfigs",
+      "file": "mapmanagement_v2_generated_map_management_list_map_context_configs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_ListMapContextConfigs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_list_map_context_configs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.list_map_context_configs",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.ListMapContextConfigs",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "ListMapContextConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.ListMapContextConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.services.map_management.pagers.ListMapContextConfigsPager",
+        "shortName": "list_map_context_configs"
+      },
+      "description": "Sample for ListMapContextConfigs",
+      "file": "mapmanagement_v2_generated_map_management_list_map_context_configs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_ListMapContextConfigs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_list_map_context_configs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.list_style_configs",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.ListStyleConfigs",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "ListStyleConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.ListStyleConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.services.map_management.pagers.ListStyleConfigsAsyncPager",
+        "shortName": "list_style_configs"
+      },
+      "description": "Sample for ListStyleConfigs",
+      "file": "mapmanagement_v2_generated_map_management_list_style_configs_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_ListStyleConfigs_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_list_style_configs_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.list_style_configs",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.ListStyleConfigs",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "ListStyleConfigs"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.ListStyleConfigsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.services.map_management.pagers.ListStyleConfigsPager",
+        "shortName": "list_style_configs"
+      },
+      "description": "Sample for ListStyleConfigs",
+      "file": "mapmanagement_v2_generated_map_management_list_style_configs_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_ListStyleConfigs_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_list_style_configs_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.update_map_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.UpdateMapConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "UpdateMapConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.UpdateMapConfigRequest"
+          },
+          {
+            "name": "map_config",
+            "type": "google.maps.mapmanagement_v2.types.MapConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.MapConfig",
+        "shortName": "update_map_config"
+      },
+      "description": "Sample for UpdateMapConfig",
+      "file": "mapmanagement_v2_generated_map_management_update_map_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_UpdateMapConfig_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_update_map_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.update_map_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.UpdateMapConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "UpdateMapConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.UpdateMapConfigRequest"
+          },
+          {
+            "name": "map_config",
+            "type": "google.maps.mapmanagement_v2.types.MapConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.MapConfig",
+        "shortName": "update_map_config"
+      },
+      "description": "Sample for UpdateMapConfig",
+      "file": "mapmanagement_v2_generated_map_management_update_map_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_UpdateMapConfig_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_update_map_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.update_map_context_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.UpdateMapContextConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "UpdateMapContextConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.UpdateMapContextConfigRequest"
+          },
+          {
+            "name": "map_context_config",
+            "type": "google.maps.mapmanagement_v2.types.MapContextConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.MapContextConfig",
+        "shortName": "update_map_context_config"
+      },
+      "description": "Sample for UpdateMapContextConfig",
+      "file": "mapmanagement_v2_generated_map_management_update_map_context_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_UpdateMapContextConfig_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_update_map_context_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.update_map_context_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.UpdateMapContextConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "UpdateMapContextConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.UpdateMapContextConfigRequest"
+          },
+          {
+            "name": "map_context_config",
+            "type": "google.maps.mapmanagement_v2.types.MapContextConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.MapContextConfig",
+        "shortName": "update_map_context_config"
+      },
+      "description": "Sample for UpdateMapContextConfig",
+      "file": "mapmanagement_v2_generated_map_management_update_map_context_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_UpdateMapContextConfig_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_update_map_context_config_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient",
+          "shortName": "MapManagementAsyncClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementAsyncClient.update_style_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.UpdateStyleConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "UpdateStyleConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.UpdateStyleConfigRequest"
+          },
+          {
+            "name": "style_config",
+            "type": "google.maps.mapmanagement_v2.types.StyleConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.StyleConfig",
+        "shortName": "update_style_config"
+      },
+      "description": "Sample for UpdateStyleConfig",
+      "file": "mapmanagement_v2_generated_map_management_update_style_config_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_UpdateStyleConfig_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_update_style_config_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.maps.mapmanagement_v2.MapManagementClient",
+          "shortName": "MapManagementClient"
+        },
+        "fullName": "google.maps.mapmanagement_v2.MapManagementClient.update_style_config",
+        "method": {
+          "fullName": "google.maps.mapmanagement.v2.MapManagement.UpdateStyleConfig",
+          "service": {
+            "fullName": "google.maps.mapmanagement.v2.MapManagement",
+            "shortName": "MapManagement"
+          },
+          "shortName": "UpdateStyleConfig"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.maps.mapmanagement_v2.types.UpdateStyleConfigRequest"
+          },
+          {
+            "name": "style_config",
+            "type": "google.maps.mapmanagement_v2.types.StyleConfig"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.maps.mapmanagement_v2.types.StyleConfig",
+        "shortName": "update_style_config"
+      },
+      "description": "Sample for UpdateStyleConfig",
+      "file": "mapmanagement_v2_generated_map_management_update_style_config_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "mapmanagement_v2_generated_MapManagement_UpdateStyleConfig_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "mapmanagement_v2_generated_map_management_update_style_config_sync.py"
+    }
+  ]
+}

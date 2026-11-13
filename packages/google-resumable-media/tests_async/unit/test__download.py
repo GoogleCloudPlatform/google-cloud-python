@@ -23,7 +23,6 @@ from google._async_resumable_media import _download
 from google.resumable_media import common
 from tests.unit import test__download as sync_test
 
-
 EXAMPLE_URL = sync_test.EXAMPLE_URL
 
 

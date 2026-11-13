@@ -23,7 +23,11 @@
 # It may require modifications to work in your environment.
 
 # To install the latest published package dependency, execute the following:
+{% if sample.get("is_resumable_upload") and sample.transport in ("grpc-async", "rest-async") %}
+#   python3 -m pip install {{ sample.package_name }}[async_rest]
+{% else %}
 #   python3 -m pip install {{ sample.package_name }}
+{% endif %}
 {% endmacro %}
 
 {% macro print_string_formatting(string_list) %}
@@ -226,7 +230,7 @@ request=request
 {% endmacro %}
 
 
-{% macro render_method_call(sample, calling_form, calling_form_enum, transport) %}
+{% macro render_method_call(sample, calling_form, calling_form_enum, transport, include_config=False) %}
 {# Note: this doesn't deal with enums or unions #}
 {# LROs return operation objects and paged requests return pager objects #}
 {% if transport == "grpc-async" and calling_form not in
@@ -238,14 +242,71 @@ await{{ " "}}
 client.{{ render_method_name(sample)|trim }}(requests=request_generator())
 {% else %}{# TODO: deal with flattening #}
 {# TODO: set up client streaming once some questions are answered #}
-client.{{ render_method_name(sample)|trim }}({{ render_request_params_unary(sample.request)|trim }})
+client.{{ render_method_name(sample)|trim }}({{ render_request_params_unary(sample.request)|trim }}{% if include_config %}, config=config{% endif %})
 {% endif %}
+{% endmacro %}
+
+
+{% macro render_resumable_upload_samples(sample, calling_form, calling_form_enum) %}
+{% set is_async = sample.transport in ("grpc-async", "rest-async") %}
+{% set async_prefix = "async " if is_async else "" %}
+{% set await_prefix = "await " if is_async else "" %}
+{% set fn_name = sample.rpc|snake_case|trim %}
+{% set fn_params = print_input_params(sample.request)|trim %}
+{% set method_call_with_config = render_method_call(sample, calling_form, calling_form_enum, sample.transport, include_config=True)|trim %}
+{{ async_prefix }}def sample_{{ fn_name }}({{ fn_params }}):
+    {{ render_client_setup(sample.module_name, sample.client_name)|indent }}
+    {{ render_request_setup(sample.request, sample.request_module_name, sample.request_type, calling_form, calling_form_enum)|indent }}
+    # Configure optional transfer settings such as chunk size and stall detection
+    config = ResumableUploadConfig(
+        chunk_size=8 * 1024 * 1024,  # 8 MB
+        stall_minimum_rate=64 * 1024,
+        stall_timeout=120,
+    )
+
+    # Make the request
+    upload_session = {{ method_call_with_config }}
+
+    # Option 1: Upload the entire stream directly and {% if is_async %}await{% else %}return{% endif %} the final response
+    stream = io.BytesIO(b"Example upload data")
+    {{ "response = " if sample.response else "" }}{{ await_prefix }}upload_session.upload(stream)
+
+    # Option 2: Alternatively, iterate over the upload to receive progress updates per chunk
+    {% if is_async %}
+    # async for progress in upload_session.upload(stream):
+    {% else %}
+    # for progress in upload_session.iter_upload(stream):
+    {% endif %}
+    #     print(f"Uploaded {progress.bytes_uploaded} bytes | State: {progress.state.name}")
+    #     print(f"Session URL: {progress.upload_url}")
+    {% if sample.response %}
+    # response = upload_session.response
+    {% endif %}
+
+    # Option 3: Alternatively, resume an interrupted upload from a saved session URL
+    # {{ "response = " if sample.response else "" }}{{ await_prefix }}upload_session.resume(upload_url, stream, chunk_size=config.chunk_size)
+
+    # Option 4: Alternatively, resume an interrupted upload while receiving progress updates
+    {% if is_async %}
+    # async for progress in upload_session.resume(upload_url, stream, chunk_size=config.chunk_size):
+    {% else %}
+    # for progress in upload_session.iter_resume(upload_url, stream, chunk_size=config.chunk_size):
+    {% endif %}
+    #     print(f"Resumed {progress.bytes_uploaded} bytes | State: {progress.state.name}")
+    {% if sample.response %}
+    # response = upload_session.response
+
+    # Handle the response
+    {% for statement in sample.response %}
+    {{ dispatch_statement(statement)|trim }}
+    {% endfor %}
+    {% endif %}
 {% endmacro %}
 
 
 {# Setting up the method invocation is the responsibility of the caller: #}
 {# it's just easier to set up client side streaming and other things from outside this macro. #}
-{% macro render_calling_form(method_invocation_text, calling_form, calling_form_enum, transport, response_statements ) %}
+{% macro render_calling_form(method_invocation_text, calling_form, calling_form_enum, transport, response_statements, sample=None ) %}
 # Make the request
 {% if calling_form in [calling_form_enum.Request, calling_form_enum.RequestStreamingClient] %}
 {% if response_statements %}response = {% endif %}{{ method_invocation_text|trim }}

@@ -143,32 +143,32 @@ async def write_aggregate(table):
     async def write_aggregate(project_id, instance_id, table_id):
         """Increments a value in a Bigtable table using AddToCell mutation."""
         async with BigtableDataClientAsync(project=project_id) as client:
-            table = client.get_table(instance_id, table_id)
-            row_key = "unique_device_ids_1"
-            try:
-                async with table.mutations_batcher() as batcher:
-                    # The AddToCell mutation increments the value of a cell.
-                    # The `counters` family must be set up to be an aggregate
-                    # family with an int64 input type.
-                    reading = AddToCell(
-                        family="counters",
-                        qualifier="odometer",
-                        value=32304,
-                        # Convert nanoseconds to microseconds
-                        timestamp_micros=time.time_ns() // 1000,
-                    )
-                    await batcher.append(
-                        RowMutationEntry(row_key.encode("utf-8"), [reading])
-                    )
-            except MutationsExceptionGroup as e:
-                # MutationsExceptionGroup contains a FailedMutationEntryError for
-                # each mutation that failed.
-                for sub_exception in e.exceptions:
-                    failed_entry: RowMutationEntry = sub_exception.entry
-                    cause: Exception = sub_exception.__cause__
-                    print(
-                        f"Failed mutation for row {failed_entry.row_key!r} with error: {cause!r}"
-                    )
+            async with client.get_table(instance_id, table_id) as table:
+                row_key = "unique_device_ids_1"
+                try:
+                    async with table.mutations_batcher() as batcher:
+                        # The AddToCell mutation increments the value of a cell.
+                        # The `counters` family must be set up to be an aggregate
+                        # family with an int64 input type.
+                        reading = AddToCell(
+                            family="counters",
+                            qualifier="odometer",
+                            value=32304,
+                            # Convert nanoseconds to microseconds
+                            timestamp_micros=time.time_ns() // 1000,
+                        )
+                        await batcher.append(
+                            RowMutationEntry(row_key.encode("utf-8"), [reading])
+                        )
+                except MutationsExceptionGroup as e:
+                    # MutationsExceptionGroup contains a FailedMutationEntryError for
+                    # each mutation that failed.
+                    for sub_exception in e.exceptions:
+                        failed_entry: RowMutationEntry = sub_exception.entry
+                        cause: Exception = sub_exception.__cause__
+                        print(
+                            f"Failed mutation for row {failed_entry.row_key!r} with error: {cause!r}"
+                        )
 
     # [END bigtable_async_write_aggregate]
     await write_aggregate(table.client.project, table.instance_id, table.table_id)
@@ -247,6 +247,36 @@ async def read_row_range(table):
     await read_row_range(table.client.project, table.instance_id, table.table_id)
 
 
+async def read_row_ranges(table):
+    # [START bigtable_async_reads_row_ranges]
+    from google.cloud.bigtable.data import (
+        BigtableDataClientAsync,
+        ReadRowsQuery,
+        RowRange,
+    )
+
+    async def read_row_ranges(project_id, instance_id, table_id):
+        async with BigtableDataClientAsync(project=project_id) as client:
+            async with client.get_table(instance_id, table_id) as table:
+                row_ranges = [
+                    RowRange(
+                        start_key=b"phone#4c410523#20190501",
+                        end_key=b"phone#4c410523#201906201",
+                    ),
+                    RowRange(
+                        start_key=b"phone#5c10102#20190501",
+                        end_key=b"phone#5c10102#201906201",
+                    ),
+                ]
+                query = ReadRowsQuery(row_ranges=row_ranges)
+
+                async for row in await table.read_rows_stream(query):
+                    print(row)
+
+    # [END bigtable_async_reads_row_ranges]
+    await read_row_ranges(table.client.project, table.instance_id, table.table_id)
+
+
 async def read_with_prefix(table):
     # [START bigtable_async_reads_prefix]
     from google.cloud.bigtable.data import (
@@ -313,3 +343,29 @@ async def execute_query(table):
 
     # [END bigtable_async_execute_query]
     await execute_query(table.client.project, table.instance_id, table.table_id)
+
+
+# [START bigtable_async_reads_print]
+def print_row(row):
+    from google.cloud._helpers import _datetime_from_microseconds
+
+    print("Reading data for {}:".format(row.row_key.decode("utf-8")))
+    last_family = None
+    for cell in row.cells:
+        if last_family != cell.family:
+            print("Column Family {}".format(cell.family))
+            last_family = cell.family
+
+        labels = " [{}]".format(",".join(cell.labels)) if len(cell.labels) else ""
+        print(
+            "\t{}: {} @{}{}".format(
+                cell.qualifier.decode("utf-8"),
+                cell.value.decode("utf-8"),
+                _datetime_from_microseconds(cell.timestamp_micros),
+                labels,
+            )
+        )
+    print("")
+
+
+# [END bigtable_async_reads_print]

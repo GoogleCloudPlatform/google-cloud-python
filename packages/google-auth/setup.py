@@ -46,7 +46,6 @@ urllib3_extra_require = [
     "packaging >= 20.0",
 ]
 
-rsa_extra_require = ["rsa>=4.0.0,<5"]
 
 grpc_extra_require = [
     "grpcio >= 1.59.0, < 2.0.0; python_version < '3.14'",
@@ -83,7 +82,8 @@ extras = {
     "requests": requests_extra_require,
     "testing": testing_extra_require,
     "urllib3": urllib3_extra_require,
-    "rsa": rsa_extra_require,
+    # rsa is deprecated, kept for backwards compatibility
+    "rsa": [],
     "grpc": grpc_extra_require,
 }
 
@@ -106,7 +106,7 @@ setup(
     long_description=long_description,
     url="https://github.com/googleapis/google-cloud-python/tree/main/packages/google-auth",
     packages=find_namespace_packages(
-        exclude=("tests*", "system_tests*", "docs*", "samples*")
+        exclude=("tests*", "system_tests*", "docs*", "samples*", "build*")
     ),
     package_data={"google.auth": ["py.typed"], "google.oauth2": ["py.typed"]},
     install_requires=DEPENDENCIES,
@@ -121,6 +121,7 @@ setup(
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",

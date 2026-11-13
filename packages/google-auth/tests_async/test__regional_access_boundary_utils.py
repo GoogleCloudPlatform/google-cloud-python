@@ -56,7 +56,9 @@ async def test_async_refresh_manager_duplicate_refresh_prevented():
 
     async def controlled_lookup(*args, **kwargs):
         lookup_started.set()  # Signal that the background lookup has started.
-        await lookup_finish.wait()  # Block until the test allows the lookup to complete.
+        await (
+            lookup_finish.wait()
+        )  # Block until the test allows the lookup to complete.
         return {"encodedLocations": "0xA30"}
 
     credentials._lookup_regional_access_boundary.side_effect = controlled_lookup

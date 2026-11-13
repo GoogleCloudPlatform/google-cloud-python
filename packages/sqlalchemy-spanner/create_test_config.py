@@ -15,6 +15,7 @@
 # limitations under the License.
 
 import configparser
+import os
 import sys
 
 
@@ -41,7 +42,8 @@ def set_test_config(
     config.add_section("db")
     config["db"]["default"] = url
 
-    with open("test.cfg", "w") as configfile:
+    config_filename = os.getenv("SQLALCHEMY_SPANNER_CONFIG", "test.cfg")
+    with open(config_filename, "w") as configfile:
         config.write(configfile)
 
 

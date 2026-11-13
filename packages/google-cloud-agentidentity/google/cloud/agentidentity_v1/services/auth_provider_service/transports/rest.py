@@ -34,6 +34,7 @@ from google.iam.v1 import (
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.agentidentity_v1._compat import transcode_request
 from google.cloud.agentidentity_v1.types import auth_provider_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1228,21 +1229,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseCreateAuthProvider._get_http_options()
-
             request, metadata = self._interceptor.pre_create_auth_provider(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseCreateAuthProvider._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuthProviderServiceRestTransport._BaseCreateAuthProvider._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseCreateAuthProvider._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseCreateAuthProvider,
+                    "_BaseCreateAuthProvider__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1378,17 +1376,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseDeleteAuthorization._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_authorization(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseDeleteAuthorization._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseDeleteAuthorization._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseDeleteAuthorization,
+                    "_BaseDeleteAuthorization__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1487,17 +1486,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseDeleteAuthProvider._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_auth_provider(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseDeleteAuthProvider._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseDeleteAuthProvider._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseDeleteAuthProvider,
+                    "_BaseDeleteAuthProvider__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1603,21 +1603,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseDisableAuthProvider._get_http_options()
-
             request, metadata = self._interceptor.pre_disable_auth_provider(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseDisableAuthProvider._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuthProviderServiceRestTransport._BaseDisableAuthProvider._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseDisableAuthProvider._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseDisableAuthProvider,
+                    "_BaseDisableAuthProvider__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1760,21 +1757,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseEnableAuthProvider._get_http_options()
-
             request, metadata = self._interceptor.pre_enable_auth_provider(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseEnableAuthProvider._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuthProviderServiceRestTransport._BaseEnableAuthProvider._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseEnableAuthProvider._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseEnableAuthProvider,
+                    "_BaseEnableAuthProvider__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1916,17 +1910,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseGetAccessSummary._get_http_options()
-
             request, metadata = self._interceptor.pre_get_access_summary(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseGetAccessSummary._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseGetAccessSummary._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseGetAccessSummary,
+                    "_BaseGetAccessSummary__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2065,17 +2060,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseGetAuthorization._get_http_options()
-
             request, metadata = self._interceptor.pre_get_authorization(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseGetAuthorization._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseGetAuthorization._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseGetAuthorization,
+                    "_BaseGetAuthorization__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2214,17 +2210,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseGetAuthProvider._get_http_options()
-
             request, metadata = self._interceptor.pre_get_auth_provider(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseGetAuthProvider._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseGetAuthProvider._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseGetAuthProvider,
+                    "_BaseGetAuthProvider__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2364,17 +2361,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseListAccessSummaries._get_http_options()
-
             request, metadata = self._interceptor.pre_list_access_summaries(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseListAccessSummaries._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseListAccessSummaries._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseListAccessSummaries,
+                    "_BaseListAccessSummaries__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2518,17 +2516,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseListAuthorizations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_authorizations(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseListAuthorizations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseListAuthorizations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseListAuthorizations,
+                    "_BaseListAuthorizations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2672,17 +2671,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseListAuthProviders._get_http_options()
-
             request, metadata = self._interceptor.pre_list_auth_providers(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseListAuthProviders._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseListAuthProviders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseListAuthProviders,
+                    "_BaseListAuthProviders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2826,17 +2826,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseQueryAuthProviders._get_http_options()
-
             request, metadata = self._interceptor.pre_query_auth_providers(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseQueryAuthProviders._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseQueryAuthProviders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseQueryAuthProviders,
+                    "_BaseQueryAuthProviders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2977,15 +2978,16 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseQueryWorkloads._get_http_options()
-
             request, metadata = self._interceptor.pre_query_workloads(request, metadata)
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseQueryWorkloads._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseQueryWorkloads._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseQueryWorkloads,
+                    "_BaseQueryWorkloads__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3126,21 +3128,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseRevokeAuthorization._get_http_options()
-
             request, metadata = self._interceptor.pre_revoke_authorization(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseRevokeAuthorization._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuthProviderServiceRestTransport._BaseRevokeAuthorization._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseRevokeAuthorization._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseRevokeAuthorization,
+                    "_BaseRevokeAuthorization__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3285,21 +3284,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseUndeleteAuthProvider._get_http_options()
-
             request, metadata = self._interceptor.pre_undelete_auth_provider(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseUndeleteAuthProvider._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuthProviderServiceRestTransport._BaseUndeleteAuthProvider._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseUndeleteAuthProvider._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseUndeleteAuthProvider,
+                    "_BaseUndeleteAuthProvider__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3442,21 +3438,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseUpdateAuthProvider._get_http_options()
-
             request, metadata = self._interceptor.pre_update_auth_provider(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseUpdateAuthProvider._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuthProviderServiceRestTransport._BaseUpdateAuthProvider._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseUpdateAuthProvider._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseUpdateAuthProvider,
+                    "_BaseUpdateAuthProvider__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3769,15 +3762,16 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3908,15 +3902,16 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4047,15 +4042,16 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4187,19 +4183,16 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuthProviderServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4332,21 +4325,18 @@ class AuthProviderServiceRestTransport(_BaseAuthProviderServiceRestTransport):
             """
 
             http_options = _BaseAuthProviderServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseAuthProviderServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuthProviderServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthProviderServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthProviderServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

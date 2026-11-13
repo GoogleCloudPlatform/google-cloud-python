@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dataflow_v1beta3._compat import transcode_request
 from google.cloud.dataflow_v1beta3.types import snapshots
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -393,15 +394,16 @@ class SnapshotsV1Beta3RestTransport(_BaseSnapshotsV1Beta3RestTransport):
             """
 
             http_options = _BaseSnapshotsV1Beta3RestTransport._BaseDeleteSnapshot._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_snapshot(request, metadata)
-            transcoded_request = _BaseSnapshotsV1Beta3RestTransport._BaseDeleteSnapshot._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSnapshotsV1Beta3RestTransport._BaseDeleteSnapshot._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSnapshotsV1Beta3RestTransport._BaseDeleteSnapshot,
+                    "_BaseDeleteSnapshot__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -540,15 +542,16 @@ class SnapshotsV1Beta3RestTransport(_BaseSnapshotsV1Beta3RestTransport):
             http_options = (
                 _BaseSnapshotsV1Beta3RestTransport._BaseGetSnapshot._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_snapshot(request, metadata)
-            transcoded_request = _BaseSnapshotsV1Beta3RestTransport._BaseGetSnapshot._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSnapshotsV1Beta3RestTransport._BaseGetSnapshot._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSnapshotsV1Beta3RestTransport._BaseGetSnapshot,
+                    "_BaseGetSnapshot__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -682,15 +685,16 @@ class SnapshotsV1Beta3RestTransport(_BaseSnapshotsV1Beta3RestTransport):
             """
 
             http_options = _BaseSnapshotsV1Beta3RestTransport._BaseListSnapshots._get_http_options()
-
             request, metadata = self._interceptor.pre_list_snapshots(request, metadata)
-            transcoded_request = _BaseSnapshotsV1Beta3RestTransport._BaseListSnapshots._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSnapshotsV1Beta3RestTransport._BaseListSnapshots._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSnapshotsV1Beta3RestTransport._BaseListSnapshots,
+                    "_BaseListSnapshots__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

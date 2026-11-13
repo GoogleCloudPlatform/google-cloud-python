@@ -52,7 +52,7 @@ UNIT_TEST_STANDARD_DEPENDENCIES = [
 UNIT_TEST_EXTERNAL_DEPENDENCIES: List[str] = []
 UNIT_TEST_LOCAL_DEPENDENCIES: List[str] = []
 UNIT_TEST_DEPENDENCIES: List[str] = []
-UNIT_TEST_EXTRAS: List[str] = []
+UNIT_TEST_EXTRAS: List[str] = ["grpc"]
 UNIT_TEST_EXTRAS_BY_PYTHON: Dict[str, List[str]] = {}
 
 SYSTEM_TEST_PYTHON_VERSIONS: List[str] = [
@@ -558,16 +558,27 @@ def core_deps_from_source(session, protobuf_implementation):
     # Note: If a dependency is added to the `core_dependencies_from_source` list,
     # the `prerel_deps` list in the `prerelease_deps` nox session should also be updated.
     core_dependencies_from_source = [
-        f"{CURRENT_DIRECTORY}/../googleapis-common-protos",
-        "google-api-core @ git+https://github.com/googleapis/google-cloud-python#egg=google-api-core&subdirectory=packages/google-api-core",
-        "google-auth @ git+https://github.com/googleapis/google-cloud-python#egg=google-auth&subdirectory=packages/google-auth",
-        f"{CURRENT_DIRECTORY}/../grpc-google-iam-v1",
-        "proto-plus @ git+https://github.com/googleapis/google-cloud-python#egg=proto-plus&subdirectory=packages/proto-plus",
+        "googleapis-common-protos",
+        "google-api-core",
+        "google-auth",
+        "grpc-google-iam-v1",
+        "proto-plus",
     ]
 
-    for dep in core_dependencies_from_source:
-        session.install(dep, "--no-deps", "--ignore-installed")
-        print(f"Installed {dep}")
+    deps_dir = next(
+        p / "packages" for p in CURRENT_DIRECTORY.parents if (p / "packages").is_dir()
+    )
+
+    local_paths = [
+        str(deps_dir / dep)
+        for dep in core_dependencies_from_source
+        if (deps_dir / dep).exists()
+    ]
+    if local_paths:
+        session.install(*local_paths, "--no-deps", "--ignore-installed")
+        print(
+            f"Installed {', '.join(core_dependencies_from_source)} locally from {deps_dir}"
+        )
 
     session.run(
         "py.test",

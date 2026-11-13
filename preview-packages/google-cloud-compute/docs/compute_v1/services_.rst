@@ -3,9 +3,12 @@ Services for Google Cloud Compute v1 API
 .. toctree::
     :maxdepth: 2
 
+    accelerator_interconnect_member_instances
+    accelerator_interconnects
     accelerator_types
     addresses
     advice
+    alias_network_endpoints
     autoscalers
     backend_buckets
     backend_services
@@ -15,19 +18,25 @@ Services for Google Cloud Compute v1 API
     external_vpn_gateways
     firewall_policies
     firewalls
+    folder_global_vm_extension_policies
+    folder_zone_vm_extension_policies
     forwarding_rules
     future_reservations
     global_addresses
+    global_folder_operations
     global_forwarding_rules
+    global_frontend_settings_service
     global_network_endpoint_groups
     global_operations
     global_organization_operations
     global_public_delegated_prefixes
     global_vm_extension_policies
+    ha_controllers
     health_checks
     hosts
     image_family_views
     images
+    image_views
     instance_group_manager_resize_requests
     instance_group_managers
     instance_groups
@@ -46,6 +55,7 @@ Services for Google Cloud Compute v1 API
     licenses
     machine_images
     machine_types
+    managed_rulesets
     network_attachments
     network_edge_security_services
     network_endpoint_groups
@@ -55,10 +65,13 @@ Services for Google Cloud Compute v1 API
     node_groups
     node_templates
     node_types
+    organization_global_vm_extension_policies
     organization_security_policies
+    organization_zone_vm_extension_policies
     packet_mirrorings
     preview_features
     projects
+    project_views
     public_advertised_prefixes
     public_delegated_prefixes
     region_autoscalers
@@ -125,6 +138,8 @@ Services for Google Cloud Compute v1 API
     vpn_gateways
     vpn_tunnels
     wire_groups
+    zone_folder_operations
     zone_operations
+    zone_organization_operations
     zones
     zone_vm_extension_policies

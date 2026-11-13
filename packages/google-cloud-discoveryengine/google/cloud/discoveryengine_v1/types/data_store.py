@@ -148,6 +148,9 @@ class DataStore(proto.Message):
             doc <https://cloud.google.com/generative-ai-app-builder/docs/provide-schema>`__.
         healthcare_fhir_config (google.cloud.discoveryengine_v1.types.HealthcareFhirConfig):
             Optional. Configuration for ``HEALTHCARE_FHIR`` vertical.
+        serving_config_data_store (google.cloud.discoveryengine_v1.types.DataStore.ServingConfigDataStore):
+            Optional. Stores serving config at DataStore
+            level.
         identity_mapping_store (str):
             Immutable. The fully qualified resource name of the
             associated
@@ -155,6 +158,21 @@ class DataStore(proto.Message):
             This field can only be set for acl_enabled DataStores with
             ``THIRD_PARTY`` or ``GSUITE`` IdP. Format:
             ``projects/{project}/locations/{location}/identityMappingStores/{identity_mapping_store}``.
+        is_infobot_faq_data_store (bool):
+            Optional. If set, this DataStore is an
+            Infobot FAQ DataStore.
+        federated_search_config (google.cloud.discoveryengine_v1.types.DataStore.FederatedSearchConfig):
+            Optional. If set, this DataStore is a
+            federated search DataStore.
+        configurable_billing_approach (google.cloud.discoveryengine_v1.types.DataStore.ConfigurableBillingApproach):
+            Optional. Configuration for configurable
+            billing approach. See
+        configurable_billing_approach_update_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The timestamp when
+            configurable_billing_approach was last updated.
+        data_protection_policy (google.cloud.discoveryengine_v1.types.DataProtectionPolicy):
+            Optional. Specifies the data protection
+            policy for the data store.
     """
 
     class ContentConfig(proto.Enum):
@@ -183,6 +201,25 @@ class DataStore(proto.Message):
         CONTENT_REQUIRED = 2
         PUBLIC_WEBSITE = 3
         GOOGLE_WORKSPACE = 4
+
+    class ConfigurableBillingApproach(proto.Enum):
+        r"""Configuration for configurable billing approach.
+
+        Values:
+            CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED (0):
+                Default value. For Spark and non-Spark
+                non-configurable billing approach.
+            CONFIGURABLE_SUBSCRIPTION_INDEXING_CORE (1):
+                Use the subscription base + overage billing
+                for indexing core for non embedding storage.
+            CONFIGURABLE_CONSUMPTION_EMBEDDING (2):
+                Use the consumption pay-as-you-go billing for
+                embedding storage add-on.
+        """
+
+        CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED = 0
+        CONFIGURABLE_SUBSCRIPTION_INDEXING_CORE = 1
+        CONFIGURABLE_CONSUMPTION_EMBEDDING = 2
 
     class BillingEstimation(proto.Message):
         r"""Estimation of data size per data store.
@@ -230,6 +267,238 @@ class DataStore(proto.Message):
             proto.MESSAGE,
             number=6,
             message=timestamp_pb2.Timestamp,
+        )
+
+    class ServingConfigDataStore(proto.Message):
+        r"""Stores information regarding the serving configurations at
+        DataStore level.
+
+        Attributes:
+            disabled_for_serving (bool):
+                Optional. If set true, the DataStore will not
+                be available for serving search requests.
+        """
+
+        disabled_for_serving: bool = proto.Field(
+            proto.BOOL,
+            number=1,
+        )
+
+    class FederatedSearchConfig(proto.Message):
+        r"""Stores information for federated search.
+
+        This message has `oneof`_ fields (mutually exclusive fields).
+        For each oneof, at most one member field can be set at the same time.
+        Setting any member of the oneof automatically clears all other
+        members.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            alloy_db_config (google.cloud.discoveryengine_v1.types.DataStore.FederatedSearchConfig.AlloyDbConfig):
+                AlloyDB config. If set, this DataStore is
+                connected to AlloyDB.
+
+                This field is a member of `oneof`_ ``data_source_config``.
+            third_party_oauth_config (google.cloud.discoveryengine_v1.types.DataStore.FederatedSearchConfig.ThirdPartyOauthConfig):
+                Third Party OAuth config. If set, this
+                DataStore is connected to a third party
+                application.
+
+                This field is a member of `oneof`_ ``data_source_config``.
+            notebooklm_config (google.cloud.discoveryengine_v1.types.DataStore.FederatedSearchConfig.NotebooklmConfig):
+                NotebookLM config. If set, this DataStore is
+                connected to NotebookLM Enterprise.
+
+                This field is a member of `oneof`_ ``data_source_config``.
+        """
+
+        class AlloyDbConfig(proto.Message):
+            r"""Stores information for connecting to AlloyDB.
+
+            Attributes:
+                alloydb_connection_config (google.cloud.discoveryengine_v1.types.DataStore.FederatedSearchConfig.AlloyDbConfig.AlloyDbConnectionConfig):
+                    Required. Configuration for connecting to
+                    AlloyDB.
+                alloydb_ai_nl_config (google.cloud.discoveryengine_v1.types.DataStore.FederatedSearchConfig.AlloyDbConfig.AlloyDbAiNaturalLanguageConfig):
+                    Optional. Configuration for Magic.
+                returned_fields (MutableSequence[str]):
+                    Optional. Fields to be returned in the search
+                    results. If empty, all fields will be returned.
+            """
+
+            class AlloyDbConnectionConfig(proto.Message):
+                r"""Configuration for connecting to AlloyDB.
+
+                Attributes:
+                    instance (str):
+                        Required. The AlloyDB instance to connect to.
+                    database (str):
+                        Required. The AlloyDB database to connect to.
+                    user (str):
+                        Required. Database user.
+
+                        If auth_mode = END_USER_ACCOUNT, it can be unset. In that
+                        case, the user will be inferred on the AlloyDB side, based
+                        on the authenticated user.
+                    password (str):
+                        Required. Database password.
+
+                        If auth_mode = END_USER_ACCOUNT, it can be unset. In that
+                        case, the password will be inferred on the AlloyDB side,
+                        based on the authenticated user.
+                    auth_mode (google.cloud.discoveryengine_v1.types.DataStore.FederatedSearchConfig.AlloyDbConfig.AlloyDbConnectionConfig.AuthMode):
+                        Optional. Auth mode.
+                    enable_psvs (bool):
+                        Optional. If true, enable PSVS for AlloyDB.
+                """
+
+                class AuthMode(proto.Enum):
+                    r"""Auth mode.
+
+                    Values:
+                        AUTH_MODE_UNSPECIFIED (0):
+                            No description available.
+                        AUTH_MODE_SERVICE_ACCOUNT (1):
+                            Uses P4SA when VAIS talks to AlloyDB.
+                        AUTH_MODE_END_USER_ACCOUNT (2):
+                            Uses EUC when VAIS talks to AlloyDB.
+                    """
+
+                    AUTH_MODE_UNSPECIFIED = 0
+                    AUTH_MODE_SERVICE_ACCOUNT = 1
+                    AUTH_MODE_END_USER_ACCOUNT = 2
+
+                instance: str = proto.Field(
+                    proto.STRING,
+                    number=1,
+                )
+                database: str = proto.Field(
+                    proto.STRING,
+                    number=2,
+                )
+                user: str = proto.Field(
+                    proto.STRING,
+                    number=3,
+                )
+                password: str = proto.Field(
+                    proto.STRING,
+                    number=4,
+                )
+                auth_mode: "DataStore.FederatedSearchConfig.AlloyDbConfig.AlloyDbConnectionConfig.AuthMode" = proto.Field(
+                    proto.ENUM,
+                    number=5,
+                    enum="DataStore.FederatedSearchConfig.AlloyDbConfig.AlloyDbConnectionConfig.AuthMode",
+                )
+                enable_psvs: bool = proto.Field(
+                    proto.BOOL,
+                    number=6,
+                )
+
+            class AlloyDbAiNaturalLanguageConfig(proto.Message):
+                r"""Configuration for AlloyDB AI Natural Language.
+
+                Attributes:
+                    nl_config_id (str):
+                        Optional. AlloyDb AI NL config id, i.e. the value that was
+                        used for calling
+                        ``SELECT alloydb_ai_nl.g_create_configuration(...)``. Can be
+                        empty.
+                """
+
+                nl_config_id: str = proto.Field(
+                    proto.STRING,
+                    number=1,
+                )
+
+            alloydb_connection_config: "DataStore.FederatedSearchConfig.AlloyDbConfig.AlloyDbConnectionConfig" = proto.Field(
+                proto.MESSAGE,
+                number=1,
+                message="DataStore.FederatedSearchConfig.AlloyDbConfig.AlloyDbConnectionConfig",
+            )
+            alloydb_ai_nl_config: "DataStore.FederatedSearchConfig.AlloyDbConfig.AlloyDbAiNaturalLanguageConfig" = proto.Field(
+                proto.MESSAGE,
+                number=2,
+                message="DataStore.FederatedSearchConfig.AlloyDbConfig.AlloyDbAiNaturalLanguageConfig",
+            )
+            returned_fields: MutableSequence[str] = proto.RepeatedField(
+                proto.STRING,
+                number=3,
+            )
+
+        class ThirdPartyOauthConfig(proto.Message):
+            r"""Stores information for third party applicationOAuth.
+
+            Attributes:
+                app_name (str):
+                    Optional. The type of the application. E.g.,
+                    "jira", "box", etc.
+                instance_name (str):
+                    Optional. The instance name identifying the 3P app, e.g.,
+                    "-my". This is different from the instance_uri which is the
+                    full URL of the 3P app e.g., "https://-my.sharepoint.com".
+            """
+
+            app_name: str = proto.Field(
+                proto.STRING,
+                number=1,
+            )
+            instance_name: str = proto.Field(
+                proto.STRING,
+                number=2,
+            )
+
+        class NotebooklmConfig(proto.Message):
+            r"""Config for connecting to NotebookLM Enterprise.
+
+            Attributes:
+                search_config (str):
+                    Required. Search config name.
+
+                    Format:
+                    projects/*/locations/global/notebookLmSearchConfigs/*
+                notebooks (MutableSequence[str]):
+                    Optional. Restricts this data store to the given notebooks.
+                    When empty, the data store covers every notebook the
+                    querying user can access, which is the existing behaviour.
+
+                    Each entry is a full notebook resource name, such as
+                    ``projects/*/locations/*/notebooks/*``.
+
+                    Scoping is enforced on results as well as requested
+                    upstream, so a notebook outside this list cannot appear in a
+                    search response through this data store even if the backend
+                    returns one.
+            """
+
+            search_config: str = proto.Field(
+                proto.STRING,
+                number=1,
+            )
+            notebooks: MutableSequence[str] = proto.RepeatedField(
+                proto.STRING,
+                number=2,
+            )
+
+        alloy_db_config: "DataStore.FederatedSearchConfig.AlloyDbConfig" = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            oneof="data_source_config",
+            message="DataStore.FederatedSearchConfig.AlloyDbConfig",
+        )
+        third_party_oauth_config: "DataStore.FederatedSearchConfig.ThirdPartyOauthConfig" = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            oneof="data_source_config",
+            message="DataStore.FederatedSearchConfig.ThirdPartyOauthConfig",
+        )
+        notebooklm_config: "DataStore.FederatedSearchConfig.NotebooklmConfig" = (
+            proto.Field(
+                proto.MESSAGE,
+                number=3,
+                oneof="data_source_config",
+                message="DataStore.FederatedSearchConfig.NotebooklmConfig",
+            )
         )
 
     name: str = proto.Field(
@@ -312,9 +581,38 @@ class DataStore(proto.Message):
         number=29,
         message=common.HealthcareFhirConfig,
     )
+    serving_config_data_store: ServingConfigDataStore = proto.Field(
+        proto.MESSAGE,
+        number=30,
+        message=ServingConfigDataStore,
+    )
     identity_mapping_store: str = proto.Field(
         proto.STRING,
         number=31,
+    )
+    is_infobot_faq_data_store: bool = proto.Field(
+        proto.BOOL,
+        number=37,
+    )
+    federated_search_config: FederatedSearchConfig = proto.Field(
+        proto.MESSAGE,
+        number=38,
+        message=FederatedSearchConfig,
+    )
+    configurable_billing_approach: ConfigurableBillingApproach = proto.Field(
+        proto.ENUM,
+        number=45,
+        enum=ConfigurableBillingApproach,
+    )
+    configurable_billing_approach_update_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=46,
+        message=timestamp_pb2.Timestamp,
+    )
+    data_protection_policy: common.DataProtectionPolicy = proto.Field(
+        proto.MESSAGE,
+        number=48,
+        message=common.DataProtectionPolicy,
     )
 
 
@@ -396,7 +694,11 @@ class WorkspaceConfig(proto.Message):
         type_ (google.cloud.discoveryengine_v1.types.WorkspaceConfig.Type):
             The Google Workspace data source.
         dasher_customer_id (str):
-            Obfuscated Dasher customer ID.
+            Output only. Obfuscated Dasher customer ID.
+            Derived by the server from the project's GCP
+            organization at data store creation time; any
+            value supplied in the request payload is
+            ignored.
         super_admin_service_account (str):
             Optional. The super admin service account for
             the workspace that will be used for access token
@@ -432,6 +734,9 @@ class WorkspaceConfig(proto.Message):
                 Workspace Data Store contains Keep data
             GOOGLE_PEOPLE (8):
                 Workspace Data Store contains People data
+            GOOGLE_WORKSPACE (9):
+                Workspace Data Store contains all Workspace
+                apps data
         """
 
         TYPE_UNSPECIFIED = 0
@@ -443,6 +748,7 @@ class WorkspaceConfig(proto.Message):
         GOOGLE_GROUPS = 6
         GOOGLE_KEEP = 7
         GOOGLE_PEOPLE = 8
+        GOOGLE_WORKSPACE = 9
 
     type_: Type = proto.Field(
         proto.ENUM,

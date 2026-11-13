@@ -1328,7 +1328,7 @@ class FirestoreAsyncClient:
             self._client._transport.execute_pipeline
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^projects/(?P<project_id>[^/]+)(?:/.*)?$")
         regex_match = routing_param_regex.match(request.database)

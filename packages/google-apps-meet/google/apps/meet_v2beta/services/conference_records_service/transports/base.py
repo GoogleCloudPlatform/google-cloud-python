@@ -311,6 +311,34 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 default_timeout=60.0,
                 client_info=client_info,
             ),
+            self.get_smart_note: gapic_v1.method.wrap_method(
+                self.get_smart_note,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_smart_notes: gapic_v1.method.wrap_method(
+                self.list_smart_notes,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
         }
 
     def close(self):
@@ -442,6 +470,26 @@ class ConferenceRecordsServiceTransport(abc.ABC):
         Union[
             service.ListTranscriptEntriesResponse,
             Awaitable[service.ListTranscriptEntriesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_smart_note(
+        self,
+    ) -> Callable[
+        [service.GetSmartNoteRequest],
+        Union[resource.SmartNote, Awaitable[resource.SmartNote]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_smart_notes(
+        self,
+    ) -> Callable[
+        [service.ListSmartNotesRequest],
+        Union[
+            service.ListSmartNotesResponse, Awaitable[service.ListSmartNotesResponse]
         ],
     ]:
         raise NotImplementedError()

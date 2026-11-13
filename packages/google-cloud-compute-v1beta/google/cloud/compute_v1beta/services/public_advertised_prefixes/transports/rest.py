@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.compute_v1beta._compat import transcode_request
 from google.cloud.compute_v1beta.types import compute
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -652,15 +653,16 @@ class PublicAdvertisedPrefixesRestTransport(_BasePublicAdvertisedPrefixesRestTra
             """
 
             http_options = _BasePublicAdvertisedPrefixesRestTransport._BaseAnnounce._get_http_options()
-
             request, metadata = self._interceptor.pre_announce(request, metadata)
-            transcoded_request = _BasePublicAdvertisedPrefixesRestTransport._BaseAnnounce._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePublicAdvertisedPrefixesRestTransport._BaseAnnounce._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublicAdvertisedPrefixesRestTransport._BaseAnnounce,
+                    "_BaseAnnounce__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -825,15 +827,16 @@ class PublicAdvertisedPrefixesRestTransport(_BasePublicAdvertisedPrefixesRestTra
             """
 
             http_options = _BasePublicAdvertisedPrefixesRestTransport._BaseDelete._get_http_options()
-
             request, metadata = self._interceptor.pre_delete(request, metadata)
-            transcoded_request = _BasePublicAdvertisedPrefixesRestTransport._BaseDelete._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePublicAdvertisedPrefixesRestTransport._BaseDelete._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublicAdvertisedPrefixesRestTransport._BaseDelete,
+                    "_BaseDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -978,15 +981,16 @@ class PublicAdvertisedPrefixesRestTransport(_BasePublicAdvertisedPrefixesRestTra
             http_options = (
                 _BasePublicAdvertisedPrefixesRestTransport._BaseGet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get(request, metadata)
-            transcoded_request = _BasePublicAdvertisedPrefixesRestTransport._BaseGet._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePublicAdvertisedPrefixesRestTransport._BaseGet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublicAdvertisedPrefixesRestTransport._BaseGet,
+                    "_BaseGet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1150,19 +1154,16 @@ class PublicAdvertisedPrefixesRestTransport(_BasePublicAdvertisedPrefixesRestTra
             """
 
             http_options = _BasePublicAdvertisedPrefixesRestTransport._BaseInsert._get_http_options()
-
             request, metadata = self._interceptor.pre_insert(request, metadata)
-            transcoded_request = _BasePublicAdvertisedPrefixesRestTransport._BaseInsert._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePublicAdvertisedPrefixesRestTransport._BaseInsert._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePublicAdvertisedPrefixesRestTransport._BaseInsert._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublicAdvertisedPrefixesRestTransport._BaseInsert,
+                    "_BaseInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1302,15 +1303,16 @@ class PublicAdvertisedPrefixesRestTransport(_BasePublicAdvertisedPrefixesRestTra
             http_options = (
                 _BasePublicAdvertisedPrefixesRestTransport._BaseList._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list(request, metadata)
-            transcoded_request = _BasePublicAdvertisedPrefixesRestTransport._BaseList._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePublicAdvertisedPrefixesRestTransport._BaseList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublicAdvertisedPrefixesRestTransport._BaseList,
+                    "_BaseList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1476,19 +1478,16 @@ class PublicAdvertisedPrefixesRestTransport(_BasePublicAdvertisedPrefixesRestTra
             """
 
             http_options = _BasePublicAdvertisedPrefixesRestTransport._BasePatch._get_http_options()
-
             request, metadata = self._interceptor.pre_patch(request, metadata)
-            transcoded_request = _BasePublicAdvertisedPrefixesRestTransport._BasePatch._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePublicAdvertisedPrefixesRestTransport._BasePatch._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePublicAdvertisedPrefixesRestTransport._BasePatch._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublicAdvertisedPrefixesRestTransport._BasePatch,
+                    "_BasePatch__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1654,15 +1653,16 @@ class PublicAdvertisedPrefixesRestTransport(_BasePublicAdvertisedPrefixesRestTra
             """
 
             http_options = _BasePublicAdvertisedPrefixesRestTransport._BaseWithdraw._get_http_options()
-
             request, metadata = self._interceptor.pre_withdraw(request, metadata)
-            transcoded_request = _BasePublicAdvertisedPrefixesRestTransport._BaseWithdraw._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePublicAdvertisedPrefixesRestTransport._BaseWithdraw._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublicAdvertisedPrefixesRestTransport._BaseWithdraw,
+                    "_BaseWithdraw__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

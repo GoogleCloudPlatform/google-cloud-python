@@ -21,10 +21,10 @@
 import datetime
 import decimal
 
-from google.cloud.bigquery import TimePartitioning
 import packaging.version
 import pytest
 import sqlalchemy
+from google.cloud.bigquery import TimePartitioning
 from sqlalchemy import (
     Column,
     MetaData,

@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.agentregistry_v1._compat import transcode_request
 from google.cloud.agentregistry_v1.types import (
     agent,
     agentregistry_service,
@@ -1535,19 +1536,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseCreateBinding._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_binding(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseCreateBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAgentRegistryRestTransport._BaseCreateBinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseCreateBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseCreateBinding,
+                    "_BaseCreateBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1686,19 +1684,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseCreateService._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_service(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseCreateService._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAgentRegistryRestTransport._BaseCreateService._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseCreateService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseCreateService,
+                    "_BaseCreateService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1836,15 +1831,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseDeleteBinding._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_binding(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseDeleteBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseDeleteBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseDeleteBinding,
+                    "_BaseDeleteBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1981,15 +1977,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseDeleteService._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_service(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseDeleteService._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseDeleteService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseDeleteService,
+                    "_BaseDeleteService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2125,17 +2122,18 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             """
 
             http_options = _BaseAgentRegistryRestTransport._BaseFetchAvailableBindings._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_available_bindings(
                 request, metadata
             )
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseFetchAvailableBindings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseFetchAvailableBindings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseFetchAvailableBindings,
+                    "_BaseFetchAvailableBindings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2278,19 +2276,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseGetAgent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_agent(request, metadata)
-            transcoded_request = (
-                _BaseAgentRegistryRestTransport._BaseGetAgent._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAgentRegistryRestTransport._BaseGetAgent._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseGetAgent,
+                    "_BaseGetAgent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2426,19 +2421,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseGetBinding._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_binding(request, metadata)
-            transcoded_request = (
-                _BaseAgentRegistryRestTransport._BaseGetBinding._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAgentRegistryRestTransport._BaseGetBinding._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseGetBinding,
+                    "_BaseGetBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2574,17 +2566,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseGetEndpoint._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_endpoint(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseGetEndpoint._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAgentRegistryRestTransport._BaseGetEndpoint._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseGetEndpoint,
+                    "_BaseGetEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2722,15 +2713,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseGetMcpServer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_mcp_server(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseGetMcpServer._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseGetMcpServer._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseGetMcpServer,
+                    "_BaseGetMcpServer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2866,19 +2858,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseGetService._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_service(request, metadata)
-            transcoded_request = (
-                _BaseAgentRegistryRestTransport._BaseGetService._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAgentRegistryRestTransport._BaseGetService._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseGetService,
+                    "_BaseGetService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3016,19 +3005,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseListAgents._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_agents(request, metadata)
-            transcoded_request = (
-                _BaseAgentRegistryRestTransport._BaseListAgents._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAgentRegistryRestTransport._BaseListAgents._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseListAgents,
+                    "_BaseListAgents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3169,15 +3155,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseListBindings._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_bindings(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseListBindings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseListBindings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseListBindings,
+                    "_BaseListBindings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3318,15 +3305,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseListEndpoints._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_endpoints(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseListEndpoints._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseListEndpoints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseListEndpoints,
+                    "_BaseListEndpoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3467,17 +3455,18 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseListMcpServers._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_mcp_servers(
                 request, metadata
             )
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseListMcpServers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseListMcpServers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseListMcpServers,
+                    "_BaseListMcpServers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3618,15 +3607,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseListServices._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_services(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseListServices._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseListServices._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseListServices,
+                    "_BaseListServices__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3767,19 +3757,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseSearchAgents._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_agents(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseSearchAgents._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAgentRegistryRestTransport._BaseSearchAgents._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseSearchAgents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseSearchAgents,
+                    "_BaseSearchAgents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3919,21 +3906,18 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             """
 
             http_options = _BaseAgentRegistryRestTransport._BaseSearchMcpServers._get_http_options()
-
             request, metadata = self._interceptor.pre_search_mcp_servers(
                 request, metadata
             )
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseSearchMcpServers._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAgentRegistryRestTransport._BaseSearchMcpServers._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseSearchMcpServers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseSearchMcpServers,
+                    "_BaseSearchMcpServers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4076,19 +4060,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseUpdateBinding._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_binding(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseUpdateBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAgentRegistryRestTransport._BaseUpdateBinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseUpdateBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseUpdateBinding,
+                    "_BaseUpdateBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4227,19 +4208,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseUpdateService._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_service(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseUpdateService._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAgentRegistryRestTransport._BaseUpdateService._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseUpdateService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseUpdateService,
+                    "_BaseUpdateService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4567,17 +4545,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAgentRegistryRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4709,15 +4686,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4847,21 +4825,18 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAgentRegistryRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4966,17 +4941,18 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5083,15 +5059,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5223,15 +5200,16 @@ class AgentRegistryRestTransport(_BaseAgentRegistryRestTransport):
             http_options = (
                 _BaseAgentRegistryRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseAgentRegistryRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAgentRegistryRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentRegistryRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

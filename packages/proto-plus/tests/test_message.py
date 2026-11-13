@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import itertools
+
 import pytest
 
 import proto
@@ -330,8 +331,8 @@ def test_serialize_to_dict():
     "expect_proto_7_plus", [True, False], ids=["proto >= 7", "proto <= 6"]
 )
 def test_serialize_to_dict_float_precision(expect_proto_7_plus):
-    if ((expect_proto_7_plus and int(proto.message._PROTOBUF_MAJOR_VERSION) < 7)) or (
-        (not expect_proto_7_plus and int(proto.message._PROTOBUF_MAJOR_VERSION) >= 7)
+    if (expect_proto_7_plus and int(proto.message._PROTOBUF_MAJOR_VERSION) < 7) or (
+        not expect_proto_7_plus and int(proto.message._PROTOBUF_MAJOR_VERSION) >= 7
     ):
         pytest.skip("installed proto version does not match test")
 

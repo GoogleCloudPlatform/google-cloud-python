@@ -61,12 +61,32 @@ from google.cloud.compute_v1.services.zone_vm_extension_policies import (
 )
 from google.cloud.compute_v1.types import compute
 
+try:
+    from google.api_core import version_header
+
+    HAS_GOOGLE_API_CORE_VERSION_HEADER = True  # pragma: NO COVER
+except ImportError:  # pragma: NO COVER
+    HAS_GOOGLE_API_CORE_VERSION_HEADER = False
+
+
 CRED_INFO_JSON = {
     "credential_source": "/path/to/file",
     "credential_type": "service account credentials",
     "principal": "service-account@example.com",
 }
 CRED_INFO_STRING = json.dumps(CRED_INFO_JSON)
+
+
+@pytest.fixture(autouse=True)
+def disable_mtls_env():
+    with mock.patch.dict(
+        os.environ,
+        {
+            "GOOGLE_API_USE_CLIENT_CERTIFICATE": "false",
+            "CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE": "false",
+        },
+    ):
+        yield
 
 
 async def mock_async_gen(data, chunk_size=1):
@@ -124,217 +144,6 @@ def set_event_loop():
             asyncio.set_event_loop(None)
 
 
-def test__get_default_mtls_endpoint():
-    api_endpoint = "example.googleapis.com"
-    api_mtls_endpoint = "example.mtls.googleapis.com"
-    sandbox_endpoint = "example.sandbox.googleapis.com"
-    sandbox_mtls_endpoint = "example.mtls.sandbox.googleapis.com"
-    non_googleapi = "api.example.com"
-    custom_endpoint = ".custom"
-
-    assert ZoneVmExtensionPoliciesClient._get_default_mtls_endpoint(None) is None
-    assert (
-        ZoneVmExtensionPoliciesClient._get_default_mtls_endpoint(api_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_default_mtls_endpoint(api_mtls_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_default_mtls_endpoint(sandbox_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_default_mtls_endpoint(sandbox_mtls_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_default_mtls_endpoint(non_googleapi)
-        == non_googleapi
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_default_mtls_endpoint(custom_endpoint)
-        == custom_endpoint
-    )
-
-
-def test__read_environment_variables():
-    assert ZoneVmExtensionPoliciesClient._read_environment_variables() == (
-        False,
-        "auto",
-        None,
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-        assert ZoneVmExtensionPoliciesClient._read_environment_variables() == (
-            True,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}):
-        assert ZoneVmExtensionPoliciesClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}
-    ):
-        if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-            with pytest.raises(ValueError) as excinfo:
-                ZoneVmExtensionPoliciesClient._read_environment_variables()
-            assert (
-                str(excinfo.value)
-                == "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be either `true` or `false`"
-            )
-        else:
-            assert ZoneVmExtensionPoliciesClient._read_environment_variables() == (
-                False,
-                "auto",
-                None,
-            )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "never"}):
-        assert ZoneVmExtensionPoliciesClient._read_environment_variables() == (
-            False,
-            "never",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "always"}):
-        assert ZoneVmExtensionPoliciesClient._read_environment_variables() == (
-            False,
-            "always",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "auto"}):
-        assert ZoneVmExtensionPoliciesClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "Unsupported"}):
-        with pytest.raises(MutualTLSChannelError) as excinfo:
-            ZoneVmExtensionPoliciesClient._read_environment_variables()
-    assert (
-        str(excinfo.value)
-        == "Environment variable `GOOGLE_API_USE_MTLS_ENDPOINT` must be `never`, `auto` or `always`"
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_CLOUD_UNIVERSE_DOMAIN": "foo.com"}):
-        assert ZoneVmExtensionPoliciesClient._read_environment_variables() == (
-            False,
-            "auto",
-            "foo.com",
-        )
-
-
-def test_use_client_cert_effective():
-    # Test case 1: Test when `should_use_client_cert` returns True.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=True
-        ):
-            assert ZoneVmExtensionPoliciesClient._use_client_cert_effective() is True
-
-    # Test case 2: Test when `should_use_client_cert` returns False.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should NOT be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=False
-        ):
-            assert ZoneVmExtensionPoliciesClient._use_client_cert_effective() is False
-
-    # Test case 3: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "true".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-            assert ZoneVmExtensionPoliciesClient._use_client_cert_effective() is True
-
-    # Test case 4: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}
-        ):
-            assert ZoneVmExtensionPoliciesClient._use_client_cert_effective() is False
-
-    # Test case 5: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "True".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "True"}):
-            assert ZoneVmExtensionPoliciesClient._use_client_cert_effective() is True
-
-    # Test case 6: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "False".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "False"}
-        ):
-            assert ZoneVmExtensionPoliciesClient._use_client_cert_effective() is False
-
-    # Test case 7: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "TRUE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "TRUE"}):
-            assert ZoneVmExtensionPoliciesClient._use_client_cert_effective() is True
-
-    # Test case 8: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "FALSE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "FALSE"}
-        ):
-            assert ZoneVmExtensionPoliciesClient._use_client_cert_effective() is False
-
-    # Test case 9: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not set.
-    # In this case, the method should return False, which is the default value.
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, clear=True):
-            assert ZoneVmExtensionPoliciesClient._use_client_cert_effective() is False
-
-    # Test case 10: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should raise a ValueError as the environment variable must be either
-    # "true" or "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            with pytest.raises(ValueError):
-                ZoneVmExtensionPoliciesClient._use_client_cert_effective()
-
-    # Test case 11: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should return False as the environment variable is set to an invalid value.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            assert ZoneVmExtensionPoliciesClient._use_client_cert_effective() is False
-
-    # Test case 12: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is unset. Also,
-    # the GOOGLE_API_CONFIG environment variable is unset.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": ""}):
-            with mock.patch.dict(os.environ, {"GOOGLE_API_CERTIFICATE_CONFIG": ""}):
-                assert (
-                    ZoneVmExtensionPoliciesClient._use_client_cert_effective() is False
-                )
-
-
 def test__get_client_cert_source():
     mock_provided_cert_source = mock.Mock()
     mock_default_cert_source = mock.Mock()
@@ -372,98 +181,239 @@ def test__get_client_cert_source():
             )
 
 
-@mock.patch.object(
-    ZoneVmExtensionPoliciesClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(ZoneVmExtensionPoliciesClient),
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
 )
-def test__get_api_endpoint():
-    api_override = "foo.com"
-    mock_client_cert_source = mock.Mock()
-    default_universe = ZoneVmExtensionPoliciesClient._DEFAULT_UNIVERSE
-    default_endpoint = ZoneVmExtensionPoliciesClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=default_universe
+def test_delete_api_version_header(transport_name):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
     )
-    mock_universe = "bar.com"
-    mock_endpoint = ZoneVmExtensionPoliciesClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=mock_universe
-    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(type(client.transport.delete), "__call__") as call:
+            call.return_value = compute.Operation()
+            client.delete()
 
-    assert (
-        ZoneVmExtensionPoliciesClient._get_api_endpoint(
-            api_override, mock_client_cert_source, default_universe, "always"
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
         )
-        == api_override
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "auto"
-        )
-        == ZoneVmExtensionPoliciesClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_api_endpoint(
-            None, None, default_universe, "auto"
-        )
-        == default_endpoint
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_api_endpoint(
-            None, None, default_universe, "always"
-        )
-        == ZoneVmExtensionPoliciesClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "always"
-        )
-        == ZoneVmExtensionPoliciesClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_api_endpoint(
-            None, None, mock_universe, "never"
-        )
-        == mock_endpoint
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_api_endpoint(
-            None, None, default_universe, "never"
-        )
-        == default_endpoint
-    )
-
-    with pytest.raises(MutualTLSChannelError) as excinfo:
-        ZoneVmExtensionPoliciesClient._get_api_endpoint(
-            None, mock_client_cert_source, mock_universe, "auto"
-        )
-    assert (
-        str(excinfo.value)
-        == "mTLS is not supported in any universe other than googleapis.com."
-    )
 
 
-def test__get_universe_domain():
-    client_universe_domain = "foo.com"
-    universe_domain_env = "bar.com"
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_get_api_version_header(transport_name):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(type(client.transport.get), "__call__") as call:
+            call.return_value = compute.VmExtensionPolicy()
+            client.get()
 
-    assert (
-        ZoneVmExtensionPoliciesClient._get_universe_domain(
-            client_universe_domain, universe_domain_env
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
         )
-        == client_universe_domain
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_universe_domain(None, universe_domain_env)
-        == universe_domain_env
-    )
-    assert (
-        ZoneVmExtensionPoliciesClient._get_universe_domain(None, None)
-        == ZoneVmExtensionPoliciesClient._DEFAULT_UNIVERSE
-    )
 
-    with pytest.raises(ValueError) as excinfo:
-        ZoneVmExtensionPoliciesClient._get_universe_domain("", None)
-    assert str(excinfo.value) == "Universe Domain cannot be an empty string."
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_get_vm_extension_api_version_header(transport_name):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.get_vm_extension), "__call__"
+        ) as call:
+            call.return_value = compute.VmExtension()
+            client.get_vm_extension()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_insert_api_version_header(transport_name):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(type(client.transport.insert), "__call__") as call:
+            call.return_value = compute.Operation()
+            client.insert()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_list_api_version_header(transport_name):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(type(client.transport.list), "__call__") as call:
+            call.return_value = compute.VmExtensionPolicyList()
+            client.list()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_list_vm_extensions_api_version_header(transport_name):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.list_vm_extensions), "__call__"
+        ) as call:
+            call.return_value = compute.ListVmExtensionsResponse()
+            client.list_vm_extensions()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_update_api_version_header(transport_name):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(type(client.transport.update), "__call__") as call:
+            call.return_value = compute.Operation()
+            client.update()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
 
 
 @pytest.mark.parametrize(
@@ -943,6 +893,7 @@ def test_zone_vm_extension_policies_client_get_mtls_endpoint_and_cert_source(
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", None)
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", None)
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -997,6 +948,7 @@ def test_zone_vm_extension_policies_client_get_mtls_endpoint_and_cert_source(
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", "")
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", "")
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1279,9 +1231,14 @@ def test_delete_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDelete,
+        "_BaseDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -1290,12 +1247,8 @@ def test_delete_rest_required_fields(
     jsonified_request["vmExtensionPolicy"] = "vm_extension_policy_value"
     jsonified_request["zone"] = "zone_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -1345,24 +1298,6 @@ def test_delete_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_rest_unset_required_fields():
-    transport = transports.ZoneVmExtensionPoliciesRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "vmExtensionPolicy",
-                "zone",
-            )
-        )
-    )
 
 
 def test_delete_rest_flattened():
@@ -1488,9 +1423,14 @@ def test_delete_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDelete,
+        "_BaseDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -1499,12 +1439,8 @@ def test_delete_unary_rest_required_fields(
     jsonified_request["vmExtensionPolicy"] = "vm_extension_policy_value"
     jsonified_request["zone"] = "zone_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -1554,24 +1490,6 @@ def test_delete_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_unary_rest_unset_required_fields():
-    transport = transports.ZoneVmExtensionPoliciesRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "vmExtensionPolicy",
-                "zone",
-            )
-        )
-    )
 
 
 def test_delete_unary_rest_flattened():
@@ -1691,9 +1609,14 @@ def test_get_rest_required_fields(request_type=compute.GetZoneVmExtensionPolicyR
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGet,
+        "_BaseGet__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -1701,11 +1624,6 @@ def test_get_rest_required_fields(request_type=compute.GetZoneVmExtensionPolicyR
     jsonified_request["project"] = "project_value"
     jsonified_request["vmExtensionPolicy"] = "vm_extension_policy_value"
     jsonified_request["zone"] = "zone_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -1755,24 +1673,6 @@ def test_get_rest_required_fields(request_type=compute.GetZoneVmExtensionPolicyR
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_rest_unset_required_fields():
-    transport = transports.ZoneVmExtensionPoliciesRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "project",
-                "vmExtensionPolicy",
-                "zone",
-            )
-        )
-    )
 
 
 def test_get_rest_flattened():
@@ -1841,6 +1741,193 @@ def test_get_rest_flattened_error(transport: str = "rest"):
         )
 
 
+def test_get_vm_extension_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = ZoneVmExtensionPoliciesClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.get_vm_extension in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.get_vm_extension] = (
+            mock_rpc
+        )
+
+        request = {}
+        client.get_vm_extension(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_vm_extension(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_get_vm_extension_rest_required_fields(
+    request_type=compute.GetVmExtensionZoneVmExtensionPolicyRequest,
+):
+    transport_class = transports.ZoneVmExtensionPoliciesRestTransport
+
+    request_init = {}
+    request_init["extension_name"] = ""
+    request_init["project"] = ""
+    request_init["zone"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseGetVmExtension,
+        "_BaseGetVmExtension__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["extensionName"] = "extension_name_value"
+    jsonified_request["project"] = "project_value"
+    jsonified_request["zone"] = "zone_value"
+
+    # verify required fields with non-default values are left alone
+    assert "extensionName" in jsonified_request
+    assert jsonified_request["extensionName"] == "extension_name_value"
+    assert "project" in jsonified_request
+    assert jsonified_request["project"] == "project_value"
+    assert "zone" in jsonified_request
+    assert jsonified_request["zone"] == "zone_value"
+
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = compute.VmExtension()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = compute.VmExtension.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.get_vm_extension(request)
+
+            expected_params = []
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_get_vm_extension_rest_flattened():
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = compute.VmExtension()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "project": "sample1",
+            "zone": "sample2",
+            "extension_name": "sample3",
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            project="project_value",
+            zone="zone_value",
+            extension_name="extension_name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = compute.VmExtension.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.get_vm_extension(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/compute/v1/projects/{project}/zones/{zone}/vmExtensions/{extension_name}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_get_vm_extension_rest_flattened_error(transport: str = "rest"):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_vm_extension(
+            compute.GetVmExtensionZoneVmExtensionPolicyRequest(),
+            project="project_value",
+            zone="zone_value",
+            extension_name="extension_name_value",
+        )
+
+
 def test_insert_rest_use_cached_wrapped_rpc():
     # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
     # instead of constructing them on each call
@@ -1897,9 +1984,14 @@ def test_insert_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).insert._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseInsert,
+        "_BaseInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -1907,12 +1999,8 @@ def test_insert_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["zone"] = "zone_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).insert._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -1961,24 +2049,6 @@ def test_insert_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_insert_rest_unset_required_fields():
-    transport = transports.ZoneVmExtensionPoliciesRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.insert._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "vmExtensionPolicyResource",
-                "zone",
-            )
-        )
-    )
 
 
 def test_insert_rest_flattened():
@@ -2103,9 +2173,14 @@ def test_insert_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).insert._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseInsert,
+        "_BaseInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2113,12 +2188,8 @@ def test_insert_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["zone"] = "zone_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).insert._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -2167,24 +2238,6 @@ def test_insert_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_insert_unary_rest_unset_required_fields():
-    transport = transports.ZoneVmExtensionPoliciesRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.insert._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "vmExtensionPolicyResource",
-                "zone",
-            )
-        )
-    )
 
 
 def test_insert_unary_rest_flattened():
@@ -2305,9 +2358,14 @@ def test_list_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseList,
+        "_BaseList__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2315,20 +2373,15 @@ def test_list_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["zone"] = "zone_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "max_results",
-            "order_by",
-            "page_token",
-            "return_partial_success",
+            "maxResults",
+            "orderBy",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -2376,31 +2429,6 @@ def test_list_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_rest_unset_required_fields():
-    transport = transports.ZoneVmExtensionPoliciesRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "maxResults",
-                "orderBy",
-                "pageToken",
-                "returnPartialSuccess",
-            )
-        )
-        & set(
-            (
-                "project",
-                "zone",
-            )
-        )
-    )
 
 
 def test_list_rest_flattened():
@@ -2527,6 +2555,259 @@ def test_list_rest_pager(transport: str = "rest"):
             assert page_.raw_page.next_page_token == token
 
 
+def test_list_vm_extensions_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = ZoneVmExtensionPoliciesClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_vm_extensions in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.list_vm_extensions] = (
+            mock_rpc
+        )
+
+        request = {}
+        client.list_vm_extensions(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_vm_extensions(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_list_vm_extensions_rest_required_fields(
+    request_type=compute.ListVmExtensionsZoneVmExtensionPoliciesRequest,
+):
+    transport_class = transports.ZoneVmExtensionPoliciesRestTransport
+
+    request_init = {}
+    request_init["project"] = ""
+    request_init["zone"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseListVmExtensions,
+        "_BaseListVmExtensions__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["project"] = "project_value"
+    jsonified_request["zone"] = "zone_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "filter",
+            "maxResults",
+            "orderBy",
+            "pageToken",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "project" in jsonified_request
+    assert jsonified_request["project"] == "project_value"
+    assert "zone" in jsonified_request
+    assert jsonified_request["zone"] == "zone_value"
+
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = compute.ListVmExtensionsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = compute.ListVmExtensionsResponse.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.list_vm_extensions(request)
+
+            expected_params = []
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_list_vm_extensions_rest_flattened():
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = compute.ListVmExtensionsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"project": "sample1", "zone": "sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            project="project_value",
+            zone="zone_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = compute.ListVmExtensionsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.list_vm_extensions(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/compute/v1/projects/{project}/zones/{zone}/vmExtensions"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_list_vm_extensions_rest_flattened_error(transport: str = "rest"):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_vm_extensions(
+            compute.ListVmExtensionsZoneVmExtensionPoliciesRequest(),
+            project="project_value",
+            zone="zone_value",
+        )
+
+
+def test_list_vm_extensions_rest_pager(transport: str = "rest"):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # TODO(kbandes): remove this mock unless there's a good reason for it.
+        # with mock.patch.object(path_template, 'transcode') as transcode:
+        # Set the response as a series of pages
+        response = (
+            compute.ListVmExtensionsResponse(
+                items=[
+                    compute.VmExtension(),
+                    compute.VmExtension(),
+                    compute.VmExtension(),
+                ],
+                next_page_token="abc",
+            ),
+            compute.ListVmExtensionsResponse(
+                items=[],
+                next_page_token="def",
+            ),
+            compute.ListVmExtensionsResponse(
+                items=[
+                    compute.VmExtension(),
+                ],
+                next_page_token="ghi",
+            ),
+            compute.ListVmExtensionsResponse(
+                items=[
+                    compute.VmExtension(),
+                    compute.VmExtension(),
+                ],
+            ),
+        )
+        # Two responses for two calls
+        response = response + response
+
+        # Wrap the values into proper Response objs
+        response = tuple(compute.ListVmExtensionsResponse.to_json(x) for x in response)
+        return_values = tuple(Response() for i in response)
+        for return_val, response_val in zip(return_values, response):
+            return_val._content = response_val.encode("UTF-8")
+            return_val.status_code = 200
+        req.side_effect = return_values
+
+        sample_request = {"project": "sample1", "zone": "sample2"}
+
+        pager = client.list_vm_extensions(request=sample_request)
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(isinstance(i, compute.VmExtension) for i in results)
+
+        pages = list(client.list_vm_extensions(request=sample_request).pages)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
 def test_update_rest_use_cached_wrapped_rpc():
     # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
     # instead of constructing them on each call
@@ -2584,9 +2865,14 @@ def test_update_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdate,
+        "_BaseUpdate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2595,12 +2881,8 @@ def test_update_rest_required_fields(
     jsonified_request["vmExtensionPolicy"] = "vm_extension_policy_value"
     jsonified_request["zone"] = "zone_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -2651,25 +2933,6 @@ def test_update_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_rest_unset_required_fields():
-    transport = transports.ZoneVmExtensionPoliciesRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "vmExtensionPolicy",
-                "vmExtensionPolicyResource",
-                "zone",
-            )
-        )
-    )
 
 
 def test_update_rest_flattened():
@@ -2801,9 +3064,14 @@ def test_update_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdate,
+        "_BaseUpdate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2812,12 +3080,8 @@ def test_update_unary_rest_required_fields(
     jsonified_request["vmExtensionPolicy"] = "vm_extension_policy_value"
     jsonified_request["zone"] = "zone_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -2868,25 +3132,6 @@ def test_update_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_unary_rest_unset_required_fields():
-    transport = transports.ZoneVmExtensionPoliciesRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "vmExtensionPolicy",
-                "vmExtensionPolicyResource",
-                "zone",
-            )
-        )
-    )
 
 
 def test_update_unary_rest_flattened():
@@ -3382,6 +3627,147 @@ def test_get_rest_interceptors(null_interceptor):
         post_with_metadata.assert_called_once()
 
 
+def test_get_vm_extension_rest_bad_request(
+    request_type=compute.GetVmExtensionZoneVmExtensionPolicyRequest,
+):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "project": "sample1",
+        "zone": "sample2",
+        "extension_name": "sample3",
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.get_vm_extension(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        compute.GetVmExtensionZoneVmExtensionPolicyRequest,
+        dict,
+    ],
+)
+def test_get_vm_extension_rest_call_success(request_type):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "project": "sample1",
+        "zone": "sample2",
+        "extension_name": "sample3",
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = compute.VmExtension(
+            name="name_value",
+            versions=["versions_value"],
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = compute.VmExtension.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.get_vm_extension(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, compute.VmExtension)
+    assert response.name == "name_value"
+    assert response.versions == ["versions_value"]
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_get_vm_extension_rest_interceptors(null_interceptor):
+    transport = transports.ZoneVmExtensionPoliciesRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.ZoneVmExtensionPoliciesRestInterceptor(),
+    )
+    client = ZoneVmExtensionPoliciesClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.ZoneVmExtensionPoliciesRestInterceptor, "post_get_vm_extension"
+        ) as post,
+        mock.patch.object(
+            transports.ZoneVmExtensionPoliciesRestInterceptor,
+            "post_get_vm_extension_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.ZoneVmExtensionPoliciesRestInterceptor, "pre_get_vm_extension"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = compute.GetVmExtensionZoneVmExtensionPolicyRequest.pb(
+            compute.GetVmExtensionZoneVmExtensionPolicyRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = compute.VmExtension.to_json(compute.VmExtension())
+        req.return_value.content = return_value
+
+        request = compute.GetVmExtensionZoneVmExtensionPolicyRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = compute.VmExtension()
+        post_with_metadata.return_value = compute.VmExtension(), metadata
+
+        client.get_vm_extension(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
 def test_insert_rest_bad_request(
     request_type=compute.InsertZoneVmExtensionPolicyRequest,
 ):
@@ -3784,6 +4170,149 @@ def test_list_rest_interceptors(null_interceptor):
         post_with_metadata.assert_called_once()
 
 
+def test_list_vm_extensions_rest_bad_request(
+    request_type=compute.ListVmExtensionsZoneVmExtensionPoliciesRequest,
+):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"project": "sample1", "zone": "sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.list_vm_extensions(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        compute.ListVmExtensionsZoneVmExtensionPoliciesRequest,
+        dict,
+    ],
+)
+def test_list_vm_extensions_rest_call_success(request_type):
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"project": "sample1", "zone": "sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = compute.ListVmExtensionsResponse(
+            etag="etag_value",
+            id="id_value",
+            kind="kind_value",
+            next_page_token="next_page_token_value",
+            self_link="self_link_value",
+            unreachables=["unreachables_value"],
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = compute.ListVmExtensionsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.list_vm_extensions(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListVmExtensionsPager)
+    assert response.etag == "etag_value"
+    assert response.id == "id_value"
+    assert response.kind == "kind_value"
+    assert response.next_page_token == "next_page_token_value"
+    assert response.self_link == "self_link_value"
+    assert response.unreachables == ["unreachables_value"]
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_list_vm_extensions_rest_interceptors(null_interceptor):
+    transport = transports.ZoneVmExtensionPoliciesRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.ZoneVmExtensionPoliciesRestInterceptor(),
+    )
+    client = ZoneVmExtensionPoliciesClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.ZoneVmExtensionPoliciesRestInterceptor, "post_list_vm_extensions"
+        ) as post,
+        mock.patch.object(
+            transports.ZoneVmExtensionPoliciesRestInterceptor,
+            "post_list_vm_extensions_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.ZoneVmExtensionPoliciesRestInterceptor, "pre_list_vm_extensions"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = compute.ListVmExtensionsZoneVmExtensionPoliciesRequest.pb(
+            compute.ListVmExtensionsZoneVmExtensionPoliciesRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = compute.ListVmExtensionsResponse.to_json(
+            compute.ListVmExtensionsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = compute.ListVmExtensionsZoneVmExtensionPoliciesRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = compute.ListVmExtensionsResponse()
+        post_with_metadata.return_value = compute.ListVmExtensionsResponse(), metadata
+
+        client.list_vm_extensions(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
 def test_update_rest_bad_request(
     request_type=compute.UpdateZoneVmExtensionPolicyRequest,
 ):
@@ -4101,6 +4630,25 @@ def test_get_empty_call_rest():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_get_vm_extension_empty_call_rest():
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.get_vm_extension), "__call__") as call:
+        client.get_vm_extension(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = compute.GetVmExtensionZoneVmExtensionPolicyRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_insert_unary_empty_call_rest():
     client = ZoneVmExtensionPoliciesClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -4134,6 +4682,27 @@ def test_list_empty_call_rest():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = compute.ListZoneVmExtensionPoliciesRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_vm_extensions_empty_call_rest():
+    client = ZoneVmExtensionPoliciesClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_vm_extensions), "__call__"
+    ) as call:
+        client.list_vm_extensions(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = compute.ListVmExtensionsZoneVmExtensionPoliciesRequest()
         assert args[0] == request_msg
 
 
@@ -4180,8 +4749,10 @@ def test_zone_vm_extension_policies_base_transport():
     methods = (
         "delete",
         "get",
+        "get_vm_extension",
         "insert",
         "list",
+        "list_vm_extensions",
         "update",
     )
     for method in methods:
@@ -4332,11 +4903,17 @@ def test_zone_vm_extension_policies_client_transport_session_collision(transport
     session1 = client1.transport.get._session
     session2 = client2.transport.get._session
     assert session1 != session2
+    session1 = client1.transport.get_vm_extension._session
+    session2 = client2.transport.get_vm_extension._session
+    assert session1 != session2
     session1 = client1.transport.insert._session
     session2 = client2.transport.insert._session
     assert session1 != session2
     session1 = client1.transport.list._session
     session2 = client2.transport.list._session
+    assert session1 != session2
+    session1 = client1.transport.list_vm_extensions._session
+    session2 = client2.transport.list_vm_extensions._session
     assert session1 != session2
     session1 = client1.transport.update._session
     session2 = client2.transport.update._session

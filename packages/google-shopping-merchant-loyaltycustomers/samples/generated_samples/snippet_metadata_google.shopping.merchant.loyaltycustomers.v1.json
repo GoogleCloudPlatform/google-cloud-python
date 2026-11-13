@@ -1,0 +1,168 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.shopping.merchant.loyaltycustomers.v1",
+        "version": "v1"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-shopping-merchant-loyaltycustomers",
+    "version": "0.1.2"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.shopping.merchant_loyaltycustomers_v1.LoyaltyCustomerMatchServiceAsyncClient",
+          "shortName": "LoyaltyCustomerMatchServiceAsyncClient"
+        },
+        "fullName": "google.shopping.merchant_loyaltycustomers_v1.LoyaltyCustomerMatchServiceAsyncClient.manage_loyalty_customer_match",
+        "method": {
+          "fullName": "google.shopping.merchant.loyaltycustomers.v1.LoyaltyCustomerMatchService.ManageLoyaltyCustomerMatch",
+          "service": {
+            "fullName": "google.shopping.merchant.loyaltycustomers.v1.LoyaltyCustomerMatchService",
+            "shortName": "LoyaltyCustomerMatchService"
+          },
+          "shortName": "ManageLoyaltyCustomerMatch"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_loyaltycustomers_v1.types.ManageLoyaltyCustomerMatchRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_loyaltycustomers_v1.types.ManageLoyaltyCustomerMatchResponse",
+        "shortName": "manage_loyalty_customer_match"
+      },
+      "description": "Sample for ManageLoyaltyCustomerMatch",
+      "file": "merchantapi_v1_generated_loyalty_customer_match_service_manage_loyalty_customer_match_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_LoyaltyCustomerMatchService_ManageLoyaltyCustomerMatch_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_loyalty_customer_match_service_manage_loyalty_customer_match_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.shopping.merchant_loyaltycustomers_v1.LoyaltyCustomerMatchServiceClient",
+          "shortName": "LoyaltyCustomerMatchServiceClient"
+        },
+        "fullName": "google.shopping.merchant_loyaltycustomers_v1.LoyaltyCustomerMatchServiceClient.manage_loyalty_customer_match",
+        "method": {
+          "fullName": "google.shopping.merchant.loyaltycustomers.v1.LoyaltyCustomerMatchService.ManageLoyaltyCustomerMatch",
+          "service": {
+            "fullName": "google.shopping.merchant.loyaltycustomers.v1.LoyaltyCustomerMatchService",
+            "shortName": "LoyaltyCustomerMatchService"
+          },
+          "shortName": "ManageLoyaltyCustomerMatch"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.shopping.merchant_loyaltycustomers_v1.types.ManageLoyaltyCustomerMatchRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.shopping.merchant_loyaltycustomers_v1.types.ManageLoyaltyCustomerMatchResponse",
+        "shortName": "manage_loyalty_customer_match"
+      },
+      "description": "Sample for ManageLoyaltyCustomerMatch",
+      "file": "merchantapi_v1_generated_loyalty_customer_match_service_manage_loyalty_customer_match_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "merchantapi_v1_generated_LoyaltyCustomerMatchService_ManageLoyaltyCustomerMatch_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "merchantapi_v1_generated_loyalty_customer_match_service_manage_loyalty_customer_match_sync.py"
+    }
+  ]
+}

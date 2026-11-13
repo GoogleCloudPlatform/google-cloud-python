@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.compute_v1beta._compat import transcode_request
 from google.cloud.compute_v1beta.types import compute
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -401,15 +402,16 @@ class StoragePoolTypesRestTransport(_BaseStoragePoolTypesRestTransport):
             """
 
             http_options = _BaseStoragePoolTypesRestTransport._BaseAggregatedList._get_http_options()
-
             request, metadata = self._interceptor.pre_aggregated_list(request, metadata)
-            transcoded_request = _BaseStoragePoolTypesRestTransport._BaseAggregatedList._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseStoragePoolTypesRestTransport._BaseAggregatedList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseStoragePoolTypesRestTransport._BaseAggregatedList,
+                    "_BaseAggregatedList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -547,19 +549,16 @@ class StoragePoolTypesRestTransport(_BaseStoragePoolTypesRestTransport):
             http_options = (
                 _BaseStoragePoolTypesRestTransport._BaseGet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get(request, metadata)
-            transcoded_request = (
-                _BaseStoragePoolTypesRestTransport._BaseGet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseStoragePoolTypesRestTransport._BaseGet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseStoragePoolTypesRestTransport._BaseGet,
+                    "_BaseGet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -695,19 +694,16 @@ class StoragePoolTypesRestTransport(_BaseStoragePoolTypesRestTransport):
             http_options = (
                 _BaseStoragePoolTypesRestTransport._BaseList._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list(request, metadata)
-            transcoded_request = (
-                _BaseStoragePoolTypesRestTransport._BaseList._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseStoragePoolTypesRestTransport._BaseList._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseStoragePoolTypesRestTransport._BaseList,
+                    "_BaseList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

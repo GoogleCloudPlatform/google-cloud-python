@@ -33,6 +33,7 @@ __protobuf__ = proto.module(
         "Issue",
         "IssueComment",
         "PullRequestComment",
+        "Ref",
         "ListInstancesRequest",
         "ListInstancesResponse",
         "GetInstanceRequest",
@@ -80,6 +81,8 @@ __protobuf__ = proto.module(
         "FetchTreeResponse",
         "FetchBlobRequest",
         "FetchBlobResponse",
+        "FetchRefsRequest",
+        "FetchRefsResponse",
         "ListPullRequestCommentsRequest",
         "ListPullRequestCommentsResponse",
         "CreatePullRequestCommentRequest",
@@ -150,6 +153,10 @@ class Instance(proto.Message):
             Identity Federation to support third party
             identity provider. If unset, defaults to the
             Google OIDC IdP.
+        satisfies_pzi (bool):
+            Output only. Reserved for future use.
+        satisfies_pzs (bool):
+            Output only. Reserved for future use.
     """
 
     class State(proto.Enum):
@@ -385,6 +392,14 @@ class Instance(proto.Message):
             number=14,
             message=WorkforceIdentityFederationConfig,
         )
+    )
+    satisfies_pzi: bool = proto.Field(
+        proto.BOOL,
+        number=18,
+    )
+    satisfies_pzs: bool = proto.Field(
+        proto.BOOL,
+        number=19,
     )
 
 
@@ -817,11 +832,15 @@ class Hook(proto.Message):
             PULL_REQUEST (2):
                 Pull request events are triggered when a pull
                 request is opened, closed, reopened, or edited.
+            PULL_REQUEST_COMMENT (3):
+                Triggers when a general comment is added,
+                edited, or deleted on a pull request.
         """
 
         UNSPECIFIED = 0
         PUSH = 1
         PULL_REQUEST = 2
+        PULL_REQUEST_COMMENT = 3
 
     class PushOption(proto.Message):
         r"""
@@ -1509,6 +1528,52 @@ class PullRequestComment(proto.Message):
         number=6,
         oneof="comment_detail",
         message=Code,
+    )
+
+
+class Ref(proto.Message):
+    r"""Ref represents a git reference within a repository.
+
+    Attributes:
+        name (str):
+            Identifier. Name of the git reference (e.g.,
+            'refs/heads/foo' or 'refs/tags/v1.0').
+        target (str):
+            Output only. The target of the reference,
+            which is a commit SHA.
+        type_ (google.cloud.securesourcemanager_v1.types.Ref.RefType):
+            Output only. The type of the reference.
+    """
+
+    class RefType(proto.Enum):
+        r"""The derived type of the reference (e.g., branch or tag) from
+        the name.
+
+        Values:
+            REF_TYPE_UNSPECIFIED (0):
+                Unspecified ref type.
+            REF_TYPE_BRANCH (1):
+                Represents a branch.
+            REF_TYPE_TAG (2):
+                Represents a tag.
+        """
+
+        REF_TYPE_UNSPECIFIED = 0
+        REF_TYPE_BRANCH = 1
+        REF_TYPE_TAG = 2
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    target: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    type_: RefType = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=RefType,
     )
 
 
@@ -2867,6 +2932,74 @@ class FetchBlobResponse(proto.Message):
         number=1,
     )
     content: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class FetchRefsRequest(proto.Message):
+    r"""Request message for fetching git references from a
+    repository.
+
+    Attributes:
+        repository (str):
+            Required. The format is
+            ``projects/{project_number}/locations/{location_id}/repositories/{repository_id}``.
+            Specifies the repository to fetch the references from.
+        type_ (google.cloud.securesourcemanager_v1.types.Ref.RefType):
+            Optional. The type of reference to fetch (eg.
+            branch, tag). By default, all references are
+            returned.
+        page_size (int):
+            Optional. Requested page size. If
+            unspecified, a default size of 30 will be used.
+            The maximum value is 100; values above 100 will
+            be coerced to 100.
+        page_token (str):
+            Optional. A token identifying a page of
+            results the server should return.
+    """
+
+    repository: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    type_: "Ref.RefType" = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum="Ref.RefType",
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=3,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+
+
+class FetchRefsResponse(proto.Message):
+    r"""Response message containing a list of git references.
+
+    Attributes:
+        refs (MutableSequence[google.cloud.securesourcemanager_v1.types.Ref]):
+            The list of git references.
+        next_page_token (str):
+            A token identifying a page of results the
+            server should return.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    refs: MutableSequence["Ref"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="Ref",
+    )
+    next_page_token: str = proto.Field(
         proto.STRING,
         number=2,
     )

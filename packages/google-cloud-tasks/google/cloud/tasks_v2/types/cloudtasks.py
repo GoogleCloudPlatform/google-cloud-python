@@ -18,8 +18,11 @@ from __future__ import annotations
 from typing import MutableMapping, MutableSequence
 
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
+import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.rpc.status_pb2 as status_pb2  # type: ignore
 import proto  # type: ignore
 
+from google.cloud.tasks_v2.types import cmek_config as gct_cmek_config
 from google.cloud.tasks_v2.types import queue as gct_queue
 from google.cloud.tasks_v2.types import task as gct_task
 
@@ -39,8 +42,15 @@ __protobuf__ = proto.module(
         "ListTasksResponse",
         "GetTaskRequest",
         "CreateTaskRequest",
+        "BatchCreateTasksRequest",
         "DeleteTaskRequest",
+        "BatchDeleteTasksRequest",
+        "BatchDeleteTasksMetadata",
         "RunTaskRequest",
+        "UpdateCmekConfigRequest",
+        "GetCmekConfigRequest",
+        "BatchCreateTasksResponse",
+        "BatchCreateTasksMetadata",
     },
 )
 
@@ -452,13 +462,11 @@ class CreateTaskRequest(proto.Message):
             If a task's ID is identical to that of an existing task or a
             task that was deleted or executed recently then the call
             will fail with
-            [ALREADY_EXISTS][google.rpc.Code.ALREADY_EXISTS]. If the
-            task's queue was created using Cloud Tasks, then another
-            task with the same name can't be created for ~1hour after
-            the original task was deleted or executed. If the task's
-            queue was created using queue.yaml or queue.xml, then
-            another task with the same name can't be created for ~9days
-            after the original task was deleted or executed.
+            [ALREADY_EXISTS][google.rpc.Code.ALREADY_EXISTS]. The IDs of
+            deleted tasks are not immediately available for reuse. It
+            can take up to 24 hours (or 9 days if the task's queue was
+            created using a queue.yaml or queue.xml) for the task ID to
+            be released and made available again.
 
             Because there is an extra lookup cost to identify duplicate
             task names, these
@@ -505,6 +513,47 @@ class CreateTaskRequest(proto.Message):
     )
 
 
+class BatchCreateTasksRequest(proto.Message):
+    r"""Request message for [BatchCreateTasks].
+
+    Attributes:
+        parent (str):
+            Required. The queue name. For example:
+            ``projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID``
+
+            The queue must already exist.
+        requests (MutableSequence[google.cloud.tasks_v2.types.CreateTaskRequest]):
+            Required. The list of requests to create
+            tasks. The queue specified in parent field of
+            each CreateTaskRequest will be the same. This
+            validation happens on the client side as well as
+            in the handler.
+            BatchCreateTasksRequest.parent will also be the
+            same value as the individual
+            CreateTaskRequest.parent.
+            The maximum number of requests is 100.
+        request_id (str):
+            Optional. This field will be used to identify
+            the long running operation, avoiding duplication
+            when user retries. If not provided, then a UUID
+            will be generated at server side.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    requests: MutableSequence["CreateTaskRequest"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="CreateTaskRequest",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
 class DeleteTaskRequest(proto.Message):
     r"""Request message for deleting a task using
     [DeleteTask][google.cloud.tasks.v2.CloudTasks.DeleteTask].
@@ -518,6 +567,124 @@ class DeleteTaskRequest(proto.Message):
     name: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+
+
+class BatchDeleteTasksRequest(proto.Message):
+    r"""Request message for deleting a batch of tasks using
+    [BatchDeleteTasks][google.cloud.tasks.v2.CloudTasks.BatchDeleteTasks].
+
+    Attributes:
+        parent (str):
+            Required. The queue name. For example: Format:
+            ``projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID``
+        names (MutableSequence[str]):
+            Required. The names of the tasks to delete. A maximum of
+            1000 tasks can be deleted in a batch. For example: Format:
+            ``projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID``
+        request_id (str):
+            Optional. This field will be used to identify
+            the long running operation, avoiding duplication
+            when user retries. If not provided, then a UUID
+            will be generated at server side.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    names: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class BatchDeleteTasksMetadata(proto.Message):
+    r"""Metadata for the long-running operation returned by
+    [BatchDeleteTasks][google.cloud.tasks.v2.CloudTasks.BatchDeleteTasks].
+    This message is used to hold metadata information about the batch
+    delete tasks operation; that is, it is put in
+    [google.longrunning.Operation.metadata][google.longrunning.Operation.metadata].
+
+    Attributes:
+        start_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The time when the batch delete
+            started.
+        end_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The time when the batch delete
+            finished.
+        state (google.cloud.tasks_v2.types.BatchDeleteTasksMetadata.State):
+            Output only. The state of the batch delete
+            operation.
+        failed_requests (MutableMapping[int, google.rpc.status_pb2.Status]):
+            Output only. A map of failed requests, where
+            the key is the index of the request in
+            BatchDeleteTasksRequest.names and the value is
+            the error status.
+    """
+
+    class State(proto.Enum):
+        r"""The state of the batch delete operation.
+        This enum is not frozen and new values may be added in the
+        future.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                The default value. This value is used if the
+                state is omitted.
+            RUNNING (1):
+                The batch delete is running.
+            SUCCEEDED (2):
+                The batch delete has finished and all tasks
+                were successfully deleted.
+            PARTIALLY_SUCCEEDED (3):
+                The batch delete has finished with partial success. The
+                tasks that failed to be deleted are reported in
+                [failed_requests][google.cloud.tasks.v2.BatchDeleteTasksMetadata.failed_requests].
+                When all requests in the batch fail,
+                [google.longrunning.Operation.error][google.longrunning.Operation.error]
+                will be set with ``code`` = ``google.rpc.Code.ABORTED`` and
+                ``message`` = "None of the requests succeeded, refer to
+                BatchDeleteTasksMetadata.failed_requests for individual
+                error details".
+            FAILED (4):
+                The batch delete has failed.
+                This means the overall batch delete operation
+                failed to complete. This can happen due to an
+                internal error preventing the operation from
+                finishing.
+        """
+
+        STATE_UNSPECIFIED = 0
+        RUNNING = 1
+        SUCCEEDED = 2
+        PARTIALLY_SUCCEEDED = 3
+        FAILED = 4
+
+    start_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=timestamp_pb2.Timestamp,
+    )
+    end_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=timestamp_pb2.Timestamp,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=State,
+    )
+    failed_requests: MutableMapping[int, status_pb2.Status] = proto.MapField(
+        proto.INT32,
+        proto.MESSAGE,
+        number=4,
+        message=status_pb2.Status,
     )
 
 
@@ -555,6 +722,136 @@ class RunTaskRequest(proto.Message):
         proto.ENUM,
         number=2,
         enum=gct_task.Task.View,
+    )
+
+
+class UpdateCmekConfigRequest(proto.Message):
+    r"""Request message for
+    [UpdateCmekConfig][google.cloud.tasks.v2.CloudTasks.UpdateCmekConfig].
+
+    Attributes:
+        cmek_config (google.cloud.tasks_v2.types.CmekConfig):
+            Required. The config to update.  Its name
+            attribute distinguishes it.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            List of fields to be updated in this request.
+    """
+
+    cmek_config: gct_cmek_config.CmekConfig = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=gct_cmek_config.CmekConfig,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
+class GetCmekConfigRequest(proto.Message):
+    r"""Request message for
+    [GetCmekConfig][google.cloud.tasks.v2.CloudTasks.GetCmekConfig].
+
+    Attributes:
+        name (str):
+            Required. The config. For example:
+            ``projects/PROJECT_ID/locations/LOCATION_ID/CmekConfig``
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class BatchCreateTasksResponse(proto.Message):
+    r"""Response message for [BatchCreateTasks].
+
+    Attributes:
+        tasks (MutableSequence[google.cloud.tasks_v2.types.Task]):
+            The tasks that were successfully created.
+    """
+
+    tasks: MutableSequence[gct_task.Task] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=gct_task.Task,
+    )
+
+
+class BatchCreateTasksMetadata(proto.Message):
+    r"""Metadata message for [BatchCreateTasks].
+
+    Attributes:
+        start_time (google.protobuf.timestamp_pb2.Timestamp):
+            The time when the batch create started.
+        end_time (google.protobuf.timestamp_pb2.Timestamp):
+            The time when the batch create finished.
+        state (google.cloud.tasks_v2.types.BatchCreateTasksMetadata.State):
+            Output only. The state of the batch create
+            operation.
+        failed_requests (MutableMapping[int, google.rpc.status_pb2.Status]):
+            A map of failed requests, where the key is
+            the index of the request in
+            BatchCreateTasksRequest.requests and the value
+            is the error status.
+    """
+
+    class State(proto.Enum):
+        r"""The state of the batch create operation.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                The default value. This value is used if the
+                state is omitted.
+            RUNNING (1):
+                The batch create is running.
+            SUCCEEDED (2):
+                The batch create has finished.
+                All tasks in the request were successfully
+                created.
+            PARTIALLY_SUCCEEDED (5):
+                The batch create has finished with partial success. The
+                tasks that failed to be created are reported in
+                [failed_requests][google.cloud.tasks.v2.BatchCreateTasksMetadata.failed_requests].
+            FAILED (3):
+                The batch create has failed.
+                This means the overall batch create operation
+                failed to complete. This can happen due to an
+                internal error preventing the operation from
+                finishing.
+            CANCELLED (4):
+                The batch create was cancelled.
+        """
+
+        STATE_UNSPECIFIED = 0
+        RUNNING = 1
+        SUCCEEDED = 2
+        PARTIALLY_SUCCEEDED = 5
+        FAILED = 3
+        CANCELLED = 4
+
+    start_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=timestamp_pb2.Timestamp,
+    )
+    end_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=timestamp_pb2.Timestamp,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=State,
+    )
+    failed_requests: MutableMapping[int, status_pb2.Status] = proto.MapField(
+        proto.INT32,
+        proto.MESSAGE,
+        number=4,
+        message=status_pb2.Status,
     )
 
 

@@ -59,7 +59,7 @@ class Waypoint(proto.Message):
             This field is a member of `oneof`_ ``location_type``.
         navigation_point_token (str):
             A token that identifies a
-            ```NavigationPoint`` <https://developers.google.com/maps/documentation/geocoding/reference/rest/v4alpha/geocode.destinations/searchDestinations#navigationpoint>`__,
+            ```NavigationPoint`` </maps/documentation/geocoding/reference/rest/v4alpha/geocode.destinations/searchDestinations#navigationpoint>`__,
             obtained from the ``SearchDestinations`` method of the
             Geocoding API.
 

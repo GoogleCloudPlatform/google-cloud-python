@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     audience_segment_messages,
     audience_segment_service,
@@ -75,6 +76,70 @@ class AudienceSegmentServiceRestInterceptor:
 
     .. code-block:: python
         class MyCustomAudienceSegmentServiceInterceptor(AudienceSegmentServiceRestInterceptor):
+            def pre_batch_activate_audience_segments(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_activate_audience_segments(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_approve_audience_segments(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_approve_audience_segments(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_create_audience_segments(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_create_audience_segments(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_deactivate_audience_segments(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_deactivate_audience_segments(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_populate_audience_segments(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_populate_audience_segments(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_reject_audience_segments(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_reject_audience_segments(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_update_audience_segments(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_update_audience_segments(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_create_audience_segment(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_audience_segment(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_get_audience_segment(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -91,11 +156,435 @@ class AudienceSegmentServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_update_audience_segment(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_audience_segment(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
         transport = AudienceSegmentServiceRestTransport(interceptor=MyCustomAudienceSegmentServiceInterceptor())
         client = AudienceSegmentServiceClient(transport=transport)
 
 
     """
+
+    def pre_batch_activate_audience_segments(
+        self,
+        request: audience_segment_service.BatchActivateAudienceSegmentsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchActivateAudienceSegmentsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_activate_audience_segments
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AudienceSegmentService server.
+        """
+        return request, metadata
+
+    def post_batch_activate_audience_segments(
+        self, response: audience_segment_service.BatchActivateAudienceSegmentsResponse
+    ) -> audience_segment_service.BatchActivateAudienceSegmentsResponse:
+        """Post-rpc interceptor for batch_activate_audience_segments
+
+        DEPRECATED. Please use the `post_batch_activate_audience_segments_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AudienceSegmentService server but before
+        it is returned to user code. This `post_batch_activate_audience_segments` interceptor runs
+        before the `post_batch_activate_audience_segments_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_activate_audience_segments_with_metadata(
+        self,
+        response: audience_segment_service.BatchActivateAudienceSegmentsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchActivateAudienceSegmentsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_activate_audience_segments
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AudienceSegmentService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_activate_audience_segments_with_metadata`
+        interceptor in new development instead of the `post_batch_activate_audience_segments` interceptor.
+        When both interceptors are used, this `post_batch_activate_audience_segments_with_metadata` interceptor runs after the
+        `post_batch_activate_audience_segments` interceptor. The (possibly modified) response returned by
+        `post_batch_activate_audience_segments` will be passed to
+        `post_batch_activate_audience_segments_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_approve_audience_segments(
+        self,
+        request: audience_segment_service.BatchApproveAudienceSegmentsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchApproveAudienceSegmentsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_approve_audience_segments
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AudienceSegmentService server.
+        """
+        return request, metadata
+
+    def post_batch_approve_audience_segments(
+        self, response: audience_segment_service.BatchApproveAudienceSegmentsResponse
+    ) -> audience_segment_service.BatchApproveAudienceSegmentsResponse:
+        """Post-rpc interceptor for batch_approve_audience_segments
+
+        DEPRECATED. Please use the `post_batch_approve_audience_segments_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AudienceSegmentService server but before
+        it is returned to user code. This `post_batch_approve_audience_segments` interceptor runs
+        before the `post_batch_approve_audience_segments_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_approve_audience_segments_with_metadata(
+        self,
+        response: audience_segment_service.BatchApproveAudienceSegmentsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchApproveAudienceSegmentsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_approve_audience_segments
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AudienceSegmentService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_approve_audience_segments_with_metadata`
+        interceptor in new development instead of the `post_batch_approve_audience_segments` interceptor.
+        When both interceptors are used, this `post_batch_approve_audience_segments_with_metadata` interceptor runs after the
+        `post_batch_approve_audience_segments` interceptor. The (possibly modified) response returned by
+        `post_batch_approve_audience_segments` will be passed to
+        `post_batch_approve_audience_segments_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_create_audience_segments(
+        self,
+        request: audience_segment_service.BatchCreateAudienceSegmentsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchCreateAudienceSegmentsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_create_audience_segments
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AudienceSegmentService server.
+        """
+        return request, metadata
+
+    def post_batch_create_audience_segments(
+        self, response: audience_segment_service.BatchCreateAudienceSegmentsResponse
+    ) -> audience_segment_service.BatchCreateAudienceSegmentsResponse:
+        """Post-rpc interceptor for batch_create_audience_segments
+
+        DEPRECATED. Please use the `post_batch_create_audience_segments_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AudienceSegmentService server but before
+        it is returned to user code. This `post_batch_create_audience_segments` interceptor runs
+        before the `post_batch_create_audience_segments_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_create_audience_segments_with_metadata(
+        self,
+        response: audience_segment_service.BatchCreateAudienceSegmentsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchCreateAudienceSegmentsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_create_audience_segments
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AudienceSegmentService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_create_audience_segments_with_metadata`
+        interceptor in new development instead of the `post_batch_create_audience_segments` interceptor.
+        When both interceptors are used, this `post_batch_create_audience_segments_with_metadata` interceptor runs after the
+        `post_batch_create_audience_segments` interceptor. The (possibly modified) response returned by
+        `post_batch_create_audience_segments` will be passed to
+        `post_batch_create_audience_segments_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_deactivate_audience_segments(
+        self,
+        request: audience_segment_service.BatchDeactivateAudienceSegmentsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchDeactivateAudienceSegmentsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_deactivate_audience_segments
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AudienceSegmentService server.
+        """
+        return request, metadata
+
+    def post_batch_deactivate_audience_segments(
+        self, response: audience_segment_service.BatchDeactivateAudienceSegmentsResponse
+    ) -> audience_segment_service.BatchDeactivateAudienceSegmentsResponse:
+        """Post-rpc interceptor for batch_deactivate_audience_segments
+
+        DEPRECATED. Please use the `post_batch_deactivate_audience_segments_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AudienceSegmentService server but before
+        it is returned to user code. This `post_batch_deactivate_audience_segments` interceptor runs
+        before the `post_batch_deactivate_audience_segments_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_deactivate_audience_segments_with_metadata(
+        self,
+        response: audience_segment_service.BatchDeactivateAudienceSegmentsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchDeactivateAudienceSegmentsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_deactivate_audience_segments
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AudienceSegmentService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_deactivate_audience_segments_with_metadata`
+        interceptor in new development instead of the `post_batch_deactivate_audience_segments` interceptor.
+        When both interceptors are used, this `post_batch_deactivate_audience_segments_with_metadata` interceptor runs after the
+        `post_batch_deactivate_audience_segments` interceptor. The (possibly modified) response returned by
+        `post_batch_deactivate_audience_segments` will be passed to
+        `post_batch_deactivate_audience_segments_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_populate_audience_segments(
+        self,
+        request: audience_segment_service.BatchPopulateAudienceSegmentsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchPopulateAudienceSegmentsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_populate_audience_segments
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AudienceSegmentService server.
+        """
+        return request, metadata
+
+    def post_batch_populate_audience_segments(
+        self, response: audience_segment_service.BatchPopulateAudienceSegmentsResponse
+    ) -> audience_segment_service.BatchPopulateAudienceSegmentsResponse:
+        """Post-rpc interceptor for batch_populate_audience_segments
+
+        DEPRECATED. Please use the `post_batch_populate_audience_segments_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AudienceSegmentService server but before
+        it is returned to user code. This `post_batch_populate_audience_segments` interceptor runs
+        before the `post_batch_populate_audience_segments_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_populate_audience_segments_with_metadata(
+        self,
+        response: audience_segment_service.BatchPopulateAudienceSegmentsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchPopulateAudienceSegmentsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_populate_audience_segments
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AudienceSegmentService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_populate_audience_segments_with_metadata`
+        interceptor in new development instead of the `post_batch_populate_audience_segments` interceptor.
+        When both interceptors are used, this `post_batch_populate_audience_segments_with_metadata` interceptor runs after the
+        `post_batch_populate_audience_segments` interceptor. The (possibly modified) response returned by
+        `post_batch_populate_audience_segments` will be passed to
+        `post_batch_populate_audience_segments_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_reject_audience_segments(
+        self,
+        request: audience_segment_service.BatchRejectAudienceSegmentsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchRejectAudienceSegmentsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_reject_audience_segments
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AudienceSegmentService server.
+        """
+        return request, metadata
+
+    def post_batch_reject_audience_segments(
+        self, response: audience_segment_service.BatchRejectAudienceSegmentsResponse
+    ) -> audience_segment_service.BatchRejectAudienceSegmentsResponse:
+        """Post-rpc interceptor for batch_reject_audience_segments
+
+        DEPRECATED. Please use the `post_batch_reject_audience_segments_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AudienceSegmentService server but before
+        it is returned to user code. This `post_batch_reject_audience_segments` interceptor runs
+        before the `post_batch_reject_audience_segments_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_reject_audience_segments_with_metadata(
+        self,
+        response: audience_segment_service.BatchRejectAudienceSegmentsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchRejectAudienceSegmentsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_reject_audience_segments
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AudienceSegmentService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_reject_audience_segments_with_metadata`
+        interceptor in new development instead of the `post_batch_reject_audience_segments` interceptor.
+        When both interceptors are used, this `post_batch_reject_audience_segments_with_metadata` interceptor runs after the
+        `post_batch_reject_audience_segments` interceptor. The (possibly modified) response returned by
+        `post_batch_reject_audience_segments` will be passed to
+        `post_batch_reject_audience_segments_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_update_audience_segments(
+        self,
+        request: audience_segment_service.BatchUpdateAudienceSegmentsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchUpdateAudienceSegmentsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_update_audience_segments
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AudienceSegmentService server.
+        """
+        return request, metadata
+
+    def post_batch_update_audience_segments(
+        self, response: audience_segment_service.BatchUpdateAudienceSegmentsResponse
+    ) -> audience_segment_service.BatchUpdateAudienceSegmentsResponse:
+        """Post-rpc interceptor for batch_update_audience_segments
+
+        DEPRECATED. Please use the `post_batch_update_audience_segments_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AudienceSegmentService server but before
+        it is returned to user code. This `post_batch_update_audience_segments` interceptor runs
+        before the `post_batch_update_audience_segments_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_update_audience_segments_with_metadata(
+        self,
+        response: audience_segment_service.BatchUpdateAudienceSegmentsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.BatchUpdateAudienceSegmentsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_update_audience_segments
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AudienceSegmentService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_update_audience_segments_with_metadata`
+        interceptor in new development instead of the `post_batch_update_audience_segments` interceptor.
+        When both interceptors are used, this `post_batch_update_audience_segments_with_metadata` interceptor runs after the
+        `post_batch_update_audience_segments` interceptor. The (possibly modified) response returned by
+        `post_batch_update_audience_segments` will be passed to
+        `post_batch_update_audience_segments_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_create_audience_segment(
+        self,
+        request: audience_segment_service.CreateAudienceSegmentRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.CreateAudienceSegmentRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for create_audience_segment
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AudienceSegmentService server.
+        """
+        return request, metadata
+
+    def post_create_audience_segment(
+        self, response: audience_segment_messages.AudienceSegment
+    ) -> audience_segment_messages.AudienceSegment:
+        """Post-rpc interceptor for create_audience_segment
+
+        DEPRECATED. Please use the `post_create_audience_segment_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AudienceSegmentService server but before
+        it is returned to user code. This `post_create_audience_segment` interceptor runs
+        before the `post_create_audience_segment_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_audience_segment_with_metadata(
+        self,
+        response: audience_segment_messages.AudienceSegment,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_messages.AudienceSegment,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for create_audience_segment
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AudienceSegmentService server but before it is returned to user code.
+
+        We recommend only using this `post_create_audience_segment_with_metadata`
+        interceptor in new development instead of the `post_create_audience_segment` interceptor.
+        When both interceptors are used, this `post_create_audience_segment_with_metadata` interceptor runs after the
+        `post_create_audience_segment` interceptor. The (possibly modified) response returned by
+        `post_create_audience_segment` will be passed to
+        `post_create_audience_segment_with_metadata`.
+        """
+        return response, metadata
 
     def pre_get_audience_segment(
         self,
@@ -198,6 +687,58 @@ class AudienceSegmentServiceRestInterceptor:
         `post_list_audience_segments` interceptor. The (possibly modified) response returned by
         `post_list_audience_segments` will be passed to
         `post_list_audience_segments_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_audience_segment(
+        self,
+        request: audience_segment_service.UpdateAudienceSegmentRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_service.UpdateAudienceSegmentRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_audience_segment
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AudienceSegmentService server.
+        """
+        return request, metadata
+
+    def post_update_audience_segment(
+        self, response: audience_segment_messages.AudienceSegment
+    ) -> audience_segment_messages.AudienceSegment:
+        """Post-rpc interceptor for update_audience_segment
+
+        DEPRECATED. Please use the `post_update_audience_segment_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AudienceSegmentService server but before
+        it is returned to user code. This `post_update_audience_segment` interceptor runs
+        before the `post_update_audience_segment_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_audience_segment_with_metadata(
+        self,
+        response: audience_segment_messages.AudienceSegment,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        audience_segment_messages.AudienceSegment,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for update_audience_segment
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AudienceSegmentService server but before it is returned to user code.
+
+        We recommend only using this `post_update_audience_segment_with_metadata`
+        interceptor in new development instead of the `post_update_audience_segment` interceptor.
+        When both interceptors are used, this `post_update_audience_segment_with_metadata` interceptor runs after the
+        `post_update_audience_segment` interceptor. The (possibly modified) response returned by
+        `post_update_audience_segment` will be passed to
+        `post_update_audience_segment_with_metadata`.
         """
         return response, metadata
 
@@ -343,6 +884,1280 @@ class AudienceSegmentServiceRestTransport(_BaseAudienceSegmentServiceRestTranspo
         self._interceptor = interceptor or AudienceSegmentServiceRestInterceptor()
         self._prep_wrapped_messages(client_info)
 
+    class _BatchActivateAudienceSegments(
+        _BaseAudienceSegmentServiceRestTransport._BaseBatchActivateAudienceSegments,
+        AudienceSegmentServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "AudienceSegmentServiceRestTransport.BatchActivateAudienceSegments"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: audience_segment_service.BatchActivateAudienceSegmentsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> audience_segment_service.BatchActivateAudienceSegmentsResponse:
+            r"""Call the batch activate audience
+            segments method over HTTP.
+
+                Args:
+                    request (~.audience_segment_service.BatchActivateAudienceSegmentsRequest):
+                        The request object. Request message for ``BatchActivateAudienceSegments``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.audience_segment_service.BatchActivateAudienceSegmentsResponse:
+                        Response message for ``BatchActivateAudienceSegments``
+                    method.
+
+            """
+
+            http_options = _BaseAudienceSegmentServiceRestTransport._BaseBatchActivateAudienceSegments._get_http_options()
+            request, metadata = self._interceptor.pre_batch_activate_audience_segments(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseBatchActivateAudienceSegments,
+                    "_BaseBatchActivateAudienceSegments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.AudienceSegmentServiceClient.BatchActivateAudienceSegments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchActivateAudienceSegments",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AudienceSegmentServiceRestTransport._BatchActivateAudienceSegments._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = audience_segment_service.BatchActivateAudienceSegmentsResponse()
+            pb_resp = audience_segment_service.BatchActivateAudienceSegmentsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_activate_audience_segments(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_activate_audience_segments_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = audience_segment_service.BatchActivateAudienceSegmentsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.AudienceSegmentServiceClient.batch_activate_audience_segments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchActivateAudienceSegments",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchApproveAudienceSegments(
+        _BaseAudienceSegmentServiceRestTransport._BaseBatchApproveAudienceSegments,
+        AudienceSegmentServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "AudienceSegmentServiceRestTransport.BatchApproveAudienceSegments"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: audience_segment_service.BatchApproveAudienceSegmentsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> audience_segment_service.BatchApproveAudienceSegmentsResponse:
+            r"""Call the batch approve audience
+            segments method over HTTP.
+
+                Args:
+                    request (~.audience_segment_service.BatchApproveAudienceSegmentsRequest):
+                        The request object. Request message for ``BatchApproveAudienceSegments``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.audience_segment_service.BatchApproveAudienceSegmentsResponse:
+                        Response message for ``BatchApproveAudienceSegments``
+                    method.
+
+            """
+
+            http_options = _BaseAudienceSegmentServiceRestTransport._BaseBatchApproveAudienceSegments._get_http_options()
+            request, metadata = self._interceptor.pre_batch_approve_audience_segments(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseBatchApproveAudienceSegments,
+                    "_BaseBatchApproveAudienceSegments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.AudienceSegmentServiceClient.BatchApproveAudienceSegments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchApproveAudienceSegments",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AudienceSegmentServiceRestTransport._BatchApproveAudienceSegments._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = audience_segment_service.BatchApproveAudienceSegmentsResponse()
+            pb_resp = audience_segment_service.BatchApproveAudienceSegmentsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_approve_audience_segments(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_approve_audience_segments_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = audience_segment_service.BatchApproveAudienceSegmentsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.AudienceSegmentServiceClient.batch_approve_audience_segments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchApproveAudienceSegments",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchCreateAudienceSegments(
+        _BaseAudienceSegmentServiceRestTransport._BaseBatchCreateAudienceSegments,
+        AudienceSegmentServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "AudienceSegmentServiceRestTransport.BatchCreateAudienceSegments"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: audience_segment_service.BatchCreateAudienceSegmentsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> audience_segment_service.BatchCreateAudienceSegmentsResponse:
+            r"""Call the batch create audience
+            segments method over HTTP.
+
+                Args:
+                    request (~.audience_segment_service.BatchCreateAudienceSegmentsRequest):
+                        The request object. Request object for ``BatchCreateAudienceSegments``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.audience_segment_service.BatchCreateAudienceSegmentsResponse:
+                        Response object for ``BatchCreateAudienceSegments``
+                    method.
+
+            """
+
+            http_options = _BaseAudienceSegmentServiceRestTransport._BaseBatchCreateAudienceSegments._get_http_options()
+            request, metadata = self._interceptor.pre_batch_create_audience_segments(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseBatchCreateAudienceSegments,
+                    "_BaseBatchCreateAudienceSegments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.AudienceSegmentServiceClient.BatchCreateAudienceSegments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchCreateAudienceSegments",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AudienceSegmentServiceRestTransport._BatchCreateAudienceSegments._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = audience_segment_service.BatchCreateAudienceSegmentsResponse()
+            pb_resp = audience_segment_service.BatchCreateAudienceSegmentsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_create_audience_segments(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_create_audience_segments_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = audience_segment_service.BatchCreateAudienceSegmentsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.AudienceSegmentServiceClient.batch_create_audience_segments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchCreateAudienceSegments",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchDeactivateAudienceSegments(
+        _BaseAudienceSegmentServiceRestTransport._BaseBatchDeactivateAudienceSegments,
+        AudienceSegmentServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "AudienceSegmentServiceRestTransport.BatchDeactivateAudienceSegments"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: audience_segment_service.BatchDeactivateAudienceSegmentsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> audience_segment_service.BatchDeactivateAudienceSegmentsResponse:
+            r"""Call the batch deactivate audience
+            segments method over HTTP.
+
+                Args:
+                    request (~.audience_segment_service.BatchDeactivateAudienceSegmentsRequest):
+                        The request object. Request message for ``BatchDeactivateAudienceSegments``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.audience_segment_service.BatchDeactivateAudienceSegmentsResponse:
+                        Response message for ``BatchDeactivateAudienceSegments``
+                    method.
+
+            """
+
+            http_options = _BaseAudienceSegmentServiceRestTransport._BaseBatchDeactivateAudienceSegments._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_batch_deactivate_audience_segments(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseBatchDeactivateAudienceSegments,
+                    "_BaseBatchDeactivateAudienceSegments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.AudienceSegmentServiceClient.BatchDeactivateAudienceSegments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchDeactivateAudienceSegments",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AudienceSegmentServiceRestTransport._BatchDeactivateAudienceSegments._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = audience_segment_service.BatchDeactivateAudienceSegmentsResponse()
+            pb_resp = (
+                audience_segment_service.BatchDeactivateAudienceSegmentsResponse.pb(
+                    resp
+                )
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_deactivate_audience_segments(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_deactivate_audience_segments_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = audience_segment_service.BatchDeactivateAudienceSegmentsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.AudienceSegmentServiceClient.batch_deactivate_audience_segments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchDeactivateAudienceSegments",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchPopulateAudienceSegments(
+        _BaseAudienceSegmentServiceRestTransport._BaseBatchPopulateAudienceSegments,
+        AudienceSegmentServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "AudienceSegmentServiceRestTransport.BatchPopulateAudienceSegments"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: audience_segment_service.BatchPopulateAudienceSegmentsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> audience_segment_service.BatchPopulateAudienceSegmentsResponse:
+            r"""Call the batch populate audience
+            segments method over HTTP.
+
+                Args:
+                    request (~.audience_segment_service.BatchPopulateAudienceSegmentsRequest):
+                        The request object. Request message for ``BatchPopulateAudienceSegments``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.audience_segment_service.BatchPopulateAudienceSegmentsResponse:
+                        Response message for ``BatchPopulateAudienceSegments``
+                    method.
+
+            """
+
+            http_options = _BaseAudienceSegmentServiceRestTransport._BaseBatchPopulateAudienceSegments._get_http_options()
+            request, metadata = self._interceptor.pre_batch_populate_audience_segments(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseBatchPopulateAudienceSegments,
+                    "_BaseBatchPopulateAudienceSegments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.AudienceSegmentServiceClient.BatchPopulateAudienceSegments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchPopulateAudienceSegments",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AudienceSegmentServiceRestTransport._BatchPopulateAudienceSegments._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = audience_segment_service.BatchPopulateAudienceSegmentsResponse()
+            pb_resp = audience_segment_service.BatchPopulateAudienceSegmentsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_populate_audience_segments(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_populate_audience_segments_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = audience_segment_service.BatchPopulateAudienceSegmentsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.AudienceSegmentServiceClient.batch_populate_audience_segments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchPopulateAudienceSegments",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchRejectAudienceSegments(
+        _BaseAudienceSegmentServiceRestTransport._BaseBatchRejectAudienceSegments,
+        AudienceSegmentServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "AudienceSegmentServiceRestTransport.BatchRejectAudienceSegments"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: audience_segment_service.BatchRejectAudienceSegmentsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> audience_segment_service.BatchRejectAudienceSegmentsResponse:
+            r"""Call the batch reject audience
+            segments method over HTTP.
+
+                Args:
+                    request (~.audience_segment_service.BatchRejectAudienceSegmentsRequest):
+                        The request object. Request message for ``BatchRejectAudienceSegments``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.audience_segment_service.BatchRejectAudienceSegmentsResponse:
+                        Response message for ``BatchRejectAudienceSegments``
+                    method.
+
+            """
+
+            http_options = _BaseAudienceSegmentServiceRestTransport._BaseBatchRejectAudienceSegments._get_http_options()
+            request, metadata = self._interceptor.pre_batch_reject_audience_segments(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseBatchRejectAudienceSegments,
+                    "_BaseBatchRejectAudienceSegments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.AudienceSegmentServiceClient.BatchRejectAudienceSegments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchRejectAudienceSegments",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AudienceSegmentServiceRestTransport._BatchRejectAudienceSegments._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = audience_segment_service.BatchRejectAudienceSegmentsResponse()
+            pb_resp = audience_segment_service.BatchRejectAudienceSegmentsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_reject_audience_segments(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_reject_audience_segments_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = audience_segment_service.BatchRejectAudienceSegmentsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.AudienceSegmentServiceClient.batch_reject_audience_segments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchRejectAudienceSegments",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchUpdateAudienceSegments(
+        _BaseAudienceSegmentServiceRestTransport._BaseBatchUpdateAudienceSegments,
+        AudienceSegmentServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "AudienceSegmentServiceRestTransport.BatchUpdateAudienceSegments"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: audience_segment_service.BatchUpdateAudienceSegmentsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> audience_segment_service.BatchUpdateAudienceSegmentsResponse:
+            r"""Call the batch update audience
+            segments method over HTTP.
+
+                Args:
+                    request (~.audience_segment_service.BatchUpdateAudienceSegmentsRequest):
+                        The request object. Request object for ``BatchUpdateAudienceSegments``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.audience_segment_service.BatchUpdateAudienceSegmentsResponse:
+                        Response object for ``BatchUpdateAudienceSegments``
+                    method.
+
+            """
+
+            http_options = _BaseAudienceSegmentServiceRestTransport._BaseBatchUpdateAudienceSegments._get_http_options()
+            request, metadata = self._interceptor.pre_batch_update_audience_segments(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseBatchUpdateAudienceSegments,
+                    "_BaseBatchUpdateAudienceSegments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.AudienceSegmentServiceClient.BatchUpdateAudienceSegments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchUpdateAudienceSegments",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AudienceSegmentServiceRestTransport._BatchUpdateAudienceSegments._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = audience_segment_service.BatchUpdateAudienceSegmentsResponse()
+            pb_resp = audience_segment_service.BatchUpdateAudienceSegmentsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_update_audience_segments(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_update_audience_segments_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = audience_segment_service.BatchUpdateAudienceSegmentsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.AudienceSegmentServiceClient.batch_update_audience_segments",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "BatchUpdateAudienceSegments",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _CreateAudienceSegment(
+        _BaseAudienceSegmentServiceRestTransport._BaseCreateAudienceSegment,
+        AudienceSegmentServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("AudienceSegmentServiceRestTransport.CreateAudienceSegment")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: audience_segment_service.CreateAudienceSegmentRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> audience_segment_messages.AudienceSegment:
+            r"""Call the create audience segment method over HTTP.
+
+            Args:
+                request (~.audience_segment_service.CreateAudienceSegmentRequest):
+                    The request object. Request object for ``CreateAudienceSegment`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.audience_segment_messages.AudienceSegment:
+                    The ``AudienceSegment`` resource.
+            """
+
+            http_options = _BaseAudienceSegmentServiceRestTransport._BaseCreateAudienceSegment._get_http_options()
+            request, metadata = self._interceptor.pre_create_audience_segment(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseCreateAudienceSegment,
+                    "_BaseCreateAudienceSegment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.AudienceSegmentServiceClient.CreateAudienceSegment",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "CreateAudienceSegment",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AudienceSegmentServiceRestTransport._CreateAudienceSegment._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = audience_segment_messages.AudienceSegment()
+            pb_resp = audience_segment_messages.AudienceSegment.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_audience_segment(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_create_audience_segment_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        audience_segment_messages.AudienceSegment.to_json(response)
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.AudienceSegmentServiceClient.create_audience_segment",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "CreateAudienceSegment",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _GetAudienceSegment(
         _BaseAudienceSegmentServiceRestTransport._BaseGetAudienceSegment,
         AudienceSegmentServiceRestStub,
@@ -399,17 +2214,18 @@ class AudienceSegmentServiceRestTransport(_BaseAudienceSegmentServiceRestTranspo
             """
 
             http_options = _BaseAudienceSegmentServiceRestTransport._BaseGetAudienceSegment._get_http_options()
-
             request, metadata = self._interceptor.pre_get_audience_segment(
                 request, metadata
             )
-            transcoded_request = _BaseAudienceSegmentServiceRestTransport._BaseGetAudienceSegment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAudienceSegmentServiceRestTransport._BaseGetAudienceSegment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseGetAudienceSegment,
+                    "_BaseGetAudienceSegment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -550,17 +2366,18 @@ class AudienceSegmentServiceRestTransport(_BaseAudienceSegmentServiceRestTranspo
             """
 
             http_options = _BaseAudienceSegmentServiceRestTransport._BaseListAudienceSegments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_audience_segments(
                 request, metadata
             )
-            transcoded_request = _BaseAudienceSegmentServiceRestTransport._BaseListAudienceSegments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAudienceSegmentServiceRestTransport._BaseListAudienceSegments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseListAudienceSegments,
+                    "_BaseListAudienceSegments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -645,6 +2462,258 @@ class AudienceSegmentServiceRestTransport(_BaseAudienceSegmentServiceRestTranspo
                 )
             return resp
 
+    class _UpdateAudienceSegment(
+        _BaseAudienceSegmentServiceRestTransport._BaseUpdateAudienceSegment,
+        AudienceSegmentServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("AudienceSegmentServiceRestTransport.UpdateAudienceSegment")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: audience_segment_service.UpdateAudienceSegmentRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> audience_segment_messages.AudienceSegment:
+            r"""Call the update audience segment method over HTTP.
+
+            Args:
+                request (~.audience_segment_service.UpdateAudienceSegmentRequest):
+                    The request object. Request object for ``UpdateAudienceSegment`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.audience_segment_messages.AudienceSegment:
+                    The ``AudienceSegment`` resource.
+            """
+
+            http_options = _BaseAudienceSegmentServiceRestTransport._BaseUpdateAudienceSegment._get_http_options()
+            request, metadata = self._interceptor.pre_update_audience_segment(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseUpdateAudienceSegment,
+                    "_BaseUpdateAudienceSegment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.AudienceSegmentServiceClient.UpdateAudienceSegment",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "UpdateAudienceSegment",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AudienceSegmentServiceRestTransport._UpdateAudienceSegment._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = audience_segment_messages.AudienceSegment()
+            pb_resp = audience_segment_messages.AudienceSegment.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_audience_segment(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_audience_segment_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        audience_segment_messages.AudienceSegment.to_json(response)
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.AudienceSegmentServiceClient.update_audience_segment",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AudienceSegmentService",
+                        "rpcName": "UpdateAudienceSegment",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    @property
+    def batch_activate_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchActivateAudienceSegmentsRequest],
+        audience_segment_service.BatchActivateAudienceSegmentsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchActivateAudienceSegments(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_approve_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchApproveAudienceSegmentsRequest],
+        audience_segment_service.BatchApproveAudienceSegmentsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchApproveAudienceSegments(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_create_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchCreateAudienceSegmentsRequest],
+        audience_segment_service.BatchCreateAudienceSegmentsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchCreateAudienceSegments(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_deactivate_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchDeactivateAudienceSegmentsRequest],
+        audience_segment_service.BatchDeactivateAudienceSegmentsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchDeactivateAudienceSegments(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_populate_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchPopulateAudienceSegmentsRequest],
+        audience_segment_service.BatchPopulateAudienceSegmentsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchPopulateAudienceSegments(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_reject_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchRejectAudienceSegmentsRequest],
+        audience_segment_service.BatchRejectAudienceSegmentsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchRejectAudienceSegments(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_update_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchUpdateAudienceSegmentsRequest],
+        audience_segment_service.BatchUpdateAudienceSegmentsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchUpdateAudienceSegments(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def create_audience_segment(
+        self,
+    ) -> Callable[
+        [audience_segment_service.CreateAudienceSegmentRequest],
+        audience_segment_messages.AudienceSegment,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateAudienceSegment(self._session, self._host, self._interceptor)  # type: ignore
+
     @property
     def get_audience_segment(
         self,
@@ -666,6 +2735,17 @@ class AudienceSegmentServiceRestTransport(_BaseAudienceSegmentServiceRestTranspo
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListAudienceSegments(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_audience_segment(
+        self,
+    ) -> Callable[
+        [audience_segment_service.UpdateAudienceSegmentRequest],
+        audience_segment_messages.AudienceSegment,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateAudienceSegment(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def cancel_operation(self):
@@ -723,17 +2803,18 @@ class AudienceSegmentServiceRestTransport(_BaseAudienceSegmentServiceRestTranspo
             """
 
             http_options = _BaseAudienceSegmentServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAudienceSegmentServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAudienceSegmentServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -841,15 +2922,16 @@ class AudienceSegmentServiceRestTransport(_BaseAudienceSegmentServiceRestTranspo
             """
 
             http_options = _BaseAudienceSegmentServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAudienceSegmentServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAudienceSegmentServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAudienceSegmentServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

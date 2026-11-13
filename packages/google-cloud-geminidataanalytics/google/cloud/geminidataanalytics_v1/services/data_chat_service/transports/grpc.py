@@ -415,6 +415,34 @@ class DataChatServiceGrpcTransport(DataChatServiceTransport):
         return self._stubs["delete_conversation"]
 
     @property
+    def update_conversation(
+        self,
+    ) -> Callable[
+        [gcg_conversation.UpdateConversationRequest], gcg_conversation.Conversation
+    ]:
+        r"""Return a callable for the update conversation method over gRPC.
+
+        Updates a conversation.
+
+        Returns:
+            Callable[[~.UpdateConversationRequest],
+                    ~.Conversation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_conversation" not in self._stubs:
+            self._stubs["update_conversation"] = self._logged_channel.unary_unary(
+                "/google.cloud.geminidataanalytics.v1.DataChatService/UpdateConversation",
+                request_serializer=gcg_conversation.UpdateConversationRequest.serialize,
+                response_deserializer=gcg_conversation.Conversation.deserialize,
+            )
+        return self._stubs["update_conversation"]
+
+    @property
     def get_conversation(
         self,
     ) -> Callable[[conversation.GetConversationRequest], conversation.Conversation]:

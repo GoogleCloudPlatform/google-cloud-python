@@ -32,16 +32,24 @@ __protobuf__ = proto.module(
         "DatasourceReferences",
         "BigQueryTableReferences",
         "BigQueryTableReference",
+        "BigQueryDatasetReference",
+        "SearchScope",
         "StudioDatasourceReferences",
         "StudioDatasourceReference",
         "AlloyDbReference",
+        "DatabaseTableReference",
         "AlloyDbDatabaseReference",
+        "BigtableReference",
+        "BigtableDatabaseReference",
+        "FirestoreReference",
+        "FirestoreDatabaseReference",
         "SpannerReference",
         "SpannerDatabaseReference",
         "CloudSqlReference",
         "CloudSqlDatabaseReference",
         "LookerExploreReferences",
         "LookerExploreReference",
+        "BigQueryPropertyGraphReference",
         "PrivateLookerInstanceInfo",
         "Datasource",
         "Schema",
@@ -106,6 +114,14 @@ class DatasourceReferences(proto.Message):
             ``QueryData`` method.
 
             This field is a member of `oneof`_ ``references``.
+        bigtable_reference (google.cloud.geminidataanalytics_v1alpha.types.BigtableReference):
+            Reference to a Bigtable instance.
+
+            This field is a member of `oneof`_ ``references``.
+        firestore_reference (google.cloud.geminidataanalytics_v1alpha.types.FirestoreReference):
+            Reference to a Firestore database.
+
+            This field is a member of `oneof`_ ``references``.
     """
 
     bq: "BigQueryTableReferences" = proto.Field(
@@ -144,22 +160,76 @@ class DatasourceReferences(proto.Message):
         oneof="references",
         message="CloudSqlReference",
     )
+    bigtable_reference: "BigtableReference" = proto.Field(
+        proto.MESSAGE,
+        number=11,
+        oneof="references",
+        message="BigtableReference",
+    )
+    firestore_reference: "FirestoreReference" = proto.Field(
+        proto.MESSAGE,
+        number=13,
+        oneof="references",
+        message="FirestoreReference",
+    )
 
 
 class BigQueryTableReferences(proto.Message):
     r"""Message representing references to BigQuery tables and property
-    graphs. At least one of ``table_references`` or
-    ``property_graph_references`` must be populated.
+    graphs. At least one of ``table_references``,
+    ``property_graph_references``, or ``search_scope`` must be
+    populated.
 
     Attributes:
         table_references (MutableSequence[google.cloud.geminidataanalytics_v1alpha.types.BigQueryTableReference]):
             Optional. References to BigQuery tables.
+        property_graph_references (MutableSequence[google.cloud.geminidataanalytics_v1alpha.types.BigQueryPropertyGraphReference]):
+            Optional. References to BigQuery graphs.
+
+            Note: "property graph" is the former name for
+            BigQuery Graph. The field and message names
+            retain the original term for backward
+            compatibility; both refer to the same resource.
+        search_scope (google.cloud.geminidataanalytics_v1alpha.types.SearchScope):
+            Optional. Search over BigQuery resources to discover most
+            relevant tables to the query.
+
+            When set, at least one of ``include_project_ids`` or
+            ``include_dataset_references`` must be populated with
+            non-blank identifiers. Matches from the two fields are
+            unioned (OR-ed).
+
+            Note: ``search_scope`` is only supported for standalone
+            conversations (``ChatRequest.inline_context`` or
+            ``ClientManagedResourceContext.inline_context``) and is not
+            supported in
+            [DataAgent][google.cloud.geminidataanalytics.v1alpha.DataAgent].
+        agent_context_reference (google.cloud.geminidataanalytics_v1alpha.types.AgentContextReference):
+            Optional. Parameters for retrieving data from
+            Agent Context.
     """
 
     table_references: MutableSequence["BigQueryTableReference"] = proto.RepeatedField(
         proto.MESSAGE,
         number=1,
         message="BigQueryTableReference",
+    )
+    property_graph_references: MutableSequence["BigQueryPropertyGraphReference"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=2,
+            message="BigQueryPropertyGraphReference",
+        )
+    )
+    search_scope: "SearchScope" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="SearchScope",
+    )
+    agent_context_reference: agent_context.AgentContextReference = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=agent_context.AgentContextReference,
     )
 
 
@@ -198,12 +268,72 @@ class BigQueryTableReference(proto.Message):
     )
 
 
+class BigQueryDatasetReference(proto.Message):
+    r"""Message representing a reference to a single BigQuery
+    dataset.
+
+    Attributes:
+        project_id (str):
+            Required. The project ID that the dataset
+            belongs to.
+        dataset_id (str):
+            Required. The dataset ID.
+    """
+
+    project_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    dataset_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class SearchScope(proto.Message):
+    r"""Message representing filters to apply to search over BigQuery
+    tables.
+
+    At least one of ``include_project_ids`` or
+    ``include_dataset_references`` must be populated with non-blank
+    identifiers. Tables matching either field are included, so the two
+    fields are unioned (OR-ed) rather than intersected.
+
+    Note: ``SearchScope`` is only supported for standalone conversations
+    (``ChatRequest.inline_context`` or
+    ``ClientManagedResourceContext.inline_context``) and is not
+    supported in
+    [DataAgent][google.cloud.geminidataanalytics.v1alpha.DataAgent].
+
+    Attributes:
+        include_project_ids (MutableSequence[str]):
+            Optional. The BigQuery project ids to search
+            over.
+        include_dataset_references (MutableSequence[google.cloud.geminidataanalytics_v1alpha.types.BigQueryDatasetReference]):
+            Optional. The BigQuery dataset references to
+            search over.
+    """
+
+    include_project_ids: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=1,
+    )
+    include_dataset_references: MutableSequence["BigQueryDatasetReference"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=2,
+            message="BigQueryDatasetReference",
+        )
+    )
+
+
 class StudioDatasourceReferences(proto.Message):
     r"""Message representing references to Looker Studio datasources.
 
     Attributes:
         studio_references (MutableSequence[google.cloud.geminidataanalytics_v1alpha.types.StudioDatasourceReference]):
-            The references to the studio datasources.
+            Optional. The references to the studio
+            datasources.
     """
 
     studio_references: MutableSequence["StudioDatasourceReference"] = (
@@ -255,6 +385,58 @@ class AlloyDbReference(proto.Message):
     )
 
 
+class DatabaseTableReference(proto.Message):
+    r"""Message representing a table including its schema.
+
+    Attributes:
+        table_id (str):
+            Required. The name of the table as defined in the database.
+
+            Note: The precise rules for table naming, including valid
+            characters, length limits, and case sensitivity, are
+            determined by the specific database system.
+
+            Requirements:
+
+            - Exact Match: The provided name must be identical to the
+              name stored in the database.
+            - Case Sensitivity: Respect the case sensitivity rules of
+              the specific database system and how the table was
+              created. For example, "Orders" and "orders" may be
+              distinct table names.
+            - Special Characters/Keywords: If the table name includes
+              spaces, special characters, or is a database reserved
+              keyword, provide the literal name as it is stored. Do not
+              add any database-specific identifier quoting characters
+              (e.g., ", \`, []).
+
+            Examples:
+
+            - Simple name: "orders", "UserActivity"
+            - Case sensitive: "MyTable"
+            - Name with spaces: "Order Details"
+            - Name with other special characters: "user/data",
+              "order-items"
+            - Name that is a keyword: "Group", "Order"
+
+            Permissions: The caller's credentials must have the
+            necessary database permissions to access the table's schema
+            and data.
+        schema (google.cloud.geminidataanalytics_v1alpha.types.Schema):
+            Optional. The schema of the table.
+    """
+
+    table_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    schema: "Schema" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="Schema",
+    )
+
+
 class AlloyDbDatabaseReference(proto.Message):
     r"""Message representing a reference to a single AlloyDB
     database.
@@ -274,6 +456,11 @@ class AlloyDbDatabaseReference(proto.Message):
         table_ids (MutableSequence[str]):
             Optional. The table ids. Denotes all tables
             if unset.
+        database_table_references (MutableSequence[google.cloud.geminidataanalytics_v1alpha.types.DatabaseTableReference]):
+            Optional. References to tables within the
+            database. Each reference specifies a table and
+            can optionally include the table's schema to
+            provide context for the query.
     """
 
     project_id: str = proto.Field(
@@ -299,6 +486,145 @@ class AlloyDbDatabaseReference(proto.Message):
     table_ids: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=6,
+    )
+    database_table_references: MutableSequence["DatabaseTableReference"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=7,
+            message="DatabaseTableReference",
+        )
+    )
+
+
+class BigtableReference(proto.Message):
+    r"""Message representing reference to a Bigtable instance and
+    agent context.
+
+    Attributes:
+        database_reference (google.cloud.geminidataanalytics_v1alpha.types.BigtableDatabaseReference):
+            Required. Singular proto that supports
+            specifying which database and tables to include.
+        agent_context_reference (google.cloud.geminidataanalytics_v1alpha.types.AgentContextReference):
+            Optional. Parameters for retrieving data from
+            Agent Context.
+    """
+
+    database_reference: "BigtableDatabaseReference" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="BigtableDatabaseReference",
+    )
+    agent_context_reference: agent_context.AgentContextReference = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=agent_context.AgentContextReference,
+    )
+
+
+class BigtableDatabaseReference(proto.Message):
+    r"""Message representing reference to Bigtable database.
+
+    Attributes:
+        project_id (str):
+            Required. The project the instance belongs
+            to.
+        instance_id (str):
+            Required. The instance id.
+        table_ids (MutableSequence[str]):
+            Optional. The table ids. Denotes all tables
+            if unset.
+        database_table_references (MutableSequence[google.cloud.geminidataanalytics_v1alpha.types.DatabaseTableReference]):
+            Optional. References to tables within the
+            database. Each reference specifies a table and
+            can optionally include the table's schema to
+            provide context for the query.
+    """
+
+    project_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    instance_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    table_ids: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+    database_table_references: MutableSequence["DatabaseTableReference"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=4,
+            message="DatabaseTableReference",
+        )
+    )
+
+
+class FirestoreReference(proto.Message):
+    r"""Message representing reference to a Firestore database and
+    agent context.
+
+    Attributes:
+        database_reference (google.cloud.geminidataanalytics_v1alpha.types.FirestoreDatabaseReference):
+            Required. Singular proto that supports
+            specifying which database and tables to include.
+        agent_context_reference (google.cloud.geminidataanalytics_v1alpha.types.AgentContextReference):
+            Optional. Parameters for retrieving data from
+            Agent Context.
+    """
+
+    database_reference: "FirestoreDatabaseReference" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="FirestoreDatabaseReference",
+    )
+    agent_context_reference: agent_context.AgentContextReference = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=agent_context.AgentContextReference,
+    )
+
+
+class FirestoreDatabaseReference(proto.Message):
+    r"""Message representing a reference to a single Firestore
+    database.
+
+    Attributes:
+        project_id (str):
+            Required. Project the firestore database
+            belongs to.
+        database_id (str):
+            Required. The database id.
+        collection_ids (MutableSequence[str]):
+            Optional. The collection ids. Denotes all
+            collections if unset.
+        database_table_references (MutableSequence[google.cloud.geminidataanalytics_v1alpha.types.DatabaseTableReference]):
+            Optional. References to collections within
+            the database. Each reference specifies a
+            collection and can optionally include the
+            collection's schema to provide context for the
+            query.
+    """
+
+    project_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    database_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    collection_ids: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+    database_table_references: MutableSequence["DatabaseTableReference"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=4,
+            message="DatabaseTableReference",
+        )
     )
 
 
@@ -337,8 +663,6 @@ class SpannerDatabaseReference(proto.Message):
         project_id (str):
             Required. The project the instance belongs
             to.
-        region (str):
-            Required. The region of the instance.
         instance_id (str):
             Required. The instance id.
         database_id (str):
@@ -346,6 +670,24 @@ class SpannerDatabaseReference(proto.Message):
         table_ids (MutableSequence[str]):
             Optional. The table ids. Denotes all tables
             if unset.
+        database_table_references (MutableSequence[google.cloud.geminidataanalytics_v1alpha.types.DatabaseTableReference]):
+            Optional. References to tables within the
+            database. Each reference specifies a table and
+            can optionally include the table's schema to
+            provide context for the query.
+        priority (str):
+            Optional. Priority for the queries to
+            Spanner. Should be a value supported by Cloud
+            Spanner e.g.: LOW, MEDIUM, HIGH. Unsupported
+            values will be ignored. See
+            https://docs.cloud.google.com/spanner/docs/reference/rest/v1/RequestOptions#Priority
+            for complete list.
+        request_tag (str):
+            Tag to be attached to all queries to Spanner.
+            Allows to identify and monitor queries sent to
+            Spanner by the GDA service.
+        graph_ids (MutableSequence[str]):
+            Optional. The graph IDs to query.
     """
 
     class Engine(proto.Enum):
@@ -373,10 +715,6 @@ class SpannerDatabaseReference(proto.Message):
         proto.STRING,
         number=1,
     )
-    region: str = proto.Field(
-        proto.STRING,
-        number=2,
-    )
     instance_id: str = proto.Field(
         proto.STRING,
         number=3,
@@ -388,6 +726,25 @@ class SpannerDatabaseReference(proto.Message):
     table_ids: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=5,
+    )
+    database_table_references: MutableSequence["DatabaseTableReference"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=7,
+            message="DatabaseTableReference",
+        )
+    )
+    priority: str = proto.Field(
+        proto.STRING,
+        number=8,
+    )
+    request_tag: str = proto.Field(
+        proto.STRING,
+        number=9,
+    )
+    graph_ids: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=10,
     )
 
 
@@ -436,6 +793,11 @@ class CloudSqlDatabaseReference(proto.Message):
         table_ids (MutableSequence[str]):
             Optional. The table ids. Denotes all tables
             if unset.
+        database_table_references (MutableSequence[google.cloud.geminidataanalytics_v1alpha.types.DatabaseTableReference]):
+            Optional. References to tables within the
+            database. Each reference specifies a table and
+            can optionally include the table's schema to
+            provide context for the query.
     """
 
     class Engine(proto.Enum):
@@ -479,6 +841,13 @@ class CloudSqlDatabaseReference(proto.Message):
         proto.STRING,
         number=7,
     )
+    database_table_references: MutableSequence["DatabaseTableReference"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=8,
+            message="DatabaseTableReference",
+        )
+    )
 
 
 class LookerExploreReferences(proto.Message):
@@ -488,8 +857,8 @@ class LookerExploreReferences(proto.Message):
         explore_references (MutableSequence[google.cloud.geminidataanalytics_v1alpha.types.LookerExploreReference]):
             Required. References to Looker explores.
         credentials (google.cloud.geminidataanalytics_v1alpha.types.Credentials):
-            Optional. The credentials to use when calling the Looker
-            API.
+            Optional. Deprecated: Use credentials in ChatRequest. The
+            credentials to use when calling the Looker API.
 
             Currently supports both OAuth token and API key-based
             credentials, as described in `Authentication with an
@@ -566,6 +935,35 @@ class LookerExploreReference(proto.Message):
     )
 
 
+class BigQueryPropertyGraphReference(proto.Message):
+    r"""Message representing a reference to a single BigQuery
+    property graph.
+
+    Attributes:
+        project_id (str):
+            Required. The project that the property graph
+            belongs to.
+        dataset_id (str):
+            Required. The dataset that the property graph
+            belongs to.
+        property_graph_id (str):
+            Required. The property graph id.
+    """
+
+    project_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    dataset_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    property_graph_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
 class PrivateLookerInstanceInfo(proto.Message):
     r"""Message representing a private Looker instance info required
     if the Looker instance is behind a private network.
@@ -623,6 +1021,18 @@ class Datasource(proto.Message):
             A reference to a CloudSQL database.
 
             This field is a member of `oneof`_ ``reference``.
+        bigtable_reference (google.cloud.geminidataanalytics_v1alpha.types.BigtableReference):
+            A reference to a Bigtable instance.
+
+            This field is a member of `oneof`_ ``reference``.
+        bigquery_property_graph_reference (google.cloud.geminidataanalytics_v1alpha.types.BigQueryPropertyGraphReference):
+            A reference to a BigQuery property graph.
+
+            This field is a member of `oneof`_ ``reference``.
+        firestore_reference (google.cloud.geminidataanalytics_v1alpha.types.FirestoreReference):
+            A reference to a Firestore database.
+
+            This field is a member of `oneof`_ ``reference``.
         schema (google.cloud.geminidataanalytics_v1alpha.types.Schema):
             Optional. The schema of the datasource.
         struct_schema (google.protobuf.struct_pb2.Struct):
@@ -669,6 +1079,24 @@ class Datasource(proto.Message):
         number=14,
         oneof="reference",
         message="CloudSqlReference",
+    )
+    bigtable_reference: "BigtableReference" = proto.Field(
+        proto.MESSAGE,
+        number=15,
+        oneof="reference",
+        message="BigtableReference",
+    )
+    bigquery_property_graph_reference: "BigQueryPropertyGraphReference" = proto.Field(
+        proto.MESSAGE,
+        number=16,
+        oneof="reference",
+        message="BigQueryPropertyGraphReference",
+    )
+    firestore_reference: "FirestoreReference" = proto.Field(
+        proto.MESSAGE,
+        number=17,
+        oneof="reference",
+        message="FirestoreReference",
     )
     schema: "Schema" = proto.Field(
         proto.MESSAGE,
@@ -772,9 +1200,7 @@ class Field(proto.Message):
             schema structures.
         category (str):
             Optional. Field category, not required,
-            currently only useful for Looker. We are using a
-            string to avoid depending on an external package
-            and keep this package self-contained.
+            currently only useful for Looker.
         value_format (str):
             Optional. Looker only. Value format of the
             field. Ref:

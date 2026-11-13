@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.iam_v3._compat import transcode_request
 from google.cloud.iam_v3.types import (
     principal_access_boundary_policies_service,
     principal_access_boundary_policy_resources,
@@ -668,23 +669,20 @@ class PrincipalAccessBoundaryPoliciesRestTransport(
             """
 
             http_options = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseCreatePrincipalAccessBoundaryPolicy._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_create_principal_access_boundary_policy(
                     request, metadata
                 )
             )
-            transcoded_request = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseCreatePrincipalAccessBoundaryPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseCreatePrincipalAccessBoundaryPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseCreatePrincipalAccessBoundaryPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseCreatePrincipalAccessBoundaryPolicy,
+                    "_BaseCreatePrincipalAccessBoundaryPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -828,19 +826,20 @@ class PrincipalAccessBoundaryPoliciesRestTransport(
             """
 
             http_options = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseDeletePrincipalAccessBoundaryPolicy._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_delete_principal_access_boundary_policy(
                     request, metadata
                 )
             )
-            transcoded_request = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseDeletePrincipalAccessBoundaryPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseDeletePrincipalAccessBoundaryPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseDeletePrincipalAccessBoundaryPolicy,
+                    "_BaseDeletePrincipalAccessBoundaryPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -981,19 +980,20 @@ class PrincipalAccessBoundaryPoliciesRestTransport(
             """
 
             http_options = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseGetPrincipalAccessBoundaryPolicy._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_get_principal_access_boundary_policy(
                     request, metadata
                 )
             )
-            transcoded_request = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseGetPrincipalAccessBoundaryPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseGetPrincipalAccessBoundaryPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseGetPrincipalAccessBoundaryPolicy,
+                    "_BaseGetPrincipalAccessBoundaryPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1142,19 +1142,20 @@ class PrincipalAccessBoundaryPoliciesRestTransport(
             """
 
             http_options = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseListPrincipalAccessBoundaryPolicies._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_principal_access_boundary_policies(
                     request, metadata
                 )
             )
-            transcoded_request = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseListPrincipalAccessBoundaryPolicies._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseListPrincipalAccessBoundaryPolicies._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseListPrincipalAccessBoundaryPolicies,
+                    "_BaseListPrincipalAccessBoundaryPolicies__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1303,19 +1304,20 @@ class PrincipalAccessBoundaryPoliciesRestTransport(
             """
 
             http_options = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseSearchPrincipalAccessBoundaryPolicyBindings._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_search_principal_access_boundary_policy_bindings(
                     request, metadata
                 )
             )
-            transcoded_request = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseSearchPrincipalAccessBoundaryPolicyBindings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseSearchPrincipalAccessBoundaryPolicyBindings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseSearchPrincipalAccessBoundaryPolicyBindings,
+                    "_BaseSearchPrincipalAccessBoundaryPolicyBindings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1469,23 +1471,20 @@ class PrincipalAccessBoundaryPoliciesRestTransport(
             """
 
             http_options = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseUpdatePrincipalAccessBoundaryPolicy._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_update_principal_access_boundary_policy(
                     request, metadata
                 )
             )
-            transcoded_request = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseUpdatePrincipalAccessBoundaryPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseUpdatePrincipalAccessBoundaryPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseUpdatePrincipalAccessBoundaryPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseUpdatePrincipalAccessBoundaryPolicy,
+                    "_BaseUpdatePrincipalAccessBoundaryPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1714,15 +1713,16 @@ class PrincipalAccessBoundaryPoliciesRestTransport(
             """
 
             http_options = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrincipalAccessBoundaryPoliciesRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

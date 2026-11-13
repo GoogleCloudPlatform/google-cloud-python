@@ -15,8 +15,8 @@
 #
 """Wrappers for Document AI Page type."""
 
-from abc import ABC
 import dataclasses
+from abc import ABC
 from functools import cached_property
 from typing import Iterable, List, Optional, Type, TypeVar
 

@@ -32,6 +32,7 @@ from google.cloud._helpers import _LocalStack
 from google.cloud.client import ClientWithProject
 from google.cloud.exceptions import NotFound
 
+from google.cloud.storage import _opentelemetry_metrics
 from google.cloud.storage._bucket_metadata_cache import BucketMetadataCache
 from google.cloud.storage._helpers import (
     _DEFAULT_SCHEME,
@@ -126,6 +127,19 @@ class Client(ClientWithProject):
         (Optional) An API key. Mutually exclusive with any other credentials.
         This parameter is an alias for setting `client_options.api_key` and
         will supercede any api key set in the `client_options` parameter.
+
+    :type enable_metrics: bool or None
+    :param enable_metrics:
+        (Optional, Experimental) Whether to enable OpenTelemetry metrics. If
+        ``None``, falls back to the ``GCP_STORAGE_PYTHON_ENABLE_OTEL_METRICS``
+        environment variable, or ``False`` if unset.
+
+    :type enable_debug_metrics: bool or None
+    :param enable_debug_metrics:
+        (Optional, Experimental) Whether to enable debug OpenTelemetry
+        metrics. If ``None``, falls back to the
+        ``GCP_STORAGE_PYTHON_ENABLE_OTEL_DEBUG_METRICS`` environment variable,
+        or ``False`` if unset.
     """
 
     SCOPE = (
@@ -146,6 +160,8 @@ class Client(ClientWithProject):
         extra_headers={},
         *,
         api_key=None,
+        enable_metrics=None,
+        enable_debug_metrics=None,
     ):
         self._base_connection = None
 
@@ -163,6 +179,14 @@ class Client(ClientWithProject):
         self._initial_client_info = client_info
         self._initial_client_options = client_options
         self._extra_headers = extra_headers
+        self._enable_metrics = enable_metrics
+        self._enable_debug_metrics = enable_debug_metrics
+        self._metrics_enabled = _opentelemetry_metrics.is_metrics_enabled(
+            enable_metrics
+        )
+        self._debug_metrics_enabled = _opentelemetry_metrics.is_debug_metrics_enabled(
+            enable_debug_metrics
+        )
 
         connection_kw_args = {"client_info": client_info}
 
@@ -293,6 +317,16 @@ class Client(ClientWithProject):
         self._connection = connection
         self._batch_stack = _LocalStack()
         self._bucket_metadata_cache = BucketMetadataCache(self)
+
+    @property
+    def metrics_enabled(self) -> bool:
+        """(Experimental) Returns ``True`` if OpenTelemetry metrics recording is active for this client."""
+        return self._metrics_enabled
+
+    @property
+    def debug_metrics_enabled(self) -> bool:
+        """(Experimental) Returns ``True`` if debug metrics recording is active for this client."""
+        return self._debug_metrics_enabled
 
     def close(self):
         """Close the client and clear any cached metadata or active connections."""
@@ -990,7 +1024,9 @@ class Client(ClientWithProject):
                 ):
                     try:
                         self._bucket_metadata_cache.update_cache(
-                            bucket_name, f"projects/_/buckets/{bucket_name}", "global"
+                            bucket_name,
+                            f"//storage.googleapis.com/projects/_/buckets/{bucket_name}",
+                            "global",
                         )
                     except Exception:
                         pass
@@ -1066,7 +1102,9 @@ class Client(ClientWithProject):
                 ):
                     try:
                         self._bucket_metadata_cache.update_cache(
-                            bucket_name, f"projects/_/buckets/{bucket_name}", "global"
+                            bucket_name,
+                            f"//storage.googleapis.com/projects/_/buckets/{bucket_name}",
+                            "global",
                         )
                     except Exception:
                         pass

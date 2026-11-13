@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.network_management_v1._compat import transcode_request
 from google.cloud.network_management_v1.types import vpc_flow_logs, vpc_flow_logs_config
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -940,21 +941,18 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseCreateVpcFlowLogsConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_vpc_flow_logs_config(
                 request, metadata
             )
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseCreateVpcFlowLogsConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVpcFlowLogsServiceRestTransport._BaseCreateVpcFlowLogsConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseCreateVpcFlowLogsConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseCreateVpcFlowLogsConfig,
+                    "_BaseCreateVpcFlowLogsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1094,17 +1092,18 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseDeleteVpcFlowLogsConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_vpc_flow_logs_config(
                 request, metadata
             )
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseDeleteVpcFlowLogsConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseDeleteVpcFlowLogsConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseDeleteVpcFlowLogsConfig,
+                    "_BaseDeleteVpcFlowLogsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1241,17 +1240,18 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseGetVpcFlowLogsConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_vpc_flow_logs_config(
                 request, metadata
             )
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseGetVpcFlowLogsConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseGetVpcFlowLogsConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseGetVpcFlowLogsConfig,
+                    "_BaseGetVpcFlowLogsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1391,17 +1391,18 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseListVpcFlowLogsConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_vpc_flow_logs_configs(
                 request, metadata
             )
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseListVpcFlowLogsConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseListVpcFlowLogsConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseListVpcFlowLogsConfigs,
+                    "_BaseListVpcFlowLogsConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1541,17 +1542,18 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseQueryOrgVpcFlowLogsConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_query_org_vpc_flow_logs_configs(
                 request, metadata
             )
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseQueryOrgVpcFlowLogsConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseQueryOrgVpcFlowLogsConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseQueryOrgVpcFlowLogsConfigs,
+                    "_BaseQueryOrgVpcFlowLogsConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1695,17 +1697,18 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseShowEffectiveFlowLogsConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_show_effective_flow_logs_configs(
                 request, metadata
             )
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseShowEffectiveFlowLogsConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseShowEffectiveFlowLogsConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseShowEffectiveFlowLogsConfigs,
+                    "_BaseShowEffectiveFlowLogsConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1851,21 +1854,18 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseUpdateVpcFlowLogsConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_vpc_flow_logs_config(
                 request, metadata
             )
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseUpdateVpcFlowLogsConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVpcFlowLogsServiceRestTransport._BaseUpdateVpcFlowLogsConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseUpdateVpcFlowLogsConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseUpdateVpcFlowLogsConfig,
+                    "_BaseUpdateVpcFlowLogsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2090,15 +2090,16 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2229,15 +2230,16 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2368,15 +2370,16 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2508,19 +2511,16 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVpcFlowLogsServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2653,21 +2653,18 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVpcFlowLogsServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2799,21 +2796,18 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVpcFlowLogsServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2917,17 +2911,18 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3033,15 +3028,16 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3172,15 +3168,16 @@ class VpcFlowLogsServiceRestTransport(_BaseVpcFlowLogsServiceRestTransport):
             """
 
             http_options = _BaseVpcFlowLogsServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseVpcFlowLogsServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVpcFlowLogsServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVpcFlowLogsServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

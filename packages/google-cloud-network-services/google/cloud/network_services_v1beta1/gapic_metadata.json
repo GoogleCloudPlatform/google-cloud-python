@@ -1,0 +1,347 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.network_services_v1beta1",
+  "protoPackage": "google.cloud.networkservices.v1beta1",
+  "schema": "1.0",
+  "services": {
+    "DepService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DepServiceClient",
+          "rpcs": {
+            "CreateExtensionBinding": {
+              "methods": [
+                "create_extension_binding"
+              ]
+            },
+            "CreateLbRouteExtension": {
+              "methods": [
+                "create_lb_route_extension"
+              ]
+            },
+            "CreateLbTrafficExtension": {
+              "methods": [
+                "create_lb_traffic_extension"
+              ]
+            },
+            "DeleteExtensionBinding": {
+              "methods": [
+                "delete_extension_binding"
+              ]
+            },
+            "DeleteLbRouteExtension": {
+              "methods": [
+                "delete_lb_route_extension"
+              ]
+            },
+            "DeleteLbTrafficExtension": {
+              "methods": [
+                "delete_lb_traffic_extension"
+              ]
+            },
+            "GetExtensionBinding": {
+              "methods": [
+                "get_extension_binding"
+              ]
+            },
+            "GetLbRouteExtension": {
+              "methods": [
+                "get_lb_route_extension"
+              ]
+            },
+            "GetLbTrafficExtension": {
+              "methods": [
+                "get_lb_traffic_extension"
+              ]
+            },
+            "ListExtensionBindings": {
+              "methods": [
+                "list_extension_bindings"
+              ]
+            },
+            "ListLbRouteExtensions": {
+              "methods": [
+                "list_lb_route_extensions"
+              ]
+            },
+            "ListLbTrafficExtensions": {
+              "methods": [
+                "list_lb_traffic_extensions"
+              ]
+            },
+            "UpdateExtensionBinding": {
+              "methods": [
+                "update_extension_binding"
+              ]
+            },
+            "UpdateLbRouteExtension": {
+              "methods": [
+                "update_lb_route_extension"
+              ]
+            },
+            "UpdateLbTrafficExtension": {
+              "methods": [
+                "update_lb_traffic_extension"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DepServiceAsyncClient",
+          "rpcs": {
+            "CreateExtensionBinding": {
+              "methods": [
+                "create_extension_binding"
+              ]
+            },
+            "CreateLbRouteExtension": {
+              "methods": [
+                "create_lb_route_extension"
+              ]
+            },
+            "CreateLbTrafficExtension": {
+              "methods": [
+                "create_lb_traffic_extension"
+              ]
+            },
+            "DeleteExtensionBinding": {
+              "methods": [
+                "delete_extension_binding"
+              ]
+            },
+            "DeleteLbRouteExtension": {
+              "methods": [
+                "delete_lb_route_extension"
+              ]
+            },
+            "DeleteLbTrafficExtension": {
+              "methods": [
+                "delete_lb_traffic_extension"
+              ]
+            },
+            "GetExtensionBinding": {
+              "methods": [
+                "get_extension_binding"
+              ]
+            },
+            "GetLbRouteExtension": {
+              "methods": [
+                "get_lb_route_extension"
+              ]
+            },
+            "GetLbTrafficExtension": {
+              "methods": [
+                "get_lb_traffic_extension"
+              ]
+            },
+            "ListExtensionBindings": {
+              "methods": [
+                "list_extension_bindings"
+              ]
+            },
+            "ListLbRouteExtensions": {
+              "methods": [
+                "list_lb_route_extensions"
+              ]
+            },
+            "ListLbTrafficExtensions": {
+              "methods": [
+                "list_lb_traffic_extensions"
+              ]
+            },
+            "UpdateExtensionBinding": {
+              "methods": [
+                "update_extension_binding"
+              ]
+            },
+            "UpdateLbRouteExtension": {
+              "methods": [
+                "update_lb_route_extension"
+              ]
+            },
+            "UpdateLbTrafficExtension": {
+              "methods": [
+                "update_lb_traffic_extension"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DepServiceClient",
+          "rpcs": {
+            "CreateExtensionBinding": {
+              "methods": [
+                "create_extension_binding"
+              ]
+            },
+            "CreateLbRouteExtension": {
+              "methods": [
+                "create_lb_route_extension"
+              ]
+            },
+            "CreateLbTrafficExtension": {
+              "methods": [
+                "create_lb_traffic_extension"
+              ]
+            },
+            "DeleteExtensionBinding": {
+              "methods": [
+                "delete_extension_binding"
+              ]
+            },
+            "DeleteLbRouteExtension": {
+              "methods": [
+                "delete_lb_route_extension"
+              ]
+            },
+            "DeleteLbTrafficExtension": {
+              "methods": [
+                "delete_lb_traffic_extension"
+              ]
+            },
+            "GetExtensionBinding": {
+              "methods": [
+                "get_extension_binding"
+              ]
+            },
+            "GetLbRouteExtension": {
+              "methods": [
+                "get_lb_route_extension"
+              ]
+            },
+            "GetLbTrafficExtension": {
+              "methods": [
+                "get_lb_traffic_extension"
+              ]
+            },
+            "ListExtensionBindings": {
+              "methods": [
+                "list_extension_bindings"
+              ]
+            },
+            "ListLbRouteExtensions": {
+              "methods": [
+                "list_lb_route_extensions"
+              ]
+            },
+            "ListLbTrafficExtensions": {
+              "methods": [
+                "list_lb_traffic_extensions"
+              ]
+            },
+            "UpdateExtensionBinding": {
+              "methods": [
+                "update_extension_binding"
+              ]
+            },
+            "UpdateLbRouteExtension": {
+              "methods": [
+                "update_lb_route_extension"
+              ]
+            },
+            "UpdateLbTrafficExtension": {
+              "methods": [
+                "update_lb_traffic_extension"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "NetworkServices": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "NetworkServicesClient",
+          "rpcs": {
+            "CreateEndpointPolicy": {
+              "methods": [
+                "create_endpoint_policy"
+              ]
+            },
+            "DeleteEndpointPolicy": {
+              "methods": [
+                "delete_endpoint_policy"
+              ]
+            },
+            "GetEndpointPolicy": {
+              "methods": [
+                "get_endpoint_policy"
+              ]
+            },
+            "ListEndpointPolicies": {
+              "methods": [
+                "list_endpoint_policies"
+              ]
+            },
+            "UpdateEndpointPolicy": {
+              "methods": [
+                "update_endpoint_policy"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "NetworkServicesAsyncClient",
+          "rpcs": {
+            "CreateEndpointPolicy": {
+              "methods": [
+                "create_endpoint_policy"
+              ]
+            },
+            "DeleteEndpointPolicy": {
+              "methods": [
+                "delete_endpoint_policy"
+              ]
+            },
+            "GetEndpointPolicy": {
+              "methods": [
+                "get_endpoint_policy"
+              ]
+            },
+            "ListEndpointPolicies": {
+              "methods": [
+                "list_endpoint_policies"
+              ]
+            },
+            "UpdateEndpointPolicy": {
+              "methods": [
+                "update_endpoint_policy"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "NetworkServicesClient",
+          "rpcs": {
+            "CreateEndpointPolicy": {
+              "methods": [
+                "create_endpoint_policy"
+              ]
+            },
+            "DeleteEndpointPolicy": {
+              "methods": [
+                "delete_endpoint_policy"
+              ]
+            },
+            "GetEndpointPolicy": {
+              "methods": [
+                "get_endpoint_policy"
+              ]
+            },
+            "ListEndpointPolicies": {
+              "methods": [
+                "list_endpoint_policies"
+              ]
+            },
+            "UpdateEndpointPolicy": {
+              "methods": [
+                "update_endpoint_policy"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

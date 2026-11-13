@@ -112,7 +112,7 @@ class _MutateRowsOperation:
                 for idx in incomplete_indices:
                     self._handle_entry_error(idx, exc)
             finally:
-                all_errors: list[Exception] = []
+                all_errors: list[bt_exceptions.FailedMutationEntryError] = []
                 for idx, exc_list in self.errors.items():
                     if len(exc_list) == 0:
                         raise core_exceptions.ClientError(

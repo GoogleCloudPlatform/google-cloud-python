@@ -157,6 +157,51 @@ class AudienceSegmentServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.create_audience_segment: gapic_v1.method.wrap_method(
+                self.create_audience_segment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_create_audience_segments: gapic_v1.method.wrap_method(
+                self.batch_create_audience_segments,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_audience_segment: gapic_v1.method.wrap_method(
+                self.update_audience_segment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_update_audience_segments: gapic_v1.method.wrap_method(
+                self.batch_update_audience_segments,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_activate_audience_segments: gapic_v1.method.wrap_method(
+                self.batch_activate_audience_segments,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_deactivate_audience_segments: gapic_v1.method.wrap_method(
+                self.batch_deactivate_audience_segments,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_approve_audience_segments: gapic_v1.method.wrap_method(
+                self.batch_approve_audience_segments,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_reject_audience_segments: gapic_v1.method.wrap_method(
+                self.batch_reject_audience_segments,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_populate_audience_segments: gapic_v1.method.wrap_method(
+                self.batch_populate_audience_segments,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.cancel_operation: gapic_v1.method.wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
@@ -198,6 +243,114 @@ class AudienceSegmentServiceTransport(abc.ABC):
         Union[
             audience_segment_service.ListAudienceSegmentsResponse,
             Awaitable[audience_segment_service.ListAudienceSegmentsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_audience_segment(
+        self,
+    ) -> Callable[
+        [audience_segment_service.CreateAudienceSegmentRequest],
+        Union[
+            audience_segment_messages.AudienceSegment,
+            Awaitable[audience_segment_messages.AudienceSegment],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_create_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchCreateAudienceSegmentsRequest],
+        Union[
+            audience_segment_service.BatchCreateAudienceSegmentsResponse,
+            Awaitable[audience_segment_service.BatchCreateAudienceSegmentsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_audience_segment(
+        self,
+    ) -> Callable[
+        [audience_segment_service.UpdateAudienceSegmentRequest],
+        Union[
+            audience_segment_messages.AudienceSegment,
+            Awaitable[audience_segment_messages.AudienceSegment],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_update_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchUpdateAudienceSegmentsRequest],
+        Union[
+            audience_segment_service.BatchUpdateAudienceSegmentsResponse,
+            Awaitable[audience_segment_service.BatchUpdateAudienceSegmentsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_activate_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchActivateAudienceSegmentsRequest],
+        Union[
+            audience_segment_service.BatchActivateAudienceSegmentsResponse,
+            Awaitable[audience_segment_service.BatchActivateAudienceSegmentsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_deactivate_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchDeactivateAudienceSegmentsRequest],
+        Union[
+            audience_segment_service.BatchDeactivateAudienceSegmentsResponse,
+            Awaitable[audience_segment_service.BatchDeactivateAudienceSegmentsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_approve_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchApproveAudienceSegmentsRequest],
+        Union[
+            audience_segment_service.BatchApproveAudienceSegmentsResponse,
+            Awaitable[audience_segment_service.BatchApproveAudienceSegmentsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_reject_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchRejectAudienceSegmentsRequest],
+        Union[
+            audience_segment_service.BatchRejectAudienceSegmentsResponse,
+            Awaitable[audience_segment_service.BatchRejectAudienceSegmentsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_populate_audience_segments(
+        self,
+    ) -> Callable[
+        [audience_segment_service.BatchPopulateAudienceSegmentsRequest],
+        Union[
+            audience_segment_service.BatchPopulateAudienceSegmentsResponse,
+            Awaitable[audience_segment_service.BatchPopulateAudienceSegmentsResponse],
         ],
     ]:
         raise NotImplementedError()

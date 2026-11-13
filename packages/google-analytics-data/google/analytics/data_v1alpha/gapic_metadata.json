@@ -10,6 +10,11 @@
         "grpc": {
           "libraryClient": "AlphaAnalyticsDataClient",
           "rpcs": {
+            "Chat": {
+              "methods": [
+                "chat"
+              ]
+            },
             "CreateAudienceList": {
               "methods": [
                 "create_audience_list"
@@ -90,6 +95,11 @@
         "grpc-async": {
           "libraryClient": "AlphaAnalyticsDataAsyncClient",
           "rpcs": {
+            "Chat": {
+              "methods": [
+                "chat"
+              ]
+            },
             "CreateAudienceList": {
               "methods": [
                 "create_audience_list"
@@ -170,6 +180,11 @@
         "rest": {
           "libraryClient": "AlphaAnalyticsDataClient",
           "rpcs": {
+            "Chat": {
+              "methods": [
+                "chat"
+              ]
+            },
             "CreateAudienceList": {
               "methods": [
                 "create_audience_list"

@@ -435,6 +435,11 @@ class StorageControlTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.disable_rapid_cache: gapic_v1.method.wrap_method(
+                self.disable_rapid_cache,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.get_rapid_cache: gapic_v1.method.wrap_method(
                 self.get_rapid_cache,
                 default_timeout=None,
@@ -862,6 +867,15 @@ class StorageControlTransport(abc.ABC):
         self,
     ) -> Callable[
         [storage_control.UpdateRapidCacheRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def disable_rapid_cache(
+        self,
+    ) -> Callable[
+        [storage_control.DisableRapidCacheRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()

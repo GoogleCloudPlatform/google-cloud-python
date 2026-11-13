@@ -35,6 +35,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.config_v1._compat import transcode_request
 from google.cloud.config_v1.types import config
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -2569,27 +2570,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseCreateDeployment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_deployment(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseCreateDeployment._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseConfigRestTransport._BaseCreateDeployment._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseCreateDeployment._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseCreateDeployment,
+                    "_BaseCreateDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2729,21 +2721,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseCreateDeploymentGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_deployment_group(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseCreateDeploymentGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConfigRestTransport._BaseCreateDeploymentGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseCreateDeploymentGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseCreateDeploymentGroup,
+                    "_BaseCreateDeploymentGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2880,23 +2869,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseCreatePreview._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_preview(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseCreatePreview._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseConfigRestTransport._BaseCreatePreview._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseCreatePreview._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseCreatePreview,
+                    "_BaseCreatePreview__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3034,21 +3016,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseDeleteDeployment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_deployment(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseDeleteDeployment._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseDeleteDeployment._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseDeleteDeployment,
+                    "_BaseDeleteDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3186,17 +3165,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseDeleteDeploymentGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_deployment_group(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseDeleteDeploymentGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseDeleteDeploymentGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseDeleteDeploymentGroup,
+                    "_BaseDeleteDeploymentGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3331,19 +3311,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseDeletePreview._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_preview(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseDeletePreview._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseDeletePreview._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseDeletePreview,
+                    "_BaseDeletePreview__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3475,25 +3452,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseDeleteStatefile._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_statefile(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseDeleteStatefile._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseConfigRestTransport._BaseDeleteStatefile._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseDeleteStatefile._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseDeleteStatefile,
+                    "_BaseDeleteStatefile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3600,21 +3570,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             """
 
             http_options = _BaseConfigRestTransport._BaseDeprovisionDeploymentGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_deprovision_deployment_group(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseDeprovisionDeploymentGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConfigRestTransport._BaseDeprovisionDeploymentGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseDeprovisionDeploymentGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseDeprovisionDeploymentGroup,
+                    "_BaseDeprovisionDeploymentGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3753,21 +3720,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             """
 
             http_options = _BaseConfigRestTransport._BaseExportDeploymentStatefile._get_http_options()
-
             request, metadata = self._interceptor.pre_export_deployment_statefile(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseExportDeploymentStatefile._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConfigRestTransport._BaseExportDeploymentStatefile._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseExportDeploymentStatefile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseExportDeploymentStatefile,
+                    "_BaseExportDeploymentStatefile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3905,21 +3869,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseExportLockInfo._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_export_lock_info(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseExportLockInfo._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseExportLockInfo._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseExportLockInfo,
+                    "_BaseExportLockInfo__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4058,21 +4019,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseExportPreviewResult._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_export_preview_result(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseExportPreviewResult._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConfigRestTransport._BaseExportPreviewResult._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseExportPreviewResult._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseExportPreviewResult,
+                    "_BaseExportPreviewResult__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4214,21 +4172,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             """
 
             http_options = _BaseConfigRestTransport._BaseExportRevisionStatefile._get_http_options()
-
             request, metadata = self._interceptor.pre_export_revision_statefile(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseExportRevisionStatefile._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConfigRestTransport._BaseExportRevisionStatefile._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseExportRevisionStatefile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseExportRevisionStatefile,
+                    "_BaseExportRevisionStatefile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4369,17 +4324,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseGetAutoMigrationConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_auto_migration_config(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseGetAutoMigrationConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseGetAutoMigrationConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetAutoMigrationConfig,
+                    "_BaseGetAutoMigrationConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4516,19 +4472,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseGetDeployment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_deployment(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseGetDeployment._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseGetDeployment._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetDeployment,
+                    "_BaseGetDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4668,19 +4621,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseGetDeploymentGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_deployment_group(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseGetDeploymentGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseGetDeploymentGroup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetDeploymentGroup,
+                    "_BaseGetDeploymentGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4820,17 +4772,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             """
 
             http_options = _BaseConfigRestTransport._BaseGetDeploymentGroupRevision._get_http_options()
-
             request, metadata = self._interceptor.pre_get_deployment_group_revision(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseGetDeploymentGroupRevision._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseGetDeploymentGroupRevision._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetDeploymentGroupRevision,
+                    "_BaseGetDeploymentGroupRevision__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4969,19 +4922,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             """
 
             http_options = _BaseConfigRestTransport._BaseGetPreview._get_http_options()
-
             request, metadata = self._interceptor.pre_get_preview(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseGetPreview._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseGetPreview._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetPreview,
+                    "_BaseGetPreview__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5118,19 +5068,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             """
 
             http_options = _BaseConfigRestTransport._BaseGetResource._get_http_options()
-
             request, metadata = self._interceptor.pre_get_resource(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseGetResource._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseGetResource._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetResource,
+                    "_BaseGetResource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5269,21 +5216,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseGetResourceChange._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_resource_change(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseGetResourceChange._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseGetResourceChange._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetResourceChange,
+                    "_BaseGetResourceChange__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5422,21 +5366,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseGetResourceDrift._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_resource_drift(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseGetResourceDrift._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseGetResourceDrift._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetResourceDrift,
+                    "_BaseGetResourceDrift__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5574,19 +5515,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             """
 
             http_options = _BaseConfigRestTransport._BaseGetRevision._get_http_options()
-
             request, metadata = self._interceptor.pre_get_revision(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseGetRevision._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseGetRevision._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetRevision,
+                    "_BaseGetRevision__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5726,17 +5664,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseGetTerraformVersion._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_terraform_version(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseGetTerraformVersion._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseGetTerraformVersion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetTerraformVersion,
+                    "_BaseGetTerraformVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5876,25 +5815,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseImportStatefile._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_import_statefile(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseImportStatefile._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseConfigRestTransport._BaseImportStatefile._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseImportStatefile._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseImportStatefile,
+                    "_BaseImportStatefile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6033,17 +5965,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             """
 
             http_options = _BaseConfigRestTransport._BaseListDeploymentGroupRevisions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_deployment_group_revisions(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseListDeploymentGroupRevisions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseListDeploymentGroupRevisions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseListDeploymentGroupRevisions,
+                    "_BaseListDeploymentGroupRevisions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6186,17 +6119,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseListDeploymentGroups._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_deployment_groups(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseListDeploymentGroups._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseListDeploymentGroups._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseListDeploymentGroups,
+                    "_BaseListDeploymentGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6334,21 +6268,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseListDeployments._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_deployments(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseListDeployments._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseListDeployments._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseListDeployments,
+                    "_BaseListDeployments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6485,19 +6416,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseListPreviews._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_previews(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseListPreviews._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseListPreviews._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseListPreviews,
+                    "_BaseListPreviews__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6637,17 +6565,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseListResourceChanges._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_resource_changes(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseListResourceChanges._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseListResourceChanges._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseListResourceChanges,
+                    "_BaseListResourceChanges__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6788,19 +6717,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseListResourceDrifts._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_resource_drifts(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseListResourceDrifts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseListResourceDrifts._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseListResourceDrifts,
+                    "_BaseListResourceDrifts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6939,19 +6867,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseListResources._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_resources(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseListResources._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseListResources._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseListResources,
+                    "_BaseListResources__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7088,19 +7013,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseListRevisions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_revisions(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseListRevisions._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseListRevisions._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseListRevisions,
+                    "_BaseListRevisions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7239,17 +7161,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseListTerraformVersions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_terraform_versions(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseListTerraformVersions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseListTerraformVersions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseListTerraformVersions,
+                    "_BaseListTerraformVersions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7390,23 +7313,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseLockDeployment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_lock_deployment(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseLockDeployment._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseConfigRestTransport._BaseLockDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseLockDeployment._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseLockDeployment,
+                    "_BaseLockDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7545,21 +7461,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             """
 
             http_options = _BaseConfigRestTransport._BaseProvisionDeploymentGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_provision_deployment_group(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseProvisionDeploymentGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConfigRestTransport._BaseProvisionDeploymentGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseProvisionDeploymentGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseProvisionDeploymentGroup,
+                    "_BaseProvisionDeploymentGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7699,27 +7612,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseUnlockDeployment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_unlock_deployment(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseUnlockDeployment._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseConfigRestTransport._BaseUnlockDeployment._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseUnlockDeployment._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseUnlockDeployment,
+                    "_BaseUnlockDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7858,21 +7762,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             """
 
             http_options = _BaseConfigRestTransport._BaseUpdateAutoMigrationConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_auto_migration_config(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseUpdateAutoMigrationConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConfigRestTransport._BaseUpdateAutoMigrationConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseUpdateAutoMigrationConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseUpdateAutoMigrationConfig,
+                    "_BaseUpdateAutoMigrationConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8011,27 +7912,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseUpdateDeployment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_deployment(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseUpdateDeployment._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseConfigRestTransport._BaseUpdateDeployment._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseUpdateDeployment._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseUpdateDeployment,
+                    "_BaseUpdateDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8171,21 +8063,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseUpdateDeploymentGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_deployment_group(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseUpdateDeploymentGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConfigRestTransport._BaseUpdateDeploymentGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfigRestTransport._BaseUpdateDeploymentGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseUpdateDeploymentGroup,
+                    "_BaseUpdateDeploymentGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8648,19 +8537,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             """
 
             http_options = _BaseConfigRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8790,19 +8676,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8932,19 +8815,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9075,23 +8955,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseConfigRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9225,25 +9098,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseTestIamPermissions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseConfigRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseConfigRestTransport._BaseTestIamPermissions._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseTestIamPermissions._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9374,25 +9240,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseCancelOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseConfigRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9497,21 +9356,18 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseDeleteOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseDeleteOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9616,19 +9472,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9758,19 +9611,16 @@ class ConfigRestTransport(_BaseConfigRestTransport):
             http_options = (
                 _BaseConfigRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseConfigRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConfigRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfigRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

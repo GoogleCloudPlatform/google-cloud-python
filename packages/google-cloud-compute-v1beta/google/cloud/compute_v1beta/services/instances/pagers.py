@@ -270,3 +270,79 @@ class ListReferrersPager:
 
     def __repr__(self) -> str:
         return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListVmExtensionStatesPager:
+    """A pager for iterating through ``list_vm_extension_states`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.compute_v1beta.types.ListVmExtensionStatesResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``items`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListVmExtensionStates`` requests and continue to iterate
+    through the ``items`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.compute_v1beta.types.ListVmExtensionStatesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., compute.ListVmExtensionStatesResponse],
+        request: compute.ListVmExtensionStatesInstancesRequest,
+        response: compute.ListVmExtensionStatesResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.compute_v1beta.types.ListVmExtensionStatesInstancesRequest):
+                The initial request object.
+            response (google.cloud.compute_v1beta.types.ListVmExtensionStatesResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = compute.ListVmExtensionStatesInstancesRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(self) -> Iterator[compute.ListVmExtensionStatesResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[compute.VmExtensionState]:
+        for page in self.pages:
+            yield from page.items
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)

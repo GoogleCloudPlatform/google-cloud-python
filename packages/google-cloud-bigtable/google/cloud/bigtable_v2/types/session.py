@@ -30,6 +30,8 @@ __protobuf__ = proto.module(
     manifest={
         "SessionType",
         "LoadBalancingOptions",
+        "SessionScopeDiversionConfiguration",
+        "SessionDiversionConfiguration",
         "SessionClientConfiguration",
         "TelemetryConfiguration",
         "OpenSessionRequest",
@@ -43,6 +45,8 @@ __protobuf__ = proto.module(
         "OpenMaterializedViewRequest",
         "OpenMaterializedViewResponse",
         "VirtualRpcRequest",
+        "ContinueVirtualRpcRequest",
+        "CancelVirtualRpcRequest",
         "ClusterInformation",
         "SessionRequestStats",
         "VirtualRpcResponse",
@@ -55,8 +59,16 @@ __protobuf__ = proto.module(
         "MaterializedViewResponse",
         "SessionReadRowRequest",
         "SessionReadRowResponse",
+        "SessionReadRowsRequest",
+        "SessionReadRowsResponse",
         "SessionMutateRowRequest",
         "SessionMutateRowResponse",
+        "SessionCheckAndMutateRowRequest",
+        "SessionCheckAndMutateRowResponse",
+        "SessionReadModifyWriteRowRequest",
+        "SessionReadModifyWriteRowResponse",
+        "SessionMutateRowsRequest",
+        "SessionMutateRowsResponse",
         "SessionParametersResponse",
         "HeartbeatResponse",
         "GoAwayResponse",
@@ -175,13 +187,104 @@ class LoadBalancingOptions(proto.Message):
     )
 
 
+class SessionScopeDiversionConfiguration(proto.Message):
+    r"""Configuration for how a given slice of traffic is diverted to
+    sessions. Internal usage only.
+
+    Attributes:
+        session_load (float):
+            What share of in-scope requests should operate on a session,
+            [0, 1]. The remaining requests within this scope should
+            operate on the classic API.
+    """
+
+    session_load: float = proto.Field(
+        proto.FLOAT,
+        number=1,
+    )
+
+
+class SessionDiversionConfiguration(proto.Message):
+    r"""Configuration for how to divert load to sessions. Internal
+    usage only.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        global_diversion (google.cloud.bigtable_v2.types.SessionScopeDiversionConfiguration):
+            If provided, all scopes should use this
+            diversion config.
+
+            This field is a member of `oneof`_ ``diversion_strategy``.
+        per_scope_diversion (google.cloud.bigtable_v2.types.SessionDiversionConfiguration.PerScopeDiversion):
+            Diversion happens per-scope.
+
+            This field is a member of `oneof`_ ``diversion_strategy``.
+    """
+
+    class PerScopeDiversion(proto.Message):
+        r"""Configuration for how to balance sessions per method.
+        Internal usage only.
+
+        Attributes:
+            scope_diversions (MutableMapping[str, google.cloud.bigtable_v2.types.SessionScopeDiversionConfiguration]):
+                Keys: Attributes of the request scope that
+                can impact the diversion. Valid format is:
+
+                  "method:<service>.<method>" - All requests
+                with this scope will have   the specified
+                diversion config applied.
+        """
+
+        scope_diversions: MutableMapping[str, "SessionScopeDiversionConfiguration"] = (
+            proto.MapField(
+                proto.STRING,
+                proto.MESSAGE,
+                number=1,
+                message="SessionScopeDiversionConfiguration",
+            )
+        )
+
+    global_diversion: "SessionScopeDiversionConfiguration" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        oneof="diversion_strategy",
+        message="SessionScopeDiversionConfiguration",
+    )
+    per_scope_diversion: PerScopeDiversion = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="diversion_strategy",
+        message=PerScopeDiversion,
+    )
+
+
 class SessionClientConfiguration(proto.Message):
     r"""Configuration for the Session API. Internal usage only.
 
     Attributes:
         session_load (float):
-            What share of requests should operate on a session, [0, 1].
-            The rest should operate on the old-style API.
+            Deprecated: Prefer session_diversion_configuration. If both
+            are provided, the client should apply this session_load to
+            Bigtable.ReadRow & Bigtable.MutateRow, then process the
+            session_diversion_configuration, overwriting any behavior
+            established by this value.
+
+            What share of the following methods should operate on a
+            session, [0, 1]:
+
+            - Bigtable.ReadRow
+            - Bigtable.MutateRow
+
+            The rest should operate on the classic API, e.g. have
+            session_load = 0.
+        session_diversion_configuration (google.cloud.bigtable_v2.types.SessionDiversionConfiguration):
+            How load should be divered to sessions.
         load_balancing_options (google.cloud.bigtable_v2.types.LoadBalancingOptions):
 
         channel_configuration (google.cloud.bigtable_v2.types.SessionClientConfiguration.ChannelPoolConfiguration):
@@ -326,6 +429,13 @@ class SessionClientConfiguration(proto.Message):
             new_session_creation_penalty (google.protobuf.duration_pb2.Duration):
                 How long to penalize the creation budget for
                 a failed session creation attempt.
+            soft_session_close_budget (int):
+                How many concurrent session closures are
+                allowed. The client will hold onto a count
+                against this budget whenever it is closing a
+                session, and release that count once the session
+                is successfully established or failed to
+                establish.
             consecutive_session_failure_threshold (int):
                 A threshold for cancelling all pending vRPCs
                 based on how many consecutive session
@@ -336,8 +446,10 @@ class SessionClientConfiguration(proto.Message):
                 waiting for any session to establish to actually
                 send the vRPC).
             load_balancing_options (google.cloud.bigtable_v2.types.LoadBalancingOptions):
-                How to balance vRPC load over connections to AFEs. Set only
-                if session_load > 0.
+                How to balance vRPC load over connections to AFEs.
+
+                Set only if session_load or session_diversion_configuration
+                indicates that there will be some session traffic.
         """
 
         headroom: float = proto.Field(
@@ -365,6 +477,10 @@ class SessionClientConfiguration(proto.Message):
             number=6,
             message=duration_pb2.Duration,
         )
+        soft_session_close_budget: int = proto.Field(
+            proto.INT32,
+            number=7,
+        )
         consecutive_session_failure_threshold: int = proto.Field(
             proto.INT32,
             number=8,
@@ -378,6 +494,11 @@ class SessionClientConfiguration(proto.Message):
     session_load: float = proto.Field(
         proto.FLOAT,
         number=1,
+    )
+    session_diversion_configuration: "SessionDiversionConfiguration" = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        message="SessionDiversionConfiguration",
     )
     load_balancing_options: "LoadBalancingOptions" = proto.Field(
         proto.MESSAGE,
@@ -779,6 +900,9 @@ class VirtualRpcRequest(proto.Message):
                 same logical operation (e.g. in logs / traces).
 
                 Note, this may not be needed for V1, TBD.
+            delay (google.protobuf.duration_pb2.Duration):
+                How long to delay the operation for on the
+                server-side, for testing.
         """
 
         attempt_number: int = proto.Field(
@@ -793,6 +917,11 @@ class VirtualRpcRequest(proto.Message):
         traceparent: str = proto.Field(
             proto.STRING,
             number=3,
+        )
+        delay: duration_pb2.Duration = proto.Field(
+            proto.MESSAGE,
+            number=4,
+            message=duration_pb2.Duration,
         )
 
     rpc_id: int = proto.Field(
@@ -812,6 +941,34 @@ class VirtualRpcRequest(proto.Message):
     payload: bytes = proto.Field(
         proto.BYTES,
         number=4,
+    )
+
+
+class ContinueVirtualRpcRequest(proto.Message):
+    r"""Internal usage only.
+
+    Attributes:
+        rpc_id (int):
+
+    """
+
+    rpc_id: int = proto.Field(
+        proto.INT64,
+        number=1,
+    )
+
+
+class CancelVirtualRpcRequest(proto.Message):
+    r"""Internal usage only.
+
+    Attributes:
+        rpc_id (int):
+
+    """
+
+    rpc_id: int = proto.Field(
+        proto.INT64,
+        number=1,
     )
 
 
@@ -865,6 +1022,8 @@ class VirtualRpcResponse(proto.Message):
         payload (bytes):
             Could be TableResponse (or in post-V1,
             SqlResponse)
+        has_more (bool):
+            If there are more responses for this rpc_id coming.
     """
 
     rpc_id: int = proto.Field(
@@ -884,6 +1043,10 @@ class VirtualRpcResponse(proto.Message):
     payload: bytes = proto.Field(
         proto.BYTES,
         number=3,
+    )
+    has_more: bool = proto.Field(
+        proto.BOOL,
+        number=5,
     )
 
 
@@ -940,6 +1103,18 @@ class TableRequest(proto.Message):
         mutate_row (google.cloud.bigtable_v2.types.SessionMutateRowRequest):
 
             This field is a member of `oneof`_ ``payload``.
+        read_rows (google.cloud.bigtable_v2.types.SessionReadRowsRequest):
+
+            This field is a member of `oneof`_ ``payload``.
+        check_and_mutate_row (google.cloud.bigtable_v2.types.SessionCheckAndMutateRowRequest):
+
+            This field is a member of `oneof`_ ``payload``.
+        read_modify_write_row (google.cloud.bigtable_v2.types.SessionReadModifyWriteRowRequest):
+
+            This field is a member of `oneof`_ ``payload``.
+        mutate_rows (google.cloud.bigtable_v2.types.SessionMutateRowsRequest):
+
+            This field is a member of `oneof`_ ``payload``.
     """
 
     read_row: "SessionReadRowRequest" = proto.Field(
@@ -953,6 +1128,30 @@ class TableRequest(proto.Message):
         number=2,
         oneof="payload",
         message="SessionMutateRowRequest",
+    )
+    read_rows: "SessionReadRowsRequest" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="payload",
+        message="SessionReadRowsRequest",
+    )
+    check_and_mutate_row: "SessionCheckAndMutateRowRequest" = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        oneof="payload",
+        message="SessionCheckAndMutateRowRequest",
+    )
+    read_modify_write_row: "SessionReadModifyWriteRowRequest" = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        oneof="payload",
+        message="SessionReadModifyWriteRowRequest",
+    )
+    mutate_rows: "SessionMutateRowsRequest" = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        oneof="payload",
+        message="SessionMutateRowsRequest",
     )
 
 
@@ -973,6 +1172,18 @@ class TableResponse(proto.Message):
         mutate_row (google.cloud.bigtable_v2.types.SessionMutateRowResponse):
 
             This field is a member of `oneof`_ ``payload``.
+        read_rows (google.cloud.bigtable_v2.types.SessionReadRowsResponse):
+
+            This field is a member of `oneof`_ ``payload``.
+        check_and_mutate_row (google.cloud.bigtable_v2.types.SessionCheckAndMutateRowResponse):
+
+            This field is a member of `oneof`_ ``payload``.
+        read_modify_write_row (google.cloud.bigtable_v2.types.SessionReadModifyWriteRowResponse):
+
+            This field is a member of `oneof`_ ``payload``.
+        mutate_rows (google.cloud.bigtable_v2.types.SessionMutateRowsResponse):
+
+            This field is a member of `oneof`_ ``payload``.
     """
 
     read_row: "SessionReadRowResponse" = proto.Field(
@@ -986,6 +1197,30 @@ class TableResponse(proto.Message):
         number=2,
         oneof="payload",
         message="SessionMutateRowResponse",
+    )
+    read_rows: "SessionReadRowsResponse" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="payload",
+        message="SessionReadRowsResponse",
+    )
+    check_and_mutate_row: "SessionCheckAndMutateRowResponse" = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        oneof="payload",
+        message="SessionCheckAndMutateRowResponse",
+    )
+    read_modify_write_row: "SessionReadModifyWriteRowResponse" = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        oneof="payload",
+        message="SessionReadModifyWriteRowResponse",
+    )
+    mutate_rows: "SessionMutateRowsResponse" = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        oneof="payload",
+        message="SessionMutateRowsResponse",
     )
 
 
@@ -1007,6 +1242,18 @@ class AuthorizedViewRequest(proto.Message):
         mutate_row (google.cloud.bigtable_v2.types.SessionMutateRowRequest):
 
             This field is a member of `oneof`_ ``payload``.
+        read_rows (google.cloud.bigtable_v2.types.SessionReadRowsRequest):
+
+            This field is a member of `oneof`_ ``payload``.
+        check_and_mutate_row (google.cloud.bigtable_v2.types.SessionCheckAndMutateRowRequest):
+
+            This field is a member of `oneof`_ ``payload``.
+        read_modify_write_row (google.cloud.bigtable_v2.types.SessionReadModifyWriteRowRequest):
+
+            This field is a member of `oneof`_ ``payload``.
+        mutate_rows (google.cloud.bigtable_v2.types.SessionMutateRowsRequest):
+
+            This field is a member of `oneof`_ ``payload``.
     """
 
     read_row: "SessionReadRowRequest" = proto.Field(
@@ -1020,6 +1267,30 @@ class AuthorizedViewRequest(proto.Message):
         number=2,
         oneof="payload",
         message="SessionMutateRowRequest",
+    )
+    read_rows: "SessionReadRowsRequest" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="payload",
+        message="SessionReadRowsRequest",
+    )
+    check_and_mutate_row: "SessionCheckAndMutateRowRequest" = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        oneof="payload",
+        message="SessionCheckAndMutateRowRequest",
+    )
+    read_modify_write_row: "SessionReadModifyWriteRowRequest" = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        oneof="payload",
+        message="SessionReadModifyWriteRowRequest",
+    )
+    mutate_rows: "SessionMutateRowsRequest" = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        oneof="payload",
+        message="SessionMutateRowsRequest",
     )
 
 
@@ -1041,6 +1312,18 @@ class AuthorizedViewResponse(proto.Message):
         mutate_row (google.cloud.bigtable_v2.types.SessionMutateRowResponse):
 
             This field is a member of `oneof`_ ``payload``.
+        read_rows (google.cloud.bigtable_v2.types.SessionReadRowsResponse):
+
+            This field is a member of `oneof`_ ``payload``.
+        check_and_mutate_row (google.cloud.bigtable_v2.types.SessionCheckAndMutateRowResponse):
+
+            This field is a member of `oneof`_ ``payload``.
+        read_modify_write_row (google.cloud.bigtable_v2.types.SessionReadModifyWriteRowResponse):
+
+            This field is a member of `oneof`_ ``payload``.
+        mutate_rows (google.cloud.bigtable_v2.types.SessionMutateRowsResponse):
+
+            This field is a member of `oneof`_ ``payload``.
     """
 
     read_row: "SessionReadRowResponse" = proto.Field(
@@ -1055,17 +1338,48 @@ class AuthorizedViewResponse(proto.Message):
         oneof="payload",
         message="SessionMutateRowResponse",
     )
+    read_rows: "SessionReadRowsResponse" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="payload",
+        message="SessionReadRowsResponse",
+    )
+    check_and_mutate_row: "SessionCheckAndMutateRowResponse" = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        oneof="payload",
+        message="SessionCheckAndMutateRowResponse",
+    )
+    read_modify_write_row: "SessionReadModifyWriteRowResponse" = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        oneof="payload",
+        message="SessionReadModifyWriteRowResponse",
+    )
+    mutate_rows: "SessionMutateRowsResponse" = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        oneof="payload",
+        message="SessionMutateRowsResponse",
+    )
 
 
 class MaterializedViewRequest(proto.Message):
     r"""A request wrapper for operations on a materialized view.
     Internal usage only.
 
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
     Attributes:
         read_row (google.cloud.bigtable_v2.types.SessionReadRowRequest):
+
+            This field is a member of `oneof`_ ``payload``.
+        read_rows (google.cloud.bigtable_v2.types.SessionReadRowsRequest):
 
             This field is a member of `oneof`_ ``payload``.
     """
@@ -1076,17 +1390,30 @@ class MaterializedViewRequest(proto.Message):
         oneof="payload",
         message="SessionReadRowRequest",
     )
+    read_rows: "SessionReadRowsRequest" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="payload",
+        message="SessionReadRowsRequest",
+    )
 
 
 class MaterializedViewResponse(proto.Message):
     r"""A response wrapper for operations on a materialized view.
     Internal usage only.
 
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
     Attributes:
         read_row (google.cloud.bigtable_v2.types.SessionReadRowResponse):
+
+            This field is a member of `oneof`_ ``payload``.
+        read_rows (google.cloud.bigtable_v2.types.SessionReadRowsResponse):
 
             This field is a member of `oneof`_ ``payload``.
     """
@@ -1096,6 +1423,12 @@ class MaterializedViewResponse(proto.Message):
         number=1,
         oneof="payload",
         message="SessionReadRowResponse",
+    )
+    read_rows: "SessionReadRowsResponse" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="payload",
+        message="SessionReadRowsResponse",
     )
 
 
@@ -1142,6 +1475,62 @@ class SessionReadRowResponse(proto.Message):
     )
 
 
+class SessionReadRowsRequest(proto.Message):
+    r"""Internal usage only.
+
+    Attributes:
+        rows (google.cloud.bigtable_v2.types.RowSet):
+
+        filter (google.cloud.bigtable_v2.types.RowFilter):
+
+        rows_limit (int):
+
+        reversed (bool):
+
+    """
+
+    rows: data.RowSet = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=data.RowSet,
+    )
+    filter: data.RowFilter = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=data.RowFilter,
+    )
+    rows_limit: int = proto.Field(
+        proto.INT64,
+        number=3,
+    )
+    reversed: bool = proto.Field(
+        proto.BOOL,
+        number=4,
+    )
+
+
+class SessionReadRowsResponse(proto.Message):
+    r"""Internal usage only.
+
+    Attributes:
+        row (MutableSequence[google.cloud.bigtable_v2.types.Row]):
+
+        stats (google.cloud.bigtable_v2.types.RequestStats):
+
+    """
+
+    row: MutableSequence[data.Row] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=data.Row,
+    )
+    stats: request_stats.RequestStats = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=request_stats.RequestStats,
+    )
+
+
 class SessionMutateRowRequest(proto.Message):
     r"""Internal usage only.
 
@@ -1167,6 +1556,209 @@ class SessionMutateRowResponse(proto.Message):
     r"""Internal usage only."""
 
 
+class SessionCheckAndMutateRowRequest(proto.Message):
+    r"""Internal usage only.
+
+    Attributes:
+        key (bytes):
+
+        predicate_filter (google.cloud.bigtable_v2.types.RowFilter):
+
+        true_mutations (MutableSequence[google.cloud.bigtable_v2.types.Mutation]):
+
+        false_mutations (MutableSequence[google.cloud.bigtable_v2.types.Mutation]):
+
+    """
+
+    key: bytes = proto.Field(
+        proto.BYTES,
+        number=1,
+    )
+    predicate_filter: data.RowFilter = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=data.RowFilter,
+    )
+    true_mutations: MutableSequence[data.Mutation] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=3,
+        message=data.Mutation,
+    )
+    false_mutations: MutableSequence[data.Mutation] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=4,
+        message=data.Mutation,
+    )
+
+
+class SessionCheckAndMutateRowResponse(proto.Message):
+    r"""Internal usage only.
+
+    Attributes:
+        predicate_matched (bool):
+
+    """
+
+    predicate_matched: bool = proto.Field(
+        proto.BOOL,
+        number=1,
+    )
+
+
+class SessionReadModifyWriteRowRequest(proto.Message):
+    r"""Internal usage only.
+
+    Attributes:
+        key (bytes):
+
+        rules (MutableSequence[google.cloud.bigtable_v2.types.ReadModifyWriteRule]):
+
+    """
+
+    key: bytes = proto.Field(
+        proto.BYTES,
+        number=1,
+    )
+    rules: MutableSequence[data.ReadModifyWriteRule] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message=data.ReadModifyWriteRule,
+    )
+
+
+class SessionReadModifyWriteRowResponse(proto.Message):
+    r"""Internal usage only.
+
+    Attributes:
+        row (google.cloud.bigtable_v2.types.Row):
+
+    """
+
+    row: data.Row = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=data.Row,
+    )
+
+
+class SessionMutateRowsRequest(proto.Message):
+    r"""Internal usage only.
+
+    Attributes:
+        entries (MutableSequence[google.cloud.bigtable_v2.types.SessionMutateRowsRequest.Entry]):
+            The row keys and corresponding mutations to
+            be applied in bulk.
+    """
+
+    class Entry(proto.Message):
+        r"""A mutation for a given row.
+
+        Attributes:
+            key (bytes):
+                The key of the row to which the ``mutations`` should be
+                applied.
+            mutations (MutableSequence[google.cloud.bigtable_v2.types.Mutation]):
+                Changes to be atomically applied to the
+                specified row.
+            idempotency (google.cloud.bigtable_v2.types.Idempotency):
+                The idempotency of the mutation.
+        """
+
+        key: bytes = proto.Field(
+            proto.BYTES,
+            number=1,
+        )
+        mutations: MutableSequence[data.Mutation] = proto.RepeatedField(
+            proto.MESSAGE,
+            number=2,
+            message=data.Mutation,
+        )
+        idempotency: data.Idempotency = proto.Field(
+            proto.MESSAGE,
+            number=3,
+            message=data.Idempotency,
+        )
+
+    entries: MutableSequence[Entry] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=Entry,
+    )
+
+
+class SessionMutateRowsResponse(proto.Message):
+    r"""Internal usage only.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        entries (MutableSequence[google.cloud.bigtable_v2.types.SessionMutateRowsResponse.Entry]):
+            One or more results for Entries from the
+            batch request.
+        rate_limit_info (google.cloud.bigtable_v2.types.SessionMutateRowsResponse.RateLimitInfo):
+            Information about how the client should
+            adjust its rate of requests.
+
+            This field is a member of `oneof`_ ``_rate_limit_info``.
+    """
+
+    class Entry(proto.Message):
+        r"""The result of applying a passed mutation in the original
+        request.
+
+        Attributes:
+            index (int):
+                The index into the original request's ``entries`` list of
+                the Entry for which a result is being reported.
+            status (google.rpc.status_pb2.Status):
+                The result of the request Entry identified by ``index``.
+        """
+
+        index: int = proto.Field(
+            proto.INT64,
+            number=1,
+        )
+        status: status_pb2.Status = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message=status_pb2.Status,
+        )
+
+    class RateLimitInfo(proto.Message):
+        r"""Rate limiting information for batched mutations.
+
+        Attributes:
+            period (google.protobuf.duration_pb2.Duration):
+                Time that must pass before the client should
+                adjust its rate again.
+            factor (float):
+                Multiplier that the client should apply to
+                its current request rate.
+        """
+
+        period: duration_pb2.Duration = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            message=duration_pb2.Duration,
+        )
+        factor: float = proto.Field(
+            proto.DOUBLE,
+            number=2,
+        )
+
+    entries: MutableSequence[Entry] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=Entry,
+    )
+    rate_limit_info: RateLimitInfo = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        optional=True,
+        message=RateLimitInfo,
+    )
+
+
 class SessionParametersResponse(proto.Message):
     r"""Internal usage only.
 
@@ -1180,12 +1772,21 @@ class SessionParametersResponse(proto.Message):
             positive.
 
             See also Heartbeats.
+        softmax_streaming_prefetch_buffer_bytes (int):
+            Client will pull this many bytes at most to
+            make messages for steamed responses. If the last
+            byte is mid-message, it will continue until a
+            full message comes.
     """
 
     keep_alive: duration_pb2.Duration = proto.Field(
         proto.MESSAGE,
         number=1,
         message=duration_pb2.Duration,
+    )
+    softmax_streaming_prefetch_buffer_bytes: int = proto.Field(
+        proto.INT32,
+        number=2,
     )
 
 

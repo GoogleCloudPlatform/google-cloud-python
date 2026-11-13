@@ -495,6 +495,35 @@ class HypercomputeClusterGrpcAsyncIOTransport(HypercomputeClusterTransport):
             )
         return self._stubs["delete_cluster"]
 
+    @property
+    def list_nodes(
+        self,
+    ) -> Callable[
+        [hypercompute_cluster.ListNodesRequest],
+        Awaitable[hypercompute_cluster.ListNodesResponse],
+    ]:
+        r"""Return a callable for the list nodes method over gRPC.
+
+        Lists Nodes in a given cluster.
+
+        Returns:
+            Callable[[~.ListNodesRequest],
+                    Awaitable[~.ListNodesResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_nodes" not in self._stubs:
+            self._stubs["list_nodes"] = self._logged_channel.unary_unary(
+                "/google.cloud.hypercomputecluster.v1beta.HypercomputeCluster/ListNodes",
+                request_serializer=hypercompute_cluster.ListNodesRequest.serialize,
+                response_deserializer=hypercompute_cluster.ListNodesResponse.deserialize,
+            )
+        return self._stubs["list_nodes"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -539,6 +568,11 @@ class HypercomputeClusterGrpcAsyncIOTransport(HypercomputeClusterTransport):
             self.delete_cluster: self._wrap_method(
                 self.delete_cluster,
                 default_timeout=3600.0,
+                client_info=client_info,
+            ),
+            self.list_nodes: self._wrap_method(
+                self.list_nodes,
+                default_timeout=None,
                 client_info=client_info,
             ),
             self.get_location: self._wrap_method(

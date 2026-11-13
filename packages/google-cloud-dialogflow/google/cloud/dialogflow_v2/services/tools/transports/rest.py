@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dialogflow_v2._compat import transcode_request
 from google.cloud.dialogflow_v2.types import tool
 from google.cloud.dialogflow_v2.types import tool as gcd_tool
 
@@ -574,23 +575,16 @@ class ToolsRestTransport(_BaseToolsRestTransport):
             """
 
             http_options = _BaseToolsRestTransport._BaseCreateTool._get_http_options()
-
             request, metadata = self._interceptor.pre_create_tool(request, metadata)
-            transcoded_request = (
-                _BaseToolsRestTransport._BaseCreateTool._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseToolsRestTransport._BaseCreateTool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseToolsRestTransport._BaseCreateTool._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseToolsRestTransport._BaseCreateTool,
+                    "_BaseCreateTool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -719,19 +713,16 @@ class ToolsRestTransport(_BaseToolsRestTransport):
             """
 
             http_options = _BaseToolsRestTransport._BaseDeleteTool._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_tool(request, metadata)
-            transcoded_request = (
-                _BaseToolsRestTransport._BaseDeleteTool._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseToolsRestTransport._BaseDeleteTool._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseToolsRestTransport._BaseDeleteTool,
+                    "_BaseDeleteTool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -829,17 +820,16 @@ class ToolsRestTransport(_BaseToolsRestTransport):
             """
 
             http_options = _BaseToolsRestTransport._BaseGetTool._get_http_options()
-
             request, metadata = self._interceptor.pre_get_tool(request, metadata)
-            transcoded_request = (
-                _BaseToolsRestTransport._BaseGetTool._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = _BaseToolsRestTransport._BaseGetTool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseToolsRestTransport._BaseGetTool,
+                    "_BaseGetTool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -971,19 +961,16 @@ class ToolsRestTransport(_BaseToolsRestTransport):
             """
 
             http_options = _BaseToolsRestTransport._BaseListTools._get_http_options()
-
             request, metadata = self._interceptor.pre_list_tools(request, metadata)
-            transcoded_request = (
-                _BaseToolsRestTransport._BaseListTools._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseToolsRestTransport._BaseListTools._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseToolsRestTransport._BaseListTools,
+                    "_BaseListTools__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1116,23 +1103,16 @@ class ToolsRestTransport(_BaseToolsRestTransport):
             """
 
             http_options = _BaseToolsRestTransport._BaseUpdateTool._get_http_options()
-
             request, metadata = self._interceptor.pre_update_tool(request, metadata)
-            transcoded_request = (
-                _BaseToolsRestTransport._BaseUpdateTool._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseToolsRestTransport._BaseUpdateTool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseToolsRestTransport._BaseUpdateTool._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseToolsRestTransport._BaseUpdateTool,
+                    "_BaseUpdateTool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1298,19 +1278,16 @@ class ToolsRestTransport(_BaseToolsRestTransport):
             """
 
             http_options = _BaseToolsRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseToolsRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseToolsRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseToolsRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1440,19 +1417,16 @@ class ToolsRestTransport(_BaseToolsRestTransport):
             http_options = (
                 _BaseToolsRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseToolsRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseToolsRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseToolsRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1579,21 +1553,18 @@ class ToolsRestTransport(_BaseToolsRestTransport):
             http_options = (
                 _BaseToolsRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseToolsRestTransport._BaseCancelOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseToolsRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseToolsRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1696,19 +1667,16 @@ class ToolsRestTransport(_BaseToolsRestTransport):
             """
 
             http_options = _BaseToolsRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseToolsRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseToolsRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseToolsRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1838,19 +1806,16 @@ class ToolsRestTransport(_BaseToolsRestTransport):
             http_options = (
                 _BaseToolsRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseToolsRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseToolsRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseToolsRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

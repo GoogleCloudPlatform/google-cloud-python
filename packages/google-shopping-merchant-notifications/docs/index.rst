@@ -2,9 +2,6 @@
 
 .. include:: multiprocessing.rst
 
-This package includes clients for multiple versions of Shopping Merchant Notifications.
-By default, you will get version ``merchant_notifications_v1``.
-
 
 API Reference
 -------------
@@ -13,14 +10,6 @@ API Reference
 
     merchant_notifications_v1/services_
     merchant_notifications_v1/types_
-
-API Reference
--------------
-.. toctree::
-    :maxdepth: 2
-
-    merchant_notifications_v1beta/services_
-    merchant_notifications_v1beta/types_
 
 
 Changelog

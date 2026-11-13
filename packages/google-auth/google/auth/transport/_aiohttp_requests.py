@@ -27,12 +27,9 @@ import logging
 import aiohttp  # type: ignore
 import urllib3  # type: ignore
 
-from google.auth import _helpers
-from google.auth import exceptions
-from google.auth import transport
+from google.auth import _helpers, exceptions, transport
 from google.auth.aio import _helpers as _helpers_async
 from google.auth.transport import requests
-
 
 _LOGGER = logging.getLogger(__name__)
 

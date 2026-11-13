@@ -729,14 +729,14 @@ class ExternalConfig(object):
         self._properties = {"sourceFormat": source_format}
 
     @property
-    def source_format(self):
-        """:class:`~.external_config.ExternalSourceFormat`:
+    def source_format(self) -> Optional[str]:
+        """Optional[:class:`~.external_config.ExternalSourceFormat`]:
         Format of external source.
 
         See
         https://cloud.google.com/bigquery/docs/reference/rest/v2/tables#ExternalDataConfiguration.FIELDS.source_format
         """
-        return self._properties["sourceFormat"]
+        return self._properties.get("sourceFormat")
 
     @property
     def options(self) -> Optional[OptionsType]:
@@ -1120,7 +1120,7 @@ class ExternalConfig(object):
         Returns:
             ExternalConfig: Configuration parsed from ``resource``.
         """
-        config = cls(resource["sourceFormat"])
+        config = cls(resource.get("sourceFormat"))
         config._properties = copy.deepcopy(resource)
         return config
 

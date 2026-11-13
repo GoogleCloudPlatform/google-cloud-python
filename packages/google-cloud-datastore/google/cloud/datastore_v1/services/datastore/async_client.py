@@ -407,7 +407,7 @@ class DatastoreAsyncClient:
         # and friendly error handling.
         rpc = self._client._transport._wrapped_methods[self._client._transport.lookup]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         if request.project_id:
             header_params["project_id"] = request.project_id
@@ -500,7 +500,7 @@ class DatastoreAsyncClient:
             self._client._transport.run_query
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         if request.project_id:
             header_params["project_id"] = request.project_id
@@ -593,7 +593,7 @@ class DatastoreAsyncClient:
             self._client._transport.run_aggregation_query
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         if request.project_id:
             header_params["project_id"] = request.project_id
@@ -711,7 +711,7 @@ class DatastoreAsyncClient:
             self._client._transport.begin_transaction
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         if request.project_id:
             header_params["project_id"] = request.project_id
@@ -873,7 +873,7 @@ class DatastoreAsyncClient:
         # and friendly error handling.
         rpc = self._client._transport._wrapped_methods[self._client._transport.commit]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         if request.project_id:
             header_params["project_id"] = request.project_id
@@ -1002,7 +1002,7 @@ class DatastoreAsyncClient:
         # and friendly error handling.
         rpc = self._client._transport._wrapped_methods[self._client._transport.rollback]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         if request.project_id:
             header_params["project_id"] = request.project_id
@@ -1133,7 +1133,7 @@ class DatastoreAsyncClient:
             self._client._transport.allocate_ids
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         if request.project_id:
             header_params["project_id"] = request.project_id
@@ -1263,7 +1263,7 @@ class DatastoreAsyncClient:
             self._client._transport.reserve_ids
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         if request.project_id:
             header_params["project_id"] = request.project_id

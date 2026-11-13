@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_inventories_v1._compat import transcode_request
 from google.shopping.merchant_inventories_v1.types import regionalinventory
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -364,17 +365,18 @@ class RegionalInventoryServiceRestTransport(_BaseRegionalInventoryServiceRestTra
             """
 
             http_options = _BaseRegionalInventoryServiceRestTransport._BaseDeleteRegionalInventory._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_regional_inventory(
                 request, metadata
             )
-            transcoded_request = _BaseRegionalInventoryServiceRestTransport._BaseDeleteRegionalInventory._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionalInventoryServiceRestTransport._BaseDeleteRegionalInventory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionalInventoryServiceRestTransport._BaseDeleteRegionalInventory,
+                    "_BaseDeleteRegionalInventory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -484,21 +486,18 @@ class RegionalInventoryServiceRestTransport(_BaseRegionalInventoryServiceRestTra
             """
 
             http_options = _BaseRegionalInventoryServiceRestTransport._BaseInsertRegionalInventory._get_http_options()
-
             request, metadata = self._interceptor.pre_insert_regional_inventory(
                 request, metadata
             )
-            transcoded_request = _BaseRegionalInventoryServiceRestTransport._BaseInsertRegionalInventory._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionalInventoryServiceRestTransport._BaseInsertRegionalInventory._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionalInventoryServiceRestTransport._BaseInsertRegionalInventory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionalInventoryServiceRestTransport._BaseInsertRegionalInventory,
+                    "_BaseInsertRegionalInventory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -639,17 +638,18 @@ class RegionalInventoryServiceRestTransport(_BaseRegionalInventoryServiceRestTra
             """
 
             http_options = _BaseRegionalInventoryServiceRestTransport._BaseListRegionalInventories._get_http_options()
-
             request, metadata = self._interceptor.pre_list_regional_inventories(
                 request, metadata
             )
-            transcoded_request = _BaseRegionalInventoryServiceRestTransport._BaseListRegionalInventories._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionalInventoryServiceRestTransport._BaseListRegionalInventories._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionalInventoryServiceRestTransport._BaseListRegionalInventories,
+                    "_BaseListRegionalInventories__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

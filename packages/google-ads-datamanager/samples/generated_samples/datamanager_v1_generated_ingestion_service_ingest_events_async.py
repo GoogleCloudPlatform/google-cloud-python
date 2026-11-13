@@ -41,8 +41,7 @@ async def sample_ingest_events():
     # Initialize request argument(s)
     destinations = datamanager_v1.Destination()
     destinations.operating_account.account_id = "account_id_value"
-    destinations.operating_account.account_type = "FLOODLIGHT_CONFIG"
-    destinations.product_destination_id = "product_destination_id_value"
+    destinations.operating_account.account_type = "GOOGLE_AD_MANAGER"
 
     request = datamanager_v1.IngestEventsRequest(
         destinations=destinations,

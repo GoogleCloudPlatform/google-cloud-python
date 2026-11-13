@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.speech_v2._compat import transcode_request
 from google.cloud.speech_v2.types import cloud_speech
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1664,23 +1665,16 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseBatchRecognize._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_batch_recognize(request, metadata)
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseBatchRecognize._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpeechRestTransport._BaseBatchRecognize._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseBatchRecognize._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseBatchRecognize,
+                    "_BaseBatchRecognize__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1821,27 +1815,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseCreateCustomClass._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_custom_class(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseCreateCustomClass._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseSpeechRestTransport._BaseCreateCustomClass._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseCreateCustomClass._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseCreateCustomClass,
+                    "_BaseCreateCustomClass__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1982,25 +1967,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseCreatePhraseSet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_phrase_set(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseCreatePhraseSet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpeechRestTransport._BaseCreatePhraseSet._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseCreatePhraseSet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseCreatePhraseSet,
+                    "_BaseCreatePhraseSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2141,27 +2119,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseCreateRecognizer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_recognizer(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseCreateRecognizer._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseSpeechRestTransport._BaseCreateRecognizer._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseCreateRecognizer._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseCreateRecognizer,
+                    "_BaseCreateRecognizer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2301,21 +2270,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseDeleteCustomClass._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_custom_class(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseDeleteCustomClass._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseDeleteCustomClass._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseDeleteCustomClass,
+                    "_BaseDeleteCustomClass__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2454,21 +2420,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseDeletePhraseSet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_phrase_set(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseDeletePhraseSet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseDeletePhraseSet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseDeletePhraseSet,
+                    "_BaseDeletePhraseSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2607,21 +2570,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseDeleteRecognizer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_recognizer(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseDeleteRecognizer._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseDeleteRecognizer._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseDeleteRecognizer,
+                    "_BaseDeleteRecognizer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2757,19 +2717,16 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             """
 
             http_options = _BaseSpeechRestTransport._BaseGetConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_config(request, metadata)
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseGetConfig._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseGetConfig._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseGetConfig,
+                    "_BaseGetConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2911,21 +2868,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseGetCustomClass._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_custom_class(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseGetCustomClass._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseGetCustomClass._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseGetCustomClass,
+                    "_BaseGetCustomClass__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3066,19 +3020,16 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseGetPhraseSet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_phrase_set(request, metadata)
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseGetPhraseSet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseGetPhraseSet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseGetPhraseSet,
+                    "_BaseGetPhraseSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3216,19 +3167,16 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseGetRecognizer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_recognizer(request, metadata)
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseGetRecognizer._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseGetRecognizer._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseGetRecognizer,
+                    "_BaseGetRecognizer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3369,21 +3317,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseListCustomClasses._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_custom_classes(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseListCustomClasses._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseListCustomClasses._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseListCustomClasses,
+                    "_BaseListCustomClasses__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3524,21 +3469,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseListPhraseSets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_phrase_sets(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseListPhraseSets._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseListPhraseSets._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseListPhraseSets,
+                    "_BaseListPhraseSets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3681,21 +3623,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseListRecognizers._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_recognizers(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseListRecognizers._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseListRecognizers._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseListRecognizers,
+                    "_BaseListRecognizers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3839,23 +3778,16 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             """
 
             http_options = _BaseSpeechRestTransport._BaseRecognize._get_http_options()
-
             request, metadata = self._interceptor.pre_recognize(request, metadata)
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseRecognize._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpeechRestTransport._BaseRecognize._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseRecognize._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseRecognize,
+                    "_BaseRecognize__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4016,21 +3948,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseUndeleteCustomClass._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_undelete_custom_class(
                 request, metadata
             )
-            transcoded_request = _BaseSpeechRestTransport._BaseUndeleteCustomClass._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSpeechRestTransport._BaseUndeleteCustomClass._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSpeechRestTransport._BaseUndeleteCustomClass._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseUndeleteCustomClass,
+                    "_BaseUndeleteCustomClass__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4171,27 +4100,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseUndeletePhraseSet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_undelete_phrase_set(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseUndeletePhraseSet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseSpeechRestTransport._BaseUndeletePhraseSet._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseUndeletePhraseSet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseUndeletePhraseSet,
+                    "_BaseUndeletePhraseSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4332,25 +4252,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseUndeleteRecognizer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_undelete_recognizer(
                 request, metadata
             )
-            transcoded_request = _BaseSpeechRestTransport._BaseUndeleteRecognizer._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseSpeechRestTransport._BaseUndeleteRecognizer._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseUndeleteRecognizer._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseUndeleteRecognizer,
+                    "_BaseUndeleteRecognizer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4490,23 +4403,16 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseUpdateConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_config(request, metadata)
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseUpdateConfig._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpeechRestTransport._BaseUpdateConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseUpdateConfig._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseUpdateConfig,
+                    "_BaseUpdateConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4649,27 +4555,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseUpdateCustomClass._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_custom_class(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseUpdateCustomClass._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseSpeechRestTransport._BaseUpdateCustomClass._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseUpdateCustomClass._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseUpdateCustomClass,
+                    "_BaseUpdateCustomClass__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4810,25 +4707,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseUpdatePhraseSet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_phrase_set(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseUpdatePhraseSet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpeechRestTransport._BaseUpdatePhraseSet._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseUpdatePhraseSet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseUpdatePhraseSet,
+                    "_BaseUpdatePhraseSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4969,27 +4859,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseUpdateRecognizer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_recognizer(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseUpdateRecognizer._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseSpeechRestTransport._BaseUpdateRecognizer._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseUpdateRecognizer._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseUpdateRecognizer,
+                    "_BaseUpdateRecognizer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5316,19 +5197,16 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             """
 
             http_options = _BaseSpeechRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5458,19 +5336,16 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5600,25 +5475,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseCancelOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpeechRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5723,21 +5591,18 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseDeleteOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseDeleteOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5842,19 +5707,16 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5984,19 +5846,16 @@ class SpeechRestTransport(_BaseSpeechRestTransport):
             http_options = (
                 _BaseSpeechRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseSpeechRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpeechRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpeechRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

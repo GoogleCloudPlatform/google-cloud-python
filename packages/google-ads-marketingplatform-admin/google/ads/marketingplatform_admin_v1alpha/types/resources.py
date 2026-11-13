@@ -25,8 +25,12 @@ __protobuf__ = proto.module(
         "LinkVerificationState",
         "AnalyticsServiceLevel",
         "AnalyticsPropertyType",
+        "OrganizationRole",
         "Organization",
         "AnalyticsAccountLink",
+        "UserGroup",
+        "UserGroupMember",
+        "AdminAccessBinding",
     },
 )
 
@@ -85,6 +89,32 @@ class AnalyticsPropertyType(proto.Enum):
     ANALYTICS_PROPERTY_TYPE_ORDINARY = 1
     ANALYTICS_PROPERTY_TYPE_SUBPROPERTY = 2
     ANALYTICS_PROPERTY_TYPE_ROLLUP = 3
+
+
+class OrganizationRole(proto.Enum):
+    r"""Roles that can be assigned to a user or user group in a GMP
+    organization.
+
+    Values:
+        ORGANIZATION_ROLE_UNSPECIFIED (0):
+            Unknown or unspecified organization role.
+        ORG_ADMIN_ROLE (1):
+            Organization admin role that grants all
+            administrative privileges.
+        USER_ADMIN_ROLE (2):
+            User admin role that grants access to the
+            Users section to perform various user management
+            functions.
+        BILLING_ADMIN_ROLE (3):
+            Billing admin role that grants access to the
+            Billing section to perform various
+            billing-related functions.
+    """
+
+    ORGANIZATION_ROLE_UNSPECIFIED = 0
+    ORG_ADMIN_ROLE = 1
+    USER_ADMIN_ROLE = 2
+    BILLING_ADMIN_ROLE = 3
 
 
 class Organization(proto.Message):
@@ -154,6 +184,163 @@ class AnalyticsAccountLink(proto.Message):
         proto.ENUM,
         number=4,
         enum="LinkVerificationState",
+    )
+
+
+class UserGroup(proto.Message):
+    r"""A resource message representing a user group in a GMP
+    organization.
+
+    Attributes:
+        name (str):
+            Identifier. Resource name of this UserGroup.
+
+            Format: organizations/{org_id}/userGroups/{user_group_id}
+            Example: "organizations/123abc/userGroups/456def".
+        display_name (str):
+            Optional. The human-readable name for the
+            user group.
+        description (str):
+            Optional. The description of the user group.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    display_name: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    description: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class UserGroupMember(proto.Message):
+    r"""A resource message representing a member of a user group.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        user_email (str):
+            Email address of the user member.
+
+            This field is a member of `oneof`_ ``member``.
+        user_group (str):
+            User group resource name of the group member.
+
+            This field is a member of `oneof`_ ``member``.
+        name (str):
+            Identifier. The resource name of this UserGroupMember.
+
+            Format:
+            organizations/{org_id}/userGroups/{user_group_id}/members/{member_id}
+            Example:
+            "organizations/123abc/userGroups/456def/members/789ghi".
+        membership_role (google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember.MembershipRole):
+            Optional. The role of the member in the user
+            group.
+    """
+
+    class MembershipRole(proto.Enum):
+        r"""The role of the member in the user group.
+
+        Values:
+            MEMBERSHIP_ROLE_UNSPECIFIED (0):
+                Unspecified membership role.
+            MEMBERSHIP_ROLE_OWNER (1):
+                Owner role that can add and remove group
+                members.
+            MEMBERSHIP_ROLE_MEMBER (2):
+                Member role that receives all permissions
+                assigned to the group.
+        """
+
+        MEMBERSHIP_ROLE_UNSPECIFIED = 0
+        MEMBERSHIP_ROLE_OWNER = 1
+        MEMBERSHIP_ROLE_MEMBER = 2
+
+    user_email: str = proto.Field(
+        proto.STRING,
+        number=2,
+        oneof="member",
+    )
+    user_group: str = proto.Field(
+        proto.STRING,
+        number=3,
+        oneof="member",
+    )
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    membership_role: MembershipRole = proto.Field(
+        proto.ENUM,
+        number=4,
+        enum=MembershipRole,
+    )
+
+
+class AdminAccessBinding(proto.Message):
+    r"""A resource message representing a binding to a set of roles.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        user_email (str):
+            Email address of the user.
+
+            This field is a member of `oneof`_ ``access_target``.
+        user_group (str):
+            Resource name of the user group.
+
+            This field is a member of `oneof`_ ``access_target``.
+        name (str):
+            Identifier. The resource name of this AdminAccessBinding.
+
+            Format:
+            organizations/{org_id}/adminAccessBindings/{admin_access_binding_id}
+            Example: "organizations/123abc/adminAccessBindings/456def".
+        organization_roles (MutableSequence[google.ads.marketingplatform_admin_v1alpha.types.OrganizationRole]):
+            Optional. A list of roles granted to the parent
+            organization.
+
+            USER_ADMIN_ROLE and BILLING_ADMIN_ROLE will be automatically
+            added if ORG_ADMIN_ROLE is assigned.
+
+            No roles will be assigned if no roles are specified.
+    """
+
+    user_email: str = proto.Field(
+        proto.STRING,
+        number=2,
+        oneof="access_target",
+    )
+    user_group: str = proto.Field(
+        proto.STRING,
+        number=3,
+        oneof="access_target",
+    )
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    organization_roles: MutableSequence["OrganizationRole"] = proto.RepeatedField(
+        proto.ENUM,
+        number=4,
+        enum="OrganizationRole",
     )
 
 

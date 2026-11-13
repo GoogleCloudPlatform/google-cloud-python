@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.recommender_v1beta1._compat import transcode_request
 from google.cloud.recommender_v1beta1.types import (
     insight,
     insight_type_config,
@@ -1062,19 +1063,16 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             http_options = (
                 _BaseRecommenderRestTransport._BaseGetInsight._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_insight(request, metadata)
-            transcoded_request = (
-                _BaseRecommenderRestTransport._BaseGetInsight._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseRecommenderRestTransport._BaseGetInsight._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseGetInsight,
+                    "_BaseGetInsight__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1208,17 +1206,18 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             """
 
             http_options = _BaseRecommenderRestTransport._BaseGetInsightTypeConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_insight_type_config(
                 request, metadata
             )
-            transcoded_request = _BaseRecommenderRestTransport._BaseGetInsightTypeConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRecommenderRestTransport._BaseGetInsightTypeConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseGetInsightTypeConfig,
+                    "_BaseGetInsightTypeConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1360,17 +1359,18 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             http_options = (
                 _BaseRecommenderRestTransport._BaseGetRecommendation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_recommendation(
                 request, metadata
             )
-            transcoded_request = _BaseRecommenderRestTransport._BaseGetRecommendation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRecommenderRestTransport._BaseGetRecommendation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseGetRecommendation,
+                    "_BaseGetRecommendation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1504,17 +1504,18 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             """
 
             http_options = _BaseRecommenderRestTransport._BaseGetRecommenderConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_recommender_config(
                 request, metadata
             )
-            transcoded_request = _BaseRecommenderRestTransport._BaseGetRecommenderConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRecommenderRestTransport._BaseGetRecommenderConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseGetRecommenderConfig,
+                    "_BaseGetRecommenderConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1652,19 +1653,16 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             http_options = (
                 _BaseRecommenderRestTransport._BaseListInsights._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_insights(request, metadata)
-            transcoded_request = (
-                _BaseRecommenderRestTransport._BaseListInsights._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseRecommenderRestTransport._BaseListInsights._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseListInsights,
+                    "_BaseListInsights__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1802,17 +1800,18 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             http_options = (
                 _BaseRecommenderRestTransport._BaseListInsightTypes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_insight_types(
                 request, metadata
             )
-            transcoded_request = _BaseRecommenderRestTransport._BaseListInsightTypes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRecommenderRestTransport._BaseListInsightTypes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseListInsightTypes,
+                    "_BaseListInsightTypes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1948,17 +1947,18 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             """
 
             http_options = _BaseRecommenderRestTransport._BaseListRecommendations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_recommendations(
                 request, metadata
             )
-            transcoded_request = _BaseRecommenderRestTransport._BaseListRecommendations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRecommenderRestTransport._BaseListRecommendations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseListRecommendations,
+                    "_BaseListRecommendations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2098,17 +2098,18 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             http_options = (
                 _BaseRecommenderRestTransport._BaseListRecommenders._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_recommenders(
                 request, metadata
             )
-            transcoded_request = _BaseRecommenderRestTransport._BaseListRecommenders._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRecommenderRestTransport._BaseListRecommenders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseListRecommenders,
+                    "_BaseListRecommenders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2249,21 +2250,18 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             """
 
             http_options = _BaseRecommenderRestTransport._BaseMarkInsightAccepted._get_http_options()
-
             request, metadata = self._interceptor.pre_mark_insight_accepted(
                 request, metadata
             )
-            transcoded_request = _BaseRecommenderRestTransport._BaseMarkInsightAccepted._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRecommenderRestTransport._BaseMarkInsightAccepted._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRecommenderRestTransport._BaseMarkInsightAccepted._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseMarkInsightAccepted,
+                    "_BaseMarkInsightAccepted__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2405,21 +2403,18 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             """
 
             http_options = _BaseRecommenderRestTransport._BaseMarkRecommendationClaimed._get_http_options()
-
             request, metadata = self._interceptor.pre_mark_recommendation_claimed(
                 request, metadata
             )
-            transcoded_request = _BaseRecommenderRestTransport._BaseMarkRecommendationClaimed._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRecommenderRestTransport._BaseMarkRecommendationClaimed._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRecommenderRestTransport._BaseMarkRecommendationClaimed._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseMarkRecommendationClaimed,
+                    "_BaseMarkRecommendationClaimed__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2562,21 +2557,18 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             """
 
             http_options = _BaseRecommenderRestTransport._BaseMarkRecommendationFailed._get_http_options()
-
             request, metadata = self._interceptor.pre_mark_recommendation_failed(
                 request, metadata
             )
-            transcoded_request = _BaseRecommenderRestTransport._BaseMarkRecommendationFailed._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRecommenderRestTransport._BaseMarkRecommendationFailed._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRecommenderRestTransport._BaseMarkRecommendationFailed._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseMarkRecommendationFailed,
+                    "_BaseMarkRecommendationFailed__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2718,21 +2710,18 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             """
 
             http_options = _BaseRecommenderRestTransport._BaseMarkRecommendationSucceeded._get_http_options()
-
             request, metadata = self._interceptor.pre_mark_recommendation_succeeded(
                 request, metadata
             )
-            transcoded_request = _BaseRecommenderRestTransport._BaseMarkRecommendationSucceeded._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRecommenderRestTransport._BaseMarkRecommendationSucceeded._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRecommenderRestTransport._BaseMarkRecommendationSucceeded._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseMarkRecommendationSucceeded,
+                    "_BaseMarkRecommendationSucceeded__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2873,21 +2862,18 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             """
 
             http_options = _BaseRecommenderRestTransport._BaseUpdateInsightTypeConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_insight_type_config(
                 request, metadata
             )
-            transcoded_request = _BaseRecommenderRestTransport._BaseUpdateInsightTypeConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRecommenderRestTransport._BaseUpdateInsightTypeConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRecommenderRestTransport._BaseUpdateInsightTypeConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseUpdateInsightTypeConfig,
+                    "_BaseUpdateInsightTypeConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3025,21 +3011,18 @@ class RecommenderRestTransport(_BaseRecommenderRestTransport):
             """
 
             http_options = _BaseRecommenderRestTransport._BaseUpdateRecommenderConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_recommender_config(
                 request, metadata
             )
-            transcoded_request = _BaseRecommenderRestTransport._BaseUpdateRecommenderConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRecommenderRestTransport._BaseUpdateRecommenderConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRecommenderRestTransport._BaseUpdateRecommenderConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRecommenderRestTransport._BaseUpdateRecommenderConfig,
+                    "_BaseUpdateRecommenderConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

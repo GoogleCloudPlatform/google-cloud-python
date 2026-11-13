@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.gkehub_v1._compat import transcode_request
 from google.cloud.gkehub_v1.types import feature, fleet, membership, service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -2750,23 +2751,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseCreateFeature._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_feature(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseCreateFeature._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseGkeHubRestTransport._BaseCreateFeature._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseCreateFeature._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseCreateFeature,
+                    "_BaseCreateFeature__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2901,23 +2895,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseCreateFleet._get_http_options()
-
             request, metadata = self._interceptor.pre_create_fleet(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseCreateFleet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseGkeHubRestTransport._BaseCreateFleet._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseCreateFleet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseCreateFleet,
+                    "_BaseCreateFleet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3057,27 +3044,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseCreateMembership._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_membership(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseCreateMembership._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseGkeHubRestTransport._BaseCreateMembership._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseCreateMembership._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseCreateMembership,
+                    "_BaseCreateMembership__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3215,21 +3193,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseCreateMembershipBinding._get_http_options()
-
             request, metadata = self._interceptor.pre_create_membership_binding(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseCreateMembershipBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGkeHubRestTransport._BaseCreateMembershipBinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseCreateMembershipBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseCreateMembershipBinding,
+                    "_BaseCreateMembershipBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3367,23 +3342,20 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseCreateMembershipRBACRoleBinding._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_create_membership_rbac_role_binding(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseCreateMembershipRBACRoleBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGkeHubRestTransport._BaseCreateMembershipRBACRoleBinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseCreateMembershipRBACRoleBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseCreateMembershipRBACRoleBinding,
+                    "_BaseCreateMembershipRBACRoleBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3522,23 +3494,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseCreateScope._get_http_options()
-
             request, metadata = self._interceptor.pre_create_scope(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseCreateScope._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseGkeHubRestTransport._BaseCreateScope._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseCreateScope._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseCreateScope,
+                    "_BaseCreateScope__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3677,21 +3642,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseCreateScopeNamespace._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_scope_namespace(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseCreateScopeNamespace._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGkeHubRestTransport._BaseCreateScopeNamespace._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseCreateScopeNamespace._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseCreateScopeNamespace,
+                    "_BaseCreateScopeNamespace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3829,21 +3791,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseCreateScopeRBACRoleBinding._get_http_options()
-
             request, metadata = self._interceptor.pre_create_scope_rbac_role_binding(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseCreateScopeRBACRoleBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGkeHubRestTransport._BaseCreateScopeRBACRoleBinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseCreateScopeRBACRoleBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseCreateScopeRBACRoleBinding,
+                    "_BaseCreateScopeRBACRoleBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3981,19 +3940,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseDeleteFeature._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_feature(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseDeleteFeature._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseDeleteFeature._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseDeleteFeature,
+                    "_BaseDeleteFeature__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4126,19 +4082,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseDeleteFleet._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_fleet(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseDeleteFleet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseDeleteFleet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseDeleteFleet,
+                    "_BaseDeleteFleet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4275,21 +4228,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseDeleteMembership._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_membership(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseDeleteMembership._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseDeleteMembership._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseDeleteMembership,
+                    "_BaseDeleteMembership__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4424,17 +4374,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseDeleteMembershipBinding._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_membership_binding(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseDeleteMembershipBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseDeleteMembershipBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseDeleteMembershipBinding,
+                    "_BaseDeleteMembershipBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4571,19 +4522,20 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseDeleteMembershipRBACRoleBinding._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_delete_membership_rbac_role_binding(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseDeleteMembershipRBACRoleBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseDeleteMembershipRBACRoleBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseDeleteMembershipRBACRoleBinding,
+                    "_BaseDeleteMembershipRBACRoleBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4720,19 +4672,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseDeleteScope._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_scope(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseDeleteScope._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseDeleteScope._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseDeleteScope,
+                    "_BaseDeleteScope__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4869,17 +4818,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseDeleteScopeNamespace._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_scope_namespace(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseDeleteScopeNamespace._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseDeleteScopeNamespace._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseDeleteScopeNamespace,
+                    "_BaseDeleteScopeNamespace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5016,17 +4966,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseDeleteScopeRBACRoleBinding._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_scope_rbac_role_binding(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseDeleteScopeRBACRoleBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseDeleteScopeRBACRoleBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseDeleteScopeRBACRoleBinding,
+                    "_BaseDeleteScopeRBACRoleBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5164,17 +5115,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseGenerateConnectManifest._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_connect_manifest(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseGenerateConnectManifest._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseGenerateConnectManifest._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseGenerateConnectManifest,
+                    "_BaseGenerateConnectManifest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5318,23 +5270,20 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseGenerateMembershipRBACRoleBindingYAML._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_generate_membership_rbac_role_binding_yaml(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseGenerateMembershipRBACRoleBindingYAML._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGkeHubRestTransport._BaseGenerateMembershipRBACRoleBindingYAML._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseGenerateMembershipRBACRoleBindingYAML._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseGenerateMembershipRBACRoleBindingYAML,
+                    "_BaseGenerateMembershipRBACRoleBindingYAML__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5477,19 +5426,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseGetFeature._get_http_options()
-
             request, metadata = self._interceptor.pre_get_feature(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseGetFeature._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseGetFeature._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseGetFeature,
+                    "_BaseGetFeature__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5623,19 +5569,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseGetFleet._get_http_options()
-
             request, metadata = self._interceptor.pre_get_fleet(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseGetFleet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseGetFleet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseGetFleet,
+                    "_BaseGetFleet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5771,19 +5714,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseGetMembership._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_membership(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseGetMembership._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseGetMembership._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseGetMembership,
+                    "_BaseGetMembership__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5924,17 +5864,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseGetMembershipBinding._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_membership_binding(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseGetMembershipBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseGetMembershipBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseGetMembershipBinding,
+                    "_BaseGetMembershipBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6072,17 +6013,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseGetMembershipRBACRoleBinding._get_http_options()
-
             request, metadata = self._interceptor.pre_get_membership_rbac_role_binding(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseGetMembershipRBACRoleBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseGetMembershipRBACRoleBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseGetMembershipRBACRoleBinding,
+                    "_BaseGetMembershipRBACRoleBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6216,19 +6158,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseGetScope._get_http_options()
-
             request, metadata = self._interceptor.pre_get_scope(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseGetScope._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseGetScope._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseGetScope,
+                    "_BaseGetScope__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6366,21 +6305,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseGetScopeNamespace._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_scope_namespace(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseGetScopeNamespace._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseGetScopeNamespace._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseGetScopeNamespace,
+                    "_BaseGetScopeNamespace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6518,17 +6454,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseGetScopeRBACRoleBinding._get_http_options()
-
             request, metadata = self._interceptor.pre_get_scope_rbac_role_binding(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseGetScopeRBACRoleBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseGetScopeRBACRoleBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseGetScopeRBACRoleBinding,
+                    "_BaseGetScopeRBACRoleBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6665,17 +6602,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseListBoundMemberships._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_bound_memberships(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseListBoundMemberships._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseListBoundMemberships._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseListBoundMemberships,
+                    "_BaseListBoundMemberships__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6811,19 +6749,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseListFeatures._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_features(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseListFeatures._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseListFeatures._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseListFeatures,
+                    "_BaseListFeatures__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6957,19 +6892,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseListFleets._get_http_options()
-
             request, metadata = self._interceptor.pre_list_fleets(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseListFleets._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseListFleets._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseListFleets,
+                    "_BaseListFleets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7105,17 +7037,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseListMembershipBindings._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_membership_bindings(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseListMembershipBindings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseListMembershipBindings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseListMembershipBindings,
+                    "_BaseListMembershipBindings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7253,19 +7186,20 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseListMembershipRBACRoleBindings._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_membership_rbac_role_bindings(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseListMembershipRBACRoleBindings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseListMembershipRBACRoleBindings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseListMembershipRBACRoleBindings,
+                    "_BaseListMembershipRBACRoleBindings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7409,21 +7343,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseListMemberships._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_memberships(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseListMemberships._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseListMemberships._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseListMemberships,
+                    "_BaseListMemberships__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7559,17 +7490,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseListPermittedScopes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_permitted_scopes(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseListPermittedScopes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseListPermittedScopes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseListPermittedScopes,
+                    "_BaseListPermittedScopes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7707,17 +7639,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseListScopeNamespaces._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_scope_namespaces(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseListScopeNamespaces._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseListScopeNamespaces._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseListScopeNamespaces,
+                    "_BaseListScopeNamespaces__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7855,17 +7788,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseListScopeRBACRoleBindings._get_http_options()
-
             request, metadata = self._interceptor.pre_list_scope_rbac_role_bindings(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseListScopeRBACRoleBindings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseListScopeRBACRoleBindings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseListScopeRBACRoleBindings,
+                    "_BaseListScopeRBACRoleBindings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8001,19 +7935,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseListScopes._get_http_options()
-
             request, metadata = self._interceptor.pre_list_scopes(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseListScopes._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseListScopes._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseListScopes,
+                    "_BaseListScopes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8151,23 +8082,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseUpdateFeature._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_feature(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseUpdateFeature._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseGkeHubRestTransport._BaseUpdateFeature._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseUpdateFeature._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseUpdateFeature,
+                    "_BaseUpdateFeature__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8302,23 +8226,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseUpdateFleet._get_http_options()
-
             request, metadata = self._interceptor.pre_update_fleet(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseUpdateFleet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseGkeHubRestTransport._BaseUpdateFleet._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseUpdateFleet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseUpdateFleet,
+                    "_BaseUpdateFleet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8457,27 +8374,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseUpdateMembership._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_membership(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseUpdateMembership._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseGkeHubRestTransport._BaseUpdateMembership._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseUpdateMembership._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseUpdateMembership,
+                    "_BaseUpdateMembership__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8615,21 +8523,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseUpdateMembershipBinding._get_http_options()
-
             request, metadata = self._interceptor.pre_update_membership_binding(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseUpdateMembershipBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGkeHubRestTransport._BaseUpdateMembershipBinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseUpdateMembershipBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseUpdateMembershipBinding,
+                    "_BaseUpdateMembershipBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8768,23 +8673,20 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseUpdateMembershipRBACRoleBinding._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_update_membership_rbac_role_binding(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseUpdateMembershipRBACRoleBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGkeHubRestTransport._BaseUpdateMembershipRBACRoleBinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseUpdateMembershipRBACRoleBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseUpdateMembershipRBACRoleBinding,
+                    "_BaseUpdateMembershipRBACRoleBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8923,23 +8825,16 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseUpdateScope._get_http_options()
-
             request, metadata = self._interceptor.pre_update_scope(request, metadata)
-            transcoded_request = (
-                _BaseGkeHubRestTransport._BaseUpdateScope._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseGkeHubRestTransport._BaseUpdateScope._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGkeHubRestTransport._BaseUpdateScope._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseUpdateScope,
+                    "_BaseUpdateScope__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9078,21 +8973,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             http_options = (
                 _BaseGkeHubRestTransport._BaseUpdateScopeNamespace._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_scope_namespace(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseUpdateScopeNamespace._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGkeHubRestTransport._BaseUpdateScopeNamespace._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseUpdateScopeNamespace._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseUpdateScopeNamespace,
+                    "_BaseUpdateScopeNamespace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9231,21 +9123,18 @@ class GkeHubRestTransport(_BaseGkeHubRestTransport):
             """
 
             http_options = _BaseGkeHubRestTransport._BaseUpdateScopeRBACRoleBinding._get_http_options()
-
             request, metadata = self._interceptor.pre_update_scope_rbac_role_binding(
                 request, metadata
             )
-            transcoded_request = _BaseGkeHubRestTransport._BaseUpdateScopeRBACRoleBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGkeHubRestTransport._BaseUpdateScopeRBACRoleBinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeHubRestTransport._BaseUpdateScopeRBACRoleBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeHubRestTransport._BaseUpdateScopeRBACRoleBinding,
+                    "_BaseUpdateScopeRBACRoleBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

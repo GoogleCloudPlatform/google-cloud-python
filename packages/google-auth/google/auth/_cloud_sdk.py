@@ -17,10 +17,7 @@
 import os
 import subprocess
 
-from google.auth import _helpers
-from google.auth import environment_vars
-from google.auth import exceptions
-
+from google.auth import _helpers, environment_vars, exceptions
 
 # The ~/.config subdirectory containing gcloud credentials.
 _CONFIG_DIRECTORY = "gcloud"

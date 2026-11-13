@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.devtools.cloudbuild_v2._compat import transcode_request
 from google.cloud.devtools.cloudbuild_v2.types import repositories
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1200,21 +1201,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseBatchCreateRepositories._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_repositories(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseBatchCreateRepositories._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRepositoryManagerRestTransport._BaseBatchCreateRepositories._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseBatchCreateRepositories._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseBatchCreateRepositories,
+                    "_BaseBatchCreateRepositories__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1354,21 +1352,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseCreateConnection._get_http_options()
-
             request, metadata = self._interceptor.pre_create_connection(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseCreateConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRepositoryManagerRestTransport._BaseCreateConnection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseCreateConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseCreateConnection,
+                    "_BaseCreateConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1506,21 +1501,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseCreateRepository._get_http_options()
-
             request, metadata = self._interceptor.pre_create_repository(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseCreateRepository._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRepositoryManagerRestTransport._BaseCreateRepository._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseCreateRepository._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseCreateRepository,
+                    "_BaseCreateRepository__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1657,17 +1649,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseDeleteConnection._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_connection(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseDeleteConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseDeleteConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseDeleteConnection,
+                    "_BaseDeleteConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1803,17 +1796,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseDeleteRepository._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_repository(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseDeleteRepository._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseDeleteRepository._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseDeleteRepository,
+                    "_BaseDeleteRepository__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1945,15 +1939,16 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseFetchGitRefs._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_git_refs(request, metadata)
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseFetchGitRefs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseFetchGitRefs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseFetchGitRefs,
+                    "_BaseFetchGitRefs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2094,17 +2089,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseFetchLinkableRepositories._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_linkable_repositories(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseFetchLinkableRepositories._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseFetchLinkableRepositories._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseFetchLinkableRepositories,
+                    "_BaseFetchLinkableRepositories__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2246,21 +2242,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseFetchReadToken._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_read_token(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseFetchReadToken._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRepositoryManagerRestTransport._BaseFetchReadToken._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseFetchReadToken._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseFetchReadToken,
+                    "_BaseFetchReadToken__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2402,21 +2395,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseFetchReadWriteToken._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_read_write_token(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseFetchReadWriteToken._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRepositoryManagerRestTransport._BaseFetchReadWriteToken._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseFetchReadWriteToken._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseFetchReadWriteToken,
+                    "_BaseFetchReadWriteToken__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2560,15 +2550,16 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseGetConnection._get_http_options()
-
             request, metadata = self._interceptor.pre_get_connection(request, metadata)
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseGetConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseGetConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseGetConnection,
+                    "_BaseGetConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2706,15 +2697,16 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseGetRepository._get_http_options()
-
             request, metadata = self._interceptor.pre_get_repository(request, metadata)
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseGetRepository._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseGetRepository._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseGetRepository,
+                    "_BaseGetRepository__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2852,17 +2844,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseListConnections._get_http_options()
-
             request, metadata = self._interceptor.pre_list_connections(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseListConnections._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseListConnections._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseListConnections,
+                    "_BaseListConnections__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3002,17 +2995,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseListRepositories._get_http_options()
-
             request, metadata = self._interceptor.pre_list_repositories(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseListRepositories._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseListRepositories._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseListRepositories,
+                    "_BaseListRepositories__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3153,21 +3147,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseUpdateConnection._get_http_options()
-
             request, metadata = self._interceptor.pre_update_connection(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseUpdateConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRepositoryManagerRestTransport._BaseUpdateConnection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseUpdateConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseUpdateConnection,
+                    "_BaseUpdateConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3435,15 +3426,16 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3574,19 +3566,16 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRepositoryManagerRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3719,21 +3708,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRepositoryManagerRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3863,21 +3849,18 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRepositoryManagerRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3983,15 +3966,16 @@ class RepositoryManagerRestTransport(_BaseRepositoryManagerRestTransport):
             """
 
             http_options = _BaseRepositoryManagerRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseRepositoryManagerRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRepositoryManagerRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRepositoryManagerRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

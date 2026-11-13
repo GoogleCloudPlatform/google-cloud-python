@@ -46,6 +46,7 @@ except AttributeError:  # pragma: NO COVER
 
 import google.api_core.operation as operation  # type: ignore
 import google.api_core.operation_async as operation_async  # type: ignore
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
@@ -81,6 +82,10 @@ class AuditManagerAsyncClient:
 
     audit_report_path = staticmethod(AuditManagerClient.audit_report_path)
     parse_audit_report_path = staticmethod(AuditManagerClient.parse_audit_report_path)
+    audit_schedule_path = staticmethod(AuditManagerClient.audit_schedule_path)
+    parse_audit_schedule_path = staticmethod(
+        AuditManagerClient.parse_audit_schedule_path
+    )
     audit_scope_report_path = staticmethod(AuditManagerClient.audit_scope_report_path)
     parse_audit_scope_report_path = staticmethod(
         AuditManagerClient.parse_audit_scope_report_path
@@ -314,6 +319,526 @@ class AuditManagerAsyncClient:
                     "credentialsType": None,
                 },
             )
+
+    async def create_audit_schedule(
+        self,
+        request: Optional[Union[auditmanager.CreateAuditScheduleRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        audit_schedule: Optional[auditmanager.AuditSchedule] = None,
+        audit_schedule_id: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> auditmanager.AuditSchedule:
+        r"""Creates a new audit schedule in a given project and
+        location.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import auditmanager_v1
+
+            async def sample_create_audit_schedule():
+                # Create a client
+                client = auditmanager_v1.AuditManagerAsyncClient()
+
+                # Initialize request argument(s)
+                audit_schedule = auditmanager_v1.AuditSchedule()
+                audit_schedule.gcs_uri = "gcs_uri_value"
+                audit_schedule.compliance_framework = "compliance_framework_value"
+                audit_schedule.report_format = "AUDIT_REPORT_FORMAT_ODF"
+                audit_schedule.schedule_config.frequency = "ANNUALLY"
+
+                request = auditmanager_v1.CreateAuditScheduleRequest(
+                    parent="parent_value",
+                    audit_schedule=audit_schedule,
+                    audit_schedule_id="audit_schedule_id_value",
+                )
+
+                # Make the request
+                response = await client.create_audit_schedule(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.auditmanager_v1.types.CreateAuditScheduleRequest, dict]]):
+                The request object. Request message for
+                [CreateAuditSchedule][google.cloud.auditmanager.v1.AuditManager.CreateAuditSchedule].
+            parent (:class:`str`):
+                Required. Project or folder that this audit schedule is
+                for, in one of the following formats:
+
+                - ``projects/{project}/locations/{location}``
+                - ``folders/{folder}/locations/{location}``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            audit_schedule (:class:`google.cloud.auditmanager_v1.types.AuditSchedule`):
+                Required. Audit schedule to create.
+                This corresponds to the ``audit_schedule`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            audit_schedule_id (:class:`str`):
+                Required. ID to use for the audit
+                schedule, which becomes the final
+                component of the audit schedule's
+                resource name.
+
+                This corresponds to the ``audit_schedule_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.auditmanager_v1.types.AuditSchedule:
+                An audit schedule, in one of the following formats:
+
+                   - projects/{project}/locations/{location}/auditSchedules/{audit_schedule}
+                   - folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, audit_schedule, audit_schedule_id]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, auditmanager.CreateAuditScheduleRequest):
+            request = auditmanager.CreateAuditScheduleRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+        if audit_schedule is not None:
+            request.audit_schedule = audit_schedule
+        if audit_schedule_id is not None:
+            request.audit_schedule_id = audit_schedule_id
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.create_audit_schedule
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_audit_schedule(
+        self,
+        request: Optional[Union[auditmanager.UpdateAuditScheduleRequest, dict]] = None,
+        *,
+        audit_schedule: Optional[auditmanager.AuditSchedule] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> auditmanager.AuditSchedule:
+        r"""Updates an existing audit schedule.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import auditmanager_v1
+
+            async def sample_update_audit_schedule():
+                # Create a client
+                client = auditmanager_v1.AuditManagerAsyncClient()
+
+                # Initialize request argument(s)
+                audit_schedule = auditmanager_v1.AuditSchedule()
+                audit_schedule.gcs_uri = "gcs_uri_value"
+                audit_schedule.compliance_framework = "compliance_framework_value"
+                audit_schedule.report_format = "AUDIT_REPORT_FORMAT_ODF"
+                audit_schedule.schedule_config.frequency = "ANNUALLY"
+
+                request = auditmanager_v1.UpdateAuditScheduleRequest(
+                    audit_schedule=audit_schedule,
+                )
+
+                # Make the request
+                response = await client.update_audit_schedule(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.auditmanager_v1.types.UpdateAuditScheduleRequest, dict]]):
+                The request object. Request message for
+                [UpdateAuditSchedule][google.cloud.auditmanager.v1.AuditManager.UpdateAuditSchedule].
+            audit_schedule (:class:`google.cloud.auditmanager_v1.types.AuditSchedule`):
+                Required. Audit schedule to update.
+                This corresponds to the ``audit_schedule`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. List of fields to update.
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.auditmanager_v1.types.AuditSchedule:
+                An audit schedule, in one of the following formats:
+
+                   - projects/{project}/locations/{location}/auditSchedules/{audit_schedule}
+                   - folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [audit_schedule, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, auditmanager.UpdateAuditScheduleRequest):
+            request = auditmanager.UpdateAuditScheduleRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if audit_schedule is not None:
+            request.audit_schedule = audit_schedule
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_audit_schedule
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("audit_schedule.name", request.audit_schedule.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_audit_schedule(
+        self,
+        request: Optional[Union[auditmanager.GetAuditScheduleRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> auditmanager.AuditSchedule:
+        r"""Gets details of a single audit schedule.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import auditmanager_v1
+
+            async def sample_get_audit_schedule():
+                # Create a client
+                client = auditmanager_v1.AuditManagerAsyncClient()
+
+                # Initialize request argument(s)
+                request = auditmanager_v1.GetAuditScheduleRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_audit_schedule(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.auditmanager_v1.types.GetAuditScheduleRequest, dict]]):
+                The request object. Request message for
+                [GetAuditSchedule][google.cloud.auditmanager.v1.AuditManager.GetAuditSchedule].
+            name (:class:`str`):
+                Required. Name of the audit schedule to retrieve, in one
+                of the following formats:
+
+                - ``projects/{project}/locations/{location}/auditSchedules/{audit_schedule}``
+                - ``folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}``
+                - ``organizations/{organization}/locations/{location}/auditSchedules/{audit_schedule}``
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.auditmanager_v1.types.AuditSchedule:
+                An audit schedule, in one of the following formats:
+
+                   - projects/{project}/locations/{location}/auditSchedules/{audit_schedule}
+                   - folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, auditmanager.GetAuditScheduleRequest):
+            request = auditmanager.GetAuditScheduleRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_audit_schedule
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_audit_schedules(
+        self,
+        request: Optional[Union[auditmanager.ListAuditSchedulesRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListAuditSchedulesAsyncPager:
+        r"""Lists audit schedules in a given project and
+        location.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import auditmanager_v1
+
+            async def sample_list_audit_schedules():
+                # Create a client
+                client = auditmanager_v1.AuditManagerAsyncClient()
+
+                # Initialize request argument(s)
+                request = auditmanager_v1.ListAuditSchedulesRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_audit_schedules(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.auditmanager_v1.types.ListAuditSchedulesRequest, dict]]):
+                The request object. Request message for
+                [ListAuditSchedules][google.cloud.auditmanager.v1.AuditManager.ListAuditSchedules].
+            parent (:class:`str`):
+                Required. Parent for the audit schedule, in one of the
+                following formats:
+
+                - ``projects/{project}/locations/{location}``
+                - ``folders/{folder}/locations/{location}``
+                - ``organizations/{organization}/locations/{location}``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.auditmanager_v1.services.audit_manager.pagers.ListAuditSchedulesAsyncPager:
+                Response message for
+                   [ListAuditSchedules][google.cloud.auditmanager.v1.AuditManager.ListAuditSchedules].
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, auditmanager.ListAuditSchedulesRequest):
+            request = auditmanager.ListAuditSchedulesRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_audit_schedules
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListAuditSchedulesAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
 
     async def enroll_resource(
         self,

@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     creative_template_messages,
     creative_template_service,
@@ -401,17 +402,18 @@ class CreativeTemplateServiceRestTransport(_BaseCreativeTemplateServiceRestTrans
             """
 
             http_options = _BaseCreativeTemplateServiceRestTransport._BaseGetCreativeTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_get_creative_template(
                 request, metadata
             )
-            transcoded_request = _BaseCreativeTemplateServiceRestTransport._BaseGetCreativeTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeTemplateServiceRestTransport._BaseGetCreativeTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeTemplateServiceRestTransport._BaseGetCreativeTemplate,
+                    "_BaseGetCreativeTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -552,17 +554,18 @@ class CreativeTemplateServiceRestTransport(_BaseCreativeTemplateServiceRestTrans
             """
 
             http_options = _BaseCreativeTemplateServiceRestTransport._BaseListCreativeTemplates._get_http_options()
-
             request, metadata = self._interceptor.pre_list_creative_templates(
                 request, metadata
             )
-            transcoded_request = _BaseCreativeTemplateServiceRestTransport._BaseListCreativeTemplates._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeTemplateServiceRestTransport._BaseListCreativeTemplates._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeTemplateServiceRestTransport._BaseListCreativeTemplates,
+                    "_BaseListCreativeTemplates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -723,17 +726,18 @@ class CreativeTemplateServiceRestTransport(_BaseCreativeTemplateServiceRestTrans
             """
 
             http_options = _BaseCreativeTemplateServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCreativeTemplateServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeTemplateServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeTemplateServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -841,15 +845,16 @@ class CreativeTemplateServiceRestTransport(_BaseCreativeTemplateServiceRestTrans
             """
 
             http_options = _BaseCreativeTemplateServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseCreativeTemplateServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeTemplateServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeTemplateServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

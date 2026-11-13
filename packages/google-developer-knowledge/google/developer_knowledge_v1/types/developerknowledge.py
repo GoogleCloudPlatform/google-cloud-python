@@ -82,8 +82,9 @@ class DocumentView(proto.Enum):
 
 
 class Document(proto.Message):
-    r"""A Document represents a piece of content from the Developer
-    Knowledge corpus.
+    r"""A Document represents a page of documentation in the
+    Developer Knowledge corpus, like the page at
+    https://docs.cloud.google.com/storage/docs/creating-buckets.
 
     Attributes:
         name (str):
@@ -92,7 +93,7 @@ class Document(proto.Message):
             ``documents/docs.cloud.google.com/storage/docs/creating-buckets``
         uri (str):
             Output only. Provides the URI of the content, such as
-            ``docs.cloud.google.com/storage/docs/creating-buckets``.
+            ``https://docs.cloud.google.com/storage/docs/creating-buckets``.
         content (str):
             Output only. Contains the full content of the
             document in Markdown format.
@@ -163,9 +164,10 @@ class SearchDocumentChunksRequest(proto.Message):
 
     Attributes:
         query (str):
-            Required. Provides the raw query string
-            provided by the user, such as "How to create a
-            Cloud Storage bucket?".
+            Required. Provides the raw query string provided by the
+            user, such as "How to create a Cloud Storage bucket?". The
+            query must not exceed 500 characters; values longer than 500
+            characters will result in an ``INVALID_ARGUMENT`` error.
         page_size (int):
             Optional. Specifies the maximum number of
             results to return. The service may return fewer
@@ -191,6 +193,8 @@ class SearchDocumentChunksRequest(proto.Message):
 
             Supported fields for filtering:
 
+            - ``content_length_bytes`` (INTEGER): The length of the
+              ``Document.content`` field in bytes.
             - ``data_source`` (STRING): The source of the document, e.g.
               ``docs.cloud.google.com``. See
               https://developers.google.com/knowledge/reference/corpus-reference
@@ -201,6 +205,9 @@ class SearchDocumentChunksRequest(proto.Message):
               metadata.
             - ``uri`` (STRING): The document URI, e.g.
               ``https://docs.cloud.google.com/bigquery/docs/tables``.
+
+            INTEGER fields support ``=``, ``<``, ``<=``, ``>``, and
+            ``>=`` operators.
 
             STRING fields support ``=`` (equals) and ``!=`` (not equals)
             operators for **exact match** on the whole string. Partial
@@ -222,6 +229,8 @@ class SearchDocumentChunksRequest(proto.Message):
 
             Examples:
 
+            - Filter by ``Document.content_length_bytes``:
+              ``content_length_bytes < 50000``
             - ``data_source = "docs.cloud.google.com" OR data_source = "firebase.google.com"``
             - ``data_source != "firebase.google.com"``
             - ``update_time < "2024-01-01T00:00:00Z"``
@@ -268,9 +277,9 @@ class SearchDocumentChunksResponse(proto.Message):
             [DeveloperKnowledge.BatchGetDocuments][google.developers.knowledge.v1.DeveloperKnowledge.BatchGetDocuments]
             to retrieve the full document content.
         next_page_token (str):
-            Optional. Provides a token that can be sent as
-            ``page_token`` to retrieve the next page. If this field is
-            omitted, there are no subsequent pages.
+            Provides a token that can be sent as ``page_token`` to
+            retrieve the next page. If this field is omitted, there are
+            no subsequent pages.
     """
 
     @property
@@ -297,6 +306,9 @@ class GetDocumentRequest(proto.Message):
             Required. Specifies the name of the document to retrieve.
             Format: ``documents/{uri_without_scheme}`` Example:
             ``documents/docs.cloud.google.com/storage/docs/creating-buckets``
+
+            The name must not exceed 500 characters; values longer than
+            500 characters will result in an ``INVALID_ARGUMENT`` error.
         view (google.developer_knowledge_v1.types.DocumentView):
             Optional. Specifies the
             [DocumentView][google.developers.knowledge.v1.DocumentView]
@@ -329,6 +341,9 @@ class BatchGetDocumentsRequest(proto.Message):
 
             Format: ``documents/{uri_without_scheme}`` Example:
             ``documents/docs.cloud.google.com/storage/docs/creating-buckets``
+
+            Each name must not exceed 500 characters; values longer than
+            500 characters will result in an ``INVALID_ARGUMENT`` error.
         view (google.developer_knowledge_v1.types.DocumentView):
             Optional. Specifies the
             [DocumentView][google.developers.knowledge.v1.DocumentView]
@@ -371,11 +386,64 @@ class AnswerQueryRequest(proto.Message):
     Attributes:
         query (str):
             Required. The query to answer.
+        filter (str):
+            Optional. Applies a strict filter to the search results used
+            to ground the answer. The expression supports a subset of
+            the syntax described at https://google.aip.dev/160.
+
+            Supported fields for filtering:
+
+            - ``content_length_bytes`` (INTEGER): The length of the
+              ``Document.content`` field in bytes.
+            - ``data_source`` (STRING): The source of the document, e.g.
+              ``docs.cloud.google.com``. See
+              https://developers.google.com/knowledge/reference/corpus-reference
+              for the complete list of data sources in the corpus.
+            - ``update_time`` (TIMESTAMP): The timestamp of when the
+              document was last meaningfully updated. A meaningful
+              update is one that changes document's markdown content or
+              metadata.
+            - ``uri`` (STRING): The document URI, e.g.
+              ``https://docs.cloud.google.com/bigquery/docs/tables``.
+
+            INTEGER fields support ``=``, ``<``, ``<=``, ``>``, and
+            ``>=`` operators.
+
+            STRING fields support ``=`` (equals) and ``!=`` (not equals)
+            operators for **exact match** on the whole string. Partial
+            match, prefix match, and regexp match are not supported.
+
+            TIMESTAMP fields support ``=``, ``<``, ``<=``, ``>``, and
+            ``>=`` operators. Timestamps must be in RFC-3339 format,
+            e.g., ``"2025-01-01T00:00:00Z"``.
+
+            You can combine expressions using ``AND``, ``OR``, and
+            ``NOT`` (or ``-``) logical operators. ``OR`` has higher
+            precedence than ``AND``. Use parentheses for explicit
+            precedence grouping.
+
+            Examples:
+
+            - Filter by ``Document.content_length_bytes``:
+              ``content_length_bytes < 50000``
+            - ``data_source = "docs.cloud.google.com" OR data_source = "firebase.google.com"``
+            - ``data_source != "firebase.google.com"``
+            - ``update_time < "2024-01-01T00:00:00Z"``
+            - ``update_time >= "2025-01-22T00:00:00Z" AND (data_source = "developer.chrome.com" OR data_source = "web.dev")``
+            - ``uri = "https://docs.cloud.google.com/release-notes"``
+
+            The ``filter`` string must not exceed 500 characters; values
+            longer than 500 characters will result in an
+            ``INVALID_ARGUMENT`` error.
     """
 
     query: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+    filter: str = proto.Field(
+        proto.STRING,
+        number=2,
     )
 
 
@@ -518,6 +586,9 @@ class DocumentChunk(proto.Message):
     or
     [DeveloperKnowledge.BatchGetDocuments][google.developers.knowledge.v1.DeveloperKnowledge.BatchGetDocuments].
 
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         parent (str):
             Output only. Contains the resource name of the document this
@@ -551,6 +622,12 @@ class DocumentChunk(proto.Message):
             or
             [DeveloperKnowledge.BatchGetDocuments][google.developers.knowledge.v1.DeveloperKnowledge.BatchGetDocuments]
             to fetch the full document content.
+        relevance_score (float):
+            Output only. Represents the relevance score of the chunk to
+            the search query. Higher score indicates higher chunk
+            relevance. The score is in range [0.0, 1.0].
+
+            This field is a member of `oneof`_ ``_relevance_score``.
     """
 
     parent: str = proto.Field(
@@ -569,6 +646,11 @@ class DocumentChunk(proto.Message):
         proto.MESSAGE,
         number=4,
         message="Document",
+    )
+    relevance_score: float = proto.Field(
+        proto.DOUBLE,
+        number=5,
+        optional=True,
     )
 
 

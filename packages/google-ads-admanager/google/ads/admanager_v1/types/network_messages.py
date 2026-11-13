@@ -19,10 +19,15 @@ from typing import MutableMapping, MutableSequence
 
 import proto  # type: ignore
 
+from google.ads.admanager_v1.types import (
+    third_party_data_declaration as gaa_third_party_data_declaration,
+)
+
 __protobuf__ = proto.module(
     package="google.ads.admanager.v1",
     manifest={
         "Network",
+        "DefaultThirdPartyDataDeclaration",
     },
 )
 
@@ -126,6 +131,37 @@ class Network(proto.Message):
         proto.INT64,
         number=11,
         optional=True,
+    )
+
+
+class DefaultThirdPartyDataDeclaration(proto.Message):
+    r"""The ``DefaultThirdPartyDataDeclaration`` singleton resource.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        name (str):
+            Identifier. The resource name of the
+            ``DefaultThirdPartyDataDeclaration``. Format:
+            ``networks/{network_code}/defaultThirdPartyDataDeclaration``
+        third_party_data_declaration (google.ads.admanager_v1.types.ThirdPartyDataDeclaration):
+            Optional. Returns the default
+            [ThirdPartyDataDeclaration][google.ads.admanager.v1.ThirdPartyDataDeclaration]
+            for this network. If this setting has never been updated on
+            your network, then this API response will be unset.
+
+            This field is a member of `oneof`_ ``_third_party_data_declaration``.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    third_party_data_declaration: gaa_third_party_data_declaration.ThirdPartyDataDeclaration = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        optional=True,
+        message=gaa_third_party_data_declaration.ThirdPartyDataDeclaration,
     )
 
 

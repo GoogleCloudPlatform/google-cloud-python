@@ -15,28 +15,28 @@
 import json
 import os
 import sys
-from unittest import mock
 import warnings
+from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import _default
-from google.auth import api_key
-from google.auth import app_engine
-from google.auth import aws
-from google.auth import compute_engine
-from google.auth import credentials
-from google.auth import environment_vars
-from google.auth import exceptions
-from google.auth import external_account
-from google.auth import external_account_authorized_user
-from google.auth import identity_pool
-from google.auth import impersonated_credentials
-from google.auth import pluggable
-from google.oauth2 import gdch_credentials
-from google.oauth2 import service_account
 import google.oauth2.credentials
-
+from google.auth import (
+    _default,
+    api_key,
+    app_engine,
+    aws,
+    compute_engine,
+    credentials,
+    environment_vars,
+    exceptions,
+    external_account,
+    external_account_authorized_user,
+    identity_pool,
+    impersonated_credentials,
+    pluggable,
+)
+from google.oauth2 import gdch_credentials, service_account
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 AUTHORIZED_USER_FILE = os.path.join(DATA_DIR, "authorized_user.json")
@@ -404,9 +404,9 @@ def test_load_credentials_from_file_impersonated_passing_scopes():
 def test_load_credentials_from_file_impersonated_wrong_target_principal(tmpdir):
     with open(IMPERSONATED_SERVICE_ACCOUNT_AUTHORIZED_USER_SOURCE_FILE) as fh:
         impersonated_credentials_info = json.load(fh)
-    impersonated_credentials_info[
-        "service_account_impersonation_url"
-    ] = "something_wrong"
+    impersonated_credentials_info["service_account_impersonation_url"] = (
+        "something_wrong"
+    )
 
     jsonfile = tmpdir.join("invalid.json")
     jsonfile.write(json.dumps(impersonated_credentials_info))
@@ -774,9 +774,9 @@ def test__get_gae_credentials_gen1(app_identity):
 
 @mock.patch.dict(os.environ)
 def test__get_gae_credentials_gen2():
-    os.environ[
-        "GAE_RUNTIME"
-    ] = f"python{sys.version_info.major}{sys.version_info.minor}"
+    os.environ["GAE_RUNTIME"] = (
+        f"python{sys.version_info.major}{sys.version_info.minor}"
+    )
     credentials, project_id = _default._get_gae_credentials()
     assert credentials is None
     assert project_id is None

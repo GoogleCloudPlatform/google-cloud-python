@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import google.api_core as api_core
+
 from .services.firestore_admin import FirestoreAdminClient
 from .types.field import Field
 from .types.firestore_admin import (
@@ -64,3 +66,6 @@ __all__ = (
     "UpdateFieldRequest",
     "FirestoreAdminClient",
 )
+
+api_core.check_python_version("google.cloud.firestore_admin_v1")
+api_core.check_dependency_versions("google.cloud.firestore_admin_v1")

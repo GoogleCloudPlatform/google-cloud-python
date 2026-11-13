@@ -34,7 +34,7 @@ for more detailed instructions.
     ```
     source <your-venv>/bin/activate
     ```
-3. To run samples for [Zonal Buckets](https://github.com/googleapis/python-storage/tree/main/samples/snippets/zonal_buckets)
+3. To run samples for [Rapid Buckets](https://github.com/googleapis/python-storage/tree/main/samples/snippets/zonal_buckets)
 
     ```
     pip install "google-cloud-storage[grpc]"

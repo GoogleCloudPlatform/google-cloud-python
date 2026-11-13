@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ai.generativelanguage_v1beta._compat import transcode_request
 from google.ai.generativelanguage_v1beta.types import discuss_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -453,21 +454,18 @@ class DiscussServiceRestTransport(_BaseDiscussServiceRestTransport):
             """
 
             http_options = _BaseDiscussServiceRestTransport._BaseCountMessageTokens._get_http_options()
-
             request, metadata = self._interceptor.pre_count_message_tokens(
                 request, metadata
             )
-            transcoded_request = _BaseDiscussServiceRestTransport._BaseCountMessageTokens._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDiscussServiceRestTransport._BaseCountMessageTokens._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDiscussServiceRestTransport._BaseCountMessageTokens._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDiscussServiceRestTransport._BaseCountMessageTokens,
+                    "_BaseCountMessageTokens__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -611,21 +609,18 @@ class DiscussServiceRestTransport(_BaseDiscussServiceRestTransport):
             """
 
             http_options = _BaseDiscussServiceRestTransport._BaseGenerateMessage._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_message(
                 request, metadata
             )
-            transcoded_request = _BaseDiscussServiceRestTransport._BaseGenerateMessage._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDiscussServiceRestTransport._BaseGenerateMessage._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDiscussServiceRestTransport._BaseGenerateMessage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDiscussServiceRestTransport._BaseGenerateMessage,
+                    "_BaseGenerateMessage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -784,17 +779,18 @@ class DiscussServiceRestTransport(_BaseDiscussServiceRestTransport):
             """
 
             http_options = _BaseDiscussServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDiscussServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDiscussServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDiscussServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -896,17 +892,18 @@ class DiscussServiceRestTransport(_BaseDiscussServiceRestTransport):
             """
 
             http_options = _BaseDiscussServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDiscussServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDiscussServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDiscussServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1013,15 +1010,16 @@ class DiscussServiceRestTransport(_BaseDiscussServiceRestTransport):
             http_options = (
                 _BaseDiscussServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseDiscussServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDiscussServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDiscussServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1153,15 +1151,16 @@ class DiscussServiceRestTransport(_BaseDiscussServiceRestTransport):
             http_options = (
                 _BaseDiscussServiceRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseDiscussServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDiscussServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDiscussServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

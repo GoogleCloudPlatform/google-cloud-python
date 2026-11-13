@@ -30,22 +30,29 @@ __protobuf__ = proto.module(
 
 
 class LineItemDiscount(proto.Message):
-    r"""Discount information for a LineItem.
+    r"""Discount information for a
+    [LineItem][google.ads.admanager.v1.LineItem].
+
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
     Attributes:
         discount_type (google.ads.admanager_v1.types.DiscountTypeEnum.DiscountType):
-            Optional. The type of discount being applied
-            to a LineItem, either percentage based or
-            absolute. This attribute is optional and
-            defaults to PERCENTAGE.
+            Optional. The type of discount being applied to a
+            [LineItem][google.ads.admanager.v1.LineItem], either
+            percentage based or absolute. This attribute is optional and
+            defaults to
+            [PERCENTAGE][google.ads.admanager.v1.DiscountTypeEnum.DiscountType.PERCENTAGE].
 
             This field is a member of `oneof`_ ``_discount_type``.
         discount (float):
-            Optional. The number here is either a
-            percentage or an absolute value depending on the
-            DiscountType. If the DiscountType is PERCENTAGE,
+            Optional. The number here is either a percentage or an
+            absolute value depending on the
+            [DiscountType][google.ads.admanager.v1.DiscountTypeEnum.DiscountType].
+            If the
+            [DiscountType][google.ads.admanager.v1.DiscountTypeEnum.DiscountType]
+            is
+            [PERCENTAGE][google.ads.admanager.v1.DiscountTypeEnum.DiscountType.PERCENTAGE],
             then only non-fractional values are supported.
 
             This field is a member of `oneof`_ ``_discount``.

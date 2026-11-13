@@ -29,6 +29,14 @@ __protobuf__ = proto.module(
         "GetSpaceRequest",
         "UpdateSpaceRequest",
         "EndActiveConferenceRequest",
+        "CreateMemberRequest",
+        "GetMemberRequest",
+        "ListMembersRequest",
+        "ListMembersResponse",
+        "DeleteMemberRequest",
+        "UpdateMemberRequest",
+        "BatchUpdateMembersRequest",
+        "BatchUpdateMembersResponse",
         "GetConferenceRecordRequest",
         "ListConferenceRecordsRequest",
         "ListConferenceRecordsResponse",
@@ -47,6 +55,9 @@ __protobuf__ = proto.module(
         "GetTranscriptEntryRequest",
         "ListTranscriptEntriesRequest",
         "ListTranscriptEntriesResponse",
+        "GetSmartNoteRequest",
+        "ListSmartNotesRequest",
+        "ListSmartNotesResponse",
     },
 )
 
@@ -95,7 +106,7 @@ class GetSpaceRequest(proto.Message):
             Meet <https://support.google.com/meet/answer/10710509>`__.
 
             For more information, see `How Meet identifies a meeting
-            space <https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space>`__.
+            space <https://developers.google.com/workspace/meet/api/guides/meeting-spaces#identify-meeting-space>`__.
     """
 
     name: str = proto.Field(
@@ -145,12 +156,223 @@ class EndActiveConferenceRequest(proto.Message):
             example, ``jQCFfuBOdN5z``.
 
             For more information, see `How Meet identifies a meeting
-            space <https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space>`__.
+            space <https://developers.google.com/workspace/meet/api/guides/meeting-spaces#identify-meeting-space>`__.
     """
 
     name: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+
+
+class CreateMemberRequest(proto.Message):
+    r"""Request to create a member for a space.
+
+    Attributes:
+        parent (str):
+            Required. Format: spaces/{space}
+        member (google.apps.meet_v2.types.Member):
+            Required. The member to be created.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    member: resource.Member = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=resource.Member,
+    )
+
+
+class GetMemberRequest(proto.Message):
+    r"""Request to get a member from a space.
+
+    Attributes:
+        name (str):
+            Required. Format:
+            “spaces/{space}/members/{member}”
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListMembersRequest(proto.Message):
+    r"""Request to list all members of a space.
+
+    Attributes:
+        parent (str):
+            Required. Format: spaces/{space}
+        page_size (int):
+            Optional. Maximum number of members to
+            return. The service might return fewer than this
+            value. If unspecified or set to 0, at most 250
+            members are returned. The maximum value is 500;
+            values above 500 are coerced to 500. Maximum
+            might change in the future.
+        page_token (str):
+            Optional. Page token returned from previous
+            List Call.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListMembersResponse(proto.Message):
+    r"""Response of list members.
+
+    Attributes:
+        members (MutableSequence[google.apps.meet_v2.types.Member]):
+            The list of members for the current page.
+        next_page_token (str):
+            Token to be circulated back for further list
+            call if current list doesn't include all the
+            members. Unset if all members are returned.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    members: MutableSequence[resource.Member] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=resource.Member,
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class DeleteMemberRequest(proto.Message):
+    r"""Request to delete a member from a space.
+
+    Attributes:
+        name (str):
+            Required. Format:
+            “spaces/{space}/members/{member}”
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class UpdateMemberRequest(proto.Message):
+    r"""Request to update a member.
+
+    Attributes:
+        member (google.apps.meet_v2.types.Member):
+            Required. The Member to update.
+            Format: spaces/{space}/members/{member}
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. Field mask used to specify the fields to be
+            updated in the member. If update_mask isn't provided(not
+            set, set with empty paths, or only has "" as paths), it
+            defaults to update all fields provided with values in the
+            request. Using "\*" as update_mask will update all fields,
+            including deleting fields not set in the request. In case of
+            BatchUpdate, it must be absent or the same as the
+            update_mask in BatchUpdateMembersRequest when
+            UpdateMemberRequest is built as a child request of
+            BatchUpdateMembersRequest.
+    """
+
+    member: resource.Member = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=resource.Member,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
+class BatchUpdateMembersRequest(proto.Message):
+    r"""Request to update members of one space within a batch.
+
+    Attributes:
+        parent (str):
+            Required. The parent resource shared by all
+            Members being updated. Format: spaces/{space}
+        requests (MutableSequence[google.apps.meet_v2.types.UpdateMemberRequest]):
+            Required. The request message specifying the
+            resources to update. A maximum of 500 members
+            can be modified in a batch.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. Top-level field mask used to
+            specify the fields to be updated in the member
+            for all UpdateMemberRequests. There are 4
+            possible scenarios for top-level and child field
+            mask:
+
+            1. top-level and child field mask is absent:
+
+               All fields provided in the requests are
+            updated, including deleting    fields not set in
+            the requests.
+            2. top-level field mask is present but child
+                field mask is absent:
+
+               The fields specified in the top-level field
+            mask are updated.
+            3. top-level and child field mask is present:
+
+               The child field mask must be the same as the
+            top-level field mask.
+            4. top-level field mask is absent but child
+                field mask is present:
+
+               It isn't supported and will return an error.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    requests: MutableSequence["UpdateMemberRequest"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="UpdateMemberRequest",
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
+class BatchUpdateMembersResponse(proto.Message):
+    r"""Response of batch update members.
+
+    Attributes:
+        members (MutableSequence[google.apps.meet_v2.types.Member]):
+            Members updated.
+    """
+
+    members: MutableSequence[resource.Member] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=resource.Member,
     )
 
 
@@ -645,6 +867,81 @@ class ListTranscriptEntriesResponse(proto.Message):
         proto.MESSAGE,
         number=1,
         message=resource.TranscriptEntry,
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class GetSmartNoteRequest(proto.Message):
+    r"""Request for GetSmartNote method.
+
+    Attributes:
+        name (str):
+            Required. Resource name of the smart note. Format:
+            conferenceRecords/{conference_record}/smartNotes/{smart_note}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListSmartNotesRequest(proto.Message):
+    r"""Request for ListSmartNotes method.
+
+    Attributes:
+        parent (str):
+            Required. Format: ``conferenceRecords/{conference_record}``
+        page_size (int):
+            Optional. Maximum number of smart notes to
+            return. The service might return fewer than this
+            value. If unspecified, at most 10 smart notes
+            are returned. The maximum value is 100; values
+            above 100 are coerced to 100. Maximum might
+            change in the future.
+        page_token (str):
+            Optional. Page token returned from previous
+            List Call.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListSmartNotesResponse(proto.Message):
+    r"""Response for ListSmartNotes method.
+
+    Attributes:
+        smart_notes (MutableSequence[google.apps.meet_v2.types.SmartNote]):
+            List of smart notes in one page.
+        next_page_token (str):
+            Token to be circulated back for further List
+            call if current List doesn't include all the
+            smart notes. Unset if all smart notes are
+            returned.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    smart_notes: MutableSequence[resource.SmartNote] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=resource.SmartNote,
     )
     next_page_token: str = proto.Field(
         proto.STRING,

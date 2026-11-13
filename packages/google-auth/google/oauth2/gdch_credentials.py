@@ -12,18 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Experimental GDCH credentials support.
-"""
+"""Experimental GDCH credentials support."""
 
 import datetime
 
-from google.auth import _helpers
-from google.auth import _service_account_info
-from google.auth import credentials
-from google.auth import exceptions
-from google.auth import jwt
+from google.auth import _helpers, _service_account_info, credentials, exceptions, jwt
 from google.oauth2 import _client
-
 
 TOKEN_EXCHANGE_TYPE = "urn:ietf:params:oauth:token-type:token-exchange"
 ACCESS_TOKEN_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:access_token"

@@ -27,11 +27,17 @@ from google.api_core import gapic_v1, grpc_helpers, operations_v1
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
+from google.iam.v1 import (
+    iam_policy_pb2,  # type: ignore
+    policy_pb2,  # type: ignore
+)
 from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 
-from google.cloud.lustre_v1.types import instance, transfer
+from google.cloud.lustre_v1.types import directory_policy, instance, mirror, transfer
+from google.cloud.lustre_v1.types import directory_policy as gcl_directory_policy
 from google.cloud.lustre_v1.types import instance as gcl_instance
+from google.cloud.lustre_v1.types import mirror as gcl_mirror
 
 from .base import DEFAULT_CLIENT_INFO, LustreTransport
 
@@ -477,6 +483,33 @@ class LustreGrpcTransport(LustreTransport):
         return self._stubs["delete_instance"]
 
     @property
+    def reschedule_maintenance(
+        self,
+    ) -> Callable[[instance.RescheduleMaintenanceRequest], operations_pb2.Operation]:
+        r"""Return a callable for the reschedule maintenance method over gRPC.
+
+        Reschedules a planned maintenance event for a
+        specific instance.
+
+        Returns:
+            Callable[[~.RescheduleMaintenanceRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "reschedule_maintenance" not in self._stubs:
+            self._stubs["reschedule_maintenance"] = self._logged_channel.unary_unary(
+                "/google.cloud.lustre.v1.Lustre/RescheduleMaintenance",
+                request_serializer=instance.RescheduleMaintenanceRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["reschedule_maintenance"]
+
+    @property
     def import_data(
         self,
     ) -> Callable[[transfer.ImportDataRequest], operations_pb2.Operation]:
@@ -529,6 +562,249 @@ class LustreGrpcTransport(LustreTransport):
                 response_deserializer=operations_pb2.Operation.FromString,
             )
         return self._stubs["export_data"]
+
+    @property
+    def create_mirror(
+        self,
+    ) -> Callable[[gcl_mirror.CreateMirrorRequest], operations_pb2.Operation]:
+        r"""Return a callable for the create mirror method over gRPC.
+
+        Creates a new mirror in a given instance.
+
+        Returns:
+            Callable[[~.CreateMirrorRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_mirror" not in self._stubs:
+            self._stubs["create_mirror"] = self._logged_channel.unary_unary(
+                "/google.cloud.lustre.v1.Lustre/CreateMirror",
+                request_serializer=gcl_mirror.CreateMirrorRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["create_mirror"]
+
+    @property
+    def update_mirror(
+        self,
+    ) -> Callable[[gcl_mirror.UpdateMirrorRequest], operations_pb2.Operation]:
+        r"""Return a callable for the update mirror method over gRPC.
+
+        Updates the parameters of a single mirror.
+
+        Returns:
+            Callable[[~.UpdateMirrorRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_mirror" not in self._stubs:
+            self._stubs["update_mirror"] = self._logged_channel.unary_unary(
+                "/google.cloud.lustre.v1.Lustre/UpdateMirror",
+                request_serializer=gcl_mirror.UpdateMirrorRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["update_mirror"]
+
+    @property
+    def delete_mirror(
+        self,
+    ) -> Callable[[mirror.DeleteMirrorRequest], operations_pb2.Operation]:
+        r"""Return a callable for the delete mirror method over gRPC.
+
+        Deletes a single mirror.
+
+        Returns:
+            Callable[[~.DeleteMirrorRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_mirror" not in self._stubs:
+            self._stubs["delete_mirror"] = self._logged_channel.unary_unary(
+                "/google.cloud.lustre.v1.Lustre/DeleteMirror",
+                request_serializer=mirror.DeleteMirrorRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["delete_mirror"]
+
+    @property
+    def get_mirror(self) -> Callable[[mirror.GetMirrorRequest], mirror.Mirror]:
+        r"""Return a callable for the get mirror method over gRPC.
+
+        Gets details of a single mirror.
+
+        Returns:
+            Callable[[~.GetMirrorRequest],
+                    ~.Mirror]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_mirror" not in self._stubs:
+            self._stubs["get_mirror"] = self._logged_channel.unary_unary(
+                "/google.cloud.lustre.v1.Lustre/GetMirror",
+                request_serializer=mirror.GetMirrorRequest.serialize,
+                response_deserializer=mirror.Mirror.deserialize,
+            )
+        return self._stubs["get_mirror"]
+
+    @property
+    def list_mirrors(
+        self,
+    ) -> Callable[[mirror.ListMirrorsRequest], mirror.ListMirrorsResponse]:
+        r"""Return a callable for the list mirrors method over gRPC.
+
+        Gets details of multiple mirrors under a given
+        instance.
+
+        Returns:
+            Callable[[~.ListMirrorsRequest],
+                    ~.ListMirrorsResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_mirrors" not in self._stubs:
+            self._stubs["list_mirrors"] = self._logged_channel.unary_unary(
+                "/google.cloud.lustre.v1.Lustre/ListMirrors",
+                request_serializer=mirror.ListMirrorsRequest.serialize,
+                response_deserializer=mirror.ListMirrorsResponse.deserialize,
+            )
+        return self._stubs["list_mirrors"]
+
+    @property
+    def create_directory_policy(
+        self,
+    ) -> Callable[
+        [gcl_directory_policy.CreateDirectoryPolicyRequest], operations_pb2.Operation
+    ]:
+        r"""Return a callable for the create directory policy method over gRPC.
+
+        Creates a directory policy resource.
+
+        Returns:
+            Callable[[~.CreateDirectoryPolicyRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_directory_policy" not in self._stubs:
+            self._stubs["create_directory_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.lustre.v1.Lustre/CreateDirectoryPolicy",
+                request_serializer=gcl_directory_policy.CreateDirectoryPolicyRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["create_directory_policy"]
+
+    @property
+    def delete_directory_policy(
+        self,
+    ) -> Callable[
+        [directory_policy.DeleteDirectoryPolicyRequest], operations_pb2.Operation
+    ]:
+        r"""Return a callable for the delete directory policy method over gRPC.
+
+        Deletes a directory policy resource.
+
+        Returns:
+            Callable[[~.DeleteDirectoryPolicyRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_directory_policy" not in self._stubs:
+            self._stubs["delete_directory_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.lustre.v1.Lustre/DeleteDirectoryPolicy",
+                request_serializer=directory_policy.DeleteDirectoryPolicyRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["delete_directory_policy"]
+
+    @property
+    def get_directory_policy(
+        self,
+    ) -> Callable[
+        [directory_policy.GetDirectoryPolicyRequest], directory_policy.DirectoryPolicy
+    ]:
+        r"""Return a callable for the get directory policy method over gRPC.
+
+        Gets details of a single directory policy.
+
+        Returns:
+            Callable[[~.GetDirectoryPolicyRequest],
+                    ~.DirectoryPolicy]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_directory_policy" not in self._stubs:
+            self._stubs["get_directory_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.lustre.v1.Lustre/GetDirectoryPolicy",
+                request_serializer=directory_policy.GetDirectoryPolicyRequest.serialize,
+                response_deserializer=directory_policy.DirectoryPolicy.deserialize,
+            )
+        return self._stubs["get_directory_policy"]
+
+    @property
+    def list_directory_policies(
+        self,
+    ) -> Callable[
+        [directory_policy.ListDirectoryPoliciesRequest],
+        directory_policy.ListDirectoryPoliciesResponse,
+    ]:
+        r"""Return a callable for the list directory policies method over gRPC.
+
+        Gets details of multiple directory policies under a
+        given instance.
+
+        Returns:
+            Callable[[~.ListDirectoryPoliciesRequest],
+                    ~.ListDirectoryPoliciesResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_directory_policies" not in self._stubs:
+            self._stubs["list_directory_policies"] = self._logged_channel.unary_unary(
+                "/google.cloud.lustre.v1.Lustre/ListDirectoryPolicies",
+                request_serializer=directory_policy.ListDirectoryPoliciesRequest.serialize,
+                response_deserializer=directory_policy.ListDirectoryPoliciesResponse.deserialize,
+            )
+        return self._stubs["list_directory_policies"]
 
     def close(self):
         self._logged_channel.close()
@@ -638,6 +914,86 @@ class LustreGrpcTransport(LustreTransport):
                 response_deserializer=locations_pb2.Location.FromString,
             )
         return self._stubs["get_location"]
+
+    @property
+    def set_iam_policy(
+        self,
+    ) -> Callable[[iam_policy_pb2.SetIamPolicyRequest], policy_pb2.Policy]:
+        r"""Return a callable for the set iam policy method over gRPC.
+        Sets the IAM access control policy on the specified
+        function. Replaces any existing policy.
+        Returns:
+            Callable[[~.SetIamPolicyRequest],
+                    ~.Policy]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "set_iam_policy" not in self._stubs:
+            self._stubs["set_iam_policy"] = self._logged_channel.unary_unary(
+                "/google.iam.v1.IAMPolicy/SetIamPolicy",
+                request_serializer=iam_policy_pb2.SetIamPolicyRequest.SerializeToString,
+                response_deserializer=policy_pb2.Policy.FromString,
+            )
+        return self._stubs["set_iam_policy"]
+
+    @property
+    def get_iam_policy(
+        self,
+    ) -> Callable[[iam_policy_pb2.GetIamPolicyRequest], policy_pb2.Policy]:
+        r"""Return a callable for the get iam policy method over gRPC.
+        Gets the IAM access control policy for a function.
+        Returns an empty policy if the function exists and does
+        not have a policy set.
+        Returns:
+            Callable[[~.GetIamPolicyRequest],
+                    ~.Policy]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_iam_policy" not in self._stubs:
+            self._stubs["get_iam_policy"] = self._logged_channel.unary_unary(
+                "/google.iam.v1.IAMPolicy/GetIamPolicy",
+                request_serializer=iam_policy_pb2.GetIamPolicyRequest.SerializeToString,
+                response_deserializer=policy_pb2.Policy.FromString,
+            )
+        return self._stubs["get_iam_policy"]
+
+    @property
+    def test_iam_permissions(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.TestIamPermissionsRequest],
+        iam_policy_pb2.TestIamPermissionsResponse,
+    ]:
+        r"""Return a callable for the test iam permissions method over gRPC.
+        Tests the specified permissions against the IAM access control
+        policy for a function. If the function does not exist, this will
+        return an empty set of permissions, not a NOT_FOUND error.
+        Returns:
+            Callable[[~.TestIamPermissionsRequest],
+                    ~.TestIamPermissionsResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "test_iam_permissions" not in self._stubs:
+            self._stubs["test_iam_permissions"] = self._logged_channel.unary_unary(
+                "/google.iam.v1.IAMPolicy/TestIamPermissions",
+                request_serializer=iam_policy_pb2.TestIamPermissionsRequest.SerializeToString,
+                response_deserializer=iam_policy_pb2.TestIamPermissionsResponse.FromString,
+            )
+        return self._stubs["test_iam_permissions"]
 
     @property
     def kind(self) -> str:

@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime
+from collections.abc import Iterable as _Iterable
+from collections.abc import Mapping as _Mapping
 from typing import ClassVar as _ClassVar
-from typing import Iterable as _Iterable
-from typing import Mapping as _Mapping
 from typing import Optional as _Optional
 from typing import Union as _Union
 
@@ -28,6 +29,7 @@ from google.protobuf.internal import containers as _containers
 
 from google.api import annotations_pb2 as _annotations_pb2
 from google.api import client_pb2 as _client_pb2
+from google.api import field_behavior_pb2 as _field_behavior_pb2
 from google.rpc import status_pb2 as _status_pb2
 
 DESCRIPTOR: _descriptor.FileDescriptor
@@ -50,7 +52,7 @@ class Operation(_message.Message):
         self,
         name: _Optional[str] = ...,
         metadata: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...,
-        done: bool = ...,
+        done: _Optional[bool] = ...,
         error: _Optional[_Union[_status_pb2.Status, _Mapping]] = ...,
         response: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...,
     ) -> None: ...
@@ -62,33 +64,39 @@ class GetOperationRequest(_message.Message):
     def __init__(self, name: _Optional[str] = ...) -> None: ...
 
 class ListOperationsRequest(_message.Message):
-    __slots__ = ("name", "filter", "page_size", "page_token")
+    __slots__ = ("name", "filter", "page_size", "page_token", "return_partial_success")
     NAME_FIELD_NUMBER: _ClassVar[int]
     FILTER_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    RETURN_PARTIAL_SUCCESS_FIELD_NUMBER: _ClassVar[int]
     name: str
     filter: str
     page_size: int
     page_token: str
+    return_partial_success: bool
     def __init__(
         self,
         name: _Optional[str] = ...,
         filter: _Optional[str] = ...,
         page_size: _Optional[int] = ...,
         page_token: _Optional[str] = ...,
+        return_partial_success: _Optional[bool] = ...,
     ) -> None: ...
 
 class ListOperationsResponse(_message.Message):
-    __slots__ = ("operations", "next_page_token")
+    __slots__ = ("operations", "next_page_token", "unreachable")
     OPERATIONS_FIELD_NUMBER: _ClassVar[int]
     NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    UNREACHABLE_FIELD_NUMBER: _ClassVar[int]
     operations: _containers.RepeatedCompositeFieldContainer[Operation]
     next_page_token: str
+    unreachable: _containers.RepeatedScalarFieldContainer[str]
     def __init__(
         self,
         operations: _Optional[_Iterable[_Union[Operation, _Mapping]]] = ...,
         next_page_token: _Optional[str] = ...,
+        unreachable: _Optional[_Iterable[str]] = ...,
     ) -> None: ...
 
 class CancelOperationRequest(_message.Message):
@@ -112,7 +120,9 @@ class WaitOperationRequest(_message.Message):
     def __init__(
         self,
         name: _Optional[str] = ...,
-        timeout: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ...,
+        timeout: _Optional[
+            _Union[datetime.timedelta, _duration_pb2.Duration, _Mapping]
+        ] = ...,
     ) -> None: ...
 
 class OperationInfo(_message.Message):

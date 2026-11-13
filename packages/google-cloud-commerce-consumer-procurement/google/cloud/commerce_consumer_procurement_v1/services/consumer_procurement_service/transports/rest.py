@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.commerce_consumer_procurement_v1._compat import transcode_request
 from google.cloud.commerce_consumer_procurement_v1.types import (
     order,
     procurement_service,
@@ -583,19 +584,16 @@ class ConsumerProcurementServiceRestTransport(
             """
 
             http_options = _BaseConsumerProcurementServiceRestTransport._BaseCancelOrder._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_order(request, metadata)
-            transcoded_request = _BaseConsumerProcurementServiceRestTransport._BaseCancelOrder._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConsumerProcurementServiceRestTransport._BaseCancelOrder._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConsumerProcurementServiceRestTransport._BaseCancelOrder._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConsumerProcurementServiceRestTransport._BaseCancelOrder,
+                    "_BaseCancelOrder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -750,15 +748,16 @@ class ConsumerProcurementServiceRestTransport(
             """
 
             http_options = _BaseConsumerProcurementServiceRestTransport._BaseGetOrder._get_http_options()
-
             request, metadata = self._interceptor.pre_get_order(request, metadata)
-            transcoded_request = _BaseConsumerProcurementServiceRestTransport._BaseGetOrder._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConsumerProcurementServiceRestTransport._BaseGetOrder._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConsumerProcurementServiceRestTransport._BaseGetOrder,
+                    "_BaseGetOrder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -896,15 +895,16 @@ class ConsumerProcurementServiceRestTransport(
             """
 
             http_options = _BaseConsumerProcurementServiceRestTransport._BaseListOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_list_orders(request, metadata)
-            transcoded_request = _BaseConsumerProcurementServiceRestTransport._BaseListOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConsumerProcurementServiceRestTransport._BaseListOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConsumerProcurementServiceRestTransport._BaseListOrders,
+                    "_BaseListOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1048,19 +1048,16 @@ class ConsumerProcurementServiceRestTransport(
             """
 
             http_options = _BaseConsumerProcurementServiceRestTransport._BaseModifyOrder._get_http_options()
-
             request, metadata = self._interceptor.pre_modify_order(request, metadata)
-            transcoded_request = _BaseConsumerProcurementServiceRestTransport._BaseModifyOrder._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConsumerProcurementServiceRestTransport._BaseModifyOrder._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConsumerProcurementServiceRestTransport._BaseModifyOrder._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConsumerProcurementServiceRestTransport._BaseModifyOrder,
+                    "_BaseModifyOrder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1201,19 +1198,16 @@ class ConsumerProcurementServiceRestTransport(
             """
 
             http_options = _BaseConsumerProcurementServiceRestTransport._BasePlaceOrder._get_http_options()
-
             request, metadata = self._interceptor.pre_place_order(request, metadata)
-            transcoded_request = _BaseConsumerProcurementServiceRestTransport._BasePlaceOrder._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConsumerProcurementServiceRestTransport._BasePlaceOrder._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConsumerProcurementServiceRestTransport._BasePlaceOrder._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConsumerProcurementServiceRestTransport._BasePlaceOrder,
+                    "_BasePlaceOrder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1392,15 +1386,16 @@ class ConsumerProcurementServiceRestTransport(
             """
 
             http_options = _BaseConsumerProcurementServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseConsumerProcurementServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConsumerProcurementServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConsumerProcurementServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

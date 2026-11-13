@@ -3,16 +3,20 @@ Services for Google Cloud Discoveryengine v1 API
 .. toctree::
     :maxdepth: 2
 
+    acl_config_service
     assistant_service
     cmek_config_service
+    collection_service
     completion_service
     control_service
     conversational_search_service
+    data_connector_service
     data_store_service
     document_service
     engine_service
     grounded_generation_service
     identity_mapping_store_service
+    license_config_service
     project_service
     rank_service
     recommendation_service
@@ -24,3 +28,5 @@ Services for Google Cloud Discoveryengine v1 API
     site_search_engine_service
     user_event_service
     user_license_service
+    user_store_service
+    widget_config_service

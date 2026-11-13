@@ -42,6 +42,7 @@ __protobuf__ = proto.module(
         "TieredStorageConfig",
         "TieredStorageRule",
         "ProtoSchema",
+        "AvroSchema",
         "SchemaBundle",
     },
 )
@@ -168,6 +169,11 @@ class Table(proto.Message):
             disabled.
 
             This field is a member of `oneof`_ ``automated_backup_config``.
+        effective_automated_backup_policy (google.cloud.bigtable_admin_v2.types.Table.AutomatedBackupPolicy):
+            Output only. The effective automated backup policy applied
+            to the table. This represents the policy actually in effect,
+            which may be a system-default policy if the user has not
+            explicitly configured one. Views: ``SCHEMA_VIEW``, ``FULL``.
         tiered_storage_config (google.cloud.bigtable_admin_v2.types.TieredStorageConfig):
             Rules to specify what data is stored in each
             storage tier. Different tiers store data
@@ -373,6 +379,20 @@ class Table(proto.Message):
                 Locations are in the format
                 ``projects/{project}/locations/{zone}``. This field can only
                 set for tables in Enterprise Plus instances.
+            keep_hot_duration (google.protobuf.duration_pb2.Duration):
+                Optional. The amount of time that the automated backups
+                remain hot. If specified, the backups created by this policy
+                are ``HOT`` backups. If not specified, the backups are
+                ``STANDARD`` backups.
+
+                The value must be at least 24 hours and at most 10 days, and
+                can't exceed the policy's ``retention_period``.
+
+                Only SSD instances support ``HOT`` automated backups.
+            disabled (bool):
+                Optional. If ``true``, automated backups are explicitly
+                disabled on this table. This allows users to opt out of
+                default enablement.
         """
 
         retention_period: duration_pb2.Duration = proto.Field(
@@ -388,6 +408,15 @@ class Table(proto.Message):
         locations: MutableSequence[str] = proto.RepeatedField(
             proto.STRING,
             number=3,
+        )
+        keep_hot_duration: duration_pb2.Duration = proto.Field(
+            proto.MESSAGE,
+            number=4,
+            message=duration_pb2.Duration,
+        )
+        disabled: bool = proto.Field(
+            proto.BOOL,
+            number=5,
         )
 
     name: str = proto.Field(
@@ -429,6 +458,11 @@ class Table(proto.Message):
         proto.MESSAGE,
         number=13,
         oneof="automated_backup_config",
+        message=AutomatedBackupPolicy,
+    )
+    effective_automated_backup_policy: AutomatedBackupPolicy = proto.Field(
+        proto.MESSAGE,
+        number=19,
         message=AutomatedBackupPolicy,
     )
     tiered_storage_config: "TieredStorageConfig" = proto.Field(
@@ -1115,7 +1149,7 @@ class TieredStorageRule(proto.Message):
 
 
 class ProtoSchema(proto.Message):
-    r"""Represents a protobuf schema.
+    r"""Represents a collection of protobuf schemas.
 
     Attributes:
         proto_descriptors (bytes):
@@ -1144,8 +1178,33 @@ class ProtoSchema(proto.Message):
     )
 
 
+class AvroSchema(proto.Message):
+    r"""Represents a collection of Avro schemas.
+
+    Attributes:
+        json_schemas (MutableSequence[str]):
+            Required. The Avro schemas in JSON format.
+            Each element must be the content of a valid,
+            self-contained Avro schema file (.avsc), as
+            described in
+            https://avro.apache.org/docs/1.8.1/spec.html.
+            Use repeated elements to include multiple Avro
+            schema files in a single bundle.
+    """
+
+    json_schemas: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=1,
+    )
+
+
 class SchemaBundle(proto.Message):
     r"""A named collection of related schemas.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
@@ -1156,6 +1215,10 @@ class SchemaBundle(proto.Message):
             ``projects/{project}/instances/{instance}/tables/{table}/schemaBundles/{schema_bundle}``
         proto_schema (google.cloud.bigtable_admin_v2.types.ProtoSchema):
             Schema for Protobufs.
+
+            This field is a member of `oneof`_ ``type``.
+        avro_schema (google.cloud.bigtable_admin_v2.types.AvroSchema):
+            Optional. Schema for Avros.
 
             This field is a member of `oneof`_ ``type``.
         etag (str):
@@ -1175,6 +1238,12 @@ class SchemaBundle(proto.Message):
         number=2,
         oneof="type",
         message="ProtoSchema",
+    )
+    avro_schema: "AvroSchema" = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        oneof="type",
+        message="AvroSchema",
     )
     etag: str = proto.Field(
         proto.STRING,

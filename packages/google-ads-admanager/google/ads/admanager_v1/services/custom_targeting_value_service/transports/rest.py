@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     custom_targeting_value_messages,
     custom_targeting_value_service,
@@ -772,23 +773,20 @@ class CustomTargetingValueServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingValueServiceRestTransport._BaseBatchActivateCustomTargetingValues._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_activate_custom_targeting_values(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCustomTargetingValueServiceRestTransport._BaseBatchActivateCustomTargetingValues._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCustomTargetingValueServiceRestTransport._BaseBatchActivateCustomTargetingValues._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingValueServiceRestTransport._BaseBatchActivateCustomTargetingValues._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingValueServiceRestTransport._BaseBatchActivateCustomTargetingValues,
+                    "_BaseBatchActivateCustomTargetingValues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -937,23 +935,20 @@ class CustomTargetingValueServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingValueServiceRestTransport._BaseBatchCreateCustomTargetingValues._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_create_custom_targeting_values(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCustomTargetingValueServiceRestTransport._BaseBatchCreateCustomTargetingValues._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCustomTargetingValueServiceRestTransport._BaseBatchCreateCustomTargetingValues._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingValueServiceRestTransport._BaseBatchCreateCustomTargetingValues._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingValueServiceRestTransport._BaseBatchCreateCustomTargetingValues,
+                    "_BaseBatchCreateCustomTargetingValues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1104,23 +1099,20 @@ class CustomTargetingValueServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingValueServiceRestTransport._BaseBatchDeactivateCustomTargetingValues._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_deactivate_custom_targeting_values(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCustomTargetingValueServiceRestTransport._BaseBatchDeactivateCustomTargetingValues._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCustomTargetingValueServiceRestTransport._BaseBatchDeactivateCustomTargetingValues._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingValueServiceRestTransport._BaseBatchDeactivateCustomTargetingValues._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingValueServiceRestTransport._BaseBatchDeactivateCustomTargetingValues,
+                    "_BaseBatchDeactivateCustomTargetingValues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1269,23 +1261,20 @@ class CustomTargetingValueServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingValueServiceRestTransport._BaseBatchUpdateCustomTargetingValues._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_update_custom_targeting_values(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCustomTargetingValueServiceRestTransport._BaseBatchUpdateCustomTargetingValues._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCustomTargetingValueServiceRestTransport._BaseBatchUpdateCustomTargetingValues._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingValueServiceRestTransport._BaseBatchUpdateCustomTargetingValues._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingValueServiceRestTransport._BaseBatchUpdateCustomTargetingValues,
+                    "_BaseBatchUpdateCustomTargetingValues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1432,21 +1421,18 @@ class CustomTargetingValueServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingValueServiceRestTransport._BaseCreateCustomTargetingValue._get_http_options()
-
             request, metadata = self._interceptor.pre_create_custom_targeting_value(
                 request, metadata
             )
-            transcoded_request = _BaseCustomTargetingValueServiceRestTransport._BaseCreateCustomTargetingValue._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCustomTargetingValueServiceRestTransport._BaseCreateCustomTargetingValue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingValueServiceRestTransport._BaseCreateCustomTargetingValue._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingValueServiceRestTransport._BaseCreateCustomTargetingValue,
+                    "_BaseCreateCustomTargetingValue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1591,17 +1577,18 @@ class CustomTargetingValueServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingValueServiceRestTransport._BaseGetCustomTargetingValue._get_http_options()
-
             request, metadata = self._interceptor.pre_get_custom_targeting_value(
                 request, metadata
             )
-            transcoded_request = _BaseCustomTargetingValueServiceRestTransport._BaseGetCustomTargetingValue._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingValueServiceRestTransport._BaseGetCustomTargetingValue._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingValueServiceRestTransport._BaseGetCustomTargetingValue,
+                    "_BaseGetCustomTargetingValue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1745,17 +1732,18 @@ class CustomTargetingValueServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingValueServiceRestTransport._BaseListCustomTargetingValues._get_http_options()
-
             request, metadata = self._interceptor.pre_list_custom_targeting_values(
                 request, metadata
             )
-            transcoded_request = _BaseCustomTargetingValueServiceRestTransport._BaseListCustomTargetingValues._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingValueServiceRestTransport._BaseListCustomTargetingValues._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingValueServiceRestTransport._BaseListCustomTargetingValues,
+                    "_BaseListCustomTargetingValues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1901,21 +1889,18 @@ class CustomTargetingValueServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingValueServiceRestTransport._BaseUpdateCustomTargetingValue._get_http_options()
-
             request, metadata = self._interceptor.pre_update_custom_targeting_value(
                 request, metadata
             )
-            transcoded_request = _BaseCustomTargetingValueServiceRestTransport._BaseUpdateCustomTargetingValue._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCustomTargetingValueServiceRestTransport._BaseUpdateCustomTargetingValue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingValueServiceRestTransport._BaseUpdateCustomTargetingValue._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingValueServiceRestTransport._BaseUpdateCustomTargetingValue,
+                    "_BaseUpdateCustomTargetingValue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2161,17 +2146,18 @@ class CustomTargetingValueServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingValueServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCustomTargetingValueServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingValueServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingValueServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2279,15 +2265,16 @@ class CustomTargetingValueServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingValueServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseCustomTargetingValueServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingValueServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingValueServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

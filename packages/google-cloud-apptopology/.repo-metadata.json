@@ -1,0 +1,15 @@
+{
+    "api_id": "apptopology.googleapis.com",
+    "api_shortname": "apptopology",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-apptopology/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-apptopology",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=2121875",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-apptopology",
+    "name_pretty": "App Topology",
+    "product_documentation": "https://docs.cloud.google.com/app-topology",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

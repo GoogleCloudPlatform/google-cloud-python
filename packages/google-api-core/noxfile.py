@@ -29,6 +29,11 @@ import unittest
 import nox
 
 RUFF_VERSION = "ruff==0.14.14"
+# Temporarily pin pytest<9.2 because pytest 9.2.0 applies filterwarnings=error
+# before pytest_configure hooks run, turning pytest-asyncio's unset
+# asyncio_default_fixture_loop_scope warning into an error. Remove once
+# pytest 9.2+ warning and fixture scope deprecations are resolved.
+PYTEST_VERSION = "pytest<9.2"
 LINT_PATHS = ["docs", "google", "tests", "noxfile.py", "setup.py"]
 
 ALL_PYTHON = ["3.10", "3.11", "3.12", "3.13", "3.14", "3.15"]
@@ -60,6 +65,18 @@ def lint(session):
     """
     session.install("flake8", RUFF_VERSION)
 
+    # 1. Check imports
+    session.run(
+        "ruff",
+        "check",
+        "--select",
+        "I",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+        "--line-length=88",
+        *LINT_PATHS,
+    )
+
+    # 2. Check formatting
     session.run(
         "ruff",
         "format",
@@ -208,7 +225,7 @@ def default(
         unittest.skip("The pre-release session cannot be run without grpc")
 
     session.install(
-        "pytest",
+        PYTEST_VERSION,
         "pytest-cov",
         "pytest-mock",
         "pytest-xdist",

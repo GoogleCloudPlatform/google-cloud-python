@@ -921,6 +921,8 @@ class AllocationPolicy(proto.Message):
     class NetworkInterface(proto.Message):
         r"""A network interface.
 
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
         Attributes:
             network (str):
                 The URL of an existing network resource. You can specify the
@@ -951,7 +953,31 @@ class AllocationPolicy(proto.Message):
                 and
                 https://cloud.google.com/nat/docs/gce-example#create-nat
                 for more information.
+            nic_type (google.cloud.batch_v1.types.AllocationPolicy.NetworkInterface.NicType):
+                Optional. The NIC type of the network
+                interface.
+
+                This field is a member of `oneof`_ ``_nic_type``.
         """
+
+        class NicType(proto.Enum):
+            r"""Compute Engine VM instance NIC type.
+
+            Values:
+                NIC_TYPE_UNSPECIFIED (0):
+                    No type specified.
+                GVNIC (1):
+                    GVNIC
+                IRDMA (2):
+                    IRDMA
+                MRDMA (3):
+                    MRDMA
+            """
+
+            NIC_TYPE_UNSPECIFIED = 0
+            GVNIC = 1
+            IRDMA = 2
+            MRDMA = 3
 
         network: str = proto.Field(
             proto.STRING,
@@ -964,6 +990,12 @@ class AllocationPolicy(proto.Message):
         no_external_ip_address: bool = proto.Field(
             proto.BOOL,
             number=3,
+        )
+        nic_type: "AllocationPolicy.NetworkInterface.NicType" = proto.Field(
+            proto.ENUM,
+            number=7,
+            optional=True,
+            enum="AllocationPolicy.NetworkInterface.NicType",
         )
 
     class NetworkPolicy(proto.Message):

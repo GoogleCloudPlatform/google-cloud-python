@@ -4,6 +4,33 @@
 
 [1]: https://pypi.org/project/google-cloud-documentai-toolbox/#history
 
+## [0.17.5](https://github.com/googleapis/google-cloud-python/compare/google-cloud-documentai-toolbox-v0.17.4...google-cloud-documentai-toolbox-v0.17.5) (2026-10-22)
+
+
+### Features
+
+* support Python 3.15 ([8fceef4](https://github.com/googleapis/google-cloud-python/commit/8fceef49c523bcc8989abf3b6b82bcf143332d50))
+
+## [0.17.4](https://github.com/googleapis/google-cloud-python/compare/google-cloud-documentai-toolbox-v0.17.3...google-cloud-documentai-toolbox-v0.17.4) (2026-09-29)
+
+
+### Features
+
+* declare Python3.15 support ([05b0c34](https://github.com/googleapis/google-cloud-python/commit/05b0c342683b2b0e1b8dccd201ec86ec89612edc))
+
+## [0.17.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-documentai-toolbox-v0.17.2...google-cloud-documentai-toolbox-v0.17.3) (2026-08-21)
+
+
+### Bug Fixes
+
+* **documentai-toolbox:** contain split_pdf output to output_path ([#18063](https://github.com/googleapis/google-cloud-python/issues/18063)) ([d206212](https://github.com/googleapis/google-cloud-python/commit/d206212acfe61f109c2dcb4efee96af6a88913a9))
+* **documentai-toolbox:** enable autoescape in export_hocr_str ([#18140](https://github.com/googleapis/google-cloud-python/issues/18140)) ([0d671d2](https://github.com/googleapis/google-cloud-python/commit/0d671d2c5cfd49c5c3e205f1e7e4145f3204d4d9))
+
+
+### Documentation
+
+* **handwritten:** centralize CONTRIBUTING.rst pointers ([#17642](https://github.com/googleapis/google-cloud-python/issues/17642)) ([23b9499](https://github.com/googleapis/google-cloud-python/commit/23b94994bd5251493b81d91657d1f79a5d3c4b97))
+
 ## [0.17.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-documentai-toolbox-v0.17.1...google-cloud-documentai-toolbox-v0.17.2) (2026-08-06)
 
 

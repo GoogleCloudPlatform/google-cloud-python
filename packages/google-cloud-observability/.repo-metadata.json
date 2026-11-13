@@ -1,0 +1,16 @@
+{
+    "api_description": "Provides functionality for configuring the observability scope, which\ncontrols the log, metric, and trace data that you can view.",
+    "api_id": "observability.googleapis.com",
+    "api_shortname": "observability",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-observability/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-observability",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1519295",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-observability",
+    "name_pretty": "Observability",
+    "product_documentation": "https://cloud.google.com/stackdriver/",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

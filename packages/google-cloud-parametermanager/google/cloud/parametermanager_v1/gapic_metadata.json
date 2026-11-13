@@ -20,6 +20,16 @@
                 "create_parameter_version"
               ]
             },
+            "CreateTemplate": {
+              "methods": [
+                "create_template"
+              ]
+            },
+            "CreateTemplateVersion": {
+              "methods": [
+                "create_template_version"
+              ]
+            },
             "DeleteParameter": {
               "methods": [
                 "delete_parameter"
@@ -28,6 +38,16 @@
             "DeleteParameterVersion": {
               "methods": [
                 "delete_parameter_version"
+              ]
+            },
+            "DeleteTemplate": {
+              "methods": [
+                "delete_template"
+              ]
+            },
+            "DeleteTemplateVersion": {
+              "methods": [
+                "delete_template_version"
               ]
             },
             "GetParameter": {
@@ -40,6 +60,16 @@
                 "get_parameter_version"
               ]
             },
+            "GetTemplate": {
+              "methods": [
+                "get_template"
+              ]
+            },
+            "GetTemplateVersion": {
+              "methods": [
+                "get_template_version"
+              ]
+            },
             "ListParameterVersions": {
               "methods": [
                 "list_parameter_versions"
@@ -50,9 +80,24 @@
                 "list_parameters"
               ]
             },
+            "ListTemplateVersions": {
+              "methods": [
+                "list_template_versions"
+              ]
+            },
+            "ListTemplates": {
+              "methods": [
+                "list_templates"
+              ]
+            },
             "RenderParameterVersion": {
               "methods": [
                 "render_parameter_version"
+              ]
+            },
+            "RenderTemplateVersion": {
+              "methods": [
+                "render_template_version"
               ]
             },
             "UpdateParameter": {
@@ -63,6 +108,16 @@
             "UpdateParameterVersion": {
               "methods": [
                 "update_parameter_version"
+              ]
+            },
+            "UpdateTemplate": {
+              "methods": [
+                "update_template"
+              ]
+            },
+            "UpdateTemplateVersion": {
+              "methods": [
+                "update_template_version"
               ]
             }
           }
@@ -80,6 +135,16 @@
                 "create_parameter_version"
               ]
             },
+            "CreateTemplate": {
+              "methods": [
+                "create_template"
+              ]
+            },
+            "CreateTemplateVersion": {
+              "methods": [
+                "create_template_version"
+              ]
+            },
             "DeleteParameter": {
               "methods": [
                 "delete_parameter"
@@ -88,6 +153,16 @@
             "DeleteParameterVersion": {
               "methods": [
                 "delete_parameter_version"
+              ]
+            },
+            "DeleteTemplate": {
+              "methods": [
+                "delete_template"
+              ]
+            },
+            "DeleteTemplateVersion": {
+              "methods": [
+                "delete_template_version"
               ]
             },
             "GetParameter": {
@@ -100,6 +175,16 @@
                 "get_parameter_version"
               ]
             },
+            "GetTemplate": {
+              "methods": [
+                "get_template"
+              ]
+            },
+            "GetTemplateVersion": {
+              "methods": [
+                "get_template_version"
+              ]
+            },
             "ListParameterVersions": {
               "methods": [
                 "list_parameter_versions"
@@ -110,9 +195,24 @@
                 "list_parameters"
               ]
             },
+            "ListTemplateVersions": {
+              "methods": [
+                "list_template_versions"
+              ]
+            },
+            "ListTemplates": {
+              "methods": [
+                "list_templates"
+              ]
+            },
             "RenderParameterVersion": {
               "methods": [
                 "render_parameter_version"
+              ]
+            },
+            "RenderTemplateVersion": {
+              "methods": [
+                "render_template_version"
               ]
             },
             "UpdateParameter": {
@@ -123,6 +223,16 @@
             "UpdateParameterVersion": {
               "methods": [
                 "update_parameter_version"
+              ]
+            },
+            "UpdateTemplate": {
+              "methods": [
+                "update_template"
+              ]
+            },
+            "UpdateTemplateVersion": {
+              "methods": [
+                "update_template_version"
               ]
             }
           }
@@ -140,6 +250,16 @@
                 "create_parameter_version"
               ]
             },
+            "CreateTemplate": {
+              "methods": [
+                "create_template"
+              ]
+            },
+            "CreateTemplateVersion": {
+              "methods": [
+                "create_template_version"
+              ]
+            },
             "DeleteParameter": {
               "methods": [
                 "delete_parameter"
@@ -148,6 +268,16 @@
             "DeleteParameterVersion": {
               "methods": [
                 "delete_parameter_version"
+              ]
+            },
+            "DeleteTemplate": {
+              "methods": [
+                "delete_template"
+              ]
+            },
+            "DeleteTemplateVersion": {
+              "methods": [
+                "delete_template_version"
               ]
             },
             "GetParameter": {
@@ -160,6 +290,16 @@
                 "get_parameter_version"
               ]
             },
+            "GetTemplate": {
+              "methods": [
+                "get_template"
+              ]
+            },
+            "GetTemplateVersion": {
+              "methods": [
+                "get_template_version"
+              ]
+            },
             "ListParameterVersions": {
               "methods": [
                 "list_parameter_versions"
@@ -170,9 +310,24 @@
                 "list_parameters"
               ]
             },
+            "ListTemplateVersions": {
+              "methods": [
+                "list_template_versions"
+              ]
+            },
+            "ListTemplates": {
+              "methods": [
+                "list_templates"
+              ]
+            },
             "RenderParameterVersion": {
               "methods": [
                 "render_parameter_version"
+              ]
+            },
+            "RenderTemplateVersion": {
+              "methods": [
+                "render_template_version"
               ]
             },
             "UpdateParameter": {
@@ -183,6 +338,16 @@
             "UpdateParameterVersion": {
               "methods": [
                 "update_parameter_version"
+              ]
+            },
+            "UpdateTemplate": {
+              "methods": [
+                "update_template"
+              ]
+            },
+            "UpdateTemplateVersion": {
+              "methods": [
+                "update_template_version"
               ]
             }
           }

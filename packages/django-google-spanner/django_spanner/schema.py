@@ -35,8 +35,9 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
     # Spanner doesn't support partial indexes. This string omits the
     # %(condition)s placeholder so that partial indexes are ignored.
     sql_create_index = (
-        "CREATE INDEX %(name)s ON %(table)s%(using)s (%(columns)s)%(extra)s"
+        "CREATE INDEX %(name)s ON %(table)s%(using)s (%(columns)s)%(include)s%(extra)s"
     )
+    sql_create_index_include = " STORING (%(columns)s)"
     sql_create_unique = (
         "CREATE UNIQUE NULL_FILTERED INDEX %(name)s ON %(table)s (%(columns)s)"
     )
@@ -123,13 +124,19 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
         # created afterwards, like geometry fields with some backends)
         for fields in model._meta.unique_together:
             columns = [model._meta.get_field(field) for field in fields]
-            self.deferred_sql.append(self._create_unique_sql(model, columns))
+            sql = self._create_unique_sql(model, columns)
+            if sql:
+                self.deferred_sql.append(sql)
         constraints = []
         for constraint in model._meta.constraints:
             if isinstance(constraint, django.db.models.UniqueConstraint):
-                self.deferred_sql.append(constraint.create_sql(model, self))
+                sql = constraint.create_sql(model, self)
+                if sql:
+                    self.deferred_sql.append(sql)
             else:
-                constraints.append(constraint.constraint_sql(model, self))
+                c_sql = constraint.constraint_sql(model, self)
+                if c_sql:
+                    constraints.append(c_sql)
         if model._meta.pk.is_relation:
             pk_column = self.quote_name(model._meta.pk.column)
         else:
@@ -258,7 +265,7 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
         effective_default = self.effective_default(field)
         if effective_default is not None:
             self.execute(
-                "UPDATE %(table)s SET %(column)s=%%s"
+                "UPDATE %(table)s SET %(column)s=%%s WHERE 1=1"
                 % {
                     "table": self.quote_name(model._meta.db_table),
                     "column": self.quote_name(field.column),
@@ -605,3 +612,16 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
         if getattr(field, "db_default", None) is not None:
             return False
         return True
+
+    def _index_include_sql(self, model, include):
+        if not include:
+            return ""
+        columns = [
+            self.quote_name(
+                field.column
+                if hasattr(field, "column")
+                else model._meta.get_field(field).column
+            )
+            for field in include
+        ]
+        return self.sql_create_index_include % {"columns": ", ".join(columns)}

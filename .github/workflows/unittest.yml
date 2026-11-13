@@ -22,7 +22,6 @@ env:
   NOX_ENVDIR: "/tmp/shared_nox_envs"
   NOX_DEFAULT_VENV_BACKEND: "uv"
   UV_VENV_SEED: "1"
-  UV_PRERELEASE: "allow"
   # Note: PARALLEL_WORKERS must remain "1" for unit tests because running pytest concurrently
   # on the same runner VM can cause socket/IPC/process deadlocks across packages.
   PARALLEL_WORKERS: "1"
@@ -40,20 +39,39 @@ jobs:
       # Each weight is roughly 1 minute of expected execution time
       # Default for unset packages is 1
       PACKAGE_WEIGHTS: |
-        google-ai-generativelanguage: 4
-        google-auth: 5
+        django-google-spanner: 2
+        gapic-generator: 3
+        google-ai-generativelanguage: 3
+        google-api-core: 2
+        google-auth: 2
+        google-cloud-bigquery: 4
+        google-cloud-bigquery-storage: 2
+        google-cloud-bigtable: 4
         google-cloud-compute: 12
         google-cloud-compute-v1beta: 12
-        google-cloud-dialogflow: 6
-        google-cloud-dialogflow-cx: 6
-        google-cloud-discoveryengine: 8
-        google-cloud-retail: 5
-        google-shopping-merchant-accounts: 4
+        google-cloud-datastore: 3
+        google-cloud-dialogflow: 4
+        google-cloud-dialogflow-cx: 4
+        google-cloud-discoveryengine: 4
+        google-cloud-firestore: 3
+        google-cloud-logging: 3
+        google-cloud-monitoring: 3
+        google-cloud-ndb: 2
+        google-cloud-pubsub: 2
+        google-cloud-retail: 3
+        google-cloud-spanner: 4
+        google-cloud-storage: 4
+        google-shopping-merchant-accounts: 3
+        pandas-gbq: 2
+        proto-plus: 1
+        sqlalchemy-bigquery: 2
+        sqlalchemy-spanner: 2
     steps:
     - name: Checkout
       uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       with:
-        fetch-depth: 2
+        fetch-depth: 0
+        filter: blob:none
         persist-credentials: false
     - name: Check for unit_test:all_packages label
       id: check-label
@@ -77,7 +95,7 @@ jobs:
         PACKAGE_WEIGHTS: ${{ env.PACKAGE_WEIGHTS }}
       run: |
         if [ -n "$TARGET_BRANCH" ]; then
-          git fetch origin "$TARGET_BRANCH" --depth=1 || true
+          git fetch --no-tags --quiet origin "$TARGET_BRANCH" || true
         fi
         python3 ci/get_package_shards.py
 
@@ -114,31 +132,6 @@ jobs:
     - name: Install nox and nox-uv
       run: |
         uv pip install --system nox nox-uv
-    # Caches local wheels for Python 3.15+ to avoid repeatedly downloading or building heavy libraries.
-    # Follow https://github.com/grpc/grpc/issues/41010 for updates.
-    - name: Cache Built Python 3.15 Wheels
-      if: matrix.python == '3.15'
-      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
-      with:
-        path: .uv-wheel-cache
-        key: ${{ runner.os }}-uv-wheels-3.15-${{ hashFiles('packages/**/testing/constraints*.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-uv-wheels-3.15-
-    # TODO: Remove this step once official Python 3.15 wheels for grpcio are published to PyPI.
-    # See https://github.com/grpc/grpc/issues/41010#issuecomment-4848264910 for details.
-    - name: Install grpcio wheel for Python 3.15
-      if: matrix.python == '3.15'
-      run: |
-        mkdir -p .uv-wheel-cache
-        WHEEL_FILE=".uv-wheel-cache/grpcio-1.83.0.dev0-cp315-cp315-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
-        if [ ! -f "$WHEEL_FILE" ]; then
-          curl -L "https://packages.grpc.io/archive/2026/06/5ccdab32010f762634e1082d19be53cf60458456-b37e49c7-5e62-4cbe-870a-c599bb907b04/python/grpcio/grpcio-1.83.0.dev0-cp315-cp315-manylinux2014_x86_64.manylinux_2_17_x86_64.whl" -o "$WHEEL_FILE"
-        fi
-        echo "d7706633cd5d97a8b8d3c6ed36c5940722a9b5cbb47f0d10bc433ee27af36ff0  $WHEEL_FILE" | sha256sum -c
-        uv pip install --system "$WHEEL_FILE"
-        echo "UV_FIND_LINKS=${{ github.workspace }}/.uv-wheel-cache" >> $GITHUB_ENV
-        echo "UV_CACHE_DIR=${{ github.workspace }}/.uv-wheel-cache" >> $GITHUB_ENV
-        echo "UV_PRERELEASE=allow" >> $GITHUB_ENV
     - name: Run unit tests for ${{ matrix.package_shard.description }}
       env:
         BUILD_TYPE: presubmit
@@ -149,18 +142,58 @@ jobs:
       run: |
         ci/run_conditional_tests.sh
     - name: Upload coverage results
-      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
       with:
         name: coverage-artifact-${{ matrix.python }}-${{ matrix.package_shard.index }}
         path: .coverage.${{ matrix.python }}.*
         include-hidden-files: true
 
+  core-deps:
+    needs: initialize
+    if: needs.initialize.outputs.matrix != '[]' && needs.initialize.outputs.matrix != ''
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: true
+      matrix:
+        python: ["3.14"]
+        package_shard: ${{ fromJson(needs.initialize.outputs.matrix) }}
+    name: ${{ matrix.package_shard.is_sharded && format('core-deps handwritten ({0}, {1})', matrix.python, matrix.package_shard.name) || format('core-deps handwritten ({0})', matrix.python) }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      # Use a fetch-depth of 2 to avoid error `fatal: origin/main...HEAD: no merge base`
+      # See https://github.com/googleapis/google-cloud-python/issues/12013
+      # and https://github.com/actions/checkout#checkout-head.
+      with:
+        fetch-depth: 2
+        persist-credentials: false
+    - name: Setup Python
+      uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+      with:
+        python-version: ${{ matrix.python }}
+        cache: 'pip'
+        allow-prereleases: true
+    - name: Install nox
+      run: |
+        pip install nox
+    - name: Run core_deps_from_source for ${{ matrix.package_shard.description }}
+      env:
+        BUILD_TYPE: presubmit
+        TARGET_BRANCH: ${{ github.base_ref || github.event.merge_group.base_ref }}
+        TEST_TYPE: core_deps_from_source
+        PY_VERSION: ${{ matrix.python }}
+        PACKAGE_LIST: ${{ matrix.package_shard.packages }}
+        NOX_DEFAULT_VENV_BACKEND: "virtualenv"
+        NOXFORCEPYTHON: ${{ matrix.python }}
+      run: |
+        ci/run_conditional_tests.sh
+
   all-tests:
-    needs: [initialize, unit]
+    needs: [initialize, unit, core-deps]
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Check unit test results
+      - name: Check test results
         run: |
           # 1. Check initialize job
           if [[ "${{ needs.initialize.result }}" != "success" ]]; then
@@ -172,7 +205,12 @@ jobs:
             echo "Unit tests failed"
             exit 1
           fi
-          echo "All unit tests passed or were skipped"
+          # 3. Check core dependencies test shards
+          if [[ "${{ needs.core-deps.result }}" != "success" && "${{ needs.core-deps.result }}" != "skipped" ]]; then
+            echo "Core dependencies tests failed"
+            exit 1
+          fi
+          echo "All unit and core dependencies tests passed or were skipped"
 
   cover:
     if: always() && !cancelled() && needs.all-tests.result == 'success'

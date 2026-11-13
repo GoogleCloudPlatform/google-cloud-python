@@ -20,6 +20,11 @@
                 "check_autopilot_compatibility"
               ]
             },
+            "CompleteControlPlaneUpgrade": {
+              "methods": [
+                "complete_control_plane_upgrade"
+              ]
+            },
             "CompleteIPRotation": {
               "methods": [
                 "complete_ip_rotation"
@@ -205,6 +210,11 @@
                 "check_autopilot_compatibility"
               ]
             },
+            "CompleteControlPlaneUpgrade": {
+              "methods": [
+                "complete_control_plane_upgrade"
+              ]
+            },
             "CompleteIPRotation": {
               "methods": [
                 "complete_ip_rotation"
@@ -388,6 +398,11 @@
             "CheckAutopilotCompatibility": {
               "methods": [
                 "check_autopilot_compatibility"
+              ]
+            },
+            "CompleteControlPlaneUpgrade": {
+              "methods": [
+                "complete_control_plane_upgrade"
               ]
             },
             "CompleteIPRotation": {

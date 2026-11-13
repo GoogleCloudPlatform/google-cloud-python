@@ -10,9 +10,24 @@
         "grpc": {
           "libraryClient": "MarketingplatformAdminServiceClient",
           "rpcs": {
+            "CreateAdminAccessBinding": {
+              "methods": [
+                "create_admin_access_binding"
+              ]
+            },
             "CreateAnalyticsAccountLink": {
               "methods": [
                 "create_analytics_account_link"
+              ]
+            },
+            "CreateUserGroup": {
+              "methods": [
+                "create_user_group"
+              ]
+            },
+            "CreateUserGroupMember": {
+              "methods": [
+                "create_user_group_member"
               ]
             },
             "DeleteAnalyticsAccountLink": {
@@ -20,14 +35,44 @@
                 "delete_analytics_account_link"
               ]
             },
+            "DeleteUserGroup": {
+              "methods": [
+                "delete_user_group"
+              ]
+            },
+            "DeleteUserGroupMember": {
+              "methods": [
+                "delete_user_group_member"
+              ]
+            },
             "FindSalesPartnerManagedClients": {
               "methods": [
                 "find_sales_partner_managed_clients"
               ]
             },
+            "GetAdminAccessBinding": {
+              "methods": [
+                "get_admin_access_binding"
+              ]
+            },
             "GetOrganization": {
               "methods": [
                 "get_organization"
+              ]
+            },
+            "GetUserGroup": {
+              "methods": [
+                "get_user_group"
+              ]
+            },
+            "GetUserGroupMember": {
+              "methods": [
+                "get_user_group_member"
+              ]
+            },
+            "ListAdminAccessBindings": {
+              "methods": [
+                "list_admin_access_bindings"
               ]
             },
             "ListAnalyticsAccountLinks": {
@@ -40,6 +85,16 @@
                 "list_organizations"
               ]
             },
+            "ListUserGroupMembers": {
+              "methods": [
+                "list_user_group_members"
+              ]
+            },
+            "ListUserGroups": {
+              "methods": [
+                "list_user_groups"
+              ]
+            },
             "ReportPropertyUsage": {
               "methods": [
                 "report_property_usage"
@@ -48,6 +103,21 @@
             "SetPropertyServiceLevel": {
               "methods": [
                 "set_property_service_level"
+              ]
+            },
+            "UpdateAdminAccessBinding": {
+              "methods": [
+                "update_admin_access_binding"
+              ]
+            },
+            "UpdateUserGroup": {
+              "methods": [
+                "update_user_group"
+              ]
+            },
+            "UpdateUserGroupMember": {
+              "methods": [
+                "update_user_group_member"
               ]
             }
           }
@@ -55,9 +125,24 @@
         "grpc-async": {
           "libraryClient": "MarketingplatformAdminServiceAsyncClient",
           "rpcs": {
+            "CreateAdminAccessBinding": {
+              "methods": [
+                "create_admin_access_binding"
+              ]
+            },
             "CreateAnalyticsAccountLink": {
               "methods": [
                 "create_analytics_account_link"
+              ]
+            },
+            "CreateUserGroup": {
+              "methods": [
+                "create_user_group"
+              ]
+            },
+            "CreateUserGroupMember": {
+              "methods": [
+                "create_user_group_member"
               ]
             },
             "DeleteAnalyticsAccountLink": {
@@ -65,14 +150,44 @@
                 "delete_analytics_account_link"
               ]
             },
+            "DeleteUserGroup": {
+              "methods": [
+                "delete_user_group"
+              ]
+            },
+            "DeleteUserGroupMember": {
+              "methods": [
+                "delete_user_group_member"
+              ]
+            },
             "FindSalesPartnerManagedClients": {
               "methods": [
                 "find_sales_partner_managed_clients"
               ]
             },
+            "GetAdminAccessBinding": {
+              "methods": [
+                "get_admin_access_binding"
+              ]
+            },
             "GetOrganization": {
               "methods": [
                 "get_organization"
+              ]
+            },
+            "GetUserGroup": {
+              "methods": [
+                "get_user_group"
+              ]
+            },
+            "GetUserGroupMember": {
+              "methods": [
+                "get_user_group_member"
+              ]
+            },
+            "ListAdminAccessBindings": {
+              "methods": [
+                "list_admin_access_bindings"
               ]
             },
             "ListAnalyticsAccountLinks": {
@@ -85,6 +200,16 @@
                 "list_organizations"
               ]
             },
+            "ListUserGroupMembers": {
+              "methods": [
+                "list_user_group_members"
+              ]
+            },
+            "ListUserGroups": {
+              "methods": [
+                "list_user_groups"
+              ]
+            },
             "ReportPropertyUsage": {
               "methods": [
                 "report_property_usage"
@@ -93,6 +218,21 @@
             "SetPropertyServiceLevel": {
               "methods": [
                 "set_property_service_level"
+              ]
+            },
+            "UpdateAdminAccessBinding": {
+              "methods": [
+                "update_admin_access_binding"
+              ]
+            },
+            "UpdateUserGroup": {
+              "methods": [
+                "update_user_group"
+              ]
+            },
+            "UpdateUserGroupMember": {
+              "methods": [
+                "update_user_group_member"
               ]
             }
           }
@@ -100,9 +240,24 @@
         "rest": {
           "libraryClient": "MarketingplatformAdminServiceClient",
           "rpcs": {
+            "CreateAdminAccessBinding": {
+              "methods": [
+                "create_admin_access_binding"
+              ]
+            },
             "CreateAnalyticsAccountLink": {
               "methods": [
                 "create_analytics_account_link"
+              ]
+            },
+            "CreateUserGroup": {
+              "methods": [
+                "create_user_group"
+              ]
+            },
+            "CreateUserGroupMember": {
+              "methods": [
+                "create_user_group_member"
               ]
             },
             "DeleteAnalyticsAccountLink": {
@@ -110,14 +265,44 @@
                 "delete_analytics_account_link"
               ]
             },
+            "DeleteUserGroup": {
+              "methods": [
+                "delete_user_group"
+              ]
+            },
+            "DeleteUserGroupMember": {
+              "methods": [
+                "delete_user_group_member"
+              ]
+            },
             "FindSalesPartnerManagedClients": {
               "methods": [
                 "find_sales_partner_managed_clients"
               ]
             },
+            "GetAdminAccessBinding": {
+              "methods": [
+                "get_admin_access_binding"
+              ]
+            },
             "GetOrganization": {
               "methods": [
                 "get_organization"
+              ]
+            },
+            "GetUserGroup": {
+              "methods": [
+                "get_user_group"
+              ]
+            },
+            "GetUserGroupMember": {
+              "methods": [
+                "get_user_group_member"
+              ]
+            },
+            "ListAdminAccessBindings": {
+              "methods": [
+                "list_admin_access_bindings"
               ]
             },
             "ListAnalyticsAccountLinks": {
@@ -130,6 +315,16 @@
                 "list_organizations"
               ]
             },
+            "ListUserGroupMembers": {
+              "methods": [
+                "list_user_group_members"
+              ]
+            },
+            "ListUserGroups": {
+              "methods": [
+                "list_user_groups"
+              ]
+            },
             "ReportPropertyUsage": {
               "methods": [
                 "report_property_usage"
@@ -138,6 +333,21 @@
             "SetPropertyServiceLevel": {
               "methods": [
                 "set_property_service_level"
+              ]
+            },
+            "UpdateAdminAccessBinding": {
+              "methods": [
+                "update_admin_access_binding"
+              ]
+            },
+            "UpdateUserGroup": {
+              "methods": [
+                "update_user_group"
+              ]
+            },
+            "UpdateUserGroupMember": {
+              "methods": [
+                "update_user_group_member"
               ]
             }
           }

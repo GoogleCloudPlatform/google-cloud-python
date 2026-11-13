@@ -4,6 +4,20 @@
 
 [1]: https://pypi.org/project/google-cloud-logging/#history
 
+## [3.17.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-logging-v3.16.3...google-cloud-logging-v3.17.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [3.16.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-logging-v3.16.2...google-cloud-logging-v3.16.3) (2026-08-21)
+
+
+### Documentation
+
+* **handwritten:** centralize CONTRIBUTING.rst pointers ([#17642](https://github.com/googleapis/google-cloud-python/issues/17642)) ([23b9499](https://github.com/googleapis/google-cloud-python/commit/23b94994bd5251493b81d91657d1f79a5d3c4b97))
+
 ## [3.16.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-logging-v3.16.1...google-cloud-logging-v3.16.2) (2026-08-06)
 
 

@@ -21,9 +21,7 @@ from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import _helpers
-from google.auth import exceptions
-from google.auth import transport
+from google.auth import _helpers, exceptions, transport
 from google.oauth2 import _credentials_async as _credentials_async
 from google.oauth2 import credentials
 from tests.oauth2 import test_credentials

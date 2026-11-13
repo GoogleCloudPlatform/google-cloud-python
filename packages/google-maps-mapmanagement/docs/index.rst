@@ -2,6 +2,9 @@
 
 .. include:: multiprocessing.rst
 
+This package includes clients for multiple versions of Map Management.
+By default, you will get version ``mapmanagement_v2beta``.
+
 
 API Reference
 -------------
@@ -10,6 +13,14 @@ API Reference
 
     mapmanagement_v2beta/services_
     mapmanagement_v2beta/types_
+
+API Reference
+-------------
+.. toctree::
+    :maxdepth: 2
+
+    mapmanagement_v2/services_
+    mapmanagement_v2/types_
 
 
 Changelog

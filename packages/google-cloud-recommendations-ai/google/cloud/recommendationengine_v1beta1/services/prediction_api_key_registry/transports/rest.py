@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.recommendationengine_v1beta1._compat import transcode_request
 from google.cloud.recommendationengine_v1beta1.types import (
     prediction_apikey_registry_service,
 )
@@ -380,23 +381,20 @@ class PredictionApiKeyRegistryRestTransport(_BasePredictionApiKeyRegistryRestTra
             """
 
             http_options = _BasePredictionApiKeyRegistryRestTransport._BaseCreatePredictionApiKeyRegistration._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_create_prediction_api_key_registration(
                     request, metadata
                 )
             )
-            transcoded_request = _BasePredictionApiKeyRegistryRestTransport._BaseCreatePredictionApiKeyRegistration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePredictionApiKeyRegistryRestTransport._BaseCreatePredictionApiKeyRegistration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePredictionApiKeyRegistryRestTransport._BaseCreatePredictionApiKeyRegistration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePredictionApiKeyRegistryRestTransport._BaseCreatePredictionApiKeyRegistration,
+                    "_BaseCreatePredictionApiKeyRegistration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -538,19 +536,20 @@ class PredictionApiKeyRegistryRestTransport(_BasePredictionApiKeyRegistryRestTra
             """
 
             http_options = _BasePredictionApiKeyRegistryRestTransport._BaseDeletePredictionApiKeyRegistration._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_delete_prediction_api_key_registration(
                     request, metadata
                 )
             )
-            transcoded_request = _BasePredictionApiKeyRegistryRestTransport._BaseDeletePredictionApiKeyRegistration._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePredictionApiKeyRegistryRestTransport._BaseDeletePredictionApiKeyRegistration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePredictionApiKeyRegistryRestTransport._BaseDeletePredictionApiKeyRegistration,
+                    "_BaseDeletePredictionApiKeyRegistration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -659,19 +658,20 @@ class PredictionApiKeyRegistryRestTransport(_BasePredictionApiKeyRegistryRestTra
             """
 
             http_options = _BasePredictionApiKeyRegistryRestTransport._BaseListPredictionApiKeyRegistrations._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_prediction_api_key_registrations(
                     request, metadata
                 )
             )
-            transcoded_request = _BasePredictionApiKeyRegistryRestTransport._BaseListPredictionApiKeyRegistrations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePredictionApiKeyRegistryRestTransport._BaseListPredictionApiKeyRegistrations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePredictionApiKeyRegistryRestTransport._BaseListPredictionApiKeyRegistrations,
+                    "_BaseListPredictionApiKeyRegistrations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

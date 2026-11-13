@@ -30,6 +30,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.devtools.containeranalysis_v1._compat import transcode_request
 from google.cloud.devtools.containeranalysis_v1.types import containeranalysis
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -535,19 +536,16 @@ class ContainerAnalysisRestTransport(_BaseContainerAnalysisRestTransport):
             http_options = (
                 _BaseContainerAnalysisRestTransport._BaseExportSBOM._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_export_sbom(request, metadata)
-            transcoded_request = _BaseContainerAnalysisRestTransport._BaseExportSBOM._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContainerAnalysisRestTransport._BaseExportSBOM._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContainerAnalysisRestTransport._BaseExportSBOM._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContainerAnalysisRestTransport._BaseExportSBOM,
+                    "_BaseExportSBOM__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -760,19 +758,16 @@ class ContainerAnalysisRestTransport(_BaseContainerAnalysisRestTransport):
             """
 
             http_options = _BaseContainerAnalysisRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseContainerAnalysisRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContainerAnalysisRestTransport._BaseGetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContainerAnalysisRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContainerAnalysisRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -915,19 +910,20 @@ class ContainerAnalysisRestTransport(_BaseContainerAnalysisRestTransport):
             """
 
             http_options = _BaseContainerAnalysisRestTransport._BaseGetVulnerabilityOccurrencesSummary._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_get_vulnerability_occurrences_summary(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseContainerAnalysisRestTransport._BaseGetVulnerabilityOccurrencesSummary._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContainerAnalysisRestTransport._BaseGetVulnerabilityOccurrencesSummary._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContainerAnalysisRestTransport._BaseGetVulnerabilityOccurrencesSummary,
+                    "_BaseGetVulnerabilityOccurrencesSummary__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1143,19 +1139,16 @@ class ContainerAnalysisRestTransport(_BaseContainerAnalysisRestTransport):
             """
 
             http_options = _BaseContainerAnalysisRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseContainerAnalysisRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContainerAnalysisRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContainerAnalysisRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContainerAnalysisRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1292,21 +1285,18 @@ class ContainerAnalysisRestTransport(_BaseContainerAnalysisRestTransport):
             """
 
             http_options = _BaseContainerAnalysisRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseContainerAnalysisRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContainerAnalysisRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContainerAnalysisRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContainerAnalysisRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

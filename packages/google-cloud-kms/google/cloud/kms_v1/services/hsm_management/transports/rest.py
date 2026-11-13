@@ -35,6 +35,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.kms_v1._compat import transcode_request
 from google.cloud.kms_v1.types import hsm_management
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -919,23 +920,20 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             """
 
             http_options = _BaseHsmManagementRestTransport._BaseApproveSingleTenantHsmInstanceProposal._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_approve_single_tenant_hsm_instance_proposal(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseHsmManagementRestTransport._BaseApproveSingleTenantHsmInstanceProposal._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHsmManagementRestTransport._BaseApproveSingleTenantHsmInstanceProposal._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseApproveSingleTenantHsmInstanceProposal._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseApproveSingleTenantHsmInstanceProposal,
+                    "_BaseApproveSingleTenantHsmInstanceProposal__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1085,21 +1083,18 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             """
 
             http_options = _BaseHsmManagementRestTransport._BaseCreateSingleTenantHsmInstance._get_http_options()
-
             request, metadata = self._interceptor.pre_create_single_tenant_hsm_instance(
                 request, metadata
             )
-            transcoded_request = _BaseHsmManagementRestTransport._BaseCreateSingleTenantHsmInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHsmManagementRestTransport._BaseCreateSingleTenantHsmInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseCreateSingleTenantHsmInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseCreateSingleTenantHsmInstance,
+                    "_BaseCreateSingleTenantHsmInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1245,23 +1240,20 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             """
 
             http_options = _BaseHsmManagementRestTransport._BaseCreateSingleTenantHsmInstanceProposal._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_create_single_tenant_hsm_instance_proposal(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseHsmManagementRestTransport._BaseCreateSingleTenantHsmInstanceProposal._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHsmManagementRestTransport._BaseCreateSingleTenantHsmInstanceProposal._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseCreateSingleTenantHsmInstanceProposal._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseCreateSingleTenantHsmInstanceProposal,
+                    "_BaseCreateSingleTenantHsmInstanceProposal__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1399,19 +1391,20 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             """
 
             http_options = _BaseHsmManagementRestTransport._BaseDeleteSingleTenantHsmInstanceProposal._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_delete_single_tenant_hsm_instance_proposal(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseHsmManagementRestTransport._BaseDeleteSingleTenantHsmInstanceProposal._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseDeleteSingleTenantHsmInstanceProposal._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseDeleteSingleTenantHsmInstanceProposal,
+                    "_BaseDeleteSingleTenantHsmInstanceProposal__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1520,23 +1513,20 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             """
 
             http_options = _BaseHsmManagementRestTransport._BaseExecuteSingleTenantHsmInstanceProposal._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_execute_single_tenant_hsm_instance_proposal(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseHsmManagementRestTransport._BaseExecuteSingleTenantHsmInstanceProposal._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHsmManagementRestTransport._BaseExecuteSingleTenantHsmInstanceProposal._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseExecuteSingleTenantHsmInstanceProposal._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseExecuteSingleTenantHsmInstanceProposal,
+                    "_BaseExecuteSingleTenantHsmInstanceProposal__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1687,17 +1677,18 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             """
 
             http_options = _BaseHsmManagementRestTransport._BaseGetSingleTenantHsmInstance._get_http_options()
-
             request, metadata = self._interceptor.pre_get_single_tenant_hsm_instance(
                 request, metadata
             )
-            transcoded_request = _BaseHsmManagementRestTransport._BaseGetSingleTenantHsmInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseGetSingleTenantHsmInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseGetSingleTenantHsmInstance,
+                    "_BaseGetSingleTenantHsmInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1844,19 +1835,20 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             """
 
             http_options = _BaseHsmManagementRestTransport._BaseGetSingleTenantHsmInstanceProposal._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_get_single_tenant_hsm_instance_proposal(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseHsmManagementRestTransport._BaseGetSingleTenantHsmInstanceProposal._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseGetSingleTenantHsmInstanceProposal._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseGetSingleTenantHsmInstanceProposal,
+                    "_BaseGetSingleTenantHsmInstanceProposal__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2001,19 +1993,20 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             """
 
             http_options = _BaseHsmManagementRestTransport._BaseListSingleTenantHsmInstanceProposals._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_single_tenant_hsm_instance_proposals(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseHsmManagementRestTransport._BaseListSingleTenantHsmInstanceProposals._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseListSingleTenantHsmInstanceProposals._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseListSingleTenantHsmInstanceProposals,
+                    "_BaseListSingleTenantHsmInstanceProposals__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2160,17 +2153,18 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             """
 
             http_options = _BaseHsmManagementRestTransport._BaseListSingleTenantHsmInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_list_single_tenant_hsm_instances(
                 request, metadata
             )
-            transcoded_request = _BaseHsmManagementRestTransport._BaseListSingleTenantHsmInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseListSingleTenantHsmInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseListSingleTenantHsmInstances,
+                    "_BaseListSingleTenantHsmInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2432,17 +2426,16 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             http_options = (
                 _BaseHsmManagementRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseHsmManagementRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseHsmManagementRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2574,15 +2567,16 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             http_options = (
                 _BaseHsmManagementRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseHsmManagementRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2714,15 +2708,16 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             http_options = (
                 _BaseHsmManagementRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseHsmManagementRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2855,19 +2850,16 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             http_options = (
                 _BaseHsmManagementRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseHsmManagementRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHsmManagementRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2999,21 +2991,18 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             """
 
             http_options = _BaseHsmManagementRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseHsmManagementRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHsmManagementRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3146,15 +3135,16 @@ class HsmManagementRestTransport(_BaseHsmManagementRestTransport):
             http_options = (
                 _BaseHsmManagementRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseHsmManagementRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHsmManagementRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHsmManagementRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -33,6 +33,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dataproc_v1._compat import transcode_request
 from google.cloud.dataproc_v1.types import clusters
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -906,19 +907,16 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseCreateCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_create_cluster(request, metadata)
-            transcoded_request = _BaseClusterControllerRestTransport._BaseCreateCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseClusterControllerRestTransport._BaseCreateCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseCreateCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseCreateCluster,
+                    "_BaseCreateCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1055,15 +1053,16 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseDeleteCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_cluster(request, metadata)
-            transcoded_request = _BaseClusterControllerRestTransport._BaseDeleteCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseDeleteCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseDeleteCluster,
+                    "_BaseDeleteCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1201,21 +1200,18 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseDiagnoseCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_diagnose_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseClusterControllerRestTransport._BaseDiagnoseCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseClusterControllerRestTransport._BaseDiagnoseCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseDiagnoseCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseDiagnoseCluster,
+                    "_BaseDiagnoseCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1355,15 +1351,16 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             http_options = (
                 _BaseClusterControllerRestTransport._BaseGetCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_cluster(request, metadata)
-            transcoded_request = _BaseClusterControllerRestTransport._BaseGetCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseGetCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseGetCluster,
+                    "_BaseGetCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1500,15 +1497,16 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseListClusters._get_http_options()
-
             request, metadata = self._interceptor.pre_list_clusters(request, metadata)
-            transcoded_request = _BaseClusterControllerRestTransport._BaseListClusters._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseListClusters._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseListClusters,
+                    "_BaseListClusters__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1646,19 +1644,16 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseStartCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_start_cluster(request, metadata)
-            transcoded_request = _BaseClusterControllerRestTransport._BaseStartCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseClusterControllerRestTransport._BaseStartCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseStartCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseStartCluster,
+                    "_BaseStartCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1797,19 +1792,16 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             http_options = (
                 _BaseClusterControllerRestTransport._BaseStopCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_stop_cluster(request, metadata)
-            transcoded_request = _BaseClusterControllerRestTransport._BaseStopCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseClusterControllerRestTransport._BaseStopCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseStopCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseStopCluster,
+                    "_BaseStopCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1947,19 +1939,16 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseUpdateCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_update_cluster(request, metadata)
-            transcoded_request = _BaseClusterControllerRestTransport._BaseUpdateCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseClusterControllerRestTransport._BaseUpdateCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseUpdateCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseUpdateCluster,
+                    "_BaseUpdateCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2158,19 +2147,16 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseClusterControllerRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseClusterControllerRestTransport._BaseGetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2302,19 +2288,16 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseClusterControllerRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseClusterControllerRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2447,21 +2430,18 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseClusterControllerRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseClusterControllerRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2590,17 +2570,18 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseClusterControllerRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2703,17 +2684,18 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseClusterControllerRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2818,15 +2800,16 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseClusterControllerRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2957,15 +2940,16 @@ class ClusterControllerRestTransport(_BaseClusterControllerRestTransport):
             """
 
             http_options = _BaseClusterControllerRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseClusterControllerRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseClusterControllerRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseClusterControllerRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

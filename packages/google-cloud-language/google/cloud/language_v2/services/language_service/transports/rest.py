@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.language_v2._compat import transcode_request
 from google.cloud.language_v2.types import language_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -521,21 +522,18 @@ class LanguageServiceRestTransport(_BaseLanguageServiceRestTransport):
             """
 
             http_options = _BaseLanguageServiceRestTransport._BaseAnalyzeEntities._get_http_options()
-
             request, metadata = self._interceptor.pre_analyze_entities(
                 request, metadata
             )
-            transcoded_request = _BaseLanguageServiceRestTransport._BaseAnalyzeEntities._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLanguageServiceRestTransport._BaseAnalyzeEntities._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLanguageServiceRestTransport._BaseAnalyzeEntities._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLanguageServiceRestTransport._BaseAnalyzeEntities,
+                    "_BaseAnalyzeEntities__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -676,21 +674,18 @@ class LanguageServiceRestTransport(_BaseLanguageServiceRestTransport):
             """
 
             http_options = _BaseLanguageServiceRestTransport._BaseAnalyzeSentiment._get_http_options()
-
             request, metadata = self._interceptor.pre_analyze_sentiment(
                 request, metadata
             )
-            transcoded_request = _BaseLanguageServiceRestTransport._BaseAnalyzeSentiment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLanguageServiceRestTransport._BaseAnalyzeSentiment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLanguageServiceRestTransport._BaseAnalyzeSentiment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLanguageServiceRestTransport._BaseAnalyzeSentiment,
+                    "_BaseAnalyzeSentiment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -834,19 +829,16 @@ class LanguageServiceRestTransport(_BaseLanguageServiceRestTransport):
             http_options = (
                 _BaseLanguageServiceRestTransport._BaseAnnotateText._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_annotate_text(request, metadata)
-            transcoded_request = _BaseLanguageServiceRestTransport._BaseAnnotateText._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLanguageServiceRestTransport._BaseAnnotateText._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLanguageServiceRestTransport._BaseAnnotateText._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLanguageServiceRestTransport._BaseAnnotateText,
+                    "_BaseAnnotateText__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -989,19 +981,16 @@ class LanguageServiceRestTransport(_BaseLanguageServiceRestTransport):
             http_options = (
                 _BaseLanguageServiceRestTransport._BaseClassifyText._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_classify_text(request, metadata)
-            transcoded_request = _BaseLanguageServiceRestTransport._BaseClassifyText._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLanguageServiceRestTransport._BaseClassifyText._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLanguageServiceRestTransport._BaseClassifyText._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLanguageServiceRestTransport._BaseClassifyText,
+                    "_BaseClassifyText__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1144,19 +1133,16 @@ class LanguageServiceRestTransport(_BaseLanguageServiceRestTransport):
             http_options = (
                 _BaseLanguageServiceRestTransport._BaseModerateText._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_moderate_text(request, metadata)
-            transcoded_request = _BaseLanguageServiceRestTransport._BaseModerateText._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLanguageServiceRestTransport._BaseModerateText._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLanguageServiceRestTransport._BaseModerateText._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLanguageServiceRestTransport._BaseModerateText,
+                    "_BaseModerateText__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

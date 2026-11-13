@@ -39,7 +39,7 @@ __protobuf__ = proto.module(
 
 
 class GetViewabilityProviderRequest(proto.Message):
-    r"""Request object for [GetViewabilityProvider][] method.
+    r"""Request object for ``GetViewabilityProvider`` method.
 
     Attributes:
         name (str):
@@ -56,33 +56,43 @@ class GetViewabilityProviderRequest(proto.Message):
 
 
 class ListViewabilityProvidersRequest(proto.Message):
-    r"""Request object for [ListViewabilityProviders][] method.
+    r"""Request object for ``ListViewabilityProviders`` method.
 
     Attributes:
         parent (str):
             Required. The parent, which owns this collection of
-            [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]s.
+            [ViewabilityProviders][google.ads.admanager.v1.ViewabilityProvider].
             Format: ``networks/{network_code}``
         page_size (int):
             Optional. The maximum number of
-            [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]s
+            [ViewabilityProviders][google.ads.admanager.v1.ViewabilityProvider]
             to return. The service may return fewer than this value. If
             unspecified, at most 50
-            [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]s
+            [ViewabilityProviders][google.ads.admanager.v1.ViewabilityProvider]
             will be returned. The maximum value is 1000; values above
             1000 will be coerced to 1000.
         page_token (str):
             Optional. A page token, received from a previous
-            [ListViewabilityProviders][] call. Provide this to retrieve
+            ``ListViewabilityProviders`` call. Provide this to retrieve
             the subsequent page.
 
             When paginating, all other parameters provided to
-            [ListViewabilityProviders][] must match the call that
+            ``ListViewabilityProviders`` must match the call that
             provided the page token.
         filter (str):
             Optional. Expression to filter the response. See syntax
             details at
             https://developers.google.com/ad-manager/api/beta/filters
+
+            Syntax summary: double-quoted ``"..."`` (never ``'...'``)
+            strings and RFC 3339 timestamps, full resource names on
+            reference fields (for example,
+            ``order = "networks/123/orders/456"``, not ``*Id`` or bare
+            IDs), prefix or suffix ``*`` wildcards with ``=``
+            (``displayName = "foo*"``), ``:`` for substring or
+            repeated-field matching, unquoted enums and booleans,
+            uppercase ``AND``/``OR``/``NOT``, and standalone
+            ``IN(field, SET(v1, v2))`` (not ``field IN (...)``).
 
             **Filterable fields:**
 
@@ -135,7 +145,7 @@ class ListViewabilityProvidersRequest(proto.Message):
 
 
 class ListViewabilityProvidersResponse(proto.Message):
-    r"""Response object for [ListViewabilityProviders][] containing matching
+    r"""Response object for ``ListViewabilityProviders`` containing matching
     [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]
     objects.
 
@@ -186,7 +196,7 @@ class ListViewabilityProvidersResponse(proto.Message):
 
 
 class CreateViewabilityProviderRequest(proto.Message):
-    r"""Request object for [CreateViewabilityProvider][] method.
+    r"""Request object for ``CreateViewabilityProvider`` method.
 
     Attributes:
         parent (str):
@@ -213,12 +223,12 @@ class CreateViewabilityProviderRequest(proto.Message):
 
 
 class BatchCreateViewabilityProvidersRequest(proto.Message):
-    r"""Request object for [BatchCreateViewabilityProviders][] method.
+    r"""Request object for ``BatchCreateViewabilityProviders`` method.
 
     Attributes:
         parent (str):
             Required. The parent resource where
-            [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]s
+            [ViewabilityProviders][google.ads.admanager.v1.ViewabilityProvider]
             will be created. Format: ``networks/{network_code}`` The
             parent field in the CreateViewabilityProviderRequest must
             match this field.
@@ -241,7 +251,7 @@ class BatchCreateViewabilityProvidersRequest(proto.Message):
 
 
 class BatchCreateViewabilityProvidersResponse(proto.Message):
-    r"""Response object for [BatchCreateViewabilityProviders][] method.
+    r"""Response object for ``BatchCreateViewabilityProviders`` method.
 
     Attributes:
         viewability_providers (MutableSequence[google.ads.admanager_v1.types.ViewabilityProvider]):
@@ -260,7 +270,7 @@ class BatchCreateViewabilityProvidersResponse(proto.Message):
 
 
 class UpdateViewabilityProviderRequest(proto.Message):
-    r"""Request object for [UpdateViewabilityProvider][] method.
+    r"""Request object for ``UpdateViewabilityProvider`` method.
 
     Attributes:
         viewability_provider (google.ads.admanager_v1.types.ViewabilityProvider):
@@ -292,12 +302,12 @@ class UpdateViewabilityProviderRequest(proto.Message):
 
 
 class BatchUpdateViewabilityProvidersRequest(proto.Message):
-    r"""Request object for [BatchUpdateViewabilityProviders][] method.
+    r"""Request object for ``BatchUpdateViewabilityProviders`` method.
 
     Attributes:
         parent (str):
             Required. The parent resource where
-            [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]s
+            [ViewabilityProviders][google.ads.admanager.v1.ViewabilityProvider]
             will be updated. Format: ``networks/{network_code}`` The
             parent field in the UpdateViewabilityProviderRequest must
             match this field.
@@ -320,7 +330,7 @@ class BatchUpdateViewabilityProvidersRequest(proto.Message):
 
 
 class BatchUpdateViewabilityProvidersResponse(proto.Message):
-    r"""Response object for [BatchUpdateViewabilityProviders][] method.
+    r"""Response object for ``BatchUpdateViewabilityProviders`` method.
 
     Attributes:
         viewability_providers (MutableSequence[google.ads.admanager_v1.types.ViewabilityProvider]):

@@ -153,6 +153,58 @@ def test_read_rows(mock_transport, client_under_test):
     )
 
 
+def test_read_rows_with_arrow_serialization_options(mock_transport, client_under_test):
+    rpc_callable = mock.Mock()
+    mock_transport._wrapped_methods[mock_transport.read_rows] = rpc_callable
+    options = {"buffer_compression": "LZ4_FRAME"}
+
+    client_under_test.read_rows(
+        "teststream", offset=10, arrow_serialization_options=options
+    )
+
+    rpc_callable.assert_called_once_with(
+        types.ReadRowsRequest(
+            read_stream="teststream", offset=10, arrow_serialization_options=options
+        ),
+        metadata=mock.ANY,
+        retry=mock.ANY,
+        timeout=mock.ANY,
+    )
+
+
+def test_read_rows_reconnect_resends_arrow_serialization_options(
+    mock_transport, client_under_test
+):
+    def first_stream():
+        yield types.ReadRowsResponse(row_count=5)
+        raise google.api_core.exceptions.ServiceUnavailable("transient disconnect")
+
+    rpc_callable = mock.Mock(
+        side_effect=[first_stream(), iter([types.ReadRowsResponse(row_count=3)])]
+    )
+    mock_transport._wrapped_methods[mock_transport.read_rows] = rpc_callable
+    options = {"buffer_compression": "ZSTD"}
+
+    stream = client_under_test.read_rows(
+        "teststream", offset=10, arrow_serialization_options=options
+    )
+
+    assert [m.row_count for m in stream] == [5, 3]
+    assert rpc_callable.call_args_list == [
+        mock.call(
+            types.ReadRowsRequest(
+                read_stream="teststream",
+                offset=offset,
+                arrow_serialization_options=options,
+            ),
+            metadata=mock.ANY,
+            retry=mock.ANY,
+            timeout=mock.ANY,
+        )
+        for offset in (10, 15)
+    ]
+
+
 @pytest.mark.parametrize(
     "module_under_test",
     ["google.cloud.bigquery_storage_v1", "google.cloud.bigquery_storage_v1beta2"],
@@ -170,3 +222,50 @@ def test_init_default_client_info(module_under_test):
             client_info = call.kwargs.get("client_info")
             assert client_info is not None
             assert expected_client_info in client_info.to_user_agent()
+
+
+_KEEPALIVE_OPTIONS = [
+    ("grpc.keepalive_time_ms", 60 * 1000),
+    ("grpc.keepalive_timeout_ms", 60 * 1000),
+]
+
+
+@pytest.mark.parametrize("transport", [None, "grpc"])
+def test_constructor_default_transport_sends_keepalive(transport):
+    from google.cloud import bigquery_storage
+
+    kwargs = {} if transport is None else {"transport": transport}
+    with mock.patch(
+        "google.api_core.grpc_helpers.create_channel", autospec=True
+    ) as create_channel:
+        client = bigquery_storage.BigQueryReadClient(
+            credentials=credentials.AnonymousCredentials(), **kwargs
+        )
+
+    create_channel.assert_called_once()
+    options = create_channel.call_args.kwargs["options"]
+    for option in _KEEPALIVE_OPTIONS:
+        assert option in options
+    # The transport's own channel options are kept.
+    assert ("grpc.max_receive_message_length", -1) in options
+    assert client._transport.grpc_channel is create_channel.return_value
+
+
+def test_constructor_keeps_given_transport(mock_transport):
+    from google.cloud import bigquery_storage
+
+    client = bigquery_storage.BigQueryReadClient(transport=mock_transport)
+
+    assert client._transport is mock_transport
+
+
+def test_constructor_keeps_given_transport_callable(mock_transport):
+    from google.cloud import bigquery_storage
+
+    create_transport = mock.Mock(return_value=mock_transport)
+    client = bigquery_storage.BigQueryReadClient(
+        credentials=credentials.AnonymousCredentials(), transport=create_transport
+    )
+
+    create_transport.assert_called_once()
+    assert client._transport is mock_transport

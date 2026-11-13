@@ -39,7 +39,7 @@ def sample_enable_managed_rotation():
     client = secretmanager_v1.SecretManagerServiceClient()
 
     # Initialize request argument(s)
-    cloud_sql_single_user_credentials = secretmanager_v1.CloudSQLSingleUserCredentials()
+    cloud_sql_single_user_credentials = secretmanager_v1.CloudSqlSingleUserCredentials()
     cloud_sql_single_user_credentials.instance_id = "instance_id_value"
     cloud_sql_single_user_credentials.username = "username_value"
 

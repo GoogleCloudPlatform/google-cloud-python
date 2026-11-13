@@ -66,7 +66,9 @@ def _test_google_api_imports():
         # This import is solely to test if the package is installed, so we ignore the "unused import" warning.
         # Remove this comment and the ignore pragma upon completing:
         # https://github.com/googleapis/google-cloud-python/issues/17045
-        from google_auth_oauthlib.flow import InstalledAppFlow  # type: ignore[import-untyped] # noqa: F401
+        from google_auth_oauthlib.flow import (  # type: ignore[import-untyped] # noqa: F401
+            InstalledAppFlow,
+        )
     except ImportError as ex:  # pragma: NO COVER
         raise ImportError("pandas-gbq requires google-auth-oauthlib") from ex
 

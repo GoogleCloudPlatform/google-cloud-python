@@ -15,20 +15,19 @@
 import os
 from unittest import mock
 
+import pytest
 from cryptography.hazmat import backends
 from cryptography.hazmat.primitives import serialization
-import pytest
 
 try:
-    import rsa as rsa_lib
+    import rsa as rsa_lib  # type: ignore
+
     from google.auth.crypt import _python_rsa
 except ImportError:
     rsa_lib = None  # type: ignore
     _pyrhon_rsa = None  # type: ignore
 
-from google.auth.crypt import _cryptography_rsa
-from google.auth.crypt import rsa
-
+from google.auth.crypt import _cryptography_rsa, rsa
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 

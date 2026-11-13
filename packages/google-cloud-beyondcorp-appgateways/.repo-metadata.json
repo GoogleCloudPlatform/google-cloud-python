@@ -1,5 +1,5 @@
 {
-    "api_description": "Beyondcorp Enterprise provides identity and context aware access controls\nfor enterprise resources and enables zero-trust access. Using the\nBeyondcorp Enterprise APIs, enterprises can set up multi-cloud and on-prem\nconnectivity using the App Connector hybrid connectivity solution.",
+    "api_description": "Chrome Enterprise Premium is a secure enterprise browsing solution that\nprovides secure access to applications and resources, and offers\nintegrated threat and data protection. It adds an extra layer of security\nto safeguard your Chrome browser environment, including Data Loss\nPrevention (DLP), real-time URL and file scanning, and Context-Aware\nAccess for SaaS and web apps.",
     "api_id": "beyondcorp.googleapis.com",
     "api_shortname": "beyondcorp",
     "client_documentation": "https://cloud.google.com/python/docs/reference/beyondcorpappgateways/latest",
@@ -8,7 +8,7 @@
     "language": "python",
     "library_type": "GAPIC_AUTO",
     "name": "beyondcorpappgateways",
-    "name_pretty": "BeyondCorp",
+    "name_pretty": "BeyondCorp AppGateways",
     "product_documentation": "https://cloud.google.com/beyondcorp/",
     "release_level": "preview",
     "repo": "googleapis/google-cloud-python"

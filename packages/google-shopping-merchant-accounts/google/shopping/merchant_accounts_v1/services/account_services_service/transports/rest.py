@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_accounts_v1._compat import transcode_request
 from google.shopping.merchant_accounts_v1.types import accountservices
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -505,21 +506,18 @@ class AccountServicesServiceRestTransport(_BaseAccountServicesServiceRestTranspo
             """
 
             http_options = _BaseAccountServicesServiceRestTransport._BaseApproveAccountService._get_http_options()
-
             request, metadata = self._interceptor.pre_approve_account_service(
                 request, metadata
             )
-            transcoded_request = _BaseAccountServicesServiceRestTransport._BaseApproveAccountService._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAccountServicesServiceRestTransport._BaseApproveAccountService._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccountServicesServiceRestTransport._BaseApproveAccountService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccountServicesServiceRestTransport._BaseApproveAccountService,
+                    "_BaseApproveAccountService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -680,17 +678,18 @@ class AccountServicesServiceRestTransport(_BaseAccountServicesServiceRestTranspo
             """
 
             http_options = _BaseAccountServicesServiceRestTransport._BaseGetAccountService._get_http_options()
-
             request, metadata = self._interceptor.pre_get_account_service(
                 request, metadata
             )
-            transcoded_request = _BaseAccountServicesServiceRestTransport._BaseGetAccountService._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccountServicesServiceRestTransport._BaseGetAccountService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccountServicesServiceRestTransport._BaseGetAccountService,
+                    "_BaseGetAccountService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -829,17 +828,18 @@ class AccountServicesServiceRestTransport(_BaseAccountServicesServiceRestTranspo
             """
 
             http_options = _BaseAccountServicesServiceRestTransport._BaseListAccountServices._get_http_options()
-
             request, metadata = self._interceptor.pre_list_account_services(
                 request, metadata
             )
-            transcoded_request = _BaseAccountServicesServiceRestTransport._BaseListAccountServices._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccountServicesServiceRestTransport._BaseListAccountServices._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccountServicesServiceRestTransport._BaseListAccountServices,
+                    "_BaseListAccountServices__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1005,21 +1005,18 @@ class AccountServicesServiceRestTransport(_BaseAccountServicesServiceRestTranspo
             """
 
             http_options = _BaseAccountServicesServiceRestTransport._BaseProposeAccountService._get_http_options()
-
             request, metadata = self._interceptor.pre_propose_account_service(
                 request, metadata
             )
-            transcoded_request = _BaseAccountServicesServiceRestTransport._BaseProposeAccountService._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAccountServicesServiceRestTransport._BaseProposeAccountService._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccountServicesServiceRestTransport._BaseProposeAccountService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccountServicesServiceRestTransport._BaseProposeAccountService,
+                    "_BaseProposeAccountService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1152,21 +1149,18 @@ class AccountServicesServiceRestTransport(_BaseAccountServicesServiceRestTranspo
             """
 
             http_options = _BaseAccountServicesServiceRestTransport._BaseRejectAccountService._get_http_options()
-
             request, metadata = self._interceptor.pre_reject_account_service(
                 request, metadata
             )
-            transcoded_request = _BaseAccountServicesServiceRestTransport._BaseRejectAccountService._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAccountServicesServiceRestTransport._BaseRejectAccountService._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccountServicesServiceRestTransport._BaseRejectAccountService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccountServicesServiceRestTransport._BaseRejectAccountService,
+                    "_BaseRejectAccountService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dataflow_v1beta3._compat import transcode_request
 from google.cloud.dataflow_v1beta3.types import jobs, snapshots
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -552,17 +553,18 @@ class JobsV1Beta3RestTransport(_BaseJobsV1Beta3RestTransport):
             """
 
             http_options = _BaseJobsV1Beta3RestTransport._BaseAggregatedListJobs._get_http_options()
-
             request, metadata = self._interceptor.pre_aggregated_list_jobs(
                 request, metadata
             )
-            transcoded_request = _BaseJobsV1Beta3RestTransport._BaseAggregatedListJobs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseJobsV1Beta3RestTransport._BaseAggregatedListJobs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseJobsV1Beta3RestTransport._BaseAggregatedListJobs,
+                    "_BaseAggregatedListJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -720,23 +722,16 @@ class JobsV1Beta3RestTransport(_BaseJobsV1Beta3RestTransport):
             http_options = (
                 _BaseJobsV1Beta3RestTransport._BaseCreateJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_job(request, metadata)
-            transcoded_request = (
-                _BaseJobsV1Beta3RestTransport._BaseCreateJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseJobsV1Beta3RestTransport._BaseCreateJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseJobsV1Beta3RestTransport._BaseCreateJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseJobsV1Beta3RestTransport._BaseCreateJob,
+                    "_BaseCreateJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -874,19 +869,16 @@ class JobsV1Beta3RestTransport(_BaseJobsV1Beta3RestTransport):
             """
 
             http_options = _BaseJobsV1Beta3RestTransport._BaseGetJob._get_http_options()
-
             request, metadata = self._interceptor.pre_get_job(request, metadata)
-            transcoded_request = (
-                _BaseJobsV1Beta3RestTransport._BaseGetJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseJobsV1Beta3RestTransport._BaseGetJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseJobsV1Beta3RestTransport._BaseGetJob,
+                    "_BaseGetJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1028,19 +1020,16 @@ class JobsV1Beta3RestTransport(_BaseJobsV1Beta3RestTransport):
             http_options = (
                 _BaseJobsV1Beta3RestTransport._BaseListJobs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_jobs(request, metadata)
-            transcoded_request = (
-                _BaseJobsV1Beta3RestTransport._BaseListJobs._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseJobsV1Beta3RestTransport._BaseListJobs._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseJobsV1Beta3RestTransport._BaseListJobs,
+                    "_BaseListJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1178,25 +1167,16 @@ class JobsV1Beta3RestTransport(_BaseJobsV1Beta3RestTransport):
             http_options = (
                 _BaseJobsV1Beta3RestTransport._BaseSnapshotJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_snapshot_job(request, metadata)
-            transcoded_request = (
-                _BaseJobsV1Beta3RestTransport._BaseSnapshotJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseJobsV1Beta3RestTransport._BaseSnapshotJob._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseJobsV1Beta3RestTransport._BaseSnapshotJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseJobsV1Beta3RestTransport._BaseSnapshotJob,
+                    "_BaseSnapshotJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1337,23 +1317,16 @@ class JobsV1Beta3RestTransport(_BaseJobsV1Beta3RestTransport):
             http_options = (
                 _BaseJobsV1Beta3RestTransport._BaseUpdateJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_job(request, metadata)
-            transcoded_request = (
-                _BaseJobsV1Beta3RestTransport._BaseUpdateJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseJobsV1Beta3RestTransport._BaseUpdateJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseJobsV1Beta3RestTransport._BaseUpdateJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseJobsV1Beta3RestTransport._BaseUpdateJob,
+                    "_BaseUpdateJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

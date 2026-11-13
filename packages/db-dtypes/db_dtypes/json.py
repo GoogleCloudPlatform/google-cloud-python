@@ -100,6 +100,39 @@ class JSONArray(arrays.ArrowExtensionArray):
         """Convert to an arrow array. This is required for pyarrow extension."""
         return pa.array(self.pa_data, type=JSONArrowType())
 
+    def _from_pyarrow_array(self, pa_array):
+        """Construct from a pyarrow Array/ChunkedArray.
+
+        If the resulting pyarrow type does not match our string storage type
+        (e.g., boolean arrays from comparisons == / !=, or integer arrays
+        from apply(id)), return a standard ArrowExtensionArray instead of
+        forcing non-string data into JSONArray.
+
+        Required override for pandas 3.1.0:
+        https://pandas.pydata.org/pandas-docs/stable/dev/whatsnew/v3.1.0.html
+        """
+        if pa_array.type != self._dtype.pyarrow_dtype:
+            return arrays.ArrowExtensionArray(pa_array)
+        _super_method = getattr(super(), "_from_pyarrow_array", None)
+        if _super_method is not None:
+            return _super_method(pa_array)
+        return type(self)(pa_array)
+
+    def _cast_pointwise_result(self, values):
+        """Cast results of pointwise operations (e.g. loc expansion with dicts)
+        back to JSONArray if values can be parsed as JSON, otherwise fall back.
+
+        Required override for pandas 3.1.0:
+        https://pandas.pydata.org/pandas-docs/stable/dev/whatsnew/v3.1.0.html
+        """
+        try:
+            return type(self)._from_sequence(values, dtype=self.dtype)
+        except Exception:
+            _super_method = getattr(super(), "_cast_pointwise_result", None)
+            if _super_method is not None:
+                return _super_method(values)
+            return np.asarray(values, dtype=object)
+
     @classmethod
     def _box_pa(
         cls, value, pa_type: pa.DataType | None = None

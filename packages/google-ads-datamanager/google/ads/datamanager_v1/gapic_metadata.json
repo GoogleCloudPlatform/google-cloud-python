@@ -25,6 +25,11 @@
                 "ingest_events"
               ]
             },
+            "IngestUsers": {
+              "methods": [
+                "ingest_users"
+              ]
+            },
             "RemoveAllAudienceMembers": {
               "methods": [
                 "remove_all_audience_members"
@@ -33,6 +38,11 @@
             "RemoveAudienceMembers": {
               "methods": [
                 "remove_audience_members"
+              ]
+            },
+            "RemoveUsers": {
+              "methods": [
+                "remove_users"
               ]
             },
             "RetrieveRequestStatus": {
@@ -60,6 +70,11 @@
                 "ingest_events"
               ]
             },
+            "IngestUsers": {
+              "methods": [
+                "ingest_users"
+              ]
+            },
             "RemoveAllAudienceMembers": {
               "methods": [
                 "remove_all_audience_members"
@@ -68,6 +83,11 @@
             "RemoveAudienceMembers": {
               "methods": [
                 "remove_audience_members"
+              ]
+            },
+            "RemoveUsers": {
+              "methods": [
+                "remove_users"
               ]
             },
             "RetrieveRequestStatus": {
@@ -95,6 +115,11 @@
                 "ingest_events"
               ]
             },
+            "IngestUsers": {
+              "methods": [
+                "ingest_users"
+              ]
+            },
             "RemoveAllAudienceMembers": {
               "methods": [
                 "remove_all_audience_members"
@@ -103,6 +128,11 @@
             "RemoveAudienceMembers": {
               "methods": [
                 "remove_audience_members"
+              ]
+            },
+            "RemoveUsers": {
+              "methods": [
+                "remove_users"
               ]
             },
             "RetrieveRequestStatus": {
@@ -206,6 +236,40 @@
             "SearchPartnerLinks": {
               "methods": [
                 "search_partner_links"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ReportingService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ReportingServiceClient",
+          "rpcs": {
+            "RetrievePartnerMatchReport": {
+              "methods": [
+                "retrieve_partner_match_report"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ReportingServiceAsyncClient",
+          "rpcs": {
+            "RetrievePartnerMatchReport": {
+              "methods": [
+                "retrieve_partner_match_report"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ReportingServiceClient",
+          "rpcs": {
+            "RetrievePartnerMatchReport": {
+              "methods": [
+                "retrieve_partner_match_report"
               ]
             }
           }

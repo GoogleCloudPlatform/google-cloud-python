@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.support_v2beta._compat import transcode_request
 from google.cloud.support_v2beta.types import attachment, attachment_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -353,15 +354,16 @@ class CaseAttachmentServiceRestTransport(_BaseCaseAttachmentServiceRestTransport
             """
 
             http_options = _BaseCaseAttachmentServiceRestTransport._BaseGetAttachment._get_http_options()
-
             request, metadata = self._interceptor.pre_get_attachment(request, metadata)
-            transcoded_request = _BaseCaseAttachmentServiceRestTransport._BaseGetAttachment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCaseAttachmentServiceRestTransport._BaseGetAttachment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCaseAttachmentServiceRestTransport._BaseGetAttachment,
+                    "_BaseGetAttachment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -499,17 +501,18 @@ class CaseAttachmentServiceRestTransport(_BaseCaseAttachmentServiceRestTransport
             """
 
             http_options = _BaseCaseAttachmentServiceRestTransport._BaseListAttachments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_attachments(
                 request, metadata
             )
-            transcoded_request = _BaseCaseAttachmentServiceRestTransport._BaseListAttachments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCaseAttachmentServiceRestTransport._BaseListAttachments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCaseAttachmentServiceRestTransport._BaseListAttachments,
+                    "_BaseListAttachments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

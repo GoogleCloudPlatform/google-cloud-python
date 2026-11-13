@@ -32,6 +32,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.run_v2._compat import transcode_request
 from google.cloud.run_v2.types import worker_pool
 from google.cloud.run_v2.types import worker_pool as gcr_worker_pool
 
@@ -840,21 +841,18 @@ class WorkerPoolsRestTransport(_BaseWorkerPoolsRestTransport):
             http_options = (
                 _BaseWorkerPoolsRestTransport._BaseCreateWorkerPool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_worker_pool(
                 request, metadata
             )
-            transcoded_request = _BaseWorkerPoolsRestTransport._BaseCreateWorkerPool._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWorkerPoolsRestTransport._BaseCreateWorkerPool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWorkerPoolsRestTransport._BaseCreateWorkerPool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWorkerPoolsRestTransport._BaseCreateWorkerPool,
+                    "_BaseCreateWorkerPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -993,17 +991,18 @@ class WorkerPoolsRestTransport(_BaseWorkerPoolsRestTransport):
             http_options = (
                 _BaseWorkerPoolsRestTransport._BaseDeleteWorkerPool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_worker_pool(
                 request, metadata
             )
-            transcoded_request = _BaseWorkerPoolsRestTransport._BaseDeleteWorkerPool._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWorkerPoolsRestTransport._BaseDeleteWorkerPool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWorkerPoolsRestTransport._BaseDeleteWorkerPool,
+                    "_BaseDeleteWorkerPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1212,19 +1211,16 @@ class WorkerPoolsRestTransport(_BaseWorkerPoolsRestTransport):
             http_options = (
                 _BaseWorkerPoolsRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseWorkerPoolsRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWorkerPoolsRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWorkerPoolsRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1371,17 +1367,16 @@ class WorkerPoolsRestTransport(_BaseWorkerPoolsRestTransport):
             http_options = (
                 _BaseWorkerPoolsRestTransport._BaseGetWorkerPool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_worker_pool(request, metadata)
-            transcoded_request = _BaseWorkerPoolsRestTransport._BaseGetWorkerPool._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWorkerPoolsRestTransport._BaseGetWorkerPool._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWorkerPoolsRestTransport._BaseGetWorkerPool,
+                    "_BaseGetWorkerPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1520,17 +1515,18 @@ class WorkerPoolsRestTransport(_BaseWorkerPoolsRestTransport):
             http_options = (
                 _BaseWorkerPoolsRestTransport._BaseListWorkerPools._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_worker_pools(
                 request, metadata
             )
-            transcoded_request = _BaseWorkerPoolsRestTransport._BaseListWorkerPools._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWorkerPoolsRestTransport._BaseListWorkerPools._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWorkerPoolsRestTransport._BaseListWorkerPools,
+                    "_BaseListWorkerPools__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1744,25 +1740,16 @@ class WorkerPoolsRestTransport(_BaseWorkerPoolsRestTransport):
             http_options = (
                 _BaseWorkerPoolsRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseWorkerPoolsRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseWorkerPoolsRestTransport._BaseSetIamPolicy._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWorkerPoolsRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWorkerPoolsRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1898,21 +1885,18 @@ class WorkerPoolsRestTransport(_BaseWorkerPoolsRestTransport):
             """
 
             http_options = _BaseWorkerPoolsRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseWorkerPoolsRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWorkerPoolsRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWorkerPoolsRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWorkerPoolsRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2054,21 +2038,18 @@ class WorkerPoolsRestTransport(_BaseWorkerPoolsRestTransport):
             http_options = (
                 _BaseWorkerPoolsRestTransport._BaseUpdateWorkerPool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_worker_pool(
                 request, metadata
             )
-            transcoded_request = _BaseWorkerPoolsRestTransport._BaseUpdateWorkerPool._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWorkerPoolsRestTransport._BaseUpdateWorkerPool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWorkerPoolsRestTransport._BaseUpdateWorkerPool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWorkerPoolsRestTransport._BaseUpdateWorkerPool,
+                    "_BaseUpdateWorkerPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2272,17 +2253,18 @@ class WorkerPoolsRestTransport(_BaseWorkerPoolsRestTransport):
             http_options = (
                 _BaseWorkerPoolsRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseWorkerPoolsRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWorkerPoolsRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWorkerPoolsRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2389,19 +2371,16 @@ class WorkerPoolsRestTransport(_BaseWorkerPoolsRestTransport):
             http_options = (
                 _BaseWorkerPoolsRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseWorkerPoolsRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWorkerPoolsRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWorkerPoolsRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2533,15 +2512,16 @@ class WorkerPoolsRestTransport(_BaseWorkerPoolsRestTransport):
             http_options = (
                 _BaseWorkerPoolsRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseWorkerPoolsRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWorkerPoolsRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWorkerPoolsRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2674,23 +2654,16 @@ class WorkerPoolsRestTransport(_BaseWorkerPoolsRestTransport):
             http_options = (
                 _BaseWorkerPoolsRestTransport._BaseWaitOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_wait_operation(request, metadata)
-            transcoded_request = _BaseWorkerPoolsRestTransport._BaseWaitOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseWorkerPoolsRestTransport._BaseWaitOperation._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWorkerPoolsRestTransport._BaseWaitOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWorkerPoolsRestTransport._BaseWaitOperation,
+                    "_BaseWaitOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

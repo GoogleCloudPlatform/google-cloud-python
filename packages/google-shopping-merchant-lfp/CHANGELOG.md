@@ -4,6 +4,24 @@
 
 [1]: https://pypi.org/project/google-shopping-merchant-lfp/#history
 
+## [2.0.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-lfp-v1.5.0...google-shopping-merchant-lfp-v2.0.0) (2026-11-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* **merchantapi:** remove discontinued Merchant API v1beta ([#19027](https://github.com/googleapis/google-cloud-python/issues/19027))
+
+### Features
+
+* **merchantapi:** remove discontinued Merchant API v1beta ([#19027](https://github.com/googleapis/google-cloud-python/issues/19027)) ([d750513](https://github.com/googleapis/google-cloud-python/commit/d750513ea8fe8e55a7cdc5b8616f182fa19243bf))
+
+## [1.5.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-lfp-v1.4.0...google-shopping-merchant-lfp-v1.5.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [1.4.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-lfp-v1.3.0...google-shopping-merchant-lfp-v1.4.0) (2026-06-02)
 
 

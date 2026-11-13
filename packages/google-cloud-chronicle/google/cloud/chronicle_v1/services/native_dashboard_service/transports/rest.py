@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.chronicle_v1._compat import transcode_request
 from google.cloud.chronicle_v1.types import native_dashboard
 from google.cloud.chronicle_v1.types import native_dashboard as gcc_native_dashboard
 
@@ -998,19 +999,16 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseAddChart._get_http_options()
-
             request, metadata = self._interceptor.pre_add_chart(request, metadata)
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseAddChart._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNativeDashboardServiceRestTransport._BaseAddChart._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseAddChart._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseAddChart,
+                    "_BaseAddChart__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1150,21 +1148,18 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseCreateNativeDashboard._get_http_options()
-
             request, metadata = self._interceptor.pre_create_native_dashboard(
                 request, metadata
             )
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseCreateNativeDashboard._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNativeDashboardServiceRestTransport._BaseCreateNativeDashboard._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseCreateNativeDashboard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseCreateNativeDashboard,
+                    "_BaseCreateNativeDashboard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1299,17 +1294,18 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseDeleteNativeDashboard._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_native_dashboard(
                 request, metadata
             )
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseDeleteNativeDashboard._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseDeleteNativeDashboard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseDeleteNativeDashboard,
+                    "_BaseDeleteNativeDashboard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1414,19 +1410,16 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseDuplicateChart._get_http_options()
-
             request, metadata = self._interceptor.pre_duplicate_chart(request, metadata)
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseDuplicateChart._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNativeDashboardServiceRestTransport._BaseDuplicateChart._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseDuplicateChart._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseDuplicateChart,
+                    "_BaseDuplicateChart__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1569,21 +1562,18 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseDuplicateNativeDashboard._get_http_options()
-
             request, metadata = self._interceptor.pre_duplicate_native_dashboard(
                 request, metadata
             )
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseDuplicateNativeDashboard._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNativeDashboardServiceRestTransport._BaseDuplicateNativeDashboard._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseDuplicateNativeDashboard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseDuplicateNativeDashboard,
+                    "_BaseDuplicateNativeDashboard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1725,19 +1715,16 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseEditChart._get_http_options()
-
             request, metadata = self._interceptor.pre_edit_chart(request, metadata)
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseEditChart._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNativeDashboardServiceRestTransport._BaseEditChart._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseEditChart._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseEditChart,
+                    "_BaseEditChart__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1879,21 +1866,18 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseExportNativeDashboards._get_http_options()
-
             request, metadata = self._interceptor.pre_export_native_dashboards(
                 request, metadata
             )
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseExportNativeDashboards._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNativeDashboardServiceRestTransport._BaseExportNativeDashboards._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseExportNativeDashboards._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseExportNativeDashboards,
+                    "_BaseExportNativeDashboards__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2033,17 +2017,18 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseGetNativeDashboard._get_http_options()
-
             request, metadata = self._interceptor.pre_get_native_dashboard(
                 request, metadata
             )
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseGetNativeDashboard._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseGetNativeDashboard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseGetNativeDashboard,
+                    "_BaseGetNativeDashboard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2185,21 +2170,18 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseImportNativeDashboards._get_http_options()
-
             request, metadata = self._interceptor.pre_import_native_dashboards(
                 request, metadata
             )
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseImportNativeDashboards._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNativeDashboardServiceRestTransport._BaseImportNativeDashboards._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseImportNativeDashboards._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseImportNativeDashboards,
+                    "_BaseImportNativeDashboards__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2341,17 +2323,18 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseListNativeDashboards._get_http_options()
-
             request, metadata = self._interceptor.pre_list_native_dashboards(
                 request, metadata
             )
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseListNativeDashboards._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseListNativeDashboards._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseListNativeDashboards,
+                    "_BaseListNativeDashboards__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2492,19 +2475,16 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseRemoveChart._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_chart(request, metadata)
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseRemoveChart._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNativeDashboardServiceRestTransport._BaseRemoveChart._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseRemoveChart._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseRemoveChart,
+                    "_BaseRemoveChart__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2644,21 +2624,18 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseUpdateNativeDashboard._get_http_options()
-
             request, metadata = self._interceptor.pre_update_native_dashboard(
                 request, metadata
             )
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseUpdateNativeDashboard._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNativeDashboardServiceRestTransport._BaseUpdateNativeDashboard._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseUpdateNativeDashboard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseUpdateNativeDashboard,
+                    "_BaseUpdateNativeDashboard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2928,21 +2905,18 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNativeDashboardServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3048,17 +3022,18 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3166,15 +3141,16 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3305,15 +3281,16 @@ class NativeDashboardServiceRestTransport(_BaseNativeDashboardServiceRestTranspo
             """
 
             http_options = _BaseNativeDashboardServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseNativeDashboardServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNativeDashboardServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeDashboardServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

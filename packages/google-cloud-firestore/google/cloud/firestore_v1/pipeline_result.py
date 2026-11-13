@@ -44,6 +44,7 @@ if TYPE_CHECKING:  # pragma: NO COVER
     from google.cloud.firestore_v1.async_transaction import AsyncTransaction
     from google.cloud.firestore_v1.base_client import BaseClient
     from google.cloud.firestore_v1.base_document import BaseDocumentReference
+    from google.cloud.firestore_v1.bson import BSONType
     from google.cloud.firestore_v1.client import Client
     from google.cloud.firestore_v1.pipeline import Pipeline
     from google.cloud.firestore_v1.pipeline_expressions import Constant
@@ -90,7 +91,7 @@ class PipelineResult:
         self._update_time = update_time
 
     def __repr__(self):
-        return f"{type(self).__name__}(data={self.data()})"
+        return f"{type(self).__name__}(data={self.data()!r})"
 
     @property
     def ref(self) -> BaseDocumentReference | None:
@@ -138,7 +139,7 @@ class PipelineResult:
             return NotImplemented
         return (self._ref == other._ref) and (self._fields_pb == other._fields_pb)
 
-    def data(self) -> dict | "Vector" | None:
+    def data(self) -> dict | "Vector" | "BSONType" | bytes | None:
         """
         Retrieves all fields in the result.
 

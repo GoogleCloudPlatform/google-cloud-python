@@ -57,7 +57,7 @@ run_package_test() {
   local PROJECT_ID
   local GOOGLE_APPLICATION_CREDENTIALS
   local NOX_FILE
-  # Inherit NOX_SESSION from environment to allow configs (like prerelease.cfg) to pass it in
+  # Inherit NOX_SESSION from environment to allow configs to pass it in
   local NOX_SESSION="${NOX_SESSION}"
 
   # ISOLATION: Create a unique gcloud config dir for this run
@@ -68,6 +68,14 @@ run_package_test() {
   trap 'rm -rf "$gcloud_config_dir"' EXIT
 
   case "${package_name}" in
+    "gapic-generator")
+      source "${KOKORO_GFILE_DIR}/gapic-generator-env.sh"
+      PROJECT_ID=$(cat "${KOKORO_GFILE_DIR}/gapic-generator-project-id.json")
+      GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/gapic-generator-service-account.json"
+      export GOOGLE_ADS_VIDEO_PATH="${KOKORO_GFILE_DIR}/gapic-generator-video.mp4"
+      NOX_FILE="noxfile.py"
+      NOX_SESSION="${NOX_SESSION:-system-3.12}"
+      ;;
     "google-auth")
       # Copy files needed for google-auth system tests
       mkdir -p "${package_path}/system_tests/data"
@@ -77,23 +85,14 @@ run_package_test() {
 
       PROJECT_ID=$(cat "${KOKORO_GFILE_DIR}/google-auth-project-id.json")
       GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/google-auth-service-account.json"
-      # Note: system.sh is also reused for monorepo-wide continuous unit test jobs
-      # like `core_deps_from_source` and `prerelease_deps`. For google-auth, we only
-      # want to override NOX_FILE to system_tests/noxfile.py when running actual system tests.
+      # Note: For google-auth, we only want to override NOX_FILE to system_tests/noxfile.py
+      # when running actual system tests.
       if [[ -z "${NOX_SESSION}" || "${NOX_SESSION}" == "system-"* ]]; then
         NOX_FILE="system_tests/noxfile.py"
         NOX_SESSION=""
       else
         NOX_FILE="noxfile.py"
       fi
-      ;;
-    "google-cloud-dns")
-      # EXPERIMENTAL: Force running all system sessions to test mixed results. This will be reverted
-      # before merge. You can safely ignore it.
-      PROJECT_ID=$(cat "${KOKORO_GFILE_DIR}/project-id.json")
-      GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
-      NOX_FILE="noxfile.py"
-      NOX_SESSION="system"
       ;;
     *)
       PROJECT_ID=$(cat "${KOKORO_GFILE_DIR}/project-id.json")
@@ -261,6 +260,12 @@ for path in `find 'packages' \
   # verification.
   if [[ "${library_type}" != "GAPIC_AUTO" || "${package_name}" == "google-cloud-compute"* ]]; then
     files_to_check=("${package_path}")
+  fi
+
+  # When running compliance tests, only test packages that have compliance suites
+  if [[ "${NOX_SESSION:-}" == "compliance"* && "${package_name:-}" != "sqlalchemy-"* ]]; then
+    printf "SKIP %-20s %-40s %s\n" "[not_applicable]" "${package_name}" "${commit_hash:-HEAD}"
+    continue
   fi
 
   set +e

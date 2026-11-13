@@ -44,6 +44,7 @@ __protobuf__ = proto.module(
         "ListReservationGroupsRequest",
         "ListReservationGroupsResponse",
         "DeleteReservationGroupRequest",
+        "UpdateReservationGroupRequest",
         "CreateCapacityCommitmentRequest",
         "ListCapacityCommitmentsRequest",
         "ListCapacityCommitmentsResponse",
@@ -309,6 +310,13 @@ class Reservation(proto.Message):
             reservation's resources are distributed.
 
             This feature is not yet generally available.
+        reservation_group_path (MutableSequence[str]):
+            Output only. The reservation group path of the reservation
+            from root to leaf. The order of elements matters: the first
+            element is the top level group and the last element is the
+            direct parent reservation group. For example, if a
+            reservation is under group-1 -> group-2 -> group-3, then the
+            reservation group path is ["group-1", "group-2", "group-3"].
     """
 
     class ScalingMode(proto.Enum):
@@ -538,6 +546,10 @@ class Reservation(proto.Message):
         number=27,
         message="SchedulingPolicy",
     )
+    reservation_group_path: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=28,
+    )
 
 
 class SchedulingPolicy(proto.Message):
@@ -592,11 +604,41 @@ class ReservationGroup(proto.Message):
             alphanumeric characters or dashes. It must start with a
             letter and must not end with a dash. Its maximum length is
             64 characters.
+        parent_group (str):
+            Optional. The parent reservation group of the reservation
+            group. Format:
+            ``projects/*/locations/*/reservationGroups/team1-prod`` for
+            non-root reservation groups, or ``projects/*/locations/*``
+            for root reservation groups.
+        creation_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Creation time of the reservation
+            group.
+        update_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Last update time of the
+            reservation group via a user operation. This
+            timestamp is updated only when an update
+            operation explicitly targets this reservation
+            group directly. It is not updated when parent or
+            child groups are created, updated, or deleted.
     """
 
     name: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+    parent_group: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    creation_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=timestamp_pb2.Timestamp,
+    )
+    update_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=timestamp_pb2.Timestamp,
     )
 
 
@@ -680,6 +722,8 @@ class CapacityCommitment(proto.Message):
                 rejected with error code
                 ``google.rpc.Code.INVALID_ARGUMENT``.
             FLEX (3):
+                Deprecated: Flex commitments are deprecated.
+                Please use Edition-based capacity commitments.
                 Flex commitments have committed period of 1
                 minute after becoming ACTIVE. After that, they
                 are not in a committed period anymore and can be
@@ -1110,6 +1154,31 @@ class DeleteReservationGroupRequest(proto.Message):
     )
 
 
+class UpdateReservationGroupRequest(proto.Message):
+    r"""The request for
+    [ReservationService.UpdateReservationGroup][google.cloud.bigquery.reservation.v1.ReservationService.UpdateReservationGroup].
+
+    Attributes:
+        reservation_group (google.cloud.bigquery_reservation_v1.types.ReservationGroup):
+            Required. Content of the reservation group to
+            update.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. Standard field mask for the set of
+            fields to be updated.
+    """
+
+    reservation_group: "ReservationGroup" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="ReservationGroup",
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
 class CreateCapacityCommitmentRequest(proto.Message):
     r"""The request for
     [ReservationService.CreateCapacityCommitment][google.cloud.bigquery.reservation.v1.ReservationService.CreateCapacityCommitment].
@@ -1403,11 +1472,11 @@ class Assignment(proto.Message):
             This feature is not yet generally available.
         principal (str):
             Optional. Represents the principal for this assignment. If
-            not empty, jobs run by this principal will utilize the
-            associated reservation. Otherwise, jobs will fall back to
-            using the reservation assigned to the project, folder, or
-            organization (in that order). If no reservation is assigned
-            at any of these levels, on-demand capacity will be used.
+            not empty, jobs run by this principal utilize the associated
+            reservation. Otherwise, jobs fall back to using the
+            reservation assigned to the project, folder, or
+            organization, in that order. If no reservation is assigned
+            at any of these levels, on-demand capacity is used.
 
             The supported formats are:
 
@@ -1418,7 +1487,7 @@ class Assignment(proto.Message):
               for workload identity pool identities.
             - The special value ``unknown_or_deleted_user`` represents
               principals which cannot be read from the user info
-              service, for example deleted users.
+              service, for example, deleted users.
         precedence (int):
             Optional. Specifies the priority precedence
             for this assignment. Used to resolve ambiguity
@@ -1483,6 +1552,11 @@ class Assignment(proto.Message):
                 columns. Reservations with this job type take
                 priority over a default BACKGROUND reservation
                 assignment (if it exists).
+            AUTOMATIC_MATERIALIZED_VIEW_REFRESH (10):
+                Automated materialized view refresh jobs will
+                use the reservation. Reservations with this job
+                type will take priority over a default QUERY
+                reservation assignment (if it exists).
         """
 
         JOB_TYPE_UNSPECIFIED = 0
@@ -1494,6 +1568,7 @@ class Assignment(proto.Message):
         BACKGROUND_CHANGE_DATA_CAPTURE = 7
         BACKGROUND_COLUMN_METADATA_INDEX = 8
         BACKGROUND_SEARCH_INDEX_REFRESH = 9
+        AUTOMATIC_MATERIALIZED_VIEW_REFRESH = 10
 
     class State(proto.Enum):
         r"""Assignment will remain in PENDING state if no active capacity

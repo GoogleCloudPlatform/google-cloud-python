@@ -154,6 +154,21 @@ class NetworkServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.update_network: gapic_v1.method.wrap_method(
+                self.update_network,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.provision_test_network: gapic_v1.method.wrap_method(
+                self.provision_test_network,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_default_third_party_data_declaration: gapic_v1.method.wrap_method(
+                self.get_default_third_party_data_declaration,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.cancel_operation: gapic_v1.method.wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
@@ -192,6 +207,36 @@ class NetworkServiceTransport(abc.ABC):
         Union[
             network_service.ListNetworksResponse,
             Awaitable[network_service.ListNetworksResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_network(
+        self,
+    ) -> Callable[
+        [network_service.UpdateNetworkRequest],
+        Union[network_messages.Network, Awaitable[network_messages.Network]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def provision_test_network(
+        self,
+    ) -> Callable[
+        [network_service.ProvisionTestNetworkRequest],
+        Union[network_messages.Network, Awaitable[network_messages.Network]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_default_third_party_data_declaration(
+        self,
+    ) -> Callable[
+        [network_service.GetDefaultThirdPartyDataDeclarationRequest],
+        Union[
+            network_messages.DefaultThirdPartyDataDeclaration,
+            Awaitable[network_messages.DefaultThirdPartyDataDeclaration],
         ],
     ]:
         raise NotImplementedError()

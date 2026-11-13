@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.saasplatform_saasservicemgmt_v1beta1._compat import transcode_request
 from google.cloud.saasplatform_saasservicemgmt_v1beta1.types import (
     rollouts_resources,
     rollouts_service,
@@ -781,19 +782,16 @@ class SaasRolloutsRestTransport(_BaseSaasRolloutsRestTransport):
             http_options = (
                 _BaseSaasRolloutsRestTransport._BaseCreateRollout._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_rollout(request, metadata)
-            transcoded_request = _BaseSaasRolloutsRestTransport._BaseCreateRollout._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasRolloutsRestTransport._BaseCreateRollout._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasRolloutsRestTransport._BaseCreateRollout._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasRolloutsRestTransport._BaseCreateRollout,
+                    "_BaseCreateRollout__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -934,21 +932,18 @@ class SaasRolloutsRestTransport(_BaseSaasRolloutsRestTransport):
             """
 
             http_options = _BaseSaasRolloutsRestTransport._BaseCreateRolloutKind._get_http_options()
-
             request, metadata = self._interceptor.pre_create_rollout_kind(
                 request, metadata
             )
-            transcoded_request = _BaseSaasRolloutsRestTransport._BaseCreateRolloutKind._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasRolloutsRestTransport._BaseCreateRolloutKind._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasRolloutsRestTransport._BaseCreateRolloutKind._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasRolloutsRestTransport._BaseCreateRolloutKind,
+                    "_BaseCreateRolloutKind__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1082,15 +1077,16 @@ class SaasRolloutsRestTransport(_BaseSaasRolloutsRestTransport):
             http_options = (
                 _BaseSaasRolloutsRestTransport._BaseDeleteRollout._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_rollout(request, metadata)
-            transcoded_request = _BaseSaasRolloutsRestTransport._BaseDeleteRollout._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasRolloutsRestTransport._BaseDeleteRollout._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasRolloutsRestTransport._BaseDeleteRollout,
+                    "_BaseDeleteRollout__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1187,17 +1183,18 @@ class SaasRolloutsRestTransport(_BaseSaasRolloutsRestTransport):
             """
 
             http_options = _BaseSaasRolloutsRestTransport._BaseDeleteRolloutKind._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_rollout_kind(
                 request, metadata
             )
-            transcoded_request = _BaseSaasRolloutsRestTransport._BaseDeleteRolloutKind._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasRolloutsRestTransport._BaseDeleteRolloutKind._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasRolloutsRestTransport._BaseDeleteRolloutKind,
+                    "_BaseDeleteRolloutKind__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1302,19 +1299,16 @@ class SaasRolloutsRestTransport(_BaseSaasRolloutsRestTransport):
             http_options = (
                 _BaseSaasRolloutsRestTransport._BaseGetRollout._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_rollout(request, metadata)
-            transcoded_request = (
-                _BaseSaasRolloutsRestTransport._BaseGetRollout._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSaasRolloutsRestTransport._BaseGetRollout._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasRolloutsRestTransport._BaseGetRollout,
+                    "_BaseGetRollout__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1455,17 +1449,18 @@ class SaasRolloutsRestTransport(_BaseSaasRolloutsRestTransport):
             http_options = (
                 _BaseSaasRolloutsRestTransport._BaseGetRolloutKind._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_rollout_kind(
                 request, metadata
             )
-            transcoded_request = _BaseSaasRolloutsRestTransport._BaseGetRolloutKind._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasRolloutsRestTransport._BaseGetRolloutKind._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasRolloutsRestTransport._BaseGetRolloutKind,
+                    "_BaseGetRolloutKind__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1604,17 +1599,18 @@ class SaasRolloutsRestTransport(_BaseSaasRolloutsRestTransport):
             http_options = (
                 _BaseSaasRolloutsRestTransport._BaseListRolloutKinds._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_rollout_kinds(
                 request, metadata
             )
-            transcoded_request = _BaseSaasRolloutsRestTransport._BaseListRolloutKinds._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasRolloutsRestTransport._BaseListRolloutKinds._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasRolloutsRestTransport._BaseListRolloutKinds,
+                    "_BaseListRolloutKinds__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1755,17 +1751,16 @@ class SaasRolloutsRestTransport(_BaseSaasRolloutsRestTransport):
             http_options = (
                 _BaseSaasRolloutsRestTransport._BaseListRollouts._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_rollouts(request, metadata)
-            transcoded_request = _BaseSaasRolloutsRestTransport._BaseListRollouts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSaasRolloutsRestTransport._BaseListRollouts._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasRolloutsRestTransport._BaseListRollouts,
+                    "_BaseListRollouts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1907,19 +1902,16 @@ class SaasRolloutsRestTransport(_BaseSaasRolloutsRestTransport):
             http_options = (
                 _BaseSaasRolloutsRestTransport._BaseUpdateRollout._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_rollout(request, metadata)
-            transcoded_request = _BaseSaasRolloutsRestTransport._BaseUpdateRollout._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasRolloutsRestTransport._BaseUpdateRollout._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasRolloutsRestTransport._BaseUpdateRollout._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasRolloutsRestTransport._BaseUpdateRollout,
+                    "_BaseUpdateRollout__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2060,21 +2052,18 @@ class SaasRolloutsRestTransport(_BaseSaasRolloutsRestTransport):
             """
 
             http_options = _BaseSaasRolloutsRestTransport._BaseUpdateRolloutKind._get_http_options()
-
             request, metadata = self._interceptor.pre_update_rollout_kind(
                 request, metadata
             )
-            transcoded_request = _BaseSaasRolloutsRestTransport._BaseUpdateRolloutKind._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasRolloutsRestTransport._BaseUpdateRolloutKind._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasRolloutsRestTransport._BaseUpdateRolloutKind._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasRolloutsRestTransport._BaseUpdateRolloutKind,
+                    "_BaseUpdateRolloutKind__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2305,19 +2294,16 @@ class SaasRolloutsRestTransport(_BaseSaasRolloutsRestTransport):
             http_options = (
                 _BaseSaasRolloutsRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseSaasRolloutsRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSaasRolloutsRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasRolloutsRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2449,15 +2435,16 @@ class SaasRolloutsRestTransport(_BaseSaasRolloutsRestTransport):
             http_options = (
                 _BaseSaasRolloutsRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseSaasRolloutsRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasRolloutsRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasRolloutsRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

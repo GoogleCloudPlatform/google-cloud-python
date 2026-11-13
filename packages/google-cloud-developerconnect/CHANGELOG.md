@@ -4,6 +4,20 @@
 
 [1]: https://pypi.org/project/google-cloud-developerconnect/#history
 
+## [0.6.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-developerconnect-v0.6.1...google-cloud-developerconnect-v0.6.2) (2026-11-05)
+
+
+### Features
+
+* update API sources and regenerate ([#18986](https://github.com/googleapis/google-cloud-python/issues/18986)) ([8c0f333](https://github.com/googleapis/google-cloud-python/commit/8c0f3331260667eb64c70db80a7ab5c52b8ccf36))
+
+## [0.6.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-developerconnect-v0.6.0...google-cloud-developerconnect-v0.6.1) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [0.6.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-developerconnect-v0.5.0...google-cloud-developerconnect-v0.6.0) (2026-06-02)
 
 

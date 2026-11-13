@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-agentregistry",
-    "version": "0.1.0"
+    "version": "0.1.2"
   },
   "snippets": [
     {
@@ -68,12 +68,12 @@
       "regionTag": "agentregistry_v1_generated_AgentRegistry_CreateBinding_async",
       "segments": [
         {
-          "end": 63,
+          "end": 62,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 63,
+          "end": 62,
           "start": 27,
           "type": "SHORT"
         },
@@ -83,18 +83,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 53,
+          "end": 52,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 60,
-          "start": 54,
+          "end": 59,
+          "start": 53,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 64,
-          "start": 61,
+          "end": 63,
+          "start": 60,
           "type": "RESPONSE_HANDLING"
         }
       ],
@@ -156,12 +156,12 @@
       "regionTag": "agentregistry_v1_generated_AgentRegistry_CreateBinding_sync",
       "segments": [
         {
-          "end": 63,
+          "end": 62,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 63,
+          "end": 62,
           "start": 27,
           "type": "SHORT"
         },
@@ -171,18 +171,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 53,
+          "end": 52,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 60,
-          "start": 54,
+          "end": 59,
+          "start": 53,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 64,
-          "start": 61,
+          "end": 63,
+          "start": 60,
           "type": "RESPONSE_HANDLING"
         }
       ],
@@ -2833,12 +2833,12 @@
       "regionTag": "agentregistry_v1_generated_AgentRegistry_UpdateBinding_async",
       "segments": [
         {
-          "end": 61,
+          "end": 60,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 61,
+          "end": 60,
           "start": 27,
           "type": "SHORT"
         },
@@ -2848,18 +2848,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 51,
+          "end": 50,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 58,
-          "start": 52,
+          "end": 57,
+          "start": 51,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 62,
-          "start": 59,
+          "end": 61,
+          "start": 58,
           "type": "RESPONSE_HANDLING"
         }
       ],
@@ -2917,12 +2917,12 @@
       "regionTag": "agentregistry_v1_generated_AgentRegistry_UpdateBinding_sync",
       "segments": [
         {
-          "end": 61,
+          "end": 60,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 61,
+          "end": 60,
           "start": 27,
           "type": "SHORT"
         },
@@ -2932,18 +2932,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 51,
+          "end": 50,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 58,
-          "start": 52,
+          "end": 57,
+          "start": 51,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 62,
-          "start": 59,
+          "end": 61,
+          "start": 58,
           "type": "RESPONSE_HANDLING"
         }
       ],

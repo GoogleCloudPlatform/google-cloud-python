@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import cdn_config_messages, cdn_config_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -748,21 +749,18 @@ class CdnConfigServiceRestTransport(_BaseCdnConfigServiceRestTransport):
             """
 
             http_options = _BaseCdnConfigServiceRestTransport._BaseBatchActivateCdnConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_activate_cdn_configs(
                 request, metadata
             )
-            transcoded_request = _BaseCdnConfigServiceRestTransport._BaseBatchActivateCdnConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCdnConfigServiceRestTransport._BaseBatchActivateCdnConfigs._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCdnConfigServiceRestTransport._BaseBatchActivateCdnConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCdnConfigServiceRestTransport._BaseBatchActivateCdnConfigs,
+                    "_BaseBatchActivateCdnConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -905,21 +903,18 @@ class CdnConfigServiceRestTransport(_BaseCdnConfigServiceRestTransport):
             """
 
             http_options = _BaseCdnConfigServiceRestTransport._BaseBatchArchiveCdnConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_archive_cdn_configs(
                 request, metadata
             )
-            transcoded_request = _BaseCdnConfigServiceRestTransport._BaseBatchArchiveCdnConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCdnConfigServiceRestTransport._BaseBatchArchiveCdnConfigs._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCdnConfigServiceRestTransport._BaseBatchArchiveCdnConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCdnConfigServiceRestTransport._BaseBatchArchiveCdnConfigs,
+                    "_BaseBatchArchiveCdnConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1062,21 +1057,18 @@ class CdnConfigServiceRestTransport(_BaseCdnConfigServiceRestTransport):
             """
 
             http_options = _BaseCdnConfigServiceRestTransport._BaseBatchCreateCdnConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_cdn_configs(
                 request, metadata
             )
-            transcoded_request = _BaseCdnConfigServiceRestTransport._BaseBatchCreateCdnConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCdnConfigServiceRestTransport._BaseBatchCreateCdnConfigs._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCdnConfigServiceRestTransport._BaseBatchCreateCdnConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCdnConfigServiceRestTransport._BaseBatchCreateCdnConfigs,
+                    "_BaseBatchCreateCdnConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1219,21 +1211,18 @@ class CdnConfigServiceRestTransport(_BaseCdnConfigServiceRestTransport):
             """
 
             http_options = _BaseCdnConfigServiceRestTransport._BaseBatchUpdateCdnConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_cdn_configs(
                 request, metadata
             )
-            transcoded_request = _BaseCdnConfigServiceRestTransport._BaseBatchUpdateCdnConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCdnConfigServiceRestTransport._BaseBatchUpdateCdnConfigs._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCdnConfigServiceRestTransport._BaseBatchUpdateCdnConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCdnConfigServiceRestTransport._BaseBatchUpdateCdnConfigs,
+                    "_BaseBatchUpdateCdnConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1380,21 +1369,18 @@ class CdnConfigServiceRestTransport(_BaseCdnConfigServiceRestTransport):
             """
 
             http_options = _BaseCdnConfigServiceRestTransport._BaseCreateCdnConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_cdn_config(
                 request, metadata
             )
-            transcoded_request = _BaseCdnConfigServiceRestTransport._BaseCreateCdnConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCdnConfigServiceRestTransport._BaseCreateCdnConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCdnConfigServiceRestTransport._BaseCreateCdnConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCdnConfigServiceRestTransport._BaseCreateCdnConfig,
+                    "_BaseCreateCdnConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1535,15 +1521,16 @@ class CdnConfigServiceRestTransport(_BaseCdnConfigServiceRestTransport):
             http_options = (
                 _BaseCdnConfigServiceRestTransport._BaseGetCdnConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_cdn_config(request, metadata)
-            transcoded_request = _BaseCdnConfigServiceRestTransport._BaseGetCdnConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCdnConfigServiceRestTransport._BaseGetCdnConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCdnConfigServiceRestTransport._BaseGetCdnConfig,
+                    "_BaseGetCdnConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1679,17 +1666,18 @@ class CdnConfigServiceRestTransport(_BaseCdnConfigServiceRestTransport):
             """
 
             http_options = _BaseCdnConfigServiceRestTransport._BaseListCdnConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_cdn_configs(
                 request, metadata
             )
-            transcoded_request = _BaseCdnConfigServiceRestTransport._BaseListCdnConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCdnConfigServiceRestTransport._BaseListCdnConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCdnConfigServiceRestTransport._BaseListCdnConfigs,
+                    "_BaseListCdnConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1831,21 +1819,18 @@ class CdnConfigServiceRestTransport(_BaseCdnConfigServiceRestTransport):
             """
 
             http_options = _BaseCdnConfigServiceRestTransport._BaseUpdateCdnConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_cdn_config(
                 request, metadata
             )
-            transcoded_request = _BaseCdnConfigServiceRestTransport._BaseUpdateCdnConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCdnConfigServiceRestTransport._BaseUpdateCdnConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCdnConfigServiceRestTransport._BaseUpdateCdnConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCdnConfigServiceRestTransport._BaseUpdateCdnConfig,
+                    "_BaseUpdateCdnConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2070,17 +2055,18 @@ class CdnConfigServiceRestTransport(_BaseCdnConfigServiceRestTransport):
             """
 
             http_options = _BaseCdnConfigServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCdnConfigServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCdnConfigServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCdnConfigServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2187,15 +2173,16 @@ class CdnConfigServiceRestTransport(_BaseCdnConfigServiceRestTransport):
             http_options = (
                 _BaseCdnConfigServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseCdnConfigServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCdnConfigServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCdnConfigServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

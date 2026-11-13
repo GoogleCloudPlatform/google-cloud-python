@@ -4,6 +4,39 @@
 
 [1]: https://pypi.org/project/django-google-spanner/#history
 
+## [5.2.1](https://github.com/googleapis/google-cloud-python/compare/django-google-spanner-v5.2.0...django-google-spanner-v5.2.1) (2026-11-12)
+
+
+### Bug Fixes
+
+* **spanner-django:** add WHERE 1=1 to unqualified DELETE and UPDATE ([8449bc1](https://github.com/googleapis/google-cloud-python/commit/8449bc1ef32e8e953bf3e7a779fb5f5f5bca8b54))
+
+## [5.2.0](https://github.com/googleapis/google-cloud-python/compare/django-google-spanner-v5.1.0...django-google-spanner-v5.2.0) (2026-09-29)
+
+
+### Features
+
+* declare Python3.15 support ([05b0c34](https://github.com/googleapis/google-cloud-python/commit/05b0c342683b2b0e1b8dccd201ec86ec89612edc))
+
+## [5.1.0](https://github.com/googleapis/google-cloud-python/compare/django-google-spanner-v5.0.1...django-google-spanner-v5.1.0) (2026-09-03)
+
+
+### Features
+
+* **django-google-spanner:** support Django 6.0 ([#18128](https://github.com/googleapis/google-cloud-python/issues/18128)) ([207d947](https://github.com/googleapis/google-cloud-python/commit/207d947231d16055dc8d3fecda47fa87f3cf949f))
+
+## [5.0.1](https://github.com/googleapis/google-cloud-python/compare/django-google-spanner-v5.0.0...django-google-spanner-v5.0.1) (2026-08-21)
+
+
+### Bug Fixes
+
+* **django-spanner:** declare django dependency in setup.py ([#18044](https://github.com/googleapis/google-cloud-python/issues/18044)) ([c341469](https://github.com/googleapis/google-cloud-python/commit/c3414690dc73a84e1028c3d05d9c723b2ffc3ef6))
+
+
+### Documentation
+
+* **django-spanner, common-protos:** centralize CONTRIBUTING.rst pointers ([#18041](https://github.com/googleapis/google-cloud-python/issues/18041)) ([2b056ab](https://github.com/googleapis/google-cloud-python/commit/2b056ab2788411bb555c6697a94d76c83ca2a863))
+
 ## [5.0.0](https://github.com/googleapis/google-cloud-python/compare/django-google-spanner-v4.0.3...django-google-spanner-v5.0.0) (2026-05-01 )
 
 ### Breaking changes

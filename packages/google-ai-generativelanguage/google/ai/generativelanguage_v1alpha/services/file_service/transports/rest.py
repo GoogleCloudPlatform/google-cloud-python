@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ai.generativelanguage_v1alpha._compat import transcode_request
 from google.ai.generativelanguage_v1alpha.types import file, file_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -457,23 +458,16 @@ class FileServiceRestTransport(_BaseFileServiceRestTransport):
             http_options = (
                 _BaseFileServiceRestTransport._BaseCreateFile._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_file(request, metadata)
-            transcoded_request = (
-                _BaseFileServiceRestTransport._BaseCreateFile._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseFileServiceRestTransport._BaseCreateFile._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFileServiceRestTransport._BaseCreateFile._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFileServiceRestTransport._BaseCreateFile,
+                    "_BaseCreateFile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -606,19 +600,16 @@ class FileServiceRestTransport(_BaseFileServiceRestTransport):
             http_options = (
                 _BaseFileServiceRestTransport._BaseDeleteFile._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_file(request, metadata)
-            transcoded_request = (
-                _BaseFileServiceRestTransport._BaseDeleteFile._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFileServiceRestTransport._BaseDeleteFile._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFileServiceRestTransport._BaseDeleteFile,
+                    "_BaseDeleteFile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -720,19 +711,16 @@ class FileServiceRestTransport(_BaseFileServiceRestTransport):
             http_options = (
                 _BaseFileServiceRestTransport._BaseGetFile._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_file(request, metadata)
-            transcoded_request = (
-                _BaseFileServiceRestTransport._BaseGetFile._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFileServiceRestTransport._BaseGetFile._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFileServiceRestTransport._BaseGetFile,
+                    "_BaseGetFile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -866,19 +854,16 @@ class FileServiceRestTransport(_BaseFileServiceRestTransport):
             http_options = (
                 _BaseFileServiceRestTransport._BaseListFiles._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_files(request, metadata)
-            transcoded_request = (
-                _BaseFileServiceRestTransport._BaseListFiles._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFileServiceRestTransport._BaseListFiles._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFileServiceRestTransport._BaseListFiles,
+                    "_BaseListFiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1047,19 +1032,16 @@ class FileServiceRestTransport(_BaseFileServiceRestTransport):
             http_options = (
                 _BaseFileServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseFileServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFileServiceRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFileServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1191,15 +1173,16 @@ class FileServiceRestTransport(_BaseFileServiceRestTransport):
             http_options = (
                 _BaseFileServiceRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseFileServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFileServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFileServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

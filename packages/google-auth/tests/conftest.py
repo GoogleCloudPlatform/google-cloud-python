@@ -18,6 +18,9 @@ from unittest import mock
 
 import pytest  # type: ignore
 
+from google.auth import environment_vars
+from google.auth.transport import _mtls_helper
+
 
 def pytest_configure():
     """Load public certificate and private key."""
@@ -28,6 +31,35 @@ def pytest_configure():
 
     with open(os.path.join(pytest.data_dir, "public_cert.pem"), "rb") as fh:
         pytest.public_cert_bytes = fh.read()
+
+    _mtls_helper._GKE_CREDENTIAL_BUNDLE_PATH = os.path.join(
+        pytest.data_dir, "nonexistent_gke_credential_bundle.pem"
+    )
+
+
+@pytest.fixture(autouse=True)
+def clean_cert_config_env(monkeypatch, tmp_path):
+    monkeypatch.delenv(
+        environment_vars.GOOGLE_API_USE_CLIENT_CERTIFICATE,
+        raising=False,
+    )
+    monkeypatch.delenv(
+        environment_vars.CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE,
+        raising=False,
+    )
+    monkeypatch.delenv(
+        environment_vars.GOOGLE_API_CERTIFICATE_CONFIG,
+        raising=False,
+    )
+    monkeypatch.delenv(
+        environment_vars.CLOUDSDK_CONTEXT_AWARE_CERTIFICATE_CONFIG_FILE_PATH,
+        raising=False,
+    )
+    monkeypatch.setattr(
+        _mtls_helper,
+        "_GKE_CREDENTIAL_BUNDLE_PATH",
+        str(tmp_path / "gke" / "credential" / "bundle" / "path"),
+    )
 
 
 @pytest.fixture

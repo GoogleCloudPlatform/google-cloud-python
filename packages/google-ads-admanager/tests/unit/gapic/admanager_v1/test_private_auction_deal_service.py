@@ -41,7 +41,10 @@ except ImportError:  # pragma: NO COVER
 import google.auth
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.type.dayofweek_pb2 as dayofweek_pb2  # type: ignore
+import google.type.interval_pb2 as interval_pb2  # type: ignore
 import google.type.money_pb2 as money_pb2  # type: ignore
+import google.type.timeofday_pb2 as timeofday_pb2  # type: ignore
 from google.api_core import (
     client_options,
     gapic_v1,
@@ -62,6 +65,7 @@ from google.ads.admanager_v1.services.private_auction_deal_service import (
     transports,
 )
 from google.ads.admanager_v1.types import (
+    dayparting_time_zone_enum,
     deal_buyer_permission_type_enum,
     deal_priority_tier_enum,
     non_guaranteed_deal_priority,
@@ -82,6 +86,18 @@ CRED_INFO_JSON = {
     "principal": "service-account@example.com",
 }
 CRED_INFO_STRING = json.dumps(CRED_INFO_JSON)
+
+
+@pytest.fixture(autouse=True)
+def disable_mtls_env():
+    with mock.patch.dict(
+        os.environ,
+        {
+            "GOOGLE_API_USE_CLIENT_CERTIFICATE": "false",
+            "CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE": "false",
+        },
+    ):
+        yield
 
 
 async def mock_async_gen(data, chunk_size=1):
@@ -139,220 +155,6 @@ def set_event_loop():
             asyncio.set_event_loop(None)
 
 
-def test__get_default_mtls_endpoint():
-    api_endpoint = "example.googleapis.com"
-    api_mtls_endpoint = "example.mtls.googleapis.com"
-    sandbox_endpoint = "example.sandbox.googleapis.com"
-    sandbox_mtls_endpoint = "example.mtls.sandbox.googleapis.com"
-    non_googleapi = "api.example.com"
-    custom_endpoint = ".custom"
-
-    assert PrivateAuctionDealServiceClient._get_default_mtls_endpoint(None) is None
-    assert (
-        PrivateAuctionDealServiceClient._get_default_mtls_endpoint(api_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_default_mtls_endpoint(api_mtls_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_default_mtls_endpoint(sandbox_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_default_mtls_endpoint(
-            sandbox_mtls_endpoint
-        )
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_default_mtls_endpoint(non_googleapi)
-        == non_googleapi
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_default_mtls_endpoint(custom_endpoint)
-        == custom_endpoint
-    )
-
-
-def test__read_environment_variables():
-    assert PrivateAuctionDealServiceClient._read_environment_variables() == (
-        False,
-        "auto",
-        None,
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-        assert PrivateAuctionDealServiceClient._read_environment_variables() == (
-            True,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}):
-        assert PrivateAuctionDealServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}
-    ):
-        if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-            with pytest.raises(ValueError) as excinfo:
-                PrivateAuctionDealServiceClient._read_environment_variables()
-            assert (
-                str(excinfo.value)
-                == "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be either `true` or `false`"
-            )
-        else:
-            assert PrivateAuctionDealServiceClient._read_environment_variables() == (
-                False,
-                "auto",
-                None,
-            )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "never"}):
-        assert PrivateAuctionDealServiceClient._read_environment_variables() == (
-            False,
-            "never",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "always"}):
-        assert PrivateAuctionDealServiceClient._read_environment_variables() == (
-            False,
-            "always",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "auto"}):
-        assert PrivateAuctionDealServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "Unsupported"}):
-        with pytest.raises(MutualTLSChannelError) as excinfo:
-            PrivateAuctionDealServiceClient._read_environment_variables()
-    assert (
-        str(excinfo.value)
-        == "Environment variable `GOOGLE_API_USE_MTLS_ENDPOINT` must be `never`, `auto` or `always`"
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_CLOUD_UNIVERSE_DOMAIN": "foo.com"}):
-        assert PrivateAuctionDealServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            "foo.com",
-        )
-
-
-def test_use_client_cert_effective():
-    # Test case 1: Test when `should_use_client_cert` returns True.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=True
-        ):
-            assert PrivateAuctionDealServiceClient._use_client_cert_effective() is True
-
-    # Test case 2: Test when `should_use_client_cert` returns False.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should NOT be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=False
-        ):
-            assert PrivateAuctionDealServiceClient._use_client_cert_effective() is False
-
-    # Test case 3: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "true".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-            assert PrivateAuctionDealServiceClient._use_client_cert_effective() is True
-
-    # Test case 4: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}
-        ):
-            assert PrivateAuctionDealServiceClient._use_client_cert_effective() is False
-
-    # Test case 5: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "True".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "True"}):
-            assert PrivateAuctionDealServiceClient._use_client_cert_effective() is True
-
-    # Test case 6: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "False".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "False"}
-        ):
-            assert PrivateAuctionDealServiceClient._use_client_cert_effective() is False
-
-    # Test case 7: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "TRUE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "TRUE"}):
-            assert PrivateAuctionDealServiceClient._use_client_cert_effective() is True
-
-    # Test case 8: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "FALSE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "FALSE"}
-        ):
-            assert PrivateAuctionDealServiceClient._use_client_cert_effective() is False
-
-    # Test case 9: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not set.
-    # In this case, the method should return False, which is the default value.
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, clear=True):
-            assert PrivateAuctionDealServiceClient._use_client_cert_effective() is False
-
-    # Test case 10: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should raise a ValueError as the environment variable must be either
-    # "true" or "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            with pytest.raises(ValueError):
-                PrivateAuctionDealServiceClient._use_client_cert_effective()
-
-    # Test case 11: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should return False as the environment variable is set to an invalid value.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            assert PrivateAuctionDealServiceClient._use_client_cert_effective() is False
-
-    # Test case 12: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is unset. Also,
-    # the GOOGLE_API_CONFIG environment variable is unset.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": ""}):
-            with mock.patch.dict(os.environ, {"GOOGLE_API_CERTIFICATE_CONFIG": ""}):
-                assert (
-                    PrivateAuctionDealServiceClient._use_client_cert_effective()
-                    is False
-                )
-
-
 def test__get_client_cert_source():
     mock_provided_cert_source = mock.Mock()
     mock_default_cert_source = mock.Mock()
@@ -388,102 +190,6 @@ def test__get_client_cert_source():
                 )
                 is mock_provided_cert_source
             )
-
-
-@mock.patch.object(
-    PrivateAuctionDealServiceClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(PrivateAuctionDealServiceClient),
-)
-def test__get_api_endpoint():
-    api_override = "foo.com"
-    mock_client_cert_source = mock.Mock()
-    default_universe = PrivateAuctionDealServiceClient._DEFAULT_UNIVERSE
-    default_endpoint = (
-        PrivateAuctionDealServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-            UNIVERSE_DOMAIN=default_universe
-        )
-    )
-    mock_universe = "bar.com"
-    mock_endpoint = PrivateAuctionDealServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=mock_universe
-    )
-
-    assert (
-        PrivateAuctionDealServiceClient._get_api_endpoint(
-            api_override, mock_client_cert_source, default_universe, "always"
-        )
-        == api_override
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "auto"
-        )
-        == PrivateAuctionDealServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_api_endpoint(
-            None, None, default_universe, "auto"
-        )
-        == default_endpoint
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_api_endpoint(
-            None, None, default_universe, "always"
-        )
-        == PrivateAuctionDealServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "always"
-        )
-        == PrivateAuctionDealServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_api_endpoint(
-            None, None, mock_universe, "never"
-        )
-        == mock_endpoint
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_api_endpoint(
-            None, None, default_universe, "never"
-        )
-        == default_endpoint
-    )
-
-    with pytest.raises(MutualTLSChannelError) as excinfo:
-        PrivateAuctionDealServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, mock_universe, "auto"
-        )
-    assert (
-        str(excinfo.value)
-        == "mTLS is not supported in any universe other than googleapis.com."
-    )
-
-
-def test__get_universe_domain():
-    client_universe_domain = "foo.com"
-    universe_domain_env = "bar.com"
-
-    assert (
-        PrivateAuctionDealServiceClient._get_universe_domain(
-            client_universe_domain, universe_domain_env
-        )
-        == client_universe_domain
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_universe_domain(None, universe_domain_env)
-        == universe_domain_env
-    )
-    assert (
-        PrivateAuctionDealServiceClient._get_universe_domain(None, None)
-        == PrivateAuctionDealServiceClient._DEFAULT_UNIVERSE
-    )
-
-    with pytest.raises(ValueError) as excinfo:
-        PrivateAuctionDealServiceClient._get_universe_domain("", None)
-    assert str(excinfo.value) == "Universe Domain cannot be an empty string."
 
 
 @pytest.mark.parametrize(
@@ -967,6 +673,7 @@ def test_private_auction_deal_service_client_get_mtls_endpoint_and_cert_source(
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", None)
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", None)
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1021,6 +728,7 @@ def test_private_auction_deal_service_client_get_mtls_endpoint_and_cert_source(
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", "")
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", "")
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1304,19 +1012,19 @@ def test_get_private_auction_deal_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_private_auction_deal._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetPrivateAuctionDeal,
+        "_BaseGetPrivateAuctionDeal__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_private_auction_deal._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -1364,15 +1072,6 @@ def test_get_private_auction_deal_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_private_auction_deal_rest_unset_required_fields():
-    transport = transports.PrivateAuctionDealServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_private_auction_deal._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_private_auction_deal_rest_flattened():
@@ -1488,29 +1187,30 @@ def test_list_private_auction_deals_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_private_auction_deals._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListPrivateAuctionDeals,
+        "_BaseListPrivateAuctionDeals__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_private_auction_deals._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
+            "orderBy",
+            "pageSize",
+            "pageToken",
             "skip",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -1560,26 +1260,6 @@ def test_list_private_auction_deals_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_private_auction_deals_rest_unset_required_fields():
-    transport = transports.PrivateAuctionDealServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_private_auction_deals._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-                "skip",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_private_auction_deals_rest_flattened():
@@ -1767,19 +1447,19 @@ def test_create_private_auction_deal_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_private_auction_deal._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreatePrivateAuctionDeal,
+        "_BaseCreatePrivateAuctionDeal__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_private_auction_deal._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -1828,23 +1508,6 @@ def test_create_private_auction_deal_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_private_auction_deal_rest_unset_required_fields():
-    transport = transports.PrivateAuctionDealServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_private_auction_deal._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "parent",
-                "privateAuctionDeal",
-            )
-        )
-    )
 
 
 def test_create_private_auction_deal_rest_flattened():
@@ -1965,19 +1628,20 @@ def test_update_private_auction_deal_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_private_auction_deal._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdatePrivateAuctionDeal,
+        "_BaseUpdatePrivateAuctionDeal__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_private_auction_deal._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("update_mask",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("updateMask",))
 
     # verify required fields with non-default values are left alone
 
@@ -2024,15 +1688,6 @@ def test_update_private_auction_deal_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_private_auction_deal_rest_unset_required_fields():
-    transport = transports.PrivateAuctionDealServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_private_auction_deal._get_unset_required_fields({})
-    assert set(unset_fields) == (set(("updateMask",)) & set(("privateAuctionDeal",)))
 
 
 def test_update_private_auction_deal_rest_flattened():
@@ -2240,7 +1895,9 @@ def test_get_private_auction_deal_rest_call_success(request_type):
             status=private_marketplace_enums.PrivateMarketplaceDealStatusEnum.PrivateMarketplaceDealStatus.PENDING,
             auction_priority_enabled=True,
             block_override_enabled=True,
+            publisher_floor_exempt=True,
             buyer_permission_type=deal_buyer_permission_type_enum.DealBuyerPermissionTypeEnum.DealBuyerPermissionType.NEGOTIATOR_ONLY,
+            archived=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -2269,10 +1926,12 @@ def test_get_private_auction_deal_rest_call_success(request_type):
     )
     assert response.auction_priority_enabled is True
     assert response.block_override_enabled is True
+    assert response.publisher_floor_exempt is True
     assert (
         response.buyer_permission_type
         == deal_buyer_permission_type_enum.DealBuyerPermissionTypeEnum.DealBuyerPermissionType.NEGOTIATOR_ONLY
     )
+    assert response.archived is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -2541,6 +2200,16 @@ def test_create_private_auction_deal_rest_call_success(request_type):
         "buyer_account_id": 1695,
         "external_deal_id": 1668,
         "targeting": {
+            "inventory_url_targeting": {
+                "targeted_inventory_urls": [
+                    "targeted_inventory_urls_value1",
+                    "targeted_inventory_urls_value2",
+                ],
+                "excluded_inventory_urls": [
+                    "excluded_inventory_urls_value1",
+                    "excluded_inventory_urls_value2",
+                ],
+            },
             "geo_targeting": {
                 "targeted_geos": ["targeted_geos_value1", "targeted_geos_value2"],
                 "excluded_geos": ["excluded_geos_value1", "excluded_geos_value2"],
@@ -2651,6 +2320,12 @@ def test_create_private_auction_deal_rest_call_success(request_type):
                     ],
                 },
             },
+            "inventory_size_targeting": {
+                "targeted_inventory_sizes": [
+                    {"width": 544, "height": 633, "size_type": 1}
+                ],
+                "excluded_inventory_sizes": {},
+            },
             "inventory_targeting": {
                 "targeted_ad_units": [
                     {"include_descendants": True, "ad_unit": "ad_unit_value"}
@@ -2696,6 +2371,21 @@ def test_create_private_auction_deal_rest_call_success(request_type):
                     }
                 ]
             },
+            "date_time_range_targeting": {
+                "targeted_range": [
+                    {"start_time": {"seconds": 751, "nanos": 543}, "end_time": {}}
+                ]
+            },
+            "publisher_provided_signals_targeting": {
+                "targeted_taxonomy_categories": [
+                    "targeted_taxonomy_categories_value1",
+                    "targeted_taxonomy_categories_value2",
+                ],
+                "excluded_taxonomy_categories": [
+                    "excluded_taxonomy_categories_value1",
+                    "excluded_taxonomy_categories_value2",
+                ],
+            },
             "user_domain_targeting": {
                 "targeted_user_domains": [
                     "targeted_user_domains_value1",
@@ -2706,12 +2396,27 @@ def test_create_private_auction_deal_rest_call_success(request_type):
                     "excluded_user_domains_value2",
                 ],
             },
+            "contextual_targeting": {
+                "targeted_verticals": [
+                    "targeted_verticals_value1",
+                    "targeted_verticals_value2",
+                ],
+                "excluded_verticals": [
+                    "excluded_verticals_value1",
+                    "excluded_verticals_value2",
+                ],
+                "excluded_content_labels": [
+                    "excluded_content_labels_value1",
+                    "excluded_content_labels_value2",
+                ],
+            },
             "video_position_targeting": {
                 "video_positions": [
                     {
                         "midroll_index": 1386,
                         "reverse_midroll_index": 2245,
                         "pod_position": 1303,
+                        "ad_spot": "ad_spot_value",
                         "position_type": 1,
                         "bumper_type": 1,
                     }
@@ -2759,20 +2464,39 @@ def test_create_private_auction_deal_rest_call_success(request_type):
                     ],
                 }
             },
+            "day_part_targeting": {
+                "targeted_day_parts": [
+                    {
+                        "day_of_week": 1,
+                        "start_time": {
+                            "hours": 561,
+                            "minutes": 773,
+                            "seconds": 751,
+                            "nanos": 543,
+                        },
+                        "end_time": {},
+                    }
+                ],
+                "dayparting_time_zone": 1,
+            },
+            "buyer_user_list_targeting": {"has_buyer_user_list_targeting": True},
         },
-        "end_time": {"seconds": 751, "nanos": 543},
+        "start_time": {},
+        "end_time": {},
         "floor_price": {
             "currency_code": "currency_code_value",
             "units": 563,
             "nanos": 543,
         },
-        "creative_sizes": [{"width": 544, "height": 633, "size_type": 1}],
+        "creative_sizes": {},
         "status": 1,
         "auction_priority_enabled": True,
         "block_override_enabled": True,
+        "publisher_floor_exempt": True,
         "buyer_permission_type": 1,
         "buyer_data": {"buyer_emails": ["buyer_emails_value1", "buyer_emails_value2"]},
         "deal_priority": {"priority_tier": 1},
+        "archived": True,
         "create_time": {},
         "update_time": {},
     }
@@ -2864,7 +2588,9 @@ def test_create_private_auction_deal_rest_call_success(request_type):
             status=private_marketplace_enums.PrivateMarketplaceDealStatusEnum.PrivateMarketplaceDealStatus.PENDING,
             auction_priority_enabled=True,
             block_override_enabled=True,
+            publisher_floor_exempt=True,
             buyer_permission_type=deal_buyer_permission_type_enum.DealBuyerPermissionTypeEnum.DealBuyerPermissionType.NEGOTIATOR_ONLY,
+            archived=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -2893,10 +2619,12 @@ def test_create_private_auction_deal_rest_call_success(request_type):
     )
     assert response.auction_priority_enabled is True
     assert response.block_override_enabled is True
+    assert response.publisher_floor_exempt is True
     assert (
         response.buyer_permission_type
         == deal_buyer_permission_type_enum.DealBuyerPermissionTypeEnum.DealBuyerPermissionType.NEGOTIATOR_ONLY
     )
+    assert response.archived is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -3023,6 +2751,16 @@ def test_update_private_auction_deal_rest_call_success(request_type):
         "buyer_account_id": 1695,
         "external_deal_id": 1668,
         "targeting": {
+            "inventory_url_targeting": {
+                "targeted_inventory_urls": [
+                    "targeted_inventory_urls_value1",
+                    "targeted_inventory_urls_value2",
+                ],
+                "excluded_inventory_urls": [
+                    "excluded_inventory_urls_value1",
+                    "excluded_inventory_urls_value2",
+                ],
+            },
             "geo_targeting": {
                 "targeted_geos": ["targeted_geos_value1", "targeted_geos_value2"],
                 "excluded_geos": ["excluded_geos_value1", "excluded_geos_value2"],
@@ -3133,6 +2871,12 @@ def test_update_private_auction_deal_rest_call_success(request_type):
                     ],
                 },
             },
+            "inventory_size_targeting": {
+                "targeted_inventory_sizes": [
+                    {"width": 544, "height": 633, "size_type": 1}
+                ],
+                "excluded_inventory_sizes": {},
+            },
             "inventory_targeting": {
                 "targeted_ad_units": [
                     {"include_descendants": True, "ad_unit": "ad_unit_value"}
@@ -3178,6 +2922,21 @@ def test_update_private_auction_deal_rest_call_success(request_type):
                     }
                 ]
             },
+            "date_time_range_targeting": {
+                "targeted_range": [
+                    {"start_time": {"seconds": 751, "nanos": 543}, "end_time": {}}
+                ]
+            },
+            "publisher_provided_signals_targeting": {
+                "targeted_taxonomy_categories": [
+                    "targeted_taxonomy_categories_value1",
+                    "targeted_taxonomy_categories_value2",
+                ],
+                "excluded_taxonomy_categories": [
+                    "excluded_taxonomy_categories_value1",
+                    "excluded_taxonomy_categories_value2",
+                ],
+            },
             "user_domain_targeting": {
                 "targeted_user_domains": [
                     "targeted_user_domains_value1",
@@ -3188,12 +2947,27 @@ def test_update_private_auction_deal_rest_call_success(request_type):
                     "excluded_user_domains_value2",
                 ],
             },
+            "contextual_targeting": {
+                "targeted_verticals": [
+                    "targeted_verticals_value1",
+                    "targeted_verticals_value2",
+                ],
+                "excluded_verticals": [
+                    "excluded_verticals_value1",
+                    "excluded_verticals_value2",
+                ],
+                "excluded_content_labels": [
+                    "excluded_content_labels_value1",
+                    "excluded_content_labels_value2",
+                ],
+            },
             "video_position_targeting": {
                 "video_positions": [
                     {
                         "midroll_index": 1386,
                         "reverse_midroll_index": 2245,
                         "pod_position": 1303,
+                        "ad_spot": "ad_spot_value",
                         "position_type": 1,
                         "bumper_type": 1,
                     }
@@ -3241,20 +3015,39 @@ def test_update_private_auction_deal_rest_call_success(request_type):
                     ],
                 }
             },
+            "day_part_targeting": {
+                "targeted_day_parts": [
+                    {
+                        "day_of_week": 1,
+                        "start_time": {
+                            "hours": 561,
+                            "minutes": 773,
+                            "seconds": 751,
+                            "nanos": 543,
+                        },
+                        "end_time": {},
+                    }
+                ],
+                "dayparting_time_zone": 1,
+            },
+            "buyer_user_list_targeting": {"has_buyer_user_list_targeting": True},
         },
-        "end_time": {"seconds": 751, "nanos": 543},
+        "start_time": {},
+        "end_time": {},
         "floor_price": {
             "currency_code": "currency_code_value",
             "units": 563,
             "nanos": 543,
         },
-        "creative_sizes": [{"width": 544, "height": 633, "size_type": 1}],
+        "creative_sizes": {},
         "status": 1,
         "auction_priority_enabled": True,
         "block_override_enabled": True,
+        "publisher_floor_exempt": True,
         "buyer_permission_type": 1,
         "buyer_data": {"buyer_emails": ["buyer_emails_value1", "buyer_emails_value2"]},
         "deal_priority": {"priority_tier": 1},
+        "archived": True,
         "create_time": {},
         "update_time": {},
     }
@@ -3346,7 +3139,9 @@ def test_update_private_auction_deal_rest_call_success(request_type):
             status=private_marketplace_enums.PrivateMarketplaceDealStatusEnum.PrivateMarketplaceDealStatus.PENDING,
             auction_priority_enabled=True,
             block_override_enabled=True,
+            publisher_floor_exempt=True,
             buyer_permission_type=deal_buyer_permission_type_enum.DealBuyerPermissionTypeEnum.DealBuyerPermissionType.NEGOTIATOR_ONLY,
+            archived=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -3375,10 +3170,12 @@ def test_update_private_auction_deal_rest_call_success(request_type):
     )
     assert response.auction_priority_enabled is True
     assert response.block_override_enabled is True
+    assert response.publisher_floor_exempt is True
     assert (
         response.buyer_permission_type
         == deal_buyer_permission_type_enum.DealBuyerPermissionTypeEnum.DealBuyerPermissionType.NEGOTIATOR_ONLY
     )
+    assert response.archived is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -3857,9 +3654,55 @@ def test_private_auction_deal_service_client_transport_session_collision(
     assert session1 != session2
 
 
-def test_ad_unit_path():
+def test_ad_category_path():
     network_code = "squid"
-    ad_unit = "clam"
+    ad_category = "clam"
+    expected = "networks/{network_code}/adCategories/{ad_category}".format(
+        network_code=network_code,
+        ad_category=ad_category,
+    )
+    actual = PrivateAuctionDealServiceClient.ad_category_path(network_code, ad_category)
+    assert expected == actual
+
+
+def test_parse_ad_category_path():
+    expected = {
+        "network_code": "whelk",
+        "ad_category": "octopus",
+    }
+    path = PrivateAuctionDealServiceClient.ad_category_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = PrivateAuctionDealServiceClient.parse_ad_category_path(path)
+    assert expected == actual
+
+
+def test_ad_spot_path():
+    network_code = "oyster"
+    ad_spot = "nudibranch"
+    expected = "networks/{network_code}/adSpots/{ad_spot}".format(
+        network_code=network_code,
+        ad_spot=ad_spot,
+    )
+    actual = PrivateAuctionDealServiceClient.ad_spot_path(network_code, ad_spot)
+    assert expected == actual
+
+
+def test_parse_ad_spot_path():
+    expected = {
+        "network_code": "cuttlefish",
+        "ad_spot": "mussel",
+    }
+    path = PrivateAuctionDealServiceClient.ad_spot_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = PrivateAuctionDealServiceClient.parse_ad_spot_path(path)
+    assert expected == actual
+
+
+def test_ad_unit_path():
+    network_code = "winkle"
+    ad_unit = "nautilus"
     expected = "networks/{network_code}/adUnits/{ad_unit}".format(
         network_code=network_code,
         ad_unit=ad_unit,
@@ -3870,8 +3713,8 @@ def test_ad_unit_path():
 
 def test_parse_ad_unit_path():
     expected = {
-        "network_code": "whelk",
-        "ad_unit": "octopus",
+        "network_code": "scallop",
+        "ad_unit": "abalone",
     }
     path = PrivateAuctionDealServiceClient.ad_unit_path(**expected)
 
@@ -3881,8 +3724,8 @@ def test_parse_ad_unit_path():
 
 
 def test_application_path():
-    network_code = "oyster"
-    application = "nudibranch"
+    network_code = "squid"
+    application = "clam"
     expected = "networks/{network_code}/applications/{application}".format(
         network_code=network_code,
         application=application,
@@ -3893,8 +3736,8 @@ def test_application_path():
 
 def test_parse_application_path():
     expected = {
-        "network_code": "cuttlefish",
-        "application": "mussel",
+        "network_code": "whelk",
+        "application": "octopus",
     }
     path = PrivateAuctionDealServiceClient.application_path(**expected)
 
@@ -3904,8 +3747,8 @@ def test_parse_application_path():
 
 
 def test_audience_segment_path():
-    network_code = "winkle"
-    audience_segment = "nautilus"
+    network_code = "oyster"
+    audience_segment = "nudibranch"
     expected = "networks/{network_code}/audienceSegments/{audience_segment}".format(
         network_code=network_code,
         audience_segment=audience_segment,
@@ -3918,8 +3761,8 @@ def test_audience_segment_path():
 
 def test_parse_audience_segment_path():
     expected = {
-        "network_code": "scallop",
-        "audience_segment": "abalone",
+        "network_code": "cuttlefish",
+        "audience_segment": "mussel",
     }
     path = PrivateAuctionDealServiceClient.audience_segment_path(**expected)
 
@@ -3929,8 +3772,8 @@ def test_parse_audience_segment_path():
 
 
 def test_bandwidth_group_path():
-    network_code = "squid"
-    bandwidth_group = "clam"
+    network_code = "winkle"
+    bandwidth_group = "nautilus"
     expected = "networks/{network_code}/bandwidthGroups/{bandwidth_group}".format(
         network_code=network_code,
         bandwidth_group=bandwidth_group,
@@ -3943,8 +3786,8 @@ def test_bandwidth_group_path():
 
 def test_parse_bandwidth_group_path():
     expected = {
-        "network_code": "whelk",
-        "bandwidth_group": "octopus",
+        "network_code": "scallop",
+        "bandwidth_group": "abalone",
     }
     path = PrivateAuctionDealServiceClient.bandwidth_group_path(**expected)
 
@@ -3954,8 +3797,8 @@ def test_parse_bandwidth_group_path():
 
 
 def test_browser_path():
-    network_code = "oyster"
-    browser = "nudibranch"
+    network_code = "squid"
+    browser = "clam"
     expected = "networks/{network_code}/browsers/{browser}".format(
         network_code=network_code,
         browser=browser,
@@ -3966,8 +3809,8 @@ def test_browser_path():
 
 def test_parse_browser_path():
     expected = {
-        "network_code": "cuttlefish",
-        "browser": "mussel",
+        "network_code": "whelk",
+        "browser": "octopus",
     }
     path = PrivateAuctionDealServiceClient.browser_path(**expected)
 
@@ -3977,8 +3820,8 @@ def test_parse_browser_path():
 
 
 def test_browser_language_path():
-    network_code = "winkle"
-    browser_language = "nautilus"
+    network_code = "oyster"
+    browser_language = "nudibranch"
     expected = "networks/{network_code}/browserLanguages/{browser_language}".format(
         network_code=network_code,
         browser_language=browser_language,
@@ -3991,8 +3834,8 @@ def test_browser_language_path():
 
 def test_parse_browser_language_path():
     expected = {
-        "network_code": "scallop",
-        "browser_language": "abalone",
+        "network_code": "cuttlefish",
+        "browser_language": "mussel",
     }
     path = PrivateAuctionDealServiceClient.browser_language_path(**expected)
 
@@ -4002,8 +3845,8 @@ def test_parse_browser_language_path():
 
 
 def test_cms_metadata_value_path():
-    network_code = "squid"
-    cms_metadata_value = "clam"
+    network_code = "winkle"
+    cms_metadata_value = "nautilus"
     expected = "networks/{network_code}/cmsMetadataValues/{cms_metadata_value}".format(
         network_code=network_code,
         cms_metadata_value=cms_metadata_value,
@@ -4016,8 +3859,8 @@ def test_cms_metadata_value_path():
 
 def test_parse_cms_metadata_value_path():
     expected = {
-        "network_code": "whelk",
-        "cms_metadata_value": "octopus",
+        "network_code": "scallop",
+        "cms_metadata_value": "abalone",
     }
     path = PrivateAuctionDealServiceClient.cms_metadata_value_path(**expected)
 
@@ -4027,8 +3870,8 @@ def test_parse_cms_metadata_value_path():
 
 
 def test_content_path():
-    network_code = "oyster"
-    content = "nudibranch"
+    network_code = "squid"
+    content = "clam"
     expected = "networks/{network_code}/content/{content}".format(
         network_code=network_code,
         content=content,
@@ -4039,8 +3882,8 @@ def test_content_path():
 
 def test_parse_content_path():
     expected = {
-        "network_code": "cuttlefish",
-        "content": "mussel",
+        "network_code": "whelk",
+        "content": "octopus",
     }
     path = PrivateAuctionDealServiceClient.content_path(**expected)
 
@@ -4050,8 +3893,8 @@ def test_parse_content_path():
 
 
 def test_content_bundle_path():
-    network_code = "winkle"
-    content_bundle = "nautilus"
+    network_code = "oyster"
+    content_bundle = "nudibranch"
     expected = "networks/{network_code}/contentBundles/{content_bundle}".format(
         network_code=network_code,
         content_bundle=content_bundle,
@@ -4064,13 +3907,38 @@ def test_content_bundle_path():
 
 def test_parse_content_bundle_path():
     expected = {
-        "network_code": "scallop",
-        "content_bundle": "abalone",
+        "network_code": "cuttlefish",
+        "content_bundle": "mussel",
     }
     path = PrivateAuctionDealServiceClient.content_bundle_path(**expected)
 
     # Check that the path construction is reversible.
     actual = PrivateAuctionDealServiceClient.parse_content_bundle_path(path)
+    assert expected == actual
+
+
+def test_content_label_path():
+    network_code = "winkle"
+    content_label = "nautilus"
+    expected = "networks/{network_code}/contentLabels/{content_label}".format(
+        network_code=network_code,
+        content_label=content_label,
+    )
+    actual = PrivateAuctionDealServiceClient.content_label_path(
+        network_code, content_label
+    )
+    assert expected == actual
+
+
+def test_parse_content_label_path():
+    expected = {
+        "network_code": "scallop",
+        "content_label": "abalone",
+    }
+    path = PrivateAuctionDealServiceClient.content_label_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = PrivateAuctionDealServiceClient.parse_content_label_path(path)
     assert expected == actual
 
 
@@ -4228,9 +4096,34 @@ def test_parse_geo_target_path():
     assert expected == actual
 
 
-def test_mobile_carrier_path():
+def test_inventory_url_path():
     network_code = "squid"
-    mobile_carrier = "clam"
+    inventory_url = "clam"
+    expected = "networks/{network_code}/inventoryUrls/{inventory_url}".format(
+        network_code=network_code,
+        inventory_url=inventory_url,
+    )
+    actual = PrivateAuctionDealServiceClient.inventory_url_path(
+        network_code, inventory_url
+    )
+    assert expected == actual
+
+
+def test_parse_inventory_url_path():
+    expected = {
+        "network_code": "whelk",
+        "inventory_url": "octopus",
+    }
+    path = PrivateAuctionDealServiceClient.inventory_url_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = PrivateAuctionDealServiceClient.parse_inventory_url_path(path)
+    assert expected == actual
+
+
+def test_mobile_carrier_path():
+    network_code = "oyster"
+    mobile_carrier = "nudibranch"
     expected = "networks/{network_code}/mobileCarriers/{mobile_carrier}".format(
         network_code=network_code,
         mobile_carrier=mobile_carrier,
@@ -4243,8 +4136,8 @@ def test_mobile_carrier_path():
 
 def test_parse_mobile_carrier_path():
     expected = {
-        "network_code": "whelk",
-        "mobile_carrier": "octopus",
+        "network_code": "cuttlefish",
+        "mobile_carrier": "mussel",
     }
     path = PrivateAuctionDealServiceClient.mobile_carrier_path(**expected)
 
@@ -4254,8 +4147,8 @@ def test_parse_mobile_carrier_path():
 
 
 def test_mobile_device_path():
-    network_code = "oyster"
-    mobile_device = "nudibranch"
+    network_code = "winkle"
+    mobile_device = "nautilus"
     expected = "networks/{network_code}/mobileDevices/{mobile_device}".format(
         network_code=network_code,
         mobile_device=mobile_device,
@@ -4268,8 +4161,8 @@ def test_mobile_device_path():
 
 def test_parse_mobile_device_path():
     expected = {
-        "network_code": "cuttlefish",
-        "mobile_device": "mussel",
+        "network_code": "scallop",
+        "mobile_device": "abalone",
     }
     path = PrivateAuctionDealServiceClient.mobile_device_path(**expected)
 
@@ -4279,8 +4172,8 @@ def test_parse_mobile_device_path():
 
 
 def test_mobile_device_submodel_path():
-    network_code = "winkle"
-    mobile_device_submodel = "nautilus"
+    network_code = "squid"
+    mobile_device_submodel = "clam"
     expected = (
         "networks/{network_code}/mobileDeviceSubmodels/{mobile_device_submodel}".format(
             network_code=network_code,
@@ -4295,8 +4188,8 @@ def test_mobile_device_submodel_path():
 
 def test_parse_mobile_device_submodel_path():
     expected = {
-        "network_code": "scallop",
-        "mobile_device_submodel": "abalone",
+        "network_code": "whelk",
+        "mobile_device_submodel": "octopus",
     }
     path = PrivateAuctionDealServiceClient.mobile_device_submodel_path(**expected)
 
@@ -4306,7 +4199,7 @@ def test_parse_mobile_device_submodel_path():
 
 
 def test_network_path():
-    network_code = "squid"
+    network_code = "oyster"
     expected = "networks/{network_code}".format(
         network_code=network_code,
     )
@@ -4316,7 +4209,7 @@ def test_network_path():
 
 def test_parse_network_path():
     expected = {
-        "network_code": "clam",
+        "network_code": "nudibranch",
     }
     path = PrivateAuctionDealServiceClient.network_path(**expected)
 
@@ -4326,8 +4219,8 @@ def test_parse_network_path():
 
 
 def test_operating_system_path():
-    network_code = "whelk"
-    operating_system = "octopus"
+    network_code = "cuttlefish"
+    operating_system = "mussel"
     expected = "networks/{network_code}/operatingSystems/{operating_system}".format(
         network_code=network_code,
         operating_system=operating_system,
@@ -4340,8 +4233,8 @@ def test_operating_system_path():
 
 def test_parse_operating_system_path():
     expected = {
-        "network_code": "oyster",
-        "operating_system": "nudibranch",
+        "network_code": "winkle",
+        "operating_system": "nautilus",
     }
     path = PrivateAuctionDealServiceClient.operating_system_path(**expected)
 
@@ -4351,8 +4244,8 @@ def test_parse_operating_system_path():
 
 
 def test_operating_system_version_path():
-    network_code = "cuttlefish"
-    operating_system_version = "mussel"
+    network_code = "scallop"
+    operating_system_version = "abalone"
     expected = "networks/{network_code}/operatingSystemVersions/{operating_system_version}".format(
         network_code=network_code,
         operating_system_version=operating_system_version,
@@ -4365,8 +4258,8 @@ def test_operating_system_version_path():
 
 def test_parse_operating_system_version_path():
     expected = {
-        "network_code": "winkle",
-        "operating_system_version": "nautilus",
+        "network_code": "squid",
+        "operating_system_version": "clam",
     }
     path = PrivateAuctionDealServiceClient.operating_system_version_path(**expected)
 
@@ -4376,8 +4269,8 @@ def test_parse_operating_system_version_path():
 
 
 def test_placement_path():
-    network_code = "scallop"
-    placement = "abalone"
+    network_code = "whelk"
+    placement = "octopus"
     expected = "networks/{network_code}/placements/{placement}".format(
         network_code=network_code,
         placement=placement,
@@ -4388,8 +4281,8 @@ def test_placement_path():
 
 def test_parse_placement_path():
     expected = {
-        "network_code": "squid",
-        "placement": "clam",
+        "network_code": "oyster",
+        "placement": "nudibranch",
     }
     path = PrivateAuctionDealServiceClient.placement_path(**expected)
 
@@ -4399,8 +4292,8 @@ def test_parse_placement_path():
 
 
 def test_private_auction_deal_path():
-    network_code = "whelk"
-    private_auction_deal = "octopus"
+    network_code = "cuttlefish"
+    private_auction_deal = "mussel"
     expected = (
         "networks/{network_code}/privateAuctionDeals/{private_auction_deal}".format(
             network_code=network_code,
@@ -4415,8 +4308,8 @@ def test_private_auction_deal_path():
 
 def test_parse_private_auction_deal_path():
     expected = {
-        "network_code": "oyster",
-        "private_auction_deal": "nudibranch",
+        "network_code": "winkle",
+        "private_auction_deal": "nautilus",
     }
     path = PrivateAuctionDealServiceClient.private_auction_deal_path(**expected)
 
@@ -4425,8 +4318,33 @@ def test_parse_private_auction_deal_path():
     assert expected == actual
 
 
+def test_taxonomy_category_path():
+    network_code = "scallop"
+    taxonomy_category = "abalone"
+    expected = "networks/{network_code}/taxonomyCategories/{taxonomy_category}".format(
+        network_code=network_code,
+        taxonomy_category=taxonomy_category,
+    )
+    actual = PrivateAuctionDealServiceClient.taxonomy_category_path(
+        network_code, taxonomy_category
+    )
+    assert expected == actual
+
+
+def test_parse_taxonomy_category_path():
+    expected = {
+        "network_code": "squid",
+        "taxonomy_category": "clam",
+    }
+    path = PrivateAuctionDealServiceClient.taxonomy_category_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = PrivateAuctionDealServiceClient.parse_taxonomy_category_path(path)
+    assert expected == actual
+
+
 def test_common_billing_account_path():
-    billing_account = "cuttlefish"
+    billing_account = "whelk"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -4438,7 +4356,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "mussel",
+        "billing_account": "octopus",
     }
     path = PrivateAuctionDealServiceClient.common_billing_account_path(**expected)
 
@@ -4448,7 +4366,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "winkle"
+    folder = "oyster"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -4458,7 +4376,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "nautilus",
+        "folder": "nudibranch",
     }
     path = PrivateAuctionDealServiceClient.common_folder_path(**expected)
 
@@ -4468,7 +4386,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "scallop"
+    organization = "cuttlefish"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -4478,7 +4396,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "abalone",
+        "organization": "mussel",
     }
     path = PrivateAuctionDealServiceClient.common_organization_path(**expected)
 
@@ -4488,7 +4406,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "squid"
+    project = "winkle"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -4498,7 +4416,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "clam",
+        "project": "nautilus",
     }
     path = PrivateAuctionDealServiceClient.common_project_path(**expected)
 
@@ -4508,8 +4426,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "whelk"
-    location = "octopus"
+    project = "scallop"
+    location = "abalone"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -4520,8 +4438,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "oyster",
-        "location": "nudibranch",
+        "project": "squid",
+        "location": "clam",
     }
     path = PrivateAuctionDealServiceClient.common_location_path(**expected)
 

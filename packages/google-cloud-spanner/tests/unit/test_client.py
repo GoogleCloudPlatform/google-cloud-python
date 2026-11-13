@@ -59,6 +59,17 @@ class TestClient(unittest.TestCase):
     def _make_one(self, *args, **kwargs):
         return self._get_target_class()(*args, **kwargs)
 
+    @staticmethod
+    def _make_instance_admin_api():
+        from google.cloud.spanner_admin_instance_v1 import InstanceAdminClient
+        from google.cloud.spanner_admin_instance_v1.services.instance_admin.transports.base import (
+            InstanceAdminTransport,
+        )
+
+        mock_transport = mock.create_autospec(InstanceAdminTransport, instance=True)
+        mock_transport._wrapped_methods = {}
+        return InstanceAdminClient(transport=mock_transport)
+
     def _constructor_test_helper(
         self,
         expected_scopes,
@@ -627,15 +638,14 @@ class TestClient(unittest.TestCase):
 
     def test_list_instance_configs(self):
         from google.cloud.spanner_admin_instance_v1 import (
-            InstanceAdminClient,
+            InstanceConfig as InstanceConfigPB,
+        )
+        from google.cloud.spanner_admin_instance_v1 import (
             ListInstanceConfigsRequest,
             ListInstanceConfigsResponse,
         )
-        from google.cloud.spanner_admin_instance_v1 import (
-            InstanceConfig as InstanceConfigPB,
-        )
 
-        api = InstanceAdminClient(credentials=AnonymousCredentials())
+        api = self._make_instance_admin_api()
         credentials = build_scoped_credentials()
         client = self._make_one(project=self.PROJECT, credentials=credentials)
         client._instance_admin_api = api
@@ -676,16 +686,15 @@ class TestClient(unittest.TestCase):
 
     def test_list_instance_configs_w_options(self):
         from google.cloud.spanner_admin_instance_v1 import (
-            InstanceAdminClient,
+            InstanceConfig as InstanceConfigPB,
+        )
+        from google.cloud.spanner_admin_instance_v1 import (
             ListInstanceConfigsRequest,
             ListInstanceConfigsResponse,
         )
-        from google.cloud.spanner_admin_instance_v1 import (
-            InstanceConfig as InstanceConfigPB,
-        )
 
         credentials = build_scoped_credentials()
-        api = InstanceAdminClient(credentials=credentials)
+        api = self._make_instance_admin_api()
         client = self._make_one(project=self.PROJECT, credentials=credentials)
         client._instance_admin_api = api
 
@@ -754,15 +763,16 @@ class TestClient(unittest.TestCase):
         self.assertIs(instance._client, client)
 
     def test_list_instances(self):
-        from google.cloud.spanner_admin_instance_v1 import Instance as InstancePB
         from google.cloud.spanner_admin_instance_v1 import (
-            InstanceAdminClient,
+            Instance as InstancePB,
+        )
+        from google.cloud.spanner_admin_instance_v1 import (
             ListInstancesRequest,
             ListInstancesResponse,
         )
 
+        api = self._make_instance_admin_api()
         credentials = build_scoped_credentials()
-        api = InstanceAdminClient(credentials=credentials)
         client = self._make_one(project=self.PROJECT, credentials=credentials)
         client._instance_admin_api = api
 
@@ -806,13 +816,12 @@ class TestClient(unittest.TestCase):
 
     def test_list_instances_w_options(self):
         from google.cloud.spanner_admin_instance_v1 import (
-            InstanceAdminClient,
             ListInstancesRequest,
             ListInstancesResponse,
         )
 
+        api = self._make_instance_admin_api()
         credentials = build_scoped_credentials()
-        api = InstanceAdminClient(credentials=credentials)
         client = self._make_one(project=self.PROJECT, credentials=credentials)
         client._instance_admin_api = api
 
@@ -988,3 +997,171 @@ class TestClient(unittest.TestCase):
         self.assertIn(
             "instance_type must be one of 'cloud' or 'omni'", str(ctx.exception)
         )
+
+    def test_constructor_w_omni_username_password(self):
+        from google.cloud.spanner_v1.client import InstanceType
+        from google.cloud.spanner_v1.omni.credentials import (
+            SpannerOmniCredentials,
+        )
+
+        client = self._make_one(
+            project=self.PROJECT,
+            client_options={"api_endpoint": "omni-host:15000"},
+            instance_type=InstanceType.OMNI,
+            username="test_user",
+            password="test_password",
+        )
+        self.assertEqual(client.project, "default")
+        self.assertEqual(client.instance_type, InstanceType.OMNI)
+        self.assertEqual(client._host, "omni-host:15000")
+        self.assertIsInstance(client._credentials, SpannerOmniCredentials)
+        self.assertEqual(client._credentials.username, "test_user")
+        self.assertEqual(client._credentials.target, "omni-host:15000")
+
+    def test_constructor_w_omni_partial_credentials_raises_value_error(self):
+        from google.cloud.spanner_v1.client import InstanceType
+
+        with self.assertRaises(ValueError) as ctx:
+            self._make_one(
+                project=self.PROJECT,
+                client_options={"api_endpoint": "omni-host:15000"},
+                instance_type=InstanceType.OMNI,
+                username="test_user",
+            )
+        self.assertIn(
+            "Both username and password must be specified for Omni authentication",
+            str(ctx.exception),
+        )
+
+        with self.assertRaises(ValueError) as ctx:
+            self._make_one(
+                project=self.PROJECT,
+                client_options={"api_endpoint": "omni-host:15000"},
+                instance_type=InstanceType.OMNI,
+                password="test_password",
+            )
+        self.assertIn(
+            "Both username and password must be specified for Omni authentication",
+            str(ctx.exception),
+        )
+
+    def test_constructor_w_username_password_on_cloud_raises_value_error(self):
+        creds = build_scoped_credentials()
+        with self.assertRaises(ValueError) as ctx:
+            self._make_one(
+                project=self.PROJECT,
+                credentials=creds,
+                username="test_user",
+                password="test_password",
+            )
+        self.assertIn(
+            "username and password can only be used when instance_type='omni'.",
+            str(ctx.exception),
+        )
+
+    def test_instance_admin_api_omni(self):
+        from google.cloud.spanner_v1.client import InstanceType
+
+        client = self._make_one(
+            project=self.PROJECT,
+            client_options={"api_endpoint": "omni-host:15000"},
+            instance_type=InstanceType.OMNI,
+            username="test_user",
+            password="test_password",
+            use_plain_text=True,
+        )
+
+        inst_module = "google.cloud.spanner_v1.client.InstanceAdminClient"
+        with mock.patch(inst_module) as instance_admin_client:
+            api = client.instance_admin_api
+            self.assertIs(api, instance_admin_client.return_value)
+            instance_admin_client.assert_called_once()
+            called_kw = instance_admin_client.call_args[1]
+            self.assertIn("transport", called_kw)
+
+    def test_database_admin_api_omni(self):
+        from google.cloud.spanner_v1.client import InstanceType
+
+        client = self._make_one(
+            project=self.PROJECT,
+            client_options={"api_endpoint": "omni-host:15000"},
+            instance_type=InstanceType.OMNI,
+            username="test_user",
+            password="test_password",
+            use_plain_text=True,
+        )
+
+        db_module = "google.cloud.spanner_v1.client.DatabaseAdminClient"
+        with mock.patch(db_module) as database_admin_client:
+            api = client.database_admin_api
+            self.assertIs(api, database_admin_client.return_value)
+            database_admin_client.assert_called_once()
+            called_kw = database_admin_client.call_args[1]
+            self.assertIn("transport", called_kw)
+
+    def test_constructor_w_omni_explicit_credentials_instance(self):
+        from google.cloud.spanner_v1.client import InstanceType
+        from google.cloud.spanner_v1.omni.credentials import SpannerOmniCredentials
+
+        creds = SpannerOmniCredentials("user", "pass", "omni-host:15000")
+        client = self._make_one(
+            project=self.PROJECT,
+            client_options={"api_endpoint": "omni-host:15000"},
+            instance_type=InstanceType.OMNI,
+            credentials=creds,
+        )
+        self.assertIs(client._credentials, creds)
+
+
+class TestInitializeMetrics(unittest.TestCase):
+    def test_initialize_metrics_emulator_branch(self):
+        from google.cloud.spanner_v1 import client as MUT
+
+        with mock.patch(
+            "google.cloud.spanner_v1.client._get_spanner_emulator_host",
+            return_value="localhost",
+        ):
+            with mock.patch(
+                "google.cloud.spanner_v1.client._metrics_monitor_initialized",
+                False,
+            ):
+                with mock.patch(
+                    "google.cloud.spanner_v1.client.metrics.set_meter_provider"
+                ) as set_mock:
+                    MUT._initialize_metrics("project", mock.Mock())
+                    set_mock.assert_called_once()
+
+    def test_initialize_metrics_emulator_host_parameter(self):
+        from google.cloud.spanner_v1 import client as MUT
+
+        with mock.patch(
+            "google.cloud.spanner_v1.client._metrics_monitor_initialized",
+            False,
+        ):
+            with mock.patch(
+                "google.cloud.spanner_v1.client.metrics.set_meter_provider"
+            ) as set_mock:
+                MUT._initialize_metrics(
+                    "project",
+                    mock.Mock(),
+                    emulator_host="localhost:9010",
+                )
+                set_mock.assert_called_once()
+
+    def test_initialize_metrics_anonymous_credentials(self):
+        from google.auth.credentials import AnonymousCredentials
+
+        from google.cloud.spanner_v1 import client as MUT
+
+        with mock.patch(
+            "google.cloud.spanner_v1.client._metrics_monitor_initialized",
+            False,
+        ):
+            with mock.patch(
+                "google.cloud.spanner_v1.client.metrics.set_meter_provider"
+            ) as set_mock:
+                MUT._initialize_metrics(
+                    "project",
+                    AnonymousCredentials(),
+                )
+                set_mock.assert_called_once()

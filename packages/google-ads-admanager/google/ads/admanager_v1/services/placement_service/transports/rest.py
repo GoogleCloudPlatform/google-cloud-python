@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import placement_messages, placement_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -806,21 +807,18 @@ class PlacementServiceRestTransport(_BasePlacementServiceRestTransport):
             """
 
             http_options = _BasePlacementServiceRestTransport._BaseBatchActivatePlacements._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_activate_placements(
                 request, metadata
             )
-            transcoded_request = _BasePlacementServiceRestTransport._BaseBatchActivatePlacements._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePlacementServiceRestTransport._BaseBatchActivatePlacements._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlacementServiceRestTransport._BaseBatchActivatePlacements._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacementServiceRestTransport._BaseBatchActivatePlacements,
+                    "_BaseBatchActivatePlacements__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -963,21 +961,18 @@ class PlacementServiceRestTransport(_BasePlacementServiceRestTransport):
             """
 
             http_options = _BasePlacementServiceRestTransport._BaseBatchArchivePlacements._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_archive_placements(
                 request, metadata
             )
-            transcoded_request = _BasePlacementServiceRestTransport._BaseBatchArchivePlacements._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePlacementServiceRestTransport._BaseBatchArchivePlacements._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlacementServiceRestTransport._BaseBatchArchivePlacements._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacementServiceRestTransport._BaseBatchArchivePlacements,
+                    "_BaseBatchArchivePlacements__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1120,21 +1115,18 @@ class PlacementServiceRestTransport(_BasePlacementServiceRestTransport):
             """
 
             http_options = _BasePlacementServiceRestTransport._BaseBatchCreatePlacements._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_placements(
                 request, metadata
             )
-            transcoded_request = _BasePlacementServiceRestTransport._BaseBatchCreatePlacements._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePlacementServiceRestTransport._BaseBatchCreatePlacements._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlacementServiceRestTransport._BaseBatchCreatePlacements._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacementServiceRestTransport._BaseBatchCreatePlacements,
+                    "_BaseBatchCreatePlacements__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1281,21 +1273,18 @@ class PlacementServiceRestTransport(_BasePlacementServiceRestTransport):
             """
 
             http_options = _BasePlacementServiceRestTransport._BaseBatchDeactivatePlacements._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_deactivate_placements(
                 request, metadata
             )
-            transcoded_request = _BasePlacementServiceRestTransport._BaseBatchDeactivatePlacements._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePlacementServiceRestTransport._BaseBatchDeactivatePlacements._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlacementServiceRestTransport._BaseBatchDeactivatePlacements._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacementServiceRestTransport._BaseBatchDeactivatePlacements,
+                    "_BaseBatchDeactivatePlacements__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1438,21 +1427,18 @@ class PlacementServiceRestTransport(_BasePlacementServiceRestTransport):
             """
 
             http_options = _BasePlacementServiceRestTransport._BaseBatchUpdatePlacements._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_placements(
                 request, metadata
             )
-            transcoded_request = _BasePlacementServiceRestTransport._BaseBatchUpdatePlacements._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePlacementServiceRestTransport._BaseBatchUpdatePlacements._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlacementServiceRestTransport._BaseBatchUpdatePlacements._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacementServiceRestTransport._BaseBatchUpdatePlacements,
+                    "_BaseBatchUpdatePlacements__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1595,21 +1581,18 @@ class PlacementServiceRestTransport(_BasePlacementServiceRestTransport):
             """
 
             http_options = _BasePlacementServiceRestTransport._BaseCreatePlacement._get_http_options()
-
             request, metadata = self._interceptor.pre_create_placement(
                 request, metadata
             )
-            transcoded_request = _BasePlacementServiceRestTransport._BaseCreatePlacement._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePlacementServiceRestTransport._BaseCreatePlacement._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlacementServiceRestTransport._BaseCreatePlacement._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacementServiceRestTransport._BaseCreatePlacement,
+                    "_BaseCreatePlacement__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1746,15 +1729,16 @@ class PlacementServiceRestTransport(_BasePlacementServiceRestTransport):
             http_options = (
                 _BasePlacementServiceRestTransport._BaseGetPlacement._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_placement(request, metadata)
-            transcoded_request = _BasePlacementServiceRestTransport._BaseGetPlacement._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlacementServiceRestTransport._BaseGetPlacement._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacementServiceRestTransport._BaseGetPlacement,
+                    "_BaseGetPlacement__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1890,15 +1874,16 @@ class PlacementServiceRestTransport(_BasePlacementServiceRestTransport):
             """
 
             http_options = _BasePlacementServiceRestTransport._BaseListPlacements._get_http_options()
-
             request, metadata = self._interceptor.pre_list_placements(request, metadata)
-            transcoded_request = _BasePlacementServiceRestTransport._BaseListPlacements._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlacementServiceRestTransport._BaseListPlacements._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacementServiceRestTransport._BaseListPlacements,
+                    "_BaseListPlacements__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2036,21 +2021,18 @@ class PlacementServiceRestTransport(_BasePlacementServiceRestTransport):
             """
 
             http_options = _BasePlacementServiceRestTransport._BaseUpdatePlacement._get_http_options()
-
             request, metadata = self._interceptor.pre_update_placement(
                 request, metadata
             )
-            transcoded_request = _BasePlacementServiceRestTransport._BaseUpdatePlacement._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePlacementServiceRestTransport._BaseUpdatePlacement._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlacementServiceRestTransport._BaseUpdatePlacement._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacementServiceRestTransport._BaseUpdatePlacement,
+                    "_BaseUpdatePlacement__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2288,17 +2270,18 @@ class PlacementServiceRestTransport(_BasePlacementServiceRestTransport):
             """
 
             http_options = _BasePlacementServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BasePlacementServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlacementServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacementServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2405,15 +2388,16 @@ class PlacementServiceRestTransport(_BasePlacementServiceRestTransport):
             http_options = (
                 _BasePlacementServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BasePlacementServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePlacementServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacementServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

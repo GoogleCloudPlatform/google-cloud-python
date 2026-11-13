@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.errorreporting_v1beta1._compat import transcode_request
 from google.cloud.errorreporting_v1beta1.types import error_stats_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -406,15 +407,16 @@ class ErrorStatsServiceRestTransport(_BaseErrorStatsServiceRestTransport):
             """
 
             http_options = _BaseErrorStatsServiceRestTransport._BaseDeleteEvents._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_events(request, metadata)
-            transcoded_request = _BaseErrorStatsServiceRestTransport._BaseDeleteEvents._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseErrorStatsServiceRestTransport._BaseDeleteEvents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseErrorStatsServiceRestTransport._BaseDeleteEvents,
+                    "_BaseDeleteEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -555,15 +557,16 @@ class ErrorStatsServiceRestTransport(_BaseErrorStatsServiceRestTransport):
             http_options = (
                 _BaseErrorStatsServiceRestTransport._BaseListEvents._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_events(request, metadata)
-            transcoded_request = _BaseErrorStatsServiceRestTransport._BaseListEvents._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseErrorStatsServiceRestTransport._BaseListEvents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseErrorStatsServiceRestTransport._BaseListEvents,
+                    "_BaseListEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -702,17 +705,18 @@ class ErrorStatsServiceRestTransport(_BaseErrorStatsServiceRestTransport):
             """
 
             http_options = _BaseErrorStatsServiceRestTransport._BaseListGroupStats._get_http_options()
-
             request, metadata = self._interceptor.pre_list_group_stats(
                 request, metadata
             )
-            transcoded_request = _BaseErrorStatsServiceRestTransport._BaseListGroupStats._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseErrorStatsServiceRestTransport._BaseListGroupStats._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseErrorStatsServiceRestTransport._BaseListGroupStats,
+                    "_BaseListGroupStats__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

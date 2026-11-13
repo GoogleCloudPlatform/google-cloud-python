@@ -42,13 +42,14 @@ To install with `pip`_:
 .. _pip: https://pip.pypa.io/
 """
 
-from google.resumable_media.common import DataCorruption
-from google.resumable_media.common import InvalidResponse
-from google.resumable_media.common import PERMANENT_REDIRECT
-from google.resumable_media.common import RetryStrategy
-from google.resumable_media.common import TOO_MANY_REQUESTS
-from google.resumable_media.common import UPLOAD_CHUNK_SIZE
-
+from google.resumable_media.common import (
+    PERMANENT_REDIRECT,
+    TOO_MANY_REQUESTS,
+    UPLOAD_CHUNK_SIZE,
+    DataCorruption,
+    InvalidResponse,
+    RetryStrategy,
+)
 
 __all__ = [
     "DataCorruption",

@@ -160,6 +160,11 @@ class ReservationSlotsTransport(abc.ABC):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.get_health: gapic_v1.method.wrap_method(
+                self.get_health,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.get_version: gapic_v1.method.wrap_method(
                 self.get_version,
                 default_timeout=600.0,
@@ -205,6 +210,15 @@ class ReservationSlotsTransport(abc.ABC):
             compute.ReservationSlotsGetResponse,
             Awaitable[compute.ReservationSlotsGetResponse],
         ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_health(
+        self,
+    ) -> Callable[
+        [compute.GetHealthReservationSlotRequest],
+        Union[compute.Operation, Awaitable[compute.Operation]],
     ]:
         raise NotImplementedError()
 

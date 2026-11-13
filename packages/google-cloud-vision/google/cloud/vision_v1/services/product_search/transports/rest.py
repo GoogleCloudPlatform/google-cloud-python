@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.vision_v1._compat import transcode_request
 from google.cloud.vision_v1.types import product_search_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1231,21 +1232,18 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             """
 
             http_options = _BaseProductSearchRestTransport._BaseAddProductToProductSet._get_http_options()
-
             request, metadata = self._interceptor.pre_add_product_to_product_set(
                 request, metadata
             )
-            transcoded_request = _BaseProductSearchRestTransport._BaseAddProductToProductSet._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductSearchRestTransport._BaseAddProductToProductSet._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseAddProductToProductSet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseAddProductToProductSet,
+                    "_BaseAddProductToProductSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1349,19 +1347,16 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             http_options = (
                 _BaseProductSearchRestTransport._BaseCreateProduct._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_product(request, metadata)
-            transcoded_request = _BaseProductSearchRestTransport._BaseCreateProduct._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductSearchRestTransport._BaseCreateProduct._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseCreateProduct._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseCreateProduct,
+                    "_BaseCreateProduct__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1502,21 +1497,18 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             """
 
             http_options = _BaseProductSearchRestTransport._BaseCreateProductSet._get_http_options()
-
             request, metadata = self._interceptor.pre_create_product_set(
                 request, metadata
             )
-            transcoded_request = _BaseProductSearchRestTransport._BaseCreateProductSet._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductSearchRestTransport._BaseCreateProductSet._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseCreateProductSet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseCreateProductSet,
+                    "_BaseCreateProductSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1656,21 +1648,18 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             """
 
             http_options = _BaseProductSearchRestTransport._BaseCreateReferenceImage._get_http_options()
-
             request, metadata = self._interceptor.pre_create_reference_image(
                 request, metadata
             )
-            transcoded_request = _BaseProductSearchRestTransport._BaseCreateReferenceImage._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductSearchRestTransport._BaseCreateReferenceImage._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseCreateReferenceImage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseCreateReferenceImage,
+                    "_BaseCreateReferenceImage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1805,15 +1794,16 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             http_options = (
                 _BaseProductSearchRestTransport._BaseDeleteProduct._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_product(request, metadata)
-            transcoded_request = _BaseProductSearchRestTransport._BaseDeleteProduct._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseDeleteProduct._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseDeleteProduct,
+                    "_BaseDeleteProduct__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1909,17 +1899,18 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             """
 
             http_options = _BaseProductSearchRestTransport._BaseDeleteProductSet._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_product_set(
                 request, metadata
             )
-            transcoded_request = _BaseProductSearchRestTransport._BaseDeleteProductSet._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseDeleteProductSet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseDeleteProductSet,
+                    "_BaseDeleteProductSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2015,17 +2006,18 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             """
 
             http_options = _BaseProductSearchRestTransport._BaseDeleteReferenceImage._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_reference_image(
                 request, metadata
             )
-            transcoded_request = _BaseProductSearchRestTransport._BaseDeleteReferenceImage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseDeleteReferenceImage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseDeleteReferenceImage,
+                    "_BaseDeleteReferenceImage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2127,19 +2119,16 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             http_options = (
                 _BaseProductSearchRestTransport._BaseGetProduct._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_product(request, metadata)
-            transcoded_request = (
-                _BaseProductSearchRestTransport._BaseGetProduct._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProductSearchRestTransport._BaseGetProduct._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseGetProduct,
+                    "_BaseGetProduct__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2280,15 +2269,16 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             http_options = (
                 _BaseProductSearchRestTransport._BaseGetProductSet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_product_set(request, metadata)
-            transcoded_request = _BaseProductSearchRestTransport._BaseGetProductSet._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseGetProductSet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseGetProductSet,
+                    "_BaseGetProductSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2426,17 +2416,18 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             """
 
             http_options = _BaseProductSearchRestTransport._BaseGetReferenceImage._get_http_options()
-
             request, metadata = self._interceptor.pre_get_reference_image(
                 request, metadata
             )
-            transcoded_request = _BaseProductSearchRestTransport._BaseGetReferenceImage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseGetReferenceImage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseGetReferenceImage,
+                    "_BaseGetReferenceImage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2576,21 +2567,18 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             """
 
             http_options = _BaseProductSearchRestTransport._BaseImportProductSets._get_http_options()
-
             request, metadata = self._interceptor.pre_import_product_sets(
                 request, metadata
             )
-            transcoded_request = _BaseProductSearchRestTransport._BaseImportProductSets._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductSearchRestTransport._BaseImportProductSets._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseImportProductSets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseImportProductSets,
+                    "_BaseImportProductSets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2725,15 +2713,16 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             http_options = (
                 _BaseProductSearchRestTransport._BaseListProducts._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_products(request, metadata)
-            transcoded_request = _BaseProductSearchRestTransport._BaseListProducts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseListProducts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseListProducts,
+                    "_BaseListProducts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2871,17 +2860,18 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             http_options = (
                 _BaseProductSearchRestTransport._BaseListProductSets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_product_sets(
                 request, metadata
             )
-            transcoded_request = _BaseProductSearchRestTransport._BaseListProductSets._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseListProductSets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseListProductSets,
+                    "_BaseListProductSets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3022,17 +3012,18 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             """
 
             http_options = _BaseProductSearchRestTransport._BaseListProductsInProductSet._get_http_options()
-
             request, metadata = self._interceptor.pre_list_products_in_product_set(
                 request, metadata
             )
-            transcoded_request = _BaseProductSearchRestTransport._BaseListProductsInProductSet._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseListProductsInProductSet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseListProductsInProductSet,
+                    "_BaseListProductsInProductSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3172,17 +3163,18 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             """
 
             http_options = _BaseProductSearchRestTransport._BaseListReferenceImages._get_http_options()
-
             request, metadata = self._interceptor.pre_list_reference_images(
                 request, metadata
             )
-            transcoded_request = _BaseProductSearchRestTransport._BaseListReferenceImages._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseListReferenceImages._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseListReferenceImages,
+                    "_BaseListReferenceImages__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3326,19 +3318,16 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             http_options = (
                 _BaseProductSearchRestTransport._BasePurgeProducts._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_purge_products(request, metadata)
-            transcoded_request = _BaseProductSearchRestTransport._BasePurgeProducts._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductSearchRestTransport._BasePurgeProducts._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BasePurgeProducts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BasePurgeProducts,
+                    "_BasePurgeProducts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3471,21 +3460,18 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             """
 
             http_options = _BaseProductSearchRestTransport._BaseRemoveProductFromProductSet._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_product_from_product_set(
                 request, metadata
             )
-            transcoded_request = _BaseProductSearchRestTransport._BaseRemoveProductFromProductSet._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductSearchRestTransport._BaseRemoveProductFromProductSet._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseRemoveProductFromProductSet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseRemoveProductFromProductSet,
+                    "_BaseRemoveProductFromProductSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3591,19 +3577,16 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             http_options = (
                 _BaseProductSearchRestTransport._BaseUpdateProduct._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_product(request, metadata)
-            transcoded_request = _BaseProductSearchRestTransport._BaseUpdateProduct._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductSearchRestTransport._BaseUpdateProduct._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseUpdateProduct._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseUpdateProduct,
+                    "_BaseUpdateProduct__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3744,21 +3727,18 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             """
 
             http_options = _BaseProductSearchRestTransport._BaseUpdateProductSet._get_http_options()
-
             request, metadata = self._interceptor.pre_update_product_set(
                 request, metadata
             )
-            transcoded_request = _BaseProductSearchRestTransport._BaseUpdateProductSet._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProductSearchRestTransport._BaseUpdateProductSet._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseUpdateProductSet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseUpdateProductSet,
+                    "_BaseUpdateProductSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4100,15 +4080,16 @@ class ProductSearchRestTransport(_BaseProductSearchRestTransport):
             http_options = (
                 _BaseProductSearchRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseProductSearchRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProductSearchRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProductSearchRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

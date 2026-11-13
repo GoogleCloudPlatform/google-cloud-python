@@ -31,6 +31,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.bigquery_reservation_v1._compat import transcode_request
 from google.cloud.bigquery_reservation_v1.types import reservation
 from google.cloud.bigquery_reservation_v1.types import reservation as gcbr_reservation
 
@@ -288,6 +289,14 @@ class ReservationServiceRestInterceptor:
                 return request, metadata
 
             def post_update_reservation(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_reservation_group(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_reservation_group(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -1583,6 +1592,55 @@ class ReservationServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_update_reservation_group(
+        self,
+        request: reservation.UpdateReservationGroupRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        reservation.UpdateReservationGroupRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_reservation_group
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the ReservationService server.
+        """
+        return request, metadata
+
+    def post_update_reservation_group(
+        self, response: reservation.ReservationGroup
+    ) -> reservation.ReservationGroup:
+        """Post-rpc interceptor for update_reservation_group
+
+        DEPRECATED. Please use the `post_update_reservation_group_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the ReservationService server but before
+        it is returned to user code. This `post_update_reservation_group` interceptor runs
+        before the `post_update_reservation_group_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_reservation_group_with_metadata(
+        self,
+        response: reservation.ReservationGroup,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[reservation.ReservationGroup, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_reservation_group
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the ReservationService server but before it is returned to user code.
+
+        We recommend only using this `post_update_reservation_group_with_metadata`
+        interceptor in new development instead of the `post_update_reservation_group` interceptor.
+        When both interceptors are used, this `post_update_reservation_group_with_metadata` interceptor runs after the
+        `post_update_reservation_group` interceptor. The (possibly modified) response returned by
+        `post_update_reservation_group` will be passed to
+        `post_update_reservation_group_with_metadata`.
+        """
+        return response, metadata
+
 
 @dataclasses.dataclass
 class ReservationServiceRestStub:
@@ -1755,21 +1813,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseCreateAssignment._get_http_options()
-
             request, metadata = self._interceptor.pre_create_assignment(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseCreateAssignment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseCreateAssignment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseCreateAssignment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseCreateAssignment,
+                    "_BaseCreateAssignment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1922,21 +1977,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseCreateCapacityCommitment._get_http_options()
-
             request, metadata = self._interceptor.pre_create_capacity_commitment(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseCreateCapacityCommitment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseCreateCapacityCommitment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseCreateCapacityCommitment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseCreateCapacityCommitment,
+                    "_BaseCreateCapacityCommitment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2078,21 +2130,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseCreateReservation._get_http_options()
-
             request, metadata = self._interceptor.pre_create_reservation(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseCreateReservation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseCreateReservation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseCreateReservation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseCreateReservation,
+                    "_BaseCreateReservation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2232,21 +2281,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseCreateReservationGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_create_reservation_group(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseCreateReservationGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseCreateReservationGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseCreateReservationGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseCreateReservationGroup,
+                    "_BaseCreateReservationGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2383,17 +2429,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseDeleteAssignment._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_assignment(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseDeleteAssignment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseDeleteAssignment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseDeleteAssignment,
+                    "_BaseDeleteAssignment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2492,17 +2539,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseDeleteCapacityCommitment._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_capacity_commitment(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseDeleteCapacityCommitment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseDeleteCapacityCommitment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseDeleteCapacityCommitment,
+                    "_BaseDeleteCapacityCommitment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2602,17 +2650,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseDeleteReservation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_reservation(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseDeleteReservation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseDeleteReservation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseDeleteReservation,
+                    "_BaseDeleteReservation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2710,17 +2759,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseDeleteReservationGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_reservation_group(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseDeleteReservationGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseDeleteReservationGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseDeleteReservationGroup,
+                    "_BaseDeleteReservationGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2827,21 +2877,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseFailoverReservation._get_http_options()
-
             request, metadata = self._interceptor.pre_failover_reservation(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseFailoverReservation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseFailoverReservation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseFailoverReservation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseFailoverReservation,
+                    "_BaseFailoverReservation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2980,17 +3027,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseGetBiReservation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_bi_reservation(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseGetBiReservation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseGetBiReservation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseGetBiReservation,
+                    "_BaseGetBiReservation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3140,17 +3188,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseGetCapacityCommitment._get_http_options()
-
             request, metadata = self._interceptor.pre_get_capacity_commitment(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseGetCapacityCommitment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseGetCapacityCommitment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseGetCapacityCommitment,
+                    "_BaseGetCapacityCommitment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3362,15 +3411,16 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseReservationServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3508,15 +3558,16 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseGetReservation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_reservation(request, metadata)
-            transcoded_request = _BaseReservationServiceRestTransport._BaseGetReservation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseGetReservation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseGetReservation,
+                    "_BaseGetReservation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3654,17 +3705,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseGetReservationGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_get_reservation_group(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseGetReservationGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseGetReservationGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseGetReservationGroup,
+                    "_BaseGetReservationGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3804,17 +3856,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseListAssignments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_assignments(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseListAssignments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseListAssignments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseListAssignments,
+                    "_BaseListAssignments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3954,17 +4007,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseListCapacityCommitments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_capacity_commitments(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseListCapacityCommitments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseListCapacityCommitments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseListCapacityCommitments,
+                    "_BaseListCapacityCommitments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4106,17 +4160,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseListReservationGroups._get_http_options()
-
             request, metadata = self._interceptor.pre_list_reservation_groups(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseListReservationGroups._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseListReservationGroups._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseListReservationGroups,
+                    "_BaseListReservationGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4258,17 +4313,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseListReservations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_reservations(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseListReservations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseListReservations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseListReservations,
+                    "_BaseListReservations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4422,21 +4478,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseMergeCapacityCommitments._get_http_options()
-
             request, metadata = self._interceptor.pre_merge_capacity_commitments(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseMergeCapacityCommitments._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseMergeCapacityCommitments._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseMergeCapacityCommitments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseMergeCapacityCommitments,
+                    "_BaseMergeCapacityCommitments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4586,19 +4639,16 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseMoveAssignment._get_http_options()
-
             request, metadata = self._interceptor.pre_move_assignment(request, metadata)
-            transcoded_request = _BaseReservationServiceRestTransport._BaseMoveAssignment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseMoveAssignment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseMoveAssignment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseMoveAssignment,
+                    "_BaseMoveAssignment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4739,17 +4789,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseSearchAllAssignments._get_http_options()
-
             request, metadata = self._interceptor.pre_search_all_assignments(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseSearchAllAssignments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseSearchAllAssignments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseSearchAllAssignments,
+                    "_BaseSearchAllAssignments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4893,17 +4944,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseSearchAssignments._get_http_options()
-
             request, metadata = self._interceptor.pre_search_assignments(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseSearchAssignments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseSearchAssignments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseSearchAssignments,
+                    "_BaseSearchAssignments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5116,19 +5168,16 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseReservationServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5268,21 +5317,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseSplitCapacityCommitment._get_http_options()
-
             request, metadata = self._interceptor.pre_split_capacity_commitment(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseSplitCapacityCommitment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseSplitCapacityCommitment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseSplitCapacityCommitment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseSplitCapacityCommitment,
+                    "_BaseSplitCapacityCommitment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5423,21 +5469,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5580,21 +5623,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseUpdateAssignment._get_http_options()
-
             request, metadata = self._interceptor.pre_update_assignment(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseUpdateAssignment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseUpdateAssignment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseUpdateAssignment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseUpdateAssignment,
+                    "_BaseUpdateAssignment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5731,21 +5771,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseUpdateBiReservation._get_http_options()
-
             request, metadata = self._interceptor.pre_update_bi_reservation(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseUpdateBiReservation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseUpdateBiReservation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseUpdateBiReservation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseUpdateBiReservation,
+                    "_BaseUpdateBiReservation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5900,21 +5937,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseUpdateCapacityCommitment._get_http_options()
-
             request, metadata = self._interceptor.pre_update_capacity_commitment(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseUpdateCapacityCommitment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseUpdateCapacityCommitment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseUpdateCapacityCommitment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseUpdateCapacityCommitment,
+                    "_BaseUpdateCapacityCommitment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6056,21 +6090,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
             """
 
             http_options = _BaseReservationServiceRestTransport._BaseUpdateReservation._get_http_options()
-
             request, metadata = self._interceptor.pre_update_reservation(
                 request, metadata
             )
-            transcoded_request = _BaseReservationServiceRestTransport._BaseUpdateReservation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReservationServiceRestTransport._BaseUpdateReservation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReservationServiceRestTransport._BaseUpdateReservation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseUpdateReservation,
+                    "_BaseUpdateReservation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6144,6 +6175,159 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
                     extra={
                         "serviceName": "google.cloud.bigquery.reservation.v1.ReservationService",
                         "rpcName": "UpdateReservation",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateReservationGroup(
+        _BaseReservationServiceRestTransport._BaseUpdateReservationGroup,
+        ReservationServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("ReservationServiceRestTransport.UpdateReservationGroup")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: reservation.UpdateReservationGroupRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> reservation.ReservationGroup:
+            r"""Call the update reservation group method over HTTP.
+
+            Args:
+                request (~.reservation.UpdateReservationGroupRequest):
+                    The request object. The request for
+                [ReservationService.UpdateReservationGroup][google.cloud.bigquery.reservation.v1.ReservationService.UpdateReservationGroup].
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.reservation.ReservationGroup:
+                    A reservation group is a container
+                for reservations.
+
+            """
+
+            http_options = _BaseReservationServiceRestTransport._BaseUpdateReservationGroup._get_http_options()
+            request, metadata = self._interceptor.pre_update_reservation_group(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReservationServiceRestTransport._BaseUpdateReservationGroup,
+                    "_BaseUpdateReservationGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.bigquery.reservation_v1.ReservationServiceClient.UpdateReservationGroup",
+                    extra={
+                        "serviceName": "google.cloud.bigquery.reservation.v1.ReservationService",
+                        "rpcName": "UpdateReservationGroup",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                ReservationServiceRestTransport._UpdateReservationGroup._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                    body,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = reservation.ReservationGroup()
+            pb_resp = reservation.ReservationGroup.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_reservation_group(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_reservation_group_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = reservation.ReservationGroup.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.bigquery.reservation_v1.ReservationServiceClient.update_reservation_group",
+                    extra={
+                        "serviceName": "google.cloud.bigquery.reservation.v1.ReservationService",
+                        "rpcName": "UpdateReservationGroup",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -6434,6 +6618,18 @@ class ReservationServiceRestTransport(_BaseReservationServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._UpdateReservation(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_reservation_group(
+        self,
+    ) -> Callable[
+        [reservation.UpdateReservationGroupRequest], reservation.ReservationGroup
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateReservationGroup(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
 
     @property
     def kind(self) -> str:

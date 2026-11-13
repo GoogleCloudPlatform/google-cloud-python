@@ -435,6 +435,27 @@ class DataStoreTool(proto.Message):
             message="DataStoreTool.BoostSpec.ConditionBoostSpec",
         )
 
+    class SnippetsConfig(proto.Message):
+        r"""Snippets configuration.
+
+        Attributes:
+            enable_snippets (bool):
+                Optional. Whether snippets are enabled.
+            max_snippets (int):
+                Optional. Number of snippets to return per
+                query. If unset, returns all snippets from the
+                service by default.
+        """
+
+        enable_snippets: bool = proto.Field(
+            proto.BOOL,
+            number=1,
+        )
+        max_snippets: int = proto.Field(
+            proto.INT32,
+            number=2,
+        )
+
     class ModalityConfig(proto.Message):
         r"""If specified, will apply the given configuration for the
         specified modality.
@@ -448,6 +469,8 @@ class DataStoreTool(proto.Message):
                 Optional. The summarization config.
             grounding_config (google.cloud.ces_v1beta.types.DataStoreTool.GroundingConfig):
                 Optional. The grounding configuration.
+            snippets_config (google.cloud.ces_v1beta.types.DataStoreTool.SnippetsConfig):
+                Optional. The snippets configuration.
         """
 
         class ModalityType(proto.Enum):
@@ -485,6 +508,11 @@ class DataStoreTool(proto.Message):
             proto.MESSAGE,
             number=4,
             message="DataStoreTool.GroundingConfig",
+        )
+        snippets_config: "DataStoreTool.SnippetsConfig" = proto.Field(
+            proto.MESSAGE,
+            number=5,
+            message="DataStoreTool.SnippetsConfig",
         )
 
     data_store_source: DataStoreSource = proto.Field(

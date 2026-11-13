@@ -19,9 +19,7 @@ from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import exceptions
-from google.auth import external_account_authorized_user
-from google.auth import transport
+from google.auth import exceptions, external_account_authorized_user, transport
 from google.auth.credentials import DEFAULT_UNIVERSE_DOMAIN
 
 TOKEN_URL = "https://sts.googleapis.com/v1/token"
@@ -57,7 +55,7 @@ class TestCredentials(object):
         token_info_url=TOKEN_INFO_URL,
         client_id=CLIENT_ID,
         client_secret=CLIENT_SECRET,
-        **kwargs
+        **kwargs,
     ):
         return external_account_authorized_user.Credentials(
             audience=audience,
@@ -66,7 +64,7 @@ class TestCredentials(object):
             token_info_url=token_info_url,
             client_id=client_id,
             client_secret=client_secret,
-            **kwargs
+            **kwargs,
         )
 
     @classmethod

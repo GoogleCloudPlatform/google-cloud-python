@@ -1708,19 +1708,20 @@ class CommerceTransactionAsyncClient:
 
         Returns:
             google.cloud.commerceproducer_v1beta.types.PrivateOfferDocument:
-                Message describing the
-                PrivateOfferDocument resource. Used to
-                attach documents to a private offer in
-                state DRAFT. Once a private offer is no
-                longer in state DRAFT, the set of child
-                documents is immutable. Existing
-                documents cannot be updated or deleted,
-                and new documents cannot be added.
+                Message describing the PrivateOfferDocument resource.
+                   Used to attach documents to a private offer in state
+                   DRAFT. Once a private offer is no longer in state
+                   DRAFT, the set of child documents is immutable.
+                   Existing documents cannot be updated or deleted, and
+                   new documents cannot be added.
 
-                A private offer must include a EULA,
-                either by assigning a standard EULA or
-                attaching a custom EULA document, or a
-                statement of work document.
+                   A private offer may have at most one document of each
+                   type, and may not have both a standard EULA and a
+                   custom EULA.
+
+                   Which document types are required, optional, or not
+                   permitted depends on the service the offer is for,
+                   and is returned in Service.document_requirement.
 
         """
         # Create or coerce a protobuf request object.
@@ -1830,19 +1831,20 @@ class CommerceTransactionAsyncClient:
 
         Returns:
             google.cloud.commerceproducer_v1beta.types.PrivateOfferDocument:
-                Message describing the
-                PrivateOfferDocument resource. Used to
-                attach documents to a private offer in
-                state DRAFT. Once a private offer is no
-                longer in state DRAFT, the set of child
-                documents is immutable. Existing
-                documents cannot be updated or deleted,
-                and new documents cannot be added.
+                Message describing the PrivateOfferDocument resource.
+                   Used to attach documents to a private offer in state
+                   DRAFT. Once a private offer is no longer in state
+                   DRAFT, the set of child documents is immutable.
+                   Existing documents cannot be updated or deleted, and
+                   new documents cannot be added.
 
-                A private offer must include a EULA,
-                either by assigning a standard EULA or
-                attaching a custom EULA document, or a
-                statement of work document.
+                   A private offer may have at most one document of each
+                   type, and may not have both a standard EULA and a
+                   custom EULA.
+
+                   Which document types are required, optional, or not
+                   permitted depends on the service the offer is for,
+                   and is returned in Service.document_requirement.
 
         """
         # Create or coerce a protobuf request object.
@@ -1953,19 +1955,20 @@ class CommerceTransactionAsyncClient:
 
         Returns:
             google.cloud.commerceproducer_v1beta.types.PrivateOfferDocument:
-                Message describing the
-                PrivateOfferDocument resource. Used to
-                attach documents to a private offer in
-                state DRAFT. Once a private offer is no
-                longer in state DRAFT, the set of child
-                documents is immutable. Existing
-                documents cannot be updated or deleted,
-                and new documents cannot be added.
+                Message describing the PrivateOfferDocument resource.
+                   Used to attach documents to a private offer in state
+                   DRAFT. Once a private offer is no longer in state
+                   DRAFT, the set of child documents is immutable.
+                   Existing documents cannot be updated or deleted, and
+                   new documents cannot be added.
 
-                A private offer must include a EULA,
-                either by assigning a standard EULA or
-                attaching a custom EULA document, or a
-                statement of work document.
+                   A private offer may have at most one document of each
+                   type, and may not have both a standard EULA and a
+                   custom EULA.
+
+                   Which document types are required, optional, or not
+                   permitted depends on the service the offer is for,
+                   and is returned in Service.document_requirement.
 
         """
         # Create or coerce a protobuf request object.

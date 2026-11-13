@@ -18,7 +18,6 @@ import logging
 
 from google.auth import version as google_auth_version
 
-
 __version__ = google_auth_version.__version__
 
 # Set default logging handler to avoid "No handler found" warnings.

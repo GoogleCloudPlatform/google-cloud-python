@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.maps.mapsplatformdatasets_v1._compat import transcode_request
 from google.maps.mapsplatformdatasets_v1.types import dataset, maps_platform_datasets
 from google.maps.mapsplatformdatasets_v1.types import dataset as gmm_dataset
 
@@ -538,19 +539,16 @@ class MapsPlatformDatasetsRestTransport(_BaseMapsPlatformDatasetsRestTransport):
             """
 
             http_options = _BaseMapsPlatformDatasetsRestTransport._BaseCreateDataset._get_http_options()
-
             request, metadata = self._interceptor.pre_create_dataset(request, metadata)
-            transcoded_request = _BaseMapsPlatformDatasetsRestTransport._BaseCreateDataset._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMapsPlatformDatasetsRestTransport._BaseCreateDataset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapsPlatformDatasetsRestTransport._BaseCreateDataset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapsPlatformDatasetsRestTransport._BaseCreateDataset,
+                    "_BaseCreateDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -682,15 +680,16 @@ class MapsPlatformDatasetsRestTransport(_BaseMapsPlatformDatasetsRestTransport):
             """
 
             http_options = _BaseMapsPlatformDatasetsRestTransport._BaseDeleteDataset._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_dataset(request, metadata)
-            transcoded_request = _BaseMapsPlatformDatasetsRestTransport._BaseDeleteDataset._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapsPlatformDatasetsRestTransport._BaseDeleteDataset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapsPlatformDatasetsRestTransport._BaseDeleteDataset,
+                    "_BaseDeleteDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -794,17 +793,18 @@ class MapsPlatformDatasetsRestTransport(_BaseMapsPlatformDatasetsRestTransport):
             """
 
             http_options = _BaseMapsPlatformDatasetsRestTransport._BaseFetchDatasetErrors._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_dataset_errors(
                 request, metadata
             )
-            transcoded_request = _BaseMapsPlatformDatasetsRestTransport._BaseFetchDatasetErrors._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapsPlatformDatasetsRestTransport._BaseFetchDatasetErrors._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapsPlatformDatasetsRestTransport._BaseFetchDatasetErrors,
+                    "_BaseFetchDatasetErrors__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -947,15 +947,16 @@ class MapsPlatformDatasetsRestTransport(_BaseMapsPlatformDatasetsRestTransport):
             """
 
             http_options = _BaseMapsPlatformDatasetsRestTransport._BaseGetDataset._get_http_options()
-
             request, metadata = self._interceptor.pre_get_dataset(request, metadata)
-            transcoded_request = _BaseMapsPlatformDatasetsRestTransport._BaseGetDataset._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapsPlatformDatasetsRestTransport._BaseGetDataset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapsPlatformDatasetsRestTransport._BaseGetDataset,
+                    "_BaseGetDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1091,15 +1092,16 @@ class MapsPlatformDatasetsRestTransport(_BaseMapsPlatformDatasetsRestTransport):
             """
 
             http_options = _BaseMapsPlatformDatasetsRestTransport._BaseListDatasets._get_http_options()
-
             request, metadata = self._interceptor.pre_list_datasets(request, metadata)
-            transcoded_request = _BaseMapsPlatformDatasetsRestTransport._BaseListDatasets._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapsPlatformDatasetsRestTransport._BaseListDatasets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapsPlatformDatasetsRestTransport._BaseListDatasets,
+                    "_BaseListDatasets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1240,21 +1242,18 @@ class MapsPlatformDatasetsRestTransport(_BaseMapsPlatformDatasetsRestTransport):
             """
 
             http_options = _BaseMapsPlatformDatasetsRestTransport._BaseUpdateDatasetMetadata._get_http_options()
-
             request, metadata = self._interceptor.pre_update_dataset_metadata(
                 request, metadata
             )
-            transcoded_request = _BaseMapsPlatformDatasetsRestTransport._BaseUpdateDatasetMetadata._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMapsPlatformDatasetsRestTransport._BaseUpdateDatasetMetadata._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapsPlatformDatasetsRestTransport._BaseUpdateDatasetMetadata._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapsPlatformDatasetsRestTransport._BaseUpdateDatasetMetadata,
+                    "_BaseUpdateDatasetMetadata__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

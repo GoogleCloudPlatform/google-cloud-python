@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     device_manufacturer_messages,
     device_manufacturer_service,
@@ -401,17 +402,18 @@ class DeviceManufacturerServiceRestTransport(
             """
 
             http_options = _BaseDeviceManufacturerServiceRestTransport._BaseGetDeviceManufacturer._get_http_options()
-
             request, metadata = self._interceptor.pre_get_device_manufacturer(
                 request, metadata
             )
-            transcoded_request = _BaseDeviceManufacturerServiceRestTransport._BaseGetDeviceManufacturer._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeviceManufacturerServiceRestTransport._BaseGetDeviceManufacturer._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeviceManufacturerServiceRestTransport._BaseGetDeviceManufacturer,
+                    "_BaseGetDeviceManufacturer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -554,17 +556,18 @@ class DeviceManufacturerServiceRestTransport(
             """
 
             http_options = _BaseDeviceManufacturerServiceRestTransport._BaseListDeviceManufacturers._get_http_options()
-
             request, metadata = self._interceptor.pre_list_device_manufacturers(
                 request, metadata
             )
-            transcoded_request = _BaseDeviceManufacturerServiceRestTransport._BaseListDeviceManufacturers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeviceManufacturerServiceRestTransport._BaseListDeviceManufacturers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeviceManufacturerServiceRestTransport._BaseListDeviceManufacturers,
+                    "_BaseListDeviceManufacturers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -727,17 +730,18 @@ class DeviceManufacturerServiceRestTransport(
             """
 
             http_options = _BaseDeviceManufacturerServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDeviceManufacturerServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeviceManufacturerServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeviceManufacturerServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -845,15 +849,16 @@ class DeviceManufacturerServiceRestTransport(
             """
 
             http_options = _BaseDeviceManufacturerServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseDeviceManufacturerServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeviceManufacturerServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeviceManufacturerServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

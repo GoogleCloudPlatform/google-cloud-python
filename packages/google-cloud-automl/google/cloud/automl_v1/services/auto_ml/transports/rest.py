@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.automl_v1._compat import transcode_request
 from google.cloud.automl_v1.types import (
     annotation_spec,
     dataset,
@@ -1287,23 +1288,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             http_options = (
                 _BaseAutoMlRestTransport._BaseCreateDataset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_dataset(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseCreateDataset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseAutoMlRestTransport._BaseCreateDataset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseCreateDataset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseCreateDataset,
+                    "_BaseCreateDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1439,23 +1433,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             """
 
             http_options = _BaseAutoMlRestTransport._BaseCreateModel._get_http_options()
-
             request, metadata = self._interceptor.pre_create_model(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseCreateModel._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseAutoMlRestTransport._BaseCreateModel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseCreateModel._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseCreateModel,
+                    "_BaseCreateModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1592,19 +1579,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             http_options = (
                 _BaseAutoMlRestTransport._BaseDeleteDataset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_dataset(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseDeleteDataset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseDeleteDataset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseDeleteDataset,
+                    "_BaseDeleteDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1738,19 +1722,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             """
 
             http_options = _BaseAutoMlRestTransport._BaseDeleteModel._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_model(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseDeleteModel._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseDeleteModel._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseDeleteModel,
+                    "_BaseDeleteModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1885,23 +1866,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             """
 
             http_options = _BaseAutoMlRestTransport._BaseDeployModel._get_http_options()
-
             request, metadata = self._interceptor.pre_deploy_model(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseDeployModel._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseAutoMlRestTransport._BaseDeployModel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseDeployModel._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseDeployModel,
+                    "_BaseDeployModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2037,23 +2011,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             """
 
             http_options = _BaseAutoMlRestTransport._BaseExportData._get_http_options()
-
             request, metadata = self._interceptor.pre_export_data(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseExportData._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseAutoMlRestTransport._BaseExportData._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseExportData._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseExportData,
+                    "_BaseExportData__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2191,23 +2158,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             """
 
             http_options = _BaseAutoMlRestTransport._BaseExportModel._get_http_options()
-
             request, metadata = self._interceptor.pre_export_model(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseExportModel._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseAutoMlRestTransport._BaseExportModel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseExportModel._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseExportModel,
+                    "_BaseExportModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2343,21 +2303,18 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             http_options = (
                 _BaseAutoMlRestTransport._BaseGetAnnotationSpec._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_annotation_spec(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseGetAnnotationSpec._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseGetAnnotationSpec._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseGetAnnotationSpec,
+                    "_BaseGetAnnotationSpec__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2494,19 +2451,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             """
 
             http_options = _BaseAutoMlRestTransport._BaseGetDataset._get_http_options()
-
             request, metadata = self._interceptor.pre_get_dataset(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseGetDataset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseGetDataset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseGetDataset,
+                    "_BaseGetDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2641,19 +2595,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             """
 
             http_options = _BaseAutoMlRestTransport._BaseGetModel._get_http_options()
-
             request, metadata = self._interceptor.pre_get_model(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseGetModel._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseGetModel._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseGetModel,
+                    "_BaseGetModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2790,19 +2741,18 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             http_options = (
                 _BaseAutoMlRestTransport._BaseGetModelEvaluation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_model_evaluation(
                 request, metadata
             )
-            transcoded_request = _BaseAutoMlRestTransport._BaseGetModelEvaluation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseGetModelEvaluation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseGetModelEvaluation,
+                    "_BaseGetModelEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2941,23 +2891,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             """
 
             http_options = _BaseAutoMlRestTransport._BaseImportData._get_http_options()
-
             request, metadata = self._interceptor.pre_import_data(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseImportData._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseAutoMlRestTransport._BaseImportData._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseImportData._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseImportData,
+                    "_BaseImportData__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3093,19 +3036,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             http_options = (
                 _BaseAutoMlRestTransport._BaseListDatasets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_datasets(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseListDatasets._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseListDatasets._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseListDatasets,
+                    "_BaseListDatasets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3244,17 +3184,18 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             http_options = (
                 _BaseAutoMlRestTransport._BaseListModelEvaluations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_model_evaluations(
                 request, metadata
             )
-            transcoded_request = _BaseAutoMlRestTransport._BaseListModelEvaluations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoMlRestTransport._BaseListModelEvaluations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseListModelEvaluations,
+                    "_BaseListModelEvaluations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3391,19 +3332,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             """
 
             http_options = _BaseAutoMlRestTransport._BaseListModels._get_http_options()
-
             request, metadata = self._interceptor.pre_list_models(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseListModels._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseListModels._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseListModels,
+                    "_BaseListModels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3542,23 +3480,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             http_options = (
                 _BaseAutoMlRestTransport._BaseUndeployModel._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_undeploy_model(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseUndeployModel._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseAutoMlRestTransport._BaseUndeployModel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseUndeployModel._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseUndeployModel,
+                    "_BaseUndeployModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3697,23 +3628,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             http_options = (
                 _BaseAutoMlRestTransport._BaseUpdateDataset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_dataset(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseUpdateDataset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseAutoMlRestTransport._BaseUpdateDataset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseUpdateDataset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseUpdateDataset,
+                    "_BaseUpdateDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3850,23 +3774,16 @@ class AutoMlRestTransport(_BaseAutoMlRestTransport):
             """
 
             http_options = _BaseAutoMlRestTransport._BaseUpdateModel._get_http_options()
-
             request, metadata = self._interceptor.pre_update_model(request, metadata)
-            transcoded_request = (
-                _BaseAutoMlRestTransport._BaseUpdateModel._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseAutoMlRestTransport._BaseUpdateModel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAutoMlRestTransport._BaseUpdateModel._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoMlRestTransport._BaseUpdateModel,
+                    "_BaseUpdateModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-pubsub",
-    "version": "2.39.1"
+    "version": "2.44.0"
   },
   "snippets": [
     {
@@ -1515,12 +1515,12 @@
       "regionTag": "pubsub_v1_generated_SchemaService_CommitSchema_async",
       "segments": [
         {
-          "end": 55,
+          "end": 57,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 55,
+          "end": 57,
           "start": 27,
           "type": "SHORT"
         },
@@ -1530,18 +1530,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 49,
+          "end": 51,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 52,
-          "start": 50,
+          "end": 54,
+          "start": 52,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 56,
-          "start": 53,
+          "end": 58,
+          "start": 55,
           "type": "RESPONSE_HANDLING"
         }
       ],
@@ -1599,12 +1599,12 @@
       "regionTag": "pubsub_v1_generated_SchemaService_CommitSchema_sync",
       "segments": [
         {
-          "end": 55,
+          "end": 57,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 55,
+          "end": 57,
           "start": 27,
           "type": "SHORT"
         },
@@ -1614,18 +1614,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 49,
+          "end": 51,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 52,
-          "start": 50,
+          "end": 54,
+          "start": 52,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 56,
-          "start": 53,
+          "end": 58,
+          "start": 55,
           "type": "RESPONSE_HANDLING"
         }
       ],
@@ -1688,12 +1688,12 @@
       "regionTag": "pubsub_v1_generated_SchemaService_CreateSchema_async",
       "segments": [
         {
-          "end": 55,
+          "end": 57,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 55,
+          "end": 57,
           "start": 27,
           "type": "SHORT"
         },
@@ -1703,18 +1703,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 49,
+          "end": 51,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 52,
-          "start": 50,
+          "end": 54,
+          "start": 52,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 56,
-          "start": 53,
+          "end": 58,
+          "start": 55,
           "type": "RESPONSE_HANDLING"
         }
       ],
@@ -1776,12 +1776,12 @@
       "regionTag": "pubsub_v1_generated_SchemaService_CreateSchema_sync",
       "segments": [
         {
-          "end": 55,
+          "end": 57,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 55,
+          "end": 57,
           "start": 27,
           "type": "SHORT"
         },
@@ -1791,18 +1791,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 49,
+          "end": 51,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 52,
-          "start": 50,
+          "end": 54,
+          "start": 52,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 56,
-          "start": 53,
+          "end": 58,
+          "start": 55,
           "type": "RESPONSE_HANDLING"
         }
       ],
@@ -2990,12 +2990,12 @@
       "regionTag": "pubsub_v1_generated_SchemaService_ValidateSchema_async",
       "segments": [
         {
-          "end": 55,
+          "end": 57,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 55,
+          "end": 57,
           "start": 27,
           "type": "SHORT"
         },
@@ -3005,18 +3005,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 49,
+          "end": 51,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 52,
-          "start": 50,
+          "end": 54,
+          "start": 52,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 56,
-          "start": 53,
+          "end": 58,
+          "start": 55,
           "type": "RESPONSE_HANDLING"
         }
       ],
@@ -3074,12 +3074,12 @@
       "regionTag": "pubsub_v1_generated_SchemaService_ValidateSchema_sync",
       "segments": [
         {
-          "end": 55,
+          "end": 57,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 55,
+          "end": 57,
           "start": 27,
           "type": "SHORT"
         },
@@ -3089,18 +3089,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 49,
+          "end": 51,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 52,
-          "start": 50,
+          "end": 54,
+          "start": 52,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 56,
-          "start": 53,
+          "end": 58,
+          "start": 55,
           "type": "RESPONSE_HANDLING"
         }
       ],

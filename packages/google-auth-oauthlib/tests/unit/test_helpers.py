@@ -17,9 +17,9 @@ import json
 import os
 from unittest import mock
 
-from google.auth import external_account_authorized_user
 import google.oauth2.credentials
 import pytest
+from google.auth import external_account_authorized_user
 
 from google_auth_oauthlib import helpers
 
@@ -133,9 +133,9 @@ def test_credentials_from_session_3pi(session):
 
     client_secrets_info = CLIENT_SECRETS_INFO["web"].copy()
     client_secrets_info["3pi"] = True
-    client_secrets_info[
-        "token_info_url"
-    ] = "https://accounts.google.com/o/oauth2/introspect"
+    client_secrets_info["token_info_url"] = (
+        "https://accounts.google.com/o/oauth2/introspect"
+    )
     credentials = helpers.credentials_from_session(session, client_secrets_info)
 
     assert isinstance(credentials, external_account_authorized_user.Credentials)

@@ -2,6 +2,9 @@
 
 .. include:: multiprocessing.rst
 
+This package includes clients for multiple versions of Lakehouse.
+By default, you will get version ``biglake_hive_v1beta``.
+
 
 API Reference
 -------------
@@ -10,6 +13,14 @@ API Reference
 
     biglake_hive_v1beta/services_
     biglake_hive_v1beta/types_
+
+API Reference
+-------------
+.. toctree::
+    :maxdepth: 2
+
+    biglake_hive_v1/services_
+    biglake_hive_v1/types_
 
 
 Changelog

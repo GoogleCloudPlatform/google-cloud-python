@@ -18,12 +18,14 @@ This is used by gapic clients to provide common error mapping, retry, timeout,
 compression, pagination, and long-running operations to gRPC methods.
 """
 
+import contextlib
 import enum
 import functools
-from typing import List, Tuple
+from typing import Any, List, Optional, Tuple
 
-from google.api_core import grpc_helpers
+from google.api_core import _observability, exceptions, grpc_helpers
 from google.api_core.gapic_v1 import client_info
+from google.api_core.gapic_v1.client_info import METRICS_METADATA_KEY
 from google.api_core.timeout import TimeToDeadlineTimeout
 
 USE_DEFAULT_METADATA = object()
@@ -38,6 +40,10 @@ class _MethodDefault(enum.Enum):
 DEFAULT = _MethodDefault._DEFAULT_VALUE
 """Sentinel value indicating that a retry, timeout, or compression argument was unspecified,
 so the default should be used."""
+
+_TRANSPORT_KIND_GRPC = "grpc"
+_TRANSPORT_KIND_REST = "rest"
+_DEFAULT_TRANSPORT_KIND = _TRANSPORT_KIND_GRPC
 
 
 def _is_not_none_or_false(value):
@@ -92,7 +98,7 @@ def _extract_metrics_header(metadata) -> Tuple[str, List[Tuple[str, str]]]:
     if not metadata:
         return "", []
 
-    key_to_find = client_info.METRICS_METADATA_KEY
+    key_to_find = METRICS_METADATA_KEY
 
     metric_str = _deduplicate_metadata_tokens(
         " ".join([v for k, v in metadata if k == key_to_find])
@@ -102,6 +108,114 @@ def _extract_metrics_header(metadata) -> Tuple[str, List[Tuple[str, str]]]:
 
     arbitrary_metadata = [item for item in metadata if item[0] != key_to_find]
     return metric_str, arbitrary_metadata
+
+
+def _extract_rpc_identity(
+    method_name: str,
+) -> Tuple[str, str, str]:
+    """Extract (full_rpc_name, service_name, rpc_method_name) from an explicit method name.
+
+    Args:
+        method_name: Explicit RPC name (e.g. "/google.cloud.secretmanager.v1.SecretManagerService/AccessSecretVersion").
+
+    Returns:
+        Tuple[str, str, str]: A 3-tuple of (full_rpc_name, service_name, rpc_method_name).
+    """
+    method_str = method_name.lstrip("/")
+    service, _, method = method_str.rpartition("/")
+    return method_str, service, method
+
+
+def _extract_error_attributes(exc: Optional[BaseException]) -> dict[str, Any]:
+    """Extract gcp.errors.* and error.type attributes from an exception.
+
+    Error details and ErrorInfo structures are resolved by inspecting the following locations:
+    * Chained exceptions: Unwraps RetryError or __cause__ to the root exception.
+    * GoogleAPICallError attributes: Reads ErrorInfo from ._error_info or .error_info.
+    * Native gRPC trailing metadata: Parses google.rpc.Status binary details from trailing_metadata.
+    * Unified attribute extraction: Extracts domain, reason, and metadata from ErrorInfo or exception attributes.
+
+    Args:
+        exc (Optional[BaseException]): An exception (such as GoogleAPICallError or grpc.RpcError) or ErrorInfo object.
+
+    Returns:
+        dict[str, Any]: Extracted error attributes (e.g. gcp.errors.domain, error.type, gcp.errors.metadata.*).
+    """
+    attrs: dict[str, Any] = {}
+    if exc is None:
+        return attrs
+
+    # 1. Unwrap chained exceptions: unwrap RetryError or __cause__ to the root failure
+    target_exc = getattr(exc, "cause", None) or getattr(exc, "__cause__", None) or exc
+
+    # 2. Check GoogleAPICallError ErrorInfo attributes
+    error_info = getattr(target_exc, "_error_info", None) or getattr(
+        target_exc, "error_info", None
+    )
+
+    # 3. Check native gRPC trailing metadata for binary google.rpc.Status details
+    if error_info is None:
+        rpc_call = (
+            target_exc
+            if hasattr(target_exc, "trailing_metadata")
+            else getattr(target_exc, "response", None)
+        )
+        if rpc_call is not None and hasattr(rpc_call, "trailing_metadata"):
+            try:
+                _, error_info = exceptions._parse_grpc_error_details(rpc_call)
+            except Exception:
+                pass
+
+    # 4. Unified attribute extraction: extract domain, reason, and metadata from ErrorInfo or exception attributes
+    http_response = getattr(target_exc, "response", None)
+    http_status = (
+        getattr(http_response, "status_code", getattr(http_response, "status", None))
+        if http_response is not None and not hasattr(http_response, "trailing_metadata")
+        else None
+    )
+
+    source = error_info or target_exc
+    if isinstance(source, dict):
+        domain = source.get("domain")
+        reason = source.get("reason")
+        metadata = source.get("metadata")
+    else:
+        domain = getattr(source, "domain", None)
+        reason = getattr(source, "reason", None)
+        metadata = getattr(source, "metadata", None)
+
+    if domain:
+        attrs["gcp.errors.domain"] = domain
+    if reason:
+        attrs["error.type"] = reason
+    elif isinstance(http_status, int):
+        attrs["error.type"] = str(http_status)
+    else:
+        # Fallback per OpenTelemetry Semantic Conventions: every failed span should record
+        # a low-cardinality error.type. Use canonical status code name or exception class name.
+        status_code = exceptions._extract_status_code(target_exc)
+        attrs["error.type"] = status_code or target_exc.__class__.__name__
+    if metadata:
+        for k, v in metadata.items():
+            attrs[f"gcp.errors.metadata.{k}"] = str(v)
+
+    # 5. Extract human-readable error description for cross-language PRD parity
+    message = (
+        _observability._TraceContext._extract_http_error_message(http_response)
+        if http_status is not None
+        else None
+    )
+    if not message:
+        message = getattr(target_exc, "message", None)
+    if not message and hasattr(target_exc, "details"):
+        details = target_exc.details
+        message = details() if callable(details) else details
+    if not message and isinstance(target_exc, BaseException):
+        message = str(target_exc)
+    if message:
+        attrs["status.message"] = str(message)
+
+    return attrs
 
 
 class _GapicCallable(object):
@@ -123,7 +237,23 @@ class _GapicCallable(object):
             provided to the RPC method on every invocation. This is merged with
             any metadata specified during invocation. If ``None``, no
             additional metadata will be passed to the RPC method.
+        client_options
+            (Optional[google.api_core.client_options.ClientOptions]):
+                Client options used to configure client-level behavior, such as
+                custom OpenTelemetry tracer providers. Defaults to None.
+        method_name (Optional[str]): The optional explicit full RPC method name
+            (e.g. "/google.cloud.secretmanager.v1.SecretManagerService/AccessSecretVersion").
+        is_streaming (bool): Whether the RPC method is streaming. Defaults to False.
+            Note: Streaming methods do not currently generate Tier 3 observability spans.
+        client_info (Optional[google.api_core.gapic_v1.client_info.ClientInfo]):
+            Client information used for metadata headers. Defaults to None.
+        kind (str): The transport kind for the RPC method. Defaults to "grpc".
+            Allowed values for OpenTelemetry method tracing are "grpc" and "rest".
+        default_host (Optional[str]): Fallback transport host when ``api_endpoint``
+            is not set on ``client_options``. Defaults to None.
     """
+
+    _SUPPORTED_TRACING_KINDS = (_TRANSPORT_KIND_GRPC, _TRANSPORT_KIND_REST)
 
     def __init__(
         self,
@@ -132,27 +262,71 @@ class _GapicCallable(object):
         timeout,
         compression,
         metadata=None,
+        client_options=None,
+        method_name=None,
+        is_streaming=False,
+        client_info=None,
+        kind=_DEFAULT_TRANSPORT_KIND,
+        default_host=None,
     ):
         self._target = target
         self._retry = retry
         self._timeout = timeout
         self._compression = compression
+
         # Pre-extract the x-goog-api-client header from the initialized metadata.
         self._x_goog_api_client, remaining = _extract_metrics_header(metadata)
         self._static_metadata = tuple(remaining)
         if self._x_goog_api_client:
             self._default_metadata = (
-                (client_info.METRICS_METADATA_KEY, self._x_goog_api_client),
+                (METRICS_METADATA_KEY, self._x_goog_api_client),
                 *self._static_metadata,
             )
         else:
             self._default_metadata = self._static_metadata
 
-    def __call__(
-        self, *args, timeout=DEFAULT, retry=DEFAULT, compression=DEFAULT, **kwargs
-    ):
-        """Invoke the low-level RPC with retry, timeout, compression, and metadata."""
+        # Configure the OpenTelemetry span factory once at initialization.
+        # For now, method tracing is gated to non-streaming calls where an explicit method_name is provided.
+        self._start_span_fn = None
+        if (
+            not is_streaming
+            and kind in self._SUPPORTED_TRACING_KINDS
+            and method_name is not None
+            and _observability.is_otel_capabilities_enabled(client_options)
+        ):
+            try:
+                from opentelemetry import trace
 
+                tracer_provider = None
+                if isinstance(client_options, dict):
+                    tracer_provider = client_options.get("tracer_provider")
+                elif client_options is not None:
+                    tracer_provider = getattr(client_options, "tracer_provider", None)
+                if tracer_provider is not None:
+                    tracer = tracer_provider.get_tracer("google.api_core")
+                else:
+                    tracer = trace.get_tracer("google.api_core")
+
+                span_name, _, _ = _extract_rpc_identity(method_name)
+                endpoint_attrs = _observability._extract_endpoint_attributes(
+                    client_options, default_host=default_host
+                )
+                span_attributes = {
+                    "rpc.system.name": "http" if kind.startswith("rest") else "grpc",
+                    "rpc.method": span_name,
+                    **endpoint_attrs,
+                }
+                self._start_span_fn = functools.partial(
+                    tracer.start_as_current_span,
+                    span_name,
+                    kind=trace.SpanKind.INTERNAL,
+                    attributes=span_attributes,
+                )
+            except (ImportError, AttributeError, TypeError):
+                # Gracefully disable tracing if OpenTelemetry or custom provider fails
+                self._start_span_fn = None
+
+    def _prepare_call(self, timeout, retry, compression, kwargs):
         if retry is DEFAULT:
             retry = self._retry
 
@@ -177,16 +351,50 @@ class _GapicCallable(object):
                 self._x_goog_api_client, user_x_goog
             )
             if merged_header:
-                final_metadata.append((client_info.METRICS_METADATA_KEY, merged_header))
+                final_metadata.append((METRICS_METADATA_KEY, merged_header))
             final_metadata.extend(remaining)
             kwargs["metadata"] = final_metadata
         elif self._default_metadata:
             kwargs["metadata"] = self._default_metadata
 
-        if self._compression is not None:
+        if compression is not None:
             kwargs["compression"] = compression
 
-        return wrapped_func(*args, **kwargs)
+        return wrapped_func
+
+    @contextlib.contextmanager
+    def _trace_span(self):
+        span_cm = contextlib.nullcontext()
+        if self._start_span_fn is not None:
+            try:
+                span_cm = self._start_span_fn()
+            except Exception:
+                # Fail-open: proceed without span if tracing initialization fails
+                span_cm = contextlib.nullcontext()
+
+        with span_cm as span:
+            try:
+                yield
+                if span is not None and hasattr(span, "set_attribute"):
+                    span.set_attribute("rpc.response.status_code", "OK")
+            except (KeyboardInterrupt, SystemExit, GeneratorExit):
+                raise
+            except BaseException as exc:
+                if span is not None and hasattr(span, "set_attribute"):
+                    span.set_attribute(
+                        "rpc.response.status_code", exceptions._extract_status_code(exc)
+                    )
+                    for k, v in _extract_error_attributes(exc).items():
+                        span.set_attribute(k, v)
+                raise
+
+    def __call__(
+        self, *args, timeout=DEFAULT, retry=DEFAULT, compression=DEFAULT, **kwargs
+    ):
+        """Invoke the low-level RPC with retry, timeout, compression, and metadata."""
+        wrapped_func = self._prepare_call(timeout, retry, compression, kwargs)
+        with self._trace_span():
+            return wrapped_func(*args, **kwargs)
 
 
 def wrap_method(
@@ -197,6 +405,11 @@ def wrap_method(
     client_info=client_info.DEFAULT_CLIENT_INFO,
     *,
     with_call=False,
+    client_options=None,
+    method_name=None,
+    is_streaming=False,
+    kind=_DEFAULT_TRANSPORT_KIND,
+    default_host=None,
 ):
     """Wrap an RPC method with common behavior.
 
@@ -280,6 +493,19 @@ def wrap_method(
             return a tuple of (response, grpc.Call) instead of just the response.
             This is useful for extracting trailing metadata from unary calls.
             Defaults to False.
+        client_options
+            (Optional[google.api_core.client_options.ClientOptions]):
+                Client options used to configure client-level behavior, such as
+                custom OpenTelemetry tracer providers. Defaults to None.
+        method_name (Optional[str]): Optional explicit full RPC method name
+            (e.g. "/google.cloud.secretmanager.v1.SecretManagerService/AccessSecretVersion").
+            Used to identify the RPC for observability.
+        is_streaming (bool): Whether the RPC method is streaming. Defaults to False.
+            Streaming methods are currently gated and do not generate Tier 3 spans.
+        kind (str): The transport kind for the RPC method. Defaults to "grpc".
+            Allowed values for OpenTelemetry method tracing are "grpc" and "rest".
+        default_host (Optional[str]): Fallback transport host when ``api_endpoint``
+            is not set on ``client_options``. Defaults to None.
 
     Returns:
         Callable: A new callable that takes optional ``retry``, ``timeout``,
@@ -307,5 +533,11 @@ def wrap_method(
             default_timeout,
             default_compression,
             metadata=user_agent_metadata,
+            client_options=client_options,
+            method_name=method_name,
+            is_streaming=is_streaming,
+            client_info=client_info,
+            kind=kind,
+            default_host=default_host,
         )
     )

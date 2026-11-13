@@ -282,6 +282,21 @@ class BigtableInstanceAdminTransport(abc.ABC):
                 default_timeout=60.0,
                 client_info=client_info,
             ),
+            self.update_memory_layer: gapic_v1.method.wrap_method(
+                self.update_memory_layer,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_memory_layers: gapic_v1.method.wrap_method(
+                self.list_memory_layers,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_memory_layer: gapic_v1.method.wrap_method(
+                self.get_memory_layer,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.create_app_profile: gapic_v1.method.wrap_method(
                 self.create_app_profile,
                 default_timeout=60.0,
@@ -563,6 +578,36 @@ class BigtableInstanceAdminTransport(abc.ABC):
     ) -> Callable[
         [bigtable_instance_admin.DeleteClusterRequest],
         Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_memory_layer(
+        self,
+    ) -> Callable[
+        [bigtable_instance_admin.UpdateMemoryLayerRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_memory_layers(
+        self,
+    ) -> Callable[
+        [bigtable_instance_admin.ListMemoryLayersRequest],
+        Union[
+            bigtable_instance_admin.ListMemoryLayersResponse,
+            Awaitable[bigtable_instance_admin.ListMemoryLayersResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_memory_layer(
+        self,
+    ) -> Callable[
+        [bigtable_instance_admin.GetMemoryLayerRequest],
+        Union[instance.MemoryLayer, Awaitable[instance.MemoryLayer]],
     ]:
         raise NotImplementedError()
 

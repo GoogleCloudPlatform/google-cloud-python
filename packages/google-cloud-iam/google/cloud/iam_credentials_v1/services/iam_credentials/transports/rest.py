@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.iam_credentials_v1._compat import transcode_request
 from google.cloud.iam_credentials_v1.types import common
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -455,21 +456,18 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             """
 
             http_options = _BaseIAMCredentialsRestTransport._BaseGenerateAccessToken._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_access_token(
                 request, metadata
             )
-            transcoded_request = _BaseIAMCredentialsRestTransport._BaseGenerateAccessToken._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIAMCredentialsRestTransport._BaseGenerateAccessToken._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIAMCredentialsRestTransport._BaseGenerateAccessToken._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIAMCredentialsRestTransport._BaseGenerateAccessToken,
+                    "_BaseGenerateAccessToken__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -607,21 +605,18 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             """
 
             http_options = _BaseIAMCredentialsRestTransport._BaseGenerateIdToken._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_id_token(
                 request, metadata
             )
-            transcoded_request = _BaseIAMCredentialsRestTransport._BaseGenerateIdToken._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIAMCredentialsRestTransport._BaseGenerateIdToken._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIAMCredentialsRestTransport._BaseGenerateIdToken._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIAMCredentialsRestTransport._BaseGenerateIdToken,
+                    "_BaseGenerateIdToken__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -759,25 +754,16 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             http_options = (
                 _BaseIAMCredentialsRestTransport._BaseSignBlob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_sign_blob(request, metadata)
-            transcoded_request = (
-                _BaseIAMCredentialsRestTransport._BaseSignBlob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseIAMCredentialsRestTransport._BaseSignBlob._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIAMCredentialsRestTransport._BaseSignBlob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIAMCredentialsRestTransport._BaseSignBlob,
+                    "_BaseSignBlob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -915,23 +901,16 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             http_options = (
                 _BaseIAMCredentialsRestTransport._BaseSignJwt._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_sign_jwt(request, metadata)
-            transcoded_request = (
-                _BaseIAMCredentialsRestTransport._BaseSignJwt._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseIAMCredentialsRestTransport._BaseSignJwt._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIAMCredentialsRestTransport._BaseSignJwt._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIAMCredentialsRestTransport._BaseSignJwt,
+                    "_BaseSignJwt__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

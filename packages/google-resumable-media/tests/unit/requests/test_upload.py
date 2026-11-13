@@ -15,12 +15,12 @@
 import http.client
 import io
 import json
-import pytest  # type: ignore
 import tempfile
 from unittest import mock
 
-import google.resumable_media.requests.upload as upload_mod
+import pytest  # type: ignore
 
+import google.resumable_media.requests.upload as upload_mod
 
 URL_PREFIX = "https://www.googleapis.com/upload/storage/v1/b/{BUCKET}/o"
 SIMPLE_URL = URL_PREFIX + "?uploadType=media&name={OBJECT}"

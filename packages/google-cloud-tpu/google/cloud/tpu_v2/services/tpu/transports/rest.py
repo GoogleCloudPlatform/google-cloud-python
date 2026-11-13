@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.tpu_v2._compat import transcode_request
 from google.cloud.tpu_v2.types import cloud_tpu
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1436,21 +1437,16 @@ class TpuRestTransport(_BaseTpuRestTransport):
             """
 
             http_options = _BaseTpuRestTransport._BaseCreateNode._get_http_options()
-
             request, metadata = self._interceptor.pre_create_node(request, metadata)
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseCreateNode._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseTpuRestTransport._BaseCreateNode._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTpuRestTransport._BaseCreateNode._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseCreateNode,
+                    "_BaseCreateNode__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1590,27 +1586,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseCreateQueuedResource._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_queued_resource(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseCreateQueuedResource._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseTpuRestTransport._BaseCreateQueuedResource._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseCreateQueuedResource._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseCreateQueuedResource,
+                    "_BaseCreateQueuedResource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1745,17 +1732,16 @@ class TpuRestTransport(_BaseTpuRestTransport):
             """
 
             http_options = _BaseTpuRestTransport._BaseDeleteNode._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_node(request, metadata)
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseDeleteNode._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTpuRestTransport._BaseDeleteNode._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseDeleteNode,
+                    "_BaseDeleteNode__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1893,21 +1879,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseDeleteQueuedResource._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_queued_resource(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseDeleteQueuedResource._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseDeleteQueuedResource._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseDeleteQueuedResource,
+                    "_BaseDeleteQueuedResource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2045,21 +2028,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseGenerateServiceIdentity._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_generate_service_identity(
                 request, metadata
             )
-            transcoded_request = _BaseTpuRestTransport._BaseGenerateServiceIdentity._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTpuRestTransport._BaseGenerateServiceIdentity._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTpuRestTransport._BaseGenerateServiceIdentity._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseGenerateServiceIdentity,
+                    "_BaseGenerateServiceIdentity__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2201,21 +2181,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseGetAcceleratorType._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_accelerator_type(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseGetAcceleratorType._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseGetAcceleratorType._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseGetAcceleratorType,
+                    "_BaseGetAcceleratorType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2355,25 +2332,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseGetGuestAttributes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_guest_attributes(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseGetGuestAttributes._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseTpuRestTransport._BaseGetGuestAttributes._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseGetGuestAttributes._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseGetGuestAttributes,
+                    "_BaseGetGuestAttributes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2508,17 +2478,16 @@ class TpuRestTransport(_BaseTpuRestTransport):
             """
 
             http_options = _BaseTpuRestTransport._BaseGetNode._get_http_options()
-
             request, metadata = self._interceptor.pre_get_node(request, metadata)
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseGetNode._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTpuRestTransport._BaseGetNode._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseGetNode,
+                    "_BaseGetNode__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2657,21 +2626,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseGetQueuedResource._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_queued_resource(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseGetQueuedResource._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseGetQueuedResource._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseGetQueuedResource,
+                    "_BaseGetQueuedResource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2808,21 +2774,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseGetRuntimeVersion._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_runtime_version(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseGetRuntimeVersion._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseGetRuntimeVersion._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseGetRuntimeVersion,
+                    "_BaseGetRuntimeVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2961,21 +2924,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseListAcceleratorTypes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_accelerator_types(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseListAcceleratorTypes._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseListAcceleratorTypes._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseListAcceleratorTypes,
+                    "_BaseListAcceleratorTypes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3112,17 +3072,16 @@ class TpuRestTransport(_BaseTpuRestTransport):
             """
 
             http_options = _BaseTpuRestTransport._BaseListNodes._get_http_options()
-
             request, metadata = self._interceptor.pre_list_nodes(request, metadata)
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseListNodes._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTpuRestTransport._BaseListNodes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseListNodes,
+                    "_BaseListNodes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3261,21 +3220,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseListQueuedResources._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_queued_resources(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseListQueuedResources._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseListQueuedResources._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseListQueuedResources,
+                    "_BaseListQueuedResources__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3416,21 +3372,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseListRuntimeVersions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_runtime_versions(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseListRuntimeVersions._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseListRuntimeVersions._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseListRuntimeVersions,
+                    "_BaseListRuntimeVersions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3573,27 +3526,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseResetQueuedResource._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_reset_queued_resource(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseResetQueuedResource._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseTpuRestTransport._BaseResetQueuedResource._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseResetQueuedResource._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseResetQueuedResource,
+                    "_BaseResetQueuedResource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3729,21 +3673,16 @@ class TpuRestTransport(_BaseTpuRestTransport):
             """
 
             http_options = _BaseTpuRestTransport._BaseStartNode._get_http_options()
-
             request, metadata = self._interceptor.pre_start_node(request, metadata)
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseStartNode._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseTpuRestTransport._BaseStartNode._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTpuRestTransport._BaseStartNode._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseStartNode,
+                    "_BaseStartNode__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3879,21 +3818,16 @@ class TpuRestTransport(_BaseTpuRestTransport):
             """
 
             http_options = _BaseTpuRestTransport._BaseStopNode._get_http_options()
-
             request, metadata = self._interceptor.pre_stop_node(request, metadata)
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseStopNode._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseTpuRestTransport._BaseStopNode._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTpuRestTransport._BaseStopNode._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseStopNode,
+                    "_BaseStopNode__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4029,21 +3963,16 @@ class TpuRestTransport(_BaseTpuRestTransport):
             """
 
             http_options = _BaseTpuRestTransport._BaseUpdateNode._get_http_options()
-
             request, metadata = self._interceptor.pre_update_node(request, metadata)
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseUpdateNode._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseTpuRestTransport._BaseUpdateNode._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTpuRestTransport._BaseUpdateNode._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseUpdateNode,
+                    "_BaseUpdateNode__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4332,19 +4261,16 @@ class TpuRestTransport(_BaseTpuRestTransport):
             """
 
             http_options = _BaseTpuRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4472,19 +4398,16 @@ class TpuRestTransport(_BaseTpuRestTransport):
             """
 
             http_options = _BaseTpuRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4611,21 +4534,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseCancelOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4727,21 +4647,18 @@ class TpuRestTransport(_BaseTpuRestTransport):
             http_options = (
                 _BaseTpuRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseDeleteOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseDeleteOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4844,19 +4761,16 @@ class TpuRestTransport(_BaseTpuRestTransport):
             """
 
             http_options = _BaseTpuRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4984,19 +4898,16 @@ class TpuRestTransport(_BaseTpuRestTransport):
             """
 
             http_options = _BaseTpuRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseTpuRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTpuRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTpuRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

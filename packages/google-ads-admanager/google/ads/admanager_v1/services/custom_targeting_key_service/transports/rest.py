@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     custom_targeting_key_messages,
     custom_targeting_key_service,
@@ -772,23 +773,20 @@ class CustomTargetingKeyServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchActivateCustomTargetingKeys._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_activate_custom_targeting_keys(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchActivateCustomTargetingKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchActivateCustomTargetingKeys._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchActivateCustomTargetingKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingKeyServiceRestTransport._BaseBatchActivateCustomTargetingKeys,
+                    "_BaseBatchActivateCustomTargetingKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -939,23 +937,20 @@ class CustomTargetingKeyServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchCreateCustomTargetingKeys._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_create_custom_targeting_keys(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchCreateCustomTargetingKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchCreateCustomTargetingKeys._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchCreateCustomTargetingKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingKeyServiceRestTransport._BaseBatchCreateCustomTargetingKeys,
+                    "_BaseBatchCreateCustomTargetingKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1106,23 +1101,20 @@ class CustomTargetingKeyServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchDeactivateCustomTargetingKeys._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_deactivate_custom_targeting_keys(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchDeactivateCustomTargetingKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchDeactivateCustomTargetingKeys._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchDeactivateCustomTargetingKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingKeyServiceRestTransport._BaseBatchDeactivateCustomTargetingKeys,
+                    "_BaseBatchDeactivateCustomTargetingKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1271,23 +1263,20 @@ class CustomTargetingKeyServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchUpdateCustomTargetingKeys._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_update_custom_targeting_keys(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchUpdateCustomTargetingKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchUpdateCustomTargetingKeys._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingKeyServiceRestTransport._BaseBatchUpdateCustomTargetingKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingKeyServiceRestTransport._BaseBatchUpdateCustomTargetingKeys,
+                    "_BaseBatchUpdateCustomTargetingKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1435,21 +1424,18 @@ class CustomTargetingKeyServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingKeyServiceRestTransport._BaseCreateCustomTargetingKey._get_http_options()
-
             request, metadata = self._interceptor.pre_create_custom_targeting_key(
                 request, metadata
             )
-            transcoded_request = _BaseCustomTargetingKeyServiceRestTransport._BaseCreateCustomTargetingKey._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCustomTargetingKeyServiceRestTransport._BaseCreateCustomTargetingKey._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingKeyServiceRestTransport._BaseCreateCustomTargetingKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingKeyServiceRestTransport._BaseCreateCustomTargetingKey,
+                    "_BaseCreateCustomTargetingKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1589,17 +1575,18 @@ class CustomTargetingKeyServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingKeyServiceRestTransport._BaseGetCustomTargetingKey._get_http_options()
-
             request, metadata = self._interceptor.pre_get_custom_targeting_key(
                 request, metadata
             )
-            transcoded_request = _BaseCustomTargetingKeyServiceRestTransport._BaseGetCustomTargetingKey._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingKeyServiceRestTransport._BaseGetCustomTargetingKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingKeyServiceRestTransport._BaseGetCustomTargetingKey,
+                    "_BaseGetCustomTargetingKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1743,17 +1730,18 @@ class CustomTargetingKeyServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingKeyServiceRestTransport._BaseListCustomTargetingKeys._get_http_options()
-
             request, metadata = self._interceptor.pre_list_custom_targeting_keys(
                 request, metadata
             )
-            transcoded_request = _BaseCustomTargetingKeyServiceRestTransport._BaseListCustomTargetingKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingKeyServiceRestTransport._BaseListCustomTargetingKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingKeyServiceRestTransport._BaseListCustomTargetingKeys,
+                    "_BaseListCustomTargetingKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1896,21 +1884,18 @@ class CustomTargetingKeyServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingKeyServiceRestTransport._BaseUpdateCustomTargetingKey._get_http_options()
-
             request, metadata = self._interceptor.pre_update_custom_targeting_key(
                 request, metadata
             )
-            transcoded_request = _BaseCustomTargetingKeyServiceRestTransport._BaseUpdateCustomTargetingKey._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCustomTargetingKeyServiceRestTransport._BaseUpdateCustomTargetingKey._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingKeyServiceRestTransport._BaseUpdateCustomTargetingKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingKeyServiceRestTransport._BaseUpdateCustomTargetingKey,
+                    "_BaseUpdateCustomTargetingKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2152,17 +2137,18 @@ class CustomTargetingKeyServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingKeyServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCustomTargetingKeyServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingKeyServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingKeyServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2270,15 +2256,16 @@ class CustomTargetingKeyServiceRestTransport(
             """
 
             http_options = _BaseCustomTargetingKeyServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseCustomTargetingKeyServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCustomTargetingKeyServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCustomTargetingKeyServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

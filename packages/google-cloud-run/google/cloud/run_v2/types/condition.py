@@ -72,6 +72,11 @@ class Condition(proto.Message):
             condition.
 
             This field is a member of `oneof`_ ``reasons``.
+        instance_reason (google.cloud.run_v2.types.Condition.InstanceReason):
+            Output only. A reason for the instance
+            condition.
+
+            This field is a member of `oneof`_ ``reasons``.
     """
 
     class State(proto.Enum):
@@ -261,6 +266,9 @@ class Condition(proto.Message):
             DELAYED_START_PENDING (6):
                 A delayed execution is waiting for a start
                 time.
+            DELAYED_EXECUTION_EXCEEDING_DURATION_LIMIT (7):
+                A delayed execution exceeded the maximum
+                runtime duration.
         """
 
         EXECUTION_REASON_UNDEFINED = 0
@@ -270,6 +278,29 @@ class Condition(proto.Message):
         CANCELLING = 4
         DELETED = 5
         DELAYED_START_PENDING = 6
+        DELAYED_EXECUTION_EXCEEDING_DURATION_LIMIT = 7
+
+    class InstanceReason(proto.Enum):
+        r"""Reasons specific to Instance resource.
+
+        Values:
+            INSTANCE_REASON_UNSPECIFIED (0):
+                Default value.
+            INSTANCE_DELETED (1):
+                Instance deleted.
+            INSTANCE_STOPPED (2):
+                Instance stopped.
+            INSTANCE_STOPPING (3):
+                Instance stopping.
+            INSTANCE_NON_ZERO_EXIT_CODE (4):
+                Instance exited with a non-zero exit code.
+        """
+
+        INSTANCE_REASON_UNSPECIFIED = 0
+        INSTANCE_DELETED = 1
+        INSTANCE_STOPPED = 2
+        INSTANCE_STOPPING = 3
+        INSTANCE_NON_ZERO_EXIT_CODE = 4
 
     type_: str = proto.Field(
         proto.STRING,
@@ -311,6 +342,12 @@ class Condition(proto.Message):
         number=11,
         oneof="reasons",
         enum=ExecutionReason,
+    )
+    instance_reason: InstanceReason = proto.Field(
+        proto.ENUM,
+        number=12,
+        oneof="reasons",
+        enum=InstanceReason,
     )
 
 

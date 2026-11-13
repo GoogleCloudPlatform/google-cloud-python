@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.ces_v1beta._compat import transcode_request
 from google.cloud.ces_v1beta.types import evaluation, evaluation_service
 from google.cloud.ces_v1beta.types import evaluation as gcc_evaluation
 
@@ -2276,21 +2277,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseCreateEvaluation._get_http_options()
-
             request, metadata = self._interceptor.pre_create_evaluation(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseCreateEvaluation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseCreateEvaluation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseCreateEvaluation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseCreateEvaluation,
+                    "_BaseCreateEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2431,21 +2429,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseCreateEvaluationDataset._get_http_options()
-
             request, metadata = self._interceptor.pre_create_evaluation_dataset(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseCreateEvaluationDataset._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseCreateEvaluationDataset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseCreateEvaluationDataset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseCreateEvaluationDataset,
+                    "_BaseCreateEvaluationDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2588,21 +2583,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseCreateEvaluationExpectation._get_http_options()
-
             request, metadata = self._interceptor.pre_create_evaluation_expectation(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseCreateEvaluationExpectation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseCreateEvaluationExpectation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseCreateEvaluationExpectation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseCreateEvaluationExpectation,
+                    "_BaseCreateEvaluationExpectation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2747,21 +2739,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseCreateScheduledEvaluationRun._get_http_options()
-
             request, metadata = self._interceptor.pre_create_scheduled_evaluation_run(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseCreateScheduledEvaluationRun._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseCreateScheduledEvaluationRun._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseCreateScheduledEvaluationRun._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseCreateScheduledEvaluationRun,
+                    "_BaseCreateScheduledEvaluationRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2898,17 +2887,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_evaluation(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseDeleteEvaluation,
+                    "_BaseDeleteEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3006,17 +2996,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationDataset._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_evaluation_dataset(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationDataset._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationDataset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationDataset,
+                    "_BaseDeleteEvaluationDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3117,17 +3108,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationExpectation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_evaluation_expectation(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationExpectation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationExpectation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationExpectation,
+                    "_BaseDeleteEvaluationExpectation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3225,17 +3217,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationResult._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_evaluation_result(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationResult._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationResult._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationResult,
+                    "_BaseDeleteEvaluationResult__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3342,17 +3335,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationRun._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_evaluation_run(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationRun._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationRun._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseDeleteEvaluationRun,
+                    "_BaseDeleteEvaluationRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3485,17 +3479,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseDeleteScheduledEvaluationRun._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_scheduled_evaluation_run(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseDeleteScheduledEvaluationRun._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseDeleteScheduledEvaluationRun._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseDeleteScheduledEvaluationRun,
+                    "_BaseDeleteScheduledEvaluationRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3601,21 +3596,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseExportEvaluationResults._get_http_options()
-
             request, metadata = self._interceptor.pre_export_evaluation_results(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseExportEvaluationResults._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseExportEvaluationResults._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseExportEvaluationResults._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseExportEvaluationResults,
+                    "_BaseExportEvaluationResults__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3756,21 +3748,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseExportEvaluationRuns._get_http_options()
-
             request, metadata = self._interceptor.pre_export_evaluation_runs(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseExportEvaluationRuns._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseExportEvaluationRuns._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseExportEvaluationRuns._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseExportEvaluationRuns,
+                    "_BaseExportEvaluationRuns__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3911,21 +3900,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseExportEvaluations._get_http_options()
-
             request, metadata = self._interceptor.pre_export_evaluations(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseExportEvaluations._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseExportEvaluations._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseExportEvaluations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseExportEvaluations,
+                    "_BaseExportEvaluations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4064,21 +4050,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseGenerateEvaluation._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_evaluation(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseGenerateEvaluation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseGenerateEvaluation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseGenerateEvaluation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseGenerateEvaluation,
+                    "_BaseGenerateEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4216,15 +4199,16 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseGetEvaluation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_evaluation(request, metadata)
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseGetEvaluation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseGetEvaluation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseGetEvaluation,
+                    "_BaseGetEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4363,17 +4347,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseGetEvaluationDataset._get_http_options()
-
             request, metadata = self._interceptor.pre_get_evaluation_dataset(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseGetEvaluationDataset._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseGetEvaluationDataset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseGetEvaluationDataset,
+                    "_BaseGetEvaluationDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4514,17 +4499,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseGetEvaluationExpectation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_evaluation_expectation(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseGetEvaluationExpectation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseGetEvaluationExpectation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseGetEvaluationExpectation,
+                    "_BaseGetEvaluationExpectation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4666,17 +4652,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseGetEvaluationResult._get_http_options()
-
             request, metadata = self._interceptor.pre_get_evaluation_result(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseGetEvaluationResult._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseGetEvaluationResult._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseGetEvaluationResult,
+                    "_BaseGetEvaluationResult__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4817,17 +4804,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseGetEvaluationRun._get_http_options()
-
             request, metadata = self._interceptor.pre_get_evaluation_run(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseGetEvaluationRun._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseGetEvaluationRun._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseGetEvaluationRun,
+                    "_BaseGetEvaluationRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4966,17 +4954,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseGetScheduledEvaluationRun._get_http_options()
-
             request, metadata = self._interceptor.pre_get_scheduled_evaluation_run(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseGetScheduledEvaluationRun._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseGetScheduledEvaluationRun._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseGetScheduledEvaluationRun,
+                    "_BaseGetScheduledEvaluationRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5120,21 +5109,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseImportEvaluations._get_http_options()
-
             request, metadata = self._interceptor.pre_import_evaluations(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseImportEvaluations._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseImportEvaluations._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseImportEvaluations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseImportEvaluations,
+                    "_BaseImportEvaluations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5271,17 +5257,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseListEvaluationDatasets._get_http_options()
-
             request, metadata = self._interceptor.pre_list_evaluation_datasets(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseListEvaluationDatasets._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseListEvaluationDatasets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseListEvaluationDatasets,
+                    "_BaseListEvaluationDatasets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5426,17 +5413,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseListEvaluationExpectations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_evaluation_expectations(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseListEvaluationExpectations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseListEvaluationExpectations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseListEvaluationExpectations,
+                    "_BaseListEvaluationExpectations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5578,17 +5566,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseListEvaluationResults._get_http_options()
-
             request, metadata = self._interceptor.pre_list_evaluation_results(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseListEvaluationResults._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseListEvaluationResults._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseListEvaluationResults,
+                    "_BaseListEvaluationResults__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5732,17 +5721,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseListEvaluationRuns._get_http_options()
-
             request, metadata = self._interceptor.pre_list_evaluation_runs(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseListEvaluationRuns._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseListEvaluationRuns._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseListEvaluationRuns,
+                    "_BaseListEvaluationRuns__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5882,17 +5872,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseListEvaluations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_evaluations(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseListEvaluations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseListEvaluations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseListEvaluations,
+                    "_BaseListEvaluations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6033,17 +6024,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseListScheduledEvaluationRuns._get_http_options()
-
             request, metadata = self._interceptor.pre_list_scheduled_evaluation_runs(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseListScheduledEvaluationRuns._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseListScheduledEvaluationRuns._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseListScheduledEvaluationRuns,
+                    "_BaseListScheduledEvaluationRuns__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6189,19 +6181,16 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseRunEvaluation._get_http_options()
-
             request, metadata = self._interceptor.pre_run_evaluation(request, metadata)
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseRunEvaluation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseRunEvaluation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseRunEvaluation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseRunEvaluation,
+                    "_BaseRunEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6341,21 +6330,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseRunEvaluationResultMetrics._get_http_options()
-
             request, metadata = self._interceptor.pre_run_evaluation_result_metrics(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseRunEvaluationResultMetrics._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseRunEvaluationResultMetrics._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseRunEvaluationResultMetrics._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseRunEvaluationResultMetrics,
+                    "_BaseRunEvaluationResultMetrics__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6495,21 +6481,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseTestPersonaVoice._get_http_options()
-
             request, metadata = self._interceptor.pre_test_persona_voice(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseTestPersonaVoice._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseTestPersonaVoice._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseTestPersonaVoice._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseTestPersonaVoice,
+                    "_BaseTestPersonaVoice__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6652,21 +6635,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseUpdateEvaluation._get_http_options()
-
             request, metadata = self._interceptor.pre_update_evaluation(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseUpdateEvaluation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseUpdateEvaluation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseUpdateEvaluation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseUpdateEvaluation,
+                    "_BaseUpdateEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6807,21 +6787,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseUpdateEvaluationDataset._get_http_options()
-
             request, metadata = self._interceptor.pre_update_evaluation_dataset(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseUpdateEvaluationDataset._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseUpdateEvaluationDataset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseUpdateEvaluationDataset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseUpdateEvaluationDataset,
+                    "_BaseUpdateEvaluationDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6964,21 +6941,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseUpdateEvaluationExpectation._get_http_options()
-
             request, metadata = self._interceptor.pre_update_evaluation_expectation(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseUpdateEvaluationExpectation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseUpdateEvaluationExpectation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseUpdateEvaluationExpectation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseUpdateEvaluationExpectation,
+                    "_BaseUpdateEvaluationExpectation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7123,21 +7097,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseUpdateScheduledEvaluationRun._get_http_options()
-
             request, metadata = self._interceptor.pre_update_scheduled_evaluation_run(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseUpdateScheduledEvaluationRun._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseUpdateScheduledEvaluationRun._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseUpdateScheduledEvaluationRun._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseUpdateScheduledEvaluationRun,
+                    "_BaseUpdateScheduledEvaluationRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7281,21 +7252,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseUploadEvaluationAudio._get_http_options()
-
             request, metadata = self._interceptor.pre_upload_evaluation_audio(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseUploadEvaluationAudio._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseUploadEvaluationAudio._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseUploadEvaluationAudio._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseUploadEvaluationAudio,
+                    "_BaseUploadEvaluationAudio__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7831,15 +7799,16 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             http_options = (
                 _BaseEvaluationServiceRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7970,15 +7939,16 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8107,21 +8077,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEvaluationServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8225,17 +8192,18 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8340,15 +8308,16 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8479,15 +8448,16 @@ class EvaluationServiceRestTransport(_BaseEvaluationServiceRestTransport):
             """
 
             http_options = _BaseEvaluationServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseEvaluationServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEvaluationServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEvaluationServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

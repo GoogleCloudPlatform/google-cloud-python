@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.gke_multicloud_v1._compat import transcode_request
 from google.cloud.gke_multicloud_v1.types import azure_resources, azure_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1479,21 +1480,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseCreateAzureClient._get_http_options()
-
             request, metadata = self._interceptor.pre_create_azure_client(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseCreateAzureClient._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAzureClustersRestTransport._BaseCreateAzureClient._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseCreateAzureClient._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseCreateAzureClient,
+                    "_BaseCreateAzureClient__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1631,21 +1629,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseCreateAzureCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_create_azure_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseCreateAzureCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAzureClustersRestTransport._BaseCreateAzureCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseCreateAzureCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseCreateAzureCluster,
+                    "_BaseCreateAzureCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1783,21 +1778,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseCreateAzureNodePool._get_http_options()
-
             request, metadata = self._interceptor.pre_create_azure_node_pool(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseCreateAzureNodePool._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAzureClustersRestTransport._BaseCreateAzureNodePool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseCreateAzureNodePool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseCreateAzureNodePool,
+                    "_BaseCreateAzureNodePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1934,17 +1926,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseDeleteAzureClient._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_azure_client(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseDeleteAzureClient._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseDeleteAzureClient._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseDeleteAzureClient,
+                    "_BaseDeleteAzureClient__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2080,17 +2073,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseDeleteAzureCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_azure_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseDeleteAzureCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseDeleteAzureCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseDeleteAzureCluster,
+                    "_BaseDeleteAzureCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2226,17 +2220,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseDeleteAzureNodePool._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_azure_node_pool(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseDeleteAzureNodePool._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseDeleteAzureNodePool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseDeleteAzureNodePool,
+                    "_BaseDeleteAzureNodePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2373,17 +2368,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseGenerateAzureAccessToken._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_azure_access_token(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseGenerateAzureAccessToken._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseGenerateAzureAccessToken._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseGenerateAzureAccessToken,
+                    "_BaseGenerateAzureAccessToken__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2524,23 +2520,20 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseGenerateAzureClusterAgentToken._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_generate_azure_cluster_agent_token(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseGenerateAzureClusterAgentToken._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAzureClustersRestTransport._BaseGenerateAzureClusterAgentToken._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseGenerateAzureClusterAgentToken._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseGenerateAzureClusterAgentToken,
+                    "_BaseGenerateAzureClusterAgentToken__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2700,17 +2693,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             http_options = (
                 _BaseAzureClustersRestTransport._BaseGetAzureClient._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_azure_client(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseGetAzureClient._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseGetAzureClient._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseGetAzureClient,
+                    "_BaseGetAzureClient__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2847,17 +2841,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             http_options = (
                 _BaseAzureClustersRestTransport._BaseGetAzureCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_azure_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseGetAzureCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseGetAzureCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseGetAzureCluster,
+                    "_BaseGetAzureCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2997,17 +2992,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseGetAzureJsonWebKeys._get_http_options()
-
             request, metadata = self._interceptor.pre_get_azure_json_web_keys(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseGetAzureJsonWebKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseGetAzureJsonWebKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseGetAzureJsonWebKeys,
+                    "_BaseGetAzureJsonWebKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3144,17 +3140,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseGetAzureNodePool._get_http_options()
-
             request, metadata = self._interceptor.pre_get_azure_node_pool(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseGetAzureNodePool._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseGetAzureNodePool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseGetAzureNodePool,
+                    "_BaseGetAzureNodePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3295,17 +3292,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseGetAzureOpenIdConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_azure_open_id_config(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseGetAzureOpenIdConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseGetAzureOpenIdConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseGetAzureOpenIdConfig,
+                    "_BaseGetAzureOpenIdConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3446,17 +3444,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseGetAzureServerConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_azure_server_config(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseGetAzureServerConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseGetAzureServerConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseGetAzureServerConfig,
+                    "_BaseGetAzureServerConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3595,17 +3594,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseListAzureClients._get_http_options()
-
             request, metadata = self._interceptor.pre_list_azure_clients(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseListAzureClients._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseListAzureClients._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseListAzureClients,
+                    "_BaseListAzureClients__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3744,17 +3744,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseListAzureClusters._get_http_options()
-
             request, metadata = self._interceptor.pre_list_azure_clusters(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseListAzureClusters._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseListAzureClusters._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseListAzureClusters,
+                    "_BaseListAzureClusters__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3893,17 +3894,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseListAzureNodePools._get_http_options()
-
             request, metadata = self._interceptor.pre_list_azure_node_pools(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseListAzureNodePools._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseListAzureNodePools._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseListAzureNodePools,
+                    "_BaseListAzureNodePools__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4044,21 +4046,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseUpdateAzureCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_update_azure_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseUpdateAzureCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAzureClustersRestTransport._BaseUpdateAzureCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseUpdateAzureCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseUpdateAzureCluster,
+                    "_BaseUpdateAzureCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4196,21 +4195,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             """
 
             http_options = _BaseAzureClustersRestTransport._BaseUpdateAzureNodePool._get_http_options()
-
             request, metadata = self._interceptor.pre_update_azure_node_pool(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseUpdateAzureNodePool._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAzureClustersRestTransport._BaseUpdateAzureNodePool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseUpdateAzureNodePool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseUpdateAzureNodePool,
+                    "_BaseUpdateAzureNodePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4524,21 +4520,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             http_options = (
                 _BaseAzureClustersRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAzureClustersRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4643,17 +4636,18 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             http_options = (
                 _BaseAzureClustersRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAzureClustersRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4760,15 +4754,16 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             http_options = (
                 _BaseAzureClustersRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAzureClustersRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4900,15 +4895,16 @@ class AzureClustersRestTransport(_BaseAzureClustersRestTransport):
             http_options = (
                 _BaseAzureClustersRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseAzureClustersRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAzureClustersRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAzureClustersRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

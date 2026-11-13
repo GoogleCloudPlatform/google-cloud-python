@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_accounts_v1._compat import transcode_request
 from google.shopping.merchant_accounts_v1.types import accountrelationships
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -425,17 +426,18 @@ class AccountRelationshipsServiceRestTransport(
             """
 
             http_options = _BaseAccountRelationshipsServiceRestTransport._BaseGetAccountRelationship._get_http_options()
-
             request, metadata = self._interceptor.pre_get_account_relationship(
                 request, metadata
             )
-            transcoded_request = _BaseAccountRelationshipsServiceRestTransport._BaseGetAccountRelationship._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccountRelationshipsServiceRestTransport._BaseGetAccountRelationship._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccountRelationshipsServiceRestTransport._BaseGetAccountRelationship,
+                    "_BaseGetAccountRelationship__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -578,17 +580,18 @@ class AccountRelationshipsServiceRestTransport(
             """
 
             http_options = _BaseAccountRelationshipsServiceRestTransport._BaseListAccountRelationships._get_http_options()
-
             request, metadata = self._interceptor.pre_list_account_relationships(
                 request, metadata
             )
-            transcoded_request = _BaseAccountRelationshipsServiceRestTransport._BaseListAccountRelationships._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccountRelationshipsServiceRestTransport._BaseListAccountRelationships._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccountRelationshipsServiceRestTransport._BaseListAccountRelationships,
+                    "_BaseListAccountRelationships__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -745,21 +748,18 @@ class AccountRelationshipsServiceRestTransport(
             """
 
             http_options = _BaseAccountRelationshipsServiceRestTransport._BaseUpdateAccountRelationship._get_http_options()
-
             request, metadata = self._interceptor.pre_update_account_relationship(
                 request, metadata
             )
-            transcoded_request = _BaseAccountRelationshipsServiceRestTransport._BaseUpdateAccountRelationship._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAccountRelationshipsServiceRestTransport._BaseUpdateAccountRelationship._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccountRelationshipsServiceRestTransport._BaseUpdateAccountRelationship._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccountRelationshipsServiceRestTransport._BaseUpdateAccountRelationship,
+                    "_BaseUpdateAccountRelationship__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

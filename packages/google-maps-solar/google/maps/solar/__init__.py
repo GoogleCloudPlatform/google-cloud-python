@@ -21,6 +21,7 @@ __version__ = package_version.__version__
 from google.maps.solar_v1.services.solar.async_client import SolarAsyncClient
 from google.maps.solar_v1.services.solar.client import SolarClient
 from google.maps.solar_v1.types.solar_service import (
+    AdditionalInsights,
     BuildingInsights,
     CashPurchaseSavings,
     DataLayers,
@@ -66,6 +67,7 @@ __all__ = (
     "SolarPanel",
     "SolarPanelConfig",
     "SolarPotential",
+    "AdditionalInsights",
     "DataLayerView",
     "Experiment",
     "ImageryQuality",

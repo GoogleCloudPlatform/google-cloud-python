@@ -72,6 +72,18 @@ CRED_INFO_JSON = {
 CRED_INFO_STRING = json.dumps(CRED_INFO_JSON)
 
 
+@pytest.fixture(autouse=True)
+def disable_mtls_env():
+    with mock.patch.dict(
+        os.environ,
+        {
+            "GOOGLE_API_USE_CLIENT_CERTIFICATE": "false",
+            "CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE": "false",
+        },
+    ):
+        yield
+
+
 async def mock_async_gen(data, chunk_size=1):
     for i in range(0, len(data)):  # pragma: NO COVER
         chunk = data[i : i + chunk_size]
@@ -127,240 +139,6 @@ def set_event_loop():
             asyncio.set_event_loop(None)
 
 
-def test__get_default_mtls_endpoint():
-    api_endpoint = "example.googleapis.com"
-    api_mtls_endpoint = "example.mtls.googleapis.com"
-    sandbox_endpoint = "example.sandbox.googleapis.com"
-    sandbox_mtls_endpoint = "example.mtls.sandbox.googleapis.com"
-    non_googleapi = "api.example.com"
-    custom_endpoint = ".custom"
-
-    assert EntitySignalsMappingServiceClient._get_default_mtls_endpoint(None) is None
-    assert (
-        EntitySignalsMappingServiceClient._get_default_mtls_endpoint(api_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_default_mtls_endpoint(api_mtls_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_default_mtls_endpoint(sandbox_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_default_mtls_endpoint(
-            sandbox_mtls_endpoint
-        )
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_default_mtls_endpoint(non_googleapi)
-        == non_googleapi
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_default_mtls_endpoint(custom_endpoint)
-        == custom_endpoint
-    )
-
-
-def test__read_environment_variables():
-    assert EntitySignalsMappingServiceClient._read_environment_variables() == (
-        False,
-        "auto",
-        None,
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-        assert EntitySignalsMappingServiceClient._read_environment_variables() == (
-            True,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}):
-        assert EntitySignalsMappingServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}
-    ):
-        if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-            with pytest.raises(ValueError) as excinfo:
-                EntitySignalsMappingServiceClient._read_environment_variables()
-            assert (
-                str(excinfo.value)
-                == "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be either `true` or `false`"
-            )
-        else:
-            assert EntitySignalsMappingServiceClient._read_environment_variables() == (
-                False,
-                "auto",
-                None,
-            )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "never"}):
-        assert EntitySignalsMappingServiceClient._read_environment_variables() == (
-            False,
-            "never",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "always"}):
-        assert EntitySignalsMappingServiceClient._read_environment_variables() == (
-            False,
-            "always",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "auto"}):
-        assert EntitySignalsMappingServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "Unsupported"}):
-        with pytest.raises(MutualTLSChannelError) as excinfo:
-            EntitySignalsMappingServiceClient._read_environment_variables()
-    assert (
-        str(excinfo.value)
-        == "Environment variable `GOOGLE_API_USE_MTLS_ENDPOINT` must be `never`, `auto` or `always`"
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_CLOUD_UNIVERSE_DOMAIN": "foo.com"}):
-        assert EntitySignalsMappingServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            "foo.com",
-        )
-
-
-def test_use_client_cert_effective():
-    # Test case 1: Test when `should_use_client_cert` returns True.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=True
-        ):
-            assert (
-                EntitySignalsMappingServiceClient._use_client_cert_effective() is True
-            )
-
-    # Test case 2: Test when `should_use_client_cert` returns False.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should NOT be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=False
-        ):
-            assert (
-                EntitySignalsMappingServiceClient._use_client_cert_effective() is False
-            )
-
-    # Test case 3: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "true".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-            assert (
-                EntitySignalsMappingServiceClient._use_client_cert_effective() is True
-            )
-
-    # Test case 4: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}
-        ):
-            assert (
-                EntitySignalsMappingServiceClient._use_client_cert_effective() is False
-            )
-
-    # Test case 5: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "True".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "True"}):
-            assert (
-                EntitySignalsMappingServiceClient._use_client_cert_effective() is True
-            )
-
-    # Test case 6: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "False".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "False"}
-        ):
-            assert (
-                EntitySignalsMappingServiceClient._use_client_cert_effective() is False
-            )
-
-    # Test case 7: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "TRUE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "TRUE"}):
-            assert (
-                EntitySignalsMappingServiceClient._use_client_cert_effective() is True
-            )
-
-    # Test case 8: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "FALSE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "FALSE"}
-        ):
-            assert (
-                EntitySignalsMappingServiceClient._use_client_cert_effective() is False
-            )
-
-    # Test case 9: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not set.
-    # In this case, the method should return False, which is the default value.
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, clear=True):
-            assert (
-                EntitySignalsMappingServiceClient._use_client_cert_effective() is False
-            )
-
-    # Test case 10: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should raise a ValueError as the environment variable must be either
-    # "true" or "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            with pytest.raises(ValueError):
-                EntitySignalsMappingServiceClient._use_client_cert_effective()
-
-    # Test case 11: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should return False as the environment variable is set to an invalid value.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            assert (
-                EntitySignalsMappingServiceClient._use_client_cert_effective() is False
-            )
-
-    # Test case 12: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is unset. Also,
-    # the GOOGLE_API_CONFIG environment variable is unset.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": ""}):
-            with mock.patch.dict(os.environ, {"GOOGLE_API_CERTIFICATE_CONFIG": ""}):
-                assert (
-                    EntitySignalsMappingServiceClient._use_client_cert_effective()
-                    is False
-                )
-
-
 def test__get_client_cert_source():
     mock_provided_cert_source = mock.Mock()
     mock_default_cert_source = mock.Mock()
@@ -398,104 +176,6 @@ def test__get_client_cert_source():
                 )
                 is mock_provided_cert_source
             )
-
-
-@mock.patch.object(
-    EntitySignalsMappingServiceClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(EntitySignalsMappingServiceClient),
-)
-def test__get_api_endpoint():
-    api_override = "foo.com"
-    mock_client_cert_source = mock.Mock()
-    default_universe = EntitySignalsMappingServiceClient._DEFAULT_UNIVERSE
-    default_endpoint = (
-        EntitySignalsMappingServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-            UNIVERSE_DOMAIN=default_universe
-        )
-    )
-    mock_universe = "bar.com"
-    mock_endpoint = EntitySignalsMappingServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=mock_universe
-    )
-
-    assert (
-        EntitySignalsMappingServiceClient._get_api_endpoint(
-            api_override, mock_client_cert_source, default_universe, "always"
-        )
-        == api_override
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "auto"
-        )
-        == EntitySignalsMappingServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_api_endpoint(
-            None, None, default_universe, "auto"
-        )
-        == default_endpoint
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_api_endpoint(
-            None, None, default_universe, "always"
-        )
-        == EntitySignalsMappingServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "always"
-        )
-        == EntitySignalsMappingServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_api_endpoint(
-            None, None, mock_universe, "never"
-        )
-        == mock_endpoint
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_api_endpoint(
-            None, None, default_universe, "never"
-        )
-        == default_endpoint
-    )
-
-    with pytest.raises(MutualTLSChannelError) as excinfo:
-        EntitySignalsMappingServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, mock_universe, "auto"
-        )
-    assert (
-        str(excinfo.value)
-        == "mTLS is not supported in any universe other than googleapis.com."
-    )
-
-
-def test__get_universe_domain():
-    client_universe_domain = "foo.com"
-    universe_domain_env = "bar.com"
-
-    assert (
-        EntitySignalsMappingServiceClient._get_universe_domain(
-            client_universe_domain, universe_domain_env
-        )
-        == client_universe_domain
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_universe_domain(
-            None, universe_domain_env
-        )
-        == universe_domain_env
-    )
-    assert (
-        EntitySignalsMappingServiceClient._get_universe_domain(None, None)
-        == EntitySignalsMappingServiceClient._DEFAULT_UNIVERSE
-    )
-
-    with pytest.raises(ValueError) as excinfo:
-        EntitySignalsMappingServiceClient._get_universe_domain("", None)
-    assert str(excinfo.value) == "Universe Domain cannot be an empty string."
 
 
 @pytest.mark.parametrize(
@@ -979,6 +659,7 @@ def test_entity_signals_mapping_service_client_get_mtls_endpoint_and_cert_source
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", None)
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", None)
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1033,6 +714,7 @@ def test_entity_signals_mapping_service_client_get_mtls_endpoint_and_cert_source
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", "")
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", "")
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1316,19 +998,19 @@ def test_get_entity_signals_mapping_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_entity_signals_mapping._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetEntitySignalsMapping,
+        "_BaseGetEntitySignalsMapping__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_entity_signals_mapping._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -1376,15 +1058,6 @@ def test_get_entity_signals_mapping_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_entity_signals_mapping_rest_unset_required_fields():
-    transport = transports.EntitySignalsMappingServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_entity_signals_mapping._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_entity_signals_mapping_rest_flattened():
@@ -1502,29 +1175,30 @@ def test_list_entity_signals_mappings_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_entity_signals_mappings._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListEntitySignalsMappings,
+        "_BaseListEntitySignalsMappings__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_entity_signals_mappings._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
+            "orderBy",
+            "pageSize",
+            "pageToken",
             "skip",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -1574,26 +1248,6 @@ def test_list_entity_signals_mappings_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_entity_signals_mappings_rest_unset_required_fields():
-    transport = transports.EntitySignalsMappingServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_entity_signals_mappings._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-                "skip",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_entity_signals_mappings_rest_flattened():
@@ -1785,19 +1439,19 @@ def test_create_entity_signals_mapping_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_entity_signals_mapping._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateEntitySignalsMapping,
+        "_BaseCreateEntitySignalsMapping__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_entity_signals_mapping._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -1846,25 +1500,6 @@ def test_create_entity_signals_mapping_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_entity_signals_mapping_rest_unset_required_fields():
-    transport = transports.EntitySignalsMappingServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_entity_signals_mapping._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "parent",
-                "entitySignalsMapping",
-            )
-        )
-    )
 
 
 def test_create_entity_signals_mapping_rest_flattened():
@@ -1987,19 +1622,20 @@ def test_update_entity_signals_mapping_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_entity_signals_mapping._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateEntitySignalsMapping,
+        "_BaseUpdateEntitySignalsMapping__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_entity_signals_mapping._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("update_mask",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("updateMask",))
 
     # verify required fields with non-default values are left alone
 
@@ -2046,17 +1682,6 @@ def test_update_entity_signals_mapping_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_entity_signals_mapping_rest_unset_required_fields():
-    transport = transports.EntitySignalsMappingServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_entity_signals_mapping._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (set(("updateMask",)) & set(("entitySignalsMapping",)))
 
 
 def test_update_entity_signals_mapping_rest_flattened():
@@ -2185,19 +1810,19 @@ def test_batch_create_entity_signals_mappings_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).batch_create_entity_signals_mappings._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseBatchCreateEntitySignalsMappings,
+        "_BaseBatchCreateEntitySignalsMappings__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).batch_create_entity_signals_mappings._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -2248,25 +1873,6 @@ def test_batch_create_entity_signals_mappings_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_batch_create_entity_signals_mappings_rest_unset_required_fields():
-    transport = transports.EntitySignalsMappingServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = (
-        transport.batch_create_entity_signals_mappings._get_unset_required_fields({})
-    )
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "parent",
-                "requests",
-            )
-        )
-    )
 
 
 def test_batch_create_entity_signals_mappings_rest_flattened():
@@ -2401,19 +2007,19 @@ def test_batch_update_entity_signals_mappings_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).batch_update_entity_signals_mappings._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseBatchUpdateEntitySignalsMappings,
+        "_BaseBatchUpdateEntitySignalsMappings__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).batch_update_entity_signals_mappings._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -2464,25 +2070,6 @@ def test_batch_update_entity_signals_mappings_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_batch_update_entity_signals_mappings_rest_unset_required_fields():
-    transport = transports.EntitySignalsMappingServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = (
-        transport.batch_update_entity_signals_mappings._get_unset_required_fields({})
-    )
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "parent",
-                "requests",
-            )
-        )
-    )
 
 
 def test_batch_update_entity_signals_mappings_rest_flattened():
@@ -2696,7 +2283,9 @@ def test_get_entity_signals_mapping_rest_call_success(request_type):
             name="name_value",
             entity_signals_mapping_id=2660,
             taxonomy_category_ids=[2267],
+            taxonomy_categories=["taxonomy_categories_value"],
             audience_segment_id=1980,
+            audience_segment="audience_segment_value",
         )
 
         # Wrap the value into a proper Response obj
@@ -2718,6 +2307,7 @@ def test_get_entity_signals_mapping_rest_call_success(request_type):
     assert response.name == "name_value"
     assert response.entity_signals_mapping_id == 2660
     assert response.taxonomy_category_ids == [2267]
+    assert response.taxonomy_categories == ["taxonomy_categories_value"]
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -2984,9 +2574,16 @@ def test_create_entity_signals_mapping_rest_call_success(request_type):
         "audience_segment_id": 1980,
         "content_bundle_id": 1792,
         "custom_targeting_value_id": 2663,
+        "audience_segment": "audience_segment_value",
+        "content_bundle": "content_bundle_value",
+        "custom_targeting_value": "custom_targeting_value_value",
         "name": "name_value",
         "entity_signals_mapping_id": 2660,
         "taxonomy_category_ids": [2268, 2269],
+        "taxonomy_categories": [
+            "taxonomy_categories_value1",
+            "taxonomy_categories_value2",
+        ],
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -3070,7 +2667,9 @@ def test_create_entity_signals_mapping_rest_call_success(request_type):
             name="name_value",
             entity_signals_mapping_id=2660,
             taxonomy_category_ids=[2267],
+            taxonomy_categories=["taxonomy_categories_value"],
             audience_segment_id=1980,
+            audience_segment="audience_segment_value",
         )
 
         # Wrap the value into a proper Response obj
@@ -3092,6 +2691,7 @@ def test_create_entity_signals_mapping_rest_call_success(request_type):
     assert response.name == "name_value"
     assert response.entity_signals_mapping_id == 2660
     assert response.taxonomy_category_ids == [2267]
+    assert response.taxonomy_categories == ["taxonomy_categories_value"]
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -3220,9 +2820,16 @@ def test_update_entity_signals_mapping_rest_call_success(request_type):
         "audience_segment_id": 1980,
         "content_bundle_id": 1792,
         "custom_targeting_value_id": 2663,
+        "audience_segment": "audience_segment_value",
+        "content_bundle": "content_bundle_value",
+        "custom_targeting_value": "custom_targeting_value_value",
         "name": "networks/sample1/entitySignalsMappings/sample2",
         "entity_signals_mapping_id": 2660,
         "taxonomy_category_ids": [2268, 2269],
+        "taxonomy_categories": [
+            "taxonomy_categories_value1",
+            "taxonomy_categories_value2",
+        ],
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -3306,7 +2913,9 @@ def test_update_entity_signals_mapping_rest_call_success(request_type):
             name="name_value",
             entity_signals_mapping_id=2660,
             taxonomy_category_ids=[2267],
+            taxonomy_categories=["taxonomy_categories_value"],
             audience_segment_id=1980,
+            audience_segment="audience_segment_value",
         )
 
         # Wrap the value into a proper Response obj
@@ -3328,6 +2937,7 @@ def test_update_entity_signals_mapping_rest_call_success(request_type):
     assert response.name == "name_value"
     assert response.entity_signals_mapping_id == 2660
     assert response.taxonomy_category_ids == [2267]
+    assert response.taxonomy_categories == ["taxonomy_categories_value"]
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -4162,6 +3772,83 @@ def test_entity_signals_mapping_service_client_transport_session_collision(
     assert session1 != session2
 
 
+def test_audience_segment_path():
+    network_code = "squid"
+    audience_segment = "clam"
+    expected = "networks/{network_code}/audienceSegments/{audience_segment}".format(
+        network_code=network_code,
+        audience_segment=audience_segment,
+    )
+    actual = EntitySignalsMappingServiceClient.audience_segment_path(
+        network_code, audience_segment
+    )
+    assert expected == actual
+
+
+def test_parse_audience_segment_path():
+    expected = {
+        "network_code": "whelk",
+        "audience_segment": "octopus",
+    }
+    path = EntitySignalsMappingServiceClient.audience_segment_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = EntitySignalsMappingServiceClient.parse_audience_segment_path(path)
+    assert expected == actual
+
+
+def test_content_bundle_path():
+    network_code = "oyster"
+    content_bundle = "nudibranch"
+    expected = "networks/{network_code}/contentBundles/{content_bundle}".format(
+        network_code=network_code,
+        content_bundle=content_bundle,
+    )
+    actual = EntitySignalsMappingServiceClient.content_bundle_path(
+        network_code, content_bundle
+    )
+    assert expected == actual
+
+
+def test_parse_content_bundle_path():
+    expected = {
+        "network_code": "cuttlefish",
+        "content_bundle": "mussel",
+    }
+    path = EntitySignalsMappingServiceClient.content_bundle_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = EntitySignalsMappingServiceClient.parse_content_bundle_path(path)
+    assert expected == actual
+
+
+def test_custom_targeting_value_path():
+    network_code = "winkle"
+    custom_targeting_value = "nautilus"
+    expected = (
+        "networks/{network_code}/customTargetingValues/{custom_targeting_value}".format(
+            network_code=network_code,
+            custom_targeting_value=custom_targeting_value,
+        )
+    )
+    actual = EntitySignalsMappingServiceClient.custom_targeting_value_path(
+        network_code, custom_targeting_value
+    )
+    assert expected == actual
+
+
+def test_parse_custom_targeting_value_path():
+    expected = {
+        "network_code": "scallop",
+        "custom_targeting_value": "abalone",
+    }
+    path = EntitySignalsMappingServiceClient.custom_targeting_value_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = EntitySignalsMappingServiceClient.parse_custom_targeting_value_path(path)
+    assert expected == actual
+
+
 def test_entity_signals_mapping_path():
     network_code = "squid"
     entity_signals_mapping = "clam"
@@ -4209,8 +3896,33 @@ def test_parse_network_path():
     assert expected == actual
 
 
+def test_taxonomy_category_path():
+    network_code = "cuttlefish"
+    taxonomy_category = "mussel"
+    expected = "networks/{network_code}/taxonomyCategories/{taxonomy_category}".format(
+        network_code=network_code,
+        taxonomy_category=taxonomy_category,
+    )
+    actual = EntitySignalsMappingServiceClient.taxonomy_category_path(
+        network_code, taxonomy_category
+    )
+    assert expected == actual
+
+
+def test_parse_taxonomy_category_path():
+    expected = {
+        "network_code": "winkle",
+        "taxonomy_category": "nautilus",
+    }
+    path = EntitySignalsMappingServiceClient.taxonomy_category_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = EntitySignalsMappingServiceClient.parse_taxonomy_category_path(path)
+    assert expected == actual
+
+
 def test_common_billing_account_path():
-    billing_account = "cuttlefish"
+    billing_account = "scallop"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -4222,7 +3934,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "mussel",
+        "billing_account": "abalone",
     }
     path = EntitySignalsMappingServiceClient.common_billing_account_path(**expected)
 
@@ -4232,7 +3944,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "winkle"
+    folder = "squid"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -4242,7 +3954,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "nautilus",
+        "folder": "clam",
     }
     path = EntitySignalsMappingServiceClient.common_folder_path(**expected)
 
@@ -4252,7 +3964,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "scallop"
+    organization = "whelk"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -4262,7 +3974,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "abalone",
+        "organization": "octopus",
     }
     path = EntitySignalsMappingServiceClient.common_organization_path(**expected)
 
@@ -4272,7 +3984,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "squid"
+    project = "oyster"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -4282,7 +3994,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "clam",
+        "project": "nudibranch",
     }
     path = EntitySignalsMappingServiceClient.common_project_path(**expected)
 
@@ -4292,8 +4004,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "whelk"
-    location = "octopus"
+    project = "cuttlefish"
+    location = "mussel"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -4304,8 +4016,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "oyster",
-        "location": "nudibranch",
+        "project": "winkle",
+        "location": "nautilus",
     }
     path = EntitySignalsMappingServiceClient.common_location_path(**expected)
 

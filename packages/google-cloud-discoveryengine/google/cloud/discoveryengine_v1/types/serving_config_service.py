@@ -25,9 +25,47 @@ from google.cloud.discoveryengine_v1.types import serving_config as gcd_serving_
 __protobuf__ = proto.module(
     package="google.cloud.discoveryengine.v1",
     manifest={
+        "CreateServingConfigRequest",
         "UpdateServingConfigRequest",
+        "DeleteServingConfigRequest",
+        "GetServingConfigRequest",
+        "ListServingConfigsRequest",
+        "ListServingConfigsResponse",
     },
 )
+
+
+class CreateServingConfigRequest(proto.Message):
+    r"""Request for CreateServingConfig method.
+
+    Attributes:
+        parent (str):
+            Required. Full resource name of parent. Format:
+            ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}``
+        serving_config (google.cloud.discoveryengine_v1.types.ServingConfig):
+            Required. The ServingConfig to create.
+        serving_config_id (str):
+            Required. The ID to use for the ServingConfig, which will
+            become the final component of the ServingConfig's resource
+            name.
+
+            This value should be 4-63 characters, and valid characters
+            are /[a-zA-Z0-9][a-zA-Z0-9\_-]+/.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    serving_config: gcd_serving_config.ServingConfig = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=gcd_serving_config.ServingConfig,
+    )
+    serving_config_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
 
 
 class UpdateServingConfigRequest(proto.Message):
@@ -55,6 +93,98 @@ class UpdateServingConfigRequest(proto.Message):
         proto.MESSAGE,
         number=2,
         message=field_mask_pb2.FieldMask,
+    )
+
+
+class DeleteServingConfigRequest(proto.Message):
+    r"""Request for DeleteServingConfig method.
+
+    Attributes:
+        name (str):
+            Required. The resource name of the ServingConfig to delete.
+            Format:
+            ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/servingConfigs/{serving_config_id}``
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class GetServingConfigRequest(proto.Message):
+    r"""Request for GetServingConfig method.
+
+    Attributes:
+        name (str):
+            Required. The resource name of the ServingConfig to get.
+            Format:
+            ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/servingConfigs/{serving_config_id}``
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListServingConfigsRequest(proto.Message):
+    r"""Request for ListServingConfigs method.
+
+    Attributes:
+        parent (str):
+            Required. Full resource name of the parent resource. Format:
+            ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}``
+        page_size (int):
+            Optional. Maximum number of results to
+            return. If unspecified, defaults to 100. If a
+            value greater than 100 is provided, at most 100
+            results are returned.
+        page_token (str):
+            Optional. A page token, received from a previous
+            ``ListServingConfigs`` call. Provide this to retrieve the
+            subsequent page.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListServingConfigsResponse(proto.Message):
+    r"""Response for ListServingConfigs method.
+
+    Attributes:
+        serving_configs (MutableSequence[google.cloud.discoveryengine_v1.types.ServingConfig]):
+            All the ServingConfigs for a given dataStore.
+        next_page_token (str):
+            Pagination token, if not returned indicates
+            the last page.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    serving_configs: MutableSequence[gcd_serving_config.ServingConfig] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=1,
+            message=gcd_serving_config.ServingConfig,
+        )
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
     )
 
 

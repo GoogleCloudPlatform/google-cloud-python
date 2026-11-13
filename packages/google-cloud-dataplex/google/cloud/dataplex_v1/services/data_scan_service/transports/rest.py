@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dataplex_v1._compat import transcode_request
 from google.cloud.dataplex_v1.types import datascans
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1088,21 +1089,18 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             """
 
             http_options = _BaseDataScanServiceRestTransport._BaseCancelDataScanJob._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_data_scan_job(
                 request, metadata
             )
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseCancelDataScanJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataScanServiceRestTransport._BaseCancelDataScanJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseCancelDataScanJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseCancelDataScanJob,
+                    "_BaseCancelDataScanJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1243,21 +1241,18 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             """
 
             http_options = _BaseDataScanServiceRestTransport._BaseCreateDataScan._get_http_options()
-
             request, metadata = self._interceptor.pre_create_data_scan(
                 request, metadata
             )
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseCreateDataScan._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataScanServiceRestTransport._BaseCreateDataScan._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseCreateDataScan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseCreateDataScan,
+                    "_BaseCreateDataScan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1393,17 +1388,18 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             """
 
             http_options = _BaseDataScanServiceRestTransport._BaseDeleteDataScan._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_data_scan(
                 request, metadata
             )
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseDeleteDataScan._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseDeleteDataScan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseDeleteDataScan,
+                    "_BaseDeleteDataScan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1541,21 +1537,18 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             """
 
             http_options = _BaseDataScanServiceRestTransport._BaseGenerateDataQualityRules._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_data_quality_rules(
                 request, metadata
             )
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseGenerateDataQualityRules._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataScanServiceRestTransport._BaseGenerateDataQualityRules._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseGenerateDataQualityRules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseGenerateDataQualityRules,
+                    "_BaseGenerateDataQualityRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1722,15 +1715,16 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             http_options = (
                 _BaseDataScanServiceRestTransport._BaseGetDataScan._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_data_scan(request, metadata)
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseGetDataScan._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseGetDataScan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseGetDataScan,
+                    "_BaseGetDataScan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1866,17 +1860,18 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             """
 
             http_options = _BaseDataScanServiceRestTransport._BaseGetDataScanJob._get_http_options()
-
             request, metadata = self._interceptor.pre_get_data_scan_job(
                 request, metadata
             )
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseGetDataScanJob._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseGetDataScanJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseGetDataScanJob,
+                    "_BaseGetDataScanJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2010,17 +2005,18 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             """
 
             http_options = _BaseDataScanServiceRestTransport._BaseListDataScanJobs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_data_scan_jobs(
                 request, metadata
             )
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseListDataScanJobs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseListDataScanJobs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseListDataScanJobs,
+                    "_BaseListDataScanJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2158,15 +2154,16 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             http_options = (
                 _BaseDataScanServiceRestTransport._BaseListDataScans._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_data_scans(request, metadata)
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseListDataScans._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseListDataScans._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseListDataScans,
+                    "_BaseListDataScans__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2303,19 +2300,16 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             http_options = (
                 _BaseDataScanServiceRestTransport._BaseRunDataScan._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_run_data_scan(request, metadata)
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseRunDataScan._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataScanServiceRestTransport._BaseRunDataScan._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseRunDataScan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseRunDataScan,
+                    "_BaseRunDataScan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2454,21 +2448,18 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             """
 
             http_options = _BaseDataScanServiceRestTransport._BaseUpdateDataScan._get_http_options()
-
             request, metadata = self._interceptor.pre_update_data_scan(
                 request, metadata
             )
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseUpdateDataScan._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataScanServiceRestTransport._BaseUpdateDataScan._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseUpdateDataScan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseUpdateDataScan,
+                    "_BaseUpdateDataScan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2695,15 +2686,16 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             http_options = (
                 _BaseDataScanServiceRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2835,15 +2827,16 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             http_options = (
                 _BaseDataScanServiceRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2975,15 +2968,16 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             http_options = (
                 _BaseDataScanServiceRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3116,19 +3110,16 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             http_options = (
                 _BaseDataScanServiceRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataScanServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3261,21 +3252,18 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             """
 
             http_options = _BaseDataScanServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataScanServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3404,21 +3392,18 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             """
 
             http_options = _BaseDataScanServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataScanServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3521,17 +3506,18 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             """
 
             http_options = _BaseDataScanServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3638,15 +3624,16 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             http_options = (
                 _BaseDataScanServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3776,15 +3763,16 @@ class DataScanServiceRestTransport(_BaseDataScanServiceRestTransport):
             """
 
             http_options = _BaseDataScanServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseDataScanServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataScanServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataScanServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.apihub_v1._compat import transcode_request
 from google.cloud.apihub_v1.types import curate_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -624,19 +625,16 @@ class ApiHubCurateRestTransport(_BaseApiHubCurateRestTransport):
             http_options = (
                 _BaseApiHubCurateRestTransport._BaseCreateCuration._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_curation(request, metadata)
-            transcoded_request = _BaseApiHubCurateRestTransport._BaseCreateCuration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApiHubCurateRestTransport._BaseCreateCuration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubCurateRestTransport._BaseCreateCuration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubCurateRestTransport._BaseCreateCuration,
+                    "_BaseCreateCuration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -770,15 +768,16 @@ class ApiHubCurateRestTransport(_BaseApiHubCurateRestTransport):
             http_options = (
                 _BaseApiHubCurateRestTransport._BaseDeleteCuration._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_curation(request, metadata)
-            transcoded_request = _BaseApiHubCurateRestTransport._BaseDeleteCuration._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubCurateRestTransport._BaseDeleteCuration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubCurateRestTransport._BaseDeleteCuration,
+                    "_BaseDeleteCuration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -880,19 +879,16 @@ class ApiHubCurateRestTransport(_BaseApiHubCurateRestTransport):
             http_options = (
                 _BaseApiHubCurateRestTransport._BaseGetCuration._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_curation(request, metadata)
-            transcoded_request = (
-                _BaseApiHubCurateRestTransport._BaseGetCuration._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseApiHubCurateRestTransport._BaseGetCuration._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubCurateRestTransport._BaseGetCuration,
+                    "_BaseGetCuration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1031,15 +1027,16 @@ class ApiHubCurateRestTransport(_BaseApiHubCurateRestTransport):
             http_options = (
                 _BaseApiHubCurateRestTransport._BaseListCurations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_curations(request, metadata)
-            transcoded_request = _BaseApiHubCurateRestTransport._BaseListCurations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubCurateRestTransport._BaseListCurations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubCurateRestTransport._BaseListCurations,
+                    "_BaseListCurations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1179,19 +1176,16 @@ class ApiHubCurateRestTransport(_BaseApiHubCurateRestTransport):
             http_options = (
                 _BaseApiHubCurateRestTransport._BaseUpdateCuration._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_curation(request, metadata)
-            transcoded_request = _BaseApiHubCurateRestTransport._BaseUpdateCuration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApiHubCurateRestTransport._BaseUpdateCuration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubCurateRestTransport._BaseUpdateCuration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubCurateRestTransport._BaseUpdateCuration,
+                    "_BaseUpdateCuration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1373,19 +1367,16 @@ class ApiHubCurateRestTransport(_BaseApiHubCurateRestTransport):
             http_options = (
                 _BaseApiHubCurateRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseApiHubCurateRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseApiHubCurateRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubCurateRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1517,15 +1508,16 @@ class ApiHubCurateRestTransport(_BaseApiHubCurateRestTransport):
             http_options = (
                 _BaseApiHubCurateRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseApiHubCurateRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubCurateRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubCurateRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1655,21 +1647,18 @@ class ApiHubCurateRestTransport(_BaseApiHubCurateRestTransport):
             http_options = (
                 _BaseApiHubCurateRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseApiHubCurateRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApiHubCurateRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubCurateRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubCurateRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1774,17 +1763,18 @@ class ApiHubCurateRestTransport(_BaseApiHubCurateRestTransport):
             http_options = (
                 _BaseApiHubCurateRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseApiHubCurateRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubCurateRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubCurateRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1891,17 +1881,16 @@ class ApiHubCurateRestTransport(_BaseApiHubCurateRestTransport):
             http_options = (
                 _BaseApiHubCurateRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseApiHubCurateRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseApiHubCurateRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubCurateRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2033,15 +2022,16 @@ class ApiHubCurateRestTransport(_BaseApiHubCurateRestTransport):
             http_options = (
                 _BaseApiHubCurateRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseApiHubCurateRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubCurateRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubCurateRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

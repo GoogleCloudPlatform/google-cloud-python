@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.kms_v1._compat import transcode_request
 from google.cloud.kms_v1.types import ekm_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -794,21 +795,18 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             """
 
             http_options = _BaseEkmServiceRestTransport._BaseCreateEkmConnection._get_http_options()
-
             request, metadata = self._interceptor.pre_create_ekm_connection(
                 request, metadata
             )
-            transcoded_request = _BaseEkmServiceRestTransport._BaseCreateEkmConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEkmServiceRestTransport._BaseCreateEkmConnection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEkmServiceRestTransport._BaseCreateEkmConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseCreateEkmConnection,
+                    "_BaseCreateEkmConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -956,19 +954,16 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             http_options = (
                 _BaseEkmServiceRestTransport._BaseGetEkmConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_ekm_config(request, metadata)
-            transcoded_request = (
-                _BaseEkmServiceRestTransport._BaseGetEkmConfig._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseEkmServiceRestTransport._BaseGetEkmConfig._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseGetEkmConfig,
+                    "_BaseGetEkmConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1117,17 +1112,18 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             http_options = (
                 _BaseEkmServiceRestTransport._BaseGetEkmConnection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_ekm_connection(
                 request, metadata
             )
-            transcoded_request = _BaseEkmServiceRestTransport._BaseGetEkmConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEkmServiceRestTransport._BaseGetEkmConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseGetEkmConnection,
+                    "_BaseGetEkmConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1266,17 +1262,18 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             http_options = (
                 _BaseEkmServiceRestTransport._BaseListEkmConnections._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_ekm_connections(
                 request, metadata
             )
-            transcoded_request = _BaseEkmServiceRestTransport._BaseListEkmConnections._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEkmServiceRestTransport._BaseListEkmConnections._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseListEkmConnections,
+                    "_BaseListEkmConnections__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1426,21 +1423,18 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             http_options = (
                 _BaseEkmServiceRestTransport._BaseUpdateEkmConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_ekm_config(
                 request, metadata
             )
-            transcoded_request = _BaseEkmServiceRestTransport._BaseUpdateEkmConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEkmServiceRestTransport._BaseUpdateEkmConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEkmServiceRestTransport._BaseUpdateEkmConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseUpdateEkmConfig,
+                    "_BaseUpdateEkmConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1589,21 +1583,18 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             """
 
             http_options = _BaseEkmServiceRestTransport._BaseUpdateEkmConnection._get_http_options()
-
             request, metadata = self._interceptor.pre_update_ekm_connection(
                 request, metadata
             )
-            transcoded_request = _BaseEkmServiceRestTransport._BaseUpdateEkmConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEkmServiceRestTransport._BaseUpdateEkmConnection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEkmServiceRestTransport._BaseUpdateEkmConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseUpdateEkmConnection,
+                    "_BaseUpdateEkmConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1743,17 +1734,18 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             http_options = (
                 _BaseEkmServiceRestTransport._BaseVerifyConnectivity._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_verify_connectivity(
                 request, metadata
             )
-            transcoded_request = _BaseEkmServiceRestTransport._BaseVerifyConnectivity._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEkmServiceRestTransport._BaseVerifyConnectivity._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseVerifyConnectivity,
+                    "_BaseVerifyConnectivity__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1954,19 +1946,16 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             http_options = (
                 _BaseEkmServiceRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseEkmServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseEkmServiceRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2098,19 +2087,16 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             http_options = (
                 _BaseEkmServiceRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseEkmServiceRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseEkmServiceRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2242,19 +2228,16 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             http_options = (
                 _BaseEkmServiceRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseEkmServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseEkmServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2387,25 +2370,16 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             http_options = (
                 _BaseEkmServiceRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseEkmServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseEkmServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseEkmServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2539,21 +2513,18 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             http_options = (
                 _BaseEkmServiceRestTransport._BaseTestIamPermissions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseEkmServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEkmServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEkmServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2686,19 +2657,16 @@ class EkmServiceRestTransport(_BaseEkmServiceRestTransport):
             http_options = (
                 _BaseEkmServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseEkmServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseEkmServiceRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEkmServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

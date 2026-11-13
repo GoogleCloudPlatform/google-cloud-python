@@ -15,13 +15,13 @@
 from unittest import mock
 
 import aiohttp  # type: ignore
-from aioresponses import aioresponses, core  # type: ignore
 import pytest  # type: ignore
-from tests_async.transport import async_compliance
+from aioresponses import aioresponses, core  # type: ignore
 
 import google.auth._credentials_async
-from google.auth.transport import _aiohttp_requests as aiohttp_requests
 import google.auth.transport._mtls_helper
+from google.auth.transport import _aiohttp_requests as aiohttp_requests
+from tests_async.transport import async_compliance
 
 
 class TestCombinedResponse:

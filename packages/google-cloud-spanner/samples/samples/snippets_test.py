@@ -18,6 +18,7 @@ import uuid
 from google.api_core import exceptions
 from google.cloud import spanner
 from google.cloud.spanner_admin_database_v1.types.common import DatabaseDialect
+from google.cloud.spanner_admin_instance_v1.types import spanner_instance_admin
 import pytest
 from test_utils.retry import RetryErrors
 
@@ -214,17 +215,34 @@ def test_create_and_update_instance_default_backup_schedule_type(
 
 
 def test_create_instance_partition(capsys, instance_partition_instance_id):
-    # Unable to use create_instance since it has editions set where partitions are unsupported.
-    # The minimal requirement for editions is ENTERPRISE_PLUS for the paritions to get supported.
-    snippets.create_instance_with_processing_units(instance_partition_instance_id, 1000)
-    retry_429(snippets.create_instance_partition)(
-        instance_partition_instance_id, "my-instance-partition"
-    )
-    out, _ = capsys.readouterr()
-    assert "Created instance partition my-instance-partition" in out
     spanner_client = spanner.Client()
     instance = spanner_client.instance(instance_partition_instance_id)
-    retry_429(instance.delete)()
+    try:
+        request = spanner_instance_admin.CreateInstanceRequest(
+            parent=spanner_client.project_name,
+            instance_id=instance_partition_instance_id,
+            instance=spanner_instance_admin.Instance(
+                config=f"{spanner_client.project_name}/instanceConfigs/nam6",
+                display_name="Partition test instance",
+                node_count=1,
+                edition=spanner_instance_admin.Instance.Edition.ENTERPRISE_PLUS,
+            ),
+        )
+        operation = retry_429(spanner_client.instance_admin_api.create_instance)(
+            request=request
+        )
+        operation.result(900)
+
+        retry_429(snippets.create_instance_partition)(
+            instance_partition_instance_id, "my-instance-partition"
+        )
+        out, _ = capsys.readouterr()
+        assert "Created instance partition my-instance-partition" in out
+    finally:
+        try:
+            retry_429(instance.delete)()
+        except Exception:
+            pass
 
 
 def test_update_database(capsys, instance_id, sample_database):

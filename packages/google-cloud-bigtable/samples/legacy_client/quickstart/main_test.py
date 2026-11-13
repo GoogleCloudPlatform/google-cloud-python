@@ -17,7 +17,7 @@ import uuid
 
 import pytest
 
-from ..utils import create_table_cm
+from ...utils import create_table_cm
 from .main import main
 
 PROJECT = os.environ["GOOGLE_CLOUD_PROJECT"]

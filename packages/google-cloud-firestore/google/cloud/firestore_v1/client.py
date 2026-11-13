@@ -213,7 +213,7 @@ class Client(BaseClient):
         timeout: float | None = None,
         *,
         read_time: datetime.datetime | None = None,
-    ) -> Generator[DocumentSnapshot, Any, None]:
+    ) -> Generator[DocumentSnapshot[DocumentReference], Any, None]:
         """Retrieve a batch of documents.
 
         .. note::
@@ -353,13 +353,13 @@ class Client(BaseClient):
         num_deleted: int = 0
 
         if isinstance(reference, CollectionReference):
-            chunk: List[DocumentSnapshot]
+            chunk: List[DocumentSnapshot[DocumentReference]]
             for chunk in (
                 reference.recursive()
                 .select([FieldPath.document_id()])
                 ._chunkify(chunk_size)
             ):
-                doc_snap: DocumentSnapshot
+                doc_snap: DocumentSnapshot[DocumentReference]
                 for doc_snap in chunk:
                     num_deleted += 1
                     bulk_writer.delete(doc_snap.reference)

@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import proto  # type: ignore
 
 from google.ads.admanager_v1.types import audience_segment_messages
@@ -27,6 +28,22 @@ __protobuf__ = proto.module(
         "GetAudienceSegmentRequest",
         "ListAudienceSegmentsRequest",
         "ListAudienceSegmentsResponse",
+        "CreateAudienceSegmentRequest",
+        "BatchCreateAudienceSegmentsRequest",
+        "BatchCreateAudienceSegmentsResponse",
+        "UpdateAudienceSegmentRequest",
+        "BatchUpdateAudienceSegmentsRequest",
+        "BatchUpdateAudienceSegmentsResponse",
+        "BatchActivateAudienceSegmentsRequest",
+        "BatchActivateAudienceSegmentsResponse",
+        "BatchDeactivateAudienceSegmentsRequest",
+        "BatchDeactivateAudienceSegmentsResponse",
+        "BatchApproveAudienceSegmentsRequest",
+        "BatchApproveAudienceSegmentsResponse",
+        "BatchRejectAudienceSegmentsRequest",
+        "BatchRejectAudienceSegmentsResponse",
+        "BatchPopulateAudienceSegmentsRequest",
+        "BatchPopulateAudienceSegmentsResponse",
     },
 )
 
@@ -72,9 +89,45 @@ class ListAudienceSegmentsRequest(proto.Message):
             details at
             https://developers.google.com/ad-manager/api/beta/filters
 
+            Notes specific to AudienceSegmentService:
+
+            - ``OR`` operator: Not supported. Multiple conditions can
+              only be combined using ``AND``. Use ``IN`` for multi-value
+              matching on a single field.
+            - ``NOT`` operator: Cannot wrap compound expressions. For
+              example, ``NOT (A AND B)``.
+            - Text-based searches (for example, from using wildcards)
+              are case-insensitive. Other string comparisons are
+              case-sensitive.
+
+            Syntax summary: double-quoted ``"..."`` (never ``'...'``)
+            strings and RFC 3339 timestamps, full resource names on
+            reference fields (for example,
+            ``order = "networks/123/orders/456"``, not ``*Id`` or bare
+            IDs), prefix or suffix ``*`` wildcards with ``=``
+            (``displayName = "foo*"``), ``:`` for substring or
+            repeated-field matching, unquoted enums and booleans,
+            uppercase ``AND``/``OR``/``NOT``, and standalone
+            ``IN(field, SET(v1, v2))`` (not ``field IN (...)``).
+
             **Filterable fields:**
 
+            - ``adIdSize``
+            - ``categoryIds``
+            - ``dataProviderDisplayName``
             - ``displayName``
+            - ``idfaSize``
+            - ``mobileWebSize``
+            - ``ppidSize``
+            - ``segmentType``
+            - ``sharedId``
+            - ``size``
+            - ``status``
+            - ``thirdPartyAudienceSegment.approvalStatus``
+            - ``thirdPartyAudienceSegment.cost``
+            - ``thirdPartyAudienceSegment.endTime``
+            - ``thirdPartyAudienceSegment.licenseType``
+            - ``thirdPartyAudienceSegment.startTime``
         order_by (str):
             Optional. Expression to specify sorting
             order. See syntax details at
@@ -154,6 +207,311 @@ class ListAudienceSegmentsResponse(proto.Message):
     total_size: int = proto.Field(
         proto.INT32,
         number=3,
+    )
+
+
+class CreateAudienceSegmentRequest(proto.Message):
+    r"""Request object for ``CreateAudienceSegment`` method.
+
+    Attributes:
+        parent (str):
+            Required. The parent resource where this ``AudienceSegment``
+            will be created. Format: ``networks/{network_code}``
+        audience_segment (google.ads.admanager_v1.types.AudienceSegment):
+            Required. The ``AudienceSegment`` to create. Only
+            first-party segments can be created.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    audience_segment: audience_segment_messages.AudienceSegment = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=audience_segment_messages.AudienceSegment,
+    )
+
+
+class BatchCreateAudienceSegmentsRequest(proto.Message):
+    r"""Request object for ``BatchCreateAudienceSegments`` method.
+
+    Attributes:
+        parent (str):
+            Required. The parent resource where ``AudienceSegments``
+            will be created. Format: ``networks/{network_code}`` The
+            parent field in the CreateAudienceSegmentRequest must match
+            this field.
+        requests (MutableSequence[google.ads.admanager_v1.types.CreateAudienceSegmentRequest]):
+            Required. The ``AudienceSegment`` objects to create. A
+            maximum of 100 objects can be created in a batch.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    requests: MutableSequence["CreateAudienceSegmentRequest"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="CreateAudienceSegmentRequest",
+    )
+
+
+class BatchCreateAudienceSegmentsResponse(proto.Message):
+    r"""Response object for ``BatchCreateAudienceSegments`` method.
+
+    Attributes:
+        audience_segments (MutableSequence[google.ads.admanager_v1.types.AudienceSegment]):
+            The ``AudienceSegment`` objects created.
+    """
+
+    audience_segments: MutableSequence[audience_segment_messages.AudienceSegment] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=1,
+            message=audience_segment_messages.AudienceSegment,
+        )
+    )
+
+
+class UpdateAudienceSegmentRequest(proto.Message):
+    r"""Request object for ``UpdateAudienceSegment`` method.
+
+    Attributes:
+        audience_segment (google.ads.admanager_v1.types.AudienceSegment):
+            Required. The ``AudienceSegment`` to update.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. The list of fields to update.
+    """
+
+    audience_segment: audience_segment_messages.AudienceSegment = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=audience_segment_messages.AudienceSegment,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
+class BatchUpdateAudienceSegmentsRequest(proto.Message):
+    r"""Request object for ``BatchUpdateAudienceSegments`` method.
+
+    Attributes:
+        parent (str):
+            Required. The parent resource where ``AudienceSegments``
+            will be updated. Format: ``networks/{network_code}`` The
+            parent field in the
+            UpdateAudienceSegmentRequest.audienceSegment must match this
+            field.
+        requests (MutableSequence[google.ads.admanager_v1.types.UpdateAudienceSegmentRequest]):
+            Required. The ``AudienceSegment`` objects to update. A
+            maximum of 100 objects can be updated in a batch.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    requests: MutableSequence["UpdateAudienceSegmentRequest"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="UpdateAudienceSegmentRequest",
+    )
+
+
+class BatchUpdateAudienceSegmentsResponse(proto.Message):
+    r"""Response object for ``BatchUpdateAudienceSegments`` method.
+
+    Attributes:
+        audience_segments (MutableSequence[google.ads.admanager_v1.types.AudienceSegment]):
+            The ``AudienceSegment`` objects updated.
+    """
+
+    audience_segments: MutableSequence[audience_segment_messages.AudienceSegment] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=1,
+            message=audience_segment_messages.AudienceSegment,
+        )
+    )
+
+
+class BatchActivateAudienceSegmentsRequest(proto.Message):
+    r"""Request message for ``BatchActivateAudienceSegments`` method.
+
+    Attributes:
+        parent (str):
+            Required. Format: ``networks/{network_code}``
+        names (MutableSequence[str]):
+            Required. Resource names for the AudienceSegments. Format:
+            ``networks/{network_code}/audienceSegments/{audience_segment_id}``
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    names: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
+
+
+class BatchActivateAudienceSegmentsResponse(proto.Message):
+    r"""Response message for ``BatchActivateAudienceSegments`` method.
+
+    Attributes:
+        change_count (int):
+            Number of audience segments activated.
+    """
+
+    change_count: int = proto.Field(
+        proto.INT64,
+        number=1,
+    )
+
+
+class BatchDeactivateAudienceSegmentsRequest(proto.Message):
+    r"""Request message for ``BatchDeactivateAudienceSegments`` method.
+
+    Attributes:
+        parent (str):
+            Required. Format: ``networks/{network_code}``
+        names (MutableSequence[str]):
+            Required. Resource names for the AudienceSegments. Format:
+            ``networks/{network_code}/audienceSegments/{audience_segment_id}``
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    names: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
+
+
+class BatchDeactivateAudienceSegmentsResponse(proto.Message):
+    r"""Response message for ``BatchDeactivateAudienceSegments`` method.
+
+    Attributes:
+        change_count (int):
+            Number of audience segments deactivated.
+    """
+
+    change_count: int = proto.Field(
+        proto.INT64,
+        number=1,
+    )
+
+
+class BatchApproveAudienceSegmentsRequest(proto.Message):
+    r"""Request message for ``BatchApproveAudienceSegments`` method.
+
+    Attributes:
+        parent (str):
+            Required. Format: ``networks/{network_code}``
+        names (MutableSequence[str]):
+            Required. Resource names for the AudienceSegments. Format:
+            ``networks/{network_code}/audienceSegments/{audience_segment_id}``
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    names: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
+
+
+class BatchApproveAudienceSegmentsResponse(proto.Message):
+    r"""Response message for ``BatchApproveAudienceSegments`` method.
+
+    Attributes:
+        change_count (int):
+            Number of audience segments approved.
+    """
+
+    change_count: int = proto.Field(
+        proto.INT64,
+        number=1,
+    )
+
+
+class BatchRejectAudienceSegmentsRequest(proto.Message):
+    r"""Request message for ``BatchRejectAudienceSegments`` method.
+
+    Attributes:
+        parent (str):
+            Required. Format: ``networks/{network_code}``
+        names (MutableSequence[str]):
+            Required. Resource names for the AudienceSegments. Format:
+            ``networks/{network_code}/audienceSegments/{audience_segment_id}``
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    names: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
+
+
+class BatchRejectAudienceSegmentsResponse(proto.Message):
+    r"""Response message for ``BatchRejectAudienceSegments`` method.
+
+    Attributes:
+        change_count (int):
+            Number of audience segments rejected.
+    """
+
+    change_count: int = proto.Field(
+        proto.INT64,
+        number=1,
+    )
+
+
+class BatchPopulateAudienceSegmentsRequest(proto.Message):
+    r"""Request message for ``BatchPopulateAudienceSegments`` method.
+
+    Attributes:
+        parent (str):
+            Required. Format: ``networks/{network_code}``
+        names (MutableSequence[str]):
+            Required. Resource names for the AudienceSegments. Format:
+            ``networks/{network_code}/audienceSegments/{audience_segment_id}``
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    names: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
+
+
+class BatchPopulateAudienceSegmentsResponse(proto.Message):
+    r"""Response message for ``BatchPopulateAudienceSegments`` method.
+
+    Attributes:
+        change_count (int):
+            Number of audience segments populated.
+    """
+
+    change_count: int = proto.Field(
+        proto.INT64,
+        number=1,
     )
 
 

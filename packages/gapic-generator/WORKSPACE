@@ -14,11 +14,24 @@ http_archive(
 )
 
 # Load com_google_googleapis first so we can choose which version will be used
-_googleapis_sha256 = "2638026851b9110c280d75338581a752a4271340"
+_googleapis_sha256 = "87352afc822946dbb5e19de59e31af4821e299e7ae927612cfeda980dc5cebc2"
+_googleapis_commit = "2638026851b9110c280d75338581a752a4271340"
 http_archive(
     name = "com_google_googleapis",
-    strip_prefix = "googleapis-{}".format(_googleapis_sha256),
-    urls = ["https://github.com/googleapis/googleapis/archive/{0}.zip".format(_googleapis_sha256)],
+    sha256 = _googleapis_sha256,
+    strip_prefix = "googleapis-{}".format(_googleapis_commit),
+    urls = ["https://github.com/googleapis/googleapis/archive/{0}.zip".format(_googleapis_commit)],
+)
+
+# Load com_google_gapic_showcase used for testing
+_gapic_showcase_sha256 = "561af1e332a7c60644cba786fc8eb4f8fc4ea1f3abfe2bd2b8bd16da6fb245b5"
+_gapic_showcase_commit = "5158967e8a41c751b15776142d190428ddb7e99f"
+http_archive(
+    name = "com_google_gapic_showcase",
+    sha256 = _gapic_showcase_sha256,
+    build_file = "//tests/integration:showcase.BUILD.bazel",
+    strip_prefix = "gapic-showcase-{}".format(_gapic_showcase_commit),
+    urls = ["https://github.com/googleapis/gapic-showcase/archive/{}.zip".format(_gapic_showcase_commit)],
 )
 
 # Load rules_gapic v1.0.0. We patch rules_gapic's .bzl files to inject the

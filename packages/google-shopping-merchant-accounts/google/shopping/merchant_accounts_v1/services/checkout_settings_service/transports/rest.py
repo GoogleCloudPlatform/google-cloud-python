@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_accounts_v1._compat import transcode_request
 from google.shopping.merchant_accounts_v1.types import checkoutsettings
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -429,21 +430,18 @@ class CheckoutSettingsServiceRestTransport(_BaseCheckoutSettingsServiceRestTrans
             """
 
             http_options = _BaseCheckoutSettingsServiceRestTransport._BaseCreateCheckoutSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_create_checkout_settings(
                 request, metadata
             )
-            transcoded_request = _BaseCheckoutSettingsServiceRestTransport._BaseCreateCheckoutSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCheckoutSettingsServiceRestTransport._BaseCreateCheckoutSettings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCheckoutSettingsServiceRestTransport._BaseCreateCheckoutSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCheckoutSettingsServiceRestTransport._BaseCreateCheckoutSettings,
+                    "_BaseCreateCheckoutSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -578,17 +576,18 @@ class CheckoutSettingsServiceRestTransport(_BaseCheckoutSettingsServiceRestTrans
             """
 
             http_options = _BaseCheckoutSettingsServiceRestTransport._BaseDeleteCheckoutSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_checkout_settings(
                 request, metadata
             )
-            transcoded_request = _BaseCheckoutSettingsServiceRestTransport._BaseDeleteCheckoutSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCheckoutSettingsServiceRestTransport._BaseDeleteCheckoutSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCheckoutSettingsServiceRestTransport._BaseDeleteCheckoutSettings,
+                    "_BaseDeleteCheckoutSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -691,17 +690,18 @@ class CheckoutSettingsServiceRestTransport(_BaseCheckoutSettingsServiceRestTrans
             """
 
             http_options = _BaseCheckoutSettingsServiceRestTransport._BaseGetCheckoutSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_get_checkout_settings(
                 request, metadata
             )
-            transcoded_request = _BaseCheckoutSettingsServiceRestTransport._BaseGetCheckoutSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCheckoutSettingsServiceRestTransport._BaseGetCheckoutSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCheckoutSettingsServiceRestTransport._BaseGetCheckoutSettings,
+                    "_BaseGetCheckoutSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -844,21 +844,18 @@ class CheckoutSettingsServiceRestTransport(_BaseCheckoutSettingsServiceRestTrans
             """
 
             http_options = _BaseCheckoutSettingsServiceRestTransport._BaseUpdateCheckoutSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_update_checkout_settings(
                 request, metadata
             )
-            transcoded_request = _BaseCheckoutSettingsServiceRestTransport._BaseUpdateCheckoutSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCheckoutSettingsServiceRestTransport._BaseUpdateCheckoutSettings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCheckoutSettingsServiceRestTransport._BaseUpdateCheckoutSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCheckoutSettingsServiceRestTransport._BaseUpdateCheckoutSettings,
+                    "_BaseUpdateCheckoutSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

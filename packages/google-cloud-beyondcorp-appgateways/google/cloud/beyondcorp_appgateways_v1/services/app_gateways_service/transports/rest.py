@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.beyondcorp_appgateways_v1._compat import transcode_request
 from google.cloud.beyondcorp_appgateways_v1.types import app_gateways_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -560,6 +561,10 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
     The AppGatewaysService service provides methods to manage
     (create/read/update/delete) BeyondCorp AppGateways.
 
+    Deprecated: App Connector is deprecated and creation of new App
+    Connector resources is no longer permitted. Use Security Gateway
+    instead.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.
@@ -658,11 +663,20 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
                         "uri": "/v1/{name=projects/*/locations/*/operations/*}:cancel",
                         "body": "*",
                     },
+                    {
+                        "method": "post",
+                        "uri": "/v1/{name=organizations/*/locations/*/operations/*}:cancel",
+                        "body": "*",
+                    },
                 ],
                 "google.longrunning.Operations.DeleteOperation": [
                     {
                         "method": "delete",
                         "uri": "/v1/{name=projects/*/locations/*/operations/*}",
+                    },
+                    {
+                        "method": "delete",
+                        "uri": "/v1/{name=organizations/*/locations/*/operations/*}",
                     },
                 ],
                 "google.longrunning.Operations.GetOperation": [
@@ -670,11 +684,19 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
                         "method": "get",
                         "uri": "/v1/{name=projects/*/locations/*/operations/*}",
                     },
+                    {
+                        "method": "get",
+                        "uri": "/v1/{name=organizations/*/locations/*/operations/*}",
+                    },
                 ],
                 "google.longrunning.Operations.ListOperations": [
                     {
                         "method": "get",
                         "uri": "/v1/{name=projects/*/locations/*}/operations",
+                    },
+                    {
+                        "method": "get",
+                        "uri": "/v1/{name=organizations/*/locations/*}/operations",
                     },
                 ],
             }
@@ -756,21 +778,18 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseCreateAppGateway._get_http_options()
-
             request, metadata = self._interceptor.pre_create_app_gateway(
                 request, metadata
             )
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseCreateAppGateway._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAppGatewaysServiceRestTransport._BaseCreateAppGateway._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseCreateAppGateway._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseCreateAppGateway,
+                    "_BaseCreateAppGateway__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -908,17 +927,18 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseDeleteAppGateway._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_app_gateway(
                 request, metadata
             )
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseDeleteAppGateway._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseDeleteAppGateway._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseDeleteAppGateway,
+                    "_BaseDeleteAppGateway__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1060,15 +1080,16 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseGetAppGateway._get_http_options()
-
             request, metadata = self._interceptor.pre_get_app_gateway(request, metadata)
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseGetAppGateway._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseGetAppGateway._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseGetAppGateway,
+                    "_BaseGetAppGateway__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1206,17 +1227,18 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseListAppGateways._get_http_options()
-
             request, metadata = self._interceptor.pre_list_app_gateways(
                 request, metadata
             )
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseListAppGateways._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseListAppGateways._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseListAppGateways,
+                    "_BaseListAppGateways__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1397,15 +1419,16 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1536,15 +1559,16 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1675,15 +1699,16 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1815,19 +1840,16 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAppGatewaysServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1960,21 +1982,18 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAppGatewaysServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2106,21 +2125,18 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAppGatewaysServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2224,17 +2240,18 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2340,15 +2357,16 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2479,15 +2497,16 @@ class AppGatewaysServiceRestTransport(_BaseAppGatewaysServiceRestTransport):
             """
 
             http_options = _BaseAppGatewaysServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseAppGatewaysServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAppGatewaysServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppGatewaysServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

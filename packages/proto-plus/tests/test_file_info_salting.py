@@ -15,9 +15,9 @@
 
 import collections
 
-import proto
 from google.protobuf import descriptor_pb2
 
+import proto
 from proto import _file_info, _package_info
 
 

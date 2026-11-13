@@ -43,7 +43,6 @@ def sample_update_instance():
     instance.filesystem = "filesystem_value"
     instance.capacity_gib = 1247
     instance.network = "network_value"
-    instance.per_unit_storage_throughput = 2931
 
     request = lustre_v1.UpdateInstanceRequest(
         instance=instance,

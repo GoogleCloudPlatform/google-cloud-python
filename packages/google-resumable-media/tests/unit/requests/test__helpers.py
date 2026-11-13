@@ -13,10 +13,9 @@
 # limitations under the License.
 
 import http.client
-
 from unittest import mock
-import pytest  # type: ignore
 
+import pytest  # type: ignore
 import requests.exceptions
 import urllib3.exceptions  # type: ignore
 

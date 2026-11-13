@@ -15,12 +15,12 @@
 from __future__ import absolute_import
 
 import contextlib
+from functools import wraps
 import os
 import pathlib
 import re
 import shutil
 import time
-from functools import wraps
 from typing import Generator
 
 import nox
@@ -180,11 +180,6 @@ def default(session, install_extras=True):
 @_calculate_duration
 def unit(session, test_type):
     """Run the unit test suite."""
-    if session.python == "3.15":
-        session.skip(
-            "Skipping 3.15 until wheels are available for pyarrow. Also pyproj wheels are needed for dependency geopandas."
-        )
-
     install_extras = True
     if test_type == "unit_noextras":
         # unit_noextras only runs on the oldest and newest Python versions
@@ -302,6 +297,41 @@ def system(session):
         "-W default::PendingDeprecationWarning",
         os.path.join("tests", "system"),
         *session.posargs,
+    )
+
+    # Maunally added samples tests.
+    # TODO: remove tests after samples are migrated to https://github.com/GoogleCloudPlatform/python-docs-samples
+    samples_tests = [
+        "desktopapp",
+        "geography",
+        "magics",
+        "notebooks",
+        "snippets",
+        "tests",
+    ]
+    for name in samples_tests:
+        _run_samples_test(session, name)
+
+
+# Maunally added samples tests helper function.
+# TODO(https://github.com/googleapis/google-cloud-python/issues/14417): remove tests after samples are migrated to https://github.com/GoogleCloudPlatform/python-docs-samples
+def _run_samples_test(session, name):
+    samples_path = os.path.join("samples", name)
+    samples_requirements_path = os.path.join("samples", name, "requirements.txt")
+    test_requirements_path = os.path.join("samples", name, "requirements-test.txt")
+
+    # Install dependencies.
+    if os.path.exists(samples_requirements_path):
+        session.install("-r", samples_requirements_path)
+
+    if os.path.exists(test_requirements_path):
+        session.install("-r", test_requirements_path)
+
+    session.run(
+        "pytest",
+        f"--junitxml=system_{session.python}_sponge_log.xml",
+        *session.posargs,
+        samples_path,
     )
 
 

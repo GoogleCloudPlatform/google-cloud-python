@@ -13,7 +13,7 @@ def check_django_compatability(supported_django_versions):
     """
     Verify that this version of django-spanner is compatible with the installed
     version of Django. For example, django-spanner is compatible
-    with Django 2.2.y and 3.2.z
+    with Django 5.2.x and 6.0.y
     """
     from . import __version__
 
@@ -37,6 +37,11 @@ def add_dummy_where(sql):
     :rtype: str
     :returns: A SQL statement with dummy WHERE clause.
     """
-    if any(isinstance(token, sqlparse.sql.Where) for token in sqlparse.parse(sql)[0]):
+    if not sql or not sql.strip():
+        return sql
+    if "where" not in sql.lower():
+        return sql + " WHERE 1=1"
+    parsed = sqlparse.parse(sql)
+    if not parsed or any(isinstance(token, sqlparse.sql.Where) for token in parsed[0]):
         return sql
     return sql + " WHERE 1=1"

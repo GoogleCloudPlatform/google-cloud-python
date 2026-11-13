@@ -17,9 +17,17 @@ import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
 from google.iam.credentials_v1 import gapic_version as package_version
+from google.iam.credentials_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+    SUPPORTS_DEFAULT_HOST as _SUPPORTS_DEFAULT_HOST,
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
 
 import google.auth  # type: ignore
 import google.api_core
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
@@ -52,6 +60,7 @@ class IAMCredentialsTransport(abc.ABC):
             client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
             always_use_jwt_access: Optional[bool] = False,
             api_audience: Optional[str] = None,
+            client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
             **kwargs,
             ) -> None:
         """Instantiate the transport.
@@ -82,12 +91,17 @@ class IAMCredentialsTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
         self._scopes = scopes
         if not hasattr(self, "_ignore_credentials"):
             self._ignore_credentials: bool = False
+        if not hasattr(self, "_user_provided_channel"):
+            self._user_provided_channel: bool = False
 
         # If no credentials are provided, then determine the appropriate
         # defaults.
@@ -119,16 +133,105 @@ class IAMCredentialsTransport(abc.ABC):
             host += ':443'
         self._host = host
 
+        self._client_options = client_options
+        # If a pre-constructed gRPC channel was provided to the subclass before
+        # super().__init__, self._host is not used to create the channel and
+        # cannot be trusted as the default span endpoint.
+        self._default_host: Optional[str] = (
+            None if self._user_provided_channel else self._host
+        )
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            if _SUPPORTS_DEFAULT_HOST:
+                kwargs["default_host"] = self._default_host
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming", "default_host"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            if _SUPPORTS_DEFAULT_HOST:
+                kwargs["default_host"] = self._default_host
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming", "default_host"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.generate_access_token: gapic_v1.method.wrap_method(
+            self.generate_access_token: self._wrap_method(
                 self.generate_access_token,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -142,8 +245,9 @@ class IAMCredentialsTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.iam.credentials.v1.IAMCredentials/GenerateAccessToken",
             ),
-            self.generate_id_token: gapic_v1.method.wrap_method(
+            self.generate_id_token: self._wrap_method(
                 self.generate_id_token,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -157,8 +261,9 @@ class IAMCredentialsTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.iam.credentials.v1.IAMCredentials/GenerateIdToken",
             ),
-            self.sign_blob: gapic_v1.method.wrap_method(
+            self.sign_blob: self._wrap_method(
                 self.sign_blob,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -172,8 +277,9 @@ class IAMCredentialsTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.iam.credentials.v1.IAMCredentials/SignBlob",
             ),
-            self.sign_jwt: gapic_v1.method.wrap_method(
+            self.sign_jwt: self._wrap_method(
                 self.sign_jwt,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -187,6 +293,7 @@ class IAMCredentialsTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.iam.credentials.v1.IAMCredentials/SignJwt",
             ),
          }
 

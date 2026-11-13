@@ -25,33 +25,34 @@ import packaging.version
 import pytest
 import pytz
 import sqlalchemy
-from sqlalchemy import and_
 import sqlalchemy.sql.sqltypes
+import sqlalchemy.testing.suite.test_types
+from sqlalchemy import and_
 from sqlalchemy.testing import config, util
 from sqlalchemy.testing.assertions import eq_
+from sqlalchemy.testing.suite import *  # noqa
 from sqlalchemy.testing.suite import (
+    Column,
+    DistinctOnTest,
+    HasIndexTest,
+    IdentityAutoincrementTest,
     Integer,
     LongNameBlowoutTest,
     PostCompileParamsTest,
     QuotedNameArgumentTest,
-)
-from sqlalchemy.testing.suite import (
+    String,
+    Table,
     WindowFunctionTest,
     bindparam,
     exists,
     select,
     testing,
 )
-from sqlalchemy.testing.suite import *  # noqa
 from sqlalchemy.testing.suite import CTETest as _CTETest
-from sqlalchemy.testing.suite import Column
-from sqlalchemy.testing.suite import DistinctOnTest
-from sqlalchemy.testing.suite import ExistsTest as _ExistsTest
-from sqlalchemy.testing.suite import HasIndexTest, IdentityAutoincrementTest
-from sqlalchemy.testing.suite import InsertBehaviorTest as _InsertBehaviorTest
-from sqlalchemy.testing.suite import String, Table
 from sqlalchemy.testing.suite import DifficultParametersTest as _DifficultParametersTest
+from sqlalchemy.testing.suite import ExistsTest as _ExistsTest
 from sqlalchemy.testing.suite import FetchLimitOffsetTest as _FetchLimitOffsetTest
+from sqlalchemy.testing.suite import InsertBehaviorTest as _InsertBehaviorTest
 from sqlalchemy.testing.suite import SimpleUpdateDeleteTest as _SimpleUpdateDeleteTest
 from sqlalchemy.testing.suite import (
     TimestampMicrosecondsTest as _TimestampMicrosecondsTest,
@@ -62,7 +63,6 @@ from sqlalchemy.testing.suite.test_reflection import (
     ComponentReflectionTestExtra,
     HasTableTest,
 )
-import sqlalchemy.testing.suite.test_types
 from sqlalchemy.testing.suite.test_types import ArrayTest
 
 if packaging.version.parse(sqlalchemy.__version__) >= packaging.version.parse("2.0"):
@@ -269,6 +269,24 @@ if packaging.version.parse(sqlalchemy.__version__) >= packaging.version.parse("2
 
         @pytest.mark.skip("BQ rounds based on datatype")
         def test_floordiv_integer_bound(self):
+            pass
+
+        @pytest.mark.skip(
+            "Skipped due to BigQuery Standard SQL limitations with extreme decimal/numeric inputs:\n"
+            "1. 38-Digit Integer Literal Overflows: BigQuery's SQL parser lexically evaluates "
+            "unquoted digit sequences without a decimal point as INT64 *before* evaluating "
+            "CAST() wrappers. Values like 30000000000000000000000000000000000000 overflow "
+            "signed 64-bit integer limits (max: 9,223,372,036,854,775,807) and raise a 400 "
+            "'Invalid integer literal' error unless quoted as strings.\n"
+            "2. Untyped Tiny Divisor Underflow: Standard NUMERIC in BigQuery is capped at 9 "
+            "decimal places (whereas BIGNUMERIC supports 38). When untyped functions (like "
+            "nullif) cast a 13-decimal divisor (0.00000000000012345679) to NUMERIC, it "
+            "rounds down to 0 and triggers a 400 division-by-zero error.\n"
+            "3. Untyped Precision Loss: Coercing high-precision operands to standard NUMERIC "
+            "during untyped division causes trailing precision mismatches "
+            "(e.g., returning 7.00000000447361540043026119825490002512 instead of 7)."
+        )
+        def test_truediv_divisor(self):
             pass
 
     class SimpleUpdateDeleteTest(_SimpleUpdateDeleteTest):
@@ -637,9 +655,18 @@ del HasTableTest.test_has_table_cache  # TODO confirm whether BQ has table cachi
 del DistinctOnTest  # expects unquoted table names.
 del HasIndexTest  # BQ doesn't do the indexes that SQLA is loooking for.
 del IdentityAutoincrementTest  # BQ doesn't do autoincrement
-del LongNameBlowoutTest  # Requires features (indexes, primary keys, etc., that BigQuery doesn't have.
-del PostCompileParamsTest  # BQ adds backticks to bind parameters, causing failure of tests TODO: fix this?
-del QuotedNameArgumentTest  # Quotes aren't allowed in BigQuery table names.
 del (
-    WindowFunctionTest.test_window_rows_between
-)  # test expects BQ to return sorted results
+    LongNameBlowoutTest
+)  # Requires features (indexes, primary keys, etc., that BigQuery doesn't have.
+del (
+    PostCompileParamsTest
+)  # BQ adds backticks to bind parameters, causing failure of tests TODO: fix this?
+del QuotedNameArgumentTest  # Quotes aren't allowed in BigQuery table names.
+# Test expects BQ to return sorted results, which it does not do. (renamed to _w_caching in SQLAlchemy 2.1+)
+for _test_name in ("test_window_rows_between", "test_window_rows_between_w_caching"):
+    if hasattr(WindowFunctionTest, _test_name):
+        delattr(WindowFunctionTest, _test_name)
+
+# BigQuery requires dataset qualification for views, which TableViaSelectTest does not provide.
+if "TableViaSelectTest" in globals():
+    del TableViaSelectTest

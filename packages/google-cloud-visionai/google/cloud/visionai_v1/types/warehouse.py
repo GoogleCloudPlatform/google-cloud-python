@@ -4454,7 +4454,7 @@ class SearchAssetsRequest(proto.Message):
             This field is a member of `oneof`_ ``sort_spec``.
         corpus (str):
             Required. The parent corpus to search. Format:
-            \`projects/{project_id}/locations/{location_id}/corpora/{corpus_id}'
+            ``projects/{project_id}/locations/{location_id}/corpora/{corpus_id}``
         page_size (int):
             The number of results to be returned in this page. If it's
             0, the server will decide the appropriate page_size.
@@ -4552,7 +4552,7 @@ class SearchIndexEndpointRequest(proto.Message):
             This field is a member of `oneof`_ ``query``.
         index_endpoint (str):
             Required. The index endpoint to search. Format:
-            \`projects/{project_id}/locations/{location_id}/indexEndpoints/{index_endpoint_id}'
+            ``projects/{project_id}/locations/{location_id}/indexEndpoints/{index_endpoint_id}``
         criteria (MutableSequence[google.cloud.visionai_v1.types.Criteria]):
             Criteria applied to search results.
         exclusion_criteria (MutableSequence[google.cloud.visionai_v1.types.Criteria]):

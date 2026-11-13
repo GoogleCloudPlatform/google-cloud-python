@@ -5,4 +5,4 @@
 # Require the latest major version be installed for each dependency.
 # e.g., if setup.py has "google-cloud-foo >= 1.14.0, < 2.0.0",
 # Then this file should have google-cloud-foo>=1
-redis>=7
+redis>=8

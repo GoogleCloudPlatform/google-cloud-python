@@ -9,8 +9,8 @@ C toolchain.
 
 # Currently Published Wheels
 
-Wheels are currently published for CPython 3.10, 3.11, 3.12, 3.13 and 3.14
-for multiple architectures. PyPy 3.10 is also supported for Linux.
+Wheels are currently published for CPython 3.10, 3.11, 3.12, 3.13, 3.14 and 3.15
+for multiple architectures.
 For information on building your own wheels please view [BUILDING.md](BUILDING.md).
 
 

@@ -532,11 +532,15 @@ class KeyOperationAttestation(proto.Message):
                 Cavium HSM attestation V2 compressed with
                 gzip. This is a new format introduced in
                 Cavium's version 3.2-08.
+            CAVIUM_V209 (5):
+                Cavium HSM attestation V209, introduced in
+                Cavium's version 2.09-0702.
         """
 
         ATTESTATION_FORMAT_UNSPECIFIED = 0
         CAVIUM_V1_COMPRESSED = 3
         CAVIUM_V2_COMPRESSED = 4
+        CAVIUM_V209 = 5
 
     class CertificateChains(proto.Message):
         r"""Certificate chains needed to verify the attestation.
@@ -1644,14 +1648,25 @@ class ExternalProtectionLevelOptions(proto.Message):
 
     Attributes:
         external_key_uri (str):
-            The URI for an external resource that this
+            Optional. The URI for an external resource that this
             [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]
             represents.
         ekm_connection_key_path (str):
-            The path to the external key material on the EKM when using
+            Optional. The path to the external key material on the EKM
+            when using
             [EkmConnection][google.cloud.kms.v1.EkmConnection] e.g.,
             "v0/my/key". Set this field instead of external_key_uri when
             using an [EkmConnection][google.cloud.kms.v1.EkmConnection].
+        ekm_connection_backend_override (str):
+            Optional. The resource name of the backend environment where
+            the key material of
+            [CryptoKeyVersions][google.cloud.kms.v1.CryptoKeyVersion] is
+            associated with. Setting this field overrides the
+            [CryptoKeyBackend][]. This field may be set when
+            [CryptoKeyVersions][google.cloud.kms.v1.CryptoKeyVersion] is
+            set to
+            [EXTERNAL_VPC][google.cloud.kms.v1.ProtectionLevel.EXTERNAL_VPC].
+            Format: ``projects/*/locations/*/ekmConnections/*``.
     """
 
     external_key_uri: str = proto.Field(
@@ -1661,6 +1676,10 @@ class ExternalProtectionLevelOptions(proto.Message):
     ekm_connection_key_path: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    ekm_connection_backend_override: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

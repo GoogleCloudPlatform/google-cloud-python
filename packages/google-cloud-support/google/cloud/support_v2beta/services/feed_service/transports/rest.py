@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.support_v2beta._compat import transcode_request
 from google.cloud.support_v2beta.types import feed_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -283,19 +284,16 @@ class FeedServiceRestTransport(_BaseFeedServiceRestTransport):
             http_options = (
                 _BaseFeedServiceRestTransport._BaseShowFeed._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_show_feed(request, metadata)
-            transcoded_request = (
-                _BaseFeedServiceRestTransport._BaseShowFeed._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFeedServiceRestTransport._BaseShowFeed._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFeedServiceRestTransport._BaseShowFeed,
+                    "_BaseShowFeed__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

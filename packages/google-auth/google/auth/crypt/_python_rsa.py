@@ -24,14 +24,13 @@ from __future__ import absolute_import
 import io
 import warnings
 
+import rsa  # type: ignore
 from pyasn1.codec.der import decoder  # type: ignore
 from pyasn1_modules import pem  # type: ignore
 from pyasn1_modules.rfc2459 import Certificate  # type: ignore
 from pyasn1_modules.rfc5208 import PrivateKeyInfo  # type: ignore
-import rsa  # type: ignore
 
-from google.auth import _helpers
-from google.auth import exceptions
+from google.auth import _helpers, exceptions
 from google.auth.crypt import base
 
 _POW2 = (128, 64, 32, 16, 8, 4, 2, 1)

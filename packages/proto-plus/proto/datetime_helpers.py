@@ -19,7 +19,6 @@ import re
 
 from google.protobuf import timestamp_pb2
 
-
 _UTC_EPOCH = datetime.datetime.fromtimestamp(0, datetime.timezone.utc)
 
 _RFC3339_MICROS = "%Y-%m-%dT%H:%M:%S.%fZ"

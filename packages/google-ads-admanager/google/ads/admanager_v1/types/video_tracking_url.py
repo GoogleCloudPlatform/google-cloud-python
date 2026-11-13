@@ -31,7 +31,7 @@ __protobuf__ = proto.module(
 
 class VideoTrackingUrl(proto.Message):
     r"""Represents a
-    [ConversionEventEnum][google.ads.admanager.v1.ConversionEventEnum]
+    [ConversionEvent][google.ads.admanager.v1.ConversionEventEnum.ConversionEvent]
     to URL pair that will be pinged when the event happens.
 
     Attributes:

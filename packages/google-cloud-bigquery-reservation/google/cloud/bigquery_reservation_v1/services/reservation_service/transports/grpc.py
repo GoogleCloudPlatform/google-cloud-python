@@ -1349,6 +1349,34 @@ class ReservationServiceGrpcTransport(ReservationServiceTransport):
             )
         return self._stubs["list_reservation_groups"]
 
+    @property
+    def update_reservation_group(
+        self,
+    ) -> Callable[
+        [reservation.UpdateReservationGroupRequest], reservation.ReservationGroup
+    ]:
+        r"""Return a callable for the update reservation group method over gRPC.
+
+        Updates an existing reservation group resource.
+
+        Returns:
+            Callable[[~.UpdateReservationGroupRequest],
+                    ~.ReservationGroup]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_reservation_group" not in self._stubs:
+            self._stubs["update_reservation_group"] = self._logged_channel.unary_unary(
+                "/google.cloud.bigquery.reservation.v1.ReservationService/UpdateReservationGroup",
+                request_serializer=reservation.UpdateReservationGroupRequest.serialize,
+                response_deserializer=reservation.ReservationGroup.deserialize,
+            )
+        return self._stubs["update_reservation_group"]
+
     def close(self):
         self._logged_channel.close()
 

@@ -25,11 +25,18 @@ nox -s system -- tests/system/_async
 
 ## 3. Verify Sync/Async Parity
 Run the cross-sync generation tool and ensure no regressions in the synchronous codebase.
+
+`generate.py` must be pointed at a **directory**; it only rewrites files reachable from
+that directory that carry a `__CROSS_SYNC_OUTPUT__` annotation.
 ```bash
-python3 .cross_sync/generate.py
+PYTHONPATH=.cross_sync python3 .cross_sync/generate.py google/cloud/spanner_v1/_async/
+git diff --exit-code google/cloud/spanner_v1/
 nox -s unit-3.14
 nox -s system-3.14
 ```
+A non-empty `git diff` here means the generated sync code has drifted from
+`google/cloud/spanner_v1/_async/`. Fix it in the `_async/` source, never in the
+generated artifact.
 
 ## 4. Check for Coroutine Leaks
 Ensure all asynchronous GAPIC calls are properly awaited. Search for any unawaited coroutines in the `_async` directory.

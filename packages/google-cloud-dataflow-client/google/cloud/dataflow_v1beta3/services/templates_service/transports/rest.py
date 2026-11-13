@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dataflow_v1beta3._compat import transcode_request
 from google.cloud.dataflow_v1beta3.types import jobs, templates
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -398,21 +399,18 @@ class TemplatesServiceRestTransport(_BaseTemplatesServiceRestTransport):
             """
 
             http_options = _BaseTemplatesServiceRestTransport._BaseCreateJobFromTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_create_job_from_template(
                 request, metadata
             )
-            transcoded_request = _BaseTemplatesServiceRestTransport._BaseCreateJobFromTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTemplatesServiceRestTransport._BaseCreateJobFromTemplate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTemplatesServiceRestTransport._BaseCreateJobFromTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTemplatesServiceRestTransport._BaseCreateJobFromTemplate,
+                    "_BaseCreateJobFromTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -554,15 +552,16 @@ class TemplatesServiceRestTransport(_BaseTemplatesServiceRestTransport):
             http_options = (
                 _BaseTemplatesServiceRestTransport._BaseGetTemplate._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_template(request, metadata)
-            transcoded_request = _BaseTemplatesServiceRestTransport._BaseGetTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTemplatesServiceRestTransport._BaseGetTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTemplatesServiceRestTransport._BaseGetTemplate,
+                    "_BaseGetTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -699,19 +698,16 @@ class TemplatesServiceRestTransport(_BaseTemplatesServiceRestTransport):
             """
 
             http_options = _BaseTemplatesServiceRestTransport._BaseLaunchTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_launch_template(request, metadata)
-            transcoded_request = _BaseTemplatesServiceRestTransport._BaseLaunchTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTemplatesServiceRestTransport._BaseLaunchTemplate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTemplatesServiceRestTransport._BaseLaunchTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTemplatesServiceRestTransport._BaseLaunchTemplate,
+                    "_BaseLaunchTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

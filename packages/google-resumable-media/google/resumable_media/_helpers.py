@@ -21,14 +21,9 @@ import hashlib
 import logging
 import random
 import warnings
-
-from urllib.parse import parse_qs
-from urllib.parse import urlencode
-from urllib.parse import urlsplit
-from urllib.parse import urlunsplit
+from urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 
 from google.resumable_media import common
-
 
 RANGE_HEADER = "range"
 CONTENT_RANGE_HEADER = "content-range"

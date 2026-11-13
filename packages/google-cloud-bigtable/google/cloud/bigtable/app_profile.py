@@ -32,6 +32,9 @@ _APP_PROFILE_NAME_RE = re.compile(
 class AppProfile(object):
     """Representation of a Google Cloud Bigtable AppProfile.
 
+    .. deprecated:: 2.30.0
+        Use :class:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient` instead.
+
     We can use a :class:`AppProfile` to:
 
     * :meth:`reload` itself
@@ -246,6 +249,11 @@ class AppProfile(object):
     def reload(self):
         """Reload the metadata for this cluster
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_app_profile`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -264,6 +272,11 @@ class AppProfile(object):
 
     def exists(self):
         """Check whether the AppProfile already exists.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_app_profile`
+            instead.
 
         For example:
 
@@ -284,6 +297,11 @@ class AppProfile(object):
 
     def create(self, ignore_warnings=None):
         """Create this AppProfile.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.create_app_profile`
+            instead.
 
         .. note::
 
@@ -317,6 +335,11 @@ class AppProfile(object):
 
     def update(self, ignore_warnings=None):
         """Update this app_profile.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.update_app_profile`
+            instead.
 
         .. note::
 
@@ -354,6 +377,11 @@ class AppProfile(object):
 
     def delete(self, ignore_warnings=None):
         """Delete this AppProfile.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.delete_app_profile`
+            instead.
 
         For example:
 

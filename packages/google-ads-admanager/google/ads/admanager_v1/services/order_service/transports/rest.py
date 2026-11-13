@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import order_messages, order_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1461,21 +1462,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchApproveAndOverbookOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_approve_and_overbook_orders(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchApproveAndOverbookOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchApproveAndOverbookOrders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchApproveAndOverbookOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchApproveAndOverbookOrders,
+                    "_BaseBatchApproveAndOverbookOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1619,21 +1617,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchApproveOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_approve_orders(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchApproveOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchApproveOrders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchApproveOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchApproveOrders,
+                    "_BaseBatchApproveOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1778,23 +1773,20 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchApproveOrdersWithoutReservation._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_approve_orders_without_reservation(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchApproveOrdersWithoutReservation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchApproveOrdersWithoutReservation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchApproveOrdersWithoutReservation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchApproveOrdersWithoutReservation,
+                    "_BaseBatchApproveOrdersWithoutReservation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1936,21 +1928,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchArchiveOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_archive_orders(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchArchiveOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchArchiveOrders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchArchiveOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchArchiveOrders,
+                    "_BaseBatchArchiveOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2088,21 +2077,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchCreateOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_orders(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchCreateOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchCreateOrders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchCreateOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchCreateOrders,
+                    "_BaseBatchCreateOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2240,21 +2226,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchDeleteOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_delete_orders(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchDeleteOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchDeleteOrders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchDeleteOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchDeleteOrders,
+                    "_BaseBatchDeleteOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2392,21 +2375,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchDisapproveOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_disapprove_orders(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchDisapproveOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchDisapproveOrders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchDisapproveOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchDisapproveOrders,
+                    "_BaseBatchDisapproveOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2553,23 +2533,20 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchDisapproveOrdersWithoutReservationChanges._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_disapprove_orders_without_reservation_changes(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchDisapproveOrdersWithoutReservationChanges._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchDisapproveOrdersWithoutReservationChanges._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchDisapproveOrdersWithoutReservationChanges._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchDisapproveOrdersWithoutReservationChanges,
+                    "_BaseBatchDisapproveOrdersWithoutReservationChanges__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2719,21 +2696,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             http_options = (
                 _BaseOrderServiceRestTransport._BaseBatchPauseOrders._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_batch_pause_orders(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchPauseOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchPauseOrders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchPauseOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchPauseOrders,
+                    "_BaseBatchPauseOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2876,21 +2850,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchResumeAndOverbookOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_resume_and_overbook_orders(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchResumeAndOverbookOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchResumeAndOverbookOrders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchResumeAndOverbookOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchResumeAndOverbookOrders,
+                    "_BaseBatchResumeAndOverbookOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3034,21 +3005,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchResumeOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_resume_orders(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchResumeOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchResumeOrders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchResumeOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchResumeOrders,
+                    "_BaseBatchResumeOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3186,21 +3154,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchRetractOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_retract_orders(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchRetractOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchRetractOrders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchRetractOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchRetractOrders,
+                    "_BaseBatchRetractOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3345,23 +3310,20 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchRetractOrdersWithoutReservationChanges._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_retract_orders_without_reservation_changes(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchRetractOrdersWithoutReservationChanges._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchRetractOrdersWithoutReservationChanges._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchRetractOrdersWithoutReservationChanges._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchRetractOrdersWithoutReservationChanges,
+                    "_BaseBatchRetractOrdersWithoutReservationChanges__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3514,21 +3476,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApproval._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_submit_orders_for_approval(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApproval._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApproval._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApproval._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApproval,
+                    "_BaseBatchSubmitOrdersForApproval__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3679,23 +3638,20 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApprovalAndOverbook._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_submit_orders_for_approval_and_overbook(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApprovalAndOverbook._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApprovalAndOverbook._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApprovalAndOverbook._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApprovalAndOverbook,
+                    "_BaseBatchSubmitOrdersForApprovalAndOverbook__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3850,23 +3806,20 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApprovalWithoutReservationChanges._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_submit_orders_for_approval_without_reservation_changes(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApprovalWithoutReservationChanges._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApprovalWithoutReservationChanges._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApprovalWithoutReservationChanges._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchSubmitOrdersForApprovalWithoutReservationChanges,
+                    "_BaseBatchSubmitOrdersForApprovalWithoutReservationChanges__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4010,21 +3963,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchUnarchiveOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_unarchive_orders(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchUnarchiveOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchUnarchiveOrders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchUnarchiveOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchUnarchiveOrders,
+                    "_BaseBatchUnarchiveOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4162,21 +4112,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             """
 
             http_options = _BaseOrderServiceRestTransport._BaseBatchUpdateOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_orders(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseBatchUpdateOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrderServiceRestTransport._BaseBatchUpdateOrders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseBatchUpdateOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseBatchUpdateOrders,
+                    "_BaseBatchUpdateOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4313,19 +4260,16 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             http_options = (
                 _BaseOrderServiceRestTransport._BaseGetOrder._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_order(request, metadata)
-            transcoded_request = (
-                _BaseOrderServiceRestTransport._BaseGetOrder._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseOrderServiceRestTransport._BaseGetOrder._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseGetOrder,
+                    "_BaseGetOrder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4463,19 +4407,16 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             http_options = (
                 _BaseOrderServiceRestTransport._BaseListOrders._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_orders(request, metadata)
-            transcoded_request = (
-                _BaseOrderServiceRestTransport._BaseListOrders._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseOrderServiceRestTransport._BaseListOrders._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseListOrders,
+                    "_BaseListOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4842,17 +4783,18 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             http_options = (
                 _BaseOrderServiceRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseOrderServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrderServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4959,17 +4901,16 @@ class OrderServiceRestTransport(_BaseOrderServiceRestTransport):
             http_options = (
                 _BaseOrderServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseOrderServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseOrderServiceRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrderServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

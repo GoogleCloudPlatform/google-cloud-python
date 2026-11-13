@@ -29,6 +29,7 @@ __protobuf__ = proto.module(
         "AutoscalingTargets",
         "AutoscalingLimits",
         "Cluster",
+        "MemoryLayer",
         "AppProfile",
         "HotTablet",
         "LogicalView",
@@ -487,6 +488,99 @@ class Cluster(proto.Message):
     )
 
 
+class MemoryLayer(proto.Message):
+    r"""The memory layer of a cluster. A memory layer serves reads
+    from memory without hitting the backing persistent data store.
+
+    Attributes:
+        name (str):
+            Identifier. Name of the memory layer. This is
+            always:
+            "projects/{project}/instances/{instance}/clusters/{cluster}/memoryLayer".
+        memory_config (google.cloud.bigtable_admin_v2.types.MemoryLayer.MemoryConfig):
+            The configuration of this memory layer. Set an empty
+            ``memory_config`` to enable the memory layer. Unset this to
+            disable the memory layer.
+        etag (str):
+            Optional. The etag for this memory layer.
+            This may be sent on update requests to ensure
+            that the client has an up-to-date value before
+            proceeding. The server returns an ABORTED error
+            on a mismatched etag.
+        state (google.cloud.bigtable_admin_v2.types.MemoryLayer.State):
+            Output only. The current state of the memory
+            layer.
+    """
+
+    class State(proto.Enum):
+        r"""Possible states of a memory layer.
+
+        Values:
+            STATE_NOT_KNOWN (0):
+                The state of the memory layer could not be
+                determined.
+            READY (1):
+                The memory layer has been successfully
+                enabled and is ready to serve requests.
+            ENABLING (2):
+                The memory layer is currently being enabled,
+                and may be disabled if the enablement process
+                encounters an error. A cluster may not be able
+                to serve requests from the memory layer while
+                being enabled.
+            RESIZING (3):
+                The memory layer is currently being resized,
+                and may revert to its previous storage size if
+                the process encounters an error. The memory
+                layer is still capable of serving requests while
+                being resized, but may exhibit performance as if
+                its number of allocated nodes is between the
+                starting and requested states.
+            DISABLED (4):
+                The memory layer is disabled. The default
+                state for a cluster without a memory layer.
+        """
+
+        STATE_NOT_KNOWN = 0
+        READY = 1
+        ENABLING = 2
+        RESIZING = 3
+        DISABLED = 4
+
+    class MemoryConfig(proto.Message):
+        r"""Configuration of a memory layer.
+
+        Attributes:
+            storage_size_gib (int):
+                Output only. Reporting the current size of
+                the memory layer in GiB.
+        """
+
+        storage_size_gib: int = proto.Field(
+            proto.INT32,
+            number=2,
+        )
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    memory_config: MemoryConfig = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=MemoryConfig,
+    )
+    etag: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=4,
+        enum=State,
+    )
+
+
 class AppProfile(proto.Message):
     r"""A configuration object describing how Cloud Bigtable should
     treat traffic from a particular end user application.
@@ -649,12 +743,30 @@ class AppProfile(proto.Message):
             priority (google.cloud.bigtable_admin_v2.types.AppProfile.Priority):
                 The priority of requests sent using this app
                 profile.
+            memory_config (google.cloud.bigtable_admin_v2.types.AppProfile.StandardIsolation.MemoryConfig):
+                Optional. The memory config to use for
+                requests sent using this app profile.
         """
+
+        class MemoryConfig(proto.Message):
+            r"""If set, eligible single-row requests (currently limited to
+            ReadRows) using this app profile will be routed to the memory
+            layer. All eligible writes populate the memory layer.
+            MemoryConfig can only be set if the AppProfile uses single
+            cluster routing and the configured cluster has a memory layer
+            enabled.
+
+            """
 
         priority: "AppProfile.Priority" = proto.Field(
             proto.ENUM,
             number=1,
             enum="AppProfile.Priority",
+        )
+        memory_config: "AppProfile.StandardIsolation.MemoryConfig" = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message="AppProfile.StandardIsolation.MemoryConfig",
         )
 
     class DataBoostIsolationReadOnly(proto.Message):

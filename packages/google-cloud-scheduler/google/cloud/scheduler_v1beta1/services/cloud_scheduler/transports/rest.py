@@ -30,6 +30,7 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.scheduler_v1beta1._compat import transcode_request
 from google.cloud.scheduler_v1beta1.types import cloudscheduler, job
 from google.cloud.scheduler_v1beta1.types import job as gcs_job
 
@@ -667,25 +668,16 @@ class CloudSchedulerRestTransport(_BaseCloudSchedulerRestTransport):
             http_options = (
                 _BaseCloudSchedulerRestTransport._BaseCreateJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_job(request, metadata)
-            transcoded_request = (
-                _BaseCloudSchedulerRestTransport._BaseCreateJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseCloudSchedulerRestTransport._BaseCreateJob._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudSchedulerRestTransport._BaseCreateJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudSchedulerRestTransport._BaseCreateJob,
+                    "_BaseCreateJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -819,19 +811,16 @@ class CloudSchedulerRestTransport(_BaseCloudSchedulerRestTransport):
             http_options = (
                 _BaseCloudSchedulerRestTransport._BaseDeleteJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_job(request, metadata)
-            transcoded_request = (
-                _BaseCloudSchedulerRestTransport._BaseDeleteJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudSchedulerRestTransport._BaseDeleteJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudSchedulerRestTransport._BaseDeleteJob,
+                    "_BaseDeleteJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -935,19 +924,16 @@ class CloudSchedulerRestTransport(_BaseCloudSchedulerRestTransport):
             http_options = (
                 _BaseCloudSchedulerRestTransport._BaseGetJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_job(request, metadata)
-            transcoded_request = (
-                _BaseCloudSchedulerRestTransport._BaseGetJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudSchedulerRestTransport._BaseGetJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudSchedulerRestTransport._BaseGetJob,
+                    "_BaseGetJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1086,19 +1072,16 @@ class CloudSchedulerRestTransport(_BaseCloudSchedulerRestTransport):
             http_options = (
                 _BaseCloudSchedulerRestTransport._BaseListJobs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_jobs(request, metadata)
-            transcoded_request = (
-                _BaseCloudSchedulerRestTransport._BaseListJobs._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudSchedulerRestTransport._BaseListJobs._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudSchedulerRestTransport._BaseListJobs,
+                    "_BaseListJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1239,25 +1222,16 @@ class CloudSchedulerRestTransport(_BaseCloudSchedulerRestTransport):
             http_options = (
                 _BaseCloudSchedulerRestTransport._BasePauseJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_pause_job(request, metadata)
-            transcoded_request = (
-                _BaseCloudSchedulerRestTransport._BasePauseJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseCloudSchedulerRestTransport._BasePauseJob._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudSchedulerRestTransport._BasePauseJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudSchedulerRestTransport._BasePauseJob,
+                    "_BasePauseJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1399,25 +1373,16 @@ class CloudSchedulerRestTransport(_BaseCloudSchedulerRestTransport):
             http_options = (
                 _BaseCloudSchedulerRestTransport._BaseResumeJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_resume_job(request, metadata)
-            transcoded_request = (
-                _BaseCloudSchedulerRestTransport._BaseResumeJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseCloudSchedulerRestTransport._BaseResumeJob._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudSchedulerRestTransport._BaseResumeJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudSchedulerRestTransport._BaseResumeJob,
+                    "_BaseResumeJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1557,23 +1522,16 @@ class CloudSchedulerRestTransport(_BaseCloudSchedulerRestTransport):
             http_options = (
                 _BaseCloudSchedulerRestTransport._BaseRunJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_run_job(request, metadata)
-            transcoded_request = (
-                _BaseCloudSchedulerRestTransport._BaseRunJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudSchedulerRestTransport._BaseRunJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudSchedulerRestTransport._BaseRunJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudSchedulerRestTransport._BaseRunJob,
+                    "_BaseRunJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1715,25 +1673,16 @@ class CloudSchedulerRestTransport(_BaseCloudSchedulerRestTransport):
             http_options = (
                 _BaseCloudSchedulerRestTransport._BaseUpdateJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_job(request, metadata)
-            transcoded_request = (
-                _BaseCloudSchedulerRestTransport._BaseUpdateJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseCloudSchedulerRestTransport._BaseUpdateJob._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudSchedulerRestTransport._BaseUpdateJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudSchedulerRestTransport._BaseUpdateJob,
+                    "_BaseUpdateJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1925,15 +1874,16 @@ class CloudSchedulerRestTransport(_BaseCloudSchedulerRestTransport):
             http_options = (
                 _BaseCloudSchedulerRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseCloudSchedulerRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudSchedulerRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudSchedulerRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2065,15 +2015,16 @@ class CloudSchedulerRestTransport(_BaseCloudSchedulerRestTransport):
             http_options = (
                 _BaseCloudSchedulerRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseCloudSchedulerRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudSchedulerRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudSchedulerRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

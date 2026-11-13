@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     cms_metadata_value_messages,
     cms_metadata_value_service,
@@ -528,23 +529,20 @@ class CmsMetadataValueServiceRestTransport(_BaseCmsMetadataValueServiceRestTrans
             """
 
             http_options = _BaseCmsMetadataValueServiceRestTransport._BaseBatchActivateCmsMetadataValues._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_activate_cms_metadata_values(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCmsMetadataValueServiceRestTransport._BaseBatchActivateCmsMetadataValues._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCmsMetadataValueServiceRestTransport._BaseBatchActivateCmsMetadataValues._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCmsMetadataValueServiceRestTransport._BaseBatchActivateCmsMetadataValues._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCmsMetadataValueServiceRestTransport._BaseBatchActivateCmsMetadataValues,
+                    "_BaseBatchActivateCmsMetadataValues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -695,23 +693,20 @@ class CmsMetadataValueServiceRestTransport(_BaseCmsMetadataValueServiceRestTrans
             """
 
             http_options = _BaseCmsMetadataValueServiceRestTransport._BaseBatchDeactivateCmsMetadataValues._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_deactivate_cms_metadata_values(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCmsMetadataValueServiceRestTransport._BaseBatchDeactivateCmsMetadataValues._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCmsMetadataValueServiceRestTransport._BaseBatchDeactivateCmsMetadataValues._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCmsMetadataValueServiceRestTransport._BaseBatchDeactivateCmsMetadataValues._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCmsMetadataValueServiceRestTransport._BaseBatchDeactivateCmsMetadataValues,
+                    "_BaseBatchDeactivateCmsMetadataValues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -857,17 +852,18 @@ class CmsMetadataValueServiceRestTransport(_BaseCmsMetadataValueServiceRestTrans
             """
 
             http_options = _BaseCmsMetadataValueServiceRestTransport._BaseGetCmsMetadataValue._get_http_options()
-
             request, metadata = self._interceptor.pre_get_cms_metadata_value(
                 request, metadata
             )
-            transcoded_request = _BaseCmsMetadataValueServiceRestTransport._BaseGetCmsMetadataValue._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCmsMetadataValueServiceRestTransport._BaseGetCmsMetadataValue._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCmsMetadataValueServiceRestTransport._BaseGetCmsMetadataValue,
+                    "_BaseGetCmsMetadataValue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1008,17 +1004,18 @@ class CmsMetadataValueServiceRestTransport(_BaseCmsMetadataValueServiceRestTrans
             """
 
             http_options = _BaseCmsMetadataValueServiceRestTransport._BaseListCmsMetadataValues._get_http_options()
-
             request, metadata = self._interceptor.pre_list_cms_metadata_values(
                 request, metadata
             )
-            transcoded_request = _BaseCmsMetadataValueServiceRestTransport._BaseListCmsMetadataValues._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCmsMetadataValueServiceRestTransport._BaseListCmsMetadataValues._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCmsMetadataValueServiceRestTransport._BaseListCmsMetadataValues,
+                    "_BaseListCmsMetadataValues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1203,17 +1200,18 @@ class CmsMetadataValueServiceRestTransport(_BaseCmsMetadataValueServiceRestTrans
             """
 
             http_options = _BaseCmsMetadataValueServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCmsMetadataValueServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCmsMetadataValueServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCmsMetadataValueServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1321,15 +1319,16 @@ class CmsMetadataValueServiceRestTransport(_BaseCmsMetadataValueServiceRestTrans
             """
 
             http_options = _BaseCmsMetadataValueServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseCmsMetadataValueServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCmsMetadataValueServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCmsMetadataValueServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

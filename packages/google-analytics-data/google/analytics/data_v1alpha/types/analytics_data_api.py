@@ -54,6 +54,8 @@ __protobuf__ = proto.module(
         "GetReportTaskRequest",
         "ListReportTasksRequest",
         "ListReportTasksResponse",
+        "ChatRequest",
+        "ChatResponse",
         "RunReportRequest",
         "RunReportResponse",
         "GetMetadataRequest",
@@ -1612,6 +1614,83 @@ class ListReportTasksResponse(proto.Message):
         proto.STRING,
         number=2,
         optional=True,
+    )
+
+
+class ChatRequest(proto.Message):
+    r"""Request message for the Chat method.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        property (str):
+            Required. The property to chat about.
+            Format: properties/{property}
+        user_query (str):
+            Required. The user's query.
+        session_id (str):
+            Optional. Provide this session ID to continue
+            an existing conversation and maintain context.
+            If this field is empty or unset, a new chat
+            session is created. Invalid session IDs will
+            result in an error.
+
+            This field is a member of `oneof`_ ``_session_id``.
+        return_property_quota (bool):
+            Optional. If true, the response will include the current
+            state of this Analytics Property's quota. Quota is returned
+            in `PropertyChatQuota <#PropertyChatQuota>`__.
+    """
+
+    property: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    user_query: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    session_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+        optional=True,
+    )
+    return_property_quota: bool = proto.Field(
+        proto.BOOL,
+        number=4,
+    )
+
+
+class ChatResponse(proto.Message):
+    r"""Response message for the Chat method.
+
+    Attributes:
+        session_id (str):
+            The unique identifier for this chat session.
+            Provide this ID in subsequent requests to
+            maintain conversational context.
+        blocks (MutableSequence[google.analytics.data_v1alpha.types.ResponseBlock]):
+            The response blocks that make up the chat
+            response. This can include text, tables, and
+            lists.
+        property_quota (google.analytics.data_v1alpha.types.PropertyChatQuota):
+            This Analytics Property's quota state
+            including this request.
+    """
+
+    session_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    blocks: MutableSequence[data.ResponseBlock] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message=data.ResponseBlock,
+    )
+    property_quota: data.PropertyChatQuota = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=data.PropertyChatQuota,
     )
 
 

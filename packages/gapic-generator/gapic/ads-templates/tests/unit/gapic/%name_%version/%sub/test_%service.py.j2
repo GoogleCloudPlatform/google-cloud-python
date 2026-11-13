@@ -664,6 +664,7 @@ def test_{{ method_name }}_api_version_header(transport_name):
                 type(client.transport.{{ method.transport_safe_name|snake_case }}),
                 '__call__'
             ) as call:
+                call.return_value = {{ method.output.ident }}()
                 client.{{ method_name }}()
 
         # Establish that the api version header was sent.
@@ -947,13 +948,11 @@ def test_{{ method_name }}_pager(transport_name: str = "grpc"):
         expected_metadata = ()
         retry = retries.Retry()
         timeout = 5
-        {% if method.field_headers %}
+        {% if method.field_headers and not method.client_streaming %}
         expected_metadata = tuple(expected_metadata) + (
             gapic_v1.routing_header.to_grpc_metadata((
                 {% for field_header in method.field_headers %}
-                {% if not method.client_streaming %}
                 ('{{ field_header.raw }}', ''),
-                {% endif %}
                 {% endfor %}
             )),
         )

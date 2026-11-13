@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.apihub_v1._compat import transcode_request
 from google.cloud.apihub_v1.types import host_project_registration_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -577,21 +578,18 @@ class HostProjectRegistrationServiceRestTransport(
             """
 
             http_options = _BaseHostProjectRegistrationServiceRestTransport._BaseCreateHostProjectRegistration._get_http_options()
-
             request, metadata = self._interceptor.pre_create_host_project_registration(
                 request, metadata
             )
-            transcoded_request = _BaseHostProjectRegistrationServiceRestTransport._BaseCreateHostProjectRegistration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHostProjectRegistrationServiceRestTransport._BaseCreateHostProjectRegistration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHostProjectRegistrationServiceRestTransport._BaseCreateHostProjectRegistration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHostProjectRegistrationServiceRestTransport._BaseCreateHostProjectRegistration,
+                    "_BaseCreateHostProjectRegistration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -746,17 +744,18 @@ class HostProjectRegistrationServiceRestTransport(
             """
 
             http_options = _BaseHostProjectRegistrationServiceRestTransport._BaseGetHostProjectRegistration._get_http_options()
-
             request, metadata = self._interceptor.pre_get_host_project_registration(
                 request, metadata
             )
-            transcoded_request = _BaseHostProjectRegistrationServiceRestTransport._BaseGetHostProjectRegistration._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHostProjectRegistrationServiceRestTransport._BaseGetHostProjectRegistration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHostProjectRegistrationServiceRestTransport._BaseGetHostProjectRegistration,
+                    "_BaseGetHostProjectRegistration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -903,17 +902,18 @@ class HostProjectRegistrationServiceRestTransport(
             """
 
             http_options = _BaseHostProjectRegistrationServiceRestTransport._BaseListHostProjectRegistrations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_host_project_registrations(
                 request, metadata
             )
-            transcoded_request = _BaseHostProjectRegistrationServiceRestTransport._BaseListHostProjectRegistrations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHostProjectRegistrationServiceRestTransport._BaseListHostProjectRegistrations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHostProjectRegistrationServiceRestTransport._BaseListHostProjectRegistrations,
+                    "_BaseListHostProjectRegistrations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1098,15 +1098,16 @@ class HostProjectRegistrationServiceRestTransport(
             """
 
             http_options = _BaseHostProjectRegistrationServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseHostProjectRegistrationServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHostProjectRegistrationServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHostProjectRegistrationServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1239,15 +1240,16 @@ class HostProjectRegistrationServiceRestTransport(
             """
 
             http_options = _BaseHostProjectRegistrationServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseHostProjectRegistrationServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHostProjectRegistrationServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHostProjectRegistrationServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1376,21 +1378,18 @@ class HostProjectRegistrationServiceRestTransport(
             """
 
             http_options = _BaseHostProjectRegistrationServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseHostProjectRegistrationServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHostProjectRegistrationServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHostProjectRegistrationServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHostProjectRegistrationServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1494,17 +1493,18 @@ class HostProjectRegistrationServiceRestTransport(
             """
 
             http_options = _BaseHostProjectRegistrationServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseHostProjectRegistrationServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHostProjectRegistrationServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHostProjectRegistrationServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1610,15 +1610,16 @@ class HostProjectRegistrationServiceRestTransport(
             """
 
             http_options = _BaseHostProjectRegistrationServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseHostProjectRegistrationServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHostProjectRegistrationServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHostProjectRegistrationServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1751,15 +1752,16 @@ class HostProjectRegistrationServiceRestTransport(
             """
 
             http_options = _BaseHostProjectRegistrationServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseHostProjectRegistrationServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHostProjectRegistrationServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHostProjectRegistrationServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

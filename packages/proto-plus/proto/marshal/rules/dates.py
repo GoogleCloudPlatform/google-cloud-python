@@ -12,11 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 
-from google.protobuf import duration_pb2
-from google.protobuf import timestamp_pb2
+from google.protobuf import duration_pb2, timestamp_pb2
+
 from proto import datetime_helpers
 
 

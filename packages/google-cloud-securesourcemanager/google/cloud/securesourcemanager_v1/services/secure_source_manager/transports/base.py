@@ -45,7 +45,10 @@ DEFAULT_CLIENT_INFO.protobuf_runtime_version = google.protobuf.__version__
 class SecureSourceManagerTransport(abc.ABC):
     """Abstract transport class for SecureSourceManager."""
 
-    AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
+    AUTH_SCOPES = (
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/securesourcemanager.read-write",
+    )
 
     DEFAULT_HOST: str = "securesourcemanager.googleapis.com"
 
@@ -350,6 +353,11 @@ class SecureSourceManagerTransport(abc.ABC):
             ),
             self.fetch_blob: gapic_v1.method.wrap_method(
                 self.fetch_blob,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.fetch_refs: gapic_v1.method.wrap_method(
+                self.fetch_refs,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -836,6 +844,18 @@ class SecureSourceManagerTransport(abc.ABC):
         Union[
             secure_source_manager.FetchBlobResponse,
             Awaitable[secure_source_manager.FetchBlobResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def fetch_refs(
+        self,
+    ) -> Callable[
+        [secure_source_manager.FetchRefsRequest],
+        Union[
+            secure_source_manager.FetchRefsResponse,
+            Awaitable[secure_source_manager.FetchRefsResponse],
         ],
     ]:
         raise NotImplementedError()

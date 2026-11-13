@@ -89,6 +89,18 @@ CRED_INFO_JSON = {
 CRED_INFO_STRING = json.dumps(CRED_INFO_JSON)
 
 
+@pytest.fixture(autouse=True)
+def disable_mtls_env():
+    with mock.patch.dict(
+        os.environ,
+        {
+            "GOOGLE_API_USE_CLIENT_CERTIFICATE": "false",
+            "CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE": "false",
+        },
+    ):
+        yield
+
+
 async def mock_async_gen(data, chunk_size=1):
     for i in range(0, len(data)):  # pragma: NO COVER
         chunk = data[i : i + chunk_size]
@@ -144,211 +156,6 @@ def set_event_loop():
             asyncio.set_event_loop(None)
 
 
-def test__get_default_mtls_endpoint():
-    api_endpoint = "example.googleapis.com"
-    api_mtls_endpoint = "example.mtls.googleapis.com"
-    sandbox_endpoint = "example.sandbox.googleapis.com"
-    sandbox_mtls_endpoint = "example.mtls.sandbox.googleapis.com"
-    non_googleapi = "api.example.com"
-    custom_endpoint = ".custom"
-
-    assert DataAgentServiceClient._get_default_mtls_endpoint(None) is None
-    assert (
-        DataAgentServiceClient._get_default_mtls_endpoint(api_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        DataAgentServiceClient._get_default_mtls_endpoint(api_mtls_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        DataAgentServiceClient._get_default_mtls_endpoint(sandbox_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        DataAgentServiceClient._get_default_mtls_endpoint(sandbox_mtls_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        DataAgentServiceClient._get_default_mtls_endpoint(non_googleapi)
-        == non_googleapi
-    )
-    assert (
-        DataAgentServiceClient._get_default_mtls_endpoint(custom_endpoint)
-        == custom_endpoint
-    )
-
-
-def test__read_environment_variables():
-    assert DataAgentServiceClient._read_environment_variables() == (False, "auto", None)
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-        assert DataAgentServiceClient._read_environment_variables() == (
-            True,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}):
-        assert DataAgentServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}
-    ):
-        if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-            with pytest.raises(ValueError) as excinfo:
-                DataAgentServiceClient._read_environment_variables()
-            assert (
-                str(excinfo.value)
-                == "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be either `true` or `false`"
-            )
-        else:
-            assert DataAgentServiceClient._read_environment_variables() == (
-                False,
-                "auto",
-                None,
-            )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "never"}):
-        assert DataAgentServiceClient._read_environment_variables() == (
-            False,
-            "never",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "always"}):
-        assert DataAgentServiceClient._read_environment_variables() == (
-            False,
-            "always",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "auto"}):
-        assert DataAgentServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "Unsupported"}):
-        with pytest.raises(MutualTLSChannelError) as excinfo:
-            DataAgentServiceClient._read_environment_variables()
-    assert (
-        str(excinfo.value)
-        == "Environment variable `GOOGLE_API_USE_MTLS_ENDPOINT` must be `never`, `auto` or `always`"
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_CLOUD_UNIVERSE_DOMAIN": "foo.com"}):
-        assert DataAgentServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            "foo.com",
-        )
-
-
-def test_use_client_cert_effective():
-    # Test case 1: Test when `should_use_client_cert` returns True.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=True
-        ):
-            assert DataAgentServiceClient._use_client_cert_effective() is True
-
-    # Test case 2: Test when `should_use_client_cert` returns False.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should NOT be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=False
-        ):
-            assert DataAgentServiceClient._use_client_cert_effective() is False
-
-    # Test case 3: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "true".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-            assert DataAgentServiceClient._use_client_cert_effective() is True
-
-    # Test case 4: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}
-        ):
-            assert DataAgentServiceClient._use_client_cert_effective() is False
-
-    # Test case 5: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "True".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "True"}):
-            assert DataAgentServiceClient._use_client_cert_effective() is True
-
-    # Test case 6: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "False".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "False"}
-        ):
-            assert DataAgentServiceClient._use_client_cert_effective() is False
-
-    # Test case 7: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "TRUE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "TRUE"}):
-            assert DataAgentServiceClient._use_client_cert_effective() is True
-
-    # Test case 8: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "FALSE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "FALSE"}
-        ):
-            assert DataAgentServiceClient._use_client_cert_effective() is False
-
-    # Test case 9: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not set.
-    # In this case, the method should return False, which is the default value.
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, clear=True):
-            assert DataAgentServiceClient._use_client_cert_effective() is False
-
-    # Test case 10: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should raise a ValueError as the environment variable must be either
-    # "true" or "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            with pytest.raises(ValueError):
-                DataAgentServiceClient._use_client_cert_effective()
-
-    # Test case 11: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should return False as the environment variable is set to an invalid value.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            assert DataAgentServiceClient._use_client_cert_effective() is False
-
-    # Test case 12: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is unset. Also,
-    # the GOOGLE_API_CONFIG environment variable is unset.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": ""}):
-            with mock.patch.dict(os.environ, {"GOOGLE_API_CERTIFICATE_CONFIG": ""}):
-                assert DataAgentServiceClient._use_client_cert_effective() is False
-
-
 def test__get_client_cert_source():
     mock_provided_cert_source = mock.Mock()
     mock_default_cert_source = mock.Mock()
@@ -380,97 +187,6 @@ def test__get_client_cert_source():
                 )
                 is mock_provided_cert_source
             )
-
-
-@mock.patch.object(
-    DataAgentServiceClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(DataAgentServiceClient),
-)
-@mock.patch.object(
-    DataAgentServiceAsyncClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(DataAgentServiceAsyncClient),
-)
-def test__get_api_endpoint():
-    api_override = "foo.com"
-    mock_client_cert_source = mock.Mock()
-    default_universe = DataAgentServiceClient._DEFAULT_UNIVERSE
-    default_endpoint = DataAgentServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=default_universe
-    )
-    mock_universe = "bar.com"
-    mock_endpoint = DataAgentServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=mock_universe
-    )
-
-    assert (
-        DataAgentServiceClient._get_api_endpoint(
-            api_override, mock_client_cert_source, default_universe, "always"
-        )
-        == api_override
-    )
-    assert (
-        DataAgentServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "auto"
-        )
-        == DataAgentServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        DataAgentServiceClient._get_api_endpoint(None, None, default_universe, "auto")
-        == default_endpoint
-    )
-    assert (
-        DataAgentServiceClient._get_api_endpoint(None, None, default_universe, "always")
-        == DataAgentServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        DataAgentServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "always"
-        )
-        == DataAgentServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        DataAgentServiceClient._get_api_endpoint(None, None, mock_universe, "never")
-        == mock_endpoint
-    )
-    assert (
-        DataAgentServiceClient._get_api_endpoint(None, None, default_universe, "never")
-        == default_endpoint
-    )
-
-    with pytest.raises(MutualTLSChannelError) as excinfo:
-        DataAgentServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, mock_universe, "auto"
-        )
-    assert (
-        str(excinfo.value)
-        == "mTLS is not supported in any universe other than googleapis.com."
-    )
-
-
-def test__get_universe_domain():
-    client_universe_domain = "foo.com"
-    universe_domain_env = "bar.com"
-
-    assert (
-        DataAgentServiceClient._get_universe_domain(
-            client_universe_domain, universe_domain_env
-        )
-        == client_universe_domain
-    )
-    assert (
-        DataAgentServiceClient._get_universe_domain(None, universe_domain_env)
-        == universe_domain_env
-    )
-    assert (
-        DataAgentServiceClient._get_universe_domain(None, None)
-        == DataAgentServiceClient._DEFAULT_UNIVERSE
-    )
-
-    with pytest.raises(ValueError) as excinfo:
-        DataAgentServiceClient._get_universe_domain("", None)
-    assert str(excinfo.value) == "Universe Domain cannot be an empty string."
 
 
 @pytest.mark.parametrize(
@@ -998,6 +714,7 @@ def test_data_agent_service_client_get_mtls_endpoint_and_cert_source(client_clas
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", None)
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", None)
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1052,6 +769,7 @@ def test_data_agent_service_client_get_mtls_endpoint_and_cert_source(client_clas
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", "")
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", "")
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -2504,6 +2222,7 @@ def test_get_data_agent(request_type, transport: str = "grpc"):
             display_name="display_name_value",
             description="description_value",
             kms_key="kms_key_value",
+            bigquery_agent_analytics_enabled=True,
         )
         response = client.get_data_agent(request)
 
@@ -2519,6 +2238,7 @@ def test_get_data_agent(request_type, transport: str = "grpc"):
     assert response.display_name == "display_name_value"
     assert response.description == "description_value"
     assert response.kms_key == "kms_key_value"
+    assert response.bigquery_agent_analytics_enabled is True
 
 
 def test_get_data_agent_non_empty_request_with_auto_populated_field():
@@ -2654,6 +2374,7 @@ async def test_get_data_agent_async(request_type, transport: str = "grpc_asyncio
                 display_name="display_name_value",
                 description="description_value",
                 kms_key="kms_key_value",
+                bigquery_agent_analytics_enabled=True,
             )
         )
         response = await client.get_data_agent(request)
@@ -2670,6 +2391,7 @@ async def test_get_data_agent_async(request_type, transport: str = "grpc_asyncio
     assert response.display_name == "display_name_value"
     assert response.description == "description_value"
     assert response.kms_key == "kms_key_value"
+    assert response.bigquery_agent_analytics_enabled is True
 
 
 def test_get_data_agent_field_headers():
@@ -3244,6 +2966,7 @@ def test_create_data_agent_sync(request_type, transport: str = "grpc"):
             display_name="display_name_value",
             description="description_value",
             kms_key="kms_key_value",
+            bigquery_agent_analytics_enabled=True,
         )
         response = client.create_data_agent_sync(request)
 
@@ -3259,6 +2982,7 @@ def test_create_data_agent_sync(request_type, transport: str = "grpc"):
     assert response.display_name == "display_name_value"
     assert response.description == "description_value"
     assert response.kms_key == "kms_key_value"
+    assert response.bigquery_agent_analytics_enabled is True
 
 
 def test_create_data_agent_sync_non_empty_request_with_auto_populated_field():
@@ -3407,6 +3131,7 @@ async def test_create_data_agent_sync_async(
                 display_name="display_name_value",
                 description="description_value",
                 kms_key="kms_key_value",
+                bigquery_agent_analytics_enabled=True,
             )
         )
         response = await client.create_data_agent_sync(request)
@@ -3423,6 +3148,7 @@ async def test_create_data_agent_sync_async(
     assert response.display_name == "display_name_value"
     assert response.description == "description_value"
     assert response.kms_key == "kms_key_value"
+    assert response.bigquery_agent_analytics_enabled is True
 
 
 def test_create_data_agent_sync_field_headers():
@@ -4045,6 +3771,7 @@ def test_update_data_agent_sync(request_type, transport: str = "grpc"):
             display_name="display_name_value",
             description="description_value",
             kms_key="kms_key_value",
+            bigquery_agent_analytics_enabled=True,
         )
         response = client.update_data_agent_sync(request)
 
@@ -4060,6 +3787,7 @@ def test_update_data_agent_sync(request_type, transport: str = "grpc"):
     assert response.display_name == "display_name_value"
     assert response.description == "description_value"
     assert response.kms_key == "kms_key_value"
+    assert response.bigquery_agent_analytics_enabled is True
 
 
 def test_update_data_agent_sync_non_empty_request_with_auto_populated_field():
@@ -4202,6 +3930,7 @@ async def test_update_data_agent_sync_async(
                 display_name="display_name_value",
                 description="description_value",
                 kms_key="kms_key_value",
+                bigquery_agent_analytics_enabled=True,
             )
         )
         response = await client.update_data_agent_sync(request)
@@ -4218,6 +3947,7 @@ async def test_update_data_agent_sync_async(
     assert response.display_name == "display_name_value"
     assert response.description == "description_value"
     assert response.kms_key == "kms_key_value"
+    assert response.bigquery_agent_analytics_enabled is True
 
 
 def test_update_data_agent_sync_field_headers():
@@ -5777,6 +5507,758 @@ async def test_set_iam_policy_flattened_error_async():
         )
 
 
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        data_agent_service.SetAgentOpsObservabilityRequest(),
+        {},
+    ],
+)
+def test_set_agent_ops_observability(request_type, transport: str = "grpc"):
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.set_agent_ops_observability), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/spam")
+        response = client.set_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = data_agent_service.SetAgentOpsObservabilityRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_set_agent_ops_observability_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = data_agent_service.SetAgentOpsObservabilityRequest(
+        parent="parent_value",
+        data_source_type="data_source_type_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.set_agent_ops_observability), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.set_agent_ops_observability(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = data_agent_service.SetAgentOpsObservabilityRequest(
+            parent="parent_value",
+            data_source_type="data_source_type_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_set_agent_ops_observability_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DataAgentServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.set_agent_ops_observability
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.set_agent_ops_observability
+        ] = mock_rpc
+        request = {}
+        client.set_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.set_agent_ops_observability(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_set_agent_ops_observability_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = DataAgentServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.set_agent_ops_observability
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.set_agent_ops_observability
+        ] = mock_rpc
+
+        request = {}
+        await client.set_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        await client.set_agent_ops_observability(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        data_agent_service.SetAgentOpsObservabilityRequest(),
+        {},
+    ],
+)
+async def test_set_agent_ops_observability_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = DataAgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.set_agent_ops_observability), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        response = await client.set_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = data_agent_service.SetAgentOpsObservabilityRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_set_agent_ops_observability_field_headers():
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = data_agent_service.SetAgentOpsObservabilityRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.set_agent_ops_observability), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.set_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_set_agent_ops_observability_field_headers_async():
+    client = DataAgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = data_agent_service.SetAgentOpsObservabilityRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.set_agent_ops_observability), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/op")
+        )
+        await client.set_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+def test_set_agent_ops_observability_flattened():
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.set_agent_ops_observability), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.set_agent_ops_observability(
+            parent="parent_value",
+            telemetry_enabled=True,
+            data_source_type="data_source_type_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+        arg = args[0].telemetry_enabled
+        mock_val = True
+        assert arg == mock_val
+        arg = args[0].data_source_type
+        mock_val = "data_source_type_value"
+        assert arg == mock_val
+
+
+def test_set_agent_ops_observability_flattened_error():
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.set_agent_ops_observability(
+            data_agent_service.SetAgentOpsObservabilityRequest(),
+            parent="parent_value",
+            telemetry_enabled=True,
+            data_source_type="data_source_type_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_set_agent_ops_observability_flattened_async():
+    client = DataAgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.set_agent_ops_observability), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.set_agent_ops_observability(
+            parent="parent_value",
+            telemetry_enabled=True,
+            data_source_type="data_source_type_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+        arg = args[0].telemetry_enabled
+        mock_val = True
+        assert arg == mock_val
+        arg = args[0].data_source_type
+        mock_val = "data_source_type_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_set_agent_ops_observability_flattened_error_async():
+    client = DataAgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.set_agent_ops_observability(
+            data_agent_service.SetAgentOpsObservabilityRequest(),
+            parent="parent_value",
+            telemetry_enabled=True,
+            data_source_type="data_source_type_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        data_agent_service.RetrieveAgentOpsObservabilityRequest(),
+        {},
+    ],
+)
+def test_retrieve_agent_ops_observability(request_type, transport: str = "grpc"):
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.retrieve_agent_ops_observability), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse(
+            telemetry_enabled=True,
+            bigquery_enabled=True,
+            cloud_trace_enabled=True,
+            cloud_monitoring_enabled=True,
+            cloud_logging_enabled=True,
+            bqaa_enabled=True,
+        )
+        response = client.retrieve_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = data_agent_service.RetrieveAgentOpsObservabilityRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, data_agent_service.RetrieveAgentOpsObservabilityResponse
+    )
+    assert response.telemetry_enabled is True
+    assert response.bigquery_enabled is True
+    assert response.cloud_trace_enabled is True
+    assert response.cloud_monitoring_enabled is True
+    assert response.cloud_logging_enabled is True
+    assert response.bqaa_enabled is True
+
+
+def test_retrieve_agent_ops_observability_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = data_agent_service.RetrieveAgentOpsObservabilityRequest(
+        parent="parent_value",
+        data_source_type="data_source_type_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.retrieve_agent_ops_observability), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.retrieve_agent_ops_observability(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = data_agent_service.RetrieveAgentOpsObservabilityRequest(
+            parent="parent_value",
+            data_source_type="data_source_type_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_retrieve_agent_ops_observability_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DataAgentServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.retrieve_agent_ops_observability
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.retrieve_agent_ops_observability
+        ] = mock_rpc
+        request = {}
+        client.retrieve_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.retrieve_agent_ops_observability(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_retrieve_agent_ops_observability_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = DataAgentServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.retrieve_agent_ops_observability
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.retrieve_agent_ops_observability
+        ] = mock_rpc
+
+        request = {}
+        await client.retrieve_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.retrieve_agent_ops_observability(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        data_agent_service.RetrieveAgentOpsObservabilityRequest(),
+        {},
+    ],
+)
+async def test_retrieve_agent_ops_observability_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = DataAgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.retrieve_agent_ops_observability), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            data_agent_service.RetrieveAgentOpsObservabilityResponse(
+                telemetry_enabled=True,
+                bigquery_enabled=True,
+                cloud_trace_enabled=True,
+                cloud_monitoring_enabled=True,
+                cloud_logging_enabled=True,
+                bqaa_enabled=True,
+            )
+        )
+        response = await client.retrieve_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = data_agent_service.RetrieveAgentOpsObservabilityRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, data_agent_service.RetrieveAgentOpsObservabilityResponse
+    )
+    assert response.telemetry_enabled is True
+    assert response.bigquery_enabled is True
+    assert response.cloud_trace_enabled is True
+    assert response.cloud_monitoring_enabled is True
+    assert response.cloud_logging_enabled is True
+    assert response.bqaa_enabled is True
+
+
+def test_retrieve_agent_ops_observability_field_headers():
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = data_agent_service.RetrieveAgentOpsObservabilityRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.retrieve_agent_ops_observability), "__call__"
+    ) as call:
+        call.return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse()
+        client.retrieve_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_retrieve_agent_ops_observability_field_headers_async():
+    client = DataAgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = data_agent_service.RetrieveAgentOpsObservabilityRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.retrieve_agent_ops_observability), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            data_agent_service.RetrieveAgentOpsObservabilityResponse()
+        )
+        await client.retrieve_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+def test_retrieve_agent_ops_observability_flattened():
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.retrieve_agent_ops_observability), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.retrieve_agent_ops_observability(
+            parent="parent_value",
+            data_source_type="data_source_type_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+        arg = args[0].data_source_type
+        mock_val = "data_source_type_value"
+        assert arg == mock_val
+
+
+def test_retrieve_agent_ops_observability_flattened_error():
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.retrieve_agent_ops_observability(
+            data_agent_service.RetrieveAgentOpsObservabilityRequest(),
+            parent="parent_value",
+            data_source_type="data_source_type_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_retrieve_agent_ops_observability_flattened_async():
+    client = DataAgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.retrieve_agent_ops_observability), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            data_agent_service.RetrieveAgentOpsObservabilityResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.retrieve_agent_ops_observability(
+            parent="parent_value",
+            data_source_type="data_source_type_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+        arg = args[0].data_source_type
+        mock_val = "data_source_type_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_retrieve_agent_ops_observability_flattened_error_async():
+    client = DataAgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.retrieve_agent_ops_observability(
+            data_agent_service.RetrieveAgentOpsObservabilityRequest(),
+            parent="parent_value",
+            data_source_type="data_source_type_value",
+        )
+
+
 def test_list_data_agents_rest_use_cached_wrapped_rpc():
     # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
     # instead of constructing them on each call
@@ -5830,29 +6312,31 @@ def test_list_data_agents_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_data_agents._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListDataAgents,
+        "_BaseListDataAgents__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_data_agents._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
+            "creatorFilter",
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
-            "show_deleted",
+            "orderBy",
+            "pageSize",
+            "pageToken",
+            "showDeleted",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -5898,26 +6382,6 @@ def test_list_data_agents_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_data_agents_rest_unset_required_fields():
-    transport = transports.DataAgentServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_data_agents._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-                "showDeleted",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_data_agents_rest_flattened():
@@ -6099,30 +6563,31 @@ def test_list_accessible_data_agents_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_accessible_data_agents._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListAccessibleDataAgents,
+        "_BaseListAccessibleDataAgents__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_accessible_data_agents._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "creator_filter",
+            "creatorFilter",
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
-            "show_deleted",
+            "orderBy",
+            "pageSize",
+            "pageToken",
+            "showDeleted",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -6170,27 +6635,6 @@ def test_list_accessible_data_agents_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_accessible_data_agents_rest_unset_required_fields():
-    transport = transports.DataAgentServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_accessible_data_agents._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "creatorFilter",
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-                "showDeleted",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_accessible_data_agents_rest_flattened():
@@ -6371,19 +6815,19 @@ def test_get_data_agent_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_data_agent._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetDataAgent,
+        "_BaseGetDataAgent__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_data_agent._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -6429,15 +6873,6 @@ def test_get_data_agent_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_data_agent_rest_unset_required_fields():
-    transport = transports.DataAgentServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_data_agent._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_data_agent_rest_flattened():
@@ -6556,26 +6991,27 @@ def test_create_data_agent_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_data_agent._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateDataAgent,
+        "_BaseCreateDataAgent__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_data_agent._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "data_agent_id",
-            "request_id",
+            "dataAgentId",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -6619,28 +7055,6 @@ def test_create_data_agent_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_data_agent_rest_unset_required_fields():
-    transport = transports.DataAgentServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_data_agent._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "dataAgentId",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "parent",
-                "dataAgent",
-            )
-        )
-    )
 
 
 def test_create_data_agent_rest_flattened():
@@ -6770,26 +7184,27 @@ def test_create_data_agent_sync_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_data_agent_sync._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateDataAgentSync,
+        "_BaseCreateDataAgentSync__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_data_agent_sync._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "data_agent_id",
-            "request_id",
+            "dataAgentId",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -6836,28 +7251,6 @@ def test_create_data_agent_sync_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_data_agent_sync_rest_unset_required_fields():
-    transport = transports.DataAgentServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_data_agent_sync._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "dataAgentId",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "parent",
-                "dataAgent",
-            )
-        )
-    )
 
 
 def test_create_data_agent_sync_rest_flattened():
@@ -6990,24 +7383,25 @@ def test_update_data_agent_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_data_agent._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateDataAgent,
+        "_BaseUpdateDataAgent__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_data_agent._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "request_id",
-            "update_mask",
+            "requestId",
+            "updateMask",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
 
@@ -7049,23 +7443,6 @@ def test_update_data_agent_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_data_agent_rest_unset_required_fields():
-    transport = transports.DataAgentServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_data_agent._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "requestId",
-                "updateMask",
-            )
-        )
-        & set(("dataAgent",))
-    )
 
 
 def test_update_data_agent_rest_flattened():
@@ -7197,24 +7574,25 @@ def test_update_data_agent_sync_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_data_agent_sync._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateDataAgentSync,
+        "_BaseUpdateDataAgentSync__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_data_agent_sync._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "request_id",
-            "update_mask",
+            "requestId",
+            "updateMask",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
 
@@ -7259,23 +7637,6 @@ def test_update_data_agent_sync_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_data_agent_sync_rest_unset_required_fields():
-    transport = transports.DataAgentServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_data_agent_sync._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "requestId",
-                "updateMask",
-            )
-        )
-        & set(("dataAgent",))
-    )
 
 
 def test_update_data_agent_sync_rest_flattened():
@@ -7411,21 +7772,22 @@ def test_delete_data_agent_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_data_agent._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteDataAgent,
+        "_BaseDeleteDataAgent__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_data_agent._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -7468,15 +7830,6 @@ def test_delete_data_agent_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_data_agent_rest_unset_required_fields():
-    transport = transports.DataAgentServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_data_agent._get_unset_required_fields({})
-    assert set(unset_fields) == (set(("requestId",)) & set(("name",)))
 
 
 def test_delete_data_agent_rest_flattened():
@@ -7592,21 +7945,22 @@ def test_delete_data_agent_sync_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_data_agent_sync._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteDataAgentSync,
+        "_BaseDeleteDataAgentSync__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_data_agent_sync._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -7649,15 +8003,6 @@ def test_delete_data_agent_sync_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_data_agent_sync_rest_unset_required_fields():
-    transport = transports.DataAgentServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_data_agent_sync._get_unset_required_fields({})
-    assert set(unset_fields) == (set(("requestId",)) & set(("name",)))
 
 
 def test_delete_data_agent_sync_rest_flattened():
@@ -7769,19 +8114,19 @@ def test_get_iam_policy_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_iam_policy._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetIamPolicy,
+        "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["resource"] = "resource_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_iam_policy._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "resource" in jsonified_request
@@ -7826,15 +8171,6 @@ def test_get_iam_policy_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_iam_policy_rest_unset_required_fields():
-    transport = transports.DataAgentServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_iam_policy._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("resource",)))
 
 
 def test_get_iam_policy_rest_flattened():
@@ -7946,19 +8282,19 @@ def test_set_iam_policy_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).set_iam_policy._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseSetIamPolicy,
+        "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["resource"] = "resource_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).set_iam_policy._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "resource" in jsonified_request
@@ -8003,23 +8339,6 @@ def test_set_iam_policy_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_set_iam_policy_rest_unset_required_fields():
-    transport = transports.DataAgentServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.set_iam_policy._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "resource",
-                "policy",
-            )
-        )
-    )
 
 
 def test_set_iam_policy_rest_flattened():
@@ -8077,6 +8396,384 @@ def test_set_iam_policy_rest_flattened_error(transport: str = "rest"):
         client.set_iam_policy(
             iam_policy_pb2.SetIamPolicyRequest(),
             resource="resource_value",
+        )
+
+
+def test_set_agent_ops_observability_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DataAgentServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.set_agent_ops_observability
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.set_agent_ops_observability
+        ] = mock_rpc
+
+        request = {}
+        client.set_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.set_agent_ops_observability(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_set_agent_ops_observability_rest_required_fields(
+    request_type=data_agent_service.SetAgentOpsObservabilityRequest,
+):
+    transport_class = transports.DataAgentServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["data_source_type"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseSetAgentOpsObservability,
+        "_BaseSetAgentOpsObservability__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["dataSourceType"] = "data_source_type_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "dataSourceType" in jsonified_request
+    assert jsonified_request["dataSourceType"] == "data_source_type_value"
+
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = operations_pb2.Operation(name="operations/spam")
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.set_agent_ops_observability(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_set_agent_ops_observability_rest_flattened():
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "projects/sample1/locations/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            telemetry_enabled=True,
+            data_source_type="data_source_type_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.set_agent_ops_observability(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=projects/*/locations/*}/observabilitySettings:setAgentOpsObservability"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_set_agent_ops_observability_rest_flattened_error(transport: str = "rest"):
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.set_agent_ops_observability(
+            data_agent_service.SetAgentOpsObservabilityRequest(),
+            parent="parent_value",
+            telemetry_enabled=True,
+            data_source_type="data_source_type_value",
+        )
+
+
+def test_retrieve_agent_ops_observability_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DataAgentServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.retrieve_agent_ops_observability
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.retrieve_agent_ops_observability
+        ] = mock_rpc
+
+        request = {}
+        client.retrieve_agent_ops_observability(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.retrieve_agent_ops_observability(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_retrieve_agent_ops_observability_rest_required_fields(
+    request_type=data_agent_service.RetrieveAgentOpsObservabilityRequest,
+):
+    transport_class = transports.DataAgentServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["data_source_type"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+    assert "dataSourceType" not in jsonified_request
+
+    default_values = getattr(
+        transport_class._BaseRetrieveAgentOpsObservability,
+        "_BaseRetrieveAgentOpsObservability__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+    assert "dataSourceType" in jsonified_request
+    assert jsonified_request["dataSourceType"] == request_init["data_source_type"]
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["dataSourceType"] = "data_source_type_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(("dataSourceType",))
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "dataSourceType" in jsonified_request
+    assert jsonified_request["dataSourceType"] == "data_source_type_value"
+
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.retrieve_agent_ops_observability(request)
+
+            expected_params = [
+                (
+                    "dataSourceType",
+                    "",
+                ),
+                ("$alt", "json;enum-encoding=int"),
+            ]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_retrieve_agent_ops_observability_rest_flattened():
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "projects/sample1/locations/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            data_source_type="data_source_type_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.retrieve_agent_ops_observability(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=projects/*/locations/*}:retrieveAgentOpsObservability"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_retrieve_agent_ops_observability_rest_flattened_error(transport: str = "rest"):
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.retrieve_agent_ops_observability(
+            data_agent_service.RetrieveAgentOpsObservabilityRequest(),
+            parent="parent_value",
+            data_source_type="data_source_type_value",
         )
 
 
@@ -8420,6 +9117,50 @@ def test_set_iam_policy_empty_call_grpc():
         assert args[0] == request_msg
 
 
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_set_agent_ops_observability_empty_call_grpc():
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.set_agent_ops_observability), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.set_agent_ops_observability(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = data_agent_service.SetAgentOpsObservabilityRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_retrieve_agent_ops_observability_empty_call_grpc():
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.retrieve_agent_ops_observability), "__call__"
+    ) as call:
+        call.return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse()
+        client.retrieve_agent_ops_observability(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = data_agent_service.RetrieveAgentOpsObservabilityRequest()
+        assert args[0] == request_msg
+
+
 def test_transport_kind_grpc_asyncio():
     transport = DataAgentServiceAsyncClient.get_transport_class("grpc_asyncio")(
         credentials=async_anonymous_credentials()
@@ -8508,6 +9249,7 @@ async def test_get_data_agent_empty_call_grpc_asyncio():
                 display_name="display_name_value",
                 description="description_value",
                 kms_key="kms_key_value",
+                bigquery_agent_analytics_enabled=True,
             )
         )
         await client.get_data_agent(request=None)
@@ -8565,6 +9307,7 @@ async def test_create_data_agent_sync_empty_call_grpc_asyncio():
                 display_name="display_name_value",
                 description="description_value",
                 kms_key="kms_key_value",
+                bigquery_agent_analytics_enabled=True,
             )
         )
         await client.create_data_agent_sync(request=None)
@@ -8622,6 +9365,7 @@ async def test_update_data_agent_sync_empty_call_grpc_asyncio():
                 display_name="display_name_value",
                 description="description_value",
                 kms_key="kms_key_value",
+                bigquery_agent_analytics_enabled=True,
             )
         )
         await client.update_data_agent_sync(request=None)
@@ -8734,6 +9478,65 @@ async def test_set_iam_policy_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = iam_policy_pb2.SetIamPolicyRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_set_agent_ops_observability_empty_call_grpc_asyncio():
+    client = DataAgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.set_agent_ops_observability), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        await client.set_agent_ops_observability(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = data_agent_service.SetAgentOpsObservabilityRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_retrieve_agent_ops_observability_empty_call_grpc_asyncio():
+    client = DataAgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.retrieve_agent_ops_observability), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            data_agent_service.RetrieveAgentOpsObservabilityResponse(
+                telemetry_enabled=True,
+                bigquery_enabled=True,
+                cloud_trace_enabled=True,
+                cloud_monitoring_enabled=True,
+                cloud_logging_enabled=True,
+                bqaa_enabled=True,
+            )
+        )
+        await client.retrieve_agent_ops_observability(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = data_agent_service.RetrieveAgentOpsObservabilityRequest()
         assert args[0] == request_msg
 
 
@@ -9074,6 +9877,7 @@ def test_get_data_agent_rest_call_success(request_type):
             display_name="display_name_value",
             description="description_value",
             kms_key="kms_key_value",
+            bigquery_agent_analytics_enabled=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -9094,6 +9898,7 @@ def test_get_data_agent_rest_call_success(request_type):
     assert response.display_name == "display_name_value"
     assert response.description == "description_value"
     assert response.kms_key == "kms_key_value"
+    assert response.bigquery_agent_analytics_enabled is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -9243,7 +10048,26 @@ def test_create_data_agent_rest_call_success(request_type):
                                     ],
                                 },
                             }
-                        ]
+                        ],
+                        "property_graph_references": [
+                            {
+                                "project_id": "project_id_value",
+                                "dataset_id": "dataset_id_value",
+                                "property_graph_id": "property_graph_id_value",
+                            }
+                        ],
+                        "search_scope": {
+                            "include_project_ids": [
+                                "include_project_ids_value1",
+                                "include_project_ids_value2",
+                            ],
+                            "include_dataset_references": [
+                                {
+                                    "project_id": "project_id_value",
+                                    "dataset_id": "dataset_id_value",
+                                }
+                            ],
+                        },
                     },
                     "studio": {
                         "studio_references": [{"datasource_id": "datasource_id_value"}]
@@ -9296,6 +10120,25 @@ def test_create_data_agent_rest_call_success(request_type):
                             ],
                             "sorts": ["sorts_value1", "sorts_value2"],
                             "limit": "limit_value",
+                            "dynamic_fields": [
+                                {
+                                    "category": "category_value",
+                                    "name": "name_value",
+                                    "label": "label_value",
+                                    "based_on": "based_on_value",
+                                    "type_": "type__value",
+                                    "description": "description_value",
+                                    "expression": "expression_value",
+                                    "filter_expression": "filter_expression_value",
+                                    "value_format": "value_format_value",
+                                    "value_format_name": "value_format_name_value",
+                                    "calculation_type": "calculation_type_value",
+                                    "args": ["args_value1", "args_value2"],
+                                    "kind_hint": "kind_hint_value",
+                                    "type_hint": "type_hint_value",
+                                    "is_disabled": True,
+                                }
+                            ],
                             "query_id": "query_id_value",
                             "client_id": "client_id_value",
                         },
@@ -9344,6 +10187,8 @@ def test_create_data_agent_rest_call_success(request_type):
         "delete_time": {},
         "purge_time": {},
         "kms_key": "kms_key_value",
+        "bigquery_agent_analytics_enabled": True,
+        "bigquery_agent_analytics_table": {},
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -9580,7 +10425,26 @@ def test_create_data_agent_sync_rest_call_success(request_type):
                                     ],
                                 },
                             }
-                        ]
+                        ],
+                        "property_graph_references": [
+                            {
+                                "project_id": "project_id_value",
+                                "dataset_id": "dataset_id_value",
+                                "property_graph_id": "property_graph_id_value",
+                            }
+                        ],
+                        "search_scope": {
+                            "include_project_ids": [
+                                "include_project_ids_value1",
+                                "include_project_ids_value2",
+                            ],
+                            "include_dataset_references": [
+                                {
+                                    "project_id": "project_id_value",
+                                    "dataset_id": "dataset_id_value",
+                                }
+                            ],
+                        },
                     },
                     "studio": {
                         "studio_references": [{"datasource_id": "datasource_id_value"}]
@@ -9633,6 +10497,25 @@ def test_create_data_agent_sync_rest_call_success(request_type):
                             ],
                             "sorts": ["sorts_value1", "sorts_value2"],
                             "limit": "limit_value",
+                            "dynamic_fields": [
+                                {
+                                    "category": "category_value",
+                                    "name": "name_value",
+                                    "label": "label_value",
+                                    "based_on": "based_on_value",
+                                    "type_": "type__value",
+                                    "description": "description_value",
+                                    "expression": "expression_value",
+                                    "filter_expression": "filter_expression_value",
+                                    "value_format": "value_format_value",
+                                    "value_format_name": "value_format_name_value",
+                                    "calculation_type": "calculation_type_value",
+                                    "args": ["args_value1", "args_value2"],
+                                    "kind_hint": "kind_hint_value",
+                                    "type_hint": "type_hint_value",
+                                    "is_disabled": True,
+                                }
+                            ],
                             "query_id": "query_id_value",
                             "client_id": "client_id_value",
                         },
@@ -9681,6 +10564,8 @@ def test_create_data_agent_sync_rest_call_success(request_type):
         "delete_time": {},
         "purge_time": {},
         "kms_key": "kms_key_value",
+        "bigquery_agent_analytics_enabled": True,
+        "bigquery_agent_analytics_table": {},
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -9759,6 +10644,7 @@ def test_create_data_agent_sync_rest_call_success(request_type):
             display_name="display_name_value",
             description="description_value",
             kms_key="kms_key_value",
+            bigquery_agent_analytics_enabled=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -9779,6 +10665,7 @@ def test_create_data_agent_sync_rest_call_success(request_type):
     assert response.display_name == "display_name_value"
     assert response.description == "description_value"
     assert response.kms_key == "kms_key_value"
+    assert response.bigquery_agent_analytics_enabled is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -9932,7 +10819,26 @@ def test_update_data_agent_rest_call_success(request_type):
                                     ],
                                 },
                             }
-                        ]
+                        ],
+                        "property_graph_references": [
+                            {
+                                "project_id": "project_id_value",
+                                "dataset_id": "dataset_id_value",
+                                "property_graph_id": "property_graph_id_value",
+                            }
+                        ],
+                        "search_scope": {
+                            "include_project_ids": [
+                                "include_project_ids_value1",
+                                "include_project_ids_value2",
+                            ],
+                            "include_dataset_references": [
+                                {
+                                    "project_id": "project_id_value",
+                                    "dataset_id": "dataset_id_value",
+                                }
+                            ],
+                        },
                     },
                     "studio": {
                         "studio_references": [{"datasource_id": "datasource_id_value"}]
@@ -9985,6 +10891,25 @@ def test_update_data_agent_rest_call_success(request_type):
                             ],
                             "sorts": ["sorts_value1", "sorts_value2"],
                             "limit": "limit_value",
+                            "dynamic_fields": [
+                                {
+                                    "category": "category_value",
+                                    "name": "name_value",
+                                    "label": "label_value",
+                                    "based_on": "based_on_value",
+                                    "type_": "type__value",
+                                    "description": "description_value",
+                                    "expression": "expression_value",
+                                    "filter_expression": "filter_expression_value",
+                                    "value_format": "value_format_value",
+                                    "value_format_name": "value_format_name_value",
+                                    "calculation_type": "calculation_type_value",
+                                    "args": ["args_value1", "args_value2"],
+                                    "kind_hint": "kind_hint_value",
+                                    "type_hint": "type_hint_value",
+                                    "is_disabled": True,
+                                }
+                            ],
                             "query_id": "query_id_value",
                             "client_id": "client_id_value",
                         },
@@ -10033,6 +10958,8 @@ def test_update_data_agent_rest_call_success(request_type):
         "delete_time": {},
         "purge_time": {},
         "kms_key": "kms_key_value",
+        "bigquery_agent_analytics_enabled": True,
+        "bigquery_agent_analytics_table": {},
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -10273,7 +11200,26 @@ def test_update_data_agent_sync_rest_call_success(request_type):
                                     ],
                                 },
                             }
-                        ]
+                        ],
+                        "property_graph_references": [
+                            {
+                                "project_id": "project_id_value",
+                                "dataset_id": "dataset_id_value",
+                                "property_graph_id": "property_graph_id_value",
+                            }
+                        ],
+                        "search_scope": {
+                            "include_project_ids": [
+                                "include_project_ids_value1",
+                                "include_project_ids_value2",
+                            ],
+                            "include_dataset_references": [
+                                {
+                                    "project_id": "project_id_value",
+                                    "dataset_id": "dataset_id_value",
+                                }
+                            ],
+                        },
                     },
                     "studio": {
                         "studio_references": [{"datasource_id": "datasource_id_value"}]
@@ -10326,6 +11272,25 @@ def test_update_data_agent_sync_rest_call_success(request_type):
                             ],
                             "sorts": ["sorts_value1", "sorts_value2"],
                             "limit": "limit_value",
+                            "dynamic_fields": [
+                                {
+                                    "category": "category_value",
+                                    "name": "name_value",
+                                    "label": "label_value",
+                                    "based_on": "based_on_value",
+                                    "type_": "type__value",
+                                    "description": "description_value",
+                                    "expression": "expression_value",
+                                    "filter_expression": "filter_expression_value",
+                                    "value_format": "value_format_value",
+                                    "value_format_name": "value_format_name_value",
+                                    "calculation_type": "calculation_type_value",
+                                    "args": ["args_value1", "args_value2"],
+                                    "kind_hint": "kind_hint_value",
+                                    "type_hint": "type_hint_value",
+                                    "is_disabled": True,
+                                }
+                            ],
                             "query_id": "query_id_value",
                             "client_id": "client_id_value",
                         },
@@ -10374,6 +11339,8 @@ def test_update_data_agent_sync_rest_call_success(request_type):
         "delete_time": {},
         "purge_time": {},
         "kms_key": "kms_key_value",
+        "bigquery_agent_analytics_enabled": True,
+        "bigquery_agent_analytics_table": {},
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -10452,6 +11419,7 @@ def test_update_data_agent_sync_rest_call_success(request_type):
             display_name="display_name_value",
             description="description_value",
             kms_key="kms_key_value",
+            bigquery_agent_analytics_enabled=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -10472,6 +11440,7 @@ def test_update_data_agent_sync_rest_call_success(request_type):
     assert response.display_name == "display_name_value"
     assert response.description == "description_value"
     assert response.kms_key == "kms_key_value"
+    assert response.bigquery_agent_analytics_enabled is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -11019,6 +11988,286 @@ def test_set_iam_policy_rest_interceptors(null_interceptor):
         post_with_metadata.return_value = policy_pb2.Policy(), metadata
 
         client.set_iam_policy(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_set_agent_ops_observability_rest_bad_request(
+    request_type=data_agent_service.SetAgentOpsObservabilityRequest,
+):
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.set_agent_ops_observability(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        data_agent_service.SetAgentOpsObservabilityRequest,
+        dict,
+    ],
+)
+def test_set_agent_ops_observability_rest_call_success(request_type):
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.set_agent_ops_observability(request)
+
+    # Establish that the response is the type that we expect.
+    json_return_value = json_format.MessageToJson(return_value)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_set_agent_ops_observability_rest_interceptors(null_interceptor):
+    transport = transports.DataAgentServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.DataAgentServiceRestInterceptor(),
+    )
+    client = DataAgentServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(operation.Operation, "_set_result_from_operation"),
+        mock.patch.object(
+            transports.DataAgentServiceRestInterceptor,
+            "post_set_agent_ops_observability",
+        ) as post,
+        mock.patch.object(
+            transports.DataAgentServiceRestInterceptor,
+            "post_set_agent_ops_observability_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.DataAgentServiceRestInterceptor,
+            "pre_set_agent_ops_observability",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = data_agent_service.SetAgentOpsObservabilityRequest.pb(
+            data_agent_service.SetAgentOpsObservabilityRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(operations_pb2.Operation())
+        req.return_value.content = return_value
+
+        request = data_agent_service.SetAgentOpsObservabilityRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = operations_pb2.Operation()
+        post_with_metadata.return_value = operations_pb2.Operation(), metadata
+
+        client.set_agent_ops_observability(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_retrieve_agent_ops_observability_rest_bad_request(
+    request_type=data_agent_service.RetrieveAgentOpsObservabilityRequest,
+):
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.retrieve_agent_ops_observability(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        data_agent_service.RetrieveAgentOpsObservabilityRequest,
+        dict,
+    ],
+)
+def test_retrieve_agent_ops_observability_rest_call_success(request_type):
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse(
+            telemetry_enabled=True,
+            bigquery_enabled=True,
+            cloud_trace_enabled=True,
+            cloud_monitoring_enabled=True,
+            cloud_logging_enabled=True,
+            bqaa_enabled=True,
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.retrieve_agent_ops_observability(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, data_agent_service.RetrieveAgentOpsObservabilityResponse
+    )
+    assert response.telemetry_enabled is True
+    assert response.bigquery_enabled is True
+    assert response.cloud_trace_enabled is True
+    assert response.cloud_monitoring_enabled is True
+    assert response.cloud_logging_enabled is True
+    assert response.bqaa_enabled is True
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_retrieve_agent_ops_observability_rest_interceptors(null_interceptor):
+    transport = transports.DataAgentServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.DataAgentServiceRestInterceptor(),
+    )
+    client = DataAgentServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.DataAgentServiceRestInterceptor,
+            "post_retrieve_agent_ops_observability",
+        ) as post,
+        mock.patch.object(
+            transports.DataAgentServiceRestInterceptor,
+            "post_retrieve_agent_ops_observability_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.DataAgentServiceRestInterceptor,
+            "pre_retrieve_agent_ops_observability",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = data_agent_service.RetrieveAgentOpsObservabilityRequest.pb(
+            data_agent_service.RetrieveAgentOpsObservabilityRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse.to_json(
+            data_agent_service.RetrieveAgentOpsObservabilityResponse()
+        )
+        req.return_value.content = return_value
+
+        request = data_agent_service.RetrieveAgentOpsObservabilityRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = data_agent_service.RetrieveAgentOpsObservabilityResponse()
+        post_with_metadata.return_value = (
+            data_agent_service.RetrieveAgentOpsObservabilityResponse(),
+            metadata,
+        )
+
+        client.retrieve_agent_ops_observability(
             request,
             metadata=[
                 ("key", "val"),
@@ -11635,6 +12884,48 @@ def test_set_iam_policy_empty_call_rest():
         assert args[0] == request_msg
 
 
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_set_agent_ops_observability_empty_call_rest():
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.set_agent_ops_observability), "__call__"
+    ) as call:
+        client.set_agent_ops_observability(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = data_agent_service.SetAgentOpsObservabilityRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_retrieve_agent_ops_observability_empty_call_rest():
+    client = DataAgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.retrieve_agent_ops_observability), "__call__"
+    ) as call:
+        client.retrieve_agent_ops_observability(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = data_agent_service.RetrieveAgentOpsObservabilityRequest()
+        assert args[0] == request_msg
+
+
 def test_data_agent_service_rest_lro_client():
     client = DataAgentServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -11696,6 +12987,8 @@ def test_data_agent_service_base_transport():
         "delete_data_agent_sync",
         "get_iam_policy",
         "set_iam_policy",
+        "set_agent_ops_observability",
+        "retrieve_agent_ops_observability",
         "get_location",
         "list_locations",
         "get_operation",
@@ -12004,6 +13297,12 @@ def test_data_agent_service_client_transport_session_collision(transport_name):
     assert session1 != session2
     session1 = client1.transport.set_iam_policy._session
     session2 = client2.transport.set_iam_policy._session
+    assert session1 != session2
+    session1 = client1.transport.set_agent_ops_observability._session
+    session2 = client2.transport.set_agent_ops_observability._session
+    assert session1 != session2
+    session1 = client1.transport.retrieve_agent_ops_observability._session
+    session2 = client2.transport.retrieve_agent_ops_observability._session
     assert session1 != session2
 
 

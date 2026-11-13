@@ -20,11 +20,10 @@ This is a much faster implementation than the default (in
 """
 
 import cryptography.exceptions
-from cryptography.hazmat import backends
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import padding
 import cryptography.x509
+from cryptography.hazmat import backends
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import padding
 
 from google.auth import _helpers
 from google.auth.crypt import base

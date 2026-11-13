@@ -63,10 +63,10 @@ class AnnotationType(proto.Enum):
 
 
 class Annotation(proto.Message):
-    r"""Output only. Annotations can be associated with the plain-text body
-    of the message or with chips that link to Google Workspace resources
-    like Google Docs or Sheets with ``start_index`` and ``length`` of 0.
-    To add basic formatting to a text message, see `Format text
+    r"""Annotations can be associated with the plain-text body of the
+    message or with chips that link to Google Workspace resources like
+    Google Docs or Sheets with ``start_index`` and ``length`` of 0. To
+    add basic formatting to a text message, see `Format text
     messages <https://developers.google.com/workspace/chat/format-messages>`__.
 
     Example plain-text message body:

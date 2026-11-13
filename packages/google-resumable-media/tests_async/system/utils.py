@@ -16,7 +16,6 @@ import base64
 import hashlib
 import time
 
-
 BUCKET_NAME = "grpm-systest-{}".format(int(1000 * time.time()))
 BUCKET_POST_URL = "https://www.googleapis.com/storage/v1/b/"
 BUCKET_URL = "https://www.googleapis.com/storage/v1/b/{}".format(BUCKET_NAME)

@@ -14,14 +14,14 @@
 
 """Support for downloading media from Google APIs."""
 
-import urllib3.response  # type: ignore
 import http
 
-from google._async_resumable_media import _download
-from google._async_resumable_media import _helpers
+import urllib3.response  # type: ignore
+
+from google._async_resumable_media import _download, _helpers
 from google._async_resumable_media.requests import _request_helpers
-from google.resumable_media import common
 from google.resumable_media import _helpers as sync_helpers
+from google.resumable_media import common
 from google.resumable_media.requests import download
 
 _CHECKSUM_MISMATCH = download._CHECKSUM_MISMATCH

@@ -28,7 +28,10 @@ __protobuf__ = proto.module(
 
 
 class ReportVisibilityEnum(proto.Message):
-    r"""Wrapper message for ReportVisibility enum."""
+    r"""Wrapper message for
+    [ReportVisibility][google.ads.admanager.v1.ReportVisibilityEnum.ReportVisibility].
+
+    """
 
     class ReportVisibility(proto.Enum):
         r"""The visibility of a report.

@@ -15,13 +15,13 @@
 import asyncio
 from unittest.mock import AsyncMock, Mock, patch
 
-from aioresponses import aioresponses  # type: ignore
 import pytest  # type: ignore
 import pytest_asyncio  # type: ignore
+from aioresponses import aioresponses  # type: ignore
 
+import google.auth.aio.transport.aiohttp as auth_aiohttp
 from google.auth import exceptions
 from google.auth.aio import _helpers as _helpers_async
-import google.auth.aio.transport.aiohttp as auth_aiohttp
 
 try:
     import aiohttp  # type: ignore
@@ -198,6 +198,7 @@ class TestRequest:
 
     async def test_request_clone_with_active_session(self):
         import ssl
+
         from aiohttp import BasicAuth, ClientTimeout, TCPConnector
 
         custom_ssl = ssl.create_default_context()

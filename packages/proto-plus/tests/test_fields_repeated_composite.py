@@ -16,7 +16,6 @@ from datetime import timezone
 from enum import Enum
 
 import pytest
-
 from google.protobuf import timestamp_pb2
 
 import proto

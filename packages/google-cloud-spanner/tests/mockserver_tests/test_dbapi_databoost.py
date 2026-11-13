@@ -24,7 +24,6 @@ from google.cloud.spanner_v1 import (
     TypeCode,
 )
 from google.cloud.spanner_v1.types import spanner as spanner_types
-
 from tests.mockserver_tests.mock_server_test_base import (
     MockServerTestBase,
     add_single_result,

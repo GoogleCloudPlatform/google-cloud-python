@@ -40,6 +40,8 @@ def sample_commit_schema():
 
     # Initialize request argument(s)
     schema = pubsub_v1.Schema()
+    schema.compiled_proto_schema.root_message = "root_message_value"
+    schema.compiled_proto_schema.compiled_bytes = b"compiled_bytes_blob"
     schema.name = "name_value"
 
     request = pubsub_v1.CommitSchemaRequest(

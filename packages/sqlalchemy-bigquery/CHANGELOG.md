@@ -8,6 +8,27 @@ Older versions of this project were distributed as [pybigquery][0].
 
 [1]: https://pypi.org/project/sqlalchemy-bigquery/#history
 
+## [1.18.0](https://github.com/googleapis/google-cloud-python/compare/sqlalchemy-bigquery-v1.17.3...sqlalchemy-bigquery-v1.18.0) (2026-11-12)
+
+
+### Features
+
+* **sqlalchemy-bigquery:** support BigQuery SAFE_CAST and SQLAlchemy 2.0 try_cast ([#18953](https://github.com/googleapis/google-cloud-python/issues/18953)) ([931968b](https://github.com/googleapis/google-cloud-python/commit/931968b1629f978175b43ae815659da26da9ac1d))
+* support Python 3.15 ([8fceef4](https://github.com/googleapis/google-cloud-python/commit/8fceef49c523bcc8989abf3b6b82bcf143332d50))
+
+
+### Bug Fixes
+
+* **sqlalchemy-bigquery:** compile func.now() to CURRENT_TIMESTAMP ([#18994](https://github.com/googleapis/google-cloud-python/issues/18994)) ([07df830](https://github.com/googleapis/google-cloud-python/commit/07df830df39418ca91937fe1cb25c19fcc3e950f))
+* **sqlalchemy-bigquery:** restore String bindparam type for GeoAlchemy2 0.21.0 ([#18985](https://github.com/googleapis/google-cloud-python/issues/18985)) ([edc4372](https://github.com/googleapis/google-cloud-python/commit/edc4372a4bb08eab6086e5b4d4bd4e80f68b06c1))
+
+## [1.17.3](https://github.com/googleapis/google-cloud-python/compare/sqlalchemy-bigquery-v1.17.2...sqlalchemy-bigquery-v1.17.3) (2026-10-02)
+
+
+### Performance Improvements
+
+* **sqlalchemy-bigquery:** parallelize compliance tests with worker-partitioned datasets and pytest-xdist ([#18534](https://github.com/googleapis/google-cloud-python/issues/18534)) ([855bbde](https://github.com/googleapis/google-cloud-python/commit/855bbde93ea4a5556d2843a6ea6d2b8ee118ba9a))
+
 ## [1.17.2](https://github.com/googleapis/google-cloud-python/compare/sqlalchemy-bigquery-v1.17.1...sqlalchemy-bigquery-v1.17.2) (2026-08-06)
 
 

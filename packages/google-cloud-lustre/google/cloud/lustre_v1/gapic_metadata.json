@@ -10,9 +10,24 @@
         "grpc": {
           "libraryClient": "LustreClient",
           "rpcs": {
+            "CreateDirectoryPolicy": {
+              "methods": [
+                "create_directory_policy"
+              ]
+            },
             "CreateInstance": {
               "methods": [
                 "create_instance"
+              ]
+            },
+            "CreateMirror": {
+              "methods": [
+                "create_mirror"
+              ]
+            },
+            "DeleteDirectoryPolicy": {
+              "methods": [
+                "delete_directory_policy"
               ]
             },
             "DeleteInstance": {
@@ -20,9 +35,19 @@
                 "delete_instance"
               ]
             },
+            "DeleteMirror": {
+              "methods": [
+                "delete_mirror"
+              ]
+            },
             "ExportData": {
               "methods": [
                 "export_data"
+              ]
+            },
+            "GetDirectoryPolicy": {
+              "methods": [
+                "get_directory_policy"
               ]
             },
             "GetInstance": {
@@ -30,9 +55,19 @@
                 "get_instance"
               ]
             },
+            "GetMirror": {
+              "methods": [
+                "get_mirror"
+              ]
+            },
             "ImportData": {
               "methods": [
                 "import_data"
+              ]
+            },
+            "ListDirectoryPolicies": {
+              "methods": [
+                "list_directory_policies"
               ]
             },
             "ListInstances": {
@@ -40,9 +75,24 @@
                 "list_instances"
               ]
             },
+            "ListMirrors": {
+              "methods": [
+                "list_mirrors"
+              ]
+            },
+            "RescheduleMaintenance": {
+              "methods": [
+                "reschedule_maintenance"
+              ]
+            },
             "UpdateInstance": {
               "methods": [
                 "update_instance"
+              ]
+            },
+            "UpdateMirror": {
+              "methods": [
+                "update_mirror"
               ]
             }
           }
@@ -50,9 +100,24 @@
         "grpc-async": {
           "libraryClient": "LustreAsyncClient",
           "rpcs": {
+            "CreateDirectoryPolicy": {
+              "methods": [
+                "create_directory_policy"
+              ]
+            },
             "CreateInstance": {
               "methods": [
                 "create_instance"
+              ]
+            },
+            "CreateMirror": {
+              "methods": [
+                "create_mirror"
+              ]
+            },
+            "DeleteDirectoryPolicy": {
+              "methods": [
+                "delete_directory_policy"
               ]
             },
             "DeleteInstance": {
@@ -60,9 +125,19 @@
                 "delete_instance"
               ]
             },
+            "DeleteMirror": {
+              "methods": [
+                "delete_mirror"
+              ]
+            },
             "ExportData": {
               "methods": [
                 "export_data"
+              ]
+            },
+            "GetDirectoryPolicy": {
+              "methods": [
+                "get_directory_policy"
               ]
             },
             "GetInstance": {
@@ -70,9 +145,19 @@
                 "get_instance"
               ]
             },
+            "GetMirror": {
+              "methods": [
+                "get_mirror"
+              ]
+            },
             "ImportData": {
               "methods": [
                 "import_data"
+              ]
+            },
+            "ListDirectoryPolicies": {
+              "methods": [
+                "list_directory_policies"
               ]
             },
             "ListInstances": {
@@ -80,9 +165,24 @@
                 "list_instances"
               ]
             },
+            "ListMirrors": {
+              "methods": [
+                "list_mirrors"
+              ]
+            },
+            "RescheduleMaintenance": {
+              "methods": [
+                "reschedule_maintenance"
+              ]
+            },
             "UpdateInstance": {
               "methods": [
                 "update_instance"
+              ]
+            },
+            "UpdateMirror": {
+              "methods": [
+                "update_mirror"
               ]
             }
           }
@@ -90,9 +190,24 @@
         "rest": {
           "libraryClient": "LustreClient",
           "rpcs": {
+            "CreateDirectoryPolicy": {
+              "methods": [
+                "create_directory_policy"
+              ]
+            },
             "CreateInstance": {
               "methods": [
                 "create_instance"
+              ]
+            },
+            "CreateMirror": {
+              "methods": [
+                "create_mirror"
+              ]
+            },
+            "DeleteDirectoryPolicy": {
+              "methods": [
+                "delete_directory_policy"
               ]
             },
             "DeleteInstance": {
@@ -100,9 +215,19 @@
                 "delete_instance"
               ]
             },
+            "DeleteMirror": {
+              "methods": [
+                "delete_mirror"
+              ]
+            },
             "ExportData": {
               "methods": [
                 "export_data"
+              ]
+            },
+            "GetDirectoryPolicy": {
+              "methods": [
+                "get_directory_policy"
               ]
             },
             "GetInstance": {
@@ -110,9 +235,19 @@
                 "get_instance"
               ]
             },
+            "GetMirror": {
+              "methods": [
+                "get_mirror"
+              ]
+            },
             "ImportData": {
               "methods": [
                 "import_data"
+              ]
+            },
+            "ListDirectoryPolicies": {
+              "methods": [
+                "list_directory_policies"
               ]
             },
             "ListInstances": {
@@ -120,9 +255,24 @@
                 "list_instances"
               ]
             },
+            "ListMirrors": {
+              "methods": [
+                "list_mirrors"
+              ]
+            },
+            "RescheduleMaintenance": {
+              "methods": [
+                "reschedule_maintenance"
+              ]
+            },
             "UpdateInstance": {
               "methods": [
                 "update_instance"
+              ]
+            },
+            "UpdateMirror": {
+              "methods": [
+                "update_mirror"
               ]
             }
           }

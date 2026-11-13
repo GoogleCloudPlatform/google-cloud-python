@@ -55,12 +55,8 @@ class TestStreamedResultSetExtra(unittest.IsolatedAsyncioTestCase):
         srs._merge_values([val])
         self.assertEqual(srs._rows[0][0], val)
 
-    def test_to_dict_list(self):
+    async def test_to_dict_list(self):
         # coverage for line 257-267
-        # Note: to_dict_list is SYNCHRONOUS in current streamed.py but uses __iter__
-        # which might fail if not careful.
-        # Wait, streamed.py has @CrossSync.convert(sync_name="__iter__")
-
         iterator = mock.Mock()
         srs = StreamedResultSet(iterator)
         srs._metadata = ResultSetMetadata(
@@ -69,15 +65,8 @@ class TestStreamedResultSetExtra(unittest.IsolatedAsyncioTestCase):
         srs._rows = [["v1"]]
         srs._done = True
 
-        # Mock __iter__ on the class because it's looked up on the class
-        def mock_iter(self):
-            return iter(self._rows)
-
-        with mock.patch.object(
-            StreamedResultSet, "__iter__", new=mock_iter, create=True
-        ):
-            res = srs.to_dict_list()
-            self.assertEqual(res, [{"f1": "v1"}])
+        res = await srs.to_dict_list()
+        self.assertEqual(res, [{"f1": "v1"}])
 
     def test_decode_row_success(self):
         # coverage for line 184-187

@@ -12,3 +12,6 @@ requests==2.33.0
 grpcio==1.59.0
 grpcio-status==1.59.0
 proto-plus==1.26.1
+opentelemetry-api==1.44.0
+opentelemetry-instrumentation-grpc==0.65b0
+opentelemetry-sdk==1.44.0

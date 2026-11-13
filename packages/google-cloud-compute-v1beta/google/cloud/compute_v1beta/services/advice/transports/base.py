@@ -148,6 +148,11 @@ class AdviceTransport(abc.ABC):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.calendar_mode_extension: gapic_v1.method.wrap_method(
+                self.calendar_mode_extension,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.capacity: gapic_v1.method.wrap_method(
                 self.capacity,
                 default_timeout=600.0,
@@ -177,6 +182,18 @@ class AdviceTransport(abc.ABC):
         Union[
             compute.CalendarModeAdviceResponse,
             Awaitable[compute.CalendarModeAdviceResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def calendar_mode_extension(
+        self,
+    ) -> Callable[
+        [compute.CalendarModeExtensionAdviceRpcRequest],
+        Union[
+            compute.CalendarModeExtensionAdviceResponse,
+            Awaitable[compute.CalendarModeExtensionAdviceResponse],
         ],
     ]:
         raise NotImplementedError()

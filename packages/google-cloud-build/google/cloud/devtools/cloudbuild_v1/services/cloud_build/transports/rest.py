@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.devtools.cloudbuild_v1._compat import transcode_request
 from google.cloud.devtools.cloudbuild_v1.types import cloudbuild
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1313,25 +1314,16 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseApproveBuild._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_approve_build(request, metadata)
-            transcoded_request = (
-                _BaseCloudBuildRestTransport._BaseApproveBuild._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseCloudBuildRestTransport._BaseApproveBuild._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudBuildRestTransport._BaseApproveBuild._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseApproveBuild,
+                    "_BaseApproveBuild__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1490,23 +1482,16 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseCancelBuild._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_build(request, metadata)
-            transcoded_request = (
-                _BaseCloudBuildRestTransport._BaseCancelBuild._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudBuildRestTransport._BaseCancelBuild._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudBuildRestTransport._BaseCancelBuild._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseCancelBuild,
+                    "_BaseCancelBuild__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1647,23 +1632,16 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseCreateBuild._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_build(request, metadata)
-            transcoded_request = (
-                _BaseCloudBuildRestTransport._BaseCreateBuild._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudBuildRestTransport._BaseCreateBuild._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudBuildRestTransport._BaseCreateBuild._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseCreateBuild,
+                    "_BaseCreateBuild__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1802,21 +1780,18 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseCreateBuildTrigger._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_build_trigger(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBuildRestTransport._BaseCreateBuildTrigger._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudBuildRestTransport._BaseCreateBuildTrigger._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBuildRestTransport._BaseCreateBuildTrigger._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseCreateBuildTrigger,
+                    "_BaseCreateBuildTrigger__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1957,21 +1932,18 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseCreateWorkerPool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_worker_pool(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBuildRestTransport._BaseCreateWorkerPool._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudBuildRestTransport._BaseCreateWorkerPool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBuildRestTransport._BaseCreateWorkerPool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseCreateWorkerPool,
+                    "_BaseCreateWorkerPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2102,17 +2074,18 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseDeleteBuildTrigger._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_build_trigger(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBuildRestTransport._BaseDeleteBuildTrigger._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBuildRestTransport._BaseDeleteBuildTrigger._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseDeleteBuildTrigger,
+                    "_BaseDeleteBuildTrigger__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2217,17 +2190,18 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseDeleteWorkerPool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_worker_pool(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBuildRestTransport._BaseDeleteWorkerPool._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBuildRestTransport._BaseDeleteWorkerPool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseDeleteWorkerPool,
+                    "_BaseDeleteWorkerPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2382,19 +2356,16 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseGetBuild._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_build(request, metadata)
-            transcoded_request = (
-                _BaseCloudBuildRestTransport._BaseGetBuild._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudBuildRestTransport._BaseGetBuild._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseGetBuild,
+                    "_BaseGetBuild__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2533,17 +2504,18 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseGetBuildTrigger._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_build_trigger(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBuildRestTransport._BaseGetBuildTrigger._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBuildRestTransport._BaseGetBuildTrigger._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseGetBuildTrigger,
+                    "_BaseGetBuildTrigger__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2679,17 +2651,18 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             """
 
             http_options = _BaseCloudBuildRestTransport._BaseGetDefaultServiceAccount._get_http_options()
-
             request, metadata = self._interceptor.pre_get_default_service_account(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBuildRestTransport._BaseGetDefaultServiceAccount._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBuildRestTransport._BaseGetDefaultServiceAccount._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseGetDefaultServiceAccount,
+                    "_BaseGetDefaultServiceAccount__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2842,19 +2815,16 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseGetWorkerPool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_worker_pool(request, metadata)
-            transcoded_request = (
-                _BaseCloudBuildRestTransport._BaseGetWorkerPool._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudBuildRestTransport._BaseGetWorkerPool._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseGetWorkerPool,
+                    "_BaseGetWorkerPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2988,19 +2958,16 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseListBuilds._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_builds(request, metadata)
-            transcoded_request = (
-                _BaseCloudBuildRestTransport._BaseListBuilds._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudBuildRestTransport._BaseListBuilds._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseListBuilds,
+                    "_BaseListBuilds__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3136,17 +3103,18 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseListBuildTriggers._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_build_triggers(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBuildRestTransport._BaseListBuildTriggers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBuildRestTransport._BaseListBuildTriggers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseListBuildTriggers,
+                    "_BaseListBuildTriggers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3284,17 +3252,18 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseListWorkerPools._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_worker_pools(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBuildRestTransport._BaseListWorkerPools._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBuildRestTransport._BaseListWorkerPools._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseListWorkerPools,
+                    "_BaseListWorkerPools__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3435,21 +3404,18 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             """
 
             http_options = _BaseCloudBuildRestTransport._BaseReceiveTriggerWebhook._get_http_options()
-
             request, metadata = self._interceptor.pre_receive_trigger_webhook(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBuildRestTransport._BaseReceiveTriggerWebhook._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudBuildRestTransport._BaseReceiveTriggerWebhook._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBuildRestTransport._BaseReceiveTriggerWebhook._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseReceiveTriggerWebhook,
+                    "_BaseReceiveTriggerWebhook__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3590,23 +3556,16 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseRetryBuild._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_retry_build(request, metadata)
-            transcoded_request = (
-                _BaseCloudBuildRestTransport._BaseRetryBuild._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudBuildRestTransport._BaseRetryBuild._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudBuildRestTransport._BaseRetryBuild._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseRetryBuild,
+                    "_BaseRetryBuild__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3746,21 +3705,18 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseRunBuildTrigger._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_run_build_trigger(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBuildRestTransport._BaseRunBuildTrigger._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudBuildRestTransport._BaseRunBuildTrigger._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBuildRestTransport._BaseRunBuildTrigger._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseRunBuildTrigger,
+                    "_BaseRunBuildTrigger__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3899,21 +3855,18 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseUpdateBuildTrigger._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_build_trigger(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBuildRestTransport._BaseUpdateBuildTrigger._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudBuildRestTransport._BaseUpdateBuildTrigger._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBuildRestTransport._BaseUpdateBuildTrigger._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseUpdateBuildTrigger,
+                    "_BaseUpdateBuildTrigger__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4054,21 +4007,18 @@ class CloudBuildRestTransport(_BaseCloudBuildRestTransport):
             http_options = (
                 _BaseCloudBuildRestTransport._BaseUpdateWorkerPool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_worker_pool(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBuildRestTransport._BaseUpdateWorkerPool._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudBuildRestTransport._BaseUpdateWorkerPool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBuildRestTransport._BaseUpdateWorkerPool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBuildRestTransport._BaseUpdateWorkerPool,
+                    "_BaseUpdateWorkerPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

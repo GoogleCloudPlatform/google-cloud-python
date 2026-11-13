@@ -12,17 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import base64
+import collections.abc
 import re
 
 import sqlalchemy
-from alembic.ddl.base import (
-    ColumnNullable,
-    ColumnType,
-    alter_column,
-    alter_table,
-    format_server_default,
-    format_type,
-)
 from google.api_core.client_options import ClientOptions
 from google.auth.credentials import AnonymousCredentials
 from google.cloud.spanner_v1 import Client, TransactionOptions
@@ -36,7 +29,6 @@ from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.pool import Pool
 from sqlalchemy.sql import elements, expression
 from sqlalchemy.sql.compiler import (
-    OPERATORS,
     RESERVED_WORDS,
     DDLCompiler,
     GenericTypeCompiler,
@@ -44,12 +36,31 @@ from sqlalchemy.sql.compiler import (
     SQLCompiler,
     selectable,
 )
-from sqlalchemy.sql.default_comparator import operator_lookup
-from sqlalchemy.sql.operators import json_getitem_op
+from sqlalchemy.sql.operators import json_path_getitem_op
 
 from google.cloud import spanner_dbapi
 from google.cloud.sqlalchemy_spanner import version as sqlalchemy_spanner_version
 from google.cloud.sqlalchemy_spanner._opentelemetry_tracing import trace_call
+
+# Defensively decouple the Alembic import so the Spanner dialect does not
+# hard-depend on Alembic at runtime. A database dialect does not inherently
+# require a schema migration tool, and consumers using only SQLAlchemy Core
+# or ORM (or managing DDL outside of Alembic) can still import and use the
+# dialect even if Alembic is omitted or unavailable in the environment
+# (see #18584).
+try:
+    from alembic.ddl.base import (
+        ColumnNullable,
+        ColumnType,
+        alter_column,
+        alter_table,
+        format_server_default,
+        format_type,
+    )
+
+    HAS_ALEMBIC_INSTALLED = True
+except ImportError:
+    HAS_ALEMBIC_INSTALLED = False
 
 USING_SQLACLCHEMY_20 = False
 if sqlalchemy.__version__.split(".")[0] == "2":
@@ -72,8 +83,94 @@ def reset_connection(dbapi_conn, connection_record, reset_state=None):
         dbapi_conn.read_only = False
 
 
-# register a method to get a single value of a JSON object
-OPERATORS[json_getitem_op] = operator_lookup["json_getitem_op"]
+_SPANNER_STRING_ESCAPE_TABLE = str.maketrans(
+    {
+        "\\": "\\\\",
+        '"': '\\"',
+        "'": "\\'",
+        "\n": "\\n",
+        "\r": "\\r",
+        "\t": "\\t",
+        **{
+            chr(c): f"\\u{c:04x}"
+            for c in (*range(0x00, 0x20), 0x7F)
+            if chr(c) not in ("\n", "\r", "\t")
+        },
+    }
+)
+
+
+def _escape_json_path_key(key):
+    """Escape a JSON member key for use inside double-quoted GoogleSQL JSONPath.
+
+    GoogleSQL's JSONPath lexer (`kEscKeyLexerStandard`) consumes `\\[^"]` as a
+    two-character pair during tokenization, while `RemoveBackSlashFollowedByChar`
+    only unescapes `\\"`. Doubling backslashes only when immediately preceding
+    `"` or end-of-string preserves interior backslashes while preventing any
+    trailing or quote-adjacent backslash from unescaping a `"` delimiter.
+    """
+    s = str(key)
+    s = re.sub(r'(\\+)(?="|\Z)', r"\g<1>\g<1>", s)
+    return s.replace('"', '\\"')
+
+
+def _escape_spanner_string_literal(value, dialect=None):
+    """Escape a string value as a double-quoted GoogleSQL string literal."""
+    escaped = str(value).translate(_SPANNER_STRING_ESCAPE_TABLE)
+    if dialect is not None and dialect.identifier_preparer._double_percents:
+        escaped = escaped.replace("%", "%%")
+    return f'"{escaped}"'
+
+
+def _is_json_path_sequence(value):
+    """Return True if value is a sequence of JSON path steps (not str/bytes)."""
+    return not isinstance(value, (str, bytes, bytearray)) and isinstance(
+        value, collections.abc.Sequence
+    )
+
+
+def _format_json_path_step(elem):
+    """Format a single JSONPath member key or integer array index step."""
+    if isinstance(elem, int) and not isinstance(elem, bool):
+        return "[%s]" % elem
+    return '."%s"' % _escape_json_path_key(elem)
+
+
+class _FormatTypeMixin:
+    def _format_value(self, value):
+        if _is_json_path_sequence(value):
+            return "$%s" % "".join(_format_json_path_step(elem) for elem in value)
+        return "$%s" % _format_json_path_step(value)
+
+    def bind_processor(self, dialect):
+        super_proc = self.string_bind_processor(dialect)
+
+        def process(value):
+            if value is None:
+                return None
+            formatted = self._format_value(value)
+            if super_proc:
+                formatted = super_proc(formatted)
+            return formatted
+
+        return process
+
+    def literal_processor(self, dialect):
+        def process(value):
+            if value is None:
+                return "NULL"
+            formatted = self._format_value(value)
+            return _escape_spanner_string_literal(formatted, dialect)
+
+        return process
+
+
+class SpannerJSONIndexType(_FormatTypeMixin, types.JSON.JSONIndexType):
+    """Format a JSON index for Spanner JSON_VALUE path."""
+
+
+class SpannerJSONPathType(_FormatTypeMixin, types.JSON.JSONPathType):
+    """Format a JSON path sequence for Spanner JSON_VALUE path."""
 
 
 # PickleType that can be used with Spanner.
@@ -228,6 +325,10 @@ class SpannerExecutionContext(DefaultExecutionContext):
         if request_tag:
             self.cursor.request_tag = request_tag
 
+        timeout = self.execution_options.get("timeout")
+        if timeout is not None:
+            self.cursor.timeout = timeout
+
         ignore_transaction_warnings = self.execution_options.get(
             "ignore_transaction_warnings"
         )
@@ -287,6 +388,34 @@ class SpannerSQLCompiler(SQLCompiler):
         self.tablealiases = {}
         super().__init__(*args, **kwargs)
 
+    def _ensure_where_clause(self, statement):
+        where_criteria = getattr(statement, "_where_criteria", None)
+        where_clause = getattr(statement, "whereclause", None)
+        has_where = bool(where_criteria) or (where_clause is not None)
+        if not has_where:
+            return statement.where(expression.literal_column("1=1"))
+        return statement
+
+    def visit_delete(self, delete_stmt, **kw):
+        """Compile a DELETE statement.
+
+        Cloud Spanner requires a WHERE clause for all DELETE statements.
+        For SQLAlchemy Core/ORM AST delete statements (e.g. sa.delete(table)),
+        automatically inject 'WHERE 1=1' if no WHERE criteria were supplied.
+        """
+        delete_stmt = self._ensure_where_clause(delete_stmt)
+        return super().visit_delete(delete_stmt, **kw)
+
+    def visit_update(self, update_stmt, **kw):
+        """Compile an UPDATE statement.
+
+        Cloud Spanner requires a WHERE clause for all UPDATE statements.
+        For SQLAlchemy Core/ORM AST update statements (e.g. sa.update(table)),
+        automatically inject 'WHERE 1=1' if no WHERE criteria were supplied.
+        """
+        update_stmt = self._ensure_where_clause(update_stmt)
+        return super().visit_update(update_stmt, **kw)
+
     def get_from_hint_text(self, _, text):
         """Return a hint text.
 
@@ -325,52 +454,39 @@ class SpannerSQLCompiler(SQLCompiler):
             binary.right._compiler_dispatch(self, **kw),
         )
 
-    def _generate_generic_binary(self, binary, opstring, eager_grouping=False, **kw):
-        """The method is overriden to process JSON data type cases."""
-        _in_binary = kw.get("_in_binary", False)
+    def _json_value_binary(self, binary, eager_grouping=False, **kw):
+        """Build a parameterized or safely escaped JSON_VALUE() function call."""
+        left_text = self.process(binary.left, eager_grouping=eager_grouping, **kw)
+        right = binary.right
 
-        kw["_in_binary"] = True
-
-        if isinstance(opstring, str):
-            text = (
-                binary.left._compiler_dispatch(
-                    self, eager_grouping=eager_grouping, **kw
+        if isinstance(right, elements.BindParameter):
+            if not isinstance(
+                right.type, (types.JSON.JSONIndexType, types.JSON.JSONPathType)
+            ):
+                right = right._clone(maintain_key=True)
+                right.type = (
+                    SpannerJSONPathType()
+                    if getattr(binary, "operator", None) is json_path_getitem_op
+                    else SpannerJSONIndexType()
                 )
-                + opstring
-                + binary.right._compiler_dispatch(
-                    self, eager_grouping=eager_grouping, **kw
-                )
-            )
-            if _in_binary and eager_grouping:
-                text = "(%s)" % text
+            right_text = self.process(right, eager_grouping=eager_grouping, **kw)
+        elif isinstance(right, elements.ClauseElement):
+            right_text = self.process(right, eager_grouping=eager_grouping, **kw)
         else:
-            # got JSON data
-            right_value = getattr(
-                binary.right, "value", None
-            ) or binary.right._compiler_dispatch(
-                self, eager_grouping=eager_grouping, **kw
+            raw_value = getattr(right, "value", right)
+            right_text = SpannerJSONIndexType().literal_processor(self.dialect)(
+                raw_value
             )
 
-            text = (
-                binary.left._compiler_dispatch(
-                    self, eager_grouping=eager_grouping, **kw
-                )
-                + """, "$."""
-                + str(right_value)
-                + '"'
-            )
-            text = "JSON_VALUE(%s)" % text
+        return "JSON_VALUE(%s, %s)" % (left_text, right_text)
 
-        return text
+    def visit_json_getitem_op_binary(self, binary, operator, **kw):
+        """Build a JSON_VALUE() function call for single-key JSON indexing."""
+        return self._json_value_binary(binary, **kw)
 
     def visit_json_path_getitem_op_binary(self, binary, operator, **kw):
         """Build a JSON_VALUE() function call."""
-        expr = """JSON_VALUE(%s, "$.%s")"""
-
-        return expr % (
-            self.process(binary.left, **kw),
-            self.process(binary.right, **kw),
-        )
+        return self._json_value_binary(binary, **kw)
 
     def render_literal_value(self, value, type_):
         """Render the value of a bind parameter as a quoted literal.
@@ -391,8 +507,28 @@ class SpannerSQLCompiler(SQLCompiler):
             # (e.g. JSON)
             return self.process(elements.Null._instance())
 
-        raw = ["\\", "'", '"', "\n", "\t", "\r"]
-        if isinstance(value, str) and any(single in value for single in raw):
+        if isinstance(type_, (types.JSON.JSONIndexType, types.JSON.JSONPathType)):
+            processor = type_._cached_literal_processor(self.dialect)
+            if processor:
+                return processor(value)
+
+        raw = ("\\", "'", '"', "\n", "\t", "\r")
+        has_ctrl = isinstance(value, str) and any(
+            (ord(ch) < 0x20 and ch not in ("\n", "\t")) or ord(ch) == 0x7F
+            for ch in value
+        )
+        if isinstance(value, str) and (
+            has_ctrl or any(single in value for single in raw)
+        ):
+            if (
+                has_ctrl
+                or '"""' in value
+                or value.endswith('"')
+                or value.endswith("\\")
+            ):
+                return _escape_spanner_string_literal(value, self.dialect)
+            if self.dialect.identifier_preparer._double_percents:
+                value = value.replace("%", "%%")
             value = 'r"""{}"""'.format(value)
             return value
         else:
@@ -440,9 +576,9 @@ class SpannerSQLCompiler(SQLCompiler):
             for c in expression._select_iterables(
                 filter(
                     lambda col: (
-                        not col.dialect_options.get("spanner", {}).get(
-                            "exclude_from_returning", False
-                        )
+                        not (getattr(col, "dialect_options", None) or {})
+                        .get("spanner", {})
+                        .get("exclude_from_returning", False)
                     ),
                     returning_cols,
                 )
@@ -889,6 +1025,10 @@ class SpannerDialect(DefaultDialect):
     execution_ctx_cls = SpannerExecutionContext
     _json_serializer = JsonObject
     _json_deserializer = JsonObject
+    colspecs = {
+        types.JSON.JSONIndexType: SpannerJSONIndexType,
+        types.JSON.JSONPathType: SpannerJSONPathType,
+    }
 
     @classmethod
     def dbapi(cls):
@@ -1882,55 +2022,60 @@ LIMIT 1
             cursor.execute(statement)
 
 
-# Alembic ALTER operation override
-@compiles(ColumnNullable, "spanner+spanner")
-def visit_column_nullable(
-    element: "ColumnNullable", compiler: "SpannerDDLCompiler", **kw
-) -> str:
-    return _format_alter_column(
-        compiler,
-        element.table_name,
-        element.schema,
-        element.column_name,
-        element.existing_type,
-        element.nullable,
-        element.existing_server_default,
-    )
+# Cloud Spanner requires ALTER TABLE ... ALTER COLUMN statements to specify the
+# complete column definition (type, nullability, and default expression), whereas
+# Alembic's default DDL compiler emits partial clauses (e.g., only SET NOT NULL
+# or TYPE). Because the @compiles decorators reference Alembic's ColumnNullable
+# and ColumnType classes at module import time, we only register these overrides
+# when Alembic is available in the environment.
+if HAS_ALEMBIC_INSTALLED:
+    # Alembic ALTER operation override
+    @compiles(ColumnNullable, "spanner+spanner")
+    def visit_column_nullable(
+        element: "ColumnNullable", compiler: "SpannerDDLCompiler", **kw
+    ) -> str:
+        return _format_alter_column(
+            compiler,
+            element.table_name,
+            element.schema,
+            element.column_name,
+            element.existing_type,
+            element.nullable,
+            element.existing_server_default,
+        )
 
+    # Alembic ALTER operation override
+    @compiles(ColumnType, "spanner+spanner")
+    def visit_column_type(
+        element: "ColumnType", compiler: "SpannerDDLCompiler", **kw
+    ) -> str:
+        return _format_alter_column(
+            compiler,
+            element.table_name,
+            element.schema,
+            element.column_name,
+            element.type_,
+            element.existing_nullable,
+            element.existing_server_default,
+        )
 
-# Alembic ALTER operation override
-@compiles(ColumnType, "spanner+spanner")
-def visit_column_type(
-    element: "ColumnType", compiler: "SpannerDDLCompiler", **kw
-) -> str:
-    return _format_alter_column(
-        compiler,
-        element.table_name,
-        element.schema,
-        element.column_name,
-        element.type_,
-        element.existing_nullable,
-        element.existing_server_default,
-    )
-
-
-def _format_alter_column(
-    compiler, table_name, schema, column_name, type_, nullable, server_default
-):
-    # Older versions of SQLAlchemy pass in a boolean to indicate whether there
-    # is an existing DEFAULT constraint, instead of the actual DEFAULT constraint
-    # expression. In those cases, we do not want to explicitly include the DEFAULT
-    # constraint in the expression that is generated here.
-    if isinstance(server_default, bool):
-        server_default = None
-    return "%s %s %s%s%s" % (
-        alter_table(compiler, table_name, schema),
-        alter_column(compiler, column_name),
-        format_type(compiler, type_),
-        "" if nullable else " NOT NULL",
-        (
-            ""
-            if server_default is None
-            else f" DEFAULT {format_server_default(compiler, server_default)}"
-        ),
-    )
+    def _format_alter_column(
+        compiler, table_name, schema, column_name, type_, nullable, server_default
+    ):
+        # Older versions of SQLAlchemy pass in a boolean to indicate whether there
+        # is an existing DEFAULT constraint, instead of the actual DEFAULT constraint
+        # expression. In those cases, we do not want to explicitly include the DEFAULT
+        # constraint in the expression that is generated here.
+        if isinstance(server_default, bool):
+            server_default = None
+        return "%s %s %s%s%s" % (
+            alter_table(compiler, table_name, schema),
+            alter_column(compiler, column_name),
+            format_type(compiler, type_),
+            "" if nullable else " NOT NULL",
+            (
+                ""
+                if server_default is None
+                else f" DEFAULT {format_server_default(compiler, server_default)}"
+            ),
+        )

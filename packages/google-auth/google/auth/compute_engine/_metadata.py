@@ -27,14 +27,16 @@ from urllib.parse import urljoin
 
 import requests
 
-from google.auth import _helpers
-from google.auth import environment_vars
-from google.auth import exceptions
-from google.auth import metrics
-from google.auth import transport
+from google.auth import (
+    _agent_identity_utils,
+    _helpers,
+    environment_vars,
+    exceptions,
+    metrics,
+    transport,
+)
 from google.auth._exponential_backoff import ExponentialBackoff
 from google.auth.compute_engine import _mtls
-
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -255,6 +257,8 @@ def get(
     headers=None,
     return_none_for_not_found_error=False,
     timeout=_METADATA_DEFAULT_TIMEOUT,
+    method="GET",
+    body=None,
 ):
     """Fetch a resource from the metadata server.
 
@@ -276,6 +280,8 @@ def get(
         return_none_for_not_found_error (Optional[bool]): If True, returns None
             for 404 error instead of throwing an exception.
         timeout (int): How long to wait, in seconds for the metadata server to respond.
+        method (str): The HTTP method to use for the request. Defaults to "GET".
+        body (Optional[bytes]): The HTTP request body payload to send. Defaults to None.
 
     Returns:
         Union[Mapping, str]: If the metadata server returns JSON, a mapping of
@@ -288,8 +294,12 @@ def get(
         google.auth.exceptions.MutualTLSChannelError: if using mtls and the environment
             configuration is invalid for mTLS (for example, the metadata host
             has been overridden in strict mTLS mode).
+        ValueError: if a request body is specified with the GET method.
 
     """
+    if body is not None and method.upper() == "GET":
+        raise ValueError("Request body cannot be specified with GET method.")
+
     use_mtls = _mtls.should_use_mds_mtls()
     # Prepare the request object for mTLS if needed.
     # This will create a new request object with the mTLS session.
@@ -319,9 +329,15 @@ def get(
     last_exception = None
     for attempt in backoff:
         try:
-            response = request(
-                url=url, method="GET", headers=headers_to_use, timeout=timeout
-            )
+            kwargs = {
+                "url": url,
+                "method": method,
+                "headers": headers_to_use,
+                "timeout": timeout,
+            }
+            if body is not None:
+                kwargs["body"] = body
+            response = request(**kwargs)
             if response.status in transport.DEFAULT_RETRYABLE_STATUS_CODES:
                 _LOGGER.warning(
                     "Compute Engine Metadata server unavailable on "
@@ -465,6 +481,40 @@ def get_service_account_info(request, service_account="default"):
     return get(request, path, params={"recursive": "true"})
 
 
+def _build_token_request_options(metrics_header_value, bind_token=True):
+    """Returns (method, body, headers) for a metadata server token request.
+
+    Defaults to a standard GET request with the x-goog-api-client metrics header.
+    If ``bind_token`` is ``True``, upgrades to a POST request with a JSON
+    certificate_chain body and Content-Type header if an Agent Identity
+    certificate is present and bound tokens are enabled.
+
+    Args:
+        metrics_header_value (str): Value for the x-goog-api-client header.
+        bind_token (bool): Whether to bind the token to the Agent Identity
+            certificate. Defaults to ``True``. If ``False``, returns a ``GET``
+            request without reading the certificate. If ``True``, requests a
+            bound token via ``POST`` when a valid Agent Identity certificate is
+            present and token binding is enabled.
+
+    Returns:
+        Tuple[str, Optional[bytes], Mapping[str, str]]: A tuple of
+            (HTTP method, request body bytes, request headers).
+    """
+    headers = {metrics.API_CLIENT_HEADER: metrics_header_value}
+    if not bind_token:
+        return "GET", None, headers
+
+    cert, cert_bytes = _agent_identity_utils.get_agent_identity_certificate_and_bytes()
+    if cert and _agent_identity_utils.should_request_bound_token(cert):
+        headers["Content-Type"] = "application/json"
+        body = json.dumps({"certificate_chain": cert_bytes.decode("utf-8")}).encode(
+            "utf-8"
+        )
+        return "POST", body, headers
+    return "GET", None, headers
+
+
 def get_service_account_token(request, service_account="default", scopes=None):
     """Get the OAuth 2.0 access token for a service account.
 
@@ -483,26 +533,20 @@ def get_service_account_token(request, service_account="default", scopes=None):
         google.auth.exceptions.TransportError: if an error occurred while
             retrieving metadata.
     """
-    from google.auth import _agent_identity_utils
-
     params = {}
     if scopes:
         if not isinstance(scopes, str):
             scopes = ",".join(scopes)
         params["scopes"] = scopes
 
-    cert = _agent_identity_utils.get_and_parse_agent_identity_certificate()
-    if cert:
-        if _agent_identity_utils.should_request_bound_token(cert):
-            fingerprint = _agent_identity_utils.calculate_certificate_fingerprint(cert)
-            params["bindCertificateFingerprint"] = fingerprint
-
-    metrics_header = {
-        metrics.API_CLIENT_HEADER: metrics.token_request_access_token_mds()
-    }
+    method, body, headers = _build_token_request_options(
+        metrics.token_request_access_token_mds()
+    )
 
     path = "instance/service-accounts/{0}/token".format(service_account)
-    token_json = get(request, path, params=params, headers=metrics_header)
+    token_json = get(
+        request, path, params=params, headers=headers, method=method, body=body
+    )
     token_expiry = _helpers.utcnow() + datetime.timedelta(
         seconds=token_json["expires_in"]
     )

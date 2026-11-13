@@ -29,7 +29,7 @@ __protobuf__ = proto.module(
 
 class CdnSecurityPolicyTypeEnum(proto.Message):
     r"""Wrapper message for
-    [CdnSecurityPolicy][google.ads.admanager.v1.CdnSecurityPolicy]
+    [CdnSecurityPolicyType][google.ads.admanager.v1.CdnSecurityPolicyTypeEnum.CdnSecurityPolicyType]
 
     """
 

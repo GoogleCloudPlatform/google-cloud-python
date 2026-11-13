@@ -291,6 +291,10 @@ class Client(ClientWithProject):
     def table_admin_client(self):
         """Getter for the gRPC stub used for the Table Admin API.
 
+        .. deprecated:: 2.30.0
+            Use :class:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -323,6 +327,10 @@ class Client(ClientWithProject):
     @property
     def instance_admin_client(self):
         """Getter for the gRPC stub used for the Table Admin API.
+
+        .. deprecated:: 2.30.0
+            Use :class:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient`
+            instead.
 
         For example:
 
@@ -423,6 +431,11 @@ class Client(ClientWithProject):
     def list_instances(self):
         """List instances owned by the project.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.list_instances`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -445,6 +458,11 @@ class Client(ClientWithProject):
 
     def list_clusters(self):
         """List the clusters in the project.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.list_clusters`
+            instead.
 
         For example:
 

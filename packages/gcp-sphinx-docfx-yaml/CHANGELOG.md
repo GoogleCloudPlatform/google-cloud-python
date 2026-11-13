@@ -4,6 +4,34 @@
 
 [1]: https://pypi.org/project/gcp-sphinx-docfx-yaml/#history
 
+## [3.4.1](https://github.com/googleapis/google-cloud-python/compare/gcp-sphinx-docfx-yaml-v3.4.0...gcp-sphinx-docfx-yaml-v3.4.1) (2026-11-05)
+
+
+### Documentation
+
+* fix typos ([#18979](https://github.com/googleapis/google-cloud-python/issues/18979)) ([5c8baeb](https://github.com/googleapis/google-cloud-python/commit/5c8baeb753c29e5bf00428a4471d530179b50649))
+
+## [3.4.0](https://github.com/googleapis/google-cloud-python/compare/gcp-sphinx-docfx-yaml-v3.3.3...gcp-sphinx-docfx-yaml-v3.4.0) (2026-10-15)
+
+
+### Features
+
+* **gcp-sphinx-docfx-yaml:** optimize performance ([#18588](https://github.com/googleapis/google-cloud-python/issues/18588)) ([cf1a0e5](https://github.com/googleapis/google-cloud-python/commit/cf1a0e575932f1670c1714c0aa6018955292015b))
+
+## [3.3.3](https://github.com/googleapis/google-cloud-python/compare/gcp-sphinx-docfx-yaml-v3.3.2...gcp-sphinx-docfx-yaml-v3.3.3) (2026-10-01)
+
+
+### Bug Fixes
+
+* **ci:** fix docfx and db-dtypes pandas compat ([#18512](https://github.com/googleapis/google-cloud-python/issues/18512)) ([5d57b25](https://github.com/googleapis/google-cloud-python/commit/5d57b255271ed43274286cb65a9f6e52ee56875a))
+
+## [3.3.2](https://github.com/googleapis/google-cloud-python/compare/gcp-sphinx-docfx-yaml-v3.3.1...gcp-sphinx-docfx-yaml-v3.3.2) (2026-08-21)
+
+
+### Documentation
+
+* **handwritten:** centralize CONTRIBUTING.rst pointers ([#17642](https://github.com/googleapis/google-cloud-python/issues/17642)) ([23b9499](https://github.com/googleapis/google-cloud-python/commit/23b94994bd5251493b81d91657d1f79a5d3c4b97))
+
 ## [3.3.1](https://github.com/googleapis/google-cloud-python/compare/gcp-sphinx-docfx-yaml-v3.3.0...gcp-sphinx-docfx-yaml-v3.3.1) (2026-08-06)
 
 

@@ -29,7 +29,6 @@ token exchange endpoint following the `OAuth 2.0 Token Exchange`_ spec.
 
 import abc
 import copy
-from dataclasses import dataclass
 import datetime
 import functools
 import io
@@ -37,17 +36,18 @@ import json
 import logging
 import re
 import threading
-from typing import Optional, TYPE_CHECKING
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Optional
 
-
-from google.auth import _helpers
-from google.auth import _regional_access_boundary_utils
-from google.auth import credentials
-from google.auth import exceptions
-from google.auth import impersonated_credentials
-from google.auth import metrics
-from google.oauth2 import sts
-from google.oauth2 import utils
+from google.auth import (
+    _helpers,
+    _regional_access_boundary_utils,
+    credentials,
+    exceptions,
+    impersonated_credentials,
+    metrics,
+)
+from google.oauth2 import sts, utils
 
 if TYPE_CHECKING:  # pragma: NO COVER
     import google.auth.transport
@@ -536,7 +536,8 @@ class Credentials(
             self.expiry = now + lifetime
 
     def _build_regional_access_boundary_lookup_url(
-        self, request: "Optional[google.auth.transport.Request]" = None  # noqa: F821
+        self,
+        request: "Optional[google.auth.transport.Request]" = None,  # noqa: F821
     ):
         """Builds and returns the URL for the Regional Access Boundary lookup API."""
         if getattr(self, "_impersonated_credentials", None):
@@ -746,7 +747,7 @@ class Credentials(
                 "universe_domain", credentials.DEFAULT_UNIVERSE_DOMAIN
             ),
             trust_boundary=info.get("trust_boundary"),
-            **kwargs
+            **kwargs,
         )
 
     @classmethod

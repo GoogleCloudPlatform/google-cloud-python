@@ -738,6 +738,235 @@
         }
       }
     },
+    "FeedsService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "FeedsServiceClient",
+          "rpcs": {
+            "CreateFeed": {
+              "methods": [
+                "create_feed"
+              ]
+            },
+            "DeleteFeed": {
+              "methods": [
+                "delete_feed"
+              ]
+            },
+            "DisableFeed": {
+              "methods": [
+                "disable_feed"
+              ]
+            },
+            "EnableFeed": {
+              "methods": [
+                "enable_feed"
+              ]
+            },
+            "FetchServiceAccountForCustomer": {
+              "methods": [
+                "fetch_service_account_for_customer"
+              ]
+            },
+            "GenerateSecret": {
+              "methods": [
+                "generate_secret"
+              ]
+            },
+            "GetFeed": {
+              "methods": [
+                "get_feed"
+              ]
+            },
+            "GetFeedPack": {
+              "methods": [
+                "get_feed_pack"
+              ]
+            },
+            "ImportPushLogs": {
+              "methods": [
+                "import_push_logs"
+              ]
+            },
+            "ListFeedPacks": {
+              "methods": [
+                "list_feed_packs"
+              ]
+            },
+            "ListFeedSourceTypeSchemas": {
+              "methods": [
+                "list_feed_source_type_schemas"
+              ]
+            },
+            "ListFeeds": {
+              "methods": [
+                "list_feeds"
+              ]
+            },
+            "ListLogTypeSchemas": {
+              "methods": [
+                "list_log_type_schemas"
+              ]
+            },
+            "UpdateFeed": {
+              "methods": [
+                "update_feed"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "FeedsServiceAsyncClient",
+          "rpcs": {
+            "CreateFeed": {
+              "methods": [
+                "create_feed"
+              ]
+            },
+            "DeleteFeed": {
+              "methods": [
+                "delete_feed"
+              ]
+            },
+            "DisableFeed": {
+              "methods": [
+                "disable_feed"
+              ]
+            },
+            "EnableFeed": {
+              "methods": [
+                "enable_feed"
+              ]
+            },
+            "FetchServiceAccountForCustomer": {
+              "methods": [
+                "fetch_service_account_for_customer"
+              ]
+            },
+            "GenerateSecret": {
+              "methods": [
+                "generate_secret"
+              ]
+            },
+            "GetFeed": {
+              "methods": [
+                "get_feed"
+              ]
+            },
+            "GetFeedPack": {
+              "methods": [
+                "get_feed_pack"
+              ]
+            },
+            "ImportPushLogs": {
+              "methods": [
+                "import_push_logs"
+              ]
+            },
+            "ListFeedPacks": {
+              "methods": [
+                "list_feed_packs"
+              ]
+            },
+            "ListFeedSourceTypeSchemas": {
+              "methods": [
+                "list_feed_source_type_schemas"
+              ]
+            },
+            "ListFeeds": {
+              "methods": [
+                "list_feeds"
+              ]
+            },
+            "ListLogTypeSchemas": {
+              "methods": [
+                "list_log_type_schemas"
+              ]
+            },
+            "UpdateFeed": {
+              "methods": [
+                "update_feed"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "FeedsServiceClient",
+          "rpcs": {
+            "CreateFeed": {
+              "methods": [
+                "create_feed"
+              ]
+            },
+            "DeleteFeed": {
+              "methods": [
+                "delete_feed"
+              ]
+            },
+            "DisableFeed": {
+              "methods": [
+                "disable_feed"
+              ]
+            },
+            "EnableFeed": {
+              "methods": [
+                "enable_feed"
+              ]
+            },
+            "FetchServiceAccountForCustomer": {
+              "methods": [
+                "fetch_service_account_for_customer"
+              ]
+            },
+            "GenerateSecret": {
+              "methods": [
+                "generate_secret"
+              ]
+            },
+            "GetFeed": {
+              "methods": [
+                "get_feed"
+              ]
+            },
+            "GetFeedPack": {
+              "methods": [
+                "get_feed_pack"
+              ]
+            },
+            "ImportPushLogs": {
+              "methods": [
+                "import_push_logs"
+              ]
+            },
+            "ListFeedPacks": {
+              "methods": [
+                "list_feed_packs"
+              ]
+            },
+            "ListFeedSourceTypeSchemas": {
+              "methods": [
+                "list_feed_source_type_schemas"
+              ]
+            },
+            "ListFeeds": {
+              "methods": [
+                "list_feeds"
+              ]
+            },
+            "ListLogTypeSchemas": {
+              "methods": [
+                "list_log_type_schemas"
+              ]
+            },
+            "UpdateFeed": {
+              "methods": [
+                "update_feed"
+              ]
+            }
+          }
+        }
+      }
+    },
     "FindingsRefinementService": {
       "clients": {
         "grpc": {

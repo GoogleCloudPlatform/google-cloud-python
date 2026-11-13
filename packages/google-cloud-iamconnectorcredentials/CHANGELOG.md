@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-iamconnectorcredentials/#history
 
+## [0.1.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-iamconnectorcredentials-v0.1.1...google-cloud-iamconnectorcredentials-v0.1.2) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [0.1.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-iamconnectorcredentials-v0.1.0...google-cloud-iamconnectorcredentials-v0.1.1) (2026-06-22)
 
 

@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.css_v1._compat import transcode_request
 from google.shopping.css_v1.types import accounts
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -392,15 +393,16 @@ class AccountsServiceRestTransport(_BaseAccountsServiceRestTransport):
             http_options = (
                 _BaseAccountsServiceRestTransport._BaseGetAccount._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_account(request, metadata)
-            transcoded_request = _BaseAccountsServiceRestTransport._BaseGetAccount._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccountsServiceRestTransport._BaseGetAccount._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccountsServiceRestTransport._BaseGetAccount,
+                    "_BaseGetAccount__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -536,17 +538,18 @@ class AccountsServiceRestTransport(_BaseAccountsServiceRestTransport):
             """
 
             http_options = _BaseAccountsServiceRestTransport._BaseListChildAccounts._get_http_options()
-
             request, metadata = self._interceptor.pre_list_child_accounts(
                 request, metadata
             )
-            transcoded_request = _BaseAccountsServiceRestTransport._BaseListChildAccounts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccountsServiceRestTransport._BaseListChildAccounts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccountsServiceRestTransport._BaseListChildAccounts,
+                    "_BaseListChildAccounts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -685,19 +688,16 @@ class AccountsServiceRestTransport(_BaseAccountsServiceRestTransport):
             http_options = (
                 _BaseAccountsServiceRestTransport._BaseUpdateLabels._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_labels(request, metadata)
-            transcoded_request = _BaseAccountsServiceRestTransport._BaseUpdateLabels._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAccountsServiceRestTransport._BaseUpdateLabels._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccountsServiceRestTransport._BaseUpdateLabels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccountsServiceRestTransport._BaseUpdateLabels,
+                    "_BaseUpdateLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_productstudio_v1alpha._compat import transcode_request
 from google.shopping.merchant_productstudio_v1alpha.types import textsuggestions
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -296,21 +297,18 @@ class TextSuggestionsServiceRestTransport(_BaseTextSuggestionsServiceRestTranspo
             """
 
             http_options = _BaseTextSuggestionsServiceRestTransport._BaseGenerateProductTextSuggestions._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_product_text_suggestions(
                 request, metadata
             )
-            transcoded_request = _BaseTextSuggestionsServiceRestTransport._BaseGenerateProductTextSuggestions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTextSuggestionsServiceRestTransport._BaseGenerateProductTextSuggestions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTextSuggestionsServiceRestTransport._BaseGenerateProductTextSuggestions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTextSuggestionsServiceRestTransport._BaseGenerateProductTextSuggestions,
+                    "_BaseGenerateProductTextSuggestions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-eventarc-publishing",
-    "version": "0.10.1"
+    "version": "0.10.2"
   },
   "snippets": [
     {

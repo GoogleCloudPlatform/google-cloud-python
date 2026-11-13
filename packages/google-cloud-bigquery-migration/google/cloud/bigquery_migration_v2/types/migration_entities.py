@@ -40,6 +40,8 @@ __protobuf__ = proto.module(
         "MigrationSubtask",
         "MigrationTaskResult",
         "TranslationTaskResult",
+        "TaskOutput",
+        "LineageOutput",
     },
 )
 
@@ -465,6 +467,9 @@ class MigrationTaskResult(proto.Message):
             Details specific to translation task types.
 
             This field is a member of `oneof`_ ``details``.
+        task_outputs (MutableMapping[str, google.cloud.bigquery_migration_v2.types.TaskOutput]):
+            The map of task output types to the task
+            outputs, e.g. "LINEAGE".
     """
 
     translation_task_result: "TranslationTaskResult" = proto.Field(
@@ -472,6 +477,12 @@ class MigrationTaskResult(proto.Message):
         number=2,
         oneof="details",
         message="TranslationTaskResult",
+    )
+    task_outputs: MutableMapping[str, "TaskOutput"] = proto.MapField(
+        proto.STRING,
+        proto.MESSAGE,
+        number=3,
+        message="TaskOutput",
     )
 
 
@@ -506,6 +517,262 @@ class TranslationTaskResult(proto.Message):
     console_uri: str = proto.Field(
         proto.STRING,
         number=3,
+    )
+
+
+class TaskOutput(proto.Message):
+    r"""The task output for a task type including the status and any
+    errors.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        lineage_output (google.cloud.bigquery_migration_v2.types.LineageOutput):
+            The output of the task with output type
+            "LINEAGE".
+
+            This field is a member of `oneof`_ ``output``.
+        state (google.cloud.bigquery_migration_v2.types.TaskOutput.State):
+            Output only. The current state of the task
+            output.
+        processing_error (google.rpc.error_details_pb2.ErrorInfo):
+            An explanation that may be populated when the
+            task output is in FAILED state.
+    """
+
+    class State(proto.Enum):
+        r"""Possible task output states.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Task output state is unspecified.
+            PENDING (1):
+                Task output is pending.
+            SUCCEEDED (2):
+                Task output is succeeded.
+            FAILED (3):
+                Task output is failed. This does not mean
+                that there is no useful information in the
+                output; partial outputs or failure details may
+                be available.
+        """
+
+        STATE_UNSPECIFIED = 0
+        PENDING = 1
+        SUCCEEDED = 2
+        FAILED = 3
+
+    lineage_output: "LineageOutput" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="output",
+        message="LineageOutput",
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum=State,
+    )
+    processing_error: error_details_pb2.ErrorInfo = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=error_details_pb2.ErrorInfo,
+    )
+
+
+class LineageOutput(proto.Message):
+    r"""The output of a task with output type "LINEAGE".
+
+    Actual generated lineage can be queried separately (see
+    [webapp_uri][google.cloud.bigquery.migration.v2.LineageOutput.webapp_uri]),
+    this message contains only metadata: processing status, errors, etc.
+
+    Attributes:
+        webapp_uri (str):
+            The URI of the webapp that visualizes the lineage. The user
+            needs the
+            ``bigquerymigration.googleapis.com/lineageDbs.query`` IAM
+            permission to use the webapp.
+        recognized_inputs (MutableSequence[google.cloud.bigquery_migration_v2.types.LineageOutput.RecognizedInput]):
+            Output only. Recognized lineage inputs.
+
+            All inputs are processed only if the task succeeds and all
+            work is in state
+            `SUCCEEDED <ProgressReport.WorkSummary.State.SUCCEEDED>`__
+            (in particular, nothing is
+            `SKIPPED <ProgressReport.WorkSummary.State.SKIPPED>`__).
+
+            Even with all inputs processed successfully, there may be
+            transpiler errors present leading to inaccurate lineage.
+        processing_progress_reports (MutableSequence[google.cloud.bigquery_migration_v2.types.LineageOutput.ProgressReport]):
+            Output only. Work processing progress reports
+            broken up by processing stage.
+    """
+
+    class RecognizedInput(proto.Message):
+        r"""Information about lineage input of the given type that
+        lineage generation recognized.
+
+        If you expected to process more of the given input, verify your
+        input was uploaded and is in the correct format and the request
+        to generate lineage correctly specified the input location.
+
+        Attributes:
+            type_ (google.cloud.bigquery_migration_v2.types.LineageOutput.RecognizedInput.Type):
+                Output only. The type of the input.
+            uncompressed_size_bytes (int):
+                Output only. The uncompressed size of the
+                recognized input of the given type.
+        """
+
+        class Type(proto.Enum):
+            r"""Input type recognized by the lineage processing.
+
+            Values:
+                TYPE_UNSPECIFIED (0):
+                    The type is not specified.
+                METADATA (1):
+                    The input is metadata.
+                QUERY_LOG (2):
+                    The input is a query log.
+                SCRIPT (3):
+                    The input is a SQL script.
+            """
+
+            TYPE_UNSPECIFIED = 0
+            METADATA = 1
+            QUERY_LOG = 2
+            SCRIPT = 3
+
+        type_: "LineageOutput.RecognizedInput.Type" = proto.Field(
+            proto.ENUM,
+            number=1,
+            enum="LineageOutput.RecognizedInput.Type",
+        )
+        uncompressed_size_bytes: int = proto.Field(
+            proto.INT64,
+            number=2,
+        )
+
+    class ProgressReport(proto.Message):
+        r"""Breaks down processing progress of work.
+
+        Attributes:
+            processing_stage (google.cloud.bigquery_migration_v2.types.LineageOutput.ProgressReport.ProcessingStage):
+                Output only. The processing stage this
+                progress report describes.
+            work_summaries (MutableSequence[google.cloud.bigquery_migration_v2.types.LineageOutput.ProgressReport.WorkSummary]):
+                Output only. Summaries of work broken up by
+                the state of the work. Each work summary
+                describes how much work is in the given state.
+
+                To get numbers for the total work covered,
+                aggregate the numbers from all summaries.
+        """
+
+        class ProcessingStage(proto.Enum):
+            r"""The processing stage the progress report describes.
+
+            Values:
+                PROCESSING_STAGE_UNSPECIFIED (0):
+                    The stage is not specified.
+                INPUT_INGESTION (1000):
+                    The input ingestion stage.
+                POSTPROCESSING (2000):
+                    The lineage DB postprocessing stage.
+            """
+
+            PROCESSING_STAGE_UNSPECIFIED = 0
+            INPUT_INGESTION = 1000
+            POSTPROCESSING = 2000
+
+        class WorkSummary(proto.Message):
+            r"""Summary of work in the given state.
+
+            Attributes:
+                state (google.cloud.bigquery_migration_v2.types.LineageOutput.ProgressReport.WorkSummary.State):
+                    Output only. The state of the work this
+                    summary describes.
+                size (int):
+                    Output only. Size of the work in the given
+                    State.
+                    Size counts "units of work". Units represent
+                    arbitrary division of work; there's no
+                    expectation each unit takes similar time to
+                    process.
+                comment (str):
+                    Output only. Human-readable comment.
+            """
+
+            class State(proto.Enum):
+                r"""States of work. Each piece of work is in exactly one state.
+                [SUCCEEDED], [FAILED] and [SKIPPED] are terminal states; work in the
+                [IN_PROGRESS] will eventually transition to one of the terminal
+                states.
+
+                Values:
+                    STATE_UNSPECIFIED (0):
+                        The state is not specified.
+                    SUCCEEDED (1):
+                        Work that was processed successfully.
+                    FAILED (2):
+                        Work that failed processing.
+                    IN_PROGRESS (3):
+                        Work that is currently being processed or
+                        queued for processing.
+                    SKIPPED (4):
+                        Work that was recognised as necessary to
+                        fully process inputs but was skipped due to
+                        system limitations.
+                """
+
+                STATE_UNSPECIFIED = 0
+                SUCCEEDED = 1
+                FAILED = 2
+                IN_PROGRESS = 3
+                SKIPPED = 4
+
+            state: "LineageOutput.ProgressReport.WorkSummary.State" = proto.Field(
+                proto.ENUM,
+                number=1,
+                enum="LineageOutput.ProgressReport.WorkSummary.State",
+            )
+            size: int = proto.Field(
+                proto.INT64,
+                number=2,
+            )
+            comment: str = proto.Field(
+                proto.STRING,
+                number=3,
+            )
+
+        processing_stage: "LineageOutput.ProgressReport.ProcessingStage" = proto.Field(
+            proto.ENUM,
+            number=1,
+            enum="LineageOutput.ProgressReport.ProcessingStage",
+        )
+        work_summaries: MutableSequence["LineageOutput.ProgressReport.WorkSummary"] = (
+            proto.RepeatedField(
+                proto.MESSAGE,
+                number=2,
+                message="LineageOutput.ProgressReport.WorkSummary",
+            )
+        )
+
+    webapp_uri: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    recognized_inputs: MutableSequence[RecognizedInput] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message=RecognizedInput,
+    )
+    processing_progress_reports: MutableSequence[ProgressReport] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=3,
+        message=ProgressReport,
     )
 
 

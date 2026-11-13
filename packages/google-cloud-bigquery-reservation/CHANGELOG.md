@@ -4,6 +4,27 @@
 
 [1]: https://pypi.org/project/google-cloud-bigquery-reservation/#history
 
+## [1.28.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-reservation-v1.27.0...google-cloud-bigquery-reservation-v1.28.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [1.27.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-reservation-v1.26.0...google-cloud-bigquery-reservation-v1.27.0) (2026-09-03)
+
+
+### Features
+
+* update googleapis and regenerate ([#18229](https://github.com/googleapis/google-cloud-python/issues/18229)) ([d4f8a57](https://github.com/googleapis/google-cloud-python/commit/d4f8a57abadd282ad95472e77daa59d8fb98cbcf))
+
+## [1.26.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-reservation-v1.25.0...google-cloud-bigquery-reservation-v1.26.0) (2026-08-21)
+
+
+### Features
+
+* update googleapis and regenerate ([#18087](https://github.com/googleapis/google-cloud-python/issues/18087)) ([db1622a](https://github.com/googleapis/google-cloud-python/commit/db1622a9cfac112b40c93842737d7a5deeb3e8bd))
+
 ## [1.25.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-reservation-v1.24.0...google-cloud-bigquery-reservation-v1.25.0) (2026-06-02)
 
 

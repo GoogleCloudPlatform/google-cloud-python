@@ -29,7 +29,9 @@ class Import:
         # Determine if we need to suppress type checking for this import.
         # We do this for protobuf generated files (_pb2) and api_core
         # internals where type information might be missing or incomplete.
-        needs_type_ignore = self.module.endswith("_pb2") or "api_core" in self.package
+        needs_type_ignore = self.module.endswith("_pb2") or (
+            "api_core" in self.package and self.module != "resumable_transfer"
+        )
         if needs_type_ignore:
             # Use 'import absolute.path as module' syntax to prevent Ruff/isort
             # from combining this with other imports. This ensures the

@@ -183,3 +183,118 @@ class Test_connect(unittest.TestCase):
 
         self.assertIsInstance(connection, Connection)
         self.assertTrue(connection.auto_partition_mode)
+
+    def test_connect_omni_with_username_and_password(self, mock_client):
+        from google.cloud.spanner_dbapi import Connection, connect
+        from google.cloud.spanner_v1.omni.credentials import (
+            SpannerOmniCredentials,
+        )
+
+        connection = connect(
+            INSTANCE,
+            DATABASE,
+            instance_type="omni",
+            client_options={"api_endpoint": "omni-host:15000"},
+            username="test_user",
+            password="test_password",
+        )
+
+        self.assertIsInstance(connection, Connection)
+        mock_client.assert_called_once_with(
+            project="default",
+            credentials=mock.ANY,
+            client_info=mock.ANY,
+            route_to_leader_enabled=True,
+            client_options=mock.ANY,
+            use_plain_text=False,
+            ca_certificate=None,
+            client_certificate=None,
+            client_key=None,
+            instance_type="omni",
+        )
+        creds = mock_client.call_args_list[0][1]["credentials"]
+        self.assertIsInstance(creds, SpannerOmniCredentials)
+        self.assertEqual(creds.username, "test_user")
+
+    def test_connect_omni_partial_auth_raises_value_error(self, mock_client):
+        from google.cloud.spanner_dbapi import connect
+
+        with self.assertRaises(ValueError) as ctx:
+            connect(
+                INSTANCE,
+                DATABASE,
+                instance_type="omni",
+                client_options={"api_endpoint": "omni-host:15000"},
+                username="test_user",
+            )
+        self.assertIn(
+            "Both username and password must be specified for Omni authentication",
+            str(ctx.exception),
+        )
+
+        with self.assertRaises(ValueError) as ctx:
+            connect(
+                INSTANCE,
+                DATABASE,
+                instance_type="omni",
+                client_options={"api_endpoint": "omni-host:15000"},
+                password="test_password",
+            )
+        self.assertIn(
+            "Both username and password must be specified for Omni authentication",
+            str(ctx.exception),
+        )
+
+    def test_connect_omni_client_options_variants(self, mock_client):
+        from google.api_core.client_options import ClientOptions
+
+        from google.cloud.spanner_dbapi import connect
+
+        # client_options is None
+        connect(
+            INSTANCE,
+            DATABASE,
+            instance_type="omni",
+            experimental_host="omni-host:15000",
+            client_options=None,
+        )
+
+        # client_options is dict
+        connect(
+            INSTANCE,
+            DATABASE,
+            instance_type="omni",
+            experimental_host="omni-host:15000",
+            client_options={"quota_project_id": "test-project"},
+        )
+
+        # client_options is ClientOptions object with api_endpoint
+        opts_with_ep = ClientOptions(api_endpoint="omni-host:15000")
+        connect(
+            INSTANCE,
+            DATABASE,
+            instance_type="omni",
+            client_options=opts_with_ep,
+        )
+
+        # client_options is ClientOptions object without api_endpoint (using experimental_host)
+        opts_empty_ep = ClientOptions()
+        connect(
+            INSTANCE,
+            DATABASE,
+            instance_type="omni",
+            experimental_host="omni-host:15000",
+            client_options=opts_empty_ep,
+        )
+
+        # Missing host when instance_type='omni' raises ValueError
+        with self.assertRaises(ValueError) as ctx:
+            connect(
+                INSTANCE,
+                DATABASE,
+                instance_type="omni",
+            )
+        self.assertIn(
+            "Host must be set for connecting to Spanner Omni instances",
+            str(ctx.exception),
+        )

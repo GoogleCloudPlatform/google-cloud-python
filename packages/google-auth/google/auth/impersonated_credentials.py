@@ -27,21 +27,22 @@ service account.
 
 import base64
 import copy
-from datetime import datetime
 import http.client as http_client
 import json
 import logging
-from typing import Optional, TYPE_CHECKING
+from datetime import datetime
+from typing import TYPE_CHECKING, Optional
 
-
-from google.auth import _exponential_backoff
-from google.auth import _helpers
-from google.auth import _regional_access_boundary_utils
-from google.auth import credentials
-from google.auth import exceptions
-from google.auth import iam
-from google.auth import jwt
-from google.auth import metrics
+from google.auth import (
+    _exponential_backoff,
+    _helpers,
+    _regional_access_boundary_utils,
+    credentials,
+    exceptions,
+    iam,
+    jwt,
+    metrics,
+)
 from google.oauth2 import _client
 
 if TYPE_CHECKING:  # pragma: NO COVER
@@ -352,7 +353,8 @@ class Credentials(
         )
 
     def _build_regional_access_boundary_lookup_url(
-        self, request: "Optional[google.auth.transport.Request]" = None  # noqa: F821
+        self,
+        request: "Optional[google.auth.transport.Request]" = None,  # noqa: F821
     ):
         """Builds and returns the URL for the Regional Access Boundary lookup API.
 
@@ -569,7 +571,7 @@ class IDTokenCredentials(credentials.CredentialsWithQuotaProject):
 
         if not isinstance(target_credentials, Credentials):
             raise exceptions.GoogleAuthError(
-                "Provided Credential must be " "impersonated_credentials"
+                "Provided Credential must be impersonated_credentials"
             )
         self._target_credentials = target_credentials
         self._target_audience = target_audience

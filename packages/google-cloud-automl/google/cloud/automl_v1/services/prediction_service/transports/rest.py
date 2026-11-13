@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.automl_v1._compat import transcode_request
 from google.cloud.automl_v1.types import prediction_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -410,19 +411,16 @@ class PredictionServiceRestTransport(_BasePredictionServiceRestTransport):
             """
 
             http_options = _BasePredictionServiceRestTransport._BaseBatchPredict._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_predict(request, metadata)
-            transcoded_request = _BasePredictionServiceRestTransport._BaseBatchPredict._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePredictionServiceRestTransport._BaseBatchPredict._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePredictionServiceRestTransport._BaseBatchPredict._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePredictionServiceRestTransport._BaseBatchPredict,
+                    "_BaseBatchPredict__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -561,23 +559,16 @@ class PredictionServiceRestTransport(_BasePredictionServiceRestTransport):
             http_options = (
                 _BasePredictionServiceRestTransport._BasePredict._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_predict(request, metadata)
-            transcoded_request = _BasePredictionServiceRestTransport._BasePredict._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BasePredictionServiceRestTransport._BasePredict._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePredictionServiceRestTransport._BasePredict._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePredictionServiceRestTransport._BasePredict,
+                    "_BasePredict__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

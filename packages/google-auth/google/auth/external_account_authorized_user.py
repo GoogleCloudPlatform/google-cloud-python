@@ -38,15 +38,15 @@ import io
 import json
 import logging
 import re
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
-
-from google.auth import _helpers
-from google.auth import _regional_access_boundary_utils
-from google.auth import credentials
-from google.auth import exceptions
-from google.oauth2 import sts
-from google.oauth2 import utils
+from google.auth import (
+    _helpers,
+    _regional_access_boundary_utils,
+    credentials,
+    exceptions,
+)
+from google.oauth2 import sts, utils
 
 if TYPE_CHECKING:  # pragma: NO COVER
     import google.auth.transport
@@ -317,7 +317,8 @@ class Credentials(
             self._refresh_token = response_data["refresh_token"]
 
     def _build_regional_access_boundary_lookup_url(
-        self, request: "Optional[google.auth.transport.Request]" = None  # noqa: F821
+        self,
+        request: "Optional[google.auth.transport.Request]" = None,  # noqa: F821
     ):
         """Builds and returns the URL for the Regional Access Boundary lookup API.
 
@@ -442,7 +443,7 @@ class Credentials(
                 "universe_domain", credentials.DEFAULT_UNIVERSE_DOMAIN
             ),
             trust_boundary=info.get("trust_boundary"),
-            **kwargs
+            **kwargs,
         )
 
     @classmethod

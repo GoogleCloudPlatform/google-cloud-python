@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-maps-mapsplatformdatasets/#history
 
+## [0.8.1](https://github.com/googleapis/google-cloud-python/compare/google-maps-mapsplatformdatasets-v0.8.0...google-maps-mapsplatformdatasets-v0.8.1) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [0.8.0](https://github.com/googleapis/google-cloud-python/compare/google-maps-mapsplatformdatasets-v0.7.0...google-maps-mapsplatformdatasets-v0.8.0) (2026-06-02)
 
 

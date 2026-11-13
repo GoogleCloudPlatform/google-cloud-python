@@ -54,6 +54,7 @@ from google.apps.chat_v1.types import (
     availability,
     contextual_addon,
     deletion_metadata,
+    elements,
     event_payload,
     group,
     history_state,
@@ -61,6 +62,7 @@ from google.apps.chat_v1.types import (
     matched_url,
     membership,
     message,
+    message_pin,
     reaction,
     section,
     slash_command,
@@ -75,6 +77,7 @@ from google.apps.chat_v1.types import (
 from google.apps.chat_v1.types import availability as gc_availability
 from google.apps.chat_v1.types import membership as gc_membership
 from google.apps.chat_v1.types import message as gc_message
+from google.apps.chat_v1.types import message_pin as gc_message_pin
 from google.apps.chat_v1.types import reaction as gc_reaction
 from google.apps.chat_v1.types import section as gc_section
 from google.apps.chat_v1.types import space as gc_space
@@ -121,6 +124,8 @@ class ChatServiceAsyncClient:
     parse_membership_path = staticmethod(ChatServiceClient.parse_membership_path)
     message_path = staticmethod(ChatServiceClient.message_path)
     parse_message_path = staticmethod(ChatServiceClient.parse_message_path)
+    message_pin_path = staticmethod(ChatServiceClient.message_pin_path)
+    parse_message_pin_path = staticmethod(ChatServiceClient.parse_message_pin_path)
     quoted_message_metadata_path = staticmethod(
         ChatServiceClient.quoted_message_metadata_path
     )
@@ -1592,6 +1597,11 @@ class ChatServiceAsyncClient:
                   ``space.display_name:Project`` searches for messages
                   in the top five spaces that contain the word "Project"
                   in their display names.
+                - ``space.space_type``: The type of the space. Only
+                  supports ``=``. For example,
+                  ``space.space_type="DIRECT_MESSAGE"`` returns only
+                  messages from direct messages. The possible values are
+                  ``DIRECT_MESSAGE``, ``GROUP_CHAT``, and ``SPACE``.
                 - ``attachment``: Supports the operator ``:*`` (has any)
                   to check for the presence of attachments. If
                   ``attachment:*`` is specified, only messages that have
@@ -1616,9 +1626,9 @@ class ChatServiceAsyncClient:
                 - ``is_unread()``: Filters out messages that have been
                   read by the calling user.
 
-                Using the ``space.display_name`` filter requires that
-                the calling credentials include one of the following
-                `authorization
+                Using the ``space.display_name`` or the
+                ``space.space_type`` filters requires that the calling
+                credentials include one of the following `authorization
                 scopes <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
 
                 - ``https://www.googleapis.com/auth/chat.spaces.readonly``
@@ -1663,6 +1673,9 @@ class ChatServiceAsyncClient:
                   ``space.display_name:Project OR space.display_name:Tasks``
                   returns messages that are in spaces with display names
                   containing either ``Project`` or ``Tasks`` or both.
+                - ``space.space_type`` supports only the ``OR``
+                  operator, for example:
+                  ``space.space_type = "DIRECT_MESSAGE" OR space.space_type = "GROUP_CHAT"``.
                 - ``annotations.user_mentions.user.name`` supports the
                   operators ``AND`` and ``OR``, but not a mix of both.
                   For example:
@@ -2885,6 +2898,7 @@ class ChatServiceAsyncClient:
 
                 - ``access_settings.access_permission_settings.discoverSpaceSetting``
                 - ``access_settings.access_permission_settings.joinSpaceSetting``
+                - ``access_settings.access_permission_settings.viewSpaceMembershipSetting``
 
                 ``permission_settings``: Supports changing the
                 `permission
@@ -2901,6 +2915,7 @@ class ChatServiceAsyncClient:
                 - ``permission_settings.manageApps``
                 - ``permission_settings.manageWebhooks``
                 - ``permission_settings.replyMessages``
+                - ``permission_settings.viewSpaceMembership``
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -4336,6 +4351,384 @@ class ChatServiceAsyncClient:
         # and friendly error handling.
         rpc = self._client._transport._wrapped_methods[
             self._client._transport.delete_reaction
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+    async def list_message_pins(
+        self,
+        request: Optional[Union[message_pin.ListMessagePinsRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListMessagePinsAsyncPager:
+        r"""Lists message pins in a space. Users can pin important messages
+        in spaces for easy access. For more information, see `Pin or
+        unpin a conversation in Google
+        Chat <https://support.google.com/chat/answer/15622437>`__.
+
+        Requires `user
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__
+        with one of the following `authorization
+        scopes <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.spaces.pins.readonly``
+        - ``https://www.googleapis.com/auth/chat.spaces.pins``
+        - ``https://www.googleapis.com/auth/chat.spaces.readonly``
+        - ``https://www.googleapis.com/auth/chat.spaces``
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.apps import chat_v1
+
+            async def sample_list_message_pins():
+                # Create a client
+                client = chat_v1.ChatServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = chat_v1.ListMessagePinsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_message_pins(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.apps.chat_v1.types.ListMessagePinsRequest, dict]]):
+                The request object. Request message for listing message
+                pins.
+            parent (:class:`str`):
+                Required. The parent space which owns the collection of
+                pinned items Format: ``spaces/{space}``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.apps.chat_v1.services.chat_service.pagers.ListMessagePinsAsyncPager:
+                Response message for listing message
+                pins.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, message_pin.ListMessagePinsRequest):
+            request = message_pin.ListMessagePinsRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_message_pins
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListMessagePinsAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def create_message_pin(
+        self,
+        request: Optional[Union[gc_message_pin.CreateMessagePinRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        message_pin: Optional[gc_message_pin.MessagePin] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> gc_message_pin.MessagePin:
+        r"""Creates a message pin.
+
+        Requires `user
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__
+        with one of the following `authorization
+        scopes <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.spaces.pins``
+        - ``https://www.googleapis.com/auth/chat.spaces``
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.apps import chat_v1
+
+            async def sample_create_message_pin():
+                # Create a client
+                client = chat_v1.ChatServiceAsyncClient()
+
+                # Initialize request argument(s)
+                message_pin = chat_v1.MessagePin()
+                message_pin.message = "message_value"
+
+                request = chat_v1.CreateMessagePinRequest(
+                    parent="parent_value",
+                    message_pin=message_pin,
+                )
+
+                # Make the request
+                response = await client.create_message_pin(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.apps.chat_v1.types.CreateMessagePinRequest, dict]]):
+                The request object. Request message for creating a
+                message pin.
+            parent (:class:`str`):
+                Required. The parent space in which
+                to create the message pin. Format:
+                spaces/{space}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            message_pin (:class:`google.apps.chat_v1.types.MessagePin`):
+                Required. The MessagePin to create.
+                This corresponds to the ``message_pin`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.apps.chat_v1.types.MessagePin:
+                A pin on a Chat message. For more information see [Pin a
+                   message](https://support.google.com/chat?p=chat-board-hc).
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, message_pin]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, gc_message_pin.CreateMessagePinRequest):
+            request = gc_message_pin.CreateMessagePinRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+        if message_pin is not None:
+            request.message_pin = message_pin
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.create_message_pin
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def delete_message_pin(
+        self,
+        request: Optional[Union[message_pin.DeleteMessagePinRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> None:
+        r"""Deletes a message pin.
+
+        Requires `user
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__
+        with one of the following `authorization
+        scopes <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.spaces.pins``
+        - ``https://www.googleapis.com/auth/chat.spaces``
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.apps import chat_v1
+
+            async def sample_delete_message_pin():
+                # Create a client
+                client = chat_v1.ChatServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = chat_v1.DeleteMessagePinRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                await client.delete_message_pin(request=request)
+
+        Args:
+            request (Optional[Union[google.apps.chat_v1.types.DeleteMessagePinRequest, dict]]):
+                The request object. Request message for deleting a
+                message pin.
+            name (:class:`str`):
+                Required. The resource name of the message pin to
+                remove. Format: spaces/{space}/messagePins/{message_pin}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, message_pin.DeleteMessagePinRequest):
+            request = message_pin.DeleteMessagePinRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.delete_message_pin
         ]
 
         # Certain fields should be provided within the metadata header;
@@ -7470,6 +7863,107 @@ class ChatServiceAsyncClient:
         # and friendly error handling.
         rpc = self._client._transport._wrapped_methods[
             self._client._transport.move_section_item
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def replace_message_cards(
+        self,
+        request: Optional[Union[message.ReplaceMessageCardsRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> message.ReplaceMessageCardsResponse:
+        r"""Replaces the cards included in a message.
+
+        A Chat app can only replace cards on a human-created message if
+        the message already contains cards, and the cards were created
+        by the app.
+
+        If the app replaces the cards with an empty list, the cards are
+        removed. After removing the cards, the app cannot add cards back
+        to the message.
+
+        Requires `app
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-app>`__
+        with the `authorization
+        scope <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.bot``
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.apps import chat_v1
+
+            async def sample_replace_message_cards():
+                # Create a client
+                client = chat_v1.ChatServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = chat_v1.ReplaceMessageCardsRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.replace_message_cards(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.apps.chat_v1.types.ReplaceMessageCardsRequest, dict]]):
+                The request object. Request message for
+                ReplaceMessageCards API method.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.apps.chat_v1.types.ReplaceMessageCardsResponse:
+                Response message for
+                ReplaceMessageCards API.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, message.ReplaceMessageCardsRequest):
+            request = message.ReplaceMessageCardsRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.replace_message_cards
         ]
 
         # Certain fields should be provided within the metadata header;

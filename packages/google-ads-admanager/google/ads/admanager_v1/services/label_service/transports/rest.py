@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import label_messages, label_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -730,21 +731,18 @@ class LabelServiceRestTransport(_BaseLabelServiceRestTransport):
             """
 
             http_options = _BaseLabelServiceRestTransport._BaseBatchActivateLabels._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_activate_labels(
                 request, metadata
             )
-            transcoded_request = _BaseLabelServiceRestTransport._BaseBatchActivateLabels._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLabelServiceRestTransport._BaseBatchActivateLabels._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLabelServiceRestTransport._BaseBatchActivateLabels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLabelServiceRestTransport._BaseBatchActivateLabels,
+                    "_BaseBatchActivateLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -882,21 +880,18 @@ class LabelServiceRestTransport(_BaseLabelServiceRestTransport):
             """
 
             http_options = _BaseLabelServiceRestTransport._BaseBatchCreateLabels._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_labels(
                 request, metadata
             )
-            transcoded_request = _BaseLabelServiceRestTransport._BaseBatchCreateLabels._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLabelServiceRestTransport._BaseBatchCreateLabels._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLabelServiceRestTransport._BaseBatchCreateLabels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLabelServiceRestTransport._BaseBatchCreateLabels,
+                    "_BaseBatchCreateLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1034,21 +1029,18 @@ class LabelServiceRestTransport(_BaseLabelServiceRestTransport):
             """
 
             http_options = _BaseLabelServiceRestTransport._BaseBatchDeactivateLabels._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_deactivate_labels(
                 request, metadata
             )
-            transcoded_request = _BaseLabelServiceRestTransport._BaseBatchDeactivateLabels._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLabelServiceRestTransport._BaseBatchDeactivateLabels._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLabelServiceRestTransport._BaseBatchDeactivateLabels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLabelServiceRestTransport._BaseBatchDeactivateLabels,
+                    "_BaseBatchDeactivateLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1186,21 +1178,18 @@ class LabelServiceRestTransport(_BaseLabelServiceRestTransport):
             """
 
             http_options = _BaseLabelServiceRestTransport._BaseBatchUpdateLabels._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_labels(
                 request, metadata
             )
-            transcoded_request = _BaseLabelServiceRestTransport._BaseBatchUpdateLabels._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLabelServiceRestTransport._BaseBatchUpdateLabels._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLabelServiceRestTransport._BaseBatchUpdateLabels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLabelServiceRestTransport._BaseBatchUpdateLabels,
+                    "_BaseBatchUpdateLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1342,25 +1331,16 @@ class LabelServiceRestTransport(_BaseLabelServiceRestTransport):
             http_options = (
                 _BaseLabelServiceRestTransport._BaseCreateLabel._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_label(request, metadata)
-            transcoded_request = (
-                _BaseLabelServiceRestTransport._BaseCreateLabel._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseLabelServiceRestTransport._BaseCreateLabel._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLabelServiceRestTransport._BaseCreateLabel._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLabelServiceRestTransport._BaseCreateLabel,
+                    "_BaseCreateLabel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1497,19 +1477,16 @@ class LabelServiceRestTransport(_BaseLabelServiceRestTransport):
             http_options = (
                 _BaseLabelServiceRestTransport._BaseGetLabel._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_label(request, metadata)
-            transcoded_request = (
-                _BaseLabelServiceRestTransport._BaseGetLabel._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLabelServiceRestTransport._BaseGetLabel._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLabelServiceRestTransport._BaseGetLabel,
+                    "_BaseGetLabel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1647,19 +1624,16 @@ class LabelServiceRestTransport(_BaseLabelServiceRestTransport):
             http_options = (
                 _BaseLabelServiceRestTransport._BaseListLabels._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_labels(request, metadata)
-            transcoded_request = (
-                _BaseLabelServiceRestTransport._BaseListLabels._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLabelServiceRestTransport._BaseListLabels._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLabelServiceRestTransport._BaseListLabels,
+                    "_BaseListLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1800,25 +1774,16 @@ class LabelServiceRestTransport(_BaseLabelServiceRestTransport):
             http_options = (
                 _BaseLabelServiceRestTransport._BaseUpdateLabel._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_label(request, metadata)
-            transcoded_request = (
-                _BaseLabelServiceRestTransport._BaseUpdateLabel._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseLabelServiceRestTransport._BaseUpdateLabel._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLabelServiceRestTransport._BaseUpdateLabel._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLabelServiceRestTransport._BaseUpdateLabel,
+                    "_BaseUpdateLabel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2031,17 +1996,18 @@ class LabelServiceRestTransport(_BaseLabelServiceRestTransport):
             http_options = (
                 _BaseLabelServiceRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseLabelServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLabelServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLabelServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2148,17 +2114,16 @@ class LabelServiceRestTransport(_BaseLabelServiceRestTransport):
             http_options = (
                 _BaseLabelServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseLabelServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLabelServiceRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLabelServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

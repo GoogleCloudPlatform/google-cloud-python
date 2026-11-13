@@ -4,6 +4,28 @@
 
 [1]: https://pypi.org/project/db-dtypes/#history
 
+## [1.9.0](https://github.com/googleapis/google-cloud-python/compare/db-dtypes-v1.8.0...db-dtypes-v1.9.0) (2026-10-22)
+
+
+### Features
+
+* support Python 3.15 ([8fceef4](https://github.com/googleapis/google-cloud-python/commit/8fceef49c523bcc8989abf3b6b82bcf143332d50))
+
+## [1.8.0](https://github.com/googleapis/google-cloud-python/compare/db-dtypes-v1.7.2...db-dtypes-v1.8.0) (2026-10-15)
+
+
+### Features
+
+* **db-dtypes:** support pandas 3.1 ([#18590](https://github.com/googleapis/google-cloud-python/issues/18590)) ([f18a11e](https://github.com/googleapis/google-cloud-python/commit/f18a11eb4308b9a8889166ea3c1246fb8306a906))
+
+## [1.7.2](https://github.com/googleapis/google-cloud-python/compare/db-dtypes-v1.7.1...db-dtypes-v1.7.2) (2026-10-01)
+
+
+### Bug Fixes
+
+* **ci:** fix docfx and db-dtypes pandas compat ([#18512](https://github.com/googleapis/google-cloud-python/issues/18512)) ([5d57b25](https://github.com/googleapis/google-cloud-python/commit/5d57b255271ed43274286cb65a9f6e52ee56875a))
+* **db-dtypes:** support updated pandas datetime reduction error message ([#18526](https://github.com/googleapis/google-cloud-python/issues/18526)) ([04ef51e](https://github.com/googleapis/google-cloud-python/commit/04ef51e31698462229c1269ad01d7ae06d9a7bb7))
+
 ## [1.7.1](https://github.com/googleapis/google-cloud-python/compare/db-dtypes-v1.7.0...db-dtypes-v1.7.1) (2026-07-07)
 
 

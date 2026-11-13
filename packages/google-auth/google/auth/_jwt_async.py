@@ -43,10 +43,12 @@ NOTE: This async support is experimental and marked internal. This surface may
 change in minor releases.
 """
 
-from google.auth import _credentials_async
-from google.auth import _helpers
-from google.auth import _regional_access_boundary_utils
-from google.auth import jwt
+from google.auth import (
+    _credentials_async,
+    _helpers,
+    _regional_access_boundary_utils,
+    jwt,
+)
 
 
 def encode(signer, payload, header=None, key_id=None):

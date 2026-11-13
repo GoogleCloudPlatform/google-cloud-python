@@ -50,6 +50,16 @@
                 "list_data_agents"
               ]
             },
+            "RetrieveAgentOpsObservability": {
+              "methods": [
+                "retrieve_agent_ops_observability"
+              ]
+            },
+            "SetAgentOpsObservability": {
+              "methods": [
+                "set_agent_ops_observability"
+              ]
+            },
             "SetIamPolicy": {
               "methods": [
                 "set_iam_policy"
@@ -108,6 +118,16 @@
             "ListDataAgents": {
               "methods": [
                 "list_data_agents"
+              ]
+            },
+            "RetrieveAgentOpsObservability": {
+              "methods": [
+                "retrieve_agent_ops_observability"
+              ]
+            },
+            "SetAgentOpsObservability": {
+              "methods": [
+                "set_agent_ops_observability"
               ]
             },
             "SetIamPolicy": {
@@ -170,6 +190,16 @@
                 "list_data_agents"
               ]
             },
+            "RetrieveAgentOpsObservability": {
+              "methods": [
+                "retrieve_agent_ops_observability"
+              ]
+            },
+            "SetAgentOpsObservability": {
+              "methods": [
+                "set_agent_ops_observability"
+              ]
+            },
             "SetIamPolicy": {
               "methods": [
                 "set_iam_policy"
@@ -223,6 +253,11 @@
               "methods": [
                 "list_messages"
               ]
+            },
+            "UpdateConversation": {
+              "methods": [
+                "update_conversation"
+              ]
             }
           }
         },
@@ -258,6 +293,11 @@
               "methods": [
                 "list_messages"
               ]
+            },
+            "UpdateConversation": {
+              "methods": [
+                "update_conversation"
+              ]
             }
           }
         },
@@ -292,6 +332,11 @@
             "ListMessages": {
               "methods": [
                 "list_messages"
+              ]
+            },
+            "UpdateConversation": {
+              "methods": [
+                "update_conversation"
               ]
             }
           }

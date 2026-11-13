@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.compute_v1._compat import transcode_request
 from google.cloud.compute_v1.types import compute
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -973,23 +974,16 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             http_options = (
                 _BaseNetworksRestTransport._BaseAddPeering._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_add_peering(request, metadata)
-            transcoded_request = (
-                _BaseNetworksRestTransport._BaseAddPeering._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetworksRestTransport._BaseAddPeering._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetworksRestTransport._BaseAddPeering._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BaseAddPeering,
+                    "_BaseAddPeering__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1156,21 +1150,18 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             """
 
             http_options = _BaseNetworksRestTransport._BaseCancelRequestRemovePeering._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_request_remove_peering(
                 request, metadata
             )
-            transcoded_request = _BaseNetworksRestTransport._BaseCancelRequestRemovePeering._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNetworksRestTransport._BaseCancelRequestRemovePeering._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetworksRestTransport._BaseCancelRequestRemovePeering._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BaseCancelRequestRemovePeering,
+                    "_BaseCancelRequestRemovePeering__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1335,19 +1326,16 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             """
 
             http_options = _BaseNetworksRestTransport._BaseDelete._get_http_options()
-
             request, metadata = self._interceptor.pre_delete(request, metadata)
-            transcoded_request = (
-                _BaseNetworksRestTransport._BaseDelete._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetworksRestTransport._BaseDelete._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BaseDelete,
+                    "_BaseDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1486,17 +1474,16 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             """
 
             http_options = _BaseNetworksRestTransport._BaseGet._get_http_options()
-
             request, metadata = self._interceptor.pre_get(request, metadata)
-            transcoded_request = (
-                _BaseNetworksRestTransport._BaseGet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetworksRestTransport._BaseGet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BaseGet,
+                    "_BaseGet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1630,17 +1617,18 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             """
 
             http_options = _BaseNetworksRestTransport._BaseGetEffectiveFirewalls._get_http_options()
-
             request, metadata = self._interceptor.pre_get_effective_firewalls(
                 request, metadata
             )
-            transcoded_request = _BaseNetworksRestTransport._BaseGetEffectiveFirewalls._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetworksRestTransport._BaseGetEffectiveFirewalls._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BaseGetEffectiveFirewalls,
+                    "_BaseGetEffectiveFirewalls__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1805,23 +1793,16 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             """
 
             http_options = _BaseNetworksRestTransport._BaseInsert._get_http_options()
-
             request, metadata = self._interceptor.pre_insert(request, metadata)
-            transcoded_request = (
-                _BaseNetworksRestTransport._BaseInsert._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetworksRestTransport._BaseInsert._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetworksRestTransport._BaseInsert._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BaseInsert,
+                    "_BaseInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1955,17 +1936,16 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             """
 
             http_options = _BaseNetworksRestTransport._BaseList._get_http_options()
-
             request, metadata = self._interceptor.pre_list(request, metadata)
-            transcoded_request = (
-                _BaseNetworksRestTransport._BaseList._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetworksRestTransport._BaseList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BaseList,
+                    "_BaseList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2101,17 +2081,18 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             http_options = (
                 _BaseNetworksRestTransport._BaseListPeeringRoutes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_peering_routes(
                 request, metadata
             )
-            transcoded_request = _BaseNetworksRestTransport._BaseListPeeringRoutes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetworksRestTransport._BaseListPeeringRoutes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BaseListPeeringRoutes,
+                    "_BaseListPeeringRoutes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2275,21 +2256,16 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             """
 
             http_options = _BaseNetworksRestTransport._BasePatch._get_http_options()
-
             request, metadata = self._interceptor.pre_patch(request, metadata)
-            transcoded_request = (
-                _BaseNetworksRestTransport._BasePatch._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetworksRestTransport._BasePatch._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetworksRestTransport._BasePatch._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BasePatch,
+                    "_BasePatch__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2457,23 +2433,16 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             http_options = (
                 _BaseNetworksRestTransport._BaseRemovePeering._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_remove_peering(request, metadata)
-            transcoded_request = (
-                _BaseNetworksRestTransport._BaseRemovePeering._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetworksRestTransport._BaseRemovePeering._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetworksRestTransport._BaseRemovePeering._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BaseRemovePeering,
+                    "_BaseRemovePeering__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2641,21 +2610,18 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             http_options = (
                 _BaseNetworksRestTransport._BaseRequestRemovePeering._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_request_remove_peering(
                 request, metadata
             )
-            transcoded_request = _BaseNetworksRestTransport._BaseRequestRemovePeering._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNetworksRestTransport._BaseRequestRemovePeering._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetworksRestTransport._BaseRequestRemovePeering._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BaseRequestRemovePeering,
+                    "_BaseRequestRemovePeering__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2822,17 +2788,18 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             http_options = (
                 _BaseNetworksRestTransport._BaseSwitchToCustomMode._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_switch_to_custom_mode(
                 request, metadata
             )
-            transcoded_request = _BaseNetworksRestTransport._BaseSwitchToCustomMode._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetworksRestTransport._BaseSwitchToCustomMode._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BaseSwitchToCustomMode,
+                    "_BaseSwitchToCustomMode__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2999,23 +2966,16 @@ class NetworksRestTransport(_BaseNetworksRestTransport):
             http_options = (
                 _BaseNetworksRestTransport._BaseUpdatePeering._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_peering(request, metadata)
-            transcoded_request = (
-                _BaseNetworksRestTransport._BaseUpdatePeering._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetworksRestTransport._BaseUpdatePeering._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetworksRestTransport._BaseUpdatePeering._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworksRestTransport._BaseUpdatePeering,
+                    "_BaseUpdatePeering__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

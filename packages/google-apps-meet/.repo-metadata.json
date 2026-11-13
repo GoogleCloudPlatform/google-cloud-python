@@ -10,7 +10,7 @@
     "library_type": "GAPIC_AUTO",
     "name": "google-apps-meet",
     "name_pretty": "Google Meet",
-    "product_documentation": "https://developers.google.com/meet/api/guides/overview",
+    "product_documentation": "https://developers.google.com/workspace/meet/api/guides/overview",
     "release_level": "preview",
     "repo": "googleapis/google-cloud-python"
 }

@@ -334,23 +334,12 @@ def test_table_backup(
     assert restored_table in tables
     restored_table.delete()
 
-    # Testing `Backup.restore()` into a different instance:
-    # Setting up another instance...
-    alt_instance_id = f"gcp-alt-{unique_suffix}"
-    alt_cluster_id = f"{alt_instance_id}-cluster"
-    alt_instance = admin_client.instance(alt_instance_id, labels=instance_labels)
-    alt_cluster = alt_instance.cluster(
-        cluster_id=alt_cluster_id,
-        location_id=location_id,
-        serve_nodes=1,
+    # Testing `Backup.restore()`:
+    restored_table_id_2 = "test-backup-table-restored-2"
+    restore_op = temp_backup.restore(
+        restored_table_id_2, data_instance_populated.instance_id
     )
-    create_op = alt_instance.create(clusters=[alt_cluster])
-    instances_to_delete.append(alt_instance)
-    create_op.result(timeout=240)
-
-    # Testing `restore()`...
-    restore_op = temp_backup.restore(restored_table_id, alt_instance_id)
     restore_op.result(timeout=240)
-    restored_table = alt_instance.table(restored_table_id)
-    assert restored_table in alt_instance.list_tables()
-    restored_table.delete()
+    restored_table_2 = data_instance_populated.table(restored_table_id_2)
+    assert restored_table_2 in data_instance_populated.list_tables()
+    restored_table_2.delete()

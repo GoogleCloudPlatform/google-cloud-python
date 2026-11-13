@@ -88,10 +88,14 @@ class Destination(proto.Message):
             Required. The account to send the data to or
             remove the data from.
         product_destination_id (str):
-            Required. The object within the product
+            Optional. The object within the product
             account to ingest into. For example, a Google
             Ads audience ID, a Display & Video 360 audience
             ID or a Google Ads conversion action ID.
+
+            This field is optional for Google Ad Manager
+            event ingestion and User ingestion. Required for
+            all other use cases.
     """
 
     reference: str = proto.Field(
@@ -158,6 +162,8 @@ class ProductAccount(proto.Message):
                 Google Ad Manager audience link.
             FLOODLIGHT_CONFIG (7):
                 Floodlight configuration.
+            GOOGLE_AD_MANAGER (8):
+                Google Ad Manager.
         """
 
         ACCOUNT_TYPE_UNSPECIFIED = 0
@@ -168,6 +174,7 @@ class ProductAccount(proto.Message):
         GOOGLE_ANALYTICS_PROPERTY = 5
         GOOGLE_AD_MANAGER_AUDIENCE_LINK = 6
         FLOODLIGHT_CONFIG = 7
+        GOOGLE_AD_MANAGER = 8
 
     product: "Product" = proto.Field(
         proto.ENUM,

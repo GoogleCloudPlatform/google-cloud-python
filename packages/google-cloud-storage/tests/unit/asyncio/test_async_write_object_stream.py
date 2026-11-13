@@ -21,6 +21,9 @@ import pytest
 
 from google.cloud import _storage_v2
 from google.cloud.storage import Blob, Bucket
+from google.cloud.storage.asyncio.async_appendable_object_writer import (
+    Preconditions,
+)
 from google.cloud.storage.asyncio.async_write_object_stream import (
     _AsyncWriteObjectStream,
 )
@@ -63,6 +66,25 @@ class TestAsyncWriteObjectStream:
             ("x-goog-request-params", f"bucket={FULL_BUCKET_PATH}"),
         )
         assert not stream.is_stream_open
+        assert stream.storage_class is None
+
+    @pytest.mark.parametrize("storage_class", ["STANDARD", "RAPID"])
+    def test_init_with_storage_class(self, mock_client, storage_class):
+        stream = _AsyncWriteObjectStream(
+            mock_client, BUCKET, OBJECT, storage_class=storage_class
+        )
+        assert stream.storage_class == storage_class
+
+    @pytest.mark.parametrize("storage_class", ["STANDARD", "RAPID"])
+    def test_init_with_blob_storage_class(self, mock_client, storage_class):
+        mock_blob = mock.Mock(spec=Blob)
+        mock_blob.name = OBJECT
+        mock_blob.bucket = mock.Mock(spec=Bucket)
+        mock_blob.bucket.name = BUCKET
+        mock_blob.storage_class = storage_class
+
+        stream = _AsyncWriteObjectStream(mock_client, BUCKET, OBJECT, blob=mock_blob)
+        assert stream.blob.storage_class == storage_class
 
     def test_init_raises_value_error(self, mock_client):
         with pytest.raises(ValueError, match="client must be provided"):
@@ -96,8 +118,42 @@ class TestAsyncWriteObjectStream:
         # Check if BidiRpc was initialized with WriteObjectSpec
         call_args = mock_rpc_cls.call_args
         initial_request = call_args.kwargs["initial_request"]
+        # In proto3, string fields default to "" rather than None
+        resource = initial_request.write_object_spec.resource
+        assert "storage_class" not in resource
+        assert resource.storage_class == ""
+        assert initial_request.write_object_spec.appendable
+
+        assert stream.is_stream_open
+        assert stream.write_handle == WRITE_HANDLE
+        assert stream.generation_number == GENERATION
+
+    @mock.patch("google.cloud.storage.asyncio.async_write_object_stream.AsyncBidiRpc")
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("storage_class", ["STANDARD", "RAPID"])
+    async def test_open_new_object_with_storage_class(
+        self, mock_rpc_cls, mock_client, storage_class
+    ):
+        mock_rpc = mock_rpc_cls.return_value
+        mock_rpc.open = AsyncMock()
+
+        mock_response = MagicMock()
+        mock_response.persisted_size = 0
+        mock_response.resource.generation = GENERATION
+        mock_response.resource.size = 0
+        mock_response.write_handle = WRITE_HANDLE
+        mock_rpc.recv = AsyncMock(return_value=mock_response)
+
+        stream = _AsyncWriteObjectStream(
+            mock_client, BUCKET, OBJECT, storage_class=storage_class
+        )
+        await stream.open()
+
+        call_args = mock_rpc_cls.call_args
+        initial_request = call_args.kwargs["initial_request"]
         assert initial_request.write_object_spec is not None
         assert initial_request.write_object_spec.resource.name == OBJECT
+        assert initial_request.write_object_spec.resource.storage_class == storage_class
         assert initial_request.write_object_spec.appendable
 
         assert stream.is_stream_open
@@ -132,6 +188,90 @@ class TestAsyncWriteObjectStream:
         assert initial_request.append_object_spec.generation == GENERATION
         assert initial_request.append_object_spec.routing_token == "token-123"
         assert stream.persisted_size == 1024
+
+    @mock.patch("google.cloud.storage.asyncio.async_write_object_stream.AsyncBidiRpc")
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "generation_number, preconditions, expected",
+        [
+            (None, None, {}),
+            (0, None, {"if_generation_match": 0}),
+            (None, Preconditions(if_generation_match=0), {"if_generation_match": 0}),
+            (
+                None,
+                Preconditions(
+                    if_generation_match=10,
+                    if_generation_not_match=20,
+                    if_metageneration_match=3,
+                    if_metageneration_not_match=4,
+                ),
+                {
+                    "if_generation_match": 10,
+                    "if_generation_not_match": 20,
+                    "if_metageneration_match": 3,
+                    "if_metageneration_not_match": 4,
+                },
+            ),
+        ],
+    )
+    async def test_open_new_object_preconditions(
+        self,
+        mock_rpc_cls,
+        mock_client,
+        generation_number,
+        preconditions,
+        expected,
+    ):
+        mock_rpc = mock_rpc_cls.return_value
+        mock_rpc.open = AsyncMock()
+        mock_rpc.recv = AsyncMock(return_value=MagicMock(resource=None))
+
+        stream = _AsyncWriteObjectStream(
+            mock_client,
+            BUCKET,
+            OBJECT,
+            generation_number=generation_number,
+            preconditions=preconditions,
+        )
+        await stream.open()
+
+        spec = mock_rpc_cls.call_args.kwargs["initial_request"].write_object_spec
+        assert spec.appendable
+        fields = (
+            "if_generation_match",
+            "if_generation_not_match",
+            "if_metageneration_match",
+            "if_metageneration_not_match",
+        )
+        # `in` checks field presence, so an unset field is not mistaken for 0.
+        assert {f: getattr(spec, f) for f in fields if f in spec} == expected
+
+    @mock.patch("google.cloud.storage.asyncio.async_write_object_stream.AsyncBidiRpc")
+    @pytest.mark.asyncio
+    async def test_open_existing_object_preconditions(self, mock_rpc_cls, mock_client):
+        mock_rpc = mock_rpc_cls.return_value
+        mock_rpc.open = AsyncMock()
+        mock_rpc.recv = AsyncMock(return_value=MagicMock(resource=None))
+
+        preconditions = Preconditions(
+            if_metageneration_match=2,
+            if_metageneration_not_match=3,
+        )
+        stream = _AsyncWriteObjectStream(
+            mock_client,
+            BUCKET,
+            OBJECT,
+            generation_number=GENERATION,
+            preconditions=preconditions,
+        )
+        await stream.open()
+
+        spec = mock_rpc_cls.call_args.kwargs["initial_request"].append_object_spec
+        assert spec.generation == GENERATION
+        assert "if_metageneration_match" in spec
+        assert spec.if_metageneration_match == 2
+        assert "if_metageneration_not_match" in spec
+        assert spec.if_metageneration_not_match == 3
 
     @mock.patch("google.cloud.storage.asyncio.async_write_object_stream.AsyncBidiRpc")
     @pytest.mark.asyncio
@@ -178,6 +318,7 @@ class TestAsyncWriteObjectStream:
         mock_blob.content_language = "content-language"
         mock_blob.temporary_hold = True
         mock_blob.event_based_hold = True
+        mock_blob.storage_class = "RAPID"
 
         custom_time = datetime.datetime(
             2025, 1, 1, 12, 0, 0, tzinfo=datetime.timezone.utc
@@ -202,6 +343,7 @@ class TestAsyncWriteObjectStream:
         mock_blob.contexts = ObjectContexts(mock_blob, custom={"context-key": payload})
 
         stream = _AsyncWriteObjectStream(mock_client, BUCKET, OBJECT, blob=mock_blob)
+        assert stream.blob.storage_class == "RAPID"
         await stream.open()
 
         # Verify initial request contains synced attributes from blob
@@ -217,6 +359,7 @@ class TestAsyncWriteObjectStream:
         assert resource.content_language == "content-language"
         assert resource.temporary_hold is True
         assert resource.event_based_hold is True
+        assert resource.storage_class == "RAPID"
 
         assert int(resource.custom_time.timestamp()) == int(custom_time.timestamp())
 

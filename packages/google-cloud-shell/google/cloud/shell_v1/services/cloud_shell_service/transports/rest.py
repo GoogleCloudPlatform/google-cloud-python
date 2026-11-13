@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.shell_v1._compat import transcode_request
 from google.cloud.shell_v1.types import cloudshell
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -545,19 +546,16 @@ class CloudShellServiceRestTransport(_BaseCloudShellServiceRestTransport):
             """
 
             http_options = _BaseCloudShellServiceRestTransport._BaseAddPublicKey._get_http_options()
-
             request, metadata = self._interceptor.pre_add_public_key(request, metadata)
-            transcoded_request = _BaseCloudShellServiceRestTransport._BaseAddPublicKey._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudShellServiceRestTransport._BaseAddPublicKey._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudShellServiceRestTransport._BaseAddPublicKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudShellServiceRestTransport._BaseAddPublicKey,
+                    "_BaseAddPublicKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -696,21 +694,18 @@ class CloudShellServiceRestTransport(_BaseCloudShellServiceRestTransport):
             """
 
             http_options = _BaseCloudShellServiceRestTransport._BaseAuthorizeEnvironment._get_http_options()
-
             request, metadata = self._interceptor.pre_authorize_environment(
                 request, metadata
             )
-            transcoded_request = _BaseCloudShellServiceRestTransport._BaseAuthorizeEnvironment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudShellServiceRestTransport._BaseAuthorizeEnvironment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudShellServiceRestTransport._BaseAuthorizeEnvironment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudShellServiceRestTransport._BaseAuthorizeEnvironment,
+                    "_BaseAuthorizeEnvironment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -855,15 +850,16 @@ class CloudShellServiceRestTransport(_BaseCloudShellServiceRestTransport):
             """
 
             http_options = _BaseCloudShellServiceRestTransport._BaseGetEnvironment._get_http_options()
-
             request, metadata = self._interceptor.pre_get_environment(request, metadata)
-            transcoded_request = _BaseCloudShellServiceRestTransport._BaseGetEnvironment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudShellServiceRestTransport._BaseGetEnvironment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudShellServiceRestTransport._BaseGetEnvironment,
+                    "_BaseGetEnvironment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1003,21 +999,18 @@ class CloudShellServiceRestTransport(_BaseCloudShellServiceRestTransport):
             """
 
             http_options = _BaseCloudShellServiceRestTransport._BaseRemovePublicKey._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_public_key(
                 request, metadata
             )
-            transcoded_request = _BaseCloudShellServiceRestTransport._BaseRemovePublicKey._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudShellServiceRestTransport._BaseRemovePublicKey._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudShellServiceRestTransport._BaseRemovePublicKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudShellServiceRestTransport._BaseRemovePublicKey,
+                    "_BaseRemovePublicKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1156,21 +1149,18 @@ class CloudShellServiceRestTransport(_BaseCloudShellServiceRestTransport):
             """
 
             http_options = _BaseCloudShellServiceRestTransport._BaseStartEnvironment._get_http_options()
-
             request, metadata = self._interceptor.pre_start_environment(
                 request, metadata
             )
-            transcoded_request = _BaseCloudShellServiceRestTransport._BaseStartEnvironment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudShellServiceRestTransport._BaseStartEnvironment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudShellServiceRestTransport._BaseStartEnvironment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudShellServiceRestTransport._BaseStartEnvironment,
+                    "_BaseStartEnvironment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

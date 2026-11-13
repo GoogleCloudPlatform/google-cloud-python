@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.retail_v2beta._compat import transcode_request
 from google.cloud.retail_v2beta.types import (
     generative_question,
     generative_question_service,
@@ -595,23 +596,20 @@ class GenerativeQuestionServiceRestTransport(
             """
 
             http_options = _BaseGenerativeQuestionServiceRestTransport._BaseBatchUpdateGenerativeQuestionConfigs._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_update_generative_question_configs(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseGenerativeQuestionServiceRestTransport._BaseBatchUpdateGenerativeQuestionConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGenerativeQuestionServiceRestTransport._BaseBatchUpdateGenerativeQuestionConfigs._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGenerativeQuestionServiceRestTransport._BaseBatchUpdateGenerativeQuestionConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGenerativeQuestionServiceRestTransport._BaseBatchUpdateGenerativeQuestionConfigs,
+                    "_BaseBatchUpdateGenerativeQuestionConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -760,19 +758,20 @@ class GenerativeQuestionServiceRestTransport(
             """
 
             http_options = _BaseGenerativeQuestionServiceRestTransport._BaseGetGenerativeQuestionsFeatureConfig._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_get_generative_questions_feature_config(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseGenerativeQuestionServiceRestTransport._BaseGetGenerativeQuestionsFeatureConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGenerativeQuestionServiceRestTransport._BaseGetGenerativeQuestionsFeatureConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGenerativeQuestionServiceRestTransport._BaseGetGenerativeQuestionsFeatureConfig,
+                    "_BaseGetGenerativeQuestionsFeatureConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -916,17 +915,18 @@ class GenerativeQuestionServiceRestTransport(
             """
 
             http_options = _BaseGenerativeQuestionServiceRestTransport._BaseListGenerativeQuestionConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_generative_question_configs(
                 request, metadata
             )
-            transcoded_request = _BaseGenerativeQuestionServiceRestTransport._BaseListGenerativeQuestionConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGenerativeQuestionServiceRestTransport._BaseListGenerativeQuestionConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGenerativeQuestionServiceRestTransport._BaseListGenerativeQuestionConfigs,
+                    "_BaseListGenerativeQuestionConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1076,21 +1076,18 @@ class GenerativeQuestionServiceRestTransport(
             """
 
             http_options = _BaseGenerativeQuestionServiceRestTransport._BaseUpdateGenerativeQuestionConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_generative_question_config(
                 request, metadata
             )
-            transcoded_request = _BaseGenerativeQuestionServiceRestTransport._BaseUpdateGenerativeQuestionConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGenerativeQuestionServiceRestTransport._BaseUpdateGenerativeQuestionConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGenerativeQuestionServiceRestTransport._BaseUpdateGenerativeQuestionConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGenerativeQuestionServiceRestTransport._BaseUpdateGenerativeQuestionConfig,
+                    "_BaseUpdateGenerativeQuestionConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1238,23 +1235,20 @@ class GenerativeQuestionServiceRestTransport(
             """
 
             http_options = _BaseGenerativeQuestionServiceRestTransport._BaseUpdateGenerativeQuestionsFeatureConfig._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_update_generative_questions_feature_config(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseGenerativeQuestionServiceRestTransport._BaseUpdateGenerativeQuestionsFeatureConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGenerativeQuestionServiceRestTransport._BaseUpdateGenerativeQuestionsFeatureConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGenerativeQuestionServiceRestTransport._BaseUpdateGenerativeQuestionsFeatureConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGenerativeQuestionServiceRestTransport._BaseUpdateGenerativeQuestionsFeatureConfig,
+                    "_BaseUpdateGenerativeQuestionsFeatureConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1466,15 +1460,16 @@ class GenerativeQuestionServiceRestTransport(
             """
 
             http_options = _BaseGenerativeQuestionServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseGenerativeQuestionServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGenerativeQuestionServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGenerativeQuestionServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1607,15 +1602,16 @@ class GenerativeQuestionServiceRestTransport(
             """
 
             http_options = _BaseGenerativeQuestionServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseGenerativeQuestionServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGenerativeQuestionServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGenerativeQuestionServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

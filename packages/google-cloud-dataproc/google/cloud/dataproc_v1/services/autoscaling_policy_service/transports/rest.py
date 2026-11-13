@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dataproc_v1._compat import transcode_request
 from google.cloud.dataproc_v1.types import autoscaling_policies
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -662,21 +663,18 @@ class AutoscalingPolicyServiceRestTransport(_BaseAutoscalingPolicyServiceRestTra
             """
 
             http_options = _BaseAutoscalingPolicyServiceRestTransport._BaseCreateAutoscalingPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_create_autoscaling_policy(
                 request, metadata
             )
-            transcoded_request = _BaseAutoscalingPolicyServiceRestTransport._BaseCreateAutoscalingPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAutoscalingPolicyServiceRestTransport._BaseCreateAutoscalingPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoscalingPolicyServiceRestTransport._BaseCreateAutoscalingPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoscalingPolicyServiceRestTransport._BaseCreateAutoscalingPolicy,
+                    "_BaseCreateAutoscalingPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -813,17 +811,18 @@ class AutoscalingPolicyServiceRestTransport(_BaseAutoscalingPolicyServiceRestTra
             """
 
             http_options = _BaseAutoscalingPolicyServiceRestTransport._BaseDeleteAutoscalingPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_autoscaling_policy(
                 request, metadata
             )
-            transcoded_request = _BaseAutoscalingPolicyServiceRestTransport._BaseDeleteAutoscalingPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoscalingPolicyServiceRestTransport._BaseDeleteAutoscalingPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoscalingPolicyServiceRestTransport._BaseDeleteAutoscalingPolicy,
+                    "_BaseDeleteAutoscalingPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -927,17 +926,18 @@ class AutoscalingPolicyServiceRestTransport(_BaseAutoscalingPolicyServiceRestTra
             """
 
             http_options = _BaseAutoscalingPolicyServiceRestTransport._BaseGetAutoscalingPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_autoscaling_policy(
                 request, metadata
             )
-            transcoded_request = _BaseAutoscalingPolicyServiceRestTransport._BaseGetAutoscalingPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoscalingPolicyServiceRestTransport._BaseGetAutoscalingPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoscalingPolicyServiceRestTransport._BaseGetAutoscalingPolicy,
+                    "_BaseGetAutoscalingPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1077,17 +1077,18 @@ class AutoscalingPolicyServiceRestTransport(_BaseAutoscalingPolicyServiceRestTra
             """
 
             http_options = _BaseAutoscalingPolicyServiceRestTransport._BaseListAutoscalingPolicies._get_http_options()
-
             request, metadata = self._interceptor.pre_list_autoscaling_policies(
                 request, metadata
             )
-            transcoded_request = _BaseAutoscalingPolicyServiceRestTransport._BaseListAutoscalingPolicies._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoscalingPolicyServiceRestTransport._BaseListAutoscalingPolicies._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoscalingPolicyServiceRestTransport._BaseListAutoscalingPolicies,
+                    "_BaseListAutoscalingPolicies__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1230,21 +1231,18 @@ class AutoscalingPolicyServiceRestTransport(_BaseAutoscalingPolicyServiceRestTra
             """
 
             http_options = _BaseAutoscalingPolicyServiceRestTransport._BaseUpdateAutoscalingPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_update_autoscaling_policy(
                 request, metadata
             )
-            transcoded_request = _BaseAutoscalingPolicyServiceRestTransport._BaseUpdateAutoscalingPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAutoscalingPolicyServiceRestTransport._BaseUpdateAutoscalingPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoscalingPolicyServiceRestTransport._BaseUpdateAutoscalingPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoscalingPolicyServiceRestTransport._BaseUpdateAutoscalingPolicy,
+                    "_BaseUpdateAutoscalingPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1448,19 +1446,16 @@ class AutoscalingPolicyServiceRestTransport(_BaseAutoscalingPolicyServiceRestTra
             """
 
             http_options = _BaseAutoscalingPolicyServiceRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseAutoscalingPolicyServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAutoscalingPolicyServiceRestTransport._BaseGetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoscalingPolicyServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoscalingPolicyServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1595,19 +1590,16 @@ class AutoscalingPolicyServiceRestTransport(_BaseAutoscalingPolicyServiceRestTra
             """
 
             http_options = _BaseAutoscalingPolicyServiceRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseAutoscalingPolicyServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAutoscalingPolicyServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoscalingPolicyServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoscalingPolicyServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1742,21 +1734,18 @@ class AutoscalingPolicyServiceRestTransport(_BaseAutoscalingPolicyServiceRestTra
             """
 
             http_options = _BaseAutoscalingPolicyServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseAutoscalingPolicyServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAutoscalingPolicyServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoscalingPolicyServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoscalingPolicyServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1887,17 +1876,18 @@ class AutoscalingPolicyServiceRestTransport(_BaseAutoscalingPolicyServiceRestTra
             """
 
             http_options = _BaseAutoscalingPolicyServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAutoscalingPolicyServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoscalingPolicyServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoscalingPolicyServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2002,17 +1992,18 @@ class AutoscalingPolicyServiceRestTransport(_BaseAutoscalingPolicyServiceRestTra
             """
 
             http_options = _BaseAutoscalingPolicyServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAutoscalingPolicyServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoscalingPolicyServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoscalingPolicyServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2120,15 +2111,16 @@ class AutoscalingPolicyServiceRestTransport(_BaseAutoscalingPolicyServiceRestTra
             """
 
             http_options = _BaseAutoscalingPolicyServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAutoscalingPolicyServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoscalingPolicyServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoscalingPolicyServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2261,15 +2253,16 @@ class AutoscalingPolicyServiceRestTransport(_BaseAutoscalingPolicyServiceRestTra
             """
 
             http_options = _BaseAutoscalingPolicyServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseAutoscalingPolicyServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutoscalingPolicyServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutoscalingPolicyServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

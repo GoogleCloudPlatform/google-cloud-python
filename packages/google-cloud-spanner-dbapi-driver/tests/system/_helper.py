@@ -14,6 +14,7 @@
 """Helper functions for system tests."""
 
 import os
+
 import pytest
 
 SPANNER_EMULATOR_HOST = os.environ.get("SPANNER_EMULATOR_HOST")

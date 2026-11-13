@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from google.cloud.bigquery.schema import SchemaField
 import pytest
+from google.cloud.bigquery.schema import SchemaField
 
 from sqlalchemy_bigquery._types import _get_transitive_schema_fields
 

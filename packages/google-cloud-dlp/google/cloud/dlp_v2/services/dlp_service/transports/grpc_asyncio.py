@@ -123,7 +123,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
     platform that works on text, images, and Google Cloud storage
     repositories. To learn more about concepts and find how-to
     guides see
-    https://cloud.google.com/sensitive-data-protection/docs/.
+    https://docs.cloud.google.com/sensitive-data-protection/docs/.
 
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
@@ -356,9 +356,9 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
         may change over time as detectors are updated.
 
         For how to guides, see
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-images
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-images
         and
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-text,
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-text,
 
         Returns:
             Callable[[~.InspectContentRequest],
@@ -387,7 +387,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
         Redacts potentially sensitive info from an image.
         This method has limits on input size, processing time,
         and output size. See
-        https://cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images
+        https://docs.cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images
         to learn more.
 
         When no InfoTypes or CustomInfoTypes are specified in
@@ -428,7 +428,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
         De-identifies potentially sensitive info from a
         ContentItem. This method has limits on input size and
         output size. See
-        https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data
+        https://docs.cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data
         to learn more.
 
         When no InfoTypes or CustomInfoTypes are specified in
@@ -463,7 +463,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
         r"""Return a callable for the reidentify content method over gRPC.
 
         Re-identifies content that has been de-identified. See
-        https://cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example
+        https://docs.cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example
         to learn more.
 
         Returns:
@@ -492,7 +492,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Returns a list of the sensitive information types
         that the DLP API supports. See
-        https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+        https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference
         to learn more.
 
         Returns:
@@ -522,7 +522,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
         Creates an InspectTemplate for reusing frequently
         used configuration for inspecting content, images, and
         storage. See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
         to learn more.
 
         Returns:
@@ -551,7 +551,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Updates the InspectTemplate.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
         to learn more.
 
         Returns:
@@ -580,7 +580,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Gets an InspectTemplate.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
         to learn more.
 
         Returns:
@@ -611,7 +611,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Lists InspectTemplates.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
         to learn more.
 
         Returns:
@@ -640,7 +640,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Deletes an InspectTemplate.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
         to learn more.
 
         Returns:
@@ -672,7 +672,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
         Creates a DeidentifyTemplate for reusing frequently
         used configuration for de-identifying content, images,
         and storage. See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
         to learn more.
 
         Returns:
@@ -705,7 +705,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Updates the DeidentifyTemplate.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
         to learn more.
 
         Returns:
@@ -738,7 +738,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Gets a DeidentifyTemplate.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
         to learn more.
 
         Returns:
@@ -770,7 +770,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Lists DeidentifyTemplates.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
         to learn more.
 
         Returns:
@@ -799,7 +799,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Deletes a DeidentifyTemplate.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
         to learn more.
 
         Returns:
@@ -831,7 +831,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
         Creates a job trigger to run DLP actions such as
         scanning storage for sensitive information on a set
         schedule. See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
         to learn more.
 
         Returns:
@@ -860,7 +860,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Updates a job trigger.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
         to learn more.
 
         Returns:
@@ -922,7 +922,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Gets a job trigger.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
         to learn more.
 
         Returns:
@@ -951,7 +951,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Lists job triggers.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
         to learn more.
 
         Returns:
@@ -980,7 +980,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Deletes a job trigger.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
         to learn more.
 
         Returns:
@@ -1170,9 +1170,9 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Creates a new job to inspect storage or calculate
         risk metrics. See
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
         and
-        https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+        https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
         to learn more.
 
         When no InfoTypes or CustomInfoTypes are specified in
@@ -1206,9 +1206,9 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Lists DlpJobs that match the specified filter in the
         request. See
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
         and
-        https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+        https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
         to learn more.
 
         Returns:
@@ -1235,9 +1235,9 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Gets the latest state of a long-running DlpJob.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
         and
-        https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+        https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
         to learn more.
 
         Returns:
@@ -1268,9 +1268,9 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
         that the client is no longer interested in the DlpJob
         result. The job will be canceled if possible.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
         and
-        https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+        https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
         to learn more.
 
         Returns:
@@ -1301,9 +1301,9 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
         DlpJob. The server makes a best effort to cancel the
         DlpJob, but success is not guaranteed.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+        https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
         and
-        https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+        https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
         to learn more.
 
         Returns:
@@ -1332,7 +1332,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Creates a pre-built stored infoType to be used for
         inspection. See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
         to learn more.
 
         Returns:
@@ -1362,7 +1362,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
         Updates the stored infoType by creating a new
         version. The existing version will continue to be used
         until the new version is ready. See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
         to learn more.
 
         Returns:
@@ -1391,7 +1391,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Gets a stored infoType.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
         to learn more.
 
         Returns:
@@ -1422,7 +1422,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Lists stored infoTypes.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
         to learn more.
 
         Returns:
@@ -1451,7 +1451,7 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
 
         Deletes a stored infoType.
         See
-        https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+        https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
         to learn more.
 
         Returns:
@@ -1975,6 +1975,138 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
                 response_deserializer=dlp.Connection.deserialize,
             )
         return self._stubs["update_connection"]
+
+    @property
+    def create_content_policy(
+        self,
+    ) -> Callable[[dlp.CreateContentPolicyRequest], Awaitable[dlp.ContentPolicy]]:
+        r"""Return a callable for the create content policy method over gRPC.
+
+        Create a ContentPolicy.
+
+        Returns:
+            Callable[[~.CreateContentPolicyRequest],
+                    Awaitable[~.ContentPolicy]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_content_policy" not in self._stubs:
+            self._stubs["create_content_policy"] = self._logged_channel.unary_unary(
+                "/google.privacy.dlp.v2.DlpService/CreateContentPolicy",
+                request_serializer=dlp.CreateContentPolicyRequest.serialize,
+                response_deserializer=dlp.ContentPolicy.deserialize,
+            )
+        return self._stubs["create_content_policy"]
+
+    @property
+    def update_content_policy(
+        self,
+    ) -> Callable[[dlp.UpdateContentPolicyRequest], Awaitable[dlp.ContentPolicy]]:
+        r"""Return a callable for the update content policy method over gRPC.
+
+        Update a ContentPolicy.
+
+        Returns:
+            Callable[[~.UpdateContentPolicyRequest],
+                    Awaitable[~.ContentPolicy]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_content_policy" not in self._stubs:
+            self._stubs["update_content_policy"] = self._logged_channel.unary_unary(
+                "/google.privacy.dlp.v2.DlpService/UpdateContentPolicy",
+                request_serializer=dlp.UpdateContentPolicyRequest.serialize,
+                response_deserializer=dlp.ContentPolicy.deserialize,
+            )
+        return self._stubs["update_content_policy"]
+
+    @property
+    def get_content_policy(
+        self,
+    ) -> Callable[[dlp.GetContentPolicyRequest], Awaitable[dlp.ContentPolicy]]:
+        r"""Return a callable for the get content policy method over gRPC.
+
+        Get a ContentPolicy.
+
+        Returns:
+            Callable[[~.GetContentPolicyRequest],
+                    Awaitable[~.ContentPolicy]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_content_policy" not in self._stubs:
+            self._stubs["get_content_policy"] = self._logged_channel.unary_unary(
+                "/google.privacy.dlp.v2.DlpService/GetContentPolicy",
+                request_serializer=dlp.GetContentPolicyRequest.serialize,
+                response_deserializer=dlp.ContentPolicy.deserialize,
+            )
+        return self._stubs["get_content_policy"]
+
+    @property
+    def list_content_policies(
+        self,
+    ) -> Callable[
+        [dlp.ListContentPoliciesRequest], Awaitable[dlp.ListContentPoliciesResponse]
+    ]:
+        r"""Return a callable for the list content policies method over gRPC.
+
+        Lists ContentPolicies in a parent.
+
+        Returns:
+            Callable[[~.ListContentPoliciesRequest],
+                    Awaitable[~.ListContentPoliciesResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_content_policies" not in self._stubs:
+            self._stubs["list_content_policies"] = self._logged_channel.unary_unary(
+                "/google.privacy.dlp.v2.DlpService/ListContentPolicies",
+                request_serializer=dlp.ListContentPoliciesRequest.serialize,
+                response_deserializer=dlp.ListContentPoliciesResponse.deserialize,
+            )
+        return self._stubs["list_content_policies"]
+
+    @property
+    def delete_content_policy(
+        self,
+    ) -> Callable[[dlp.DeleteContentPolicyRequest], Awaitable[empty_pb2.Empty]]:
+        r"""Return a callable for the delete content policy method over gRPC.
+
+        Delete a ContentPolicy.
+
+        Returns:
+            Callable[[~.DeleteContentPolicyRequest],
+                    Awaitable[~.Empty]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_content_policy" not in self._stubs:
+            self._stubs["delete_content_policy"] = self._logged_channel.unary_unary(
+                "/google.privacy.dlp.v2.DlpService/DeleteContentPolicy",
+                request_serializer=dlp.DeleteContentPolicyRequest.serialize,
+                response_deserializer=empty_pb2.Empty.FromString,
+            )
+        return self._stubs["delete_content_policy"]
 
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
@@ -2571,6 +2703,31 @@ class DlpServiceGrpcAsyncIOTransport(DlpServiceTransport):
             ),
             self.update_connection: self._wrap_method(
                 self.update_connection,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_content_policy: self._wrap_method(
+                self.create_content_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_content_policy: self._wrap_method(
+                self.update_content_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_content_policy: self._wrap_method(
+                self.get_content_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_content_policies: self._wrap_method(
+                self.list_content_policies,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_content_policy: self._wrap_method(
+                self.delete_content_policy,
                 default_timeout=None,
                 client_info=client_info,
             ),

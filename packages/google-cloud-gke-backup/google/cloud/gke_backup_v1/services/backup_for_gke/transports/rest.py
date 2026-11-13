@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.gke_backup_v1._compat import transcode_request
 from google.cloud.gke_backup_v1.types import (
     backup,
     backup_channel,
@@ -2706,23 +2707,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseCreateBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_backup(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseCreateBackup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseBackupForGKERestTransport._BaseCreateBackup._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBackupForGKERestTransport._BaseCreateBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseCreateBackup,
+                    "_BaseCreateBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2860,21 +2854,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseCreateBackupChannel._get_http_options()
-
             request, metadata = self._interceptor.pre_create_backup_channel(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseCreateBackupChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBackupForGKERestTransport._BaseCreateBackupChannel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseCreateBackupChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseCreateBackupChannel,
+                    "_BaseCreateBackupChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3013,21 +3004,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseCreateBackupPlan._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_backup_plan(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseCreateBackupPlan._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBackupForGKERestTransport._BaseCreateBackupPlan._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseCreateBackupPlan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseCreateBackupPlan,
+                    "_BaseCreateBackupPlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3166,19 +3154,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseCreateRestore._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_restore(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseCreateRestore._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBackupForGKERestTransport._BaseCreateRestore._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseCreateRestore._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseCreateRestore,
+                    "_BaseCreateRestore__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3316,21 +3301,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseCreateRestoreChannel._get_http_options()
-
             request, metadata = self._interceptor.pre_create_restore_channel(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseCreateRestoreChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBackupForGKERestTransport._BaseCreateRestoreChannel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseCreateRestoreChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseCreateRestoreChannel,
+                    "_BaseCreateRestoreChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3468,21 +3450,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseCreateRestorePlan._get_http_options()
-
             request, metadata = self._interceptor.pre_create_restore_plan(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseCreateRestorePlan._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBackupForGKERestTransport._BaseCreateRestorePlan._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseCreateRestorePlan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseCreateRestorePlan,
+                    "_BaseCreateRestorePlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3620,17 +3599,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseDeleteBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_backup(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseDeleteBackup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBackupForGKERestTransport._BaseDeleteBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseDeleteBackup,
+                    "_BaseDeleteBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3766,17 +3744,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseDeleteBackupChannel._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_backup_channel(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseDeleteBackupChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseDeleteBackupChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseDeleteBackupChannel,
+                    "_BaseDeleteBackupChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3913,17 +3892,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseDeleteBackupPlan._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_backup_plan(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseDeleteBackupPlan._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseDeleteBackupPlan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseDeleteBackupPlan,
+                    "_BaseDeleteBackupPlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4060,15 +4040,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseDeleteRestore._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_restore(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseDeleteRestore._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseDeleteRestore._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseDeleteRestore,
+                    "_BaseDeleteRestore__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4204,17 +4185,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseDeleteRestoreChannel._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_restore_channel(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseDeleteRestoreChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseDeleteRestoreChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseDeleteRestoreChannel,
+                    "_BaseDeleteRestoreChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4350,17 +4332,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseDeleteRestorePlan._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_restore_plan(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseDeleteRestorePlan._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseDeleteRestorePlan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseDeleteRestorePlan,
+                    "_BaseDeleteRestorePlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4501,19 +4484,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseGetBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_backup(request, metadata)
-            transcoded_request = (
-                _BaseBackupForGKERestTransport._BaseGetBackup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBackupForGKERestTransport._BaseGetBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetBackup,
+                    "_BaseGetBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4653,17 +4633,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseGetBackupChannel._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_backup_channel(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseGetBackupChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseGetBackupChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetBackupChannel,
+                    "_BaseGetBackupChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4802,17 +4783,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseGetBackupIndexDownloadUrl._get_http_options()
-
             request, metadata = self._interceptor.pre_get_backup_index_download_url(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseGetBackupIndexDownloadUrl._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseGetBackupIndexDownloadUrl._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetBackupIndexDownloadUrl,
+                    "_BaseGetBackupIndexDownloadUrl__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4956,15 +4938,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseGetBackupPlan._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_backup_plan(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseGetBackupPlan._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseGetBackupPlan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetBackupPlan,
+                    "_BaseGetBackupPlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5107,17 +5090,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseGetBackupPlanBinding._get_http_options()
-
             request, metadata = self._interceptor.pre_get_backup_plan_binding(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseGetBackupPlanBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseGetBackupPlanBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetBackupPlanBinding,
+                    "_BaseGetBackupPlanBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5259,19 +5243,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseGetRestore._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_restore(request, metadata)
-            transcoded_request = (
-                _BaseBackupForGKERestTransport._BaseGetRestore._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBackupForGKERestTransport._BaseGetRestore._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetRestore,
+                    "_BaseGetRestore__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5410,17 +5391,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseGetRestoreChannel._get_http_options()
-
             request, metadata = self._interceptor.pre_get_restore_channel(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseGetRestoreChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseGetRestoreChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetRestoreChannel,
+                    "_BaseGetRestoreChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5560,17 +5542,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseGetRestorePlan._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_restore_plan(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseGetRestorePlan._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseGetRestorePlan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetRestorePlan,
+                    "_BaseGetRestorePlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5713,17 +5696,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseGetRestorePlanBinding._get_http_options()
-
             request, metadata = self._interceptor.pre_get_restore_plan_binding(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseGetRestorePlanBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseGetRestorePlanBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetRestorePlanBinding,
+                    "_BaseGetRestorePlanBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5866,17 +5850,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseGetVolumeBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_volume_backup(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseGetVolumeBackup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseGetVolumeBackup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetVolumeBackup,
+                    "_BaseGetVolumeBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6014,17 +5999,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseGetVolumeRestore._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_volume_restore(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseGetVolumeRestore._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseGetVolumeRestore._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetVolumeRestore,
+                    "_BaseGetVolumeRestore__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6161,17 +6147,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseListBackupChannels._get_http_options()
-
             request, metadata = self._interceptor.pre_list_backup_channels(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseListBackupChannels._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseListBackupChannels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseListBackupChannels,
+                    "_BaseListBackupChannels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6310,17 +6297,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseListBackupPlanBindings._get_http_options()
-
             request, metadata = self._interceptor.pre_list_backup_plan_bindings(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseListBackupPlanBindings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseListBackupPlanBindings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseListBackupPlanBindings,
+                    "_BaseListBackupPlanBindings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6458,17 +6446,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseListBackupPlans._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_backup_plans(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseListBackupPlans._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseListBackupPlans._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseListBackupPlans,
+                    "_BaseListBackupPlans__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6606,19 +6595,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseListBackups._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_backups(request, metadata)
-            transcoded_request = (
-                _BaseBackupForGKERestTransport._BaseListBackups._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBackupForGKERestTransport._BaseListBackups._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseListBackups,
+                    "_BaseListBackups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6755,17 +6741,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseListRestoreChannels._get_http_options()
-
             request, metadata = self._interceptor.pre_list_restore_channels(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseListRestoreChannels._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseListRestoreChannels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseListRestoreChannels,
+                    "_BaseListRestoreChannels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6906,17 +6893,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseListRestorePlanBindings._get_http_options()
-
             request, metadata = self._interceptor.pre_list_restore_plan_bindings(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseListRestorePlanBindings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseListRestorePlanBindings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseListRestorePlanBindings,
+                    "_BaseListRestorePlanBindings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7056,17 +7044,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseListRestorePlans._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_restore_plans(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseListRestorePlans._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseListRestorePlans._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseListRestorePlans,
+                    "_BaseListRestorePlans__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7204,17 +7193,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseListRestores._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_restores(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseListRestores._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBackupForGKERestTransport._BaseListRestores._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseListRestores,
+                    "_BaseListRestores__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7351,17 +7339,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseListVolumeBackups._get_http_options()
-
             request, metadata = self._interceptor.pre_list_volume_backups(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseListVolumeBackups._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseListVolumeBackups._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseListVolumeBackups,
+                    "_BaseListVolumeBackups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7500,17 +7489,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseListVolumeRestores._get_http_options()
-
             request, metadata = self._interceptor.pre_list_volume_restores(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseListVolumeRestores._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseListVolumeRestores._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseListVolumeRestores,
+                    "_BaseListVolumeRestores__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7652,23 +7642,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseUpdateBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_backup(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseUpdateBackup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseBackupForGKERestTransport._BaseUpdateBackup._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBackupForGKERestTransport._BaseUpdateBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseUpdateBackup,
+                    "_BaseUpdateBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7806,21 +7789,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseUpdateBackupChannel._get_http_options()
-
             request, metadata = self._interceptor.pre_update_backup_channel(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseUpdateBackupChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBackupForGKERestTransport._BaseUpdateBackupChannel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseUpdateBackupChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseUpdateBackupChannel,
+                    "_BaseUpdateBackupChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7959,21 +7939,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseUpdateBackupPlan._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_backup_plan(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseUpdateBackupPlan._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBackupForGKERestTransport._BaseUpdateBackupPlan._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseUpdateBackupPlan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseUpdateBackupPlan,
+                    "_BaseUpdateBackupPlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8112,19 +8089,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseUpdateRestore._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_restore(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseUpdateRestore._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBackupForGKERestTransport._BaseUpdateRestore._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseUpdateRestore._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseUpdateRestore,
+                    "_BaseUpdateRestore__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8262,21 +8236,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseUpdateRestoreChannel._get_http_options()
-
             request, metadata = self._interceptor.pre_update_restore_channel(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseUpdateRestoreChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBackupForGKERestTransport._BaseUpdateRestoreChannel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseUpdateRestoreChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseUpdateRestoreChannel,
+                    "_BaseUpdateRestoreChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8414,21 +8385,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseUpdateRestorePlan._get_http_options()
-
             request, metadata = self._interceptor.pre_update_restore_plan(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseUpdateRestorePlan._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBackupForGKERestTransport._BaseUpdateRestorePlan._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseUpdateRestorePlan._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseUpdateRestorePlan,
+                    "_BaseUpdateRestorePlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8906,19 +8874,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseBackupForGKERestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBackupForGKERestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9050,15 +9015,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9190,17 +9156,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBackupForGKERestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9333,23 +9298,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseBackupForGKERestTransport._BaseSetIamPolicy._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBackupForGKERestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9481,21 +9439,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             """
 
             http_options = _BaseBackupForGKERestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBackupForGKERestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9626,21 +9581,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBackupForGKERestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9745,17 +9697,18 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseBackupForGKERestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9862,17 +9815,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBackupForGKERestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10004,15 +9956,16 @@ class BackupForGKERestTransport(_BaseBackupForGKERestTransport):
             http_options = (
                 _BaseBackupForGKERestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseBackupForGKERestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBackupForGKERestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupForGKERestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

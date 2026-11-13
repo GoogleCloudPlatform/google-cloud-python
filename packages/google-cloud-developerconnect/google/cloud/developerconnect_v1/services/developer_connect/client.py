@@ -46,6 +46,13 @@ from google.auth.transport.grpc import SslCredentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
 from google.cloud.developerconnect_v1 import gapic_version as package_version
+from google.cloud.developerconnect_v1._compat import (
+    get_api_endpoint,
+    get_default_mtls_endpoint,
+    get_universe_domain,
+    read_environment_variables,
+    should_use_client_cert,
+)
 
 try:
     OptionalRetry = Union[retries.Retry, gapic_v1.method._MethodDefault, None]
@@ -116,76 +123,12 @@ class DeveloperConnectClientMeta(type):
 class DeveloperConnectClient(metaclass=DeveloperConnectClientMeta):
     """Service describing handlers for resources"""
 
-    @staticmethod
-    def _get_default_mtls_endpoint(api_endpoint) -> Optional[str]:
-        """Converts api endpoint to mTLS endpoint.
-
-        Convert "*.sandbox.googleapis.com" and "*.googleapis.com" to
-        "*.mtls.sandbox.googleapis.com" and "*.mtls.googleapis.com" respectively.
-        Args:
-            api_endpoint (Optional[str]): the api endpoint to convert.
-        Returns:
-            Optional[str]: converted mTLS api endpoint.
-        """
-        if not api_endpoint:
-            return api_endpoint
-
-        mtls_endpoint_re = re.compile(
-            r"(?P<name>[^.]+)(?P<mtls>\.mtls)?(?P<sandbox>\.sandbox)?(?P<googledomain>\.googleapis\.com)?"
-        )
-
-        m = mtls_endpoint_re.match(api_endpoint)
-        if m is None:
-            # Could not parse api_endpoint; return as-is.
-            return api_endpoint
-
-        name, mtls, sandbox, googledomain = m.groups()
-        if mtls or not googledomain:
-            return api_endpoint
-
-        if sandbox:
-            return api_endpoint.replace(
-                "sandbox.googleapis.com", "mtls.sandbox.googleapis.com"
-            )
-
-        return api_endpoint.replace(".googleapis.com", ".mtls.googleapis.com")
-
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "developerconnect.googleapis.com"
-    DEFAULT_MTLS_ENDPOINT = _get_default_mtls_endpoint.__func__(  # type: ignore
-        DEFAULT_ENDPOINT
-    )
+    DEFAULT_MTLS_ENDPOINT = get_default_mtls_endpoint(DEFAULT_ENDPOINT)
 
     _DEFAULT_ENDPOINT_TEMPLATE = "developerconnect.{UNIVERSE_DOMAIN}"
     _DEFAULT_UNIVERSE = "googleapis.com"
-
-    @staticmethod
-    def _use_client_cert_effective():
-        """Returns whether client certificate should be used for mTLS if the
-        google-auth version supports should_use_client_cert automatic mTLS enablement.
-
-        Alternatively, read from the GOOGLE_API_USE_CLIENT_CERTIFICATE env var.
-
-        Returns:
-            bool: whether client certificate should be used for mTLS
-        Raises:
-            ValueError: (If using a version of google-auth without should_use_client_cert and
-            GOOGLE_API_USE_CLIENT_CERTIFICATE is set to an unexpected value.)
-        """
-        # check if google-auth version supports should_use_client_cert for automatic mTLS enablement
-        if hasattr(mtls, "should_use_client_cert"):  # pragma: NO COVER
-            return mtls.should_use_client_cert()
-        else:  # pragma: NO COVER
-            # if unsupported, fallback to reading from env var
-            use_client_cert_str = os.getenv(
-                "GOOGLE_API_USE_CLIENT_CERTIFICATE", "false"
-            ).lower()
-            if use_client_cert_str not in ("true", "false"):
-                raise ValueError(
-                    "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be"
-                    " either `true` or `false`"
-                )
-            return use_client_cert_str == "true"
 
     @classmethod
     def from_service_account_info(cls, info: dict, *args, **kwargs):
@@ -538,7 +481,7 @@ class DeveloperConnectClient(metaclass=DeveloperConnectClientMeta):
         )
         if client_options is None:
             client_options = client_options_lib.ClientOptions()
-        use_client_cert = DeveloperConnectClient._use_client_cert_effective()
+        use_client_cert = should_use_client_cert()
         use_mtls_endpoint = os.getenv("GOOGLE_API_USE_MTLS_ENDPOINT", "auto")
         if use_mtls_endpoint not in ("auto", "never", "always"):
             raise MutualTLSChannelError(
@@ -559,34 +502,11 @@ class DeveloperConnectClient(metaclass=DeveloperConnectClientMeta):
         elif use_mtls_endpoint == "always" or (
             use_mtls_endpoint == "auto" and client_cert_source
         ):
-            api_endpoint = cls.DEFAULT_MTLS_ENDPOINT
+            api_endpoint = cls.DEFAULT_MTLS_ENDPOINT  # type: ignore
         else:
             api_endpoint = cls.DEFAULT_ENDPOINT
 
         return api_endpoint, client_cert_source
-
-    @staticmethod
-    def _read_environment_variables():
-        """Returns the environment variables used by the client.
-
-        Returns:
-            Tuple[bool, str, str]: returns the GOOGLE_API_USE_CLIENT_CERTIFICATE,
-            GOOGLE_API_USE_MTLS_ENDPOINT, and GOOGLE_CLOUD_UNIVERSE_DOMAIN environment variables.
-
-        Raises:
-            ValueError: If GOOGLE_API_USE_CLIENT_CERTIFICATE is not
-                any of ["true", "false"].
-            google.auth.exceptions.MutualTLSChannelError: If GOOGLE_API_USE_MTLS_ENDPOINT
-                is not any of ["auto", "never", "always"].
-        """
-        use_client_cert = DeveloperConnectClient._use_client_cert_effective()
-        use_mtls_endpoint = os.getenv("GOOGLE_API_USE_MTLS_ENDPOINT", "auto").lower()
-        universe_domain_env = os.getenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN")
-        if use_mtls_endpoint not in ("auto", "never", "always"):
-            raise MutualTLSChannelError(
-                "Environment variable `GOOGLE_API_USE_MTLS_ENDPOINT` must be `never`, `auto` or `always`"
-            )
-        return use_client_cert, use_mtls_endpoint, universe_domain_env
 
     @staticmethod
     def _get_client_cert_source(provided_cert_source, use_cert_flag):
@@ -606,65 +526,6 @@ class DeveloperConnectClient(metaclass=DeveloperConnectClientMeta):
             elif mtls.has_default_client_cert_source():
                 client_cert_source = mtls.default_client_cert_source()
         return client_cert_source
-
-    @staticmethod
-    def _get_api_endpoint(
-        api_override, client_cert_source, universe_domain, use_mtls_endpoint
-    ) -> str:
-        """Return the API endpoint used by the client.
-
-        Args:
-            api_override (str): The API endpoint override. If specified, this is always
-                the return value of this function and the other arguments are not used.
-            client_cert_source (bytes): The client certificate source used by the client.
-            universe_domain (str): The universe domain used by the client.
-            use_mtls_endpoint (str): How to use the mTLS endpoint, which depends also on the other parameters.
-                Possible values are "always", "auto", or "never".
-
-        Returns:
-            str: The API endpoint to be used by the client.
-        """
-        if api_override is not None:
-            api_endpoint = api_override
-        elif use_mtls_endpoint == "always" or (
-            use_mtls_endpoint == "auto" and client_cert_source
-        ):
-            _default_universe = DeveloperConnectClient._DEFAULT_UNIVERSE
-            if universe_domain != _default_universe:
-                raise MutualTLSChannelError(
-                    f"mTLS is not supported in any universe other than {_default_universe}."
-                )
-            api_endpoint = DeveloperConnectClient.DEFAULT_MTLS_ENDPOINT
-        else:
-            api_endpoint = DeveloperConnectClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-                UNIVERSE_DOMAIN=universe_domain
-            )
-        return api_endpoint
-
-    @staticmethod
-    def _get_universe_domain(
-        client_universe_domain: Optional[str], universe_domain_env: Optional[str]
-    ) -> str:
-        """Return the universe domain used by the client.
-
-        Args:
-            client_universe_domain (Optional[str]): The universe domain configured via the client options.
-            universe_domain_env (Optional[str]): The universe domain configured via the "GOOGLE_CLOUD_UNIVERSE_DOMAIN" environment variable.
-
-        Returns:
-            str: The universe domain to be used by the client.
-
-        Raises:
-            ValueError: If the universe domain is an empty string.
-        """
-        universe_domain = DeveloperConnectClient._DEFAULT_UNIVERSE
-        if client_universe_domain is not None:
-            universe_domain = client_universe_domain
-        elif universe_domain_env is not None:
-            universe_domain = universe_domain_env
-        if len(universe_domain.strip()) == 0:
-            raise ValueError("Universe Domain cannot be an empty string.")
-        return universe_domain
 
     def _validate_universe_domain(self):
         """Validates client's and credentials' universe domains are consistent.
@@ -797,13 +658,15 @@ class DeveloperConnectClient(metaclass=DeveloperConnectClientMeta):
         universe_domain_opt = getattr(self._client_options, "universe_domain", None)
 
         self._use_client_cert, self._use_mtls_endpoint, self._universe_domain_env = (
-            DeveloperConnectClient._read_environment_variables()
+            read_environment_variables()
         )
         self._client_cert_source = DeveloperConnectClient._get_client_cert_source(
             self._client_options.client_cert_source, self._use_client_cert
         )
-        self._universe_domain = DeveloperConnectClient._get_universe_domain(
-            universe_domain_opt, self._universe_domain_env
+        self._universe_domain = get_universe_domain(
+            universe_domain_opt,
+            self._universe_domain_env,
+            default_universe=DeveloperConnectClient._DEFAULT_UNIVERSE,
         )
         self._api_endpoint: str = ""  # updated below, depending on `transport`
 
@@ -838,14 +701,14 @@ class DeveloperConnectClient(metaclass=DeveloperConnectClientMeta):
             self._transport = cast(DeveloperConnectTransport, transport)
             self._api_endpoint = self._transport.host
 
-        self._api_endpoint = (
-            self._api_endpoint
-            or DeveloperConnectClient._get_api_endpoint(
-                self._client_options.api_endpoint,
-                self._client_cert_source,
-                self._universe_domain,
-                self._use_mtls_endpoint,
-            )
+        self._api_endpoint = self._api_endpoint or get_api_endpoint(
+            api_override=self._client_options.api_endpoint,
+            universe_domain=self._universe_domain,
+            default_universe=DeveloperConnectClient._DEFAULT_UNIVERSE,
+            default_mtls_endpoint=DeveloperConnectClient.DEFAULT_MTLS_ENDPOINT,
+            default_endpoint_template=DeveloperConnectClient._DEFAULT_ENDPOINT_TEMPLATE,
+            use_mtls=self._use_mtls_endpoint == "always"
+            or (self._use_mtls_endpoint == "auto" and self._client_cert_source),
         )
 
         if not transport_provided:
@@ -2294,6 +2157,138 @@ class DeveloperConnectClient(metaclass=DeveloperConnectClientMeta):
         # Done; return the response.
         return response
 
+    def open_git_repository_link_pull_request(
+        self,
+        request: Optional[
+            Union[developer_connect.OpenGitRepositoryLinkPullRequestRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        pull_request: Optional[developer_connect.PullRequest] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> developer_connect.PullRequest:
+        r"""Opens a Pull Request in the remote SCM repository
+        associated with a GitRepositoryLink.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import developerconnect_v1
+
+            def sample_open_git_repository_link_pull_request():
+                # Create a client
+                client = developerconnect_v1.DeveloperConnectClient()
+
+                # Initialize request argument(s)
+                pull_request = developerconnect_v1.PullRequest()
+                pull_request.id = "id_value"
+                pull_request.title = "title_value"
+                pull_request.head_ref = "head_ref_value"
+                pull_request.base_ref = "base_ref_value"
+
+                request = developerconnect_v1.OpenGitRepositoryLinkPullRequestRequest(
+                    name="name_value",
+                    pull_request=pull_request,
+                )
+
+                # Make the request
+                response = client.open_git_repository_link_pull_request(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.developerconnect_v1.types.OpenGitRepositoryLinkPullRequestRequest, dict]):
+                The request object. Message for opening SCM Pull Request.
+            name (str):
+                Required. The GitRepositoryLink resource name in the
+                format
+                ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            pull_request (google.cloud.developerconnect_v1.types.PullRequest):
+                Required. The Pull Request details to open. Input fields
+                used: title, body, head_ref, base_ref.
+
+                This corresponds to the ``pull_request`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.developerconnect_v1.types.PullRequest:
+                Message representing a SCM Pull
+                Request.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, pull_request]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, developer_connect.OpenGitRepositoryLinkPullRequestRequest
+        ):
+            request = developer_connect.OpenGitRepositoryLinkPullRequestRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+            if pull_request is not None:
+                request.pull_request = pull_request
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.open_git_repository_link_pull_request
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
     def fetch_linkable_git_repositories(
         self,
         request: Optional[
@@ -2669,6 +2664,1220 @@ class DeveloperConnectClient(metaclass=DeveloperConnectClientMeta):
         # This method is paged; wrap the response in a pager, which provides
         # an `__iter__` convenience method.
         response = pagers.FetchGitRefsPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def diff_git_repository_link_commit(
+        self,
+        request: Optional[
+            Union[developer_connect.DiffGitRepositoryLinkCommitRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        base_sha: Optional[str] = None,
+        head_sha: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> developer_connect.DiffGitRepositoryLinkCommitResponse:
+        r"""Diff commits for a GitRepositoryLink.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import developerconnect_v1
+
+            def sample_diff_git_repository_link_commit():
+                # Create a client
+                client = developerconnect_v1.DeveloperConnectClient()
+
+                # Initialize request argument(s)
+                request = developerconnect_v1.DiffGitRepositoryLinkCommitRequest(
+                    name="name_value",
+                    base_sha="base_sha_value",
+                    head_sha="head_sha_value",
+                )
+
+                # Make the request
+                response = client.diff_git_repository_link_commit(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.developerconnect_v1.types.DiffGitRepositoryLinkCommitRequest, dict]):
+                The request object. Request message for
+                DiffGitRepositoryLinkCommit.
+            name (str):
+                Required. The resource name of the
+                GitRepositoryLink.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            base_sha (str):
+                Required. The base commit SHA or ref.
+                This corresponds to the ``base_sha`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            head_sha (str):
+                Required. The head commit SHA or ref.
+                This corresponds to the ``head_sha`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.developerconnect_v1.types.DiffGitRepositoryLinkCommitResponse:
+                Response message for
+                DiffGitRepositoryLinkCommit.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, base_sha, head_sha]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, developer_connect.DiffGitRepositoryLinkCommitRequest
+        ):
+            request = developer_connect.DiffGitRepositoryLinkCommitRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+            if base_sha is not None:
+                request.base_sha = base_sha
+            if head_sha is not None:
+                request.head_sha = head_sha
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.diff_git_repository_link_commit
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def fetch_git_repository_link_commit(
+        self,
+        request: Optional[
+            Union[developer_connect.FetchGitRepositoryLinkCommitRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        commit_sha: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> developer_connect.FetchGitRepositoryLinkCommitResponse:
+        r"""Fetch Commit details from a Git repository link.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import developerconnect_v1
+
+            def sample_fetch_git_repository_link_commit():
+                # Create a client
+                client = developerconnect_v1.DeveloperConnectClient()
+
+                # Initialize request argument(s)
+                request = developerconnect_v1.FetchGitRepositoryLinkCommitRequest(
+                    name="name_value",
+                    commit_sha="commit_sha_value",
+                )
+
+                # Make the request
+                response = client.fetch_git_repository_link_commit(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkCommitRequest, dict]):
+                The request object. Request message for
+                FetchGitRepositoryLinkCommit.
+            name (str):
+                Required. The resource name of the GitRepositoryLink in
+                the format
+                ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            commit_sha (str):
+                Required. The commit SHA, or symbolic
+                revision (e.g., branch name, tag, or Git
+                reference).
+
+                This corresponds to the ``commit_sha`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkCommitResponse:
+                Response message for
+                FetchGitRepositoryLinkCommit.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, commit_sha]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, developer_connect.FetchGitRepositoryLinkCommitRequest
+        ):
+            request = developer_connect.FetchGitRepositoryLinkCommitRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+            if commit_sha is not None:
+                request.commit_sha = commit_sha
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.fetch_git_repository_link_commit
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def fetch_git_repository_link_commit_list(
+        self,
+        request: Optional[
+            Union[developer_connect.FetchGitRepositoryLinkCommitListRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        ref: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.FetchGitRepositoryLinkCommitListPager:
+        r"""Fetch a list of Commits from a Git repository link.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import developerconnect_v1
+
+            def sample_fetch_git_repository_link_commit_list():
+                # Create a client
+                client = developerconnect_v1.DeveloperConnectClient()
+
+                # Initialize request argument(s)
+                request = developerconnect_v1.FetchGitRepositoryLinkCommitListRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                page_result = client.fetch_git_repository_link_commit_list(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkCommitListRequest, dict]):
+                The request object. Request message for
+                FetchGitRepositoryLinkCommitList.
+            name (str):
+                Required. The resource name of the GitRepositoryLink in
+                the format
+                ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            ref (str):
+                Optional. The commit SHA, or symbolic
+                revision (e.g., branch name, tag, or Git
+                reference) from which to start listing
+                commits.
+
+                This corresponds to the ``ref`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.developerconnect_v1.services.developer_connect.pagers.FetchGitRepositoryLinkCommitListPager:
+                Response message for
+                FetchGitRepositoryLinkCommitList.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, ref]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, developer_connect.FetchGitRepositoryLinkCommitListRequest
+        ):
+            request = developer_connect.FetchGitRepositoryLinkCommitListRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+            if ref is not None:
+                request.ref = ref
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.fetch_git_repository_link_commit_list
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.FetchGitRepositoryLinkCommitListPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def fetch_git_repository_link_file_blame(
+        self,
+        request: Optional[
+            Union[developer_connect.FetchGitRepositoryLinkFileBlameRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        ref: Optional[str] = None,
+        path: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> developer_connect.FetchGitRepositoryLinkFileBlameResponse:
+        r"""Fetches blame information for a file or line range in
+        a file.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import developerconnect_v1
+
+            def sample_fetch_git_repository_link_file_blame():
+                # Create a client
+                client = developerconnect_v1.DeveloperConnectClient()
+
+                # Initialize request argument(s)
+                request = developerconnect_v1.FetchGitRepositoryLinkFileBlameRequest(
+                    name="name_value",
+                    ref="ref_value",
+                    path="path_value",
+                )
+
+                # Make the request
+                response = client.fetch_git_repository_link_file_blame(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkFileBlameRequest, dict]):
+                The request object. Request message for
+                FetchGitRepositoryLinkFileBlame.
+            name (str):
+                Required. The resource name of the GitRepositoryLink in
+                the format
+                ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            ref (str):
+                Required. The SCM commit SHA, or
+                symbolic revision (e.g., branch name,
+                tag) from which to fetch the blame.
+
+                This corresponds to the ``ref`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            path (str):
+                Required. The file path within the
+                repository.
+
+                This corresponds to the ``path`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkFileBlameResponse:
+                Response message for
+                FetchGitRepositoryLinkFileBlame.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, ref, path]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, developer_connect.FetchGitRepositoryLinkFileBlameRequest
+        ):
+            request = developer_connect.FetchGitRepositoryLinkFileBlameRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+            if ref is not None:
+                request.ref = ref
+            if path is not None:
+                request.path = path
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.fetch_git_repository_link_file_blame
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def fetch_git_repository_link_pull_request(
+        self,
+        request: Optional[
+            Union[developer_connect.FetchGitRepositoryLinkPullRequestRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        pull_request_id: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> developer_connect.PullRequest:
+        r"""Fetch Pull Request details from a Git repository
+        link.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import developerconnect_v1
+
+            def sample_fetch_git_repository_link_pull_request():
+                # Create a client
+                client = developerconnect_v1.DeveloperConnectClient()
+
+                # Initialize request argument(s)
+                request = developerconnect_v1.FetchGitRepositoryLinkPullRequestRequest(
+                    name="name_value",
+                    pull_request_id="pull_request_id_value",
+                )
+
+                # Make the request
+                response = client.fetch_git_repository_link_pull_request(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkPullRequestRequest, dict]):
+                The request object. Request message for
+                FetchGitRepositoryLinkPullRequest.
+            name (str):
+                Required. The resource name of the GitRepositoryLink in
+                the format
+                ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            pull_request_id (str):
+                Required. The ID of the Pull Request.
+                This corresponds to the ``pull_request_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.developerconnect_v1.types.PullRequest:
+                Message representing a SCM Pull
+                Request.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, pull_request_id]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, developer_connect.FetchGitRepositoryLinkPullRequestRequest
+        ):
+            request = developer_connect.FetchGitRepositoryLinkPullRequestRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+            if pull_request_id is not None:
+                request.pull_request_id = pull_request_id
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.fetch_git_repository_link_pull_request
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def add_git_repository_link_pull_request_comment(
+        self,
+        request: Optional[
+            Union[developer_connect.AddGitRepositoryLinkPullRequestCommentRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        pull_request_id: Optional[str] = None,
+        comment: Optional[developer_connect.PullRequestComment] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> developer_connect.PullRequestComment:
+        r"""Add a comment to a Pull Request.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import developerconnect_v1
+
+            def sample_add_git_repository_link_pull_request_comment():
+                # Create a client
+                client = developerconnect_v1.DeveloperConnectClient()
+
+                # Initialize request argument(s)
+                comment = developerconnect_v1.PullRequestComment()
+                comment.body = "body_value"
+
+                request = developerconnect_v1.AddGitRepositoryLinkPullRequestCommentRequest(
+                    name="name_value",
+                    pull_request_id="pull_request_id_value",
+                    comment=comment,
+                )
+
+                # Make the request
+                response = client.add_git_repository_link_pull_request_comment(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.developerconnect_v1.types.AddGitRepositoryLinkPullRequestCommentRequest, dict]):
+                The request object. Request message for
+                AddGitRepositoryLinkPullRequestComment.
+            name (str):
+                Required. The resource name of the GitRepositoryLink in
+                the format
+                ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            pull_request_id (str):
+                Required. The ID of the Pull Request.
+                This corresponds to the ``pull_request_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            comment (google.cloud.developerconnect_v1.types.PullRequestComment):
+                Required. The comment to add.
+                This corresponds to the ``comment`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.developerconnect_v1.types.PullRequestComment:
+                Message representing a SCM Pull
+                Request Comment.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, pull_request_id, comment]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, developer_connect.AddGitRepositoryLinkPullRequestCommentRequest
+        ):
+            request = developer_connect.AddGitRepositoryLinkPullRequestCommentRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+            if pull_request_id is not None:
+                request.pull_request_id = pull_request_id
+            if comment is not None:
+                request.comment = comment
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.add_git_repository_link_pull_request_comment
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def add_git_repository_link_pull_request_review_comment(
+        self,
+        request: Optional[
+            Union[
+                developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest,
+                dict,
+            ]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        pull_request_id: Optional[str] = None,
+        comment: Optional[developer_connect.PullRequestReviewComment] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> developer_connect.PullRequestReviewComment:
+        r"""Add a review comment (inline on diff) to a Pull
+        Request.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import developerconnect_v1
+
+            def sample_add_git_repository_link_pull_request_review_comment():
+                # Create a client
+                client = developerconnect_v1.DeveloperConnectClient()
+
+                # Initialize request argument(s)
+                comment = developerconnect_v1.PullRequestReviewComment()
+                comment.body = "body_value"
+                comment.path = "path_value"
+                comment.last_line = 955
+
+                request = developerconnect_v1.AddGitRepositoryLinkPullRequestReviewCommentRequest(
+                    name="name_value",
+                    pull_request_id="pull_request_id_value",
+                    comment=comment,
+                )
+
+                # Make the request
+                response = client.add_git_repository_link_pull_request_review_comment(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.developerconnect_v1.types.AddGitRepositoryLinkPullRequestReviewCommentRequest, dict]):
+                The request object. Request message for
+                AddGitRepositoryLinkPullRequestReviewComment.
+            name (str):
+                Required. The resource name of the GitRepositoryLink in
+                the format
+                ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            pull_request_id (str):
+                Required. The ID of the Pull Request.
+                This corresponds to the ``pull_request_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            comment (google.cloud.developerconnect_v1.types.PullRequestReviewComment):
+                Required. The review comment to add.
+                This corresponds to the ``comment`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.developerconnect_v1.types.PullRequestReviewComment:
+                Message representing a SCM Pull
+                Request Review Comment (inline on diff).
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, pull_request_id, comment]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request,
+            developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest,
+        ):
+            request = (
+                developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest(
+                    request
+                )
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+            if pull_request_id is not None:
+                request.pull_request_id = pull_request_id
+            if comment is not None:
+                request.comment = comment
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.add_git_repository_link_pull_request_review_comment
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def modify_git_repository_link_pull_request(
+        self,
+        request: Optional[
+            Union[developer_connect.ModifyGitRepositoryLinkPullRequestRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        pull_request_id: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> developer_connect.PullRequest:
+        r"""Modifies a Pull Request in the remote SCM repository
+        associated with a GitRepositoryLink.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import developerconnect_v1
+
+            def sample_modify_git_repository_link_pull_request():
+                # Create a client
+                client = developerconnect_v1.DeveloperConnectClient()
+
+                # Initialize request argument(s)
+                request = developerconnect_v1.ModifyGitRepositoryLinkPullRequestRequest(
+                    name="name_value",
+                    pull_request_id="pull_request_id_value",
+                )
+
+                # Make the request
+                response = client.modify_git_repository_link_pull_request(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.developerconnect_v1.types.ModifyGitRepositoryLinkPullRequestRequest, dict]):
+                The request object. Message for modifying SCM Pull
+                Request.
+            name (str):
+                Required. The GitRepositoryLink resource name in the
+                format
+                ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            pull_request_id (str):
+                Required. The SCM-specific Pull
+                Request identifier (e.g., "45").
+
+                This corresponds to the ``pull_request_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.developerconnect_v1.types.PullRequest:
+                Message representing a SCM Pull
+                Request.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, pull_request_id]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, developer_connect.ModifyGitRepositoryLinkPullRequestRequest
+        ):
+            request = developer_connect.ModifyGitRepositoryLinkPullRequestRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+            if pull_request_id is not None:
+                request.pull_request_id = pull_request_id
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.modify_git_repository_link_pull_request
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def fetch_git_repository_link_pull_request_list(
+        self,
+        request: Optional[
+            Union[developer_connect.FetchGitRepositoryLinkPullRequestListRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.FetchGitRepositoryLinkPullRequestListPager:
+        r"""Fetches a list of Pull Requests from the remote
+        repository.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import developerconnect_v1
+
+            def sample_fetch_git_repository_link_pull_request_list():
+                # Create a client
+                client = developerconnect_v1.DeveloperConnectClient()
+
+                # Initialize request argument(s)
+                request = developerconnect_v1.FetchGitRepositoryLinkPullRequestListRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                page_result = client.fetch_git_repository_link_pull_request_list(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkPullRequestListRequest, dict]):
+                The request object. Request message for
+                FetchGitRepositoryLinkPullRequestList.
+            name (str):
+                Required. The GitRepositoryLink resource name in the
+                format
+                ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.developerconnect_v1.services.developer_connect.pagers.FetchGitRepositoryLinkPullRequestListPager:
+                Response message for
+                FetchGitRepositoryLinkPullRequestList.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, developer_connect.FetchGitRepositoryLinkPullRequestListRequest
+        ):
+            request = developer_connect.FetchGitRepositoryLinkPullRequestListRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.fetch_git_repository_link_pull_request_list
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.FetchGitRepositoryLinkPullRequestListPager(
             method=rpc,
             request=request,
             response=response,

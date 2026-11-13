@@ -114,8 +114,7 @@ class Instance(object):
     :param labels: (Optional) User-assigned labels for this instance.
 
     :type experimental_host: str
-    :param experimental_host: (Deprecated) The instance type and host are now managed by the Client.
-    """
+    :param experimental_host: (Deprecated) The instance type and host are now managed by the Client."""
 
     def __init__(
         self,

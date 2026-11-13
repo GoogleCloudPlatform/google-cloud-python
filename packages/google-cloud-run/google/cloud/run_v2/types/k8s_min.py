@@ -54,6 +54,9 @@ class Container(proto.Message):
     Note that additional arguments can be supplied by the system to
     the container at runtime.
 
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         name (str):
             Name of the container specified as a DNS_LABEL (RFC 1123).
@@ -63,7 +66,8 @@ class Container(proto.Message):
             Container Registry. If the host is not provided,
             Dockerhub is assumed.
         source_code (google.cloud.run_v2.types.SourceCode):
-            Optional. Location of the source.
+            Optional. Location of the source. This field
+            is only supported in Cloud Run Service.
         command (MutableSequence[str]):
             Entrypoint array. Not executed within a
             shell. The docker image's ENTRYPOINT is used if
@@ -119,6 +123,12 @@ class Container(proto.Message):
         build_info (google.cloud.run_v2.types.BuildInfo):
             Output only. The build info of the container
             image.
+        sandbox_launcher (bool):
+            Optional. Indicates that this container can
+            act as a sandbox supervisor and launch
+            sandboxes.
+
+            This field is a member of `oneof`_ ``_sandbox_launcher``.
     """
 
     name: str = proto.Field(
@@ -193,6 +203,11 @@ class Container(proto.Message):
         proto.MESSAGE,
         number=15,
         message="BuildInfo",
+    )
+    sandbox_launcher: bool = proto.Field(
+        proto.BOOL,
+        number=22,
+        optional=True,
     )
 
 
@@ -373,6 +388,9 @@ class VolumeMount(proto.Message):
             Optional. Path within the volume from which
             the container's volume should be mounted.
             Defaults to "" (volume's root).
+
+            This field is currently rejected in Secret
+            volume mounts.
     """
 
     name: str = proto.Field(
@@ -581,15 +599,26 @@ class CloudSqlInstance(proto.Message):
 
     Attributes:
         instances (MutableSequence[str]):
-            The Cloud SQL instance connection names, as
-            can be found in
-            https://console.cloud.google.com/sql/instances.
-            Visit
-            https://cloud.google.com/sql/docs/mysql/connect-run
-            for more information on how to connect Cloud SQL
-            and Cloud Run. Format:
+            A list of Cloud SQL instance connection names. Cloud Run
+            uses these to establish connections to the specified Cloud
+            SQL instances. While the SQL instance name itself is unique
+            within a project, the full connection name requires the
+            location for proper routing. Format:
+            ``{project}:{location}:{instance}`` Example:
+            ``my-project:us-central1:my-instance``
 
-            {project}:{location}:{instance}
+            You can find this value on the instance's **Overview** page
+            in the Google Cloud console or by using the following
+            ``gcloud`` command:
+
+            .. code:: sh
+
+               gcloud sql instances describe INSTANCE_NAME \
+                 --format='value(connectionName)'
+
+            Visit https://cloud.google.com/sql/docs/mysql/connect-run
+            for more information on how to connect Cloud SQL and Cloud
+            Run.
     """
 
     instances: MutableSequence[str] = proto.RepeatedField(
@@ -599,31 +628,28 @@ class CloudSqlInstance(proto.Message):
 
 
 class EmptyDirVolumeSource(proto.Message):
-    r"""In memory (tmpfs) ephemeral storage.
-    It is ephemeral in the sense that when the sandbox is taken
-    down, the data is destroyed with it (it does not persist across
-    sandbox runs).
+    r"""Represents in-memory (tmpfs) or disk-backed ephemeral
+    storage. It is ephemeral in the sense that when the sandbox is
+    taken down, the data is destroyed with it (it does not persist
+    across sandbox runs).
 
     Attributes:
         medium (google.cloud.run_v2.types.EmptyDirVolumeSource.Medium):
-            The medium on which the data is stored.
-            Acceptable values today is only MEMORY or none.
-            When none, the default will currently be backed
-            by memory but could change over time. +optional
+            The medium on which the data is stored. Acceptable values
+            are ``MEMORY``, ``DISK``, or unset (``MEDIUM_UNSPECIFIED``).
+            When unset, the default is currently memory-backed but could
+            change over time.
         size_limit (str):
-            Limit on the storage usable by this EmptyDir
-            volume. The size limit is also applicable for
-            memory medium. The maximum usage on memory
-            medium EmptyDir would be the minimum value
-            between the SizeLimit specified here and the sum
-            of memory limits of all containers. The default
-            is nil which means that the limit is undefined.
-            More info:
-
-            https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume.
-            Info in Kubernetes:
-
-            https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
+            Limit on the storage usable by this EmptyDir volume. The
+            size limit is also applicable for memory medium. The maximum
+            usage on memory medium EmptyDir would be the minimum value
+            between the SizeLimit specified here and the sum of memory
+            limits of all containers. The default is nil which means
+            that the limit is undefined. For more information, see
+            `Configure in-memory volume
+            mounts <https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume>`__
+            and the `Kubernetes ``emptyDir`` volume
+            documentation <https://kubernetes.io/docs/concepts/storage/volumes/#emptydir>`__.
     """
 
     class Medium(proto.Enum):
@@ -637,10 +663,13 @@ class EmptyDirVolumeSource(proto.Message):
             MEMORY (1):
                 Explicitly set the EmptyDir to be in memory.
                 Uses tmpfs.
+            DISK (2):
+                Explicitly sets the EmptyDir to be a disk.
         """
 
         MEDIUM_UNSPECIFIED = 0
         MEMORY = 1
+        DISK = 2
 
     medium: Medium = proto.Field(
         proto.ENUM,
@@ -681,8 +710,8 @@ class NFSVolumeSource(proto.Message):
 
 
 class GCSVolumeSource(proto.Message):
-    r"""Represents a volume backed by a Cloud Storage bucket using
-    Cloud Storage FUSE.
+    r"""Represents a volume backed by a Cloud Storage bucket (mounted
+    via Cloud Storage FUSE or as a block device disk).
 
     Attributes:
         bucket (str):
@@ -920,11 +949,23 @@ class BuildInfo(proto.Message):
 class SourceCode(proto.Message):
     r"""Source type for the container.
 
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
     Attributes:
         cloud_storage_source (google.cloud.run_v2.types.SourceCode.CloudStorageSource):
             The source is a Cloud Storage bucket.
+
+            This field is a member of `oneof`_ ``source_type``.
+        inlined_source (google.cloud.run_v2.types.SourceCode.InlinedSource):
+            Optional. Input only. Source code inlined in the request.
+            Cloud Run will store the inlined_source to Cloud Storage and
+            replace the field with cloud_storage_source. This field is
+            only supported in Cloud Run Service.
 
             This field is a member of `oneof`_ ``source_type``.
     """
@@ -955,11 +996,60 @@ class SourceCode(proto.Message):
             number=3,
         )
 
+    class SourceFile(proto.Message):
+        r"""Source file.
+
+        Attributes:
+            filename (str):
+                Required. Input only. The file name for the source code.
+                e.g., ``"index.js"`` or ``"node_modules/dependency.js"``.
+                The filename must be less than 255 characters and cannot
+                contain ``..``, ``./``, ``//``, or end with a ``/``. Cloud
+                Run will place the files in the container subdirectories,
+                please use relative path to access the file.
+            content (str):
+                Required. Input only. Represents the exact, literal, and
+                complete source code of the file. Placeholders like ``...``
+                or comments such as ``# [rest of code]`` should NEVER be
+                used as omission. Every character in this field will be
+                built into the final container. Any omission will result in
+                a broken application.
+        """
+
+        filename: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        content: str = proto.Field(
+            proto.STRING,
+            number=2,
+        )
+
+    class InlinedSource(proto.Message):
+        r"""Inlined source.
+
+        Attributes:
+            sources (MutableSequence[google.cloud.run_v2.types.SourceCode.SourceFile]):
+                Required. Input only. The source code.
+        """
+
+        sources: MutableSequence["SourceCode.SourceFile"] = proto.RepeatedField(
+            proto.MESSAGE,
+            number=1,
+            message="SourceCode.SourceFile",
+        )
+
     cloud_storage_source: CloudStorageSource = proto.Field(
         proto.MESSAGE,
         number=1,
         oneof="source_type",
         message=CloudStorageSource,
+    )
+    inlined_source: InlinedSource = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="source_type",
+        message=InlinedSource,
     )
 
 

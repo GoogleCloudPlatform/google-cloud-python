@@ -377,6 +377,11 @@ class Step(proto.Message):
             Connection.
 
             This field is a member of `oneof`_ ``step_info``.
+        datastream_private_connection (google.cloud.network_management_v1.types.PrivateConnectionInfo):
+            Display information of a Datastream Private
+            Connection.
+
+            This field is a member of `oneof`_ ``step_info``.
     """
 
     class State(proto.Enum):
@@ -454,6 +459,9 @@ class Step(proto.Message):
             START_FROM_DMS_PRIVATE_CONNECTION (48):
                 Initial state: packet originating from a DMS
                 Private Connection.
+            START_FROM_DATASTREAM_PRIVATE_CONNECTION (49):
+                Initial state: packet originating from a
+                Datastream Private Connection.
             APPLY_INGRESS_FIREWALL_RULE (4):
                 Config checking state: verify ingress
                 firewall rule.
@@ -567,6 +575,7 @@ class Step(proto.Message):
         START_FROM_PSC_PUBLISHED_SERVICE = 30
         START_FROM_SERVERLESS_NEG = 31
         START_FROM_DMS_PRIVATE_CONNECTION = 48
+        START_FROM_DATASTREAM_PRIVATE_CONNECTION = 49
         APPLY_INGRESS_FIREWALL_RULE = 4
         APPLY_EGRESS_FIREWALL_RULE = 5
         APPLY_ROUTE = 6
@@ -843,6 +852,12 @@ class Step(proto.Message):
         oneof="step_info",
         message="PrivateConnectionInfo",
     )
+    datastream_private_connection: "PrivateConnectionInfo" = proto.Field(
+        proto.MESSAGE,
+        number=44,
+        oneof="step_info",
+        message="PrivateConnectionInfo",
+    )
 
 
 class InstanceInfo(proto.Message):
@@ -853,12 +868,14 @@ class InstanceInfo(proto.Message):
         display_name (str):
             Name of a Compute Engine instance.
         uri (str):
-            URI of a Compute Engine instance.
+            URI of a Compute Engine instance in format
+            "projects/{project}/zones/{zone}/instances/{instance}".
         interface (str):
             Name of the network interface of a Compute
             Engine instance.
         network_uri (str):
-            URI of a Compute Engine network.
+            URI of a Compute Engine network in format
+            "projects/{project}/global/networks/{network}".
         internal_ip (str):
             Internal IP address of the network interface.
         external_ip (str):
@@ -868,8 +885,9 @@ class InstanceInfo(proto.Message):
         service_account (str):
             Service account authorized for the instance.
         psc_network_attachment_uri (str):
-            URI of the PSC network attachment the NIC is
-            attached to (if relevant).
+            URI of the PSC network attachment the NIC is attached to (if
+            relevant) in format
+            "projects/{project}/regions/{region}/networkAttachments/{network_attachment}".
         running (bool):
             Indicates whether the Compute Engine instance is running.
             Deprecated: use the ``status`` field instead.
@@ -950,10 +968,12 @@ class NetworkInfo(proto.Message):
         display_name (str):
             Name of a Compute Engine network.
         uri (str):
-            URI of a Compute Engine network.
+            URI of a Compute Engine network in format
+            "projects/{project}/global/networks/{network}".
         matched_subnet_uri (str):
             URI of the subnet matching the source IP
-            address of the test.
+            address of the test in format
+            "projects/{project}/regions/{region}/subnetworks/{subnetwork}".
         matched_ip_range (str):
             The IP range of the subnet matching the
             source IP address of the test.
@@ -993,8 +1013,10 @@ class FirewallInfo(proto.Message):
             The display name of the firewall rule. This
             field might be empty for firewall policy rules.
         uri (str):
-            The URI of the firewall rule. This field is
-            not applicable to implied VPC firewall rules.
+            The URI of the firewall rule in format
+            "projects/{project}/global/firewalls/{firewall}".
+            This field is not applicable to implied VPC
+            firewall rules.
         direction (str):
             Possible values: INGRESS, EGRESS
         action (str):
@@ -1003,9 +1025,10 @@ class FirewallInfo(proto.Message):
             The priority of the firewall rule.
         network_uri (str):
             The URI of the VPC network that the firewall
-            rule is associated with. This field is not
-            applicable to hierarchical firewall policy
-            rules.
+            rule is associated with in format
+            "projects/{project}/global/networks/{network}".
+            This field is not applicable to hierarchical
+            firewall policy rules.
         target_tags (MutableSequence[str]):
             The target tags defined by the VPC firewall
             rule. This field is not applicable to firewall
@@ -1019,10 +1042,16 @@ class FirewallInfo(proto.Message):
             applicable to VPC firewall rules and implied VPC
             firewall rules.
         policy_uri (str):
-            The URI of the firewall policy that this rule
-            is associated with. This field is not applicable
-            to VPC firewall rules and implied VPC firewall
-            rules.
+            The URI of the firewall policy that this rule is associated
+            with. This field is not applicable to VPC firewall rules and
+            implied VPC firewall rules. Format:
+
+            - ``locations/global/firewallPolicies/{policy_id}``
+              (hierarchical policy)
+            - ``projects/{project_id}/global/firewallPolicies/{policy_id}``
+              (global network firewall policy)
+            - ``projects/{project_id}/regions/{region}/firewallPolicies/{policy_id}``
+              (regional network firewall policy)
         firewall_rule_type (google.cloud.network_management_v1.types.FirewallInfo.FirewallRuleType):
             The firewall rule's type.
         policy_priority (int):
@@ -1193,8 +1222,10 @@ class RouteInfo(proto.Message):
         display_name (str):
             Name of a route.
         uri (str):
-            URI of a route. SUBNET, STATIC, PEERING_SUBNET (only for
-            peering network) and POLICY_BASED routes only.
+            URI of a route in format
+            "projects/{project}/global/routes/{route}". SUBNET, STATIC,
+            PEERING_SUBNET (only for peering network) and POLICY_BASED
+            routes only.
         region (str):
             Region of the route. DYNAMIC, PEERING_DYNAMIC, POLICY_BASED
             and ADVERTISED routes only. If set for POLICY_BASED route,
@@ -1209,7 +1240,9 @@ class RouteInfo(proto.Message):
             tunnel"). Deprecated in favor of the next_hop_type and
             next_hop_uri fields, not used in new tests.
         network_uri (str):
-            URI of a VPC network where route is located.
+            URI of a VPC network where route is located
+            in format
+            "projects/{project}/global/networks/{network}".
         priority (int):
             Priority of the route.
         instance_tags (MutableSequence[str]):
@@ -1225,20 +1258,26 @@ class RouteInfo(proto.Message):
         protocols (MutableSequence[str]):
             Protocols of the route. POLICY_BASED routes only.
         ncc_hub_uri (str):
-            URI of the NCC Hub the route is advertised by.
+            URI of the NCC Hub the route is advertised by in format
+            "projects/{project}/locations/global/hubs/{hub}".
             PEERING_SUBNET and PEERING_DYNAMIC routes that are
             advertised by NCC Hub only.
 
             This field is a member of `oneof`_ ``_ncc_hub_uri``.
         ncc_spoke_uri (str):
-            URI of the destination NCC Spoke. PEERING_SUBNET and
-            PEERING_DYNAMIC routes that are advertised by NCC Hub only.
+            URI of the destination NCC Spoke in format
+            "projects/{project}/locations/{location}/spokes/{spoke}"
+            (regional) or
+            "projects/{project}/locations/global/spokes/{spoke}"
+            (global). PEERING_SUBNET and PEERING_DYNAMIC routes that are
+            advertised by NCC Hub only.
 
             This field is a member of `oneof`_ ``_ncc_spoke_uri``.
         advertised_route_source_router_uri (str):
             For ADVERTISED dynamic routes, the URI of the
             Cloud Router that advertised the corresponding
-            IP prefix.
+            IP prefix in format
+            "projects/{project}/regions/{region}/routers/{router}".
 
             This field is a member of `oneof`_ ``_advertised_route_source_router_uri``.
         advertised_route_next_hop_uri (str):
@@ -1254,10 +1293,12 @@ class RouteInfo(proto.Message):
             URI of the next hop resource.
         next_hop_network_uri (str):
             URI of a VPC network where the next hop
-            resource is located.
+            resource is located in format
+            "projects/{project}/global/networks/{network}".
         originating_route_uri (str):
             For PEERING_SUBNET and PEERING_STATIC routes, the URI of the
-            originating SUBNET/STATIC route.
+            originating SUBNET/STATIC route. Format:
+            ``projects/{project_id}/global/routes/{route_id}``
         originating_route_display_name (str):
             For PEERING_SUBNET, PEERING_STATIC and PEERING_DYNAMIC
             routes, the name of the originating SUBNET/STATIC/DYNAMIC
@@ -1265,7 +1306,8 @@ class RouteInfo(proto.Message):
         ncc_hub_route_uri (str):
             For PEERING_SUBNET and PEERING_DYNAMIC routes that are
             advertised by NCC Hub, the URI of the corresponding route in
-            NCC Hub's routing table.
+            NCC Hub's routing table. Format:
+            ``projects/{project_id}/locations/global/hubs/{hub_id}/routeTables/{route_table_id}/routes/{route_id}``
     """
 
     class RouteType(proto.Enum):
@@ -1571,7 +1613,11 @@ class ForwardingRuleInfo(proto.Message):
         display_name (str):
             Name of the forwarding rule.
         uri (str):
-            URI of the forwarding rule.
+            URI of the forwarding rule in format
+            "projects/{project}/global/forwardingRules/{forwarding_rule}"
+            (global) or
+            "projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}"
+            (regional).
         matched_protocol (str):
             Protocol defined in the forwarding rule that
             matches the packet.
@@ -1583,7 +1629,9 @@ class ForwardingRuleInfo(proto.Message):
         target (str):
             Target type of the forwarding rule.
         network_uri (str):
-            Network URI.
+            URI of a VPC network where the forwarding
+            rule is located in format
+            "projects/{project}/global/networks/{network}".
         region (str):
             Region of the forwarding rule. Set only for
             regional forwarding rules.
@@ -1593,8 +1641,9 @@ class ForwardingRuleInfo(proto.Message):
             related to load balancers (like PSC forwarding
             rules).
         psc_service_attachment_uri (str):
-            URI of the PSC service attachment this
-            forwarding rule targets (if applicable).
+            URI of the PSC service attachment this forwarding rule
+            targets (if applicable) in format
+            "projects/{project}/regions/{region}/serviceAttachments/{service_attachment}".
         psc_google_api_target (str):
             PSC Google API target this forwarding rule
             targets (if applicable).
@@ -1663,7 +1712,13 @@ class LoadBalancerInfo(proto.Message):
             Type of load balancer's backend
             configuration.
         backend_uri (str):
-            Backend configuration URI.
+            URI of the backend associated with the load balancer.
+            Format:
+
+            - ``projects/{project_id}/regions/{region}/backendServices/{backend_service_id}``
+            - ``projects/{project_id}/global/backendServices/{backend_service_id}``
+            - ``projects/{project_id}/regions/{region}/targetPools/{target_pool_id}``
+            - ``projects/{project_id}/zones/{zone}/targetInstances/{target_instance_id}``
     """
 
     class LoadBalancerType(proto.Enum):
@@ -1747,8 +1802,16 @@ class LoadBalancerBackend(proto.Message):
             Name of a Compute Engine instance or network
             endpoint.
         uri (str):
-            URI of a Compute Engine instance or network
-            endpoint.
+            URI of the backend instance or network endpoint. Format:
+
+            - ``projects/{project_id}/zones/{zone}/instances/{instance_id}``
+              (instance)
+            - ``projects/{project_id}/zones/{zone}/networkEndpointGroups/{neg_id}``
+              (zonal NEG)
+            - ``projects/{project_id}/regions/{region}/networkEndpointGroups/{neg_id}``
+              (regional NEG)
+            - ``projects/{project_id}/global/networkEndpointGroups/{neg_id}``
+              (global NEG)
         health_check_firewall_state (google.cloud.network_management_v1.types.LoadBalancerBackend.HealthCheckFirewallState):
             State of the health check firewall
             configuration.
@@ -1814,7 +1877,8 @@ class HybridSubnetInfo(proto.Message):
         display_name (str):
             Name of a hybrid subnet.
         uri (str):
-            URI of a hybrid subnet.
+            URI of the hybrid subnet. Format:
+            ``projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}``
         region (str):
             Name of a Google Cloud region where the
             hybrid subnet is configured.
@@ -1842,17 +1906,23 @@ class VpnGatewayInfo(proto.Message):
         display_name (str):
             Name of a VPN gateway.
         uri (str):
-            URI of a VPN gateway.
+            URI of the VPN gateway. Format:
+
+            - ``projects/{project_id}/regions/{region}/vpnGateways/{vpn_gateway_id}``
+              (HA VPN gateway)
+            - ``projects/{project_id}/regions/{region}/targetVpnGateways/{target_vpn_gateway_id}``
+              (Classic VPN gateway)
         network_uri (str):
-            URI of a Compute Engine network where the VPN
-            gateway is configured.
+            URI of the VPC network where the VPN gateway is configured.
+            Format:
+            ``projects/{project_id}/global/networks/{network_id}``
         ip_address (str):
             IP address of the VPN gateway.
         vpn_tunnel_uri (str):
-            A VPN tunnel that is associated with this VPN
-            gateway. There may be multiple VPN tunnels
-            configured on a VPN gateway, and only the one
-            relevant to the test is displayed.
+            URI of the VPN tunnel associated with the VPN gateway. There
+            may be multiple VPN tunnels configured on a VPN gateway, and
+            only the one relevant to the test is displayed. Format:
+            ``projects/{project_id}/regions/{region}/vpnTunnels/{vpn_tunnel_id}``
         region (str):
             Name of a Google Cloud region where this VPN
             gateway is configured.
@@ -1892,20 +1962,30 @@ class VpnTunnelInfo(proto.Message):
         display_name (str):
             Name of a VPN tunnel.
         uri (str):
-            URI of a VPN tunnel.
+            URI of the VPN tunnel. Format:
+            ``projects/{project_id}/regions/{region}/vpnTunnels/{vpn_tunnel_id}``
         source_gateway (str):
-            URI of the VPN gateway at local end of the
-            tunnel.
+            URI of the VPN gateway at local end of the tunnel. Format:
+
+            - ``projects/{project_id}/regions/{region}/vpnGateways/{vpn_gateway_id}``
+              (HA VPN gateway)
+            - ``projects/{project_id}/regions/{region}/targetVpnGateways/{target_vpn_gateway_id}``
+              (Classic VPN gateway)
         remote_gateway (str):
-            URI of a VPN gateway at remote end of the
-            tunnel.
+            URI of a VPN gateway at remote end of the tunnel. Format:
+
+            - ``projects/{project_id}/regions/{region}/vpnGateways/{vpn_gateway_id}``
+              (GCP HA VPN gateway)
+            - ``projects/{project_id}/global/peerVpnGateways/{peer_vpn_gateway_id}``
+              (GCP peer VPN gateway)
         remote_gateway_ip (str):
             Remote VPN gateway's IP address.
         source_gateway_ip (str):
             Local VPN gateway's IP address.
         network_uri (str):
-            URI of a Compute Engine network where the VPN
-            tunnel is configured.
+            URI of the VPC network where the VPN tunnel is configured.
+            Format:
+            ``projects/{project_id}/global/networks/{network_id}``
         region (str):
             Name of a Google Cloud region where this VPN
             tunnel is configured.
@@ -1981,16 +2061,18 @@ class InterconnectAttachmentInfo(proto.Message):
         display_name (str):
             Name of an Interconnect attachment.
         uri (str):
-            URI of an Interconnect attachment.
+            URI of the Interconnect attachment. Format:
+            ``projects/{project_id}/regions/{region}/interconnectAttachments/{attachment_id}``
         interconnect_uri (str):
-            URI of the Interconnect where the
-            Interconnect attachment is configured.
+            URI of the Interconnect. Format:
+            ``projects/{project_id}/global/interconnects/{interconnect_id}``
         region (str):
             Name of a Google Cloud region where the
             Interconnect attachment is configured.
         cloud_router_uri (str):
-            URI of the Cloud Router to be used for
-            dynamic routing.
+            URI of the Cloud Router to be used for dynamic routing.
+            Format:
+            ``projects/{project_id}/regions/{region}/routers/{router_id}``
         type_ (google.cloud.network_management_v1.types.InterconnectAttachmentInfo.Type):
             The type of interconnect attachment this is.
         l2_attachment_matched_ip_address (str):
@@ -2074,11 +2156,12 @@ class EndpointInfo(proto.Message):
             Destination port. Only valid when protocol is
             TCP or UDP.
         source_network_uri (str):
-            URI of the network where this packet
-            originates from.
+            URI of the network where this packet originates from.
+            Format:
+            ``projects/{project_id}/global/networks/{network_id}``
         destination_network_uri (str):
-            URI of the network where this packet is sent
-            to.
+            URI of the network where this packet is sent to. Format:
+            ``projects/{project_id}/global/networks/{network_id}``
         source_agent_uri (str):
             URI of the source telemetry agent this packet
             originates from.
@@ -2125,8 +2208,11 @@ class DeliverInfo(proto.Message):
         target (google.cloud.network_management_v1.types.DeliverInfo.Target):
             Target type where the packet is delivered to.
         resource_uri (str):
-            URI of the resource that the packet is
-            delivered to.
+            URI of the resource that the packet is delivered to. For
+            example:
+
+            - ``"projects/{project}/zones/{zone}/instances/{instance}"``
+            - ``"projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}"``
         ip_address (str):
             IP address of the target (if applicable).
         storage_bucket (str):
@@ -2198,6 +2284,9 @@ class DeliverInfo(proto.Message):
             DMS_PRIVATE_CONNECTION (21):
                 Target is a DMS Private Connection. Used only
                 for return traces.
+            DATASTREAM_PRIVATE_CONNECTION (22):
+                Target is a Datastream Private Connection.
+                Used only for return traces.
         """
 
         TARGET_UNSPECIFIED = 0
@@ -2221,6 +2310,7 @@ class DeliverInfo(proto.Message):
         GKE_POD = 19
         CLOUD_RUN_JOB = 20
         DMS_PRIVATE_CONNECTION = 21
+        DATASTREAM_PRIVATE_CONNECTION = 22
 
     class GoogleServiceType(proto.Enum):
         r"""Recognized type of a Google Service.
@@ -2296,8 +2386,12 @@ class ForwardInfo(proto.Message):
             Target type where this packet is forwarded
             to.
         resource_uri (str):
-            URI of the resource that the packet is
-            forwarded to.
+            URI of the resource that the packet is forwarded to. Format:
+
+            - ``projects/{project_id}/global/networks/{network_id}``
+              (VPC peering network)
+            - ``projects/{project_id}/regions/{region}/vpnGateways/{vpn_gateway_id}``
+              (VPN gateway)
         ip_address (str):
             IP address of the target (if applicable).
     """
@@ -2367,7 +2461,12 @@ class AbortInfo(proto.Message):
         cause (google.cloud.network_management_v1.types.AbortInfo.Cause):
             Causes that the analysis is aborted.
         resource_uri (str):
-            URI of the resource that caused the abort.
+            URI of the resource that caused the abort. Format:
+
+            - ``projects/{project_id}/global/networks/{network_id}``
+              (VPC network)
+            - ``projects/{project_id}/zones/{zone}/instances/{instance_id}``
+              (VM instance)
         ip_address (str):
             IP address that caused the abort.
         projects_missing_permission (MutableSequence[str]):
@@ -2621,7 +2720,11 @@ class DropInfo(proto.Message):
         cause (google.cloud.network_management_v1.types.DropInfo.Cause):
             Cause that the packet is dropped.
         resource_uri (str):
-            URI of the resource that caused the drop.
+            URI of the resource that caused the drop. Format:
+
+            - ``projects/{project_id}/global/firewalls/{firewall_id}``
+              (firewall rule)
+            - ``projects/{project_id}/global/routes/{route_id}`` (route)
         source_ip (str):
             Source IP address of the dropped packet (if
             relevant).
@@ -2782,6 +2885,9 @@ class DropInfo(proto.Message):
                 Packet was dropped inside Cloud SQL Service.
             DROPPED_INSIDE_DMS_PRIVATE_CONNECTION (114):
                 Packet was dropped inside DMS Private
+                Connection.
+            DROPPED_INSIDE_DATASTREAM_PRIVATE_CONNECTION (115):
+                Packet was dropped inside Datastream Private
                 Connection.
             GOOGLE_MANAGED_SERVICE_NO_PEERING (20):
                 Packet was dropped because there is no
@@ -3089,6 +3195,7 @@ class DropInfo(proto.Message):
         DROPPED_INSIDE_GKE_SERVICE = 18
         DROPPED_INSIDE_CLOUD_SQL_SERVICE = 19
         DROPPED_INSIDE_DMS_PRIVATE_CONNECTION = 114
+        DROPPED_INSIDE_DATASTREAM_PRIVATE_CONNECTION = 115
         GOOGLE_MANAGED_SERVICE_NO_PEERING = 20
         GOOGLE_MANAGED_SERVICE_NO_PSC_ENDPOINT = 38
         GKE_PSC_ENDPOINT_MISSING = 36
@@ -3195,9 +3302,15 @@ class GKEMasterInfo(proto.Message):
 
     Attributes:
         cluster_uri (str):
-            URI of a GKE cluster.
+            URI of the GKE cluster. Format:
+
+            - ``projects/{project_id}/locations/{location}/clusters/{cluster_id}``
+              (regional cluster)
+            - ``projects/{project_id}/zones/{zone}/clusters/{cluster_id}``
+              (zonal cluster)
         cluster_network_uri (str):
-            URI of a GKE cluster network.
+            URI of the GKE cluster network. Format:
+            ``projects/{project_id}/global/networks/{network_id}``
         internal_ip (str):
             Internal IP address of a GKE cluster control
             plane.
@@ -3246,7 +3359,8 @@ class GkePodInfo(proto.Message):
             dual-stack, this is the IP address relevant to
             the trace.
         network_uri (str):
-            URI of the network containing the GKE Pod.
+            URI of the network containing the GKE Pod. Format:
+            ``projects/{project_id}/global/networks/{network_id}``
     """
 
     pod_uri: str = proto.Field(
@@ -3423,10 +3537,13 @@ class CloudSQLInstanceInfo(proto.Message):
         display_name (str):
             Name of a Cloud SQL instance.
         uri (str):
-            URI of a Cloud SQL instance.
+            URI of a Cloud SQL instance in format
+            "projects/{project}/instances/{instance}".
         network_uri (str):
             URI of a Cloud SQL instance network or empty
-            string if the instance does not have one.
+            string if the instance does not have one. In
+            format
+            "projects/{project}/global/networks/{network}".
         internal_ip (str):
             Internal IP address of a Cloud SQL instance.
         external_ip (str):
@@ -3470,9 +3587,12 @@ class RedisInstanceInfo(proto.Message):
         display_name (str):
             Name of a Cloud Redis Instance.
         uri (str):
-            URI of a Cloud Redis Instance.
+            URI of a Cloud Redis Instance in format
+            "projects/{project}/locations/{location}/instances/{instance}".
         network_uri (str):
-            URI of a Cloud Redis Instance network.
+            URI of a Cloud Redis Instance network in
+            format
+            "projects/{project}/global/networks/{network}".
         primary_endpoint_ip (str):
             Primary endpoint IP address of a Cloud Redis
             Instance.
@@ -3566,7 +3686,8 @@ class CloudFunctionInfo(proto.Message):
         display_name (str):
             Name of a Cloud Function.
         uri (str):
-            URI of a Cloud Function.
+            URI of the Cloud Function. Format:
+            ``projects/{project_id}/locations/{location}/functions/{function_id}``
         location (str):
             Location in which the Cloud Function is
             deployed.
@@ -3601,12 +3722,14 @@ class CloudRunRevisionInfo(proto.Message):
         display_name (str):
             Name of a Cloud Run revision.
         uri (str):
-            URI of a Cloud Run revision.
+            URI of the Cloud Run revision. Format:
+            ``projects/{project_id}/locations/{location}/revisions/{revision_id}``
         location (str):
             Location in which this revision is deployed.
         service_uri (str):
-            URI of Cloud Run service this revision
-            belongs to.
+            URI of Cloud Run service this revision belongs to. Format:
+            ``projects/{project_id}/locations/{location}/services/{service_id}``
+            Mutually exclusive with ``worker_pool_uri``.
     """
 
     display_name: str = proto.Field(
@@ -3634,7 +3757,8 @@ class CloudRunJobInfo(proto.Message):
         display_name (str):
             Name of a Cloud Run job.
         uri (str):
-            URI of a Cloud Run job.
+            URI of the Cloud Run job. Format:
+            ``projects/{project_id}/locations/{location}/jobs/{job_id}``
         location (str):
             Location in which this job is deployed.
     """
@@ -3661,7 +3785,8 @@ class AppEngineVersionInfo(proto.Message):
         display_name (str):
             Name of an App Engine version.
         uri (str):
-            URI of an App Engine version.
+            URI of the App Engine version. Format:
+            ``apps/{app_id}/services/{service_id}/versions/{version_id}``
         runtime (str):
             Runtime of the App Engine version.
         environment (str):
@@ -3694,7 +3819,8 @@ class VpcConnectorInfo(proto.Message):
         display_name (str):
             Name of a VPC connector.
         uri (str):
-            URI of a VPC connector.
+            URI of a VPC connector. Format:
+            ``projects/{project_id}/locations/{location}/connectors/{connector_id}``
         location (str):
             Location in which the VPC connector is
             deployed.
@@ -3720,9 +3846,11 @@ class DirectVpcEgressConnectionInfo(proto.Message):
 
     Attributes:
         network_uri (str):
-            URI of direct access network.
+            URI of the VPC network for direct egress. Format:
+            ``projects/{project_id}/global/networks/{network_id}``
         subnetwork_uri (str):
-            URI of direct access subnetwork.
+            URI of the subnetwork for direct egress. Format:
+            ``projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}``
         selected_ip_range (str):
             Selected IP range.
         selected_ip_address (str):
@@ -3781,8 +3909,9 @@ class NatInfo(proto.Message):
             IP protocol in string format, for example:
             "TCP", "UDP", "ICMP".
         network_uri (str):
-            URI of the network where NAT translation
-            takes place.
+            URI of the VPC network where NAT translation takes place.
+            Format:
+            ``projects/{project_id}/global/networks/{network_id}``
         old_source_ip (str):
             Source IP address before NAT translation.
         new_source_ip (str):
@@ -3805,7 +3934,9 @@ class NatInfo(proto.Message):
             Destination port after NAT translation. Only
             valid when protocol is TCP or UDP.
         router_uri (str):
-            Uri of the Cloud Router. Only valid when type is CLOUD_NAT.
+            URI of the Cloud Router. Only valid when type is CLOUD_NAT.
+            Format:
+            ``projects/{project_id}/regions/{region}/routers/{router_id}``
         nat_gateway_name (str):
             The name of Cloud NAT Gateway. Only valid when type is
             CLOUD_NAT.
@@ -3955,10 +4086,11 @@ class ProxyConnectionInfo(proto.Message):
             Destination port of a new connection. Only
             valid when protocol is TCP or UDP.
         subnet_uri (str):
-            Uri of proxy subnet.
+            URI of the proxy subnet. Format:
+            ``projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}``
         network_uri (str):
-            URI of the network where connection is
-            proxied.
+            URI of the VPC network where connection is proxied. Format:
+            ``projects/{project_id}/global/networks/{network_id}``
     """
 
     protocol: str = proto.Field(
@@ -4018,30 +4150,51 @@ class LoadBalancerBackendInfo(proto.Message):
             backends, or an IP address and port for zonal
             network endpoint group backends.
         instance_uri (str):
-            URI of the backend instance (if applicable).
+            URI of the backend instance (if applicable)
+            in format
+            "projects/{project}/zones/{zone}/instances/{instance}".
             Populated for instance group backends, and zonal
             NEG backends.
         backend_service_uri (str):
-            URI of the backend service this backend
-            belongs to (if applicable).
+            URI of the backend service this backend belongs to (if
+            applicable) in format
+            "projects/{project}/regions/{region}/backendServices/{backend_service}"
+            (regional) or
+            "projects/{project}/global/backendServices/{backend_service}"
+            (global).
         instance_group_uri (str):
-            URI of the instance group this backend
-            belongs to (if applicable).
+            URI of the instance group this backend belongs to (if
+            applicable) in format
+            "projects/{project}/zones/{zone}/instanceGroups/{instance_group}".
         network_endpoint_group_uri (str):
-            URI of the network endpoint group this
-            backend belongs to (if applicable).
+            URI of the network endpoint group this backend belongs to
+            (if applicable) Format:
+
+            - ``projects/{project_id}/zones/{zone}/networkEndpointGroups/{neg_id}``
+              (zonal NEG)
+            - ``projects/{project_id}/regions/{region}/networkEndpointGroups/{neg_id}``
+              (regional NEG)
+            - ``projects/{project_id}/global/networkEndpointGroups/{neg_id}``
+              (global NEG)
         backend_bucket_uri (str):
-            URI of the backend bucket this backend
-            targets (if applicable).
+            URI of the backend bucket this backend targets (if
+            applicable) in format
+            "projects/{project}/global/backendBuckets/{backend_bucket}".
         psc_service_attachment_uri (str):
-            URI of the PSC service attachment this PSC
-            NEG backend targets (if applicable).
+            URI of the PSC service attachment this PSC NEG backend
+            targets (if applicable) in format
+            "projects/{project}/regions/{region}/serviceAttachments/{service_attachment}".
         psc_google_api_target (str):
             PSC Google API target this PSC NEG backend
             targets (if applicable).
         health_check_uri (str):
-            URI of the health check attached to this
-            backend (if applicable).
+            URI of the health check attached to this backend (if
+            applicable). Format:
+
+            - ``projects/{project_id}/global/healthChecks/{health_check_id}``
+            - ``projects/{project_id}/regions/{region}/healthChecks/{health_check_id}``
+            - ``projects/{project_id}/global/httpHealthChecks/{health_check_id}``
+              (legacy)
         health_check_firewalls_config_state (google.cloud.network_management_v1.types.LoadBalancerBackendInfo.HealthCheckFirewallsConfigState):
             Output only. Health check firewalls
             configuration state for the backend. This is a
@@ -4155,7 +4308,8 @@ class ServerlessNegInfo(proto.Message):
 
     Attributes:
         neg_uri (str):
-            URI of the serverless network endpoint group.
+            URI of the serverless network endpoint group in format
+            "projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}".
     """
 
     neg_uri: str = proto.Field(
@@ -4170,8 +4324,9 @@ class NgfwPacketInspectionInfo(proto.Message):
 
     Attributes:
         security_profile_group_uri (str):
-            URI of the security profile group associated
-            with this firewall packet inspection.
+            URI of the security profile group associated with this
+            firewall packet inspection. Format:
+            ``organizations/{organization_id}/locations/global/securityProfileGroups/{security_profile_group_id}``
     """
 
     security_profile_group_uri: str = proto.Field(

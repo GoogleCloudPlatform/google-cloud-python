@@ -36,39 +36,39 @@ import re
 from itertools import chain
 from typing import (
     Any,
-    cast,
+    ClassVar,
     Dict,
     FrozenSet,
-    Iterator,
     Iterable,
+    Iterator,
     List,
     Mapping,
-    ClassVar,
     Optional,
+    Pattern,
     Sequence,
     Set,
     Tuple,
     Union,
-    Pattern,
+    cast,
 )
-from google.api import annotations_pb2  # type: ignore
-from google.api import client_pb2
-from google.api import field_behavior_pb2
-from google.api import field_info_pb2
-from google.api import http_pb2
-from google.api import resource_pb2
-from google.api import routing_pb2
-from google.api_core import exceptions
-from google.api_core import path_template
+
+from google.api import (
+    annotations_pb2,  # type: ignore
+    client_pb2,
+    field_behavior_pb2,
+    field_info_pb2,
+    http_pb2,
+    resource_pb2,
+    routing_pb2,
+)
+from google.api_core import exceptions, path_template
 from google.cloud import extended_operations_pb2 as ex_ops_pb2  # type: ignore
 from google.protobuf import descriptor_pb2  # type: ignore
 from google.protobuf.json_format import MessageToDict  # type: ignore
 
 from gapic import utils
 from gapic.schema import metadata
-from gapic.utils import cached_proto_context
-from gapic.utils import uri_sample
-from gapic.utils import make_private
+from gapic.utils import cached_proto_context, make_private, uri_sample
 
 
 @dataclasses.dataclass(frozen=True)
@@ -690,7 +690,7 @@ class MessageType:
         resource = self.options.Extensions[resource_pb2.resource]
         if not resource.type:
             return None
-            
+
         default_type = resource.type[resource.type.find("/") + 1 :]
 
         return self.resource_name_aliases.get(resource.type, default_type)
@@ -1463,6 +1463,7 @@ class MixinMethod:
     name: str
     request_type: str
     response_type: str
+    rpc_name: str = ""
 
 
 @dataclasses.dataclass(frozen=True)
@@ -1499,6 +1500,7 @@ class Method:
     meta: metadata.Metadata = dataclasses.field(
         default_factory=metadata.Metadata,
     )
+    resumable_upload_prefix: str = "resumable/upload"
 
     def __getattr__(self, name):
         return getattr(self.method_pb, name)
@@ -1638,6 +1640,28 @@ class Method:
                 )
             )
 
+        # If this method is a resumable upload, return a PythonType instance
+        # representing the resumable upload session (while self.output remains
+        # the underlying protobuf response message for final deserialization).
+        if self.is_resumable_upload:
+            return PythonType(
+                meta=metadata.Metadata(
+                    address=metadata.Address(
+                        name=(
+                            "AsyncResumableUploadSession"
+                            if enable_asyncio
+                            else "ResumableUploadSession"
+                        ),
+                        module="resumable_transfer",
+                        package=("google", "api_core"),
+                        collisions=self.input.ident.collisions,
+                    ),
+                    documentation=utils.doc(
+                        "An object representing a resumable upload session."
+                    ),
+                ),
+            )
+
         # Return the usual output.
         return self.output
 
@@ -1727,6 +1751,13 @@ class Method:
         # TODO(yon-mg): handle nested fields & fields past body i.e. 'additional bindings'
         # TODO(yon-mg): enums for http verbs?
         return answer
+
+    @property
+    def is_resumable_upload(self) -> bool:
+        """Return True if this method is a resumable upload method."""
+        # Resumable upload method names are temporarily hardcoded here until
+        # the resumable upload proto annotation exists and is published.
+        return self.name in ("UploadMedia", "CreateYouTubeVideoUpload")
 
     @property
     def path_params(self) -> Sequence[str]:
@@ -1934,6 +1965,11 @@ class Method:
         if self.paged_result_field and self.paged_result_field.message:
             answer.append(self.paged_result_field.message)
 
+        # If this method is a resumable upload, client_output is ResumableUploadSession,
+        # so explicitly include self.output to ensure the underlying response message is imported.
+        if self.is_resumable_upload:
+            answer.append(self.output)
+
         # Done; return the answer.
         return tuple(answer)
 
@@ -2090,7 +2126,6 @@ class Method:
             return None
 
 
-
 @dataclasses.dataclass(frozen=True)
 class CommonResource:
     type_name: str
@@ -2098,8 +2133,16 @@ class CommonResource:
     resource_name_aliases: Mapping[str, str] = dataclasses.field(default_factory=dict)
 
     @classmethod
-    def build(cls, resource: resource_pb2.ResourceDescriptor, aliases: Optional[Mapping[str, str]] = None):
-        return cls(type_name=resource.type, pattern=next(iter(resource.pattern)), resource_name_aliases=aliases or {})
+    def build(
+        cls,
+        resource: resource_pb2.ResourceDescriptor,
+        aliases: Optional[Mapping[str, str]] = None,
+    ):
+        return cls(
+            type_name=resource.type,
+            pattern=next(iter(resource.pattern)),
+            resource_name_aliases=aliases or {},
+        )
 
     @utils.cached_property
     def message_type(self):
@@ -2209,6 +2252,16 @@ class Service:
         return any(m.paged_result_field for m in self.methods.values())
 
     @property
+    def has_resumable_upload_methods(self) -> bool:
+        """Return whether this specific service has resumable upload methods.
+
+        Used during per-service file generation and in service-level templates
+        to conditionally emit resumable upload imports, transports, and client
+        methods only for services that define resumable upload RPCs.
+        """
+        return any(m.is_resumable_upload for m in self.methods.values())
+
+    @property
     def host(self) -> str:
         """Return the hostname for this service, if specified.
 
@@ -2241,7 +2294,7 @@ class Service:
         # Get the shortname from the host
         # Real APIs are expected to have format:
         # "{api_shortname}.googleapis.com"
-        return self.host.split(".")[0]
+        return self.host.split(".")[0].split(":")[0]
 
     @property
     def oauth_scopes(self) -> Sequence[str]:
@@ -2294,7 +2347,7 @@ class Service:
         return frozenset(answer)
 
     @utils.cached_property
-    def resource_messages(self) -> Sequence['MessageType']:
+    def resource_messages(self) -> Sequence["MessageType"]:
         """Returns all the resource message types used in all
         request and response fields in the service."""
 
@@ -2335,8 +2388,7 @@ class Service:
         # Convert the set to a sorted tuple using the resource path or message name.
         # This is needed to prevent non-deterministic code generation.
         sorted_messages = sorted(
-            unique_messages,
-            key=lambda m: m.resource_type_full_path or m.name
+            unique_messages, key=lambda m: m.resource_type_full_path or m.name
         )
 
         # Fail-fast collision detection
@@ -2349,7 +2401,7 @@ class Service:
                     f"\n\nFatal: Message '{msg.name}' defines a resource pattern but is missing a resource type. "
                     f"This violates AIP-123 (https://google.aip.dev/123). Please define a 'type' in the google.api.resource option."
                 )
-                
+
             if res_type in seen_types:
                 incumbent = seen_types[res_type]
                 raise ValueError(
@@ -2499,7 +2551,8 @@ class Service:
             new_v = v.with_selective_generation(
                 generate_omitted_as_internal=generate_omitted_as_internal,
                 public_methods=public_methods,
-                excluded_addresses=excluded_addresses)
+                excluded_addresses=excluded_addresses,
+            )
             if new_v:
                 methods[k] = new_v
 

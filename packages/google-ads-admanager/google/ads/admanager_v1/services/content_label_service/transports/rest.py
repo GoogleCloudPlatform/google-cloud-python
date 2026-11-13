@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import content_label_messages, content_label_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -395,17 +396,18 @@ class ContentLabelServiceRestTransport(_BaseContentLabelServiceRestTransport):
             """
 
             http_options = _BaseContentLabelServiceRestTransport._BaseGetContentLabel._get_http_options()
-
             request, metadata = self._interceptor.pre_get_content_label(
                 request, metadata
             )
-            transcoded_request = _BaseContentLabelServiceRestTransport._BaseGetContentLabel._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContentLabelServiceRestTransport._BaseGetContentLabel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContentLabelServiceRestTransport._BaseGetContentLabel,
+                    "_BaseGetContentLabel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -544,17 +546,18 @@ class ContentLabelServiceRestTransport(_BaseContentLabelServiceRestTransport):
             """
 
             http_options = _BaseContentLabelServiceRestTransport._BaseListContentLabels._get_http_options()
-
             request, metadata = self._interceptor.pre_list_content_labels(
                 request, metadata
             )
-            transcoded_request = _BaseContentLabelServiceRestTransport._BaseListContentLabels._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContentLabelServiceRestTransport._BaseListContentLabels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContentLabelServiceRestTransport._BaseListContentLabels,
+                    "_BaseListContentLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -717,17 +720,18 @@ class ContentLabelServiceRestTransport(_BaseContentLabelServiceRestTransport):
             """
 
             http_options = _BaseContentLabelServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseContentLabelServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContentLabelServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContentLabelServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -833,15 +837,16 @@ class ContentLabelServiceRestTransport(_BaseContentLabelServiceRestTransport):
             """
 
             http_options = _BaseContentLabelServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseContentLabelServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContentLabelServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContentLabelServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -430,7 +430,7 @@ class StorageAsyncClient:
             self._client._transport.delete_bucket
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.name)
@@ -550,7 +550,7 @@ class StorageAsyncClient:
             self._client._transport.get_bucket
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.name)
@@ -708,7 +708,7 @@ class StorageAsyncClient:
             self._client._transport.create_bucket
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<project>.*)$")
         regex_match = routing_param_regex.match(request.parent)
@@ -845,7 +845,7 @@ class StorageAsyncClient:
             self._client._transport.list_buckets
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<project>.*)$")
         regex_match = routing_param_regex.match(request.parent)
@@ -988,7 +988,7 @@ class StorageAsyncClient:
             self._client._transport.lock_bucket_retention_policy
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.bucket)
@@ -1142,7 +1142,7 @@ class StorageAsyncClient:
             self._client._transport.get_iam_policy
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.resource)
@@ -1297,7 +1297,7 @@ class StorageAsyncClient:
             self._client._transport.set_iam_policy
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.resource)
@@ -1438,7 +1438,7 @@ class StorageAsyncClient:
             self._client._transport.test_iam_permissions
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.resource)
@@ -1598,7 +1598,7 @@ class StorageAsyncClient:
             self._client._transport.update_bucket
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.bucket.name)
@@ -1699,7 +1699,7 @@ class StorageAsyncClient:
             self._client._transport.compose_object
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.destination.bucket)
@@ -1849,7 +1849,7 @@ class StorageAsyncClient:
             self._client._transport.delete_object
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.bucket)
@@ -2022,7 +2022,7 @@ class StorageAsyncClient:
             self._client._transport.restore_object
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.bucket)
@@ -2149,7 +2149,7 @@ class StorageAsyncClient:
             self._client._transport.cancel_resumable_write
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^(?P<bucket>projects/[^/]+/buckets/[^/]+)(?:/.*)?$"
@@ -2293,7 +2293,7 @@ class StorageAsyncClient:
             self._client._transport.get_object
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.bucket)
@@ -2438,7 +2438,7 @@ class StorageAsyncClient:
             self._client._transport.read_object
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.bucket)
@@ -2548,7 +2548,7 @@ class StorageAsyncClient:
             self._client._transport.bidi_read_object
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         if header_params:
             metadata = tuple(metadata) + (
@@ -2687,7 +2687,7 @@ class StorageAsyncClient:
             self._client._transport.update_object
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.object.bucket)
@@ -3074,7 +3074,7 @@ class StorageAsyncClient:
             self._client._transport.list_objects
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.parent)
@@ -3191,7 +3191,7 @@ class StorageAsyncClient:
             self._client._transport.rewrite_object
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         if request.source_bucket:
             header_params["source_bucket"] = request.source_bucket
@@ -3295,7 +3295,7 @@ class StorageAsyncClient:
             self._client._transport.start_resumable_write
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(
@@ -3431,7 +3431,7 @@ class StorageAsyncClient:
             self._client._transport.query_write_status
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^(?P<bucket>projects/[^/]+/buckets/[^/]+)(?:/.*)?$"
@@ -3581,7 +3581,7 @@ class StorageAsyncClient:
             self._client._transport.move_object
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<bucket>.*)$")
         regex_match = routing_param_regex.match(request.bucket)

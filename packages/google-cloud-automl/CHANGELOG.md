@@ -4,6 +4,20 @@
 
 [1]: https://pypi.org/project/google-cloud-automl/#history
 
+## [2.21.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-automl-v2.20.1...google-cloud-automl-v2.21.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [2.20.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-automl-v2.20.0...google-cloud-automl-v2.20.1) (2026-08-21)
+
+
+### Bug Fixes
+
+* **automl:** remove unused libcst extra and constraints ([#18056](https://github.com/googleapis/google-cloud-python/issues/18056)) ([9ba4449](https://github.com/googleapis/google-cloud-python/commit/9ba4449edd198eab9282e422bdb6ab99a616299e))
+
 ## [2.20.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-automl-v2.19.0...google-cloud-automl-v2.20.0) (2026-06-02)
 
 

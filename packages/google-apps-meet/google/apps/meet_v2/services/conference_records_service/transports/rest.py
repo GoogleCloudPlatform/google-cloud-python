@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.apps.meet_v2._compat import transcode_request
 from google.apps.meet_v2.types import resource, service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -103,6 +104,14 @@ class ConferenceRecordsServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_get_smart_note(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_smart_note(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_get_transcript(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -148,6 +157,14 @@ class ConferenceRecordsServiceRestInterceptor:
                 return request, metadata
 
             def post_list_recordings(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_smart_notes(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_smart_notes(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -356,6 +373,50 @@ class ConferenceRecordsServiceRestInterceptor:
         `post_get_recording` interceptor. The (possibly modified) response returned by
         `post_get_recording` will be passed to
         `post_get_recording_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_get_smart_note(
+        self,
+        request: service.GetSmartNoteRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[service.GetSmartNoteRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for get_smart_note
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the ConferenceRecordsService server.
+        """
+        return request, metadata
+
+    def post_get_smart_note(self, response: resource.SmartNote) -> resource.SmartNote:
+        """Post-rpc interceptor for get_smart_note
+
+        DEPRECATED. Please use the `post_get_smart_note_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the ConferenceRecordsService server but before
+        it is returned to user code. This `post_get_smart_note` interceptor runs
+        before the `post_get_smart_note_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_smart_note_with_metadata(
+        self,
+        response: resource.SmartNote,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[resource.SmartNote, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for get_smart_note
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the ConferenceRecordsService server but before it is returned to user code.
+
+        We recommend only using this `post_get_smart_note_with_metadata`
+        interceptor in new development instead of the `post_get_smart_note` interceptor.
+        When both interceptors are used, this `post_get_smart_note_with_metadata` interceptor runs after the
+        `post_get_smart_note` interceptor. The (possibly modified) response returned by
+        `post_get_smart_note` will be passed to
+        `post_get_smart_note_with_metadata`.
         """
         return response, metadata
 
@@ -647,6 +708,52 @@ class ConferenceRecordsServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_list_smart_notes(
+        self,
+        request: service.ListSmartNotesRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[service.ListSmartNotesRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for list_smart_notes
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the ConferenceRecordsService server.
+        """
+        return request, metadata
+
+    def post_list_smart_notes(
+        self, response: service.ListSmartNotesResponse
+    ) -> service.ListSmartNotesResponse:
+        """Post-rpc interceptor for list_smart_notes
+
+        DEPRECATED. Please use the `post_list_smart_notes_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the ConferenceRecordsService server but before
+        it is returned to user code. This `post_list_smart_notes` interceptor runs
+        before the `post_list_smart_notes_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_smart_notes_with_metadata(
+        self,
+        response: service.ListSmartNotesResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[service.ListSmartNotesResponse, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for list_smart_notes
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the ConferenceRecordsService server but before it is returned to user code.
+
+        We recommend only using this `post_list_smart_notes_with_metadata`
+        interceptor in new development instead of the `post_list_smart_notes` interceptor.
+        When both interceptors are used, this `post_list_smart_notes_with_metadata` interceptor runs after the
+        `post_list_smart_notes` interceptor. The (possibly modified) response returned by
+        `post_list_smart_notes` will be passed to
+        `post_list_smart_notes_with_metadata`.
+        """
+        return response, metadata
+
     def pre_list_transcript_entries(
         self,
         request: service.ListTranscriptEntriesRequest,
@@ -897,17 +1004,18 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
             """
 
             http_options = _BaseConferenceRecordsServiceRestTransport._BaseGetConferenceRecord._get_http_options()
-
             request, metadata = self._interceptor.pre_get_conference_record(
                 request, metadata
             )
-            transcoded_request = _BaseConferenceRecordsServiceRestTransport._BaseGetConferenceRecord._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConferenceRecordsServiceRestTransport._BaseGetConferenceRecord._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseGetConferenceRecord,
+                    "_BaseGetConferenceRecord__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1044,15 +1152,16 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
             """
 
             http_options = _BaseConferenceRecordsServiceRestTransport._BaseGetParticipant._get_http_options()
-
             request, metadata = self._interceptor.pre_get_participant(request, metadata)
-            transcoded_request = _BaseConferenceRecordsServiceRestTransport._BaseGetParticipant._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConferenceRecordsServiceRestTransport._BaseGetParticipant._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseGetParticipant,
+                    "_BaseGetParticipant__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1198,17 +1307,18 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
             """
 
             http_options = _BaseConferenceRecordsServiceRestTransport._BaseGetParticipantSession._get_http_options()
-
             request, metadata = self._interceptor.pre_get_participant_session(
                 request, metadata
             )
-            transcoded_request = _BaseConferenceRecordsServiceRestTransport._BaseGetParticipantSession._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConferenceRecordsServiceRestTransport._BaseGetParticipantSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseGetParticipantSession,
+                    "_BaseGetParticipantSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1346,15 +1456,16 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
             """
 
             http_options = _BaseConferenceRecordsServiceRestTransport._BaseGetRecording._get_http_options()
-
             request, metadata = self._interceptor.pre_get_recording(request, metadata)
-            transcoded_request = _BaseConferenceRecordsServiceRestTransport._BaseGetRecording._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConferenceRecordsServiceRestTransport._BaseGetRecording._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseGetRecording,
+                    "_BaseGetRecording__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1435,6 +1546,156 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
                 )
             return resp
 
+    class _GetSmartNote(
+        _BaseConferenceRecordsServiceRestTransport._BaseGetSmartNote,
+        ConferenceRecordsServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("ConferenceRecordsServiceRestTransport.GetSmartNote")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: service.GetSmartNoteRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> resource.SmartNote:
+            r"""Call the get smart note method over HTTP.
+
+            Args:
+                request (~.service.GetSmartNoteRequest):
+                    The request object. Request for GetSmartNote method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.resource.SmartNote:
+                    Metadata for a smart note generated
+                from a conference. It refers to the
+                notes generated from Take Notes with
+                Gemini during the conference.
+
+            """
+
+            http_options = _BaseConferenceRecordsServiceRestTransport._BaseGetSmartNote._get_http_options()
+            request, metadata = self._interceptor.pre_get_smart_note(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseGetSmartNote,
+                    "_BaseGetSmartNote__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.apps.meet_v2.ConferenceRecordsServiceClient.GetSmartNote",
+                    extra={
+                        "serviceName": "google.apps.meet.v2.ConferenceRecordsService",
+                        "rpcName": "GetSmartNote",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                ConferenceRecordsServiceRestTransport._GetSmartNote._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = resource.SmartNote()
+            pb_resp = resource.SmartNote.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_smart_note(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_smart_note_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = resource.SmartNote.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.apps.meet_v2.ConferenceRecordsServiceClient.get_smart_note",
+                    extra={
+                        "serviceName": "google.apps.meet.v2.ConferenceRecordsService",
+                        "rpcName": "GetSmartNote",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _GetTranscript(
         _BaseConferenceRecordsServiceRestTransport._BaseGetTranscript,
         ConferenceRecordsServiceRestStub,
@@ -1495,15 +1756,16 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
             """
 
             http_options = _BaseConferenceRecordsServiceRestTransport._BaseGetTranscript._get_http_options()
-
             request, metadata = self._interceptor.pre_get_transcript(request, metadata)
-            transcoded_request = _BaseConferenceRecordsServiceRestTransport._BaseGetTranscript._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConferenceRecordsServiceRestTransport._BaseGetTranscript._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseGetTranscript,
+                    "_BaseGetTranscript__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1643,17 +1905,18 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
             """
 
             http_options = _BaseConferenceRecordsServiceRestTransport._BaseGetTranscriptEntry._get_http_options()
-
             request, metadata = self._interceptor.pre_get_transcript_entry(
                 request, metadata
             )
-            transcoded_request = _BaseConferenceRecordsServiceRestTransport._BaseGetTranscriptEntry._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConferenceRecordsServiceRestTransport._BaseGetTranscriptEntry._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseGetTranscriptEntry,
+                    "_BaseGetTranscriptEntry__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1793,17 +2056,18 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
             """
 
             http_options = _BaseConferenceRecordsServiceRestTransport._BaseListConferenceRecords._get_http_options()
-
             request, metadata = self._interceptor.pre_list_conference_records(
                 request, metadata
             )
-            transcoded_request = _BaseConferenceRecordsServiceRestTransport._BaseListConferenceRecords._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConferenceRecordsServiceRestTransport._BaseListConferenceRecords._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseListConferenceRecords,
+                    "_BaseListConferenceRecords__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1941,17 +2205,18 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
             """
 
             http_options = _BaseConferenceRecordsServiceRestTransport._BaseListParticipants._get_http_options()
-
             request, metadata = self._interceptor.pre_list_participants(
                 request, metadata
             )
-            transcoded_request = _BaseConferenceRecordsServiceRestTransport._BaseListParticipants._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConferenceRecordsServiceRestTransport._BaseListParticipants._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseListParticipants,
+                    "_BaseListParticipants__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2092,17 +2357,18 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
             """
 
             http_options = _BaseConferenceRecordsServiceRestTransport._BaseListParticipantSessions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_participant_sessions(
                 request, metadata
             )
-            transcoded_request = _BaseConferenceRecordsServiceRestTransport._BaseListParticipantSessions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConferenceRecordsServiceRestTransport._BaseListParticipantSessions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseListParticipantSessions,
+                    "_BaseListParticipantSessions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2239,15 +2505,16 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
             """
 
             http_options = _BaseConferenceRecordsServiceRestTransport._BaseListRecordings._get_http_options()
-
             request, metadata = self._interceptor.pre_list_recordings(request, metadata)
-            transcoded_request = _BaseConferenceRecordsServiceRestTransport._BaseListRecordings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConferenceRecordsServiceRestTransport._BaseListRecordings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseListRecordings,
+                    "_BaseListRecordings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2328,6 +2595,154 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
                 )
             return resp
 
+    class _ListSmartNotes(
+        _BaseConferenceRecordsServiceRestTransport._BaseListSmartNotes,
+        ConferenceRecordsServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("ConferenceRecordsServiceRestTransport.ListSmartNotes")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: service.ListSmartNotesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> service.ListSmartNotesResponse:
+            r"""Call the list smart notes method over HTTP.
+
+            Args:
+                request (~.service.ListSmartNotesRequest):
+                    The request object. Request for ListSmartNotes method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.service.ListSmartNotesResponse:
+                    Response for ListSmartNotes method.
+            """
+
+            http_options = _BaseConferenceRecordsServiceRestTransport._BaseListSmartNotes._get_http_options()
+            request, metadata = self._interceptor.pre_list_smart_notes(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseListSmartNotes,
+                    "_BaseListSmartNotes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.apps.meet_v2.ConferenceRecordsServiceClient.ListSmartNotes",
+                    extra={
+                        "serviceName": "google.apps.meet.v2.ConferenceRecordsService",
+                        "rpcName": "ListSmartNotes",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                ConferenceRecordsServiceRestTransport._ListSmartNotes._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = service.ListSmartNotesResponse()
+            pb_resp = service.ListSmartNotesResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_smart_notes(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_smart_notes_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = service.ListSmartNotesResponse.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.apps.meet_v2.ConferenceRecordsServiceClient.list_smart_notes",
+                    extra={
+                        "serviceName": "google.apps.meet.v2.ConferenceRecordsService",
+                        "rpcName": "ListSmartNotes",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _ListTranscriptEntries(
         _BaseConferenceRecordsServiceRestTransport._BaseListTranscriptEntries,
         ConferenceRecordsServiceRestStub,
@@ -2387,17 +2802,18 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
             """
 
             http_options = _BaseConferenceRecordsServiceRestTransport._BaseListTranscriptEntries._get_http_options()
-
             request, metadata = self._interceptor.pre_list_transcript_entries(
                 request, metadata
             )
-            transcoded_request = _BaseConferenceRecordsServiceRestTransport._BaseListTranscriptEntries._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConferenceRecordsServiceRestTransport._BaseListTranscriptEntries._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseListTranscriptEntries,
+                    "_BaseListTranscriptEntries__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2534,17 +2950,18 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
             """
 
             http_options = _BaseConferenceRecordsServiceRestTransport._BaseListTranscripts._get_http_options()
-
             request, metadata = self._interceptor.pre_list_transcripts(
                 request, metadata
             )
-            transcoded_request = _BaseConferenceRecordsServiceRestTransport._BaseListTranscripts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConferenceRecordsServiceRestTransport._BaseListTranscripts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConferenceRecordsServiceRestTransport._BaseListTranscripts,
+                    "_BaseListTranscripts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2658,6 +3075,14 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
         return self._GetRecording(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def get_smart_note(
+        self,
+    ) -> Callable[[service.GetSmartNoteRequest], resource.SmartNote]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetSmartNote(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def get_transcript(
         self,
     ) -> Callable[[service.GetTranscriptRequest], resource.Transcript]:
@@ -2711,6 +3136,14 @@ class ConferenceRecordsServiceRestTransport(_BaseConferenceRecordsServiceRestTra
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListRecordings(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def list_smart_notes(
+        self,
+    ) -> Callable[[service.ListSmartNotesRequest], service.ListSmartNotesResponse]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListSmartNotes(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def list_transcript_entries(

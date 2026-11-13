@@ -14,7 +14,6 @@
 
 import proto
 
-
 PACKAGE = "a.test.package.with.and.without.manifest"
 __protobuf__ = proto.module(
     package=PACKAGE,

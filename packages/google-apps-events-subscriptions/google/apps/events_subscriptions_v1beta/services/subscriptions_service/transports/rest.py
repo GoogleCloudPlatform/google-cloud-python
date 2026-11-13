@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.apps.events_subscriptions_v1beta._compat import transcode_request
 from google.apps.events_subscriptions_v1beta.types import (
     subscription_resource,
     subscriptions_service,
@@ -644,21 +645,18 @@ class SubscriptionsServiceRestTransport(_BaseSubscriptionsServiceRestTransport):
             """
 
             http_options = _BaseSubscriptionsServiceRestTransport._BaseCreateSubscription._get_http_options()
-
             request, metadata = self._interceptor.pre_create_subscription(
                 request, metadata
             )
-            transcoded_request = _BaseSubscriptionsServiceRestTransport._BaseCreateSubscription._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSubscriptionsServiceRestTransport._BaseCreateSubscription._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSubscriptionsServiceRestTransport._BaseCreateSubscription._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSubscriptionsServiceRestTransport._BaseCreateSubscription,
+                    "_BaseCreateSubscription__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -798,17 +796,18 @@ class SubscriptionsServiceRestTransport(_BaseSubscriptionsServiceRestTransport):
             """
 
             http_options = _BaseSubscriptionsServiceRestTransport._BaseDeleteSubscription._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_subscription(
                 request, metadata
             )
-            transcoded_request = _BaseSubscriptionsServiceRestTransport._BaseDeleteSubscription._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSubscriptionsServiceRestTransport._BaseDeleteSubscription._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSubscriptionsServiceRestTransport._BaseDeleteSubscription,
+                    "_BaseDeleteSubscription__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -948,17 +947,18 @@ class SubscriptionsServiceRestTransport(_BaseSubscriptionsServiceRestTransport):
             """
 
             http_options = _BaseSubscriptionsServiceRestTransport._BaseGetSubscription._get_http_options()
-
             request, metadata = self._interceptor.pre_get_subscription(
                 request, metadata
             )
-            transcoded_request = _BaseSubscriptionsServiceRestTransport._BaseGetSubscription._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSubscriptionsServiceRestTransport._BaseGetSubscription._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSubscriptionsServiceRestTransport._BaseGetSubscription,
+                    "_BaseGetSubscription__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1098,17 +1098,18 @@ class SubscriptionsServiceRestTransport(_BaseSubscriptionsServiceRestTransport):
             """
 
             http_options = _BaseSubscriptionsServiceRestTransport._BaseListSubscriptions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_subscriptions(
                 request, metadata
             )
-            transcoded_request = _BaseSubscriptionsServiceRestTransport._BaseListSubscriptions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSubscriptionsServiceRestTransport._BaseListSubscriptions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSubscriptionsServiceRestTransport._BaseListSubscriptions,
+                    "_BaseListSubscriptions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1254,21 +1255,18 @@ class SubscriptionsServiceRestTransport(_BaseSubscriptionsServiceRestTransport):
             """
 
             http_options = _BaseSubscriptionsServiceRestTransport._BaseReactivateSubscription._get_http_options()
-
             request, metadata = self._interceptor.pre_reactivate_subscription(
                 request, metadata
             )
-            transcoded_request = _BaseSubscriptionsServiceRestTransport._BaseReactivateSubscription._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSubscriptionsServiceRestTransport._BaseReactivateSubscription._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSubscriptionsServiceRestTransport._BaseReactivateSubscription._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSubscriptionsServiceRestTransport._BaseReactivateSubscription,
+                    "_BaseReactivateSubscription__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1409,21 +1407,18 @@ class SubscriptionsServiceRestTransport(_BaseSubscriptionsServiceRestTransport):
             """
 
             http_options = _BaseSubscriptionsServiceRestTransport._BaseUpdateSubscription._get_http_options()
-
             request, metadata = self._interceptor.pre_update_subscription(
                 request, metadata
             )
-            transcoded_request = _BaseSubscriptionsServiceRestTransport._BaseUpdateSubscription._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSubscriptionsServiceRestTransport._BaseUpdateSubscription._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSubscriptionsServiceRestTransport._BaseUpdateSubscription._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSubscriptionsServiceRestTransport._BaseUpdateSubscription,
+                    "_BaseUpdateSubscription__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1626,15 +1621,16 @@ class SubscriptionsServiceRestTransport(_BaseSubscriptionsServiceRestTransport):
             """
 
             http_options = _BaseSubscriptionsServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseSubscriptionsServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSubscriptionsServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSubscriptionsServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

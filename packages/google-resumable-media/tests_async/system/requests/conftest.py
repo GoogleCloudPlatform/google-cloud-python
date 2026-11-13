@@ -13,11 +13,11 @@
 # limitations under the License.
 """py.test fixtures to be shared across multiple system test modules."""
 
-from tests.system import utils
-
-from google.auth._default_async import default_async  # type: ignore
 import google.auth.transport._aiohttp_requests as tr_requests  # type: ignore
 import pytest  # type: ignore
+from google.auth._default_async import default_async  # type: ignore
+
+from tests.system import utils
 
 
 async def ensure_bucket(transport):

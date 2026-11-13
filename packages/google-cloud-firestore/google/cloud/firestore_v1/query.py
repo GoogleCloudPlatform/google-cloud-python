@@ -59,6 +59,7 @@ if TYPE_CHECKING:  # pragma: NO COVER
     import datetime
 
     from google.cloud.firestore_v1.base_vector_query import DistanceMeasure
+    from google.cloud.firestore_v1.document import DocumentReference
     from google.cloud.firestore_v1.field_path import FieldPath
     from google.cloud.firestore_v1.query_profile import ExplainMetrics, ExplainOptions
 
@@ -155,7 +156,7 @@ class Query(BaseQuery):
         *,
         explain_options: Optional[ExplainOptions] = None,
         read_time: Optional[datetime.datetime] = None,
-    ) -> QueryResultsList[DocumentSnapshot]:
+    ) -> QueryResultsList[DocumentSnapshot[DocumentReference]]:
         """Read the documents in the collection that match this query.
 
         This sends a ``RunQuery`` RPC and returns a list of documents
@@ -221,11 +222,11 @@ class Query(BaseQuery):
 
     def _chunkify(
         self, chunk_size: int
-    ) -> Generator[List[DocumentSnapshot], None, None]:
+    ) -> Generator[List[DocumentSnapshot[DocumentReference]], None, None]:
         max_to_return: Optional[int] = self._limit
         num_returned: int = 0
         original: Query = self._copy()
-        last_document: Optional[DocumentSnapshot] = None
+        last_document: Optional[DocumentSnapshot[DocumentReference]] = None
 
         while True:
             # Optionally trim the `chunk_size` down to honor a previously
@@ -372,7 +373,7 @@ class Query(BaseQuery):
         timeout: float | None = None,
         explain_options: Optional[ExplainOptions] = None,
         read_time: Optional[datetime.datetime] = None,
-    ) -> Generator[DocumentSnapshot, Any, Optional[ExplainMetrics]]:
+    ) -> Generator[DocumentSnapshot[DocumentReference], Any, Optional[ExplainMetrics]]:
         """Internal method for stream(). Read the documents in the collection
         that match this query.
 
@@ -474,7 +475,7 @@ class Query(BaseQuery):
         *,
         explain_options: Optional[ExplainOptions] = None,
         read_time: Optional[datetime.datetime] = None,
-    ) -> StreamGenerator[DocumentSnapshot]:
+    ) -> StreamGenerator[DocumentSnapshot[DocumentReference]]:
         """Read the documents in the collection that match this query.
 
         This sends a ``RunQuery`` RPC and then returns a generator which

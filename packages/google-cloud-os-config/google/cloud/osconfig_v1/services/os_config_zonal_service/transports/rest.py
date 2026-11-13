@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.osconfig_v1._compat import transcode_request
 from google.cloud.osconfig_v1.types import (
     inventory,
     os_policy_assignment_reports,
@@ -986,21 +987,18 @@ class OsConfigZonalServiceRestTransport(_BaseOsConfigZonalServiceRestTransport):
             """
 
             http_options = _BaseOsConfigZonalServiceRestTransport._BaseCreateOSPolicyAssignment._get_http_options()
-
             request, metadata = self._interceptor.pre_create_os_policy_assignment(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigZonalServiceRestTransport._BaseCreateOSPolicyAssignment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOsConfigZonalServiceRestTransport._BaseCreateOSPolicyAssignment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigZonalServiceRestTransport._BaseCreateOSPolicyAssignment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigZonalServiceRestTransport._BaseCreateOSPolicyAssignment,
+                    "_BaseCreateOSPolicyAssignment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1139,17 +1137,18 @@ class OsConfigZonalServiceRestTransport(_BaseOsConfigZonalServiceRestTransport):
             """
 
             http_options = _BaseOsConfigZonalServiceRestTransport._BaseDeleteOSPolicyAssignment._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_os_policy_assignment(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigZonalServiceRestTransport._BaseDeleteOSPolicyAssignment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigZonalServiceRestTransport._BaseDeleteOSPolicyAssignment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigZonalServiceRestTransport._BaseDeleteOSPolicyAssignment,
+                    "_BaseDeleteOSPolicyAssignment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1293,15 +1292,16 @@ class OsConfigZonalServiceRestTransport(_BaseOsConfigZonalServiceRestTransport):
             """
 
             http_options = _BaseOsConfigZonalServiceRestTransport._BaseGetInventory._get_http_options()
-
             request, metadata = self._interceptor.pre_get_inventory(request, metadata)
-            transcoded_request = _BaseOsConfigZonalServiceRestTransport._BaseGetInventory._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigZonalServiceRestTransport._BaseGetInventory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigZonalServiceRestTransport._BaseGetInventory,
+                    "_BaseGetInventory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1449,17 +1449,18 @@ class OsConfigZonalServiceRestTransport(_BaseOsConfigZonalServiceRestTransport):
             """
 
             http_options = _BaseOsConfigZonalServiceRestTransport._BaseGetOSPolicyAssignment._get_http_options()
-
             request, metadata = self._interceptor.pre_get_os_policy_assignment(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigZonalServiceRestTransport._BaseGetOSPolicyAssignment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigZonalServiceRestTransport._BaseGetOSPolicyAssignment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigZonalServiceRestTransport._BaseGetOSPolicyAssignment,
+                    "_BaseGetOSPolicyAssignment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1602,17 +1603,18 @@ class OsConfigZonalServiceRestTransport(_BaseOsConfigZonalServiceRestTransport):
             """
 
             http_options = _BaseOsConfigZonalServiceRestTransport._BaseGetOSPolicyAssignmentReport._get_http_options()
-
             request, metadata = self._interceptor.pre_get_os_policy_assignment_report(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigZonalServiceRestTransport._BaseGetOSPolicyAssignmentReport._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigZonalServiceRestTransport._BaseGetOSPolicyAssignmentReport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigZonalServiceRestTransport._BaseGetOSPolicyAssignmentReport,
+                    "_BaseGetOSPolicyAssignmentReport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1761,17 +1763,18 @@ class OsConfigZonalServiceRestTransport(_BaseOsConfigZonalServiceRestTransport):
             """
 
             http_options = _BaseOsConfigZonalServiceRestTransport._BaseGetVulnerabilityReport._get_http_options()
-
             request, metadata = self._interceptor.pre_get_vulnerability_report(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigZonalServiceRestTransport._BaseGetVulnerabilityReport._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigZonalServiceRestTransport._BaseGetVulnerabilityReport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigZonalServiceRestTransport._BaseGetVulnerabilityReport,
+                    "_BaseGetVulnerabilityReport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1915,17 +1918,18 @@ class OsConfigZonalServiceRestTransport(_BaseOsConfigZonalServiceRestTransport):
             """
 
             http_options = _BaseOsConfigZonalServiceRestTransport._BaseListInventories._get_http_options()
-
             request, metadata = self._interceptor.pre_list_inventories(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigZonalServiceRestTransport._BaseListInventories._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigZonalServiceRestTransport._BaseListInventories._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigZonalServiceRestTransport._BaseListInventories,
+                    "_BaseListInventories__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2069,17 +2073,18 @@ class OsConfigZonalServiceRestTransport(_BaseOsConfigZonalServiceRestTransport):
             """
 
             http_options = _BaseOsConfigZonalServiceRestTransport._BaseListOSPolicyAssignmentReports._get_http_options()
-
             request, metadata = self._interceptor.pre_list_os_policy_assignment_reports(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigZonalServiceRestTransport._BaseListOSPolicyAssignmentReports._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigZonalServiceRestTransport._BaseListOSPolicyAssignmentReports._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigZonalServiceRestTransport._BaseListOSPolicyAssignmentReports,
+                    "_BaseListOSPolicyAssignmentReports__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2228,19 +2233,20 @@ class OsConfigZonalServiceRestTransport(_BaseOsConfigZonalServiceRestTransport):
             """
 
             http_options = _BaseOsConfigZonalServiceRestTransport._BaseListOSPolicyAssignmentRevisions._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_os_policy_assignment_revisions(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseOsConfigZonalServiceRestTransport._BaseListOSPolicyAssignmentRevisions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigZonalServiceRestTransport._BaseListOSPolicyAssignmentRevisions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigZonalServiceRestTransport._BaseListOSPolicyAssignmentRevisions,
+                    "_BaseListOSPolicyAssignmentRevisions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2385,17 +2391,18 @@ class OsConfigZonalServiceRestTransport(_BaseOsConfigZonalServiceRestTransport):
             """
 
             http_options = _BaseOsConfigZonalServiceRestTransport._BaseListOSPolicyAssignments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_os_policy_assignments(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigZonalServiceRestTransport._BaseListOSPolicyAssignments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigZonalServiceRestTransport._BaseListOSPolicyAssignments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigZonalServiceRestTransport._BaseListOSPolicyAssignments,
+                    "_BaseListOSPolicyAssignments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2540,17 +2547,18 @@ class OsConfigZonalServiceRestTransport(_BaseOsConfigZonalServiceRestTransport):
             """
 
             http_options = _BaseOsConfigZonalServiceRestTransport._BaseListVulnerabilityReports._get_http_options()
-
             request, metadata = self._interceptor.pre_list_vulnerability_reports(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigZonalServiceRestTransport._BaseListVulnerabilityReports._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigZonalServiceRestTransport._BaseListVulnerabilityReports._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigZonalServiceRestTransport._BaseListVulnerabilityReports,
+                    "_BaseListVulnerabilityReports__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2693,21 +2701,18 @@ class OsConfigZonalServiceRestTransport(_BaseOsConfigZonalServiceRestTransport):
             """
 
             http_options = _BaseOsConfigZonalServiceRestTransport._BaseUpdateOSPolicyAssignment._get_http_options()
-
             request, metadata = self._interceptor.pre_update_os_policy_assignment(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigZonalServiceRestTransport._BaseUpdateOSPolicyAssignment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOsConfigZonalServiceRestTransport._BaseUpdateOSPolicyAssignment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigZonalServiceRestTransport._BaseUpdateOSPolicyAssignment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigZonalServiceRestTransport._BaseUpdateOSPolicyAssignment,
+                    "_BaseUpdateOSPolicyAssignment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

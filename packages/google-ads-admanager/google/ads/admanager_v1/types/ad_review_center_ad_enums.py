@@ -24,6 +24,7 @@ __protobuf__ = proto.module(
     manifest={
         "AdReviewCenterAdStatusEnum",
         "ManualAdReviewCenterAdStatusEnum",
+        "ArcCreativeFormatEnum",
     },
 )
 
@@ -90,6 +91,46 @@ class ManualAdReviewCenterAdStatusEnum(proto.Message):
         ARCHIVED = 3
         PENDING = 4
         SERVING = 5
+
+
+class ArcCreativeFormatEnum(proto.Message):
+    r"""Wrapper message for
+    [ArcCreativeFormat][google.ads.admanager.v1.ArcCreativeFormatEnum.ArcCreativeFormat]
+
+    Message representing the ad review center creative formats which is
+    about how the creative is rendered for the end user.
+
+    """
+
+    class ArcCreativeFormat(proto.Enum):
+        r"""Specifies the status of an ArcCreativeFormat.
+
+        New values may be added in the future.
+
+        Values:
+            ARC_CREATIVE_FORMAT_UNSPECIFIED (0):
+                Not specified value
+            TEXT (1):
+                Text based creatives.
+            IMAGE (2):
+                Image creatives.
+            VIDEO (3):
+                Video creatives.
+            AUDIO (4):
+                Audio creatives.
+            APP_INSTALLS (5):
+                Creatives leading to mobile app stores.
+            RICH_MEDIA (6):
+                Creatives leading to rich media.
+        """
+
+        ARC_CREATIVE_FORMAT_UNSPECIFIED = 0
+        TEXT = 1
+        IMAGE = 2
+        VIDEO = 3
+        AUDIO = 4
+        APP_INSTALLS = 5
+        RICH_MEDIA = 6
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

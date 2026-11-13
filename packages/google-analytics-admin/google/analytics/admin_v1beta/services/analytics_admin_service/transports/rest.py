@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.analytics.admin_v1beta._compat import transcode_request
 from google.analytics.admin_v1beta.types import analytics_admin, resources
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -2982,21 +2983,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseAcknowledgeUserDataCollection._get_http_options()
-
             request, metadata = self._interceptor.pre_acknowledge_user_data_collection(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseAcknowledgeUserDataCollection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseAcknowledgeUserDataCollection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseAcknowledgeUserDataCollection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseAcknowledgeUserDataCollection,
+                    "_BaseAcknowledgeUserDataCollection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3136,21 +3134,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseArchiveCustomDimension._get_http_options()
-
             request, metadata = self._interceptor.pre_archive_custom_dimension(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseArchiveCustomDimension._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseArchiveCustomDimension._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseArchiveCustomDimension._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseArchiveCustomDimension,
+                    "_BaseArchiveCustomDimension__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3250,21 +3245,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseArchiveCustomMetric._get_http_options()
-
             request, metadata = self._interceptor.pre_archive_custom_metric(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseArchiveCustomMetric._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseArchiveCustomMetric._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseArchiveCustomMetric._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseArchiveCustomMetric,
+                    "_BaseArchiveCustomMetric__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3372,21 +3364,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseCreateConversionEvent._get_http_options()
-
             request, metadata = self._interceptor.pre_create_conversion_event(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseCreateConversionEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseCreateConversionEvent._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseCreateConversionEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseCreateConversionEvent,
+                    "_BaseCreateConversionEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3526,21 +3515,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseCreateCustomDimension._get_http_options()
-
             request, metadata = self._interceptor.pre_create_custom_dimension(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseCreateCustomDimension._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseCreateCustomDimension._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseCreateCustomDimension._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseCreateCustomDimension,
+                    "_BaseCreateCustomDimension__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3680,21 +3666,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseCreateCustomMetric._get_http_options()
-
             request, metadata = self._interceptor.pre_create_custom_metric(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseCreateCustomMetric._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseCreateCustomMetric._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseCreateCustomMetric._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseCreateCustomMetric,
+                    "_BaseCreateCustomMetric__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3836,21 +3819,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseCreateDataStream._get_http_options()
-
             request, metadata = self._interceptor.pre_create_data_stream(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseCreateDataStream._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseCreateDataStream._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseCreateDataStream._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseCreateDataStream,
+                    "_BaseCreateDataStream__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3992,21 +3972,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseCreateFirebaseLink._get_http_options()
-
             request, metadata = self._interceptor.pre_create_firebase_link(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseCreateFirebaseLink._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseCreateFirebaseLink._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseCreateFirebaseLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseCreateFirebaseLink,
+                    "_BaseCreateFirebaseLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4148,21 +4125,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseCreateGoogleAdsLink._get_http_options()
-
             request, metadata = self._interceptor.pre_create_google_ads_link(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseCreateGoogleAdsLink._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseCreateGoogleAdsLink._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseCreateGoogleAdsLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseCreateGoogleAdsLink,
+                    "_BaseCreateGoogleAdsLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4304,21 +4278,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseCreateKeyEvent._get_http_options()
-
             request, metadata = self._interceptor.pre_create_key_event(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseCreateKeyEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseCreateKeyEvent._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseCreateKeyEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseCreateKeyEvent,
+                    "_BaseCreateKeyEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4461,23 +4432,20 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseCreateMeasurementProtocolSecret._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_create_measurement_protocol_secret(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseCreateMeasurementProtocolSecret._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseCreateMeasurementProtocolSecret._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseCreateMeasurementProtocolSecret._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseCreateMeasurementProtocolSecret,
+                    "_BaseCreateMeasurementProtocolSecret__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4621,19 +4589,16 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseCreateProperty._get_http_options()
-
             request, metadata = self._interceptor.pre_create_property(request, metadata)
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseCreateProperty._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseCreateProperty._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseCreateProperty._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseCreateProperty,
+                    "_BaseCreateProperty__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4766,15 +4731,16 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteAccount._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_account(request, metadata)
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteAccount._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteAccount._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseDeleteAccount,
+                    "_BaseDeleteAccount__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4872,17 +4838,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteConversionEvent._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_conversion_event(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteConversionEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteConversionEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseDeleteConversionEvent,
+                    "_BaseDeleteConversionEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4982,17 +4949,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteDataStream._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_data_stream(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteDataStream._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteDataStream._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseDeleteDataStream,
+                    "_BaseDeleteDataStream__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5092,17 +5060,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteFirebaseLink._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_firebase_link(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteFirebaseLink._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteFirebaseLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseDeleteFirebaseLink,
+                    "_BaseDeleteFirebaseLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5202,17 +5171,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteGoogleAdsLink._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_google_ads_link(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteGoogleAdsLink._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteGoogleAdsLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseDeleteGoogleAdsLink,
+                    "_BaseDeleteGoogleAdsLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5312,17 +5282,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteKeyEvent._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_key_event(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteKeyEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteKeyEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseDeleteKeyEvent,
+                    "_BaseDeleteKeyEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5423,19 +5394,20 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteMeasurementProtocolSecret._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_delete_measurement_protocol_secret(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteMeasurementProtocolSecret._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteMeasurementProtocolSecret._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseDeleteMeasurementProtocolSecret,
+                    "_BaseDeleteMeasurementProtocolSecret__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5539,15 +5511,16 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteProperty._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_property(request, metadata)
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteProperty._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseDeleteProperty._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseDeleteProperty,
+                    "_BaseDeleteProperty__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5684,15 +5657,16 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseGetAccount._get_http_options()
-
             request, metadata = self._interceptor.pre_get_account(request, metadata)
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseGetAccount._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseGetAccount._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseGetAccount,
+                    "_BaseGetAccount__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5830,17 +5804,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseGetConversionEvent._get_http_options()
-
             request, metadata = self._interceptor.pre_get_conversion_event(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseGetConversionEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseGetConversionEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseGetConversionEvent,
+                    "_BaseGetConversionEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5978,17 +5953,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseGetCustomDimension._get_http_options()
-
             request, metadata = self._interceptor.pre_get_custom_dimension(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseGetCustomDimension._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseGetCustomDimension._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseGetCustomDimension,
+                    "_BaseGetCustomDimension__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6126,17 +6102,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseGetCustomMetric._get_http_options()
-
             request, metadata = self._interceptor.pre_get_custom_metric(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseGetCustomMetric._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseGetCustomMetric._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseGetCustomMetric,
+                    "_BaseGetCustomMetric__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6277,17 +6254,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseGetDataRetentionSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_get_data_retention_settings(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseGetDataRetentionSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseGetDataRetentionSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseGetDataRetentionSettings,
+                    "_BaseGetDataRetentionSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6426,17 +6404,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseGetDataSharingSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_get_data_sharing_settings(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseGetDataSharingSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseGetDataSharingSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseGetDataSharingSettings,
+                    "_BaseGetDataSharingSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6574,15 +6553,16 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseGetDataStream._get_http_options()
-
             request, metadata = self._interceptor.pre_get_data_stream(request, metadata)
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseGetDataStream._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseGetDataStream._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseGetDataStream,
+                    "_BaseGetDataStream__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6719,15 +6699,16 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseGetKeyEvent._get_http_options()
-
             request, metadata = self._interceptor.pre_get_key_event(request, metadata)
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseGetKeyEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseGetKeyEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseGetKeyEvent,
+                    "_BaseGetKeyEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6868,17 +6849,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseGetMeasurementProtocolSecret._get_http_options()
-
             request, metadata = self._interceptor.pre_get_measurement_protocol_secret(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseGetMeasurementProtocolSecret._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseGetMeasurementProtocolSecret._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseGetMeasurementProtocolSecret,
+                    "_BaseGetMeasurementProtocolSecret__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7019,15 +7001,16 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseGetProperty._get_http_options()
-
             request, metadata = self._interceptor.pre_get_property(request, metadata)
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseGetProperty._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseGetProperty._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseGetProperty,
+                    "_BaseGetProperty__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7162,15 +7145,16 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseListAccounts._get_http_options()
-
             request, metadata = self._interceptor.pre_list_accounts(request, metadata)
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseListAccounts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseListAccounts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseListAccounts,
+                    "_BaseListAccounts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7310,17 +7294,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseListAccountSummaries._get_http_options()
-
             request, metadata = self._interceptor.pre_list_account_summaries(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseListAccountSummaries._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseListAccountSummaries._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseListAccountSummaries,
+                    "_BaseListAccountSummaries__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7462,17 +7447,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseListConversionEvents._get_http_options()
-
             request, metadata = self._interceptor.pre_list_conversion_events(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseListConversionEvents._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseListConversionEvents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseListConversionEvents,
+                    "_BaseListConversionEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7614,17 +7600,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseListCustomDimensions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_custom_dimensions(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseListCustomDimensions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseListCustomDimensions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseListCustomDimensions,
+                    "_BaseListCustomDimensions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7766,17 +7753,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseListCustomMetrics._get_http_options()
-
             request, metadata = self._interceptor.pre_list_custom_metrics(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseListCustomMetrics._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseListCustomMetrics._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseListCustomMetrics,
+                    "_BaseListCustomMetrics__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7918,17 +7906,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseListDataStreams._get_http_options()
-
             request, metadata = self._interceptor.pre_list_data_streams(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseListDataStreams._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseListDataStreams._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseListDataStreams,
+                    "_BaseListDataStreams__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8070,17 +8059,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseListFirebaseLinks._get_http_options()
-
             request, metadata = self._interceptor.pre_list_firebase_links(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseListFirebaseLinks._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseListFirebaseLinks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseListFirebaseLinks,
+                    "_BaseListFirebaseLinks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8222,17 +8212,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseListGoogleAdsLinks._get_http_options()
-
             request, metadata = self._interceptor.pre_list_google_ads_links(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseListGoogleAdsLinks._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseListGoogleAdsLinks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseListGoogleAdsLinks,
+                    "_BaseListGoogleAdsLinks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8373,15 +8364,16 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseListKeyEvents._get_http_options()
-
             request, metadata = self._interceptor.pre_list_key_events(request, metadata)
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseListKeyEvents._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseListKeyEvents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseListKeyEvents,
+                    "_BaseListKeyEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8524,17 +8516,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseListMeasurementProtocolSecrets._get_http_options()
-
             request, metadata = self._interceptor.pre_list_measurement_protocol_secrets(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseListMeasurementProtocolSecrets._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseListMeasurementProtocolSecrets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseListMeasurementProtocolSecrets,
+                    "_BaseListMeasurementProtocolSecrets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8678,15 +8671,16 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseListProperties._get_http_options()
-
             request, metadata = self._interceptor.pre_list_properties(request, metadata)
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseListProperties._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseListProperties._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseListProperties,
+                    "_BaseListProperties__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8827,21 +8821,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseProvisionAccountTicket._get_http_options()
-
             request, metadata = self._interceptor.pre_provision_account_ticket(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseProvisionAccountTicket._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseProvisionAccountTicket._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseProvisionAccountTicket._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseProvisionAccountTicket,
+                    "_BaseProvisionAccountTicket__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8983,21 +8974,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseRunAccessReport._get_http_options()
-
             request, metadata = self._interceptor.pre_run_access_report(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseRunAccessReport._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseRunAccessReport._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseRunAccessReport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseRunAccessReport,
+                    "_BaseRunAccessReport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9142,21 +9130,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseSearchChangeHistoryEvents._get_http_options()
-
             request, metadata = self._interceptor.pre_search_change_history_events(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseSearchChangeHistoryEvents._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseSearchChangeHistoryEvents._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseSearchChangeHistoryEvents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseSearchChangeHistoryEvents,
+                    "_BaseSearchChangeHistoryEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9300,19 +9285,16 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateAccount._get_http_options()
-
             request, metadata = self._interceptor.pre_update_account(request, metadata)
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateAccount._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateAccount._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateAccount._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseUpdateAccount,
+                    "_BaseUpdateAccount__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9452,21 +9434,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateConversionEvent._get_http_options()
-
             request, metadata = self._interceptor.pre_update_conversion_event(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateConversionEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateConversionEvent._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateConversionEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseUpdateConversionEvent,
+                    "_BaseUpdateConversionEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9606,21 +9585,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateCustomDimension._get_http_options()
-
             request, metadata = self._interceptor.pre_update_custom_dimension(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateCustomDimension._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateCustomDimension._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateCustomDimension._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseUpdateCustomDimension,
+                    "_BaseUpdateCustomDimension__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9760,21 +9736,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateCustomMetric._get_http_options()
-
             request, metadata = self._interceptor.pre_update_custom_metric(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateCustomMetric._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateCustomMetric._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateCustomMetric._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseUpdateCustomMetric,
+                    "_BaseUpdateCustomMetric__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9919,21 +9892,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateDataRetentionSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_update_data_retention_settings(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateDataRetentionSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateDataRetentionSettings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateDataRetentionSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseUpdateDataRetentionSettings,
+                    "_BaseUpdateDataRetentionSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10075,21 +10045,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateDataStream._get_http_options()
-
             request, metadata = self._interceptor.pre_update_data_stream(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateDataStream._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateDataStream._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateDataStream._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseUpdateDataStream,
+                    "_BaseUpdateDataStream__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10231,21 +10198,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateGoogleAdsLink._get_http_options()
-
             request, metadata = self._interceptor.pre_update_google_ads_link(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateGoogleAdsLink._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateGoogleAdsLink._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateGoogleAdsLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseUpdateGoogleAdsLink,
+                    "_BaseUpdateGoogleAdsLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10387,21 +10351,18 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateKeyEvent._get_http_options()
-
             request, metadata = self._interceptor.pre_update_key_event(
                 request, metadata
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateKeyEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateKeyEvent._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateKeyEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseUpdateKeyEvent,
+                    "_BaseUpdateKeyEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10544,23 +10505,20 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateMeasurementProtocolSecret._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_update_measurement_protocol_secret(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateMeasurementProtocolSecret._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateMeasurementProtocolSecret._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateMeasurementProtocolSecret._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseUpdateMeasurementProtocolSecret,
+                    "_BaseUpdateMeasurementProtocolSecret__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10704,19 +10662,16 @@ class AnalyticsAdminServiceRestTransport(_BaseAnalyticsAdminServiceRestTransport
             """
 
             http_options = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateProperty._get_http_options()
-
             request, metadata = self._interceptor.pre_update_property(request, metadata)
-            transcoded_request = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateProperty._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateProperty._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnalyticsAdminServiceRestTransport._BaseUpdateProperty._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnalyticsAdminServiceRestTransport._BaseUpdateProperty,
+                    "_BaseUpdateProperty__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -1241,24 +1241,20 @@ def test_operations_base_transport_with_adc():
 )
 def test_operations_auth_adc(client_class):
     # If no credentials are provided, we should use ADC credentials.
+    is_async = "async" in str(client_class).lower()
+    if is_async and parse_version_to_tuple(auth_version) < (2, 60, 0):
+        # Older versions of google-auth do not accept the synchronous credentials
+        # returned by ADC in `AsyncAuthorizedSession`.
+        pytest.skip("ADC with the async REST transport requires google-auth >= 2.60.0")
+
     with mock.patch.object(google.auth, "default", autospec=True) as adc:
         adc.return_value = (ga_credentials.AnonymousCredentials(), None)
-
-        if "async" in str(client_class).lower():
-            # TODO(): Add support for adc to async REST transport.
-            # NOTE: Ideally, the logic for adc shouldn't be called if transport
-            # is set to async REST. If the user does not configure credentials
-            # of type `google.auth.aio.credentials.Credentials`,
-            # we should raise an exception to avoid the adc workflow.
-            with pytest.raises(google.auth.exceptions.InvalidType):
-                client_class()
-        else:
-            client_class()
-            adc.assert_called_once_with(
-                scopes=None,
-                default_scopes=(),
-                quota_project_id=None,
-            )
+        client_class()
+        adc.assert_called_once_with(
+            scopes=None,
+            default_scopes=(),
+            quota_project_id=None,
+        )
 
 
 # TODO(https://github.com/googleapis/python-api-core/issues/705): Add

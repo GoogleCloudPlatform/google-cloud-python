@@ -61,12 +61,32 @@ from google.cloud.compute_v1.services.region_instance_group_managers import (
 )
 from google.cloud.compute_v1.types import compute
 
+try:
+    from google.api_core import version_header
+
+    HAS_GOOGLE_API_CORE_VERSION_HEADER = True  # pragma: NO COVER
+except ImportError:  # pragma: NO COVER
+    HAS_GOOGLE_API_CORE_VERSION_HEADER = False
+
+
 CRED_INFO_JSON = {
     "credential_source": "/path/to/file",
     "credential_type": "service account credentials",
     "principal": "service-account@example.com",
 }
 CRED_INFO_STRING = json.dumps(CRED_INFO_JSON)
+
+
+@pytest.fixture(autouse=True)
+def disable_mtls_env():
+    with mock.patch.dict(
+        os.environ,
+        {
+            "GOOGLE_API_USE_CLIENT_CERTIFICATE": "false",
+            "CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE": "false",
+        },
+    ):
+        yield
 
 
 async def mock_async_gen(data, chunk_size=1):
@@ -124,240 +144,6 @@ def set_event_loop():
             asyncio.set_event_loop(None)
 
 
-def test__get_default_mtls_endpoint():
-    api_endpoint = "example.googleapis.com"
-    api_mtls_endpoint = "example.mtls.googleapis.com"
-    sandbox_endpoint = "example.sandbox.googleapis.com"
-    sandbox_mtls_endpoint = "example.mtls.sandbox.googleapis.com"
-    non_googleapi = "api.example.com"
-    custom_endpoint = ".custom"
-
-    assert RegionInstanceGroupManagersClient._get_default_mtls_endpoint(None) is None
-    assert (
-        RegionInstanceGroupManagersClient._get_default_mtls_endpoint(api_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_default_mtls_endpoint(api_mtls_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_default_mtls_endpoint(sandbox_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_default_mtls_endpoint(
-            sandbox_mtls_endpoint
-        )
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_default_mtls_endpoint(non_googleapi)
-        == non_googleapi
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_default_mtls_endpoint(custom_endpoint)
-        == custom_endpoint
-    )
-
-
-def test__read_environment_variables():
-    assert RegionInstanceGroupManagersClient._read_environment_variables() == (
-        False,
-        "auto",
-        None,
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-        assert RegionInstanceGroupManagersClient._read_environment_variables() == (
-            True,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}):
-        assert RegionInstanceGroupManagersClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}
-    ):
-        if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-            with pytest.raises(ValueError) as excinfo:
-                RegionInstanceGroupManagersClient._read_environment_variables()
-            assert (
-                str(excinfo.value)
-                == "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be either `true` or `false`"
-            )
-        else:
-            assert RegionInstanceGroupManagersClient._read_environment_variables() == (
-                False,
-                "auto",
-                None,
-            )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "never"}):
-        assert RegionInstanceGroupManagersClient._read_environment_variables() == (
-            False,
-            "never",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "always"}):
-        assert RegionInstanceGroupManagersClient._read_environment_variables() == (
-            False,
-            "always",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "auto"}):
-        assert RegionInstanceGroupManagersClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "Unsupported"}):
-        with pytest.raises(MutualTLSChannelError) as excinfo:
-            RegionInstanceGroupManagersClient._read_environment_variables()
-    assert (
-        str(excinfo.value)
-        == "Environment variable `GOOGLE_API_USE_MTLS_ENDPOINT` must be `never`, `auto` or `always`"
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_CLOUD_UNIVERSE_DOMAIN": "foo.com"}):
-        assert RegionInstanceGroupManagersClient._read_environment_variables() == (
-            False,
-            "auto",
-            "foo.com",
-        )
-
-
-def test_use_client_cert_effective():
-    # Test case 1: Test when `should_use_client_cert` returns True.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=True
-        ):
-            assert (
-                RegionInstanceGroupManagersClient._use_client_cert_effective() is True
-            )
-
-    # Test case 2: Test when `should_use_client_cert` returns False.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should NOT be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=False
-        ):
-            assert (
-                RegionInstanceGroupManagersClient._use_client_cert_effective() is False
-            )
-
-    # Test case 3: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "true".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-            assert (
-                RegionInstanceGroupManagersClient._use_client_cert_effective() is True
-            )
-
-    # Test case 4: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}
-        ):
-            assert (
-                RegionInstanceGroupManagersClient._use_client_cert_effective() is False
-            )
-
-    # Test case 5: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "True".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "True"}):
-            assert (
-                RegionInstanceGroupManagersClient._use_client_cert_effective() is True
-            )
-
-    # Test case 6: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "False".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "False"}
-        ):
-            assert (
-                RegionInstanceGroupManagersClient._use_client_cert_effective() is False
-            )
-
-    # Test case 7: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "TRUE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "TRUE"}):
-            assert (
-                RegionInstanceGroupManagersClient._use_client_cert_effective() is True
-            )
-
-    # Test case 8: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "FALSE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "FALSE"}
-        ):
-            assert (
-                RegionInstanceGroupManagersClient._use_client_cert_effective() is False
-            )
-
-    # Test case 9: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not set.
-    # In this case, the method should return False, which is the default value.
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, clear=True):
-            assert (
-                RegionInstanceGroupManagersClient._use_client_cert_effective() is False
-            )
-
-    # Test case 10: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should raise a ValueError as the environment variable must be either
-    # "true" or "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            with pytest.raises(ValueError):
-                RegionInstanceGroupManagersClient._use_client_cert_effective()
-
-    # Test case 11: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should return False as the environment variable is set to an invalid value.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            assert (
-                RegionInstanceGroupManagersClient._use_client_cert_effective() is False
-            )
-
-    # Test case 12: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is unset. Also,
-    # the GOOGLE_API_CONFIG environment variable is unset.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": ""}):
-            with mock.patch.dict(os.environ, {"GOOGLE_API_CERTIFICATE_CONFIG": ""}):
-                assert (
-                    RegionInstanceGroupManagersClient._use_client_cert_effective()
-                    is False
-                )
-
-
 def test__get_client_cert_source():
     mock_provided_cert_source = mock.Mock()
     mock_default_cert_source = mock.Mock()
@@ -397,102 +183,799 @@ def test__get_client_cert_source():
             )
 
 
-@mock.patch.object(
-    RegionInstanceGroupManagersClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(RegionInstanceGroupManagersClient),
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
 )
-def test__get_api_endpoint():
-    api_override = "foo.com"
-    mock_client_cert_source = mock.Mock()
-    default_universe = RegionInstanceGroupManagersClient._DEFAULT_UNIVERSE
-    default_endpoint = (
-        RegionInstanceGroupManagersClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-            UNIVERSE_DOMAIN=default_universe
-        )
+def test_abandon_instances_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
     )
-    mock_universe = "bar.com"
-    mock_endpoint = RegionInstanceGroupManagersClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=mock_universe
-    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.abandon_instances), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.abandon_instances()
 
-    assert (
-        RegionInstanceGroupManagersClient._get_api_endpoint(
-            api_override, mock_client_cert_source, default_universe, "always"
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
         )
-        == api_override
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "auto"
-        )
-        == RegionInstanceGroupManagersClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_api_endpoint(
-            None, None, default_universe, "auto"
-        )
-        == default_endpoint
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_api_endpoint(
-            None, None, default_universe, "always"
-        )
-        == RegionInstanceGroupManagersClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "always"
-        )
-        == RegionInstanceGroupManagersClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_api_endpoint(
-            None, None, mock_universe, "never"
-        )
-        == mock_endpoint
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_api_endpoint(
-            None, None, default_universe, "never"
-        )
-        == default_endpoint
-    )
-
-    with pytest.raises(MutualTLSChannelError) as excinfo:
-        RegionInstanceGroupManagersClient._get_api_endpoint(
-            None, mock_client_cert_source, mock_universe, "auto"
-        )
-    assert (
-        str(excinfo.value)
-        == "mTLS is not supported in any universe other than googleapis.com."
-    )
 
 
-def test__get_universe_domain():
-    client_universe_domain = "foo.com"
-    universe_domain_env = "bar.com"
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_apply_updates_to_instances_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.apply_updates_to_instances), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.apply_updates_to_instances()
 
-    assert (
-        RegionInstanceGroupManagersClient._get_universe_domain(
-            client_universe_domain, universe_domain_env
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
         )
-        == client_universe_domain
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_universe_domain(
-            None, universe_domain_env
-        )
-        == universe_domain_env
-    )
-    assert (
-        RegionInstanceGroupManagersClient._get_universe_domain(None, None)
-        == RegionInstanceGroupManagersClient._DEFAULT_UNIVERSE
-    )
 
-    with pytest.raises(ValueError) as excinfo:
-        RegionInstanceGroupManagersClient._get_universe_domain("", None)
-    assert str(excinfo.value) == "Universe Domain cannot be an empty string."
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_create_instances_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.create_instances), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.create_instances()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_delete_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(type(client.transport.delete), "__call__") as call:
+            call.return_value = compute.Operation()
+            client.delete()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_delete_instances_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.delete_instances), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.delete_instances()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_delete_per_instance_configs_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.delete_per_instance_configs), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.delete_per_instance_configs()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_get_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(type(client.transport.get), "__call__") as call:
+            call.return_value = compute.InstanceGroupManager()
+            client.get()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_insert_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(type(client.transport.insert), "__call__") as call:
+            call.return_value = compute.Operation()
+            client.insert()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_list_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(type(client.transport.list), "__call__") as call:
+            call.return_value = compute.RegionInstanceGroupManagerList()
+            client.list()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_list_errors_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(type(client.transport.list_errors), "__call__") as call:
+            call.return_value = compute.RegionInstanceGroupManagersListErrorsResponse()
+            client.list_errors()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_list_managed_instances_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.list_managed_instances), "__call__"
+        ) as call:
+            call.return_value = (
+                compute.RegionInstanceGroupManagersListInstancesResponse()
+            )
+            client.list_managed_instances()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_list_per_instance_configs_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.list_per_instance_configs), "__call__"
+        ) as call:
+            call.return_value = (
+                compute.RegionInstanceGroupManagersListInstanceConfigsResp()
+            )
+            client.list_per_instance_configs()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_patch_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(type(client.transport.patch), "__call__") as call:
+            call.return_value = compute.Operation()
+            client.patch()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_patch_per_instance_configs_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.patch_per_instance_configs), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.patch_per_instance_configs()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_recreate_instances_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.recreate_instances), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.recreate_instances()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_resize_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(type(client.transport.resize), "__call__") as call:
+            call.return_value = compute.Operation()
+            client.resize()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_resume_instances_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.resume_instances), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.resume_instances()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_set_instance_template_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.set_instance_template), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.set_instance_template()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_set_target_pools_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.set_target_pools), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.set_target_pools()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_start_instances_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.start_instances), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.start_instances()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_stop_instances_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.stop_instances), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.stop_instances()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_suspend_instances_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.suspend_instances), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.suspend_instances()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_name",
+    [
+        ("rest"),
+    ],
+)
+def test_update_per_instance_configs_api_version_header(transport_name):
+    client = RegionInstanceGroupManagersClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport=transport_name
+    )
+    # TODO: Make this test unconditional once the minimum supported version of
+    # google-api-core becomes 2.19.0 or higher.
+    api_core_major, api_core_minor = [
+        int(part) for part in api_core_version.__version__.split(".")[0:2]
+    ]
+    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
+        # Mock the actual call within the gRPC stub, and fake the request.
+        with mock.patch.object(
+            type(client.transport.update_per_instance_configs), "__call__"
+        ) as call:
+            call.return_value = compute.Operation()
+            client.update_per_instance_configs()
+
+        # Establish that the api version header was sent.
+        _, _, kw = call.mock_calls[0]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "2026-10-01-preview",
+        ) in kw["metadata"]
+    else:
+        pytest.skip(
+            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
+        )
 
 
 @pytest.mark.parametrize(
@@ -976,6 +1459,7 @@ def test_region_instance_group_managers_client_get_mtls_endpoint_and_cert_source
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", None)
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", None)
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1030,6 +1514,7 @@ def test_region_instance_group_managers_client_get_mtls_endpoint_and_cert_source
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", "")
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", "")
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1316,9 +1801,14 @@ def test_abandon_instances_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).abandon_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseAbandonInstances,
+        "_BaseAbandonInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -1327,12 +1817,8 @@ def test_abandon_instances_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).abandon_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -1383,25 +1869,6 @@ def test_abandon_instances_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_abandon_instances_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.abandon_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersAbandonInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_abandon_instances_rest_flattened():
@@ -1535,9 +2002,14 @@ def test_abandon_instances_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).abandon_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseAbandonInstances,
+        "_BaseAbandonInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -1546,12 +2018,8 @@ def test_abandon_instances_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).abandon_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -1602,25 +2070,6 @@ def test_abandon_instances_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_abandon_instances_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.abandon_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersAbandonInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_abandon_instances_unary_rest_flattened():
@@ -1757,9 +2206,14 @@ def test_apply_updates_to_instances_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).apply_updates_to_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseApplyUpdatesToInstances,
+        "_BaseApplyUpdatesToInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -1767,11 +2221,6 @@ def test_apply_updates_to_instances_rest_required_fields(
     jsonified_request["instanceGroupManager"] = "instance_group_manager_value"
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).apply_updates_to_instances._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -1822,25 +2271,6 @@ def test_apply_updates_to_instances_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_apply_updates_to_instances_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.apply_updates_to_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersApplyUpdatesRequestResource",
-            )
-        )
-    )
 
 
 def test_apply_updates_to_instances_rest_flattened():
@@ -1977,9 +2407,14 @@ def test_apply_updates_to_instances_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).apply_updates_to_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseApplyUpdatesToInstances,
+        "_BaseApplyUpdatesToInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -1987,11 +2422,6 @@ def test_apply_updates_to_instances_unary_rest_required_fields(
     jsonified_request["instanceGroupManager"] = "instance_group_manager_value"
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).apply_updates_to_instances._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -2042,25 +2472,6 @@ def test_apply_updates_to_instances_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_apply_updates_to_instances_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.apply_updates_to_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersApplyUpdatesRequestResource",
-            )
-        )
-    )
 
 
 def test_apply_updates_to_instances_unary_rest_flattened():
@@ -2194,9 +2605,14 @@ def test_create_instances_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateInstances,
+        "_BaseCreateInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2205,12 +2621,8 @@ def test_create_instances_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -2261,25 +2673,6 @@ def test_create_instances_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_instances_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersCreateInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_create_instances_rest_flattened():
@@ -2413,9 +2806,14 @@ def test_create_instances_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateInstances,
+        "_BaseCreateInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2424,12 +2822,8 @@ def test_create_instances_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -2480,25 +2874,6 @@ def test_create_instances_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_instances_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersCreateInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_create_instances_unary_rest_flattened():
@@ -2630,9 +3005,14 @@ def test_delete_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDelete,
+        "_BaseDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2641,17 +3021,13 @@ def test_delete_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "no_graceful_shutdown",
-            "request_id",
+            "noGracefulShutdown",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -2701,29 +3077,6 @@ def test_delete_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "noGracefulShutdown",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-            )
-        )
-    )
 
 
 def test_delete_rest_flattened():
@@ -2849,9 +3202,14 @@ def test_delete_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDelete,
+        "_BaseDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2860,17 +3218,13 @@ def test_delete_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "no_graceful_shutdown",
-            "request_id",
+            "noGracefulShutdown",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -2920,29 +3274,6 @@ def test_delete_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "noGracefulShutdown",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-            )
-        )
-    )
 
 
 def test_delete_unary_rest_flattened():
@@ -3070,9 +3401,14 @@ def test_delete_instances_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteInstances,
+        "_BaseDeleteInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -3081,17 +3417,13 @@ def test_delete_instances_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "no_graceful_shutdown",
-            "request_id",
+            "noGracefulShutdown",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -3142,30 +3474,6 @@ def test_delete_instances_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_instances_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "noGracefulShutdown",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersDeleteInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_delete_instances_rest_flattened():
@@ -3299,9 +3607,14 @@ def test_delete_instances_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteInstances,
+        "_BaseDeleteInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -3310,17 +3623,13 @@ def test_delete_instances_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "no_graceful_shutdown",
-            "request_id",
+            "noGracefulShutdown",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -3371,30 +3680,6 @@ def test_delete_instances_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_instances_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "noGracefulShutdown",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersDeleteInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_delete_instances_unary_rest_flattened():
@@ -3531,9 +3816,14 @@ def test_delete_per_instance_configs_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_per_instance_configs._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeletePerInstanceConfigs,
+        "_BaseDeletePerInstanceConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -3541,11 +3831,6 @@ def test_delete_per_instance_configs_rest_required_fields(
     jsonified_request["instanceGroupManager"] = "instance_group_manager_value"
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_per_instance_configs._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -3596,25 +3881,6 @@ def test_delete_per_instance_configs_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_per_instance_configs_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_per_instance_configs._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagerDeleteInstanceConfigReqResource",
-            )
-        )
-    )
 
 
 def test_delete_per_instance_configs_rest_flattened():
@@ -3751,9 +4017,14 @@ def test_delete_per_instance_configs_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_per_instance_configs._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeletePerInstanceConfigs,
+        "_BaseDeletePerInstanceConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -3761,11 +4032,6 @@ def test_delete_per_instance_configs_unary_rest_required_fields(
     jsonified_request["instanceGroupManager"] = "instance_group_manager_value"
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_per_instance_configs._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -3816,25 +4082,6 @@ def test_delete_per_instance_configs_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_per_instance_configs_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_per_instance_configs._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagerDeleteInstanceConfigReqResource",
-            )
-        )
-    )
 
 
 def test_delete_per_instance_configs_unary_rest_flattened():
@@ -3964,9 +4211,14 @@ def test_get_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGet,
+        "_BaseGet__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -3974,11 +4226,6 @@ def test_get_rest_required_fields(
     jsonified_request["instanceGroupManager"] = "instance_group_manager_value"
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -4028,24 +4275,6 @@ def test_get_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-            )
-        )
-    )
 
 
 def test_get_rest_flattened():
@@ -4170,9 +4399,14 @@ def test_insert_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).insert._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseInsert,
+        "_BaseInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -4180,12 +4414,8 @@ def test_insert_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).insert._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -4236,24 +4466,6 @@ def test_insert_rest_required_fields(
             assert sorted(expected_params) == sorted(actual_params)
 
 
-def test_insert_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.insert._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManagerResource",
-                "project",
-                "region",
-            )
-        )
-    )
-
-
 def test_insert_rest_flattened():
     client = RegionInstanceGroupManagersClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -4275,7 +4487,7 @@ def test_insert_rest_flattened():
             instance_group_manager_resource=compute.InstanceGroupManager(
                 all_instances_config=compute.InstanceGroupManagerAllInstancesConfig(
                     properties=compute.InstancePropertiesPatch(
-                        labels={"key_value": "value_value"}
+                        expose_host_topology=True
                     )
                 )
             ),
@@ -4321,7 +4533,7 @@ def test_insert_rest_flattened_error(transport: str = "rest"):
             instance_group_manager_resource=compute.InstanceGroupManager(
                 all_instances_config=compute.InstanceGroupManagerAllInstancesConfig(
                     properties=compute.InstancePropertiesPatch(
-                        labels={"key_value": "value_value"}
+                        expose_host_topology=True
                     )
                 )
             ),
@@ -4384,9 +4596,14 @@ def test_insert_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).insert._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseInsert,
+        "_BaseInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -4394,12 +4611,8 @@ def test_insert_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).insert._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -4450,24 +4663,6 @@ def test_insert_unary_rest_required_fields(
             assert sorted(expected_params) == sorted(actual_params)
 
 
-def test_insert_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.insert._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManagerResource",
-                "project",
-                "region",
-            )
-        )
-    )
-
-
 def test_insert_unary_rest_flattened():
     client = RegionInstanceGroupManagersClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -4489,7 +4684,7 @@ def test_insert_unary_rest_flattened():
             instance_group_manager_resource=compute.InstanceGroupManager(
                 all_instances_config=compute.InstanceGroupManagerAllInstancesConfig(
                     properties=compute.InstancePropertiesPatch(
-                        labels={"key_value": "value_value"}
+                        expose_host_topology=True
                     )
                 )
             ),
@@ -4535,7 +4730,7 @@ def test_insert_unary_rest_flattened_error(transport: str = "rest"):
             instance_group_manager_resource=compute.InstanceGroupManager(
                 all_instances_config=compute.InstanceGroupManagerAllInstancesConfig(
                     properties=compute.InstancePropertiesPatch(
-                        labels={"key_value": "value_value"}
+                        expose_host_topology=True
                     )
                 )
             ),
@@ -4594,9 +4789,14 @@ def test_list_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseList,
+        "_BaseList__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -4604,20 +4804,15 @@ def test_list_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "max_results",
-            "order_by",
-            "page_token",
-            "return_partial_success",
+            "maxResults",
+            "orderBy",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -4665,31 +4860,6 @@ def test_list_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "maxResults",
-                "orderBy",
-                "pageToken",
-                "returnPartialSuccess",
-            )
-        )
-        & set(
-            (
-                "project",
-                "region",
-            )
-        )
-    )
 
 
 def test_list_rest_flattened():
@@ -4871,9 +5041,14 @@ def test_list_errors_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_errors._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListErrors,
+        "_BaseListErrors__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -4882,20 +5057,15 @@ def test_list_errors_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_errors._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "max_results",
-            "order_by",
-            "page_token",
-            "return_partial_success",
+            "maxResults",
+            "orderBy",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -4947,32 +5117,6 @@ def test_list_errors_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_errors_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_errors._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "maxResults",
-                "orderBy",
-                "pageToken",
-                "returnPartialSuccess",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-            )
-        )
-    )
 
 
 def test_list_errors_rest_flattened():
@@ -5172,9 +5316,14 @@ def test_list_managed_instances_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_managed_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListManagedInstances,
+        "_BaseListManagedInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -5183,20 +5332,15 @@ def test_list_managed_instances_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_managed_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "max_results",
-            "order_by",
-            "page_token",
-            "return_partial_success",
+            "maxResults",
+            "orderBy",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -5248,32 +5392,6 @@ def test_list_managed_instances_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_managed_instances_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_managed_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "maxResults",
-                "orderBy",
-                "pageToken",
-                "returnPartialSuccess",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-            )
-        )
-    )
 
 
 def test_list_managed_instances_rest_flattened():
@@ -5473,9 +5591,14 @@ def test_list_per_instance_configs_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_per_instance_configs._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListPerInstanceConfigs,
+        "_BaseListPerInstanceConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -5484,20 +5607,15 @@ def test_list_per_instance_configs_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_per_instance_configs._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "max_results",
-            "order_by",
-            "page_token",
-            "return_partial_success",
+            "maxResults",
+            "orderBy",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -5551,32 +5669,6 @@ def test_list_per_instance_configs_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_per_instance_configs_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_per_instance_configs._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "maxResults",
-                "orderBy",
-                "pageToken",
-                "returnPartialSuccess",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-            )
-        )
-    )
 
 
 def test_list_per_instance_configs_rest_flattened():
@@ -5775,9 +5867,14 @@ def test_patch_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePatch,
+        "_BasePatch__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -5786,12 +5883,8 @@ def test_patch_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -5844,25 +5937,6 @@ def test_patch_rest_required_fields(
             assert sorted(expected_params) == sorted(actual_params)
 
 
-def test_patch_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.patch._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "instanceGroupManagerResource",
-                "project",
-                "region",
-            )
-        )
-    )
-
-
 def test_patch_rest_flattened():
     client = RegionInstanceGroupManagersClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -5889,7 +5963,7 @@ def test_patch_rest_flattened():
             instance_group_manager_resource=compute.InstanceGroupManager(
                 all_instances_config=compute.InstanceGroupManagerAllInstancesConfig(
                     properties=compute.InstancePropertiesPatch(
-                        labels={"key_value": "value_value"}
+                        expose_host_topology=True
                     )
                 )
             ),
@@ -5936,7 +6010,7 @@ def test_patch_rest_flattened_error(transport: str = "rest"):
             instance_group_manager_resource=compute.InstanceGroupManager(
                 all_instances_config=compute.InstanceGroupManagerAllInstancesConfig(
                     properties=compute.InstancePropertiesPatch(
-                        labels={"key_value": "value_value"}
+                        expose_host_topology=True
                     )
                 )
             ),
@@ -6000,9 +6074,14 @@ def test_patch_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePatch,
+        "_BasePatch__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -6011,12 +6090,8 @@ def test_patch_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -6069,25 +6144,6 @@ def test_patch_unary_rest_required_fields(
             assert sorted(expected_params) == sorted(actual_params)
 
 
-def test_patch_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.patch._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "instanceGroupManagerResource",
-                "project",
-                "region",
-            )
-        )
-    )
-
-
 def test_patch_unary_rest_flattened():
     client = RegionInstanceGroupManagersClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -6114,7 +6170,7 @@ def test_patch_unary_rest_flattened():
             instance_group_manager_resource=compute.InstanceGroupManager(
                 all_instances_config=compute.InstanceGroupManagerAllInstancesConfig(
                     properties=compute.InstancePropertiesPatch(
-                        labels={"key_value": "value_value"}
+                        expose_host_topology=True
                     )
                 )
             ),
@@ -6161,7 +6217,7 @@ def test_patch_unary_rest_flattened_error(transport: str = "rest"):
             instance_group_manager_resource=compute.InstanceGroupManager(
                 all_instances_config=compute.InstanceGroupManagerAllInstancesConfig(
                     properties=compute.InstancePropertiesPatch(
-                        labels={"key_value": "value_value"}
+                        expose_host_topology=True
                     )
                 )
             ),
@@ -6230,9 +6286,14 @@ def test_patch_per_instance_configs_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch_per_instance_configs._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePatchPerInstanceConfigs,
+        "_BasePatchPerInstanceConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -6241,12 +6302,8 @@ def test_patch_per_instance_configs_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch_per_instance_configs._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -6297,25 +6354,6 @@ def test_patch_per_instance_configs_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_patch_per_instance_configs_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.patch_per_instance_configs._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagerPatchInstanceConfigReqResource",
-            )
-        )
-    )
 
 
 def test_patch_per_instance_configs_rest_flattened():
@@ -6456,9 +6494,14 @@ def test_patch_per_instance_configs_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch_per_instance_configs._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePatchPerInstanceConfigs,
+        "_BasePatchPerInstanceConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -6467,12 +6510,8 @@ def test_patch_per_instance_configs_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch_per_instance_configs._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -6523,25 +6562,6 @@ def test_patch_per_instance_configs_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_patch_per_instance_configs_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.patch_per_instance_configs._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagerPatchInstanceConfigReqResource",
-            )
-        )
-    )
 
 
 def test_patch_per_instance_configs_unary_rest_flattened():
@@ -6681,9 +6701,14 @@ def test_recreate_instances_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).recreate_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseRecreateInstances,
+        "_BaseRecreateInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -6692,17 +6717,13 @@ def test_recreate_instances_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).recreate_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "no_graceful_shutdown",
-            "request_id",
+            "noGracefulShutdown",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -6753,30 +6774,6 @@ def test_recreate_instances_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_recreate_instances_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.recreate_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "noGracefulShutdown",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersRecreateRequestResource",
-            )
-        )
-    )
 
 
 def test_recreate_instances_rest_flattened():
@@ -6912,9 +6909,14 @@ def test_recreate_instances_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).recreate_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseRecreateInstances,
+        "_BaseRecreateInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -6923,17 +6925,13 @@ def test_recreate_instances_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).recreate_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "no_graceful_shutdown",
-            "request_id",
+            "noGracefulShutdown",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -6984,30 +6982,6 @@ def test_recreate_instances_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_recreate_instances_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.recreate_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "noGracefulShutdown",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersRecreateRequestResource",
-            )
-        )
-    )
 
 
 def test_recreate_instances_unary_rest_flattened():
@@ -7141,9 +7115,14 @@ def test_resize_rest_required_fields(
     # verify fields with default values are dropped
     assert "size" not in jsonified_request
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).resize._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseResize,
+        "_BaseResize__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -7155,17 +7134,13 @@ def test_resize_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["size"] = 443
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).resize._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "request_id",
+            "requestId",
             "size",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -7222,30 +7197,6 @@ def test_resize_rest_required_fields(
             ]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_resize_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.resize._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "requestId",
-                "size",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "size",
-            )
-        )
-    )
 
 
 def test_resize_rest_flattened():
@@ -7375,9 +7326,14 @@ def test_resize_unary_rest_required_fields(
     # verify fields with default values are dropped
     assert "size" not in jsonified_request
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).resize._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseResize,
+        "_BaseResize__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -7389,17 +7345,13 @@ def test_resize_unary_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["size"] = 443
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).resize._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "request_id",
+            "requestId",
             "size",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -7456,30 +7408,6 @@ def test_resize_unary_rest_required_fields(
             ]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_resize_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.resize._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "requestId",
-                "size",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "size",
-            )
-        )
-    )
 
 
 def test_resize_unary_rest_flattened():
@@ -7609,9 +7537,14 @@ def test_resume_instances_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).resume_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseResumeInstances,
+        "_BaseResumeInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -7620,12 +7553,8 @@ def test_resume_instances_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).resume_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -7676,25 +7605,6 @@ def test_resume_instances_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_resume_instances_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.resume_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersResumeInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_resume_instances_rest_flattened():
@@ -7828,9 +7738,14 @@ def test_resume_instances_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).resume_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseResumeInstances,
+        "_BaseResumeInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -7839,12 +7754,8 @@ def test_resume_instances_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).resume_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -7895,25 +7806,6 @@ def test_resume_instances_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_resume_instances_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.resume_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersResumeInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_resume_instances_unary_rest_flattened():
@@ -8050,9 +7942,14 @@ def test_set_instance_template_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).set_instance_template._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseSetInstanceTemplate,
+        "_BaseSetInstanceTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -8061,12 +7958,8 @@ def test_set_instance_template_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).set_instance_template._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -8117,25 +8010,6 @@ def test_set_instance_template_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_set_instance_template_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.set_instance_template._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersSetTemplateRequestResource",
-            )
-        )
-    )
 
 
 def test_set_instance_template_rest_flattened():
@@ -8272,9 +8146,14 @@ def test_set_instance_template_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).set_instance_template._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseSetInstanceTemplate,
+        "_BaseSetInstanceTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -8283,12 +8162,8 @@ def test_set_instance_template_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).set_instance_template._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -8339,25 +8214,6 @@ def test_set_instance_template_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_set_instance_template_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.set_instance_template._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersSetTemplateRequestResource",
-            )
-        )
-    )
 
 
 def test_set_instance_template_unary_rest_flattened():
@@ -8491,9 +8347,14 @@ def test_set_target_pools_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).set_target_pools._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseSetTargetPools,
+        "_BaseSetTargetPools__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -8502,12 +8363,8 @@ def test_set_target_pools_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).set_target_pools._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -8558,25 +8415,6 @@ def test_set_target_pools_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_set_target_pools_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.set_target_pools._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersSetTargetPoolsRequestResource",
-            )
-        )
-    )
 
 
 def test_set_target_pools_rest_flattened():
@@ -8710,9 +8548,14 @@ def test_set_target_pools_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).set_target_pools._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseSetTargetPools,
+        "_BaseSetTargetPools__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -8721,12 +8564,8 @@ def test_set_target_pools_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).set_target_pools._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -8777,25 +8616,6 @@ def test_set_target_pools_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_set_target_pools_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.set_target_pools._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersSetTargetPoolsRequestResource",
-            )
-        )
-    )
 
 
 def test_set_target_pools_unary_rest_flattened():
@@ -8927,9 +8747,14 @@ def test_start_instances_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).start_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseStartInstances,
+        "_BaseStartInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -8938,12 +8763,8 @@ def test_start_instances_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).start_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -8994,25 +8815,6 @@ def test_start_instances_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_start_instances_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.start_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersStartInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_start_instances_rest_flattened():
@@ -9144,9 +8946,14 @@ def test_start_instances_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).start_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseStartInstances,
+        "_BaseStartInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -9155,12 +8962,8 @@ def test_start_instances_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).start_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -9211,25 +9014,6 @@ def test_start_instances_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_start_instances_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.start_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersStartInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_start_instances_unary_rest_flattened():
@@ -9361,9 +9145,14 @@ def test_stop_instances_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).stop_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseStopInstances,
+        "_BaseStopInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -9372,17 +9161,13 @@ def test_stop_instances_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).stop_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "no_graceful_shutdown",
-            "request_id",
+            "noGracefulShutdown",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -9433,30 +9218,6 @@ def test_stop_instances_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_stop_instances_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.stop_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "noGracefulShutdown",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersStopInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_stop_instances_rest_flattened():
@@ -9588,9 +9349,14 @@ def test_stop_instances_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).stop_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseStopInstances,
+        "_BaseStopInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -9599,17 +9365,13 @@ def test_stop_instances_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).stop_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "no_graceful_shutdown",
-            "request_id",
+            "noGracefulShutdown",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -9660,30 +9422,6 @@ def test_stop_instances_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_stop_instances_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.stop_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "noGracefulShutdown",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersStopInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_stop_instances_unary_rest_flattened():
@@ -9817,9 +9555,14 @@ def test_suspend_instances_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).suspend_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseSuspendInstances,
+        "_BaseSuspendInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -9828,12 +9571,8 @@ def test_suspend_instances_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).suspend_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -9884,25 +9623,6 @@ def test_suspend_instances_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_suspend_instances_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.suspend_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersSuspendInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_suspend_instances_rest_flattened():
@@ -10036,9 +9756,14 @@ def test_suspend_instances_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).suspend_instances._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseSuspendInstances,
+        "_BaseSuspendInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -10047,12 +9772,8 @@ def test_suspend_instances_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).suspend_instances._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -10103,25 +9824,6 @@ def test_suspend_instances_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_suspend_instances_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.suspend_instances._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagersSuspendInstancesRequestResource",
-            )
-        )
-    )
 
 
 def test_suspend_instances_unary_rest_flattened():
@@ -10258,9 +9960,14 @@ def test_update_per_instance_configs_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_per_instance_configs._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdatePerInstanceConfigs,
+        "_BaseUpdatePerInstanceConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -10269,12 +9976,8 @@ def test_update_per_instance_configs_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_per_instance_configs._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -10325,25 +10028,6 @@ def test_update_per_instance_configs_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_per_instance_configs_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_per_instance_configs._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagerUpdateInstanceConfigReqResource",
-            )
-        )
-    )
 
 
 def test_update_per_instance_configs_rest_flattened():
@@ -10484,9 +10168,14 @@ def test_update_per_instance_configs_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_per_instance_configs._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdatePerInstanceConfigs,
+        "_BaseUpdatePerInstanceConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -10495,12 +10184,8 @@ def test_update_per_instance_configs_unary_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_per_instance_configs._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "instanceGroupManager" in jsonified_request
@@ -10551,25 +10236,6 @@ def test_update_per_instance_configs_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_per_instance_configs_unary_rest_unset_required_fields():
-    transport = transports.RegionInstanceGroupManagersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_per_instance_configs._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "instanceGroupManager",
-                "project",
-                "region",
-                "regionInstanceGroupManagerUpdateInstanceConfigReqResource",
-            )
-        )
-    )
 
 
 def test_update_per_instance_configs_unary_rest_flattened():
@@ -12498,7 +12164,9 @@ def test_insert_rest_call_success(request_type):
     # send a request that will satisfy transcoding
     request_init = {"project": "sample1", "region": "sample2"}
     request_init["instance_group_manager_resource"] = {
-        "all_instances_config": {"properties": {"labels": {}, "metadata": {}}},
+        "all_instances_config": {
+            "properties": {"expose_host_topology": True, "labels": {}, "metadata": {}}
+        },
         "auto_healing_policies": [
             {"health_check": "health_check_value", "initial_delay_sec": 1778}
         ],
@@ -13495,7 +13163,9 @@ def test_patch_rest_call_success(request_type):
         "instance_group_manager": "sample3",
     }
     request_init["instance_group_manager_resource"] = {
-        "all_instances_config": {"properties": {"labels": {}, "metadata": {}}},
+        "all_instances_config": {
+            "properties": {"expose_host_topology": True, "labels": {}, "metadata": {}}
+        },
         "auto_healing_policies": [
             {"health_check": "health_check_value", "initial_delay_sec": 1778}
         ],

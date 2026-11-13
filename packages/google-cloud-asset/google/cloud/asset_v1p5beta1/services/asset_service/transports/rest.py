@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.asset_v1p5beta1._compat import transcode_request
 from google.cloud.asset_v1p5beta1.types import asset_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -287,19 +288,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             http_options = (
                 _BaseAssetServiceRestTransport._BaseListAssets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_assets(request, metadata)
-            transcoded_request = (
-                _BaseAssetServiceRestTransport._BaseListAssets._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAssetServiceRestTransport._BaseListAssets._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssetServiceRestTransport._BaseListAssets,
+                    "_BaseListAssets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

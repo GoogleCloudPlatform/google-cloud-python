@@ -4,4 +4,4 @@
 # license that can be found in the LICENSE file or at
 # https://developers.google.com/open-source/licenses/bsd
 
-__version__ = "5.0.0"
+__version__ = "5.2.1"

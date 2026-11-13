@@ -46,3 +46,41 @@ class TestSpannerMetricsTracerFactory:
     def test_get_client_name(self):
         client_name = SpannerMetricsTracerFactory._get_client_name()
         assert isinstance(client_name, str)
+
+    def test_singleton_enabled_toggle(self):
+        factory = SpannerMetricsTracerFactory(enabled=True)
+        assert factory.enabled is True
+        factory_disabled = SpannerMetricsTracerFactory(enabled=False)
+        assert factory_disabled is factory
+        assert factory.enabled is False
+        factory_re_enabled = SpannerMetricsTracerFactory(enabled=True)
+        assert factory_re_enabled is factory
+        assert factory.enabled is True
+
+    def test_generate_client_hash_empty(self):
+        assert SpannerMetricsTracerFactory._generate_client_hash("") == "000000"
+
+    def test_generate_client_uid_exception(self, monkeypatch):
+        import os
+
+        monkeypatch.setattr(
+            os, "uname", lambda: (_ for _ in ()).throw(RuntimeError("uname fail"))
+        )
+        assert SpannerMetricsTracerFactory._generate_client_uid() == ""
+
+    def test_context_var_methods(self):
+        mock_tracer = object()
+        token = SpannerMetricsTracerFactory.set_current_tracer(mock_tracer)
+        try:
+            assert SpannerMetricsTracerFactory.get_current_tracer() is mock_tracer
+        finally:
+            SpannerMetricsTracerFactory.reset_current_tracer(token)
+        assert SpannerMetricsTracerFactory.get_current_tracer() is None
+
+    def test_without_opentelemetry(self, monkeypatch):
+        import google.cloud.spanner_v1.metrics.spanner_metrics_tracer_factory as mod
+
+        monkeypatch.setattr(mod, "HAS_OPENTELEMETRY_INSTALLED", False)
+        SpannerMetricsTracerFactory._metrics_tracer_factory = None
+        factory = SpannerMetricsTracerFactory(enabled=True)
+        assert factory is not None

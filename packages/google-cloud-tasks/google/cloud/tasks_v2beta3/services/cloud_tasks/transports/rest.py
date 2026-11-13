@@ -33,6 +33,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.tasks_v2beta3._compat import transcode_request
 from google.cloud.tasks_v2beta3.types import cloudtasks, cmek_config, queue, task
 from google.cloud.tasks_v2beta3.types import cmek_config as gct_cmek_config
 from google.cloud.tasks_v2beta3.types import queue as gct_queue
@@ -1337,21 +1338,18 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseBatchCreateTasks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_batch_create_tasks(
                 request, metadata
             )
-            transcoded_request = _BaseCloudTasksRestTransport._BaseBatchCreateTasks._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseBatchCreateTasks._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudTasksRestTransport._BaseBatchCreateTasks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseBatchCreateTasks,
+                    "_BaseBatchCreateTasks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1491,21 +1489,18 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseBatchDeleteTasks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_batch_delete_tasks(
                 request, metadata
             )
-            transcoded_request = _BaseCloudTasksRestTransport._BaseBatchDeleteTasks._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseBatchDeleteTasks._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudTasksRestTransport._BaseBatchDeleteTasks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseBatchDeleteTasks,
+                    "_BaseBatchDeleteTasks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1648,23 +1643,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseCreateQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseCreateQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseCreateQueue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseCreateQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseCreateQueue,
+                    "_BaseCreateQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1801,23 +1789,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseCreateTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_task(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseCreateTask._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseCreateTask._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseCreateTask._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseCreateTask,
+                    "_BaseCreateTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1951,19 +1932,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseDeleteQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseDeleteQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseDeleteQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseDeleteQueue,
+                    "_BaseDeleteQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2060,19 +2038,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseDeleteTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_task(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseDeleteTask._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseDeleteTask._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseDeleteTask,
+                    "_BaseDeleteTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2178,19 +2153,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseGetCmekConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_cmek_config(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseGetCmekConfig._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseGetCmekConfig._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseGetCmekConfig,
+                    "_BaseGetCmekConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2402,25 +2374,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseCloudTasksRestTransport._BaseGetIamPolicy._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2562,19 +2525,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseGetQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseGetQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseGetQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseGetQueue,
+                    "_BaseGetQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2707,19 +2667,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             """
 
             http_options = _BaseCloudTasksRestTransport._BaseGetTask._get_http_options()
-
             request, metadata = self._interceptor.pre_get_task(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseGetTask._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseGetTask._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseGetTask,
+                    "_BaseGetTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2856,19 +2813,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseListQueues._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_queues(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseListQueues._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseListQueues._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseListQueues,
+                    "_BaseListQueues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3005,19 +2959,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseListTasks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_tasks(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseListTasks._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseListTasks._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseListTasks,
+                    "_BaseListTasks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3159,23 +3110,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BasePauseQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_pause_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BasePauseQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BasePauseQueue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BasePauseQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BasePauseQueue,
+                    "_BasePauseQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3318,23 +3262,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BasePurgeQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_purge_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BasePurgeQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BasePurgeQueue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BasePurgeQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BasePurgeQueue,
+                    "_BasePurgeQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3479,23 +3416,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseResumeQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_resume_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseResumeQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseResumeQueue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseResumeQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseResumeQueue,
+                    "_BaseResumeQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3630,23 +3560,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             """
 
             http_options = _BaseCloudTasksRestTransport._BaseRunTask._get_http_options()
-
             request, metadata = self._interceptor.pre_run_task(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseRunTask._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseRunTask._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseRunTask._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseRunTask,
+                    "_BaseRunTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3859,25 +3782,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseCloudTasksRestTransport._BaseSetIamPolicy._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4015,21 +3929,18 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseTestIamPermissions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseCloudTasksRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudTasksRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4171,21 +4082,18 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseUpdateCmekConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_cmek_config(
                 request, metadata
             )
-            transcoded_request = _BaseCloudTasksRestTransport._BaseUpdateCmekConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseUpdateCmekConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudTasksRestTransport._BaseUpdateCmekConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseUpdateCmekConfig,
+                    "_BaseUpdateCmekConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4330,23 +4238,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseUpdateQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseUpdateQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseUpdateQueue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseUpdateQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseUpdateQueue,
+                    "_BaseUpdateQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4633,19 +4534,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4777,19 +4675,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4921,19 +4816,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

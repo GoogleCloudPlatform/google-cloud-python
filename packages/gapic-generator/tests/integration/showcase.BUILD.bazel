@@ -1,0 +1,37 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+package(default_visibility = ["//visibility:public"])
+
+# TODO(https://github.com/googleapis/google-cloud-python/issues/16312):
+# Add compliance.proto once this bug is fixed
+# We should use `srcs = glob(["schema/google/showcase/v1beta1/*.proto"]),`
+# Rather than list protos manually.
+proto_library(
+    name = "showcase_proto",
+    srcs = [
+        "schema/google/showcase/v1beta1/echo.proto",
+        "schema/google/showcase/v1beta1/identity.proto",
+        "schema/google/showcase/v1beta1/messaging.proto",
+        "schema/google/showcase/v1beta1/rest_error.proto",
+        "schema/google/showcase/v1beta1/resumable_upload.proto",
+        "schema/google/showcase/v1beta1/sequence.proto",
+        "schema/google/showcase/v1beta1/testing.proto",
+    ],
+    deps = [
+        "@com_google_googleapis//google/api:annotations_proto",
+        "@com_google_googleapis//google/api:client_proto",
+        "@com_google_googleapis//google/api:field_behavior_proto",
+        "@com_google_googleapis//google/api:field_info_proto",
+        "@com_google_googleapis//google/api:resource_proto",
+        "@com_google_googleapis//google/api:routing_proto",
+        "@com_google_googleapis//google/longrunning:operations_proto",
+        "@com_google_googleapis//google/rpc:code_proto",
+        "@com_google_googleapis//google/rpc:error_details_proto",
+        "@com_google_googleapis//google/rpc:status_proto",
+        "@com_google_protobuf//:any_proto",
+        "@com_google_protobuf//:duration_proto",
+        "@com_google_protobuf//:empty_proto",
+        "@com_google_protobuf//:field_mask_proto",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+)

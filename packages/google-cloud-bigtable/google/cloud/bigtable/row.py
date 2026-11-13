@@ -14,17 +14,18 @@
 
 """User-friendly container for Google Cloud Bigtable Row."""
 
-import struct
-
+from google.api_core.exceptions import DeadlineExceeded, GoogleAPICallError
 from google.cloud._helpers import (
     _datetime_from_microseconds,  # type: ignore
     _microseconds_from_datetime,  # type: ignore
     _to_bytes,  # type: ignore
 )
+from google.rpc import code_pb2, status_pb2
 
-from google.cloud.bigtable_v2.types import data as data_v2_pb2
-
-_PACK_I64 = struct.Struct(">q").pack
+from google.cloud.bigtable.data import mutations
+from google.cloud.bigtable.data import read_modify_write_rules as rmw_rules
+from google.cloud.bigtable.data._helpers import _get_status
+from google.cloud.bigtable.data.exceptions import RetryExceptionGroup
 
 MAX_MUTATIONS = 100000
 """The maximum number of mutations that a row can accumulate."""
@@ -158,26 +159,21 @@ class _SetDeleteRow(Row):
         :param state: (Optional) The state that is passed along to
                       :meth:`_get_mutations`.
         """
-        column = _to_bytes(column)
-        if isinstance(value, int):
-            value = _PACK_I64(value)
-        value = _to_bytes(value)
         if timestamp is None:
-            # Use -1 for current Bigtable server time.
-            timestamp_micros = -1
+            # Use current Bigtable server time.
+            timestamp_micros = mutations._SERVER_SIDE_TIMESTAMP
         else:
             timestamp_micros = _microseconds_from_datetime(timestamp)
             # Truncate to millisecond granularity.
             timestamp_micros -= timestamp_micros % 1000
 
-        mutation_val = data_v2_pb2.Mutation.SetCell(
-            family_name=column_family_id,
-            column_qualifier=column,
+        mutation = mutations.SetCell(
+            family=column_family_id,
+            qualifier=column,
+            new_value=value,
             timestamp_micros=timestamp_micros,
-            value=value,
         )
-        mutation_pb = data_v2_pb2.Mutation(set_cell=mutation_val)
-        self._get_mutations(state).append(mutation_pb)
+        self._get_mutations(state).append(mutation)
 
     def _delete(self, state=None):
         """Helper for :meth:`delete`
@@ -192,9 +188,7 @@ class _SetDeleteRow(Row):
         :param state: (Optional) The state that is passed along to
                       :meth:`_get_mutations`.
         """
-        mutation_val = data_v2_pb2.Mutation.DeleteFromRow()
-        mutation_pb = data_v2_pb2.Mutation(delete_from_row=mutation_val)
-        self._get_mutations(state).append(mutation_pb)
+        self._get_mutations(state).append(mutations.DeleteAllFromRow())
 
     def _delete_cells(self, column_family_id, columns, time_range=None, state=None):
         """Helper for :meth:`delete_cell` and :meth:`delete_cells`.
@@ -221,33 +215,34 @@ class _SetDeleteRow(Row):
         :param state: (Optional) The state that is passed along to
                       :meth:`_get_mutations`.
         """
-        mutations_list = self._get_mutations(state)
         if columns is self.ALL_COLUMNS:
-            mutation_val = data_v2_pb2.Mutation.DeleteFromFamily(
-                family_name=column_family_id
+            self._get_mutations(state).append(
+                mutations.DeleteAllFromFamily(family_to_delete=column_family_id)
             )
-            mutation_pb = data_v2_pb2.Mutation(delete_from_family=mutation_val)
-            mutations_list.append(mutation_pb)
         else:
-            delete_kwargs = {}
-            if time_range is not None:
-                delete_kwargs["time_range"] = time_range.to_pb()
+            if isinstance(columns, (str, bytes)):
+                raise TypeError(
+                    "columns must be an iterable of column names, not str or bytes"
+                )
+            timestamps = time_range._to_dict() if time_range else {}
+            start_timestamp_micros = timestamps.get("start_timestamp_micros")
+            end_timestamp_micros = timestamps.get("end_timestamp_micros")
 
             to_append = []
             for column in columns:
                 column = _to_bytes(column)
-                # time_range will never change if present, but the rest of
-                # delete_kwargs will
-                delete_kwargs.update(
-                    family_name=column_family_id, column_qualifier=column
+                to_append.append(
+                    mutations.DeleteRangeFromColumn(
+                        family=column_family_id,
+                        qualifier=column,
+                        start_timestamp_micros=start_timestamp_micros,
+                        end_timestamp_micros=end_timestamp_micros,
+                    )
                 )
-                mutation_val = data_v2_pb2.Mutation.DeleteFromColumn(**delete_kwargs)
-                mutation_pb = data_v2_pb2.Mutation(delete_from_column=mutation_val)
-                to_append.append(mutation_pb)
 
             # We don't add the mutations until all columns have been
             # processed without error.
-            mutations_list.extend(to_append)
+            self._get_mutations(state).extend(to_append)
 
 
 class DirectRow(_SetDeleteRow):
@@ -285,7 +280,7 @@ class DirectRow(_SetDeleteRow):
 
     def __init__(self, row_key, table=None):
         super(DirectRow, self).__init__(row_key, table)
-        self._pb_mutations = []
+        self._mutations = []
 
     def _get_mutations(self, state=None):  # pylint: disable=unused-argument
         """Gets the list of mutations for a given state.
@@ -300,7 +295,12 @@ class DirectRow(_SetDeleteRow):
         :rtype: list
         :returns: The list to add new mutations to (for the current state).
         """
-        return self._pb_mutations
+        return self._mutations
+
+    def _get_mutation_pbs(self):
+        """Gets the list of mutation protos."""
+
+        return [mut._to_pb() for mut in self._get_mutations()]
 
     def get_mutations_size(self):
         """Gets the total mutations size for current row
@@ -314,7 +314,7 @@ class DirectRow(_SetDeleteRow):
         """
 
         mutation_size = 0
-        for mutation in self._get_mutations():
+        for mutation in self._get_mutation_pbs():
             mutation_size += mutation._pb.ByteSize()
 
         return mutation_size
@@ -449,7 +449,8 @@ class DirectRow(_SetDeleteRow):
     def commit(self):
         """Makes a ``MutateRow`` API request.
 
-        If no mutations have been created in the row, no request is made.
+        If no mutations have been created in the row, no request is made and a
+        ValueError is raised instead.
 
         Mutations are applied atomically and in order, meaning that earlier
         mutations can be masked / negated by later ones. Cells already present
@@ -468,14 +469,51 @@ class DirectRow(_SetDeleteRow):
         :rtype: :class:`~google.rpc.status_pb2.Status`
         :returns: A response status (`google.rpc.status_pb2.Status`)
                   representing success or failure of the row committed.
-        :raises: :exc:`~.table.TooManyMutationsError` if the number of
-                 mutations is greater than 100,000.
+        :raises: ValueError: if no mutations have been created in the row
+                 or if the number of mutations is greater than 100,000.
         """
-        response = self._table.mutate_rows([self])
+        num_mutations = len(self._get_mutations())
+        if num_mutations > MAX_MUTATIONS:
+            raise ValueError(
+                "Number of mutations exceeds the maximum "
+                "allowable %d." % (MAX_MUTATIONS,)
+            )
 
+        try:
+            self._table._table_impl.mutate_row(self.row_key, self._get_mutations())
+            status = status_pb2.Status(code=code_pb2.OK)
+        except GoogleAPICallError as e:
+            # On timeout the data client raises a synthetic DeadlineExceeded
+            # chained with the errors seen on the wire, which would mask the
+            # real failure, so report the terminal one instead. Only that case
+            # is unwrapped: otherwise the raised error already is the terminal
+            # one and the group holds only earlier attempts. The synthetic
+            # error is the one with no response, as server errors carry one.
+            cause = e.__cause__
+            if (
+                isinstance(e, DeadlineExceeded)
+                and e.response is None
+                and isinstance(cause, RetryExceptionGroup)
+                and cause.exceptions
+            ):
+                status = _get_status(cause.exceptions[-1])
+            else:
+                # If the RPC call returns an error, extract the error into a status object, if possible.
+                status = status_pb2.Status(
+                    code=(
+                        e.grpc_status_code.value[0]
+                        if e.grpc_status_code is not None
+                        else code_pb2.UNKNOWN
+                    ),
+                    message=e.message,
+                    details=getattr(e, "details", []),
+                )
+
+        # Clear once a status is produced, success or failure. An error that
+        # cannot be turned into a status propagates instead, and the mutations
+        # stay on the row so the caller can retry them.
         self.clear()
-
-        return response[0]
+        return status
 
     def clear(self):
         """Removes all currently accumulated mutations on the current row.
@@ -487,7 +525,7 @@ class DirectRow(_SetDeleteRow):
             :end-before: [END bigtable_api_row_clear]
             :dedent: 4
         """
-        del self._pb_mutations[:]
+        del self._mutations[:]
 
 
 class ConditionalRow(_SetDeleteRow):
@@ -598,17 +636,15 @@ class ConditionalRow(_SetDeleteRow):
                 % (MAX_MUTATIONS, num_true_mutations, num_false_mutations)
             )
 
-        data_client = self._table._instance._client.table_data_client
-        resp = data_client.check_and_mutate_row(
-            table_name=self._table.name,
+        table = self._table._table_impl
+        resp = table.check_and_mutate_row(
             row_key=self._row_key,
-            predicate_filter=self._filter.to_pb(),
-            app_profile_id=self._table._app_profile_id,
-            true_mutations=true_mutations,
-            false_mutations=false_mutations,
+            predicate=self._filter,
+            true_case_mutations=true_mutations,
+            false_case_mutations=false_mutations,
         )
         self.clear()
-        return resp.predicate_matched
+        return resp
 
     # pylint: disable=arguments-differ
     def set_cell(self, column_family_id, column, value, timestamp=None, state=True):
@@ -798,7 +834,7 @@ class AppendRow(Row):
 
     def __init__(self, row_key, table):
         super(AppendRow, self).__init__(row_key, table)
-        self._rule_pb_list = []
+        self._rule_list = []
 
     def clear(self):
         """Removes all currently accumulated modifications on current row.
@@ -810,7 +846,7 @@ class AppendRow(Row):
             :end-before: [END bigtable_api_row_clear]
             :dedent: 4
         """
-        del self._rule_pb_list[:]
+        del self._rule_list[:]
 
     def append_cell_value(self, column_family_id, column, value):
         """Appends a value to an existing cell.
@@ -843,12 +879,11 @@ class AppendRow(Row):
                       the targeted cell is unset, it will be treated as
                       containing the empty string.
         """
-        column = _to_bytes(column)
-        value = _to_bytes(value)
-        rule_pb = data_v2_pb2.ReadModifyWriteRule(
-            family_name=column_family_id, column_qualifier=column, append_value=value
+        self._rule_list.append(
+            rmw_rules.AppendValueRule(
+                family=column_family_id, qualifier=column, append_value=value
+            )
         )
-        self._rule_pb_list.append(rule_pb)
 
     def increment_cell_value(self, column_family_id, column, int_value):
         """Increments a value in an existing cell.
@@ -887,13 +922,11 @@ class AppendRow(Row):
                           big-endian signed integer), or the entire request
                           will fail.
         """
-        column = _to_bytes(column)
-        rule_pb = data_v2_pb2.ReadModifyWriteRule(
-            family_name=column_family_id,
-            column_qualifier=column,
-            increment_amount=int_value,
+        self._rule_list.append(
+            rmw_rules.IncrementRule(
+                family=column_family_id, qualifier=column, increment_amount=int_value
+            )
         )
-        self._rule_pb_list.append(rule_pb)
 
     def commit(self):
         """Makes a ``ReadModifyWriteRow`` API request.
@@ -926,7 +959,7 @@ class AppendRow(Row):
         :raises: :class:`ValueError <exceptions.ValueError>` if the number of
                  mutations exceeds the :data:`MAX_MUTATIONS`.
         """
-        num_mutations = len(self._rule_pb_list)
+        num_mutations = len(self._rule_list)
         if num_mutations == 0:
             return {}
         if num_mutations > MAX_MUTATIONS:
@@ -935,12 +968,10 @@ class AppendRow(Row):
                 "allowable %d." % (num_mutations, MAX_MUTATIONS)
             )
 
-        data_client = self._table._instance._client.table_data_client
-        row_response = data_client.read_modify_write_row(
-            table_name=self._table.name,
+        table = self._table._table_impl
+        row_response = table.read_modify_write_row(
             row_key=self._row_key,
-            rules=self._rule_pb_list,
-            app_profile_id=self._table._app_profile_id,
+            rules=self._rule_list,
         )
 
         # Reset modifications after commit-ing request.
@@ -984,45 +1015,11 @@ def _parse_rmw_row_response(row_response):
                   }
     """
     result = {}
-    for column_family in row_response.row.families:
-        column_family_id, curr_family = _parse_family_pb(column_family)
-        result[column_family_id] = curr_family
+    for cell in row_response.cells:
+        column_family = result.setdefault(cell.family, {})
+        column = column_family.setdefault(cell.qualifier, [])
+        column.append((cell.value, _datetime_from_microseconds(cell.timestamp_micros)))
     return result
-
-
-def _parse_family_pb(family_pb):
-    """Parses a Family protobuf into a dictionary.
-
-    :type family_pb: :class:`._generated.data_pb2.Family`
-    :param family_pb: A protobuf
-
-    :rtype: tuple
-    :returns: A string and dictionary. The string is the name of the
-              column family and the dictionary has column names (within the
-              family) as keys and cell lists as values. Each cell is
-              represented with a two-tuple with the value (in bytes) and the
-              timestamp for the cell. For example:
-
-              .. code:: python
-
-                  {
-                      b'col-name1': [
-                          (b'cell-val', datetime.datetime(...)),
-                          (b'cell-val-newer', datetime.datetime(...)),
-                      ],
-                      b'col-name2': [
-                          (b'altcol-cell-val', datetime.datetime(...)),
-                      ],
-                  }
-    """
-    result = {}
-    for column in family_pb.columns:
-        result[column.qualifier] = cells = []
-        for cell in column.cells:
-            val_pair = (cell.value, _datetime_from_microseconds(cell.timestamp_micros))
-            cells.append(val_pair)
-
-    return family_pb.name, result
 
 
 class PartialRowData(object):
@@ -1038,6 +1035,16 @@ class PartialRowData(object):
     def __init__(self, row_key):
         self._row_key = row_key
         self._cells = {}
+
+    @classmethod
+    def _from_data_client_row(cls, row):
+        partial_row_data = cls(row.row_key)
+        for column_family in row._index:
+            columns = {}
+            for column, items in row._index[column_family].items():
+                columns[column] = [Cell._from_data_client_cell(item) for item in items]
+            partial_row_data._cells[column_family] = columns
+        return partial_row_data
 
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
@@ -1241,6 +1248,14 @@ class Cell(object):
             return cls(cell_pb.value, cell_pb.timestamp_micros, labels=cell_pb.labels)
         else:
             return cls(cell_pb.value, cell_pb.timestamp_micros)
+
+    @classmethod
+    def _from_data_client_cell(cls, cell):
+        return cls(
+            cell.value,
+            cell.timestamp_micros,
+            cell.labels,
+        )
 
     @property
     def timestamp(self):

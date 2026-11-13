@@ -67,9 +67,12 @@ class Membership(proto.Message):
             Optional. The Google Chat user or app the membership
             corresponds to. If your Chat app `authenticates as a
             user <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__,
-            the output populates the
+            the output only populates the
             `user <https://developers.google.com/workspace/chat/api/reference/rest/v1/User>`__
-            ``name`` and ``type``.
+            ``name`` and ``type`` fields for both internal and external
+            users, unless they are members of the space or have a prior
+            affinity, like a direct message (DM) conversation, with the
+            calling user.
 
             This field is a member of `oneof`_ ``memberType``.
         group_member (google.apps.chat_v1.types.Group):

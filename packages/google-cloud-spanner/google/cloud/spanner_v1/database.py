@@ -42,17 +42,13 @@ from google.cloud.spanner_admin_database_v1 import (
     RestoreDatabaseRequest,
     UpdateDatabaseDdlRequest,
 )
-from google.cloud.spanner_admin_database_v1 import (
-    Database as DatabasePB,
-)
+from google.cloud.spanner_admin_database_v1 import Database as DatabasePB
 from google.cloud.spanner_admin_database_v1.types import DatabaseDialect
 from google.cloud.spanner_v1._helpers import (
     _augment_errors_with_request_id,
     _merge_query_options,
     _metadata_with_leader_aware_routing,
     _metadata_with_prefix,
-    _metadata_with_request_id,
-    _metadata_with_request_id_and_req_id,
 )
 from google.cloud.spanner_v1._opentelemetry_tracing import (
     add_span_event,
@@ -67,7 +63,15 @@ from google.cloud.spanner_v1.database_sessions_manager import (
 from google.cloud.spanner_v1.keyset import KeySet
 from google.cloud.spanner_v1.merged_result_set import MergedResultSet
 from google.cloud.spanner_v1.metrics.metrics_capture import MetricsCapture
+from google.cloud.spanner_v1.metrics.spanner_metrics_tracer_factory import (
+    SpannerMetricsTracerFactory,
+)
 from google.cloud.spanner_v1.pool import BurstyPool
+from google.cloud.spanner_v1.request_id_header import (
+    REQ_ID_HEADER_KEY,
+    X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR,
+    _CachedPrefixDescriptor,
+)
 from google.cloud.spanner_v1.services.spanner.client import (
     SpannerClient as SpannerClient,
 )
@@ -149,12 +153,13 @@ class Database(object):
         has drop protection enabled or not.
     :type proto_descriptors: bytes
     :param proto_descriptors: (Optional) Proto descriptors used by CREATE/ALTER PROTO BUNDLE
-                              statements in 'ddl_statements' above.
-    """
+                              statements in 'ddl_statements' above."""
 
     _spanner_api: SpannerClient = None
     __transport_lock = threading.Lock()
     __transports_to_channel_id = dict()
+    _channel_id_val = 0
+    _req_id_prefix = _CachedPrefixDescriptor()
 
     def __init__(
         self,
@@ -211,13 +216,26 @@ class Database(object):
     @property
     def _resource_info(self):
         """Resource information for metrics labels."""
-        return {
-            "project": self._instance._client.project
-            if self._instance and self._instance._client
-            else None,
-            "instance": self._instance.instance_id if self._instance else None,
-            "database": self.database_id,
-        }
+        cached = getattr(self, "_cached_resource_info", None)
+        if cached is None:
+            instance = self._instance
+            client = getattr(instance, "_client", None) if instance else None
+            project = getattr(client, "project", None) if client else None
+            instance_id = getattr(instance, "instance_id", None) if instance else None
+            database_id = self.database_id
+            try:
+                factory = SpannerMetricsTracerFactory()
+                cached = factory.create_resource_info(
+                    project=project, instance=instance_id, database=database_id
+                )
+            except Exception:
+                cached = {
+                    "project": project,
+                    "instance": instance_id,
+                    "database": database_id,
+                }
+            self._cached_resource_info = cached
+        return cached
 
     @classmethod
     def from_pb(cls, database_pb, instance, pool=None):
@@ -452,6 +470,7 @@ class Database(object):
                     client._ca_certificate,
                     client._client_certificate,
                     client._client_key,
+                    credentials=client.credentials,
                 )
                 self._spanner_api = SpannerClient(
                     client_info=client_info,
@@ -476,22 +495,17 @@ class Database(object):
                 self._channel_id = channel_id
         return self._spanner_api
 
-    def metadata_with_request_id(
-        self, nth_request, nth_attempt, prior_metadata=[], span=None
-    ):
-        if span is None:
-            span = get_current_span()
-        return _metadata_with_request_id(
-            self._nth_client_id,
-            self._channel_id,
-            nth_request,
-            nth_attempt,
-            prior_metadata,
-            span,
-        )
+    @property
+    def _channel_id(self):
+        return self._channel_id_val
+
+    @_channel_id.setter
+    def _channel_id(self, value):
+        self._channel_id_val = value
+        self.__dict__.pop("_req_id_prefix", None)
 
     def metadata_and_request_id(
-        self, nth_request, nth_attempt, prior_metadata=[], span=None
+        self, nth_request, nth_attempt, prior_metadata=None, span=None
     ):
         """Return metadata and request ID string.
 
@@ -508,17 +522,33 @@ class Database(object):
             tuple: (metadata_list, request_id_string)"""
         if span is None:
             span = get_current_span()
-        return _metadata_with_request_id_and_req_id(
-            self._nth_client_id,
-            self._channel_id,
-            nth_request,
-            nth_attempt,
-            prior_metadata,
-            span,
+        req_id = f"{self._req_id_prefix}{nth_request}.{nth_attempt}"
+        metadata = (
+            [*prior_metadata, (REQ_ID_HEADER_KEY, req_id)]
+            if prior_metadata
+            else [(REQ_ID_HEADER_KEY, req_id)]
         )
+        if span is not None and span.is_recording():
+            span.set_attribute(X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR, req_id)
+        return (metadata, req_id)
+
+    def metadata_with_request_id(
+        self, nth_request, nth_attempt, prior_metadata=None, span=None
+    ):
+        if span is None:
+            span = get_current_span()
+        req_id = f"{self._req_id_prefix}{nth_request}.{nth_attempt}"
+        metadata = (
+            [*prior_metadata, (REQ_ID_HEADER_KEY, req_id)]
+            if prior_metadata
+            else [(REQ_ID_HEADER_KEY, req_id)]
+        )
+        if span is not None and span.is_recording():
+            span.set_attribute(X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR, req_id)
+        return metadata
 
     def with_error_augmentation(
-        self, nth_request, nth_attempt, prior_metadata=[], span=None
+        self, nth_request, nth_attempt, prior_metadata=None, span=None
     ):
         """Context manager for gRPC calls with error augmentation.
 
@@ -535,15 +565,15 @@ class Database(object):
             tuple: (metadata_list, context_manager)"""
         if span is None:
             span = get_current_span()
-        metadata, request_id = _metadata_with_request_id_and_req_id(
-            self._nth_client_id,
-            self._channel_id,
-            nth_request,
-            nth_attempt,
-            prior_metadata,
-            span,
+        req_id = f"{self._req_id_prefix}{nth_request}.{nth_attempt}"
+        metadata = (
+            [*prior_metadata, (REQ_ID_HEADER_KEY, req_id)]
+            if prior_metadata
+            else [(REQ_ID_HEADER_KEY, req_id)]
         )
-        return (metadata, _augment_errors_with_request_id(request_id))
+        if span is not None and span.is_recording():
+            span.set_attribute(X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR, req_id)
+        return (metadata, _augment_errors_with_request_id(req_id))
 
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
@@ -569,17 +599,18 @@ class Database(object):
         :raises NotFound: if the instance owning the database does not exist"""
         api = self._instance._client.database_admin_api
         metadata = _metadata_with_prefix(self.name)
-        db_name = self.database_id
-        if "-" in db_name:
-            if self._database_dialect == DatabaseDialect.POSTGRESQL:
-                db_name = f'"{db_name}"'
-            else:
-                db_name = f"`{db_name}`"
+        database_id = str(self.database_id)
+        if self._database_dialect == DatabaseDialect.POSTGRESQL:
+            escaped = database_id.replace('"', '""')
+            quoted_database_id = f'"{escaped}"'
+        else:
+            escaped = database_id.replace("\\", "\\\\").replace("`", "\\`")
+            quoted_database_id = f"`{escaped}`"
         if type(self._encryption_config) is dict:
             self._encryption_config = EncryptionConfig(**self._encryption_config)
         request = CreateDatabaseRequest(
             parent=self._instance.name,
-            create_statement="CREATE DATABASE %s" % (db_name,),
+            create_statement=f"CREATE DATABASE {quoted_database_id}",
             extra_statements=list(self._ddl_statements),
             encryption_config=self._encryption_config,
             database_dialect=self._database_dialect,
@@ -720,8 +751,7 @@ class Database(object):
         """Drop this database.
 
         See
-        https://cloud.google.com/spanner/reference/rpc/google.spanner.admin.database.v1#google.spanner.admin.database.v1.DatabaseAdmin.DropDatabase
-        """
+        https://cloud.google.com/spanner/reference/rpc/google.spanner.admin.database.v1#google.spanner.admin.database.v1.DatabaseAdmin.DropDatabase"""
         api = self._instance._client.database_admin_api
         metadata = _metadata_with_prefix(self.name)
         api.drop_database(
@@ -858,13 +888,13 @@ class Database(object):
     @property
     def _next_nth_request(self):
         if self._instance and self._instance._client:
-            return self._instance._client._next_nth_request
+            return getattr(self._instance._client, "_next_nth_request", 1)
         return 1
 
     @property
     def _nth_client_id(self):
         if self._instance and self._instance._client:
-            return self._instance._client._nth_client_id
+            return getattr(self._instance._client, "_nth_client_id", 0)
         return 0
 
     def session(self, labels=None, database_role=None):
@@ -1114,8 +1144,7 @@ class Database(object):
         """Test whether this database is ready for use.
 
         :rtype: bool
-        :returns: True if the database state is READY_OPTIMIZING or READY, else False.
-        """
+        :returns: True if the database state is READY_OPTIMIZING or READY, else False."""
         return (
             self.state == DatabasePB.State.READY_OPTIMIZING
             or self.state == DatabasePB.State.READY

@@ -18,9 +18,7 @@ import logging
 import random
 import time
 
-
 from google.resumable_media import common
-
 
 RANGE_HEADER = "range"
 CONTENT_RANGE_HEADER = "content-range"

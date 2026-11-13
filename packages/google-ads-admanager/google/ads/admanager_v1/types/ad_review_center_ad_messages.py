@@ -64,10 +64,40 @@ class AdReviewCenterAd(proto.Message):
         preview_url (str):
             Output only. The preview URL that can be
             embedded or accessed directly which will present
-            the rendered contents of the ad. (This URL
-            expires 72 hours after being retrieved.).
+            the rendered contents of the ad. This URL
+            expires 72 hours after being retrieved.
 
             This field is a member of `oneof`_ ``_preview_url``.
+        asset_preview_urls (MutableSequence[str]):
+            Output only. The preview URLs that can be
+            embedded or accessed directly which will present
+            the rendered contents of the ad, each with a
+            different asset. These URLs expire 72 hours
+            after being retrieved.
+        advertiser_display_name (str):
+            Output only. The advertiser name of the Ad
+            Review Center ad. Specifies the detected
+            advertiser for Google Display Network (GDN) ads,
+            and individual network name for real-time
+            bidding (RTB) ads.
+        language_codes (MutableSequence[str]):
+            Output only. The language codes of the Ad
+            Review Center ad. Languages detected are
+            represented by their BCP 47 code. For example,
+            'en', 'fr', 'es-419', or 'zh-cn'.
+        region_codes (MutableSequence[str]):
+            Output only. The region codes of the Ad
+            Review Center ad.
+        ad_types (MutableSequence[google.ads.admanager_v1.types.ArcCreativeFormatEnum.ArcCreativeFormat]):
+            Output only. The ad types of the Ad Review
+            Center ad.
+        destination_urls (MutableSequence[str]):
+            Output only. The destination URLs of the Ad
+            Review Center ad.
+        label_ids (MutableSequence[str]):
+            Output only. The
+            [labelIds][google.ads.admanager.v1.FetchAdReviewCenterCustomLabelsResponse.CustomLabel.label_id]
+            associated with this Ad Review Center ad.
     """
 
     name: str = proto.Field(
@@ -99,6 +129,37 @@ class AdReviewCenterAd(proto.Message):
         proto.STRING,
         number=5,
         optional=True,
+    )
+    asset_preview_urls: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=13,
+    )
+    advertiser_display_name: str = proto.Field(
+        proto.STRING,
+        number=7,
+    )
+    language_codes: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=8,
+    )
+    region_codes: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=9,
+    )
+    ad_types: MutableSequence[
+        ad_review_center_ad_enums.ArcCreativeFormatEnum.ArcCreativeFormat
+    ] = proto.RepeatedField(
+        proto.ENUM,
+        number=10,
+        enum=ad_review_center_ad_enums.ArcCreativeFormatEnum.ArcCreativeFormat,
+    )
+    destination_urls: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=12,
+    )
+    label_ids: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=14,
     )
 
 

@@ -663,15 +663,19 @@ transmitted in chunks until completion:
    True
 """
 
-from google.resumable_media.requests.download import ChunkedDownload
-from google.resumable_media.requests.download import Download
-from google.resumable_media.requests.upload import MultipartUpload
-from google.resumable_media.requests.download import RawChunkedDownload
-from google.resumable_media.requests.download import RawDownload
-from google.resumable_media.requests.upload import ResumableUpload
-from google.resumable_media.requests.upload import SimpleUpload
-from google.resumable_media.requests.upload import XMLMPUContainer
-from google.resumable_media.requests.upload import XMLMPUPart
+from google.resumable_media.requests.download import (
+    ChunkedDownload,
+    Download,
+    RawChunkedDownload,
+    RawDownload,
+)
+from google.resumable_media.requests.upload import (
+    MultipartUpload,
+    ResumableUpload,
+    SimpleUpload,
+    XMLMPUContainer,
+    XMLMPUPart,
+)
 
 __all__ = [
     "ChunkedDownload",

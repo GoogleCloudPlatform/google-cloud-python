@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ai.generativelanguage_v1beta2._compat import transcode_request
 from google.ai.generativelanguage_v1beta2.types import text_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -343,23 +344,16 @@ class TextServiceRestTransport(_BaseTextServiceRestTransport):
             http_options = (
                 _BaseTextServiceRestTransport._BaseEmbedText._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_embed_text(request, metadata)
-            transcoded_request = (
-                _BaseTextServiceRestTransport._BaseEmbedText._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseTextServiceRestTransport._BaseEmbedText._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTextServiceRestTransport._BaseEmbedText._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTextServiceRestTransport._BaseEmbedText,
+                    "_BaseEmbedText__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -500,25 +494,16 @@ class TextServiceRestTransport(_BaseTextServiceRestTransport):
             http_options = (
                 _BaseTextServiceRestTransport._BaseGenerateText._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_generate_text(request, metadata)
-            transcoded_request = (
-                _BaseTextServiceRestTransport._BaseGenerateText._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseTextServiceRestTransport._BaseGenerateText._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTextServiceRestTransport._BaseGenerateText._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTextServiceRestTransport._BaseGenerateText,
+                    "_BaseGenerateText__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

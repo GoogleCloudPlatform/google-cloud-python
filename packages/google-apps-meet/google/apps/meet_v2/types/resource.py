@@ -26,6 +26,7 @@ __protobuf__ = proto.module(
         "Space",
         "ActiveConference",
         "SpaceConfig",
+        "Member",
         "ConferenceRecord",
         "Participant",
         "ParticipantSession",
@@ -37,6 +38,7 @@ __protobuf__ = proto.module(
         "Transcript",
         "DocsDestination",
         "TranscriptEntry",
+        "SmartNote",
     },
 )
 
@@ -56,7 +58,7 @@ class Space(proto.Message):
             example, ``jQCFfuBOdN5z``.
 
             For more information, see `How Meet identifies a meeting
-            space <https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space>`__.
+            space <https://developers.google.com/workspace/meet/api/guides/meeting-spaces#identify-meeting-space>`__.
         meeting_uri (str):
             Output only. URI used to join meetings consisting of
             ``https://meet.google.com/`` followed by the
@@ -78,7 +80,89 @@ class Space(proto.Message):
             space.
         active_conference (google.apps.meet_v2.types.ActiveConference):
             Active conference, if it exists.
+        phone_access (MutableSequence[google.apps.meet_v2.types.Space.PhoneAccess]):
+            Output only. All regional phone access
+            methods for this meeting space. Can be empty.
+        gateway_sip_access (MutableSequence[google.apps.meet_v2.types.Space.GatewaySipAccess]):
+            Output only. The SIP-based access methods
+            that can be used to join the conference. Can be
+            empty.
     """
+
+    class PhoneAccess(proto.Message):
+        r"""Phone access contains information required to dial into a
+        conference using a regional phone number and a PIN that is
+        specific to that phone number.
+
+        Attributes:
+            phone_number (str):
+                The phone number to dial for this meeting
+                space in E.164 format. Full phone number with a
+                leading '+' character.
+            pin (str):
+                The PIN that users must enter after dialing
+                the given number. The PIN consists of only
+                decimal digits and the length may vary.
+            region_code (str):
+                The CLDR/ISO 3166 region code for the country
+                associated with this phone access. To be parsed
+                by the i18n RegionCode utility. Example: "SE"
+                for Sweden.
+            language_code (str):
+                The BCP 47/LDML language code for the
+                language associated with this phone access. To
+                be parsed by the i18n LanguageCode utility.
+                Examples: "es-419" for Latin American Spanish,
+                "fr-CA" for Canadian French.
+        """
+
+        phone_number: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        pin: str = proto.Field(
+            proto.STRING,
+            number=2,
+        )
+        region_code: str = proto.Field(
+            proto.STRING,
+            number=3,
+        )
+        language_code: str = proto.Field(
+            proto.STRING,
+            number=4,
+        )
+
+    class GatewaySipAccess(proto.Message):
+        r"""Details how to join the conference through a SIP gateway.
+
+        Attributes:
+            uri (str):
+                The Session Initiation Protocol (SIP) URI the conference can
+                be reached through.
+
+                The string is in one of these formats:
+
+                - "sip:USER_ID@GATEWAY_ADDRESS"
+                - "sips:USER_ID@GATEWAY_ADDRESS"
+
+                where USER_ID is the 13-digit universal pin (with the future
+                option to support using a Meet meeting code as well), and
+                GATEWAY_ADDRESS is a valid address to be resolved using a
+                DNS SRV lookup, or a dotted quad.
+            sip_access_code (str):
+                The permanent numeric code for manual entry
+                on specially configured devices.
+        """
+
+        uri: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        sip_access_code: str = proto.Field(
+            proto.STRING,
+            number=2,
+        )
 
     name: str = proto.Field(
         proto.STRING,
@@ -101,6 +185,16 @@ class Space(proto.Message):
         proto.MESSAGE,
         number=6,
         message="ActiveConference",
+    )
+    phone_access: MutableSequence[PhoneAccess] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=7,
+        message=PhoneAccess,
+    )
+    gateway_sip_access: MutableSequence[GatewaySipAccess] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=8,
+        message=GatewaySipAccess,
     )
 
 
@@ -135,6 +229,22 @@ class SpaceConfig(proto.Message):
             Defines the entry points that can be used to
             join meetings hosted in this meeting space.
             Default: EntryPointAccess.ALL
+        moderation (google.apps.meet_v2.types.SpaceConfig.Moderation):
+            The pre-configured moderation mode for the
+            Meeting. Default: Controlled by the user's
+            policies.
+        moderation_restrictions (google.apps.meet_v2.types.SpaceConfig.ModerationRestrictions):
+            When moderation.ON, these restrictions go
+            into effect for the meeting. When
+            moderation.OFF, will be reset to default
+            ModerationRestrictions.
+        attendance_report_generation_type (google.apps.meet_v2.types.SpaceConfig.AttendanceReportGenerationType):
+            Whether attendance report is enabled for the
+            meeting space.
+        artifact_config (google.apps.meet_v2.types.SpaceConfig.ArtifactConfig):
+            Configuration pertaining to the
+            auto-generated artifacts that the meeting
+            supports.
     """
 
     class AccessType(proto.Enum):
@@ -185,6 +295,233 @@ class SpaceConfig(proto.Message):
         ALL = 1
         CREATOR_APP_ONLY = 2
 
+    class Moderation(proto.Enum):
+        r"""The moderation mode for a meeting. When the moderation mode
+        is on, the meeting owner has more control over the meeting with
+        features such as co-host management (see message Member) and
+        feature restrictions (see message ModerationRestrictions).
+
+        Values:
+            MODERATION_UNSPECIFIED (0):
+                Moderation type is not specified. This is
+                used to indicate the user hasn't specified any
+                value as the user does not intend to update the
+                state. Users are not allowed to set the value as
+                unspecified.
+            OFF (1):
+                Moderation is off.
+            ON (2):
+                Moderation is on.
+        """
+
+        MODERATION_UNSPECIFIED = 0
+        OFF = 1
+        ON = 2
+
+    class AttendanceReportGenerationType(proto.Enum):
+        r"""Possible states of whether attendance report is enabled for
+        the meeting space.
+
+        Values:
+            ATTENDANCE_REPORT_GENERATION_TYPE_UNSPECIFIED (0):
+                Default value specified by user policy.
+                This should never be returned.
+            GENERATE_REPORT (1):
+                Attendance report will be generated and sent
+                to drive/email.
+            DO_NOT_GENERATE (2):
+                Attendance report will not be generated.
+        """
+
+        ATTENDANCE_REPORT_GENERATION_TYPE_UNSPECIFIED = 0
+        GENERATE_REPORT = 1
+        DO_NOT_GENERATE = 2
+
+    class ModerationRestrictions(proto.Message):
+        r"""Defines restrictions for features when the meeting is
+        moderated.
+
+        Attributes:
+            chat_restriction (google.apps.meet_v2.types.SpaceConfig.ModerationRestrictions.RestrictionType):
+                Defines who has permission to send chat
+                messages in the meeting space.
+            reaction_restriction (google.apps.meet_v2.types.SpaceConfig.ModerationRestrictions.RestrictionType):
+                Defines who has permission to send reactions
+                in the meeting space.
+            present_restriction (google.apps.meet_v2.types.SpaceConfig.ModerationRestrictions.RestrictionType):
+                Defines who has permission to share their
+                screen in the meeting space.
+            default_join_as_viewer_type (google.apps.meet_v2.types.SpaceConfig.ModerationRestrictions.DefaultJoinAsViewerType):
+                Defines whether to restrict the default role
+                assigned to users as viewer.
+        """
+
+        class RestrictionType(proto.Enum):
+            r"""Determines who has permission to use a particular feature.
+
+            Values:
+                RESTRICTION_TYPE_UNSPECIFIED (0):
+                    Default value specified by user policy.
+                    This should never be returned.
+                HOSTS_ONLY (1):
+                    Meeting owner and co-host have the
+                    permission.
+                NO_RESTRICTION (2):
+                    All Participants have permissions.
+            """
+
+            RESTRICTION_TYPE_UNSPECIFIED = 0
+            HOSTS_ONLY = 1
+            NO_RESTRICTION = 2
+
+        class DefaultJoinAsViewerType(proto.Enum):
+            r"""By default users will join as contributors. Hosts can
+            restrict users to join as viewers.
+            Note: If an explicit role is set for a user in the Member
+            resource, the user will join as that role.
+
+            Values:
+                DEFAULT_JOIN_AS_VIEWER_TYPE_UNSPECIFIED (0):
+                    Default value specified by user policy.
+                    This should never be returned.
+                ON (1):
+                    Users will by default join as viewers.
+                OFF (2):
+                    Users will by default join as contributors.
+            """
+
+            DEFAULT_JOIN_AS_VIEWER_TYPE_UNSPECIFIED = 0
+            ON = 1
+            OFF = 2
+
+        chat_restriction: "SpaceConfig.ModerationRestrictions.RestrictionType" = (
+            proto.Field(
+                proto.ENUM,
+                number=1,
+                enum="SpaceConfig.ModerationRestrictions.RestrictionType",
+            )
+        )
+        reaction_restriction: "SpaceConfig.ModerationRestrictions.RestrictionType" = (
+            proto.Field(
+                proto.ENUM,
+                number=2,
+                enum="SpaceConfig.ModerationRestrictions.RestrictionType",
+            )
+        )
+        present_restriction: "SpaceConfig.ModerationRestrictions.RestrictionType" = (
+            proto.Field(
+                proto.ENUM,
+                number=3,
+                enum="SpaceConfig.ModerationRestrictions.RestrictionType",
+            )
+        )
+        default_join_as_viewer_type: "SpaceConfig.ModerationRestrictions.DefaultJoinAsViewerType" = proto.Field(
+            proto.ENUM,
+            number=4,
+            enum="SpaceConfig.ModerationRestrictions.DefaultJoinAsViewerType",
+        )
+
+    class ArtifactConfig(proto.Message):
+        r"""Configuration related to meeting artifacts potentially
+        generated by this meeting space.
+
+        Attributes:
+            recording_config (google.apps.meet_v2.types.SpaceConfig.ArtifactConfig.RecordingConfig):
+                Configuration for recording.
+            transcription_config (google.apps.meet_v2.types.SpaceConfig.ArtifactConfig.TranscriptionConfig):
+                Configuration for auto-transcript.
+            smart_notes_config (google.apps.meet_v2.types.SpaceConfig.ArtifactConfig.SmartNotesConfig):
+                Configuration for auto-smart-notes.
+        """
+
+        class AutoGenerationType(proto.Enum):
+            r"""Determines whether an artifact can be automatically generated
+            in the meeting space.
+
+            Values:
+                AUTO_GENERATION_TYPE_UNSPECIFIED (0):
+                    Default value specified by user policy.
+                    This should never be returned.
+                ON (1):
+                    The artifact is generated automatically.
+                OFF (2):
+                    The artifact is not generated automatically.
+            """
+
+            AUTO_GENERATION_TYPE_UNSPECIFIED = 0
+            ON = 1
+            OFF = 2
+
+        class RecordingConfig(proto.Message):
+            r"""Configuration related to recording in a meeting space.
+
+            Attributes:
+                auto_recording_generation (google.apps.meet_v2.types.SpaceConfig.ArtifactConfig.AutoGenerationType):
+                    Defines whether a meeting space is
+                    automatically recorded when someone with the
+                    privilege to record joins the meeting.
+            """
+
+            auto_recording_generation: "SpaceConfig.ArtifactConfig.AutoGenerationType" = proto.Field(
+                proto.ENUM,
+                number=2,
+                enum="SpaceConfig.ArtifactConfig.AutoGenerationType",
+            )
+
+        class TranscriptionConfig(proto.Message):
+            r"""Configuration related to transcription in a meeting space.
+
+            Attributes:
+                auto_transcription_generation (google.apps.meet_v2.types.SpaceConfig.ArtifactConfig.AutoGenerationType):
+                    Defines whether the content of a meeting is
+                    automatically transcribed when someone with the
+                    privilege to transcribe joins the meeting.
+            """
+
+            auto_transcription_generation: "SpaceConfig.ArtifactConfig.AutoGenerationType" = proto.Field(
+                proto.ENUM,
+                number=2,
+                enum="SpaceConfig.ArtifactConfig.AutoGenerationType",
+            )
+
+        class SmartNotesConfig(proto.Message):
+            r"""Configuration related to smart notes in a meeting space. For more
+            information about smart notes, see `"Take notes for me" in Google
+            Meet <https://support.google.com/meet/answer/14754931>`__.
+
+            Attributes:
+                auto_smart_notes_generation (google.apps.meet_v2.types.SpaceConfig.ArtifactConfig.AutoGenerationType):
+                    Defines whether to automatically generate a
+                    summary and recap of the meeting for all
+                    invitees in the organization when someone with
+                    the privilege to enable smart notes joins the
+                    meeting.
+            """
+
+            auto_smart_notes_generation: "SpaceConfig.ArtifactConfig.AutoGenerationType" = proto.Field(
+                proto.ENUM,
+                number=2,
+                enum="SpaceConfig.ArtifactConfig.AutoGenerationType",
+            )
+
+        recording_config: "SpaceConfig.ArtifactConfig.RecordingConfig" = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            message="SpaceConfig.ArtifactConfig.RecordingConfig",
+        )
+        transcription_config: "SpaceConfig.ArtifactConfig.TranscriptionConfig" = (
+            proto.Field(
+                proto.MESSAGE,
+                number=2,
+                message="SpaceConfig.ArtifactConfig.TranscriptionConfig",
+            )
+        )
+        smart_notes_config: "SpaceConfig.ArtifactConfig.SmartNotesConfig" = proto.Field(
+            proto.MESSAGE,
+            number=3,
+            message="SpaceConfig.ArtifactConfig.SmartNotesConfig",
+        )
+
     access_type: AccessType = proto.Field(
         proto.ENUM,
         number=1,
@@ -194,6 +531,74 @@ class SpaceConfig(proto.Message):
         proto.ENUM,
         number=2,
         enum=EntryPointAccess,
+    )
+    moderation: Moderation = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=Moderation,
+    )
+    moderation_restrictions: ModerationRestrictions = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=ModerationRestrictions,
+    )
+    attendance_report_generation_type: AttendanceReportGenerationType = proto.Field(
+        proto.ENUM,
+        number=6,
+        enum=AttendanceReportGenerationType,
+    )
+    artifact_config: ArtifactConfig = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        message=ArtifactConfig,
+    )
+
+
+class Member(proto.Message):
+    r"""Users who are configured to have a role in the space. These
+    users can join the space without knocking.
+
+    Attributes:
+        name (str):
+            Identifier. Resource name of the member.
+            Format: spaces/{space}/members/{member}
+        email (str):
+            Email for the member. This is required for
+            creating the member.
+        role (google.apps.meet_v2.types.Member.Role):
+            The meeting role assigned to the member.
+    """
+
+    class Role(proto.Enum):
+        r"""Role of this member in the space.
+
+        Values:
+            ROLE_UNSPECIFIED (0):
+                This is used to indicate the user hasn't specified any value
+                and the user’s role will be determined upon joining the
+                meetings between 'contributor' and 'viewer' role depending
+                on meeting configuration. For more information about the
+                viewer role, see `Assign View only roles in Google
+                Meet <https://support.google.com/meet/answer/13658394>`__.
+            COHOST (1):
+                Co-host role.
+        """
+
+        ROLE_UNSPECIFIED = 0
+        COHOST = 1
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    email: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    role: Role = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=Role,
     )
 
 
@@ -670,6 +1075,84 @@ class TranscriptEntry(proto.Message):
     end_time: timestamp_pb2.Timestamp = proto.Field(
         proto.MESSAGE,
         number=6,
+        message=timestamp_pb2.Timestamp,
+    )
+
+
+class SmartNote(proto.Message):
+    r"""Metadata for a smart note generated from a conference. It
+    refers to the notes generated from Take Notes with Gemini during
+    the conference.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        docs_destination (google.apps.meet_v2.types.DocsDestination):
+            Output only. The Google Doc destination where
+            the smart notes are saved.
+
+            This field is a member of `oneof`_ ``destination``.
+        name (str):
+            Output only. Identifier. Resource name of the smart notes.
+            Format:
+            ``conferenceRecords/{conference_record}/smartNotes/{smart_note}``,
+            where ``{smart_note}`` is a 1:1 mapping to each unique smart
+            notes session of the conference.
+        state (google.apps.meet_v2.types.SmartNote.State):
+            Output only. Current state.
+        start_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Timestamp when the smart notes
+            started.
+        end_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Timestamp when the smart notes
+            stopped.
+    """
+
+    class State(proto.Enum):
+        r"""Current state of the smart notes session.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Default, never used.
+            STARTED (1):
+                An active smart notes session has started.
+            ENDED (2):
+                This smart notes session has ended, but the
+                smart notes file hasn't been generated yet.
+            FILE_GENERATED (3):
+                Smart notes file is generated and ready to
+                download.
+        """
+
+        STATE_UNSPECIFIED = 0
+        STARTED = 1
+        ENDED = 2
+        FILE_GENERATED = 3
+
+    docs_destination: "DocsDestination" = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        oneof="destination",
+        message="DocsDestination",
+    )
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum=State,
+    )
+    start_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=timestamp_pb2.Timestamp,
+    )
+    end_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=4,
         message=timestamp_pb2.Timestamp,
     )
 

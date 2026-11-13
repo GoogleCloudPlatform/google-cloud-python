@@ -14,8 +14,8 @@
 
 import pytest  # type: ignore
 
-from google.auth import exceptions
 import google.auth.transport._http_client
+from google.auth import exceptions
 from tests.transport import compliance
 
 

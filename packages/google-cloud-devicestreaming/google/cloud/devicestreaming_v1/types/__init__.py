@@ -27,6 +27,7 @@ from .adb_service import (
 from .service import (
     AndroidDevice,
     CancelDeviceSessionRequest,
+    ClientInfo,
     CreateDeviceSessionRequest,
     DeviceSession,
     GetDeviceSessionRequest,
@@ -47,6 +48,7 @@ __all__ = (
     "StreamStatus",
     "AndroidDevice",
     "CancelDeviceSessionRequest",
+    "ClientInfo",
     "CreateDeviceSessionRequest",
     "DeviceSession",
     "GetDeviceSessionRequest",

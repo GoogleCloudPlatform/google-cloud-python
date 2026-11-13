@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-confidentialcomputing",
-    "version": "0.11.0"
+    "version": "0.11.2"
   },
   "snippets": [
     {

@@ -149,9 +149,7 @@ def tokyo_table(bigquery_client, tokyo_dataset):
           2000 + CAST(18 * RAND() as INT64) as year,
           IF(RAND() > 0.5,"foo","bar") as token
         FROM UNNEST(GENERATE_ARRAY(0,5,1)) as r
-        """.format(
-            tokyo_dataset, table_id
-        ),
+        """.format(tokyo_dataset, table_id),
         location="asia-northeast1",
     ).result()
     return table_id

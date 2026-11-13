@@ -140,7 +140,7 @@ if os.environ.get("GAPIC_PYTHON_ASYNC", "true") == "true":
         # Note: trailing metadata is part of a gRPC response.
         if "grpc" in str(async_echo.transport).lower():
             trailing_metadata = await stream.trailing_metadata()
-            assert _METADATA[0] in trailing_metadata.items()
+            assert _METADATA[0] in list(trailing_metadata)
 
     @pytest.mark.asyncio
     async def test_async_unary_stream_async_generator(async_echo):
@@ -162,7 +162,7 @@ if os.environ.get("GAPIC_PYTHON_ASYNC", "true") == "true":
         # Note: trailing metadata is part of a gRPC response.
         if "grpc" in str(async_echo.transport).lower():
             trailing_metadata = await stream.trailing_metadata()
-            assert _METADATA[0] in trailing_metadata.items()
+            assert _METADATA[0] in list(trailing_metadata)
 
     @pytest.mark.asyncio
     async def test_async_stream_unary_iterable(async_echo):
@@ -246,7 +246,7 @@ if os.environ.get("GAPIC_PYTHON_ASYNC", "true") == "true":
         assert contents == ["hello", "world!"]
 
         trailing_metadata = await call.trailing_metadata()
-        assert _METADATA[0] in trailing_metadata.items()
+        assert _METADATA[0] in list(trailing_metadata)
 
     @pytest.mark.asyncio
     async def test_async_stream_stream_async_generator(async_echo):
@@ -269,7 +269,7 @@ if os.environ.get("GAPIC_PYTHON_ASYNC", "true") == "true":
         assert contents == ["hello", "world!"]
 
         trailing_metadata = await call.trailing_metadata()
-        assert _METADATA[0] in trailing_metadata.items()
+        assert _METADATA[0] in list(trailing_metadata)
 
     @pytest.mark.asyncio
     async def test_async_stream_stream_passing_dict(async_echo):
@@ -289,4 +289,4 @@ if os.environ.get("GAPIC_PYTHON_ASYNC", "true") == "true":
         assert contents == ["hello", "world!"]
 
         trailing_metadata = await call.trailing_metadata()
-        assert _METADATA[0] in trailing_metadata.items()
+        assert _METADATA[0] in list(trailing_metadata)

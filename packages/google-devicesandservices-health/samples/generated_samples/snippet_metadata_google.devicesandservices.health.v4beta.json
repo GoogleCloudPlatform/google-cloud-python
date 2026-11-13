@@ -1,0 +1,4074 @@
+{
+  "clientLibrary": {
+    "apis": [
+      {
+        "id": "google.devicesandservices.health.v4beta",
+        "version": "v4beta"
+      }
+    ],
+    "language": "PYTHON",
+    "name": "google-devicesandservices-health",
+    "version": "0.1.5"
+  },
+  "snippets": [
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient",
+          "shortName": "DataPointsServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient.batch_delete_data_points",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.BatchDeleteDataPoints",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "BatchDeleteDataPoints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.BatchDeleteDataPointsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "batch_delete_data_points"
+      },
+      "description": "Sample for BatchDeleteDataPoints",
+      "file": "health_v4beta_generated_data_points_service_batch_delete_data_points_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_BatchDeleteDataPoints_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_batch_delete_data_points_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient",
+          "shortName": "DataPointsServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient.batch_delete_data_points",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.BatchDeleteDataPoints",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "BatchDeleteDataPoints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.BatchDeleteDataPointsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "batch_delete_data_points"
+      },
+      "description": "Sample for BatchDeleteDataPoints",
+      "file": "health_v4beta_generated_data_points_service_batch_delete_data_points_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_BatchDeleteDataPoints_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_batch_delete_data_points_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient",
+          "shortName": "DataPointsServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient.create_data_point",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.CreateDataPoint",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "CreateDataPoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.CreateDataPointRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "data_point",
+            "type": "google.devicesandservices.health_v4beta.types.DataPoint"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_data_point"
+      },
+      "description": "Sample for CreateDataPoint",
+      "file": "health_v4beta_generated_data_points_service_create_data_point_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_CreateDataPoint_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_create_data_point_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient",
+          "shortName": "DataPointsServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient.create_data_point",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.CreateDataPoint",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "CreateDataPoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.CreateDataPointRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "data_point",
+            "type": "google.devicesandservices.health_v4beta.types.DataPoint"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_data_point"
+      },
+      "description": "Sample for CreateDataPoint",
+      "file": "health_v4beta_generated_data_points_service_create_data_point_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_CreateDataPoint_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_create_data_point_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient",
+          "shortName": "DataPointsServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient.daily_roll_up_data_points",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.DailyRollUpDataPoints",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "DailyRollUpDataPoints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.DailyRollUpDataPointsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.data_points_service.pagers.DailyRollUpDataPointsAsyncPager",
+        "shortName": "daily_roll_up_data_points"
+      },
+      "description": "Sample for DailyRollUpDataPoints",
+      "file": "health_v4beta_generated_data_points_service_daily_roll_up_data_points_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_DailyRollUpDataPoints_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_daily_roll_up_data_points_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient",
+          "shortName": "DataPointsServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient.daily_roll_up_data_points",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.DailyRollUpDataPoints",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "DailyRollUpDataPoints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.DailyRollUpDataPointsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.data_points_service.pagers.DailyRollUpDataPointsPager",
+        "shortName": "daily_roll_up_data_points"
+      },
+      "description": "Sample for DailyRollUpDataPoints",
+      "file": "health_v4beta_generated_data_points_service_daily_roll_up_data_points_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_DailyRollUpDataPoints_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_daily_roll_up_data_points_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient",
+          "shortName": "DataPointsServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient.export_exercise_tcx",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.ExportExerciseTcx",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "ExportExerciseTcx"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.ExportExerciseTcxRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.ExportExerciseTcxResponse",
+        "shortName": "export_exercise_tcx"
+      },
+      "description": "Sample for ExportExerciseTcx",
+      "file": "health_v4beta_generated_data_points_service_export_exercise_tcx_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_ExportExerciseTcx_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_export_exercise_tcx_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient",
+          "shortName": "DataPointsServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient.export_exercise_tcx",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.ExportExerciseTcx",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "ExportExerciseTcx"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.ExportExerciseTcxRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.ExportExerciseTcxResponse",
+        "shortName": "export_exercise_tcx"
+      },
+      "description": "Sample for ExportExerciseTcx",
+      "file": "health_v4beta_generated_data_points_service_export_exercise_tcx_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_ExportExerciseTcx_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_export_exercise_tcx_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient",
+          "shortName": "DataPointsServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient.get_data_point",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.GetDataPoint",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "GetDataPoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.GetDataPointRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.DataPoint",
+        "shortName": "get_data_point"
+      },
+      "description": "Sample for GetDataPoint",
+      "file": "health_v4beta_generated_data_points_service_get_data_point_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_GetDataPoint_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_get_data_point_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient",
+          "shortName": "DataPointsServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient.get_data_point",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.GetDataPoint",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "GetDataPoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.GetDataPointRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.DataPoint",
+        "shortName": "get_data_point"
+      },
+      "description": "Sample for GetDataPoint",
+      "file": "health_v4beta_generated_data_points_service_get_data_point_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_GetDataPoint_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_get_data_point_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient",
+          "shortName": "DataPointsServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient.list_data_points",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.ListDataPoints",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "ListDataPoints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.ListDataPointsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.data_points_service.pagers.ListDataPointsAsyncPager",
+        "shortName": "list_data_points"
+      },
+      "description": "Sample for ListDataPoints",
+      "file": "health_v4beta_generated_data_points_service_list_data_points_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_ListDataPoints_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_list_data_points_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient",
+          "shortName": "DataPointsServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient.list_data_points",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.ListDataPoints",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "ListDataPoints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.ListDataPointsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.data_points_service.pagers.ListDataPointsPager",
+        "shortName": "list_data_points"
+      },
+      "description": "Sample for ListDataPoints",
+      "file": "health_v4beta_generated_data_points_service_list_data_points_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_ListDataPoints_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_list_data_points_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient",
+          "shortName": "DataPointsServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient.reconcile_data_points",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.ReconcileDataPoints",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "ReconcileDataPoints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.ReconcileDataPointsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.data_points_service.pagers.ReconcileDataPointsAsyncPager",
+        "shortName": "reconcile_data_points"
+      },
+      "description": "Sample for ReconcileDataPoints",
+      "file": "health_v4beta_generated_data_points_service_reconcile_data_points_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_ReconcileDataPoints_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_reconcile_data_points_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient",
+          "shortName": "DataPointsServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient.reconcile_data_points",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.ReconcileDataPoints",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "ReconcileDataPoints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.ReconcileDataPointsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.data_points_service.pagers.ReconcileDataPointsPager",
+        "shortName": "reconcile_data_points"
+      },
+      "description": "Sample for ReconcileDataPoints",
+      "file": "health_v4beta_generated_data_points_service_reconcile_data_points_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_ReconcileDataPoints_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_reconcile_data_points_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient",
+          "shortName": "DataPointsServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient.roll_up_data_points",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.RollUpDataPoints",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "RollUpDataPoints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.RollUpDataPointsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.data_points_service.pagers.RollUpDataPointsAsyncPager",
+        "shortName": "roll_up_data_points"
+      },
+      "description": "Sample for RollUpDataPoints",
+      "file": "health_v4beta_generated_data_points_service_roll_up_data_points_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_RollUpDataPoints_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_roll_up_data_points_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient",
+          "shortName": "DataPointsServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient.roll_up_data_points",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.RollUpDataPoints",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "RollUpDataPoints"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.RollUpDataPointsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.data_points_service.pagers.RollUpDataPointsPager",
+        "shortName": "roll_up_data_points"
+      },
+      "description": "Sample for RollUpDataPoints",
+      "file": "health_v4beta_generated_data_points_service_roll_up_data_points_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_RollUpDataPoints_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_roll_up_data_points_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient",
+          "shortName": "DataPointsServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceAsyncClient.update_data_point",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.UpdateDataPoint",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "UpdateDataPoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.UpdateDataPointRequest"
+          },
+          {
+            "name": "data_point",
+            "type": "google.devicesandservices.health_v4beta.types.DataPoint"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_data_point"
+      },
+      "description": "Sample for UpdateDataPoint",
+      "file": "health_v4beta_generated_data_points_service_update_data_point_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_UpdateDataPoint_async",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_update_data_point_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient",
+          "shortName": "DataPointsServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataPointsServiceClient.update_data_point",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataPointsService.UpdateDataPoint",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataPointsService",
+            "shortName": "DataPointsService"
+          },
+          "shortName": "UpdateDataPoint"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.UpdateDataPointRequest"
+          },
+          {
+            "name": "data_point",
+            "type": "google.devicesandservices.health_v4beta.types.DataPoint"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_data_point"
+      },
+      "description": "Sample for UpdateDataPoint",
+      "file": "health_v4beta_generated_data_points_service_update_data_point_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataPointsService_UpdateDataPoint_sync",
+      "segments": [
+        {
+          "end": 54,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 54,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 55,
+          "start": 52,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_points_service_update_data_point_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient",
+          "shortName": "DataSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient.create_subscriber",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.CreateSubscriber",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "CreateSubscriber"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.CreateSubscriberRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "subscriber",
+            "type": "google.devicesandservices.health_v4beta.types.CreateSubscriberPayload"
+          },
+          {
+            "name": "subscriber_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "create_subscriber"
+      },
+      "description": "Sample for CreateSubscriber",
+      "file": "health_v4beta_generated_data_subscription_service_create_subscriber_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_CreateSubscriber_async",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_create_subscriber_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient",
+          "shortName": "DataSubscriptionServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient.create_subscriber",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.CreateSubscriber",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "CreateSubscriber"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.CreateSubscriberRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "subscriber",
+            "type": "google.devicesandservices.health_v4beta.types.CreateSubscriberPayload"
+          },
+          {
+            "name": "subscriber_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "create_subscriber"
+      },
+      "description": "Sample for CreateSubscriber",
+      "file": "health_v4beta_generated_data_subscription_service_create_subscriber_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_CreateSubscriber_sync",
+      "segments": [
+        {
+          "end": 60,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 60,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 57,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 61,
+          "start": 58,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_create_subscriber_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient",
+          "shortName": "DataSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient.create_subscription",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.CreateSubscription",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "CreateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.CreateSubscriptionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "subscription",
+            "type": "google.devicesandservices.health_v4beta.types.CreateSubscriptionPayload"
+          },
+          {
+            "name": "subscription_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Subscription",
+        "shortName": "create_subscription"
+      },
+      "description": "Sample for CreateSubscription",
+      "file": "health_v4beta_generated_data_subscription_service_create_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_CreateSubscription_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_create_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient",
+          "shortName": "DataSubscriptionServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient.create_subscription",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.CreateSubscription",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "CreateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.CreateSubscriptionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "subscription",
+            "type": "google.devicesandservices.health_v4beta.types.CreateSubscriptionPayload"
+          },
+          {
+            "name": "subscription_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Subscription",
+        "shortName": "create_subscription"
+      },
+      "description": "Sample for CreateSubscription",
+      "file": "health_v4beta_generated_data_subscription_service_create_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_CreateSubscription_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_create_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient",
+          "shortName": "DataSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient.delete_subscriber",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.DeleteSubscriber",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "DeleteSubscriber"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.DeleteSubscriberRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_subscriber"
+      },
+      "description": "Sample for DeleteSubscriber",
+      "file": "health_v4beta_generated_data_subscription_service_delete_subscriber_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_DeleteSubscriber_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_delete_subscriber_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient",
+          "shortName": "DataSubscriptionServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient.delete_subscriber",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.DeleteSubscriber",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "DeleteSubscriber"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.DeleteSubscriberRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_subscriber"
+      },
+      "description": "Sample for DeleteSubscriber",
+      "file": "health_v4beta_generated_data_subscription_service_delete_subscriber_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_DeleteSubscriber_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_delete_subscriber_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient",
+          "shortName": "DataSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient.delete_subscription",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.DeleteSubscription",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "DeleteSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.DeleteSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_subscription"
+      },
+      "description": "Sample for DeleteSubscription",
+      "file": "health_v4beta_generated_data_subscription_service_delete_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_DeleteSubscription_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_delete_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient",
+          "shortName": "DataSubscriptionServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient.delete_subscription",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.DeleteSubscription",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "DeleteSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.DeleteSubscriptionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_subscription"
+      },
+      "description": "Sample for DeleteSubscription",
+      "file": "health_v4beta_generated_data_subscription_service_delete_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_DeleteSubscription_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_delete_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient",
+          "shortName": "DataSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient.list_subscribers",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.ListSubscribers",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "ListSubscribers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.ListSubscribersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.data_subscription_service.pagers.ListSubscribersAsyncPager",
+        "shortName": "list_subscribers"
+      },
+      "description": "Sample for ListSubscribers",
+      "file": "health_v4beta_generated_data_subscription_service_list_subscribers_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_ListSubscribers_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_list_subscribers_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient",
+          "shortName": "DataSubscriptionServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient.list_subscribers",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.ListSubscribers",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "ListSubscribers"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.ListSubscribersRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.data_subscription_service.pagers.ListSubscribersPager",
+        "shortName": "list_subscribers"
+      },
+      "description": "Sample for ListSubscribers",
+      "file": "health_v4beta_generated_data_subscription_service_list_subscribers_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_ListSubscribers_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_list_subscribers_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient",
+          "shortName": "DataSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient.list_subscriptions",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.ListSubscriptions",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "ListSubscriptions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.ListSubscriptionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.data_subscription_service.pagers.ListSubscriptionsAsyncPager",
+        "shortName": "list_subscriptions"
+      },
+      "description": "Sample for ListSubscriptions",
+      "file": "health_v4beta_generated_data_subscription_service_list_subscriptions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_ListSubscriptions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_list_subscriptions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient",
+          "shortName": "DataSubscriptionServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient.list_subscriptions",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.ListSubscriptions",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "ListSubscriptions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.ListSubscriptionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.data_subscription_service.pagers.ListSubscriptionsPager",
+        "shortName": "list_subscriptions"
+      },
+      "description": "Sample for ListSubscriptions",
+      "file": "health_v4beta_generated_data_subscription_service_list_subscriptions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_ListSubscriptions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_list_subscriptions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient",
+          "shortName": "DataSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient.update_subscriber",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.UpdateSubscriber",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "UpdateSubscriber"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.UpdateSubscriberRequest"
+          },
+          {
+            "name": "subscriber",
+            "type": "google.devicesandservices.health_v4beta.types.Subscriber"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_subscriber"
+      },
+      "description": "Sample for UpdateSubscriber",
+      "file": "health_v4beta_generated_data_subscription_service_update_subscriber_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_UpdateSubscriber_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_update_subscriber_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient",
+          "shortName": "DataSubscriptionServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient.update_subscriber",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.UpdateSubscriber",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "UpdateSubscriber"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.UpdateSubscriberRequest"
+          },
+          {
+            "name": "subscriber",
+            "type": "google.devicesandservices.health_v4beta.types.Subscriber"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_subscriber"
+      },
+      "description": "Sample for UpdateSubscriber",
+      "file": "health_v4beta_generated_data_subscription_service_update_subscriber_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_UpdateSubscriber_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_update_subscriber_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient",
+          "shortName": "DataSubscriptionServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceAsyncClient.update_subscription",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.UpdateSubscription",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "UpdateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.UpdateSubscriptionRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "google.devicesandservices.health_v4beta.types.Subscription"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Subscription",
+        "shortName": "update_subscription"
+      },
+      "description": "Sample for UpdateSubscription",
+      "file": "health_v4beta_generated_data_subscription_service_update_subscription_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_UpdateSubscription_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_update_subscription_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient",
+          "shortName": "DataSubscriptionServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.DataSubscriptionServiceClient.update_subscription",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService.UpdateSubscription",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.DataSubscriptionService",
+            "shortName": "DataSubscriptionService"
+          },
+          "shortName": "UpdateSubscription"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.UpdateSubscriptionRequest"
+          },
+          {
+            "name": "subscription",
+            "type": "google.devicesandservices.health_v4beta.types.Subscription"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Subscription",
+        "shortName": "update_subscription"
+      },
+      "description": "Sample for UpdateSubscription",
+      "file": "health_v4beta_generated_data_subscription_service_update_subscription_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_DataSubscriptionService_UpdateSubscription_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_data_subscription_service_update_subscription_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient",
+          "shortName": "HealthProfileServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient.get_identity",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "GetIdentity"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.GetIdentityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Identity",
+        "shortName": "get_identity"
+      },
+      "description": "Sample for GetIdentity",
+      "file": "health_v4beta_generated_health_profile_service_get_identity_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_GetIdentity_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_get_identity_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient",
+          "shortName": "HealthProfileServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient.get_identity",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "GetIdentity"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.GetIdentityRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Identity",
+        "shortName": "get_identity"
+      },
+      "description": "Sample for GetIdentity",
+      "file": "health_v4beta_generated_health_profile_service_get_identity_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_GetIdentity_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_get_identity_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient",
+          "shortName": "HealthProfileServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient.get_irn_profile",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.GetIrnProfile",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "GetIrnProfile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.GetIrnProfileRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.IrnProfile",
+        "shortName": "get_irn_profile"
+      },
+      "description": "Sample for GetIrnProfile",
+      "file": "health_v4beta_generated_health_profile_service_get_irn_profile_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_GetIrnProfile_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_get_irn_profile_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient",
+          "shortName": "HealthProfileServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient.get_irn_profile",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.GetIrnProfile",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "GetIrnProfile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.GetIrnProfileRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.IrnProfile",
+        "shortName": "get_irn_profile"
+      },
+      "description": "Sample for GetIrnProfile",
+      "file": "health_v4beta_generated_health_profile_service_get_irn_profile_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_GetIrnProfile_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_get_irn_profile_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient",
+          "shortName": "HealthProfileServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient.get_paired_device",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.GetPairedDevice",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "GetPairedDevice"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.GetPairedDeviceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.PairedDevice",
+        "shortName": "get_paired_device"
+      },
+      "description": "Sample for GetPairedDevice",
+      "file": "health_v4beta_generated_health_profile_service_get_paired_device_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_GetPairedDevice_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_get_paired_device_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient",
+          "shortName": "HealthProfileServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient.get_paired_device",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.GetPairedDevice",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "GetPairedDevice"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.GetPairedDeviceRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.PairedDevice",
+        "shortName": "get_paired_device"
+      },
+      "description": "Sample for GetPairedDevice",
+      "file": "health_v4beta_generated_health_profile_service_get_paired_device_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_GetPairedDevice_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_get_paired_device_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient",
+          "shortName": "HealthProfileServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient.get_profile",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.GetProfile",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "GetProfile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.GetProfileRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Profile",
+        "shortName": "get_profile"
+      },
+      "description": "Sample for GetProfile",
+      "file": "health_v4beta_generated_health_profile_service_get_profile_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_GetProfile_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_get_profile_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient",
+          "shortName": "HealthProfileServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient.get_profile",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.GetProfile",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "GetProfile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.GetProfileRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Profile",
+        "shortName": "get_profile"
+      },
+      "description": "Sample for GetProfile",
+      "file": "health_v4beta_generated_health_profile_service_get_profile_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_GetProfile_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_get_profile_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient",
+          "shortName": "HealthProfileServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient.get_settings",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.GetSettings",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "GetSettings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.GetSettingsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Settings",
+        "shortName": "get_settings"
+      },
+      "description": "Sample for GetSettings",
+      "file": "health_v4beta_generated_health_profile_service_get_settings_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_GetSettings_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_get_settings_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient",
+          "shortName": "HealthProfileServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient.get_settings",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.GetSettings",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "GetSettings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.GetSettingsRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Settings",
+        "shortName": "get_settings"
+      },
+      "description": "Sample for GetSettings",
+      "file": "health_v4beta_generated_health_profile_service_get_settings_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_GetSettings_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_get_settings_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient",
+          "shortName": "HealthProfileServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient.list_paired_devices",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.ListPairedDevices",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "ListPairedDevices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.ListPairedDevicesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.health_profile_service.pagers.ListPairedDevicesAsyncPager",
+        "shortName": "list_paired_devices"
+      },
+      "description": "Sample for ListPairedDevices",
+      "file": "health_v4beta_generated_health_profile_service_list_paired_devices_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_ListPairedDevices_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_list_paired_devices_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient",
+          "shortName": "HealthProfileServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient.list_paired_devices",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.ListPairedDevices",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "ListPairedDevices"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.ListPairedDevicesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.services.health_profile_service.pagers.ListPairedDevicesPager",
+        "shortName": "list_paired_devices"
+      },
+      "description": "Sample for ListPairedDevices",
+      "file": "health_v4beta_generated_health_profile_service_list_paired_devices_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_ListPairedDevices_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_list_paired_devices_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient",
+          "shortName": "HealthProfileServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient.update_profile",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.UpdateProfile",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "UpdateProfile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.UpdateProfileRequest"
+          },
+          {
+            "name": "profile",
+            "type": "google.devicesandservices.health_v4beta.types.Profile"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Profile",
+        "shortName": "update_profile"
+      },
+      "description": "Sample for UpdateProfile",
+      "file": "health_v4beta_generated_health_profile_service_update_profile_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_UpdateProfile_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_update_profile_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient",
+          "shortName": "HealthProfileServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient.update_profile",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.UpdateProfile",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "UpdateProfile"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.UpdateProfileRequest"
+          },
+          {
+            "name": "profile",
+            "type": "google.devicesandservices.health_v4beta.types.Profile"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Profile",
+        "shortName": "update_profile"
+      },
+      "description": "Sample for UpdateProfile",
+      "file": "health_v4beta_generated_health_profile_service_update_profile_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_UpdateProfile_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_update_profile_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient",
+          "shortName": "HealthProfileServiceAsyncClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceAsyncClient.update_settings",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.UpdateSettings",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "UpdateSettings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.UpdateSettingsRequest"
+          },
+          {
+            "name": "settings",
+            "type": "google.devicesandservices.health_v4beta.types.Settings"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Settings",
+        "shortName": "update_settings"
+      },
+      "description": "Sample for UpdateSettings",
+      "file": "health_v4beta_generated_health_profile_service_update_settings_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_UpdateSettings_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_update_settings_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient",
+          "shortName": "HealthProfileServiceClient"
+        },
+        "fullName": "google.devicesandservices.health_v4beta.HealthProfileServiceClient.update_settings",
+        "method": {
+          "fullName": "google.devicesandservices.health.v4beta.HealthProfileService.UpdateSettings",
+          "service": {
+            "fullName": "google.devicesandservices.health.v4beta.HealthProfileService",
+            "shortName": "HealthProfileService"
+          },
+          "shortName": "UpdateSettings"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.devicesandservices.health_v4beta.types.UpdateSettingsRequest"
+          },
+          {
+            "name": "settings",
+            "type": "google.devicesandservices.health_v4beta.types.Settings"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.devicesandservices.health_v4beta.types.Settings",
+        "shortName": "update_settings"
+      },
+      "description": "Sample for UpdateSettings",
+      "file": "health_v4beta_generated_health_profile_service_update_settings_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "health_v4beta_generated_HealthProfileService_UpdateSettings_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "health_v4beta_generated_health_profile_service_update_settings_sync.py"
+    }
+  ]
+}

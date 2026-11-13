@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.licensemanager_v1._compat import transcode_request
 from google.cloud.licensemanager_v1.types import api_entities, licensemanager
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1178,15 +1179,16 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             http_options = (
                 _BaseLicenseManagerRestTransport._BaseAggregateUsage._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_aggregate_usage(request, metadata)
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseAggregateUsage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseAggregateUsage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseAggregateUsage,
+                    "_BaseAggregateUsage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1327,21 +1329,18 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             """
 
             http_options = _BaseLicenseManagerRestTransport._BaseCreateConfiguration._get_http_options()
-
             request, metadata = self._interceptor.pre_create_configuration(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseCreateConfiguration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLicenseManagerRestTransport._BaseCreateConfiguration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseCreateConfiguration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseCreateConfiguration,
+                    "_BaseCreateConfiguration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1480,21 +1479,18 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             """
 
             http_options = _BaseLicenseManagerRestTransport._BaseDeactivateConfiguration._get_http_options()
-
             request, metadata = self._interceptor.pre_deactivate_configuration(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseDeactivateConfiguration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLicenseManagerRestTransport._BaseDeactivateConfiguration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseDeactivateConfiguration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseDeactivateConfiguration,
+                    "_BaseDeactivateConfiguration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1633,17 +1629,18 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             """
 
             http_options = _BaseLicenseManagerRestTransport._BaseDeleteConfiguration._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_configuration(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseDeleteConfiguration._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseDeleteConfiguration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseDeleteConfiguration,
+                    "_BaseDeleteConfiguration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1777,17 +1774,18 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             """
 
             http_options = _BaseLicenseManagerRestTransport._BaseGetConfiguration._get_http_options()
-
             request, metadata = self._interceptor.pre_get_configuration(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseGetConfiguration._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseGetConfiguration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseGetConfiguration,
+                    "_BaseGetConfiguration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1923,15 +1921,16 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             http_options = (
                 _BaseLicenseManagerRestTransport._BaseGetInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_instance(request, metadata)
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseGetInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseGetInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseGetInstance,
+                    "_BaseGetInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2067,17 +2066,16 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             http_options = (
                 _BaseLicenseManagerRestTransport._BaseGetProduct._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_product(request, metadata)
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseGetProduct._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLicenseManagerRestTransport._BaseGetProduct._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseGetProduct,
+                    "_BaseGetProduct__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2214,17 +2212,18 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             """
 
             http_options = _BaseLicenseManagerRestTransport._BaseListConfigurations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_configurations(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseListConfigurations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseListConfigurations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseListConfigurations,
+                    "_BaseListConfigurations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2365,15 +2364,16 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             http_options = (
                 _BaseLicenseManagerRestTransport._BaseListInstances._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_instances(request, metadata)
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseListInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseListInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseListInstances,
+                    "_BaseListInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2514,15 +2514,16 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             http_options = (
                 _BaseLicenseManagerRestTransport._BaseListProducts._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_products(request, metadata)
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseListProducts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseListProducts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseListProducts,
+                    "_BaseListProducts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2663,17 +2664,18 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             """
 
             http_options = _BaseLicenseManagerRestTransport._BaseQueryConfigurationLicenseUsage._get_http_options()
-
             request, metadata = self._interceptor.pre_query_configuration_license_usage(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseQueryConfigurationLicenseUsage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseQueryConfigurationLicenseUsage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseQueryConfigurationLicenseUsage,
+                    "_BaseQueryConfigurationLicenseUsage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2818,21 +2820,18 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             """
 
             http_options = _BaseLicenseManagerRestTransport._BaseReactivateConfiguration._get_http_options()
-
             request, metadata = self._interceptor.pre_reactivate_configuration(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseReactivateConfiguration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLicenseManagerRestTransport._BaseReactivateConfiguration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseReactivateConfiguration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseReactivateConfiguration,
+                    "_BaseReactivateConfiguration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2972,21 +2971,18 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             """
 
             http_options = _BaseLicenseManagerRestTransport._BaseUpdateConfiguration._get_http_options()
-
             request, metadata = self._interceptor.pre_update_configuration(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseUpdateConfiguration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLicenseManagerRestTransport._BaseUpdateConfiguration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseUpdateConfiguration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseUpdateConfiguration,
+                    "_BaseUpdateConfiguration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3256,15 +3252,16 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             http_options = (
                 _BaseLicenseManagerRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3396,15 +3393,16 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             http_options = (
                 _BaseLicenseManagerRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3532,21 +3530,18 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             """
 
             http_options = _BaseLicenseManagerRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLicenseManagerRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3649,17 +3644,18 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             """
 
             http_options = _BaseLicenseManagerRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3766,15 +3762,16 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             http_options = (
                 _BaseLicenseManagerRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3906,15 +3903,16 @@ class LicenseManagerRestTransport(_BaseLicenseManagerRestTransport):
             http_options = (
                 _BaseLicenseManagerRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseLicenseManagerRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagerRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagerRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

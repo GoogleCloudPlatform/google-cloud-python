@@ -73,7 +73,7 @@ class ManagedZone(object):
         dns_name = resource.get("dnsName")
         if name is None or dns_name is None:
             raise KeyError(
-                "Resource lacks required identity information:" '["name"]["dnsName"]'
+                'Resource lacks required identity information:["name"]["dnsName"]'
             )
         zone = cls(name, dns_name, client=client)
         zone._set_properties(resource)

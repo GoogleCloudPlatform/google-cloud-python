@@ -20,8 +20,8 @@
 import contextlib
 
 import google.api_core.exceptions
-from google.cloud.bigquery import SchemaField, TimePartitioning
 import pytest
+from google.cloud.bigquery import SchemaField, TimePartitioning
 from sqlalchemy import Column, DateTime, Integer, Numeric, String
 
 alembic = pytest.importorskip("alembic")

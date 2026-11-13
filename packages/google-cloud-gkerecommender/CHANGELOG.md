@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-gkerecommender/#history
 
+## [0.3.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-gkerecommender-v0.3.1...google-cloud-gkerecommender-v0.3.2) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [0.3.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-gkerecommender-v0.3.0...google-cloud-gkerecommender-v0.3.1) (2026-06-22)
 
 

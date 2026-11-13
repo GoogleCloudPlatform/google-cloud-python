@@ -31,6 +31,7 @@ INTEGRATION_TEST_LIBRARIES = [
     "redis_selective", # Selective generation.
     "storagebatchoperations", # AIP 4235 testing : https://google.aip.dev/client-libraries/4235
     "logging_internal", # Selective generation with internal client classes.
+    "showcase", # For testing resumable uploads
 ]
 
 [integration_test(
@@ -258,5 +259,33 @@ test_suite(
         ":credentials_py_gapic_test",
         ":eventarc_py_gapic_test",
         ":redis_py_gapic_test",
+    ],
+)
+
+# Showcase
+py_gapic_library(
+    name = "showcase_py_gapic",
+    srcs = [
+        "@com_google_gapic_showcase//:showcase_proto",
+    ],
+    grpc_service_config = "showcase_grpc_service_config.json",
+    opt_args = [
+        "autogen-snippets",
+    ],
+    service_yaml = "showcase_v1beta1.yaml",
+    transport = "grpc+rest",
+    deps = [":iam_policy_py_proto"],
+    rest_numeric_enums = True,
+)
+
+py_test(
+    name = "showcase_py_gapic_test",
+    srcs = [
+        "showcase_py_gapic_pytest.py",
+        "showcase_py_gapic_test.py",
+    ],
+    legacy_create_init = False,
+    deps = [
+        ":showcase_py_gapic",
     ],
 )

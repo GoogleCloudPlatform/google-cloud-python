@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.contentwarehouse_v1._compat import transcode_request
 from google.cloud.contentwarehouse_v1.types import (
     synonymset,
     synonymset_service_request,
@@ -518,21 +519,18 @@ class SynonymSetServiceRestTransport(_BaseSynonymSetServiceRestTransport):
             """
 
             http_options = _BaseSynonymSetServiceRestTransport._BaseCreateSynonymSet._get_http_options()
-
             request, metadata = self._interceptor.pre_create_synonym_set(
                 request, metadata
             )
-            transcoded_request = _BaseSynonymSetServiceRestTransport._BaseCreateSynonymSet._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSynonymSetServiceRestTransport._BaseCreateSynonymSet._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSynonymSetServiceRestTransport._BaseCreateSynonymSet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSynonymSetServiceRestTransport._BaseCreateSynonymSet,
+                    "_BaseCreateSynonymSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -665,17 +663,18 @@ class SynonymSetServiceRestTransport(_BaseSynonymSetServiceRestTransport):
             """
 
             http_options = _BaseSynonymSetServiceRestTransport._BaseDeleteSynonymSet._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_synonym_set(
                 request, metadata
             )
-            transcoded_request = _BaseSynonymSetServiceRestTransport._BaseDeleteSynonymSet._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSynonymSetServiceRestTransport._BaseDeleteSynonymSet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSynonymSetServiceRestTransport._BaseDeleteSynonymSet,
+                    "_BaseDeleteSynonymSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -787,15 +786,16 @@ class SynonymSetServiceRestTransport(_BaseSynonymSetServiceRestTransport):
             """
 
             http_options = _BaseSynonymSetServiceRestTransport._BaseGetSynonymSet._get_http_options()
-
             request, metadata = self._interceptor.pre_get_synonym_set(request, metadata)
-            transcoded_request = _BaseSynonymSetServiceRestTransport._BaseGetSynonymSet._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSynonymSetServiceRestTransport._BaseGetSynonymSet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSynonymSetServiceRestTransport._BaseGetSynonymSet,
+                    "_BaseGetSynonymSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -935,17 +935,18 @@ class SynonymSetServiceRestTransport(_BaseSynonymSetServiceRestTransport):
             """
 
             http_options = _BaseSynonymSetServiceRestTransport._BaseListSynonymSets._get_http_options()
-
             request, metadata = self._interceptor.pre_list_synonym_sets(
                 request, metadata
             )
-            transcoded_request = _BaseSynonymSetServiceRestTransport._BaseListSynonymSets._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSynonymSetServiceRestTransport._BaseListSynonymSets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSynonymSetServiceRestTransport._BaseListSynonymSets,
+                    "_BaseListSynonymSets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1098,21 +1099,18 @@ class SynonymSetServiceRestTransport(_BaseSynonymSetServiceRestTransport):
             """
 
             http_options = _BaseSynonymSetServiceRestTransport._BaseUpdateSynonymSet._get_http_options()
-
             request, metadata = self._interceptor.pre_update_synonym_set(
                 request, metadata
             )
-            transcoded_request = _BaseSynonymSetServiceRestTransport._BaseUpdateSynonymSet._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSynonymSetServiceRestTransport._BaseUpdateSynonymSet._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSynonymSetServiceRestTransport._BaseUpdateSynonymSet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSynonymSetServiceRestTransport._BaseUpdateSynonymSet,
+                    "_BaseUpdateSynonymSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1301,15 +1299,16 @@ class SynonymSetServiceRestTransport(_BaseSynonymSetServiceRestTransport):
             """
 
             http_options = _BaseSynonymSetServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseSynonymSetServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSynonymSetServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSynonymSetServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

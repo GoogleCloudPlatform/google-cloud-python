@@ -16,12 +16,11 @@
 
 import enum
 import logging
-from os import getenv
 import ssl
+from os import getenv
 from typing import Optional
 
-from google.auth import environment_vars
-from google.auth import exceptions
+from google.auth import environment_vars, exceptions
 from google.auth.transport import _mtls_helper
 
 _LOGGER = logging.getLogger(__name__)
@@ -43,10 +42,21 @@ def has_default_client_cert_source(include_context_aware=True):
     Returns:
         bool: indicating if the default client cert source exists.
     """
-    cert_path = _mtls_helper._get_cert_config_path(
-        include_context_aware=include_context_aware
-    )
-    if cert_path is not None:
+    try:
+        (
+            cert_path,
+            key_path,
+            config_file_path,
+        ) = _mtls_helper._get_workload_cert_and_key_paths(
+            None, include_context_aware=include_context_aware
+        )
+    except (exceptions.ClientCertError, OSError):
+        # Config exists, but is malformed or unreadable. Let caller surface error.
+        return True
+
+    if cert_path is not None and key_path is not None:
+        return True
+    if _mtls_helper._should_use_gke_credential_bundle(config_file_path):
         return True
     if (
         include_context_aware

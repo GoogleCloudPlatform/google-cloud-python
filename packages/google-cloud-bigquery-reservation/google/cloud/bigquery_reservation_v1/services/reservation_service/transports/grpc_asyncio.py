@@ -1386,6 +1386,35 @@ class ReservationServiceGrpcAsyncIOTransport(ReservationServiceTransport):
             )
         return self._stubs["list_reservation_groups"]
 
+    @property
+    def update_reservation_group(
+        self,
+    ) -> Callable[
+        [reservation.UpdateReservationGroupRequest],
+        Awaitable[reservation.ReservationGroup],
+    ]:
+        r"""Return a callable for the update reservation group method over gRPC.
+
+        Updates an existing reservation group resource.
+
+        Returns:
+            Callable[[~.UpdateReservationGroupRequest],
+                    Awaitable[~.ReservationGroup]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_reservation_group" not in self._stubs:
+            self._stubs["update_reservation_group"] = self._logged_channel.unary_unary(
+                "/google.cloud.bigquery.reservation.v1.ReservationService/UpdateReservationGroup",
+                request_serializer=reservation.UpdateReservationGroupRequest.serialize,
+                response_deserializer=reservation.ReservationGroup.deserialize,
+            )
+        return self._stubs["update_reservation_group"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -1631,6 +1660,11 @@ class ReservationServiceGrpcAsyncIOTransport(ReservationServiceTransport):
             ),
             self.list_reservation_groups: self._wrap_method(
                 self.list_reservation_groups,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_reservation_group: self._wrap_method(
+                self.update_reservation_group,
                 default_timeout=None,
                 client_info=client_info,
             ),

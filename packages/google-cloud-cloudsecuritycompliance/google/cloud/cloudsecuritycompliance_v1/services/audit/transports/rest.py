@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.cloudsecuritycompliance_v1._compat import transcode_request
 from google.cloud.cloudsecuritycompliance_v1.types import audit
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -679,21 +680,18 @@ class AuditRestTransport(_BaseAuditRestTransport):
             http_options = (
                 _BaseAuditRestTransport._BaseCreateFrameworkAudit._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_framework_audit(
                 request, metadata
             )
-            transcoded_request = _BaseAuditRestTransport._BaseCreateFrameworkAudit._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuditRestTransport._BaseCreateFrameworkAudit._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditRestTransport._BaseCreateFrameworkAudit._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditRestTransport._BaseCreateFrameworkAudit,
+                    "_BaseCreateFrameworkAudit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -831,23 +829,20 @@ class AuditRestTransport(_BaseAuditRestTransport):
             """
 
             http_options = _BaseAuditRestTransport._BaseGenerateFrameworkAuditScopeReport._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_generate_framework_audit_scope_report(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseAuditRestTransport._BaseGenerateFrameworkAuditScopeReport._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuditRestTransport._BaseGenerateFrameworkAuditScopeReport._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditRestTransport._BaseGenerateFrameworkAuditScopeReport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditRestTransport._BaseGenerateFrameworkAuditScopeReport,
+                    "_BaseGenerateFrameworkAuditScopeReport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -992,21 +987,18 @@ class AuditRestTransport(_BaseAuditRestTransport):
             http_options = (
                 _BaseAuditRestTransport._BaseGetFrameworkAudit._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_framework_audit(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseAuditRestTransport._BaseGetFrameworkAudit._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAuditRestTransport._BaseGetFrameworkAudit._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditRestTransport._BaseGetFrameworkAudit,
+                    "_BaseGetFrameworkAudit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1142,19 +1134,18 @@ class AuditRestTransport(_BaseAuditRestTransport):
             http_options = (
                 _BaseAuditRestTransport._BaseListFrameworkAudits._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_framework_audits(
                 request, metadata
             )
-            transcoded_request = _BaseAuditRestTransport._BaseListFrameworkAudits._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAuditRestTransport._BaseListFrameworkAudits._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditRestTransport._BaseListFrameworkAudits,
+                    "_BaseListFrameworkAudits__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1330,19 +1321,16 @@ class AuditRestTransport(_BaseAuditRestTransport):
             """
 
             http_options = _BaseAuditRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseAuditRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAuditRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1472,19 +1460,16 @@ class AuditRestTransport(_BaseAuditRestTransport):
             http_options = (
                 _BaseAuditRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseAuditRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAuditRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1612,25 +1597,18 @@ class AuditRestTransport(_BaseAuditRestTransport):
             http_options = (
                 _BaseAuditRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseAuditRestTransport._BaseCancelOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseAuditRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAuditRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1733,21 +1711,18 @@ class AuditRestTransport(_BaseAuditRestTransport):
             http_options = (
                 _BaseAuditRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseAuditRestTransport._BaseDeleteOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAuditRestTransport._BaseDeleteOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1850,19 +1825,16 @@ class AuditRestTransport(_BaseAuditRestTransport):
             """
 
             http_options = _BaseAuditRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseAuditRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAuditRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1992,19 +1964,16 @@ class AuditRestTransport(_BaseAuditRestTransport):
             http_options = (
                 _BaseAuditRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseAuditRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAuditRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

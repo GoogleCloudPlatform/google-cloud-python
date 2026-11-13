@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.developerconnect_v1._compat import transcode_request
 from google.cloud.developerconnect_v1.types import insights_config
 from google.cloud.developerconnect_v1.types import (
     insights_config as gcd_insights_config,
@@ -853,21 +854,18 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseCreateInsightsConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_insights_config(
                 request, metadata
             )
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseCreateInsightsConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInsightsConfigServiceRestTransport._BaseCreateInsightsConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseCreateInsightsConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseCreateInsightsConfig,
+                    "_BaseCreateInsightsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1007,17 +1005,18 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseDeleteInsightsConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_insights_config(
                 request, metadata
             )
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseDeleteInsightsConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseDeleteInsightsConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseDeleteInsightsConfig,
+                    "_BaseDeleteInsightsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1157,17 +1156,18 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseGetDeploymentEvent._get_http_options()
-
             request, metadata = self._interceptor.pre_get_deployment_event(
                 request, metadata
             )
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseGetDeploymentEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseGetDeploymentEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseGetDeploymentEvent,
+                    "_BaseGetDeploymentEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1313,17 +1313,18 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseGetInsightsConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_insights_config(
                 request, metadata
             )
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseGetInsightsConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseGetInsightsConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseGetInsightsConfig,
+                    "_BaseGetInsightsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1461,17 +1462,18 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseListDeploymentEvents._get_http_options()
-
             request, metadata = self._interceptor.pre_list_deployment_events(
                 request, metadata
             )
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseListDeploymentEvents._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseListDeploymentEvents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseListDeploymentEvents,
+                    "_BaseListDeploymentEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1613,17 +1615,18 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseListInsightsConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_insights_configs(
                 request, metadata
             )
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseListInsightsConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseListInsightsConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseListInsightsConfigs,
+                    "_BaseListInsightsConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1767,21 +1770,18 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseUpdateInsightsConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_insights_config(
                 request, metadata
             )
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseUpdateInsightsConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInsightsConfigServiceRestTransport._BaseUpdateInsightsConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseUpdateInsightsConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseUpdateInsightsConfig,
+                    "_BaseUpdateInsightsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1992,15 +1992,16 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2131,15 +2132,16 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2268,21 +2270,18 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInsightsConfigServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2388,17 +2387,18 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2506,15 +2506,16 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2645,15 +2646,16 @@ class InsightsConfigServiceRestTransport(_BaseInsightsConfigServiceRestTransport
             """
 
             http_options = _BaseInsightsConfigServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseInsightsConfigServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInsightsConfigServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInsightsConfigServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

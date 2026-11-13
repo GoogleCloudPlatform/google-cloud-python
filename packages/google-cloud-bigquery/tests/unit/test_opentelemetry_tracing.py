@@ -18,7 +18,7 @@ import sys
 from unittest import mock
 
 try:
-    import opentelemetry
+    import opentelemetry.sdk as opentelemetry
 except ImportError:
     opentelemetry = None
 

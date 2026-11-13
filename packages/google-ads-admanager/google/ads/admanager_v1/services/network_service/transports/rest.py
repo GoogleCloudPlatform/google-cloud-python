@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import network_messages, network_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -72,6 +73,14 @@ class NetworkServiceRestInterceptor:
 
     .. code-block:: python
         class MyCustomNetworkServiceInterceptor(NetworkServiceRestInterceptor):
+            def pre_get_default_third_party_data_declaration(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_default_third_party_data_declaration(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_get_network(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -88,11 +97,79 @@ class NetworkServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_provision_test_network(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_provision_test_network(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_network(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_network(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
         transport = NetworkServiceRestTransport(interceptor=MyCustomNetworkServiceInterceptor())
         client = NetworkServiceClient(transport=transport)
 
 
     """
+
+    def pre_get_default_third_party_data_declaration(
+        self,
+        request: network_service.GetDefaultThirdPartyDataDeclarationRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        network_service.GetDefaultThirdPartyDataDeclarationRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for get_default_third_party_data_declaration
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetworkService server.
+        """
+        return request, metadata
+
+    def post_get_default_third_party_data_declaration(
+        self, response: network_messages.DefaultThirdPartyDataDeclaration
+    ) -> network_messages.DefaultThirdPartyDataDeclaration:
+        """Post-rpc interceptor for get_default_third_party_data_declaration
+
+        DEPRECATED. Please use the `post_get_default_third_party_data_declaration_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetworkService server but before
+        it is returned to user code. This `post_get_default_third_party_data_declaration` interceptor runs
+        before the `post_get_default_third_party_data_declaration_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_default_third_party_data_declaration_with_metadata(
+        self,
+        response: network_messages.DefaultThirdPartyDataDeclaration,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        network_messages.DefaultThirdPartyDataDeclaration,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for get_default_third_party_data_declaration
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetworkService server but before it is returned to user code.
+
+        We recommend only using this `post_get_default_third_party_data_declaration_with_metadata`
+        interceptor in new development instead of the `post_get_default_third_party_data_declaration` interceptor.
+        When both interceptors are used, this `post_get_default_third_party_data_declaration_with_metadata` interceptor runs after the
+        `post_get_default_third_party_data_declaration` interceptor. The (possibly modified) response returned by
+        `post_get_default_third_party_data_declaration` will be passed to
+        `post_get_default_third_party_data_declaration_with_metadata`.
+        """
+        return response, metadata
 
     def pre_get_network(
         self,
@@ -189,6 +266,103 @@ class NetworkServiceRestInterceptor:
         `post_list_networks` interceptor. The (possibly modified) response returned by
         `post_list_networks` will be passed to
         `post_list_networks_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_provision_test_network(
+        self,
+        request: network_service.ProvisionTestNetworkRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        network_service.ProvisionTestNetworkRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for provision_test_network
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetworkService server.
+        """
+        return request, metadata
+
+    def post_provision_test_network(
+        self, response: network_messages.Network
+    ) -> network_messages.Network:
+        """Post-rpc interceptor for provision_test_network
+
+        DEPRECATED. Please use the `post_provision_test_network_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetworkService server but before
+        it is returned to user code. This `post_provision_test_network` interceptor runs
+        before the `post_provision_test_network_with_metadata` interceptor.
+        """
+        return response
+
+    def post_provision_test_network_with_metadata(
+        self,
+        response: network_messages.Network,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[network_messages.Network, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for provision_test_network
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetworkService server but before it is returned to user code.
+
+        We recommend only using this `post_provision_test_network_with_metadata`
+        interceptor in new development instead of the `post_provision_test_network` interceptor.
+        When both interceptors are used, this `post_provision_test_network_with_metadata` interceptor runs after the
+        `post_provision_test_network` interceptor. The (possibly modified) response returned by
+        `post_provision_test_network` will be passed to
+        `post_provision_test_network_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_network(
+        self,
+        request: network_service.UpdateNetworkRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        network_service.UpdateNetworkRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for update_network
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetworkService server.
+        """
+        return request, metadata
+
+    def post_update_network(
+        self, response: network_messages.Network
+    ) -> network_messages.Network:
+        """Post-rpc interceptor for update_network
+
+        DEPRECATED. Please use the `post_update_network_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetworkService server but before
+        it is returned to user code. This `post_update_network` interceptor runs
+        before the `post_update_network_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_network_with_metadata(
+        self,
+        response: network_messages.Network,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[network_messages.Network, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_network
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetworkService server but before it is returned to user code.
+
+        We recommend only using this `post_update_network_with_metadata`
+        interceptor in new development instead of the `post_update_network` interceptor.
+        When both interceptors are used, this `post_update_network_with_metadata` interceptor runs after the
+        `post_update_network` interceptor. The (possibly modified) response returned by
+        `post_update_network` will be passed to
+        `post_update_network_with_metadata`.
         """
         return response, metadata
 
@@ -334,6 +508,166 @@ class NetworkServiceRestTransport(_BaseNetworkServiceRestTransport):
         self._interceptor = interceptor or NetworkServiceRestInterceptor()
         self._prep_wrapped_messages(client_info)
 
+    class _GetDefaultThirdPartyDataDeclaration(
+        _BaseNetworkServiceRestTransport._BaseGetDefaultThirdPartyDataDeclaration,
+        NetworkServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "NetworkServiceRestTransport.GetDefaultThirdPartyDataDeclaration"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: network_service.GetDefaultThirdPartyDataDeclarationRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> network_messages.DefaultThirdPartyDataDeclaration:
+            r"""Call the get default third party
+            data declaration method over HTTP.
+
+                Args:
+                    request (~.network_service.GetDefaultThirdPartyDataDeclarationRequest):
+                        The request object. Request for the ``GetDefaultThirdPartyDataDeclaration``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.network_messages.DefaultThirdPartyDataDeclaration:
+                        The ``DefaultThirdPartyDataDeclaration`` singleton
+                    resource.
+
+            """
+
+            http_options = _BaseNetworkServiceRestTransport._BaseGetDefaultThirdPartyDataDeclaration._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_get_default_third_party_data_declaration(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworkServiceRestTransport._BaseGetDefaultThirdPartyDataDeclaration,
+                    "_BaseGetDefaultThirdPartyDataDeclaration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.NetworkServiceClient.GetDefaultThirdPartyDataDeclaration",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.NetworkService",
+                        "rpcName": "GetDefaultThirdPartyDataDeclaration",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetworkServiceRestTransport._GetDefaultThirdPartyDataDeclaration._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = network_messages.DefaultThirdPartyDataDeclaration()
+            pb_resp = network_messages.DefaultThirdPartyDataDeclaration.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_default_third_party_data_declaration(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_get_default_third_party_data_declaration_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        network_messages.DefaultThirdPartyDataDeclaration.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.NetworkServiceClient.get_default_third_party_data_declaration",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.NetworkService",
+                        "rpcName": "GetDefaultThirdPartyDataDeclaration",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _GetNetwork(
         _BaseNetworkServiceRestTransport._BaseGetNetwork, NetworkServiceRestStub
     ):
@@ -391,17 +725,16 @@ class NetworkServiceRestTransport(_BaseNetworkServiceRestTransport):
             http_options = (
                 _BaseNetworkServiceRestTransport._BaseGetNetwork._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_network(request, metadata)
-            transcoded_request = _BaseNetworkServiceRestTransport._BaseGetNetwork._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetworkServiceRestTransport._BaseGetNetwork._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworkServiceRestTransport._BaseGetNetwork,
+                    "_BaseGetNetwork__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -537,15 +870,16 @@ class NetworkServiceRestTransport(_BaseNetworkServiceRestTransport):
             http_options = (
                 _BaseNetworkServiceRestTransport._BaseListNetworks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_networks(request, metadata)
-            transcoded_request = _BaseNetworkServiceRestTransport._BaseListNetworks._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetworkServiceRestTransport._BaseListNetworks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworkServiceRestTransport._BaseListNetworks,
+                    "_BaseListNetworks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -626,6 +960,314 @@ class NetworkServiceRestTransport(_BaseNetworkServiceRestTransport):
                 )
             return resp
 
+    class _ProvisionTestNetwork(
+        _BaseNetworkServiceRestTransport._BaseProvisionTestNetwork,
+        NetworkServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("NetworkServiceRestTransport.ProvisionTestNetwork")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: network_service.ProvisionTestNetworkRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> network_messages.Network:
+            r"""Call the provision test network method over HTTP.
+
+            Args:
+                request (~.network_service.ProvisionTestNetworkRequest):
+                    The request object. Request for the ``ProvisionTestNetwork`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.network_messages.Network:
+                    The Network resource.
+            """
+
+            http_options = _BaseNetworkServiceRestTransport._BaseProvisionTestNetwork._get_http_options()
+            request, metadata = self._interceptor.pre_provision_test_network(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworkServiceRestTransport._BaseProvisionTestNetwork,
+                    "_BaseProvisionTestNetwork__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.NetworkServiceClient.ProvisionTestNetwork",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.NetworkService",
+                        "rpcName": "ProvisionTestNetwork",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetworkServiceRestTransport._ProvisionTestNetwork._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = network_messages.Network()
+            pb_resp = network_messages.Network.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_provision_test_network(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_provision_test_network_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = network_messages.Network.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.NetworkServiceClient.provision_test_network",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.NetworkService",
+                        "rpcName": "ProvisionTestNetwork",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateNetwork(
+        _BaseNetworkServiceRestTransport._BaseUpdateNetwork, NetworkServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("NetworkServiceRestTransport.UpdateNetwork")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: network_service.UpdateNetworkRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> network_messages.Network:
+            r"""Call the update network method over HTTP.
+
+            Args:
+                request (~.network_service.UpdateNetworkRequest):
+                    The request object. Request for the ``UpdateNetwork`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.network_messages.Network:
+                    The Network resource.
+            """
+
+            http_options = (
+                _BaseNetworkServiceRestTransport._BaseUpdateNetwork._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_update_network(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworkServiceRestTransport._BaseUpdateNetwork,
+                    "_BaseUpdateNetwork__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.NetworkServiceClient.UpdateNetwork",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.NetworkService",
+                        "rpcName": "UpdateNetwork",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetworkServiceRestTransport._UpdateNetwork._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = network_messages.Network()
+            pb_resp = network_messages.Network.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_network(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_network_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = network_messages.Network.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.NetworkServiceClient.update_network",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.NetworkService",
+                        "rpcName": "UpdateNetwork",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    @property
+    def get_default_third_party_data_declaration(
+        self,
+    ) -> Callable[
+        [network_service.GetDefaultThirdPartyDataDeclarationRequest],
+        network_messages.DefaultThirdPartyDataDeclaration,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetDefaultThirdPartyDataDeclaration(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
     @property
     def get_network(
         self,
@@ -643,6 +1285,24 @@ class NetworkServiceRestTransport(_BaseNetworkServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListNetworks(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def provision_test_network(
+        self,
+    ) -> Callable[
+        [network_service.ProvisionTestNetworkRequest], network_messages.Network
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ProvisionTestNetwork(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_network(
+        self,
+    ) -> Callable[[network_service.UpdateNetworkRequest], network_messages.Network]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateNetwork(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def cancel_operation(self):
@@ -699,17 +1359,18 @@ class NetworkServiceRestTransport(_BaseNetworkServiceRestTransport):
             """
 
             http_options = _BaseNetworkServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseNetworkServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetworkServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworkServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -816,15 +1477,16 @@ class NetworkServiceRestTransport(_BaseNetworkServiceRestTransport):
             http_options = (
                 _BaseNetworkServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseNetworkServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetworkServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetworkServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

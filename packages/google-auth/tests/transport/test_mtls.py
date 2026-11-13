@@ -19,8 +19,7 @@ from unittest import mock
 import pytest  # type: ignore
 
 from google.auth import exceptions
-from google.auth.transport import _mtls_helper
-from google.auth.transport import mtls
+from google.auth.transport import _mtls_helper, mtls
 
 
 @mock.patch("google.auth.transport._mtls_helper._get_cert_config_path")
@@ -47,7 +46,7 @@ def test_has_default_client_cert_source_with_context_aware_metadata(
 
     # Assert
     assert result is True
-    mock_get_cert.assert_called_once_with(include_context_aware=True)
+    mock_get_cert.assert_called_once_with(None, True)
     mock_check.assert_any_call(_mtls_helper.CONTEXT_AWARE_METADATA_PATH)
 
 
@@ -64,13 +63,21 @@ def test_has_default_client_cert_source_without_context_aware(
     result = mtls.has_default_client_cert_source(include_context_aware=False)
 
     assert result is False
-    mock_get_cert.assert_called_once_with(include_context_aware=False)
+    mock_get_cert.assert_called_once_with(None, False)
     mock_check.assert_not_called()
 
 
+@mock.patch(
+    "google.auth.transport._mtls_helper._load_json_file",
+    return_value={
+        "cert_configs": {"workload": {"cert_path": "cert.pem", "key_path": "key.pem"}}
+    },
+)
 @mock.patch("google.auth.transport._mtls_helper._check_config_path")
 @mock.patch("google.auth.transport._mtls_helper._get_cert_config_path")
-def test_has_default_client_cert_source_falls_back(mock_get_cert, mock_check):
+def test_has_default_client_cert_source_falls_back(
+    mock_get_cert, mock_check, mock_load_json
+):
     """
     Tests that it checks X.509 WIF first, and if found, returns True without checking context aware metadata.
     """
@@ -84,21 +91,28 @@ def test_has_default_client_cert_source_falls_back(mock_get_cert, mock_check):
     # Assert
     assert result is True
     # Verify the sequence of calls
-    mock_get_cert.assert_called_once_with(include_context_aware=True)
+    mock_get_cert.assert_called_once_with(None, True)
     mock_check.assert_not_called()
 
 
+@mock.patch(
+    "google.auth.transport._mtls_helper._load_json_file",
+    return_value={
+        "cert_configs": {"workload": {"cert_path": "cert.pem", "key_path": "key.pem"}}
+    },
+    autospec=True,
+)
 @mock.patch("google.auth.transport._mtls_helper._get_cert_config_path", autospec=True)
 @mock.patch("google.auth.transport._mtls_helper._check_config_path", autospec=True)
 def test_has_default_client_cert_source_env_var_success(
-    check_config_path, get_cert_config_path
+    check_config_path, get_cert_config_path, mock_load_json
 ):
     check_config_path.return_value = None
     get_cert_config_path.return_value = "/absolute/path/to/cert.json"
 
     assert mtls.has_default_client_cert_source(True)
 
-    get_cert_config_path.assert_called_with(include_context_aware=True)
+    get_cert_config_path.assert_called_with(None, True)
 
 
 @mock.patch("google.auth.transport._mtls_helper._get_cert_config_path", autospec=True)
@@ -477,3 +491,70 @@ def test_get_default_ssl_context_no_default_source(mock_has_default, mock_should
 
     result = mtls.get_default_ssl_context()
     assert result is None
+
+
+@mock.patch(
+    "google.auth.transport._mtls_helper._get_cert_config_path",
+    return_value=None,
+    autospec=True,
+)
+@mock.patch(
+    "google.auth._agent_identity_utils._is_certificate_file_ready",
+    return_value=True,
+    autospec=True,
+)
+def test_has_default_client_cert_source_gke_bundle(mock_is_ready, mock_get_cert):
+    assert mtls.has_default_client_cert_source(include_context_aware=False) is True
+    mock_is_ready.assert_called_once_with(_mtls_helper._GKE_CREDENTIAL_BUNDLE_PATH)
+
+
+@mock.patch(
+    "google.auth.transport._mtls_helper._load_json_file",
+    return_value={"cert_configs": {}},
+    autospec=True,
+)
+@mock.patch(
+    "google.auth.transport._mtls_helper._get_cert_config_path",
+    return_value="/home/user/.config/gcloud/certificate_config.json",
+    autospec=True,
+)
+@mock.patch(
+    "google.auth._agent_identity_utils._is_certificate_file_ready",
+    return_value=True,
+    autospec=True,
+)
+def test_has_default_client_cert_source_config_without_workload_no_gke_fallback(
+    mock_is_ready, mock_get_cert, mock_load_json
+):
+    assert mtls.has_default_client_cert_source(include_context_aware=False) is False
+    mock_is_ready.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    "side_effect",
+    [
+        exceptions.ClientCertError("Invalid JSON"),
+        OSError("Permission denied"),
+    ],
+)
+@mock.patch(
+    "google.auth.transport._mtls_helper._load_json_file",
+    autospec=True,
+)
+@mock.patch(
+    "google.auth.transport._mtls_helper._get_cert_config_path",
+    return_value="/home/user/.config/gcloud/certificate_config.json",
+    autospec=True,
+)
+@mock.patch(
+    "google.auth._agent_identity_utils._is_certificate_file_ready",
+    return_value=True,
+    autospec=True,
+)
+def test_has_default_client_cert_source_malformed_config_no_gke_fallback(
+    mock_is_ready, mock_get_cert, mock_load_json, side_effect
+):
+    mock_load_json.side_effect = side_effect
+
+    assert mtls.has_default_client_cert_source(include_context_aware=False) is True
+    mock_is_ready.assert_not_called()

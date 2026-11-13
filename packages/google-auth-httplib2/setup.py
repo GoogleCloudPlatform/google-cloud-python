@@ -16,7 +16,7 @@ import io
 
 from setuptools import setup
 
-version = "0.4.1"
+version = "0.4.4"
 
 DEPENDENCIES = [
     "google-auth >= 2.14.1, <3.0.0",
@@ -34,7 +34,7 @@ setup(
     author_email="googleapis-packages@google.com",
     description="Google Authentication Library: httplib2 transport",
     long_description=long_description,
-    url="https://github.com/googleapis/google-cloud-python/packages/google-auth-httplib2",
+    url="https://github.com/googleapis/google-cloud-python/tree/main/packages/google-auth-httplib2",
     py_modules=["google_auth_httplib2"],
     python_requires=">=3.10",
     install_requires=DEPENDENCIES,
@@ -47,6 +47,7 @@ setup(
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",

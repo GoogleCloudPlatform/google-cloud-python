@@ -42,7 +42,7 @@ DependencyConstraint = namedtuple(
 PQC_GRPC_WARNING_TEMPLATE = (
     "Package {consumer_package} depends on {dependency_package}, currently installed at version {version_used_string}. "
     "grpcio < 1.83.0 does not support Post-Quantum Cryptography (PQC). "
-    "Support for non-PQC environments is deprecated. In October 2026, "
+    "Support for non-PQC environments is deprecated. In April 2027, "
     "Google Cloud Python packages will raise their minimum requirements "
     "(including google-api-core, grpcio, and grpcio-status) to enforce grpcio >= 1.83.0. "
     "For more details on Google Cloud's post-quantum security migration, visit: "

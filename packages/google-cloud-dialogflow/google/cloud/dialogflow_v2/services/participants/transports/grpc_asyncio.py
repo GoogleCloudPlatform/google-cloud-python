@@ -534,6 +534,71 @@ class ParticipantsGrpcAsyncIOTransport(ParticipantsTransport):
         return self._stubs["streaming_analyze_content"]
 
     @property
+    def bidi_streaming_analyze_content(
+        self,
+    ) -> Callable[
+        [participant.BidiStreamingAnalyzeContentRequest],
+        Awaitable[participant.BidiStreamingAnalyzeContentResponse],
+    ]:
+        r"""Return a callable for the bidi streaming analyze content method over gRPC.
+
+        Bidirectional endless streaming version of
+        [StreamingAnalyzeContent][google.cloud.dialogflow.v2.Participants.StreamingAnalyzeContent].
+
+        Returns:
+            Callable[[~.BidiStreamingAnalyzeContentRequest],
+                    Awaitable[~.BidiStreamingAnalyzeContentResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "bidi_streaming_analyze_content" not in self._stubs:
+            self._stubs["bidi_streaming_analyze_content"] = (
+                self._logged_channel.stream_stream(
+                    "/google.cloud.dialogflow.v2.Participants/BidiStreamingAnalyzeContent",
+                    request_serializer=participant.BidiStreamingAnalyzeContentRequest.serialize,
+                    response_deserializer=participant.BidiStreamingAnalyzeContentResponse.deserialize,
+                )
+            )
+        return self._stubs["bidi_streaming_analyze_content"]
+
+    @property
+    def streaming_reactive_companion_suggestions(
+        self,
+    ) -> Callable[
+        [participant.StreamingReactiveCompanionSuggestionsRequest],
+        Awaitable[participant.StreamingReactiveCompanionSuggestionsResponse],
+    ]:
+        r"""Return a callable for the streaming reactive companion
+        suggestions method over gRPC.
+
+        External streaming API for direct human-agent-to-bot
+        chats.
+
+        Returns:
+            Callable[[~.StreamingReactiveCompanionSuggestionsRequest],
+                    Awaitable[~.StreamingReactiveCompanionSuggestionsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "streaming_reactive_companion_suggestions" not in self._stubs:
+            self._stubs["streaming_reactive_companion_suggestions"] = (
+                self._logged_channel.stream_stream(
+                    "/google.cloud.dialogflow.v2.Participants/StreamingReactiveCompanionSuggestions",
+                    request_serializer=participant.StreamingReactiveCompanionSuggestionsRequest.serialize,
+                    response_deserializer=participant.StreamingReactiveCompanionSuggestionsResponse.deserialize,
+                )
+            )
+        return self._stubs["streaming_reactive_companion_suggestions"]
+
+    @property
     def suggest_articles(
         self,
     ) -> Callable[
@@ -693,6 +758,16 @@ class ParticipantsGrpcAsyncIOTransport(ParticipantsTransport):
             self.streaming_analyze_content: self._wrap_method(
                 self.streaming_analyze_content,
                 default_timeout=220.0,
+                client_info=client_info,
+            ),
+            self.bidi_streaming_analyze_content: self._wrap_method(
+                self.bidi_streaming_analyze_content,
+                default_timeout=1800.0,
+                client_info=client_info,
+            ),
+            self.streaming_reactive_companion_suggestions: self._wrap_method(
+                self.streaming_reactive_companion_suggestions,
+                default_timeout=5400.0,
                 client_info=client_info,
             ),
             self.suggest_articles: self._wrap_method(

@@ -22,6 +22,8 @@ import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
 from google.cloud.apphub_v1.types import application as gca_application
+from google.cloud.apphub_v1.types import boundary as gca_boundary
+from google.cloud.apphub_v1.types import extended_metadata_schema
 from google.cloud.apphub_v1.types import service as gca_service
 from google.cloud.apphub_v1.types import (
     service_project_attachment as gca_service_project_attachment,
@@ -68,7 +70,12 @@ __protobuf__ = proto.module(
         "LookupDiscoveredWorkloadResponse",
         "UpdateWorkloadRequest",
         "DeleteWorkloadRequest",
+        "GetBoundaryRequest",
+        "UpdateBoundaryRequest",
         "OperationMetadata",
+        "GetExtendedMetadataSchemaRequest",
+        "ListExtendedMetadataSchemasRequest",
+        "ListExtendedMetadataSchemasResponse",
     },
 )
 
@@ -606,7 +613,7 @@ class UpdateServiceRequest(proto.Message):
 
     Attributes:
         update_mask (google.protobuf.field_mask_pb2.FieldMask):
-            Required. Field mask is used to specify the fields to be
+            Optional. Field mask is used to specify the fields to be
             overwritten in the Service resource by the update. The
             fields specified in the update_mask are relative to the
             resource, not the full request. The API changes the values
@@ -849,7 +856,7 @@ class UpdateApplicationRequest(proto.Message):
 
     Attributes:
         update_mask (google.protobuf.field_mask_pb2.FieldMask):
-            Required. Field mask is used to specify the fields to be
+            Optional. Field mask is used to specify the fields to be
             overwritten in the Application resource by the update. The
             fields specified in the update_mask are relative to the
             resource, not the full request. The API changes the values
@@ -1226,7 +1233,7 @@ class UpdateWorkloadRequest(proto.Message):
 
     Attributes:
         update_mask (google.protobuf.field_mask_pb2.FieldMask):
-            Required. Field mask is used to specify the fields to be
+            Optional. Field mask is used to specify the fields to be
             overwritten in the Workload resource by the update. The
             fields specified in the update_mask are relative to the
             resource, not the full request. The API changes the values
@@ -1315,6 +1322,72 @@ class DeleteWorkloadRequest(proto.Message):
     )
 
 
+class GetBoundaryRequest(proto.Message):
+    r"""Request message for AppHub.GetBoundary.
+
+    Attributes:
+        name (str):
+            Required. The name of the boundary to retrieve. Format:
+            ``projects/{project}/locations/{location}/boundary``.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class UpdateBoundaryRequest(proto.Message):
+    r"""Request message for AppHub.UpdateBoundary.
+
+    Attributes:
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. Field mask is used to specify the fields to be
+            overwritten in the Boundary resource by the update. The
+            fields specified in the update_mask are relative to the
+            resource, not the full request. A field will be overwritten
+            if it is in the mask. If the user does not provide a mask
+            then all fields will be overwritten.
+        boundary (google.cloud.apphub_v1.types.Boundary):
+            Required. The boundary to update.
+        request_id (str):
+            Optional. An optional request ID to identify
+            requests. Specify a unique request ID so that if
+            you must retry your request, the server will
+            know to ignore the request if it has already
+            been completed. The server will guarantee that
+            for at least 60 minutes since the first request.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
+    """
+
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=field_mask_pb2.FieldMask,
+    )
+    boundary: gca_boundary.Boundary = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=gca_boundary.Boundary,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
 class OperationMetadata(proto.Message):
     r"""Represents the metadata of the long-running operation.
 
@@ -1376,6 +1449,84 @@ class OperationMetadata(proto.Message):
     api_version: str = proto.Field(
         proto.STRING,
         number=7,
+    )
+
+
+class GetExtendedMetadataSchemaRequest(proto.Message):
+    r"""Request for GetExtendedMetadataSchema.
+
+    Attributes:
+        name (str):
+            Required. Schema resource name. Format:
+            ``projects/{project}/locations/{location}/extendedMetadataSchemas/{extended_metadata_schema}``.
+
+            ``{extended_metadata_schema}`` has the format
+            ``"apphub.googleapis.com/{SchemaName}"``.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListExtendedMetadataSchemasRequest(proto.Message):
+    r"""Request for ListExtendedMetadataSchemas.
+
+    Attributes:
+        parent (str):
+            Required. Project and location to list Extended Metadata
+            Schemas on. Expected format:
+            ``projects/{project}/locations/{location}``.
+        page_size (int):
+            Optional. Requested page size. Server may
+            return fewer items than requested. If
+            unspecified, server will pick an appropriate
+            default.
+        page_token (str):
+            Optional. A token identifying a page of
+            results the server should return.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListExtendedMetadataSchemasResponse(proto.Message):
+    r"""Response for ListExtendedMetadataSchemas.
+
+    Attributes:
+        extended_metadata_schemas (MutableSequence[google.cloud.apphub_v1.types.ExtendedMetadataSchema]):
+            List of Extended Metadata Schemas.
+        next_page_token (str):
+            A token identifying a page of results the
+            server should return.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    extended_metadata_schemas: MutableSequence[
+        extended_metadata_schema.ExtendedMetadataSchema
+    ] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=extended_metadata_schema.ExtendedMetadataSchema,
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
     )
 
 

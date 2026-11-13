@@ -32,7 +32,6 @@ except ImportError:  # pragma: NO COVER
 
 from google.auth import _oauth2client
 
-
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 SERVICE_ACCOUNT_JSON_FILE = os.path.join(DATA_DIR, "service_account.json")
 

@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     dai_encoding_profile_messages,
     dai_encoding_profile_service,
@@ -772,23 +773,20 @@ class DaiEncodingProfileServiceRestTransport(
             """
 
             http_options = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchActivateDaiEncodingProfiles._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_activate_dai_encoding_profiles(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchActivateDaiEncodingProfiles._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchActivateDaiEncodingProfiles._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchActivateDaiEncodingProfiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiEncodingProfileServiceRestTransport._BaseBatchActivateDaiEncodingProfiles,
+                    "_BaseBatchActivateDaiEncodingProfiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -939,23 +937,20 @@ class DaiEncodingProfileServiceRestTransport(
             """
 
             http_options = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchArchiveDaiEncodingProfiles._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_archive_dai_encoding_profiles(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchArchiveDaiEncodingProfiles._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchArchiveDaiEncodingProfiles._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchArchiveDaiEncodingProfiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiEncodingProfileServiceRestTransport._BaseBatchArchiveDaiEncodingProfiles,
+                    "_BaseBatchArchiveDaiEncodingProfiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1108,23 +1103,20 @@ class DaiEncodingProfileServiceRestTransport(
             """
 
             http_options = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchCreateDaiEncodingProfiles._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_create_dai_encoding_profiles(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchCreateDaiEncodingProfiles._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchCreateDaiEncodingProfiles._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchCreateDaiEncodingProfiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiEncodingProfileServiceRestTransport._BaseBatchCreateDaiEncodingProfiles,
+                    "_BaseBatchCreateDaiEncodingProfiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1275,23 +1267,20 @@ class DaiEncodingProfileServiceRestTransport(
             """
 
             http_options = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchUpdateDaiEncodingProfiles._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_update_dai_encoding_profiles(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchUpdateDaiEncodingProfiles._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchUpdateDaiEncodingProfiles._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiEncodingProfileServiceRestTransport._BaseBatchUpdateDaiEncodingProfiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiEncodingProfileServiceRestTransport._BaseBatchUpdateDaiEncodingProfiles,
+                    "_BaseBatchUpdateDaiEncodingProfiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1446,21 +1435,18 @@ class DaiEncodingProfileServiceRestTransport(
             """
 
             http_options = _BaseDaiEncodingProfileServiceRestTransport._BaseCreateDaiEncodingProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_create_dai_encoding_profile(
                 request, metadata
             )
-            transcoded_request = _BaseDaiEncodingProfileServiceRestTransport._BaseCreateDaiEncodingProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDaiEncodingProfileServiceRestTransport._BaseCreateDaiEncodingProfile._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiEncodingProfileServiceRestTransport._BaseCreateDaiEncodingProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiEncodingProfileServiceRestTransport._BaseCreateDaiEncodingProfile,
+                    "_BaseCreateDaiEncodingProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1607,17 +1593,18 @@ class DaiEncodingProfileServiceRestTransport(
             """
 
             http_options = _BaseDaiEncodingProfileServiceRestTransport._BaseGetDaiEncodingProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_get_dai_encoding_profile(
                 request, metadata
             )
-            transcoded_request = _BaseDaiEncodingProfileServiceRestTransport._BaseGetDaiEncodingProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiEncodingProfileServiceRestTransport._BaseGetDaiEncodingProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiEncodingProfileServiceRestTransport._BaseGetDaiEncodingProfile,
+                    "_BaseGetDaiEncodingProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1761,17 +1748,18 @@ class DaiEncodingProfileServiceRestTransport(
             """
 
             http_options = _BaseDaiEncodingProfileServiceRestTransport._BaseListDaiEncodingProfiles._get_http_options()
-
             request, metadata = self._interceptor.pre_list_dai_encoding_profiles(
                 request, metadata
             )
-            transcoded_request = _BaseDaiEncodingProfileServiceRestTransport._BaseListDaiEncodingProfiles._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiEncodingProfileServiceRestTransport._BaseListDaiEncodingProfiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiEncodingProfileServiceRestTransport._BaseListDaiEncodingProfiles,
+                    "_BaseListDaiEncodingProfiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1921,21 +1909,18 @@ class DaiEncodingProfileServiceRestTransport(
             """
 
             http_options = _BaseDaiEncodingProfileServiceRestTransport._BaseUpdateDaiEncodingProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_update_dai_encoding_profile(
                 request, metadata
             )
-            transcoded_request = _BaseDaiEncodingProfileServiceRestTransport._BaseUpdateDaiEncodingProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDaiEncodingProfileServiceRestTransport._BaseUpdateDaiEncodingProfile._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiEncodingProfileServiceRestTransport._BaseUpdateDaiEncodingProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiEncodingProfileServiceRestTransport._BaseUpdateDaiEncodingProfile,
+                    "_BaseUpdateDaiEncodingProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2177,17 +2162,18 @@ class DaiEncodingProfileServiceRestTransport(
             """
 
             http_options = _BaseDaiEncodingProfileServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDaiEncodingProfileServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiEncodingProfileServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiEncodingProfileServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2295,15 +2281,16 @@ class DaiEncodingProfileServiceRestTransport(
             """
 
             http_options = _BaseDaiEncodingProfileServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseDaiEncodingProfileServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiEncodingProfileServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiEncodingProfileServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -124,6 +124,8 @@ def spanner_client():
             client_key=_helpers.CLIENT_KEY,
             client_options={"api_endpoint": _helpers.SPANNER_OMNI},
             instance_type="omni",
+            username=_helpers.SPANNER_OMNI_USER,
+            password=_helpers.SPANNER_OMNI_PASSWORD,
         )
     else:
         client_options = {"api_endpoint": _helpers.API_ENDPOINT}
@@ -205,14 +207,30 @@ def shared_instance(
     _helpers.cleanup_old_instances(spanner_client)
 
     if _helpers.CREATE_INSTANCE:
+        from google.cloud.spanner_admin_instance_v1.types import spanner_instance_admin
+
         create_time = str(int(time.time()))
         labels = {"python-spanner-systests": "true", "created": create_time}
+
+        request = spanner_instance_admin.CreateInstanceRequest(
+            parent=spanner_client.project_name,
+            instance_id=shared_instance_id,
+            instance=spanner_instance_admin.Instance(
+                config=instance_config.name,
+                display_name=shared_instance_id,
+                node_count=1,
+                labels=labels,
+                edition=spanner_instance_admin.Instance.Edition.ENTERPRISE,
+            ),
+        )
+        created_op = _helpers.retry_429_503(
+            spanner_client.instance_admin_api.create_instance
+        )(request=request)
+        created_op.result(instance_operation_timeout)  # block until completion
 
         instance = spanner_client.instance(
             shared_instance_id, instance_config.name, labels=labels
         )
-        created_op = _helpers.retry_429_503(instance.create)()
-        created_op.result(instance_operation_timeout)  # block until completion
 
     else:  # reuse existing instance
         instance = spanner_client.instance(shared_instance_id)

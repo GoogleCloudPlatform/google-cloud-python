@@ -356,8 +356,8 @@ class StoragePool(proto.Message):
             This field is a member of `oneof`_ ``_type``.
         mode (google.cloud.netapp_v1.types.Mode):
             Optional. Mode of the storage pool. This field is used to
-            control whether the user can perform the ONTAP operations on
-            the storage pool using the GCNV ONTAP Mode APIs. If not
+            control whether the user can perform ONTAP operations on the
+            storage pool using the GCNV ONTAP Mode APIs. If not
             specified during creation, it defaults to ``DEFAULT``.
 
             This field is a member of `oneof`_ ``_mode``.

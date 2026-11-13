@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from __future__ import print_function
+
 import os
 import sys
 import time
 
 import google.auth.credentials  # type: ignore
 from google.auth.environment_vars import CREDENTIALS as TEST_CREDENTIALS  # type: ignore
-
 
 # From shell environ. May be None.
 CREDENTIALS = os.getenv(TEST_CREDENTIALS)

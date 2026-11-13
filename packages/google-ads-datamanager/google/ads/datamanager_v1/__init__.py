@@ -13,15 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import sys
-
 import google.api_core as api_core
 
 from google.ads.datamanager_v1 import gapic_version as package_version
 
 __version__ = package_version.__version__
-
-from importlib import metadata
 
 # PEP 0810: Explicit Lazy Imports
 # Python 3.15+ natively intercepts and defers these imports.
@@ -33,12 +29,14 @@ __lazy_modules__ = {
     "google.ads.datamanager_v1.services.ingestion_service",
     "google.ads.datamanager_v1.services.marketing_data_insights_service",
     "google.ads.datamanager_v1.services.partner_link_service",
+    "google.ads.datamanager_v1.services.reporting_service",
     "google.ads.datamanager_v1.services.user_list_direct_license_service",
     "google.ads.datamanager_v1.services.user_list_global_license_service",
     "google.ads.datamanager_v1.services.user_list_service",
     "google.ads.datamanager_v1.types.ad_event",
     "google.ads.datamanager_v1.types.age_range",
     "google.ads.datamanager_v1.types.audience",
+    "google.ads.datamanager_v1.types.call_info",
     "google.ads.datamanager_v1.types.cart_data",
     "google.ads.datamanager_v1.types.consent",
     "google.ads.datamanager_v1.types.destination",
@@ -54,9 +52,12 @@ __lazy_modules__ = {
     "google.ads.datamanager_v1.types.item_parameter",
     "google.ads.datamanager_v1.types.match_rate",
     "google.ads.datamanager_v1.types.partner_link_service",
+    "google.ads.datamanager_v1.types.partner_match_report_entry",
     "google.ads.datamanager_v1.types.processing_errors",
+    "google.ads.datamanager_v1.types.reporting_service",
     "google.ads.datamanager_v1.types.request_status_per_destination",
     "google.ads.datamanager_v1.types.terms_of_service",
+    "google.ads.datamanager_v1.types.user",
     "google.ads.datamanager_v1.types.user_data",
     "google.ads.datamanager_v1.types.user_list",
     "google.ads.datamanager_v1.types.user_list_direct_license",
@@ -85,6 +86,10 @@ from .services.marketing_data_insights_service import (
 from .services.partner_link_service import (
     PartnerLinkServiceAsyncClient,
     PartnerLinkServiceClient,
+)
+from .services.reporting_service import (
+    ReportingServiceAsyncClient,
+    ReportingServiceClient,
 )
 from .services.user_list_direct_license_service import (
     UserListDirectLicenseServiceAsyncClient,
@@ -120,6 +125,7 @@ from .types.audience import (
     PpidData,
     UserIdData,
 )
+from .types.call_info import CallInfo
 from .types.cart_data import CartData, Item, ItemCustomVariable
 from .types.consent import Consent, ConsentStatus
 from .types.destination import Destination, Product, ProductAccount
@@ -150,10 +156,14 @@ from .types.ingestion_service import (
     IngestAudienceMembersResponse,
     IngestEventsRequest,
     IngestEventsResponse,
+    IngestUsersRequest,
+    IngestUsersResponse,
     RemoveAllAudienceMembersRequest,
     RemoveAllAudienceMembersResponse,
     RemoveAudienceMembersRequest,
     RemoveAudienceMembersResponse,
+    RemoveUsersRequest,
+    RemoveUsersResponse,
     RetrieveRequestStatusRequest,
     RetrieveRequestStatusResponse,
 )
@@ -174,6 +184,14 @@ from .types.partner_link_service import (
     SearchPartnerLinksRequest,
     SearchPartnerLinksResponse,
 )
+from .types.partner_match_report_entry import (
+    PartnerMatchAdGroup,
+    PartnerMatchAdvertiserAccount,
+    PartnerMatchCampaign,
+    PartnerMatchLineItem,
+    PartnerMatchReportEntry,
+    PartnerMatchUserList,
+)
 from .types.processing_errors import (
     ErrorCount,
     ErrorInfo,
@@ -184,8 +202,13 @@ from .types.processing_errors import (
     WarningInfo,
     WarningReason,
 )
+from .types.reporting_service import (
+    RetrievePartnerMatchReportRequest,
+    RetrievePartnerMatchReportResponse,
+)
 from .types.request_status_per_destination import RequestStatusPerDestination
 from .types.terms_of_service import TermsOfService, TermsOfServiceStatus
+from .types.user import User
 from .types.user_data import AddressInfo, UserData, UserIdentifier
 from .types.user_list import (
     ContactIdInfo,
@@ -244,93 +267,11 @@ from .types.user_properties import (
 )
 from .types.viewability_info import MediaQuartile, ViewabilityInfo, ViewType
 
-if hasattr(api_core, "check_python_version") and hasattr(
-    api_core, "check_dependency_versions"
-):  # pragma: NO COVER
-    api_core.check_python_version("google.ads.datamanager_v1")  # type: ignore
-    api_core.check_dependency_versions("google.ads.datamanager_v1")  # type: ignore
-else:  # pragma: NO COVER
-    # An older version of api_core is installed which does not define the
-    # functions above. We do equivalent checks manually.
-    try:
-        import warnings
-
-        _py_version_str = sys.version.split()[0]
-        _package_label = "google.ads.datamanager_v1"
-        if sys.version_info < (3, 10):
-            warnings.warn(
-                "You are using a non-supported Python version "
-                + f"({_py_version_str}).  Google will not post any further "
-                + f"updates to {_package_label} supporting this Python version. "
-                + "Please upgrade to the latest Python version, or at "
-                + f"least to Python 3.10, and then update {_package_label}.",
-                FutureWarning,
-            )
-
-        def parse_version_to_tuple(version_string: str):
-            """Safely converts a semantic version string to a comparable tuple of integers.
-            Example: "6.33.5" -> (6, 33, 5)
-            Ignores non-numeric parts and handles common version formats.
-            Args:
-                version_string: Version string in the format "x.y.z" or "x.y.z<suffix>"
-            Returns:
-                Tuple of integers for the parsed version string.
-            """
-            parts = []
-            for part in version_string.split("."):
-                try:
-                    parts.append(int(part))
-                except ValueError:
-                    # If it's a non-numeric part (e.g., '1.0.0b1' -> 'b1'), stop here.
-                    # This is a simplification compared to 'packaging.parse_version', but sufficient
-                    # for comparing strictly numeric semantic versions.
-                    break
-            return tuple(parts)
-
-        def _get_version(dependency_name):
-            try:
-                version_string: str = metadata.version(dependency_name)
-                parsed_version = parse_version_to_tuple(version_string)
-                return (parsed_version, version_string)
-            except Exception:
-                # Catch exceptions from metadata.version() (e.g., PackageNotFoundError)
-                # or errors during parse_version_to_tuple
-                return (None, "--")
-
-        _dependency_package = "google.protobuf"
-        _next_supported_version = "6.33.5"
-        _next_supported_version_tuple = (6, 33, 5)
-        _recommendation = " (we recommend 7.x)"
-        (_version_used, _version_used_string) = _get_version(_dependency_package)
-        if _version_used and _version_used < _next_supported_version_tuple:
-            warnings.warn(
-                f"Package {_package_label} depends on "
-                + f"{_dependency_package}, currently installed at version "
-                + f"{_version_used_string}. Future updates to "
-                + f"{_package_label} will require {_dependency_package} at "
-                + f"version {_next_supported_version} or higher{_recommendation}."
-                + " Please ensure "
-                + "that either (a) your Python environment doesn't pin the "
-                + f"version of {_dependency_package}, so that updates to "
-                + f"{_package_label} can require the higher version, or "
-                + "(b) you manually update your Python environment to use at "
-                + f"least version {_next_supported_version} of "
-                + f"{_dependency_package}.",
-                FutureWarning,
-            )
-    except Exception:
-        warnings.warn(
-            "Could not determine the version of Python "
-            + "currently being used. To continue receiving "
-            + "updates for {_package_label}, ensure you are "
-            + "using a supported version of Python; see "
-            + "https://devguide.python.org/versions/"
-        )
-
 __all__ = (
     "IngestionServiceAsyncClient",
     "MarketingDataInsightsServiceAsyncClient",
     "PartnerLinkServiceAsyncClient",
+    "ReportingServiceAsyncClient",
     "UserListDirectLicenseServiceAsyncClient",
     "UserListGlobalLicenseServiceAsyncClient",
     "UserListServiceAsyncClient",
@@ -345,6 +286,7 @@ __all__ = (
     "AudienceMember",
     "AwsWrappedKeyInfo",
     "Baseline",
+    "CallInfo",
     "CartData",
     "CompositeData",
     "Consent",
@@ -388,6 +330,8 @@ __all__ = (
     "IngestAudienceMembersResponse",
     "IngestEventsRequest",
     "IngestEventsResponse",
+    "IngestUsersRequest",
+    "IngestUsersResponse",
     "IngestedUserListInfo",
     "IngestionServiceClient",
     "IpData",
@@ -414,6 +358,12 @@ __all__ = (
     "PartnerLink",
     "PartnerLinkMetadata",
     "PartnerLinkServiceClient",
+    "PartnerMatchAdGroup",
+    "PartnerMatchAdvertiserAccount",
+    "PartnerMatchCampaign",
+    "PartnerMatchLineItem",
+    "PartnerMatchReportEntry",
+    "PartnerMatchUserList",
     "PartnerProvidedIdData",
     "Platform",
     "PlatformType",
@@ -427,9 +377,14 @@ __all__ = (
     "RemoveAllAudienceMembersResponse",
     "RemoveAudienceMembersRequest",
     "RemoveAudienceMembersResponse",
+    "RemoveUsersRequest",
+    "RemoveUsersResponse",
+    "ReportingServiceClient",
     "RequestStatusPerDestination",
     "RetrieveInsightsRequest",
     "RetrieveInsightsResponse",
+    "RetrievePartnerMatchReportRequest",
+    "RetrievePartnerMatchReportResponse",
     "RetrieveRequestStatusRequest",
     "RetrieveRequestStatusResponse",
     "SearchPartnerLinksRequest",
@@ -442,6 +397,7 @@ __all__ = (
     "UpdateUserListDirectLicenseRequest",
     "UpdateUserListGlobalLicenseRequest",
     "UpdateUserListRequest",
+    "User",
     "UserData",
     "UserIdData",
     "UserIdInfo",
@@ -466,3 +422,6 @@ __all__ = (
     "WarningInfo",
     "WarningReason",
 )
+
+api_core.check_python_version("google.ads.datamanager_v1")
+api_core.check_dependency_versions("google.ads.datamanager_v1")

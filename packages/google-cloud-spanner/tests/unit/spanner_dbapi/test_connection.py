@@ -21,6 +21,7 @@ import warnings
 import mock
 import pytest
 from google.auth.credentials import AnonymousCredentials
+
 from google.cloud.spanner_admin_database_v1 import DatabaseDialect
 from google.cloud.spanner_dbapi import Connection
 from google.cloud.spanner_dbapi.batch_dml_executor import BatchMode
@@ -38,7 +39,6 @@ from google.cloud.spanner_dbapi.parsed_statement import (
     StatementType,
 )
 from google.cloud.spanner_v1.database_sessions_manager import TransactionType
-
 from tests._builders import build_connection, build_session
 
 PROJECT = "test-project"
@@ -89,6 +89,16 @@ class TestConnection(unittest.TestCase):
     def test_autocommit_setter_transaction_started(self, mock_commit):
         connection = self._make_connection()
         connection._spanner_transaction_started = True
+
+        connection.autocommit = True
+
+        mock_commit.assert_called_once()
+        self.assertTrue(connection._autocommit)
+
+    @mock.patch("google.cloud.spanner_dbapi.connection.Connection.commit")
+    def test_autocommit_setter_with_pending_ddl_statements(self, mock_commit):
+        connection = self._make_connection()
+        connection._ddl_statements = ["CREATE TABLE t (id INT64) PRIMARY KEY (id)"]
 
         connection.autocommit = True
 
@@ -344,6 +354,22 @@ class TestConnection(unittest.TestCase):
         mock_release.assert_called_once_with()
         self.assertEqual(len(transaction_helper._statement_result_details_list), 0)
 
+    def test_commit_with_failing_ddl_resets_connection(self):
+        connection = self._under_test
+        connection._spanner_transaction_started = True
+        connection._ddl_statements = ["CREATE TABLE t (id INT64) PRIMARY KEY (id)"]
+        connection.database.update_ddl = mock.MagicMock(
+            side_effect=Exception("DDL execution failed")
+        )
+
+        with mock.patch.object(
+            connection, "_reset_post_commit_or_rollback"
+        ) as mock_reset:
+            with pytest.raises(Exception, match="DDL execution failed"):
+                connection.commit()
+
+        mock_reset.assert_called_once()
+
     @mock.patch.object(warnings, "warn")
     def test_commit_in_autocommit_mode(self, mock_warn):
         self._under_test._autocommit = True
@@ -395,12 +421,16 @@ class TestConnection(unittest.TestCase):
         mock_transaction.rollback = mock_rollback
         transaction_helper = self._under_test._transaction_helper
         transaction_helper._statement_result_details_list = [{}, {}]
+        self._under_test._ddl_statements = [
+            "CREATE TABLE t (id INT64) PRIMARY KEY (id)"
+        ]
         with mock.patch(
             "google.cloud.spanner_dbapi.connection.Connection._release_session"
         ) as mock_release:
             self._under_test.rollback()
 
         self.assertEqual(len(transaction_helper._statement_result_details_list), 0)
+        self.assertEqual(self._under_test._ddl_statements, [])
         mock_rollback.assert_called_once_with()
         mock_release.assert_called_once_with()
 

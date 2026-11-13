@@ -24,9 +24,9 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
 import os
 import shlex
+import sys
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -36,6 +36,24 @@ sys.path.insert(0, os.path.abspath(".."))
 # For plugins that can not read conf.py.
 # See also: https://github.com/docascode/sphinx-docfx-yaml/issues/85
 sys.path.insert(0, os.path.abspath("."))
+
+# TODO(b/559711363): Propagate table formatting fix across all google-cloud-* libraries.
+try:
+    import sphinx_markdown_builder.markdown_writer as _smb_writer
+
+    _orig_depart_paragraph = _smb_writer.MarkdownTranslator.depart_paragraph
+
+    def _table_safe_depart_paragraph(self, node):
+        if getattr(self, "table_entries", None):
+            return
+        return _orig_depart_paragraph(self, node)
+
+    _smb_writer.MarkdownTranslator.depart_paragraph = _table_safe_depart_paragraph
+    _smb_writer.MarkdownTranslator.depart_compact_paragraph = (
+        _table_safe_depart_paragraph
+    )
+except ImportError:
+    pass
 
 __version__ = ""
 

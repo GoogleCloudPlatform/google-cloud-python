@@ -40,7 +40,12 @@ class SystemTestRunner:
         """
         Automatically deletes any test instances older than 1 day.
         """
+        from google.cloud.environment_vars import BIGTABLE_EMULATOR
+
         from tests.system.utils import clear_stale_instances
+
+        if os.getenv(BIGTABLE_EMULATOR):
+            return
 
         clear_stale_instances(project_id, "python-bigtable-tests", older_than_days=1)
 

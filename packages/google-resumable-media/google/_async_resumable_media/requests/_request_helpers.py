@@ -19,11 +19,11 @@ This utilities are explicitly catered to ``requests``-like transports.
 
 import functools
 
+import aiohttp  # type: ignore
+from google.auth.transport import _aiohttp_requests as aiohttp_requests  # type: ignore
+
 from google._async_resumable_media import _helpers
 from google.resumable_media import common
-
-from google.auth.transport import _aiohttp_requests as aiohttp_requests  # type: ignore
-import aiohttp  # type: ignore
 
 _DEFAULT_RETRY_STRATEGY = common.RetryStrategy()
 _SINGLE_GET_CHUNK_SIZE = 8192

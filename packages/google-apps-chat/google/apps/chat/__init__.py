@@ -35,6 +35,7 @@ from google.apps.chat_v1.types.annotation import (
     SlashCommandMetadata,
     UserMentionMetadata,
 )
+from google.apps.chat_v1.types.app_command_metadata import AppCommandMetadata
 from google.apps.chat_v1.types.attachment import (
     Attachment,
     AttachmentDataRef,
@@ -54,8 +55,12 @@ from google.apps.chat_v1.types.availability import (
     MarkAsDoNotDisturbRequest,
     UpdateAvailabilityRequest,
 )
+from google.apps.chat_v1.types.citation import Citation
+from google.apps.chat_v1.types.cited_source import CitedSource
 from google.apps.chat_v1.types.contextual_addon import ContextualAddOnMarkup
 from google.apps.chat_v1.types.deletion_metadata import DeletionMetadata
+from google.apps.chat_v1.types.elements import Elements
+from google.apps.chat_v1.types.elements_common import ElementsImage
 from google.apps.chat_v1.types.event_payload import (
     MembershipBatchCreatedEventData,
     MembershipBatchDeletedEventData,
@@ -106,11 +111,20 @@ from google.apps.chat_v1.types.message import (
     Message,
     QuotedMessageMetadata,
     QuotedMessageSnapshot,
+    ReplaceMessageCardsRequest,
+    ReplaceMessageCardsResponse,
     SearchMessageResult,
     SearchMessagesRequest,
     SearchMessagesResponse,
     Thread,
     UpdateMessageRequest,
+)
+from google.apps.chat_v1.types.message_pin import (
+    CreateMessagePinRequest,
+    DeleteMessagePinRequest,
+    ListMessagePinsRequest,
+    ListMessagePinsResponse,
+    MessagePin,
 )
 from google.apps.chat_v1.types.reaction import (
     CreateCustomEmojiRequest,
@@ -198,6 +212,7 @@ __all__ = (
     "SlashCommandMetadata",
     "UserMentionMetadata",
     "AnnotationType",
+    "AppCommandMetadata",
     "Attachment",
     "AttachmentDataRef",
     "DriveDataRef",
@@ -213,8 +228,12 @@ __all__ = (
     "MarkAsAwayRequest",
     "MarkAsDoNotDisturbRequest",
     "UpdateAvailabilityRequest",
+    "Citation",
+    "CitedSource",
     "ContextualAddOnMarkup",
     "DeletionMetadata",
+    "Elements",
+    "ElementsImage",
     "MembershipBatchCreatedEventData",
     "MembershipBatchDeletedEventData",
     "MembershipBatchUpdatedEventData",
@@ -260,11 +279,18 @@ __all__ = (
     "Message",
     "QuotedMessageMetadata",
     "QuotedMessageSnapshot",
+    "ReplaceMessageCardsRequest",
+    "ReplaceMessageCardsResponse",
     "SearchMessageResult",
     "SearchMessagesRequest",
     "SearchMessagesResponse",
     "Thread",
     "UpdateMessageRequest",
+    "CreateMessagePinRequest",
+    "DeleteMessagePinRequest",
+    "ListMessagePinsRequest",
+    "ListMessagePinsResponse",
+    "MessagePin",
     "CreateCustomEmojiRequest",
     "CreateReactionRequest",
     "CustomEmoji",

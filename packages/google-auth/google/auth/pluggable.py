@@ -42,9 +42,7 @@ import subprocess
 import sys
 import time
 
-from google.auth import _helpers
-from google.auth import exceptions
-from google.auth import external_account
+from google.auth import _helpers, exceptions, external_account
 
 # The max supported executable spec version.
 EXECUTABLE_SUPPORTED_MAX_VERSION = 1
@@ -76,7 +74,7 @@ class Credentials(external_account.Credentials):
         token_url,
         credential_source,
         *args,
-        **kwargs
+        **kwargs,
     ):
         """Instantiates an external account credentials object from a executables.
 
@@ -118,7 +116,7 @@ class Credentials(external_account.Credentials):
             token_url=token_url,
             credential_source=credential_source,
             *args,
-            **kwargs
+            **kwargs,
         )
         if not isinstance(credential_source, Mapping):
             self._credential_source_executable = None
@@ -352,13 +350,13 @@ class Credentials(external_account.Credentials):
         env["GOOGLE_EXTERNAL_ACCOUNT_INTERACTIVE"] = "1" if self.interactive else "0"
 
         if self._service_account_impersonation_url is not None:
-            env[
-                "GOOGLE_EXTERNAL_ACCOUNT_IMPERSONATED_EMAIL"
-            ] = self.service_account_email
+            env["GOOGLE_EXTERNAL_ACCOUNT_IMPERSONATED_EMAIL"] = (
+                self.service_account_email
+            )
         if self._credential_source_executable_output_file is not None:
-            env[
-                "GOOGLE_EXTERNAL_ACCOUNT_OUTPUT_FILE"
-            ] = self._credential_source_executable_output_file
+            env["GOOGLE_EXTERNAL_ACCOUNT_OUTPUT_FILE"] = (
+                self._credential_source_executable_output_file
+            )
 
     def _parse_subject_token(self, response):
         self._validate_response_schema(response)

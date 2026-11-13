@@ -33,6 +33,7 @@ from google.iam.v1 import (
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.pubsub_v1._compat import transcode_request
 from google.pubsub_v1.types import pubsub
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -749,23 +750,16 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             http_options = (
                 _BasePublisherRestTransport._BaseCreateTopic._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_topic(request, metadata)
-            transcoded_request = (
-                _BasePublisherRestTransport._BaseCreateTopic._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BasePublisherRestTransport._BaseCreateTopic._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePublisherRestTransport._BaseCreateTopic._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BaseCreateTopic,
+                    "_BaseCreateTopic__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -896,19 +890,16 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             http_options = (
                 _BasePublisherRestTransport._BaseDeleteTopic._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_topic(request, metadata)
-            transcoded_request = (
-                _BasePublisherRestTransport._BaseDeleteTopic._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePublisherRestTransport._BaseDeleteTopic._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BaseDeleteTopic,
+                    "_BaseDeleteTopic__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1013,17 +1004,18 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             http_options = (
                 _BasePublisherRestTransport._BaseDetachSubscription._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_detach_subscription(
                 request, metadata
             )
-            transcoded_request = _BasePublisherRestTransport._BaseDetachSubscription._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePublisherRestTransport._BaseDetachSubscription._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BaseDetachSubscription,
+                    "_BaseDetachSubscription__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1157,19 +1149,16 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             """
 
             http_options = _BasePublisherRestTransport._BaseGetTopic._get_http_options()
-
             request, metadata = self._interceptor.pre_get_topic(request, metadata)
-            transcoded_request = (
-                _BasePublisherRestTransport._BaseGetTopic._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePublisherRestTransport._BaseGetTopic._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BaseGetTopic,
+                    "_BaseGetTopic__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1303,19 +1292,16 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             http_options = (
                 _BasePublisherRestTransport._BaseListTopics._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_topics(request, metadata)
-            transcoded_request = (
-                _BasePublisherRestTransport._BaseListTopics._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePublisherRestTransport._BaseListTopics._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BaseListTopics,
+                    "_BaseListTopics__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1451,17 +1437,18 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             http_options = (
                 _BasePublisherRestTransport._BaseListTopicSnapshots._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_topic_snapshots(
                 request, metadata
             )
-            transcoded_request = _BasePublisherRestTransport._BaseListTopicSnapshots._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePublisherRestTransport._BaseListTopicSnapshots._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BaseListTopicSnapshots,
+                    "_BaseListTopicSnapshots__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1597,17 +1584,18 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             """
 
             http_options = _BasePublisherRestTransport._BaseListTopicSubscriptions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_topic_subscriptions(
                 request, metadata
             )
-            transcoded_request = _BasePublisherRestTransport._BaseListTopicSubscriptions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePublisherRestTransport._BaseListTopicSubscriptions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BaseListTopicSubscriptions,
+                    "_BaseListTopicSubscriptions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1742,23 +1730,16 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             """
 
             http_options = _BasePublisherRestTransport._BasePublish._get_http_options()
-
             request, metadata = self._interceptor.pre_publish(request, metadata)
-            transcoded_request = (
-                _BasePublisherRestTransport._BasePublish._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BasePublisherRestTransport._BasePublish._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePublisherRestTransport._BasePublish._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BasePublish,
+                    "_BasePublish__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1894,23 +1875,16 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             http_options = (
                 _BasePublisherRestTransport._BaseUpdateTopic._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_topic(request, metadata)
-            transcoded_request = (
-                _BasePublisherRestTransport._BaseUpdateTopic._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BasePublisherRestTransport._BaseUpdateTopic._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePublisherRestTransport._BaseUpdateTopic._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BaseUpdateTopic,
+                    "_BaseUpdateTopic__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2120,19 +2094,16 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             http_options = (
                 _BasePublisherRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = (
-                _BasePublisherRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePublisherRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2265,23 +2236,16 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             http_options = (
                 _BasePublisherRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = (
-                _BasePublisherRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BasePublisherRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePublisherRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2415,21 +2379,18 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             http_options = (
                 _BasePublisherRestTransport._BaseTestIamPermissions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BasePublisherRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePublisherRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePublisherRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

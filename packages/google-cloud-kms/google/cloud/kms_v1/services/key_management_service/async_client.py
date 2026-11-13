@@ -109,6 +109,10 @@ class KeyManagementServiceAsyncClient:
     parse_crypto_key_version_path = staticmethod(
         KeyManagementServiceClient.parse_crypto_key_version_path
     )
+    ekm_connection_path = staticmethod(KeyManagementServiceClient.ekm_connection_path)
+    parse_ekm_connection_path = staticmethod(
+        KeyManagementServiceClient.parse_ekm_connection_path
+    )
     import_job_path = staticmethod(KeyManagementServiceClient.import_job_path)
     parse_import_job_path = staticmethod(
         KeyManagementServiceClient.parse_import_job_path

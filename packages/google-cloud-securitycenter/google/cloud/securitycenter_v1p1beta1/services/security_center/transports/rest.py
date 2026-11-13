@@ -32,6 +32,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.securitycenter_v1p1beta1._compat import transcode_request
 from google.cloud.securitycenter_v1p1beta1.types import (
     finding,
     notification_config,
@@ -1604,19 +1605,16 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             http_options = (
                 _BaseSecurityCenterRestTransport._BaseCreateFinding._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_finding(request, metadata)
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseCreateFinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseCreateFinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseCreateFinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseCreateFinding,
+                    "_BaseCreateFinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1762,21 +1760,18 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             """
 
             http_options = _BaseSecurityCenterRestTransport._BaseCreateNotificationConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_notification_config(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseCreateNotificationConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseCreateNotificationConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseCreateNotificationConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseCreateNotificationConfig,
+                    "_BaseCreateNotificationConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1925,19 +1920,16 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             http_options = (
                 _BaseSecurityCenterRestTransport._BaseCreateSource._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_source(request, metadata)
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseCreateSource._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseCreateSource._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseCreateSource._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseCreateSource,
+                    "_BaseCreateSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2071,17 +2063,18 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             """
 
             http_options = _BaseSecurityCenterRestTransport._BaseDeleteNotificationConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_notification_config(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseDeleteNotificationConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseDeleteNotificationConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseDeleteNotificationConfig,
+                    "_BaseDeleteNotificationConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2261,19 +2254,16 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             http_options = (
                 _BaseSecurityCenterRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseGetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2417,17 +2407,18 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             """
 
             http_options = _BaseSecurityCenterRestTransport._BaseGetNotificationConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_notification_config(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseGetNotificationConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseGetNotificationConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseGetNotificationConfig,
+                    "_BaseGetNotificationConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2568,17 +2559,18 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             """
 
             http_options = _BaseSecurityCenterRestTransport._BaseGetOrganizationSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_get_organization_settings(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseGetOrganizationSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseGetOrganizationSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseGetOrganizationSettings,
+                    "_BaseGetOrganizationSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2724,19 +2716,16 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             http_options = (
                 _BaseSecurityCenterRestTransport._BaseGetSource._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_source(request, metadata)
-            transcoded_request = (
-                _BaseSecurityCenterRestTransport._BaseGetSource._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSecurityCenterRestTransport._BaseGetSource._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseGetSource,
+                    "_BaseGetSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2876,19 +2865,16 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             http_options = (
                 _BaseSecurityCenterRestTransport._BaseGroupAssets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_group_assets(request, metadata)
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseGroupAssets._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseGroupAssets._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseGroupAssets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseGroupAssets,
+                    "_BaseGroupAssets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3031,19 +3017,16 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             http_options = (
                 _BaseSecurityCenterRestTransport._BaseGroupFindings._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_group_findings(request, metadata)
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseGroupFindings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseGroupFindings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseGroupFindings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseGroupFindings,
+                    "_BaseGroupFindings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3182,17 +3165,16 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             http_options = (
                 _BaseSecurityCenterRestTransport._BaseListAssets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_assets(request, metadata)
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseListAssets._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSecurityCenterRestTransport._BaseListAssets._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseListAssets,
+                    "_BaseListAssets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3332,15 +3314,16 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             http_options = (
                 _BaseSecurityCenterRestTransport._BaseListFindings._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_findings(request, metadata)
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseListFindings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseListFindings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseListFindings,
+                    "_BaseListFindings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3480,17 +3463,18 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             """
 
             http_options = _BaseSecurityCenterRestTransport._BaseListNotificationConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_notification_configs(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseListNotificationConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseListNotificationConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseListNotificationConfigs,
+                    "_BaseListNotificationConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3632,15 +3616,16 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             http_options = (
                 _BaseSecurityCenterRestTransport._BaseListSources._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_sources(request, metadata)
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseListSources._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseListSources._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseListSources,
+                    "_BaseListSources__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3781,21 +3766,18 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             """
 
             http_options = _BaseSecurityCenterRestTransport._BaseRunAssetDiscovery._get_http_options()
-
             request, metadata = self._interceptor.pre_run_asset_discovery(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseRunAssetDiscovery._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseRunAssetDiscovery._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseRunAssetDiscovery._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseRunAssetDiscovery,
+                    "_BaseRunAssetDiscovery__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3940,21 +3922,18 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             """
 
             http_options = _BaseSecurityCenterRestTransport._BaseSetFindingState._get_http_options()
-
             request, metadata = self._interceptor.pre_set_finding_state(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseSetFindingState._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseSetFindingState._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseSetFindingState._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseSetFindingState,
+                    "_BaseSetFindingState__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4167,19 +4146,16 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             http_options = (
                 _BaseSecurityCenterRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4315,21 +4291,18 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             """
 
             http_options = _BaseSecurityCenterRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4478,19 +4451,16 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             http_options = (
                 _BaseSecurityCenterRestTransport._BaseUpdateFinding._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_finding(request, metadata)
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseUpdateFinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseUpdateFinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseUpdateFinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseUpdateFinding,
+                    "_BaseUpdateFinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4636,21 +4606,18 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             """
 
             http_options = _BaseSecurityCenterRestTransport._BaseUpdateNotificationConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_notification_config(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseUpdateNotificationConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseUpdateNotificationConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseUpdateNotificationConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseUpdateNotificationConfig,
+                    "_BaseUpdateNotificationConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4796,21 +4763,18 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             """
 
             http_options = _BaseSecurityCenterRestTransport._BaseUpdateOrganizationSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_update_organization_settings(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseUpdateOrganizationSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseUpdateOrganizationSettings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseUpdateOrganizationSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseUpdateOrganizationSettings,
+                    "_BaseUpdateOrganizationSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4960,21 +4924,18 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             """
 
             http_options = _BaseSecurityCenterRestTransport._BaseUpdateSecurityMarks._get_http_options()
-
             request, metadata = self._interceptor.pre_update_security_marks(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseUpdateSecurityMarks._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseUpdateSecurityMarks._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseUpdateSecurityMarks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseUpdateSecurityMarks,
+                    "_BaseUpdateSecurityMarks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5121,19 +5082,16 @@ class SecurityCenterRestTransport(_BaseSecurityCenterRestTransport):
             http_options = (
                 _BaseSecurityCenterRestTransport._BaseUpdateSource._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_source(request, metadata)
-            transcoded_request = _BaseSecurityCenterRestTransport._BaseUpdateSource._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterRestTransport._BaseUpdateSource._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterRestTransport._BaseUpdateSource._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterRestTransport._BaseUpdateSource,
+                    "_BaseUpdateSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

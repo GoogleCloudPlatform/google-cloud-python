@@ -265,6 +265,11 @@ class RegionNetworkFirewallPoliciesTransport(abc.ABC):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.patch_association: gapic_v1.method.wrap_method(
+                self.patch_association,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.patch_rule: gapic_v1.method.wrap_method(
                 self.patch_rule,
                 default_timeout=600.0,
@@ -413,6 +418,15 @@ class RegionNetworkFirewallPoliciesTransport(abc.ABC):
         self,
     ) -> Callable[
         [compute.PatchRegionNetworkFirewallPolicyRequest],
+        Union[compute.Operation, Awaitable[compute.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def patch_association(
+        self,
+    ) -> Callable[
+        [compute.PatchAssociationRegionNetworkFirewallPolicyRequest],
         Union[compute.Operation, Awaitable[compute.Operation]],
     ]:
         raise NotImplementedError()

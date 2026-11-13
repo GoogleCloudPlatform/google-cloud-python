@@ -4513,6 +4513,109 @@ class SecureSourceManagerAsyncClient:
         # Done; return the response.
         return response
 
+    async def fetch_refs(
+        self,
+        request: Optional[Union[secure_source_manager.FetchRefsRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.FetchRefsAsyncPager:
+        r"""Fetches git references from a repository.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import securesourcemanager_v1
+
+            async def sample_fetch_refs():
+                # Create a client
+                client = securesourcemanager_v1.SecureSourceManagerAsyncClient()
+
+                # Initialize request argument(s)
+                request = securesourcemanager_v1.FetchRefsRequest(
+                    repository="repository_value",
+                )
+
+                # Make the request
+                page_result = client.fetch_refs(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.securesourcemanager_v1.types.FetchRefsRequest, dict]]):
+                The request object. Request message for fetching git
+                references from a repository.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.securesourcemanager_v1.services.secure_source_manager.pagers.FetchRefsAsyncPager:
+                Response message containing a list of
+                git references.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, secure_source_manager.FetchRefsRequest):
+            request = secure_source_manager.FetchRefsRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.fetch_refs
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("repository", request.repository),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.FetchRefsAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
     async def create_issue(
         self,
         request: Optional[Union[secure_source_manager.CreateIssueRequest, dict]] = None,

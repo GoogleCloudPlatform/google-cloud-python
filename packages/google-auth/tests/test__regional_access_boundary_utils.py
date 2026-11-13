@@ -18,10 +18,12 @@ from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import _credentials_async
-from google.auth import _helpers
-from google.auth import _regional_access_boundary_utils
-from google.auth import credentials
+from google.auth import (
+    _credentials_async,
+    _helpers,
+    _regional_access_boundary_utils,
+    credentials,
+)
 from google.oauth2 import credentials as oauth2_credentials
 
 

@@ -14,7 +14,7 @@
 # limitations under the License.
 
 
-# [START bigtable_filters_limit_row_sample]
+# [START bigtable_filters_limit_row_sample_legacy]
 def filter_limit_row_sample(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -28,8 +28,8 @@ def filter_limit_row_sample(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_row_sample]
-# [START bigtable_filters_limit_row_regex]
+# [END bigtable_filters_limit_row_sample_legacy]
+# [START bigtable_filters_limit_row_regex_legacy]
 def filter_limit_row_regex(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -45,8 +45,8 @@ def filter_limit_row_regex(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_row_regex]
-# [START bigtable_filters_limit_cells_per_col]
+# [END bigtable_filters_limit_row_regex_legacy]
+# [START bigtable_filters_limit_cells_per_col_legacy]
 def filter_limit_cells_per_col(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -60,8 +60,8 @@ def filter_limit_cells_per_col(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_cells_per_col]
-# [START bigtable_filters_limit_cells_per_row]
+# [END bigtable_filters_limit_cells_per_col_legacy]
+# [START bigtable_filters_limit_cells_per_row_legacy]
 def filter_limit_cells_per_row(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -75,8 +75,8 @@ def filter_limit_cells_per_row(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_cells_per_row]
-# [START bigtable_filters_limit_cells_per_row_offset]
+# [END bigtable_filters_limit_cells_per_row_legacy]
+# [START bigtable_filters_limit_cells_per_row_offset_legacy]
 def filter_limit_cells_per_row_offset(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -90,8 +90,8 @@ def filter_limit_cells_per_row_offset(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_cells_per_row_offset]
-# [START bigtable_filters_limit_col_family_regex]
+# [END bigtable_filters_limit_cells_per_row_offset_legacy]
+# [START bigtable_filters_limit_col_family_regex_legacy]
 def filter_limit_col_family_regex(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -107,8 +107,8 @@ def filter_limit_col_family_regex(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_col_family_regex]
-# [START bigtable_filters_limit_col_qualifier_regex]
+# [END bigtable_filters_limit_col_family_regex_legacy]
+# [START bigtable_filters_limit_col_qualifier_regex_legacy]
 def filter_limit_col_qualifier_regex(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -124,8 +124,8 @@ def filter_limit_col_qualifier_regex(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_col_qualifier_regex]
-# [START bigtable_filters_limit_col_range]
+# [END bigtable_filters_limit_col_qualifier_regex_legacy]
+# [START bigtable_filters_limit_col_range_legacy]
 def filter_limit_col_range(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -143,8 +143,8 @@ def filter_limit_col_range(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_col_range]
-# [START bigtable_filters_limit_value_range]
+# [END bigtable_filters_limit_col_range_legacy]
+# [START bigtable_filters_limit_value_range_legacy]
 def filter_limit_value_range(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -161,8 +161,8 @@ def filter_limit_value_range(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_value_range]
-# [START bigtable_filters_limit_value_regex]
+# [END bigtable_filters_limit_value_range_legacy]
+# [START bigtable_filters_limit_value_regex_legacy]
 
 
 def filter_limit_value_regex(project_id, instance_id, table_id):
@@ -180,8 +180,8 @@ def filter_limit_value_regex(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_value_regex]
-# [START bigtable_filters_limit_timestamp_range]
+# [END bigtable_filters_limit_value_regex_legacy]
+# [START bigtable_filters_limit_timestamp_range_legacy]
 def filter_limit_timestamp_range(project_id, instance_id, table_id):
     import datetime
 
@@ -201,8 +201,8 @@ def filter_limit_timestamp_range(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_timestamp_range]
-# [START bigtable_filters_limit_block_all]
+# [END bigtable_filters_limit_timestamp_range_legacy]
+# [START bigtable_filters_limit_block_all_legacy]
 def filter_limit_block_all(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -216,8 +216,8 @@ def filter_limit_block_all(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_block_all]
-# [START bigtable_filters_limit_pass_all]
+# [END bigtable_filters_limit_block_all_legacy]
+# [START bigtable_filters_limit_pass_all_legacy]
 def filter_limit_pass_all(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -231,8 +231,8 @@ def filter_limit_pass_all(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_limit_pass_all]
-# [START bigtable_filters_modify_strip_value]
+# [END bigtable_filters_limit_pass_all_legacy]
+# [START bigtable_filters_modify_strip_value_legacy]
 def filter_modify_strip_value(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -246,8 +246,8 @@ def filter_modify_strip_value(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_modify_strip_value]
-# [START bigtable_filters_modify_apply_label]
+# [END bigtable_filters_modify_strip_value_legacy]
+# [START bigtable_filters_modify_apply_label_legacy]
 def filter_modify_apply_label(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -261,8 +261,8 @@ def filter_modify_apply_label(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_modify_apply_label]
-# [START bigtable_filters_composing_chain]
+# [END bigtable_filters_modify_apply_label_legacy]
+# [START bigtable_filters_composing_chain_legacy]
 def filter_composing_chain(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -283,8 +283,8 @@ def filter_composing_chain(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_composing_chain]
-# [START bigtable_filters_composing_interleave]
+# [END bigtable_filters_composing_chain_legacy]
+# [START bigtable_filters_composing_interleave_legacy]
 def filter_composing_interleave(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -305,8 +305,8 @@ def filter_composing_interleave(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_composing_interleave]
-# [START bigtable_filters_composing_condition]
+# [END bigtable_filters_composing_interleave_legacy]
+# [START bigtable_filters_composing_condition_legacy]
 def filter_composing_condition(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -331,10 +331,10 @@ def filter_composing_condition(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_filters_composing_condition]
+# [END bigtable_filters_composing_condition_legacy]
 
 
-# [START bigtable_filters_print]
+# [START bigtable_filters_print_legacy]
 def print_row(row):
     print("Reading data for {}:".format(row.row_key.decode("utf-8")))
     for cf, cols in sorted(row.cells.items()):
@@ -355,4 +355,4 @@ def print_row(row):
     print("")
 
 
-# [END bigtable_filters_print]
+# [END bigtable_filters_print_legacy]

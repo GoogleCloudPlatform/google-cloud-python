@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.discoveryengine_v1._compat import transcode_request
 from google.cloud.discoveryengine_v1.types import conversational_search_service, session
 from google.cloud.discoveryengine_v1.types import session as gcd_session
 
@@ -550,19 +551,16 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             http_options = (
                 _BaseSessionServiceRestTransport._BaseCreateSession._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_session(request, metadata)
-            transcoded_request = _BaseSessionServiceRestTransport._BaseCreateSession._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSessionServiceRestTransport._BaseCreateSession._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseCreateSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseCreateSession,
+                    "_BaseCreateSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -695,15 +693,16 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             http_options = (
                 _BaseSessionServiceRestTransport._BaseDeleteSession._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_session(request, metadata)
-            transcoded_request = _BaseSessionServiceRestTransport._BaseDeleteSession._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseDeleteSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseDeleteSession,
+                    "_BaseDeleteSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -805,17 +804,16 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             http_options = (
                 _BaseSessionServiceRestTransport._BaseGetSession._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_session(request, metadata)
-            transcoded_request = _BaseSessionServiceRestTransport._BaseGetSession._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSessionServiceRestTransport._BaseGetSession._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseGetSession,
+                    "_BaseGetSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -951,15 +949,16 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             http_options = (
                 _BaseSessionServiceRestTransport._BaseListSessions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_sessions(request, metadata)
-            transcoded_request = _BaseSessionServiceRestTransport._BaseListSessions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseListSessions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseListSessions,
+                    "_BaseListSessions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1100,19 +1099,16 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             http_options = (
                 _BaseSessionServiceRestTransport._BaseUpdateSession._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_session(request, metadata)
-            transcoded_request = _BaseSessionServiceRestTransport._BaseUpdateSession._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSessionServiceRestTransport._BaseUpdateSession._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseUpdateSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseUpdateSession,
+                    "_BaseUpdateSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1297,21 +1293,18 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             """
 
             http_options = _BaseSessionServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSessionServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSessionServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1419,15 +1412,16 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             http_options = (
                 _BaseSessionServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseSessionServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1559,15 +1553,16 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             http_options = (
                 _BaseSessionServiceRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseSessionServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

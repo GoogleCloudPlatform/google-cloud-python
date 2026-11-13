@@ -125,6 +125,8 @@ class DatabaseVersion(proto.Enum):
             The database version is Postgres 17.
         POSTGRES_18 (6):
             The database version is Postgres 18.
+        POSTGRES_19 (7):
+            The database version is Postgres 19.
     """
 
     DATABASE_VERSION_UNSPECIFIED = 0
@@ -134,6 +136,7 @@ class DatabaseVersion(proto.Enum):
     POSTGRES_16 = 4
     POSTGRES_17 = 5
     POSTGRES_18 = 6
+    POSTGRES_19 = 7
 
 
 class SubscriptionType(proto.Enum):
@@ -1430,8 +1433,21 @@ class Instance(proto.Message):
             PRIMARY instance.
         query_insights_config (google.cloud.alloydb_v1beta.types.Instance.QueryInsightsInstanceConfig):
             Configuration for query insights.
+        query_insights_info (google.cloud.alloydb_v1beta.types.Instance.QueryInsightsInstanceInfo):
+            Output only. Instance level Query Insights information,
+            which is read-only and available in the output only.
+            Contains the effective query insights settings for this
+            instance, by merging customer's provided
+            ``QueryInsightsInstanceConfig`` with the Query Insights
+            defaults.
         observability_config (google.cloud.alloydb_v1beta.types.Instance.ObservabilityInstanceConfig):
             Configuration for observability.
+        observability_instance_info (google.cloud.alloydb_v1beta.types.Instance.ObservabilityInstanceInfo):
+            Output only. Instance level observability information,
+            contains the effective values of observability settings for
+            this instance, by merging customer's provided
+            ``ObservabilityInstanceConfig`` with the Observability
+            defaults.
         read_pool_config (google.cloud.alloydb_v1beta.types.Instance.ReadPoolConfig):
             Read pool instance configuration. This is required if the
             value of instanceType is READ_POOL.
@@ -1743,6 +1759,48 @@ class Instance(proto.Message):
             optional=True,
         )
 
+    class QueryInsightsInstanceInfo(proto.Message):
+        r"""Instance level Query Insights information, which is read-only
+        and available in the output only.
+
+        Attributes:
+            enabled (bool):
+                Output only. Whether Query Insights is
+                enabled.
+            record_application_tags (bool):
+                Output only. Whether to record application
+                tags.
+            record_client_address (bool):
+                Output only. Whether to record client
+                address.
+            query_string_length (int):
+                Output only. Maximum query string length.
+            query_plans_per_minute (int):
+                Output only. Number of query execution plans
+                captured per minute.
+        """
+
+        enabled: bool = proto.Field(
+            proto.BOOL,
+            number=1,
+        )
+        record_application_tags: bool = proto.Field(
+            proto.BOOL,
+            number=2,
+        )
+        record_client_address: bool = proto.Field(
+            proto.BOOL,
+            number=3,
+        )
+        query_string_length: int = proto.Field(
+            proto.UINT32,
+            number=4,
+        )
+        query_plans_per_minute: int = proto.Field(
+            proto.UINT32,
+            number=5,
+        )
+
     class ObservabilityInstanceConfig(proto.Message):
         r"""Observability Instance specific configuration.
 
@@ -1859,6 +1917,92 @@ class Instance(proto.Message):
             proto.BOOL,
             number=10,
             optional=True,
+        )
+
+    class ObservabilityInstanceInfo(proto.Message):
+        r"""
+
+        Attributes:
+            enabled (bool):
+                Output only. Observability feature status for
+                an instance.
+            preserve_comments (bool):
+                Output only. Preserve comments in query
+                string for an instance.
+            track_wait_events (bool):
+                Output only. Track wait events during query
+                execution for an instance.
+            track_wait_event_types (bool):
+                Output only. Track wait event types during
+                query execution for an instance.
+            max_query_string_length (int):
+                Output only. Query string length. The default
+                value is 10k.
+            record_application_tags (bool):
+                Output only. Record application tags for an
+                instance.
+            query_plans_per_minute (int):
+                Output only. Number of query execution plans
+                captured by Insights per minute for all queries
+                combined.
+            track_active_queries (bool):
+                Output only. Track actively running queries
+                on the instance.
+            track_client_address (bool):
+                Output only. Track client address for an
+                instance.
+            assistive_experiences_enabled (bool):
+                Output only. Whether assistive experiences
+                are enabled for this AlloyDB instance.
+            track_active_query_plan (bool):
+                Output only. Indicates whether to track active query plans
+                for an instance. Deprecated: Use track_active_queries
+                instead.
+        """
+
+        enabled: bool = proto.Field(
+            proto.BOOL,
+            number=2,
+        )
+        preserve_comments: bool = proto.Field(
+            proto.BOOL,
+            number=3,
+        )
+        track_wait_events: bool = proto.Field(
+            proto.BOOL,
+            number=4,
+        )
+        track_wait_event_types: bool = proto.Field(
+            proto.BOOL,
+            number=5,
+        )
+        max_query_string_length: int = proto.Field(
+            proto.INT32,
+            number=6,
+        )
+        record_application_tags: bool = proto.Field(
+            proto.BOOL,
+            number=7,
+        )
+        query_plans_per_minute: int = proto.Field(
+            proto.INT32,
+            number=8,
+        )
+        track_active_queries: bool = proto.Field(
+            proto.BOOL,
+            number=9,
+        )
+        track_client_address: bool = proto.Field(
+            proto.BOOL,
+            number=10,
+        )
+        assistive_experiences_enabled: bool = proto.Field(
+            proto.BOOL,
+            number=11,
+        )
+        track_active_query_plan: bool = proto.Field(
+            proto.BOOL,
+            number=13,
         )
 
     class ReadPoolConfig(proto.Message):
@@ -2325,10 +2469,20 @@ class Instance(proto.Message):
         number=21,
         message=QueryInsightsInstanceConfig,
     )
+    query_insights_info: QueryInsightsInstanceInfo = proto.Field(
+        proto.MESSAGE,
+        number=47,
+        message=QueryInsightsInstanceInfo,
+    )
     observability_config: ObservabilityInstanceConfig = proto.Field(
         proto.MESSAGE,
         number=26,
         message=ObservabilityInstanceConfig,
+    )
+    observability_instance_info: ObservabilityInstanceInfo = proto.Field(
+        proto.MESSAGE,
+        number=44,
+        message=ObservabilityInstanceInfo,
     )
     read_pool_config: ReadPoolConfig = proto.Field(
         proto.MESSAGE,

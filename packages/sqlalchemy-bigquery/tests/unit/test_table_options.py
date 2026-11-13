@@ -20,14 +20,14 @@
 import datetime
 import sqlite3
 
+import pytest
+import sqlalchemy
 from google.cloud.bigquery import (
     PartitionRange,
     RangePartitioning,
     TimePartitioning,
     TimePartitioningType,
 )
-import pytest
-import sqlalchemy
 
 from .conftest import setup_table
 

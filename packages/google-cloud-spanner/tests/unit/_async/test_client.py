@@ -936,3 +936,123 @@ class TestClient(IsolatedAsyncioTestCase):
             "instance_type must be one of 'cloud' or 'omni'",
             str(ctx.exception),
         )
+
+    @CrossSync.pytest
+    async def test_constructor_w_omni_username_password(self):
+        from google.cloud.spanner_v1._async.client import InstanceType
+        from google.cloud.spanner_v1.omni.credentials import (
+            SpannerOmniCredentials,
+        )
+
+        client = self._make_one(
+            project=self.PROJECT,
+            client_options={"api_endpoint": "omni-host:15000"},
+            instance_type=InstanceType.OMNI,
+            username="test_user",
+            password="test_password",
+        )
+        self.assertEqual(client.project, "default")
+        self.assertEqual(client.instance_type, InstanceType.OMNI)
+        self.assertEqual(client._host, "omni-host:15000")
+        self.assertIsInstance(client._credentials, SpannerOmniCredentials)
+        self.assertEqual(client._credentials.username, "test_user")
+        self.assertEqual(client._credentials.target, "omni-host:15000")
+
+    @CrossSync.pytest
+    async def test_constructor_w_omni_partial_credentials_raises_value_error(self):
+        from google.cloud.spanner_v1._async.client import InstanceType
+
+        with self.assertRaises(ValueError) as ctx:
+            self._make_one(
+                project=self.PROJECT,
+                client_options={"api_endpoint": "omni-host:15000"},
+                instance_type=InstanceType.OMNI,
+                username="test_user",
+            )
+        self.assertIn(
+            "Both username and password must be specified for Omni authentication",
+            str(ctx.exception),
+        )
+
+        with self.assertRaises(ValueError) as ctx:
+            self._make_one(
+                project=self.PROJECT,
+                client_options={"api_endpoint": "omni-host:15000"},
+                instance_type=InstanceType.OMNI,
+                password="test_password",
+            )
+        self.assertIn(
+            "Both username and password must be specified for Omni authentication",
+            str(ctx.exception),
+        )
+
+    @CrossSync.pytest
+    async def test_constructor_w_username_password_on_cloud_raises_value_error(self):
+        creds = build_scoped_credentials()
+        with self.assertRaises(ValueError) as ctx:
+            self._make_one(
+                project=self.PROJECT,
+                credentials=creds,
+                username="test_user",
+                password="test_password",
+            )
+        self.assertIn(
+            "username and password can only be used when instance_type='omni'.",
+            str(ctx.exception),
+        )
+
+    @CrossSync.pytest
+    async def test_instance_admin_api_omni(self):
+        from google.cloud.spanner_v1._async.client import InstanceType
+
+        client = self._make_one(
+            project=self.PROJECT,
+            client_options={"api_endpoint": "omni-host:15000"},
+            instance_type=InstanceType.OMNI,
+            username="test_user",
+            password="test_password",
+            use_plain_text=True,
+        )
+
+        inst_module = "google.cloud.spanner_v1._async.client.InstanceAdminClient"
+        with mock.patch(inst_module) as instance_admin_client:
+            api = client.instance_admin_api
+            self.assertIs(api, instance_admin_client.return_value)
+            instance_admin_client.assert_called_once()
+            called_kw = instance_admin_client.call_args[1]
+            self.assertIn("transport", called_kw)
+
+    @CrossSync.pytest
+    async def test_database_admin_api_omni(self):
+        from google.cloud.spanner_v1._async.client import InstanceType
+
+        client = self._make_one(
+            project=self.PROJECT,
+            client_options={"api_endpoint": "omni-host:15000"},
+            instance_type=InstanceType.OMNI,
+            username="test_user",
+            password="test_password",
+            use_plain_text=True,
+        )
+
+        db_module = "google.cloud.spanner_v1._async.client.DatabaseAdminClient"
+        with mock.patch(db_module) as database_admin_client:
+            api = client.database_admin_api
+            self.assertIs(api, database_admin_client.return_value)
+            database_admin_client.assert_called_once()
+            called_kw = database_admin_client.call_args[1]
+            self.assertIn("transport", called_kw)
+
+    @CrossSync.pytest
+    async def test_constructor_w_omni_explicit_credentials_instance(self):
+        from google.cloud.spanner_v1._async.client import InstanceType
+        from google.cloud.spanner_v1.omni.credentials import SpannerOmniCredentials
+
+        creds = SpannerOmniCredentials("user", "pass", "omni-host:15000")
+        client = self._make_one(
+            project=self.PROJECT,
+            client_options={"api_endpoint": "omni-host:15000"},
+            instance_type=InstanceType.OMNI,
+            credentials=creds,
+        )
+        self.assertIs(client._credentials, creds)

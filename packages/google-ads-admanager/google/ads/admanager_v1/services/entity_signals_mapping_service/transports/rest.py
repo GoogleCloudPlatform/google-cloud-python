@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     entity_signals_mapping_messages,
     entity_signals_mapping_service,
@@ -650,23 +651,20 @@ class EntitySignalsMappingServiceRestTransport(
             """
 
             http_options = _BaseEntitySignalsMappingServiceRestTransport._BaseBatchCreateEntitySignalsMappings._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_create_entity_signals_mappings(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseEntitySignalsMappingServiceRestTransport._BaseBatchCreateEntitySignalsMappings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEntitySignalsMappingServiceRestTransport._BaseBatchCreateEntitySignalsMappings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntitySignalsMappingServiceRestTransport._BaseBatchCreateEntitySignalsMappings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntitySignalsMappingServiceRestTransport._BaseBatchCreateEntitySignalsMappings,
+                    "_BaseBatchCreateEntitySignalsMappings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -815,23 +813,20 @@ class EntitySignalsMappingServiceRestTransport(
             """
 
             http_options = _BaseEntitySignalsMappingServiceRestTransport._BaseBatchUpdateEntitySignalsMappings._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_update_entity_signals_mappings(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseEntitySignalsMappingServiceRestTransport._BaseBatchUpdateEntitySignalsMappings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEntitySignalsMappingServiceRestTransport._BaseBatchUpdateEntitySignalsMappings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntitySignalsMappingServiceRestTransport._BaseBatchUpdateEntitySignalsMappings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntitySignalsMappingServiceRestTransport._BaseBatchUpdateEntitySignalsMappings,
+                    "_BaseBatchUpdateEntitySignalsMappings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -962,8 +957,8 @@ class EntitySignalsMappingServiceRestTransport(
 
                 Args:
                     request (~.entity_signals_mapping_service.CreateEntitySignalsMappingRequest):
-                        The request object. Request object for
-                    'CreateEntitySignalsMapping' method.
+                        The request object. Request object for ``CreateEntitySignalsMapping``
+                    method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
                     timeout (float): The timeout for this request.
@@ -978,21 +973,18 @@ class EntitySignalsMappingServiceRestTransport(
             """
 
             http_options = _BaseEntitySignalsMappingServiceRestTransport._BaseCreateEntitySignalsMapping._get_http_options()
-
             request, metadata = self._interceptor.pre_create_entity_signals_mapping(
                 request, metadata
             )
-            transcoded_request = _BaseEntitySignalsMappingServiceRestTransport._BaseCreateEntitySignalsMapping._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEntitySignalsMappingServiceRestTransport._BaseCreateEntitySignalsMapping._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntitySignalsMappingServiceRestTransport._BaseCreateEntitySignalsMapping._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntitySignalsMappingServiceRestTransport._BaseCreateEntitySignalsMapping,
+                    "_BaseCreateEntitySignalsMapping__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1137,17 +1129,18 @@ class EntitySignalsMappingServiceRestTransport(
             """
 
             http_options = _BaseEntitySignalsMappingServiceRestTransport._BaseGetEntitySignalsMapping._get_http_options()
-
             request, metadata = self._interceptor.pre_get_entity_signals_mapping(
                 request, metadata
             )
-            transcoded_request = _BaseEntitySignalsMappingServiceRestTransport._BaseGetEntitySignalsMapping._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntitySignalsMappingServiceRestTransport._BaseGetEntitySignalsMapping._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntitySignalsMappingServiceRestTransport._BaseGetEntitySignalsMapping,
+                    "_BaseGetEntitySignalsMapping__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1291,17 +1284,18 @@ class EntitySignalsMappingServiceRestTransport(
             """
 
             http_options = _BaseEntitySignalsMappingServiceRestTransport._BaseListEntitySignalsMappings._get_http_options()
-
             request, metadata = self._interceptor.pre_list_entity_signals_mappings(
                 request, metadata
             )
-            transcoded_request = _BaseEntitySignalsMappingServiceRestTransport._BaseListEntitySignalsMappings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntitySignalsMappingServiceRestTransport._BaseListEntitySignalsMappings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntitySignalsMappingServiceRestTransport._BaseListEntitySignalsMappings,
+                    "_BaseListEntitySignalsMappings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1431,8 +1425,8 @@ class EntitySignalsMappingServiceRestTransport(
 
                 Args:
                     request (~.entity_signals_mapping_service.UpdateEntitySignalsMappingRequest):
-                        The request object. Request object for
-                    'UpdateEntitySignalsMapping' method.
+                        The request object. Request object for ``UpdateEntitySignalsMapping``
+                    method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
                     timeout (float): The timeout for this request.
@@ -1447,21 +1441,18 @@ class EntitySignalsMappingServiceRestTransport(
             """
 
             http_options = _BaseEntitySignalsMappingServiceRestTransport._BaseUpdateEntitySignalsMapping._get_http_options()
-
             request, metadata = self._interceptor.pre_update_entity_signals_mapping(
                 request, metadata
             )
-            transcoded_request = _BaseEntitySignalsMappingServiceRestTransport._BaseUpdateEntitySignalsMapping._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEntitySignalsMappingServiceRestTransport._BaseUpdateEntitySignalsMapping._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntitySignalsMappingServiceRestTransport._BaseUpdateEntitySignalsMapping._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntitySignalsMappingServiceRestTransport._BaseUpdateEntitySignalsMapping,
+                    "_BaseUpdateEntitySignalsMapping__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1681,17 +1672,18 @@ class EntitySignalsMappingServiceRestTransport(
             """
 
             http_options = _BaseEntitySignalsMappingServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseEntitySignalsMappingServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntitySignalsMappingServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntitySignalsMappingServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1799,15 +1791,16 @@ class EntitySignalsMappingServiceRestTransport(
             """
 
             http_options = _BaseEntitySignalsMappingServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseEntitySignalsMappingServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntitySignalsMappingServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntitySignalsMappingServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

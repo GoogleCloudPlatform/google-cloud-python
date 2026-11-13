@@ -35,6 +35,8 @@ from google.cloud.spanner_v1 import (
 from google.cloud.spanner_v1._helpers import (
     AtomicCounter,
     _augment_errors_with_request_id,
+    _make_list_value_pb,
+    _make_value_pb,
     _metadata_with_request_id,
     _metadata_with_request_id_and_req_id,
 )
@@ -101,6 +103,33 @@ class Test_BatchBase(_BaseTest):
         base = self._make_one(session)
         self.assertIs(base._session, session)
         self.assertEqual(len(base._mutations), 0)
+
+    def test_resource_info_with_database(self):
+        session = mock.Mock()
+        mock_db = mock.Mock(spec=["_resource_info"])
+        mock_db._resource_info = {"project": "p", "instance": "i", "database": "d"}
+        session._database = mock_db
+        base = self._make_one(session)
+        self.assertEqual(base._resource_info, mock_db._resource_info)
+
+    def test_resource_info_fallback(self):
+        session = mock.Mock()
+        mock_db = mock.Mock(spec=["_instance", "database_id"])
+        mock_db._instance = mock.Mock(spec=["_client", "instance_id"])
+        mock_db._instance.instance_id = "i"
+        mock_db._instance._client = mock.Mock(spec=["project"])
+        mock_db._instance._client.project = "p"
+        mock_db.database_id = "d"
+        session._database = mock_db
+        base = self._make_one(session)
+        self.assertEqual(
+            base._resource_info,
+            {"project": "p", "instance": "i", "database": "d"},
+        )
+
+    def test_resource_info_none(self):
+        base = self._make_one(None)
+        self.assertIsNone(base._resource_info)
 
     def test_insert(self):
         session = _Session()
@@ -181,6 +210,40 @@ class Test_BatchBase(_BaseTest):
         self.assertEqual(len(key_set_pb.keys), len(keys))
         for found, expected in zip(key_set_pb.keys, keys):
             self.assertEqual([int(value) for value in found], expected)
+
+    def test_send(self):
+        queue = "TestQueue"
+        key = [2]
+        payload = "Hello, Queues!"
+        session = _Session()
+        base = self._make_one(session)
+
+        base.send(queue, key=key, payload=payload)
+
+        self.assertEqual(len(base._mutations), 1)
+        mutation = base._mutations[0]
+        self.assertIsInstance(mutation, Mutation)
+        send = mutation.send
+        self.assertIsInstance(send, Mutation.Send)
+        self.assertEqual(send.queue, queue)
+        self.assertEqual(send._pb.payload, _make_value_pb(payload))
+        self.assertEqual(send._pb.key, _make_list_value_pb(key))
+
+    def test_ack(self):
+        queue = "TestQueue"
+        key = [2]
+        session = _Session()
+        base = self._make_one(session)
+
+        base.ack(queue, key=key)
+
+        self.assertEqual(len(base._mutations), 1)
+        mutation = base._mutations[0]
+        self.assertIsInstance(mutation, Mutation)
+        ack = mutation.ack
+        self.assertIsInstance(ack, Mutation.Ack)
+        self.assertEqual(ack.queue, queue)
+        self.assertEqual(ack._pb.key, _make_list_value_pb(key))
 
 
 class TestBatch(_BaseTest, OpenTelemetryBase):
@@ -309,12 +372,25 @@ class TestBatch(_BaseTest, OpenTelemetryBase):
         batch.insert(TABLE_NAME, COLUMNS, VALUES)
 
         # Assertion: Ensure that calling batch.commit() raises Aborted
-        with self.assertRaises(Aborted) as context:
-            batch.commit(timeout_secs=1.0, default_retry_delay=0)
+        delay_call_count = 0
+
+        def fake_delay(exc, *args, **kwargs):
+            nonlocal delay_call_count
+            delay_call_count += 1
+            if delay_call_count >= 2:
+                raise exc
+
+        with mock.patch(
+            "google.cloud.spanner_v1._helpers._delay_until_retry",
+            side_effect=fake_delay,
+        ):
+            with self.assertRaises(Aborted) as context:
+                batch.commit(timeout_secs=1.0, default_retry_delay=0)
 
         # Verify exception includes request_id attribute
         self.assertIn("409 Transaction was aborted", str(context.exception))
         self.assertTrue(hasattr(context.exception, "request_id"))
+        self.assertEqual(delay_call_count, 2)
         self.assertGreater(
             api.commit.call_count, 1, "commit should be called more than once"
         )
@@ -617,6 +693,33 @@ class TestMutationGroups(_BaseTest, OpenTelemetryBase):
         session = _Session()
         groups = self._make_one(session)
         self.assertIs(groups._session, session)
+
+    def test_resource_info_with_database(self):
+        session = mock.Mock()
+        mock_db = mock.Mock(spec=["_resource_info"])
+        mock_db._resource_info = {"project": "p", "instance": "i", "database": "d"}
+        session._database = mock_db
+        groups = self._make_one(session)
+        self.assertEqual(groups._resource_info, mock_db._resource_info)
+
+    def test_resource_info_fallback(self):
+        session = mock.Mock()
+        mock_db = mock.Mock(spec=["_instance", "database_id"])
+        mock_db._instance = mock.Mock(spec=["_client", "instance_id"])
+        mock_db._instance.instance_id = "i"
+        mock_db._instance._client = mock.Mock(spec=["project"])
+        mock_db._instance._client.project = "p"
+        mock_db.database_id = "d"
+        session._database = mock_db
+        groups = self._make_one(session)
+        self.assertEqual(
+            groups._resource_info,
+            {"project": "p", "instance": "i", "database": "d"},
+        )
+
+    def test_resource_info_none(self):
+        groups = self._make_one(None)
+        self.assertIsNone(groups._resource_info)
 
     @mock.patch(
         "google.cloud.spanner_v1._opentelemetry_tracing._get_cloud_region",

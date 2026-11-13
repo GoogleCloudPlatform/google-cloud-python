@@ -23,11 +23,7 @@ import base64
 import http.client as http_client
 import json
 
-from google.auth import _exponential_backoff
-from google.auth import _helpers
-from google.auth import credentials
-from google.auth import crypt
-from google.auth import exceptions
+from google.auth import _exponential_backoff, _helpers, credentials, crypt, exceptions
 from google.auth.transport import _mtls_helper
 
 IAM_RETRY_CODES = {

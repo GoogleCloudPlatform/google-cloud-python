@@ -142,12 +142,32 @@ class IngestionServiceTransport(abc.ABC):
         self._wrapped_methods = {
             self.ingest_audience_members: gapic_v1.method.wrap_method(
                 self.ingest_audience_members,
-                default_timeout=None,
+                default_retry=retries.Retry(
+                    initial=5.0,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=120.0,
+                ),
+                default_timeout=120.0,
                 client_info=client_info,
             ),
             self.remove_audience_members: gapic_v1.method.wrap_method(
                 self.remove_audience_members,
-                default_timeout=None,
+                default_retry=retries.Retry(
+                    initial=5.0,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=120.0,
+                ),
+                default_timeout=120.0,
                 client_info=client_info,
             ),
             self.remove_all_audience_members: gapic_v1.method.wrap_method(
@@ -157,7 +177,47 @@ class IngestionServiceTransport(abc.ABC):
             ),
             self.ingest_events: gapic_v1.method.wrap_method(
                 self.ingest_events,
-                default_timeout=None,
+                default_retry=retries.Retry(
+                    initial=5.0,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=120.0,
+                ),
+                default_timeout=120.0,
+                client_info=client_info,
+            ),
+            self.ingest_users: gapic_v1.method.wrap_method(
+                self.ingest_users,
+                default_retry=retries.Retry(
+                    initial=5.0,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=120.0,
+                ),
+                default_timeout=120.0,
+                client_info=client_info,
+            ),
+            self.remove_users: gapic_v1.method.wrap_method(
+                self.remove_users,
+                default_retry=retries.Retry(
+                    initial=5.0,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=120.0,
+                ),
+                default_timeout=120.0,
                 client_info=client_info,
             ),
             self.ingest_ad_events: gapic_v1.method.wrap_method(
@@ -167,7 +227,17 @@ class IngestionServiceTransport(abc.ABC):
             ),
             self.retrieve_request_status: gapic_v1.method.wrap_method(
                 self.retrieve_request_status,
-                default_timeout=None,
+                default_retry=retries.Retry(
+                    initial=5.0,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
                 client_info=client_info,
             ),
         }
@@ -225,6 +295,30 @@ class IngestionServiceTransport(abc.ABC):
         Union[
             ingestion_service.IngestEventsResponse,
             Awaitable[ingestion_service.IngestEventsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def ingest_users(
+        self,
+    ) -> Callable[
+        [ingestion_service.IngestUsersRequest],
+        Union[
+            ingestion_service.IngestUsersResponse,
+            Awaitable[ingestion_service.IngestUsersResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def remove_users(
+        self,
+    ) -> Callable[
+        [ingestion_service.RemoveUsersRequest],
+        Union[
+            ingestion_service.RemoveUsersResponse,
+            Awaitable[ingestion_service.RemoveUsersResponse],
         ],
     ]:
         raise NotImplementedError()

@@ -35,6 +35,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dataplex_v1._compat import transcode_request
 from google.cloud.dataplex_v1.types import catalog
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -2538,21 +2539,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseCancelMetadataJob._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_metadata_job(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseCancelMetadataJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseCancelMetadataJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseCancelMetadataJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseCancelMetadataJob,
+                    "_BaseCancelMetadataJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2657,21 +2655,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseCreateAspectType._get_http_options()
-
             request, metadata = self._interceptor.pre_create_aspect_type(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseCreateAspectType._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseCreateAspectType._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseCreateAspectType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseCreateAspectType,
+                    "_BaseCreateAspectType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2810,19 +2805,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseCreateEntry._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_entry(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseCreateEntry._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseCreateEntry._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseCreateEntry._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseCreateEntry,
+                    "_BaseCreateEntry__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2961,21 +2953,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseCreateEntryGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_create_entry_group(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseCreateEntryGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseCreateEntryGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseCreateEntryGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseCreateEntryGroup,
+                    "_BaseCreateEntryGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3111,21 +3100,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseCreateEntryLink._get_http_options()
-
             request, metadata = self._interceptor.pre_create_entry_link(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseCreateEntryLink._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseCreateEntryLink._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseCreateEntryLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseCreateEntryLink,
+                    "_BaseCreateEntryLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3264,21 +3250,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseCreateEntryType._get_http_options()
-
             request, metadata = self._interceptor.pre_create_entry_type(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseCreateEntryType._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseCreateEntryType._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseCreateEntryType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseCreateEntryType,
+                    "_BaseCreateEntryType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3416,21 +3399,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseCreateMetadataFeed._get_http_options()
-
             request, metadata = self._interceptor.pre_create_metadata_feed(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseCreateMetadataFeed._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseCreateMetadataFeed._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseCreateMetadataFeed._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseCreateMetadataFeed,
+                    "_BaseCreateMetadataFeed__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3567,21 +3547,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseCreateMetadataJob._get_http_options()
-
             request, metadata = self._interceptor.pre_create_metadata_job(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseCreateMetadataJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseCreateMetadataJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseCreateMetadataJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseCreateMetadataJob,
+                    "_BaseCreateMetadataJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3717,17 +3694,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseDeleteAspectType._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_aspect_type(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseDeleteAspectType._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseDeleteAspectType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseDeleteAspectType,
+                    "_BaseDeleteAspectType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3864,15 +3842,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseDeleteEntry._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_entry(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseDeleteEntry._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseDeleteEntry._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseDeleteEntry,
+                    "_BaseDeleteEntry__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4009,17 +3988,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseDeleteEntryGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_entry_group(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseDeleteEntryGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseDeleteEntryGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseDeleteEntryGroup,
+                    "_BaseDeleteEntryGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4153,17 +4133,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseDeleteEntryLink._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_entry_link(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseDeleteEntryLink._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseDeleteEntryLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseDeleteEntryLink,
+                    "_BaseDeleteEntryLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4300,17 +4281,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseDeleteEntryType._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_entry_type(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseDeleteEntryType._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseDeleteEntryType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseDeleteEntryType,
+                    "_BaseDeleteEntryType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4446,17 +4428,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseDeleteMetadataFeed._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_metadata_feed(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseDeleteMetadataFeed._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseDeleteMetadataFeed._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseDeleteMetadataFeed,
+                    "_BaseDeleteMetadataFeed__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4594,15 +4577,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseGetAspectType._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_aspect_type(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseGetAspectType._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseGetAspectType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseGetAspectType,
+                    "_BaseGetAspectType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4741,19 +4725,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseGetEntry._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_entry(request, metadata)
-            transcoded_request = (
-                _BaseCatalogServiceRestTransport._BaseGetEntry._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCatalogServiceRestTransport._BaseGetEntry._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseGetEntry,
+                    "_BaseGetEntry__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4891,15 +4872,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseGetEntryGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_entry_group(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseGetEntryGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseGetEntryGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseGetEntryGroup,
+                    "_BaseGetEntryGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5037,15 +5019,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseGetEntryLink._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_entry_link(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseGetEntryLink._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseGetEntryLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseGetEntryLink,
+                    "_BaseGetEntryLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5183,15 +5166,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseGetEntryType._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_entry_type(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseGetEntryType._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseGetEntryType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseGetEntryType,
+                    "_BaseGetEntryType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5327,17 +5311,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseGetMetadataFeed._get_http_options()
-
             request, metadata = self._interceptor.pre_get_metadata_feed(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseGetMetadataFeed._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseGetMetadataFeed._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseGetMetadataFeed,
+                    "_BaseGetMetadataFeed__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5473,17 +5458,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseGetMetadataJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_metadata_job(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseGetMetadataJob._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseGetMetadataJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseGetMetadataJob,
+                    "_BaseGetMetadataJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5617,17 +5603,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseListAspectTypes._get_http_options()
-
             request, metadata = self._interceptor.pre_list_aspect_types(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseListAspectTypes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseListAspectTypes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseListAspectTypes,
+                    "_BaseListAspectTypes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5763,15 +5750,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseListEntries._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_entries(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseListEntries._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseListEntries._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseListEntries,
+                    "_BaseListEntries__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5905,17 +5893,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseListEntryGroups._get_http_options()
-
             request, metadata = self._interceptor.pre_list_entry_groups(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseListEntryGroups._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseListEntryGroups._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseListEntryGroups,
+                    "_BaseListEntryGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6051,17 +6040,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseListEntryTypes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_entry_types(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseListEntryTypes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseListEntryTypes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseListEntryTypes,
+                    "_BaseListEntryTypes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6198,17 +6188,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseListMetadataFeeds._get_http_options()
-
             request, metadata = self._interceptor.pre_list_metadata_feeds(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseListMetadataFeeds._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseListMetadataFeeds._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseListMetadataFeeds,
+                    "_BaseListMetadataFeeds__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6344,17 +6335,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseListMetadataJobs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_metadata_jobs(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseListMetadataJobs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseListMetadataJobs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseListMetadataJobs,
+                    "_BaseListMetadataJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6494,19 +6486,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseLookupContext._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_lookup_context(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseLookupContext._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseLookupContext._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseLookupContext._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseLookupContext,
+                    "_BaseLookupContext__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6647,15 +6636,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseLookupEntry._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_lookup_entry(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseLookupEntry._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseLookupEntry._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseLookupEntry,
+                    "_BaseLookupEntry__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6791,17 +6781,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseLookupEntryLinks._get_http_options()
-
             request, metadata = self._interceptor.pre_lookup_entry_links(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseLookupEntryLinks._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseLookupEntryLinks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseLookupEntryLinks,
+                    "_BaseLookupEntryLinks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6944,19 +6935,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseModifyEntry._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_modify_entry(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseModifyEntry._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseModifyEntry._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseModifyEntry._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseModifyEntry,
+                    "_BaseModifyEntry__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7093,15 +7081,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseSearchEntries._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_entries(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseSearchEntries._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseSearchEntries._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseSearchEntries,
+                    "_BaseSearchEntries__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7239,21 +7228,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseUpdateAspectType._get_http_options()
-
             request, metadata = self._interceptor.pre_update_aspect_type(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseUpdateAspectType._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseUpdateAspectType._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseUpdateAspectType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseUpdateAspectType,
+                    "_BaseUpdateAspectType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7392,19 +7378,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseUpdateEntry._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_entry(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseUpdateEntry._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseUpdateEntry._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseUpdateEntry._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseUpdateEntry,
+                    "_BaseUpdateEntry__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7543,21 +7526,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseUpdateEntryGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_update_entry_group(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseUpdateEntryGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseUpdateEntryGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseUpdateEntryGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseUpdateEntryGroup,
+                    "_BaseUpdateEntryGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7694,21 +7674,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseUpdateEntryLink._get_http_options()
-
             request, metadata = self._interceptor.pre_update_entry_link(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseUpdateEntryLink._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseUpdateEntryLink._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseUpdateEntryLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseUpdateEntryLink,
+                    "_BaseUpdateEntryLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7847,21 +7824,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseUpdateEntryType._get_http_options()
-
             request, metadata = self._interceptor.pre_update_entry_type(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseUpdateEntryType._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseUpdateEntryType._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseUpdateEntryType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseUpdateEntryType,
+                    "_BaseUpdateEntryType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7999,21 +7973,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseUpdateMetadataFeed._get_http_options()
-
             request, metadata = self._interceptor.pre_update_metadata_feed(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseUpdateMetadataFeed._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseUpdateMetadataFeed._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseUpdateMetadataFeed._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseUpdateMetadataFeed,
+                    "_BaseUpdateMetadataFeed__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8445,15 +8416,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8585,15 +8557,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8725,15 +8698,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8866,19 +8840,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9010,21 +8981,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9153,21 +9121,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCatalogServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9270,17 +9235,18 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             """
 
             http_options = _BaseCatalogServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9387,15 +9353,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9527,15 +9494,16 @@ class CatalogServiceRestTransport(_BaseCatalogServiceRestTransport):
             http_options = (
                 _BaseCatalogServiceRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseCatalogServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCatalogServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCatalogServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

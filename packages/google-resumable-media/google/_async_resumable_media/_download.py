@@ -20,7 +20,6 @@ import re
 from google._async_resumable_media import _helpers
 from google.resumable_media import common
 
-
 _CONTENT_RANGE_RE = re.compile(
     r"bytes (?P<start_byte>\d+)-(?P<end_byte>\d+)/(?P<total_bytes>\d+)",
     flags=re.IGNORECASE,

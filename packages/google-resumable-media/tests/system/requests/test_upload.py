@@ -18,17 +18,14 @@ import http.client
 import io
 import os
 import urllib.parse
-
-import pytest  # type: ignore
 from unittest import mock
 
-from google.resumable_media import common
-from google import resumable_media
-import google.resumable_media.requests as resumable_requests
-from google.resumable_media import _helpers
-from tests.system import utils
-from google.resumable_media import _upload
+import pytest  # type: ignore
 
+import google.resumable_media.requests as resumable_requests
+from google import resumable_media
+from google.resumable_media import _helpers, _upload, common
+from tests.system import utils
 
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
 DATA_DIR = os.path.join(CURR_DIR, "..", "..", "data")

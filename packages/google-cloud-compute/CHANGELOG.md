@@ -4,6 +4,77 @@
 
 [1]: https://pypi.org/project/google-cloud-compute/#history
 
+## [1.58.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.57.0...google-cloud-compute-v1.58.0) (2026-11-12)
+
+
+### Features
+
+* update API sources and regenerate ([#19036](https://github.com/googleapis/google-cloud-python/issues/19036)) ([b64a9e5](https://github.com/googleapis/google-cloud-python/commit/b64a9e51a22810d4e3b4c44b13847eb96c604628))
+
+## [1.57.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.56.0...google-cloud-compute-v1.57.0) (2026-11-05)
+
+
+### Features
+
+* update API sources and regenerate ([#18986](https://github.com/googleapis/google-cloud-python/issues/18986)) ([8c0f333](https://github.com/googleapis/google-cloud-python/commit/8c0f3331260667eb64c70db80a7ab5c52b8ccf36))
+
+## [1.56.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.55.0...google-cloud-compute-v1.56.0) (2026-10-15)
+
+
+### Features
+
+* update API sources and regenerate ([#18699](https://github.com/googleapis/google-cloud-python/issues/18699)) ([1aa57db](https://github.com/googleapis/google-cloud-python/commit/1aa57db6309e47e1a0505be80ed0443d2ca5a4d0))
+
+## [1.55.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.54.0...google-cloud-compute-v1.55.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+* update API sources and regenerate ([#18513](https://github.com/googleapis/google-cloud-python/issues/18513)) ([7d7adca](https://github.com/googleapis/google-cloud-python/commit/7d7adcaee688603077ea53abec678130045c20ed))
+* update Compute v1 API to version 2026-09-01 ([#18523](https://github.com/googleapis/google-cloud-python/issues/18523)) ([d7d3d20](https://github.com/googleapis/google-cloud-python/commit/d7d3d20db46fb996b278ec4d3f74e03365d789a0))
+
+
+### Bug Fixes
+
+* all AggregatedList RPCs behavior is now return_partial_success=true ([d7d3d20](https://github.com/googleapis/google-cloud-python/commit/d7d3d20db46fb996b278ec4d3f74e03365d789a0))
+* all AggregatedList RPCs return_partial_success fields removed ([d7d3d20](https://github.com/googleapis/google-cloud-python/commit/d7d3d20db46fb996b278ec4d3f74e03365d789a0))
+* remove several enums and fields that no longer exist in the API ([d7d3d20](https://github.com/googleapis/google-cloud-python/commit/d7d3d20db46fb996b278ec4d3f74e03365d789a0))
+
+
+### Documentation
+
+* see https://docs.cloud.google.com/compute/docs/release-notes ([d7d3d20](https://github.com/googleapis/google-cloud-python/commit/d7d3d20db46fb996b278ec4d3f74e03365d789a0))
+
+## [1.54.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.53.0...google-cloud-compute-v1.54.0) (2026-09-17)
+
+
+### Features
+
+* update API sources and regenerate ([#18396](https://github.com/googleapis/google-cloud-python/issues/18396)) ([e9f8e59](https://github.com/googleapis/google-cloud-python/commit/e9f8e590b7b395e660cc5437535166dfb920d246))
+* update API sources and regenerate. ([e9f8e59](https://github.com/googleapis/google-cloud-python/commit/e9f8e590b7b395e660cc5437535166dfb920d246))
+
+## [1.53.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.52.0...google-cloud-compute-v1.53.0) (2026-09-14)
+
+
+### Features
+
+* update API sources and regenerate ([#18324](https://github.com/googleapis/google-cloud-python/issues/18324)) ([0766fb6](https://github.com/googleapis/google-cloud-python/commit/0766fb69c28973d5d51cffc490f195c60e8eee10))
+
+## [1.52.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.51.0...google-cloud-compute-v1.52.0) (2026-09-03)
+
+
+### Features
+
+* update googleapis and regenerate ([#18229](https://github.com/googleapis/google-cloud-python/issues/18229)) ([d4f8a57](https://github.com/googleapis/google-cloud-python/commit/d4f8a57abadd282ad95472e77daa59d8fb98cbcf))
+
+## [1.51.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.50.0...google-cloud-compute-v1.51.0) (2026-08-21)
+
+
+### Features
+
+* update googleapis and regenerate ([#18087](https://github.com/googleapis/google-cloud-python/issues/18087)) ([db1622a](https://github.com/googleapis/google-cloud-python/commit/db1622a9cfac112b40c93842737d7a5deeb3e8bd))
+
 ## [1.50.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.49.0...google-cloud-compute-v1.50.0) (2026-07-16)
 
 

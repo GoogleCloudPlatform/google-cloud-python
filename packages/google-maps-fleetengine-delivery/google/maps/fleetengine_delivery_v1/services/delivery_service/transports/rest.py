@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.maps.fleetengine_delivery_v1._compat import transcode_request
 from google.maps.fleetengine_delivery_v1.types import (
     delivery_api,
     delivery_vehicles,
@@ -824,21 +825,18 @@ class DeliveryServiceRestTransport(_BaseDeliveryServiceRestTransport):
             """
 
             http_options = _BaseDeliveryServiceRestTransport._BaseBatchCreateTasks._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_tasks(
                 request, metadata
             )
-            transcoded_request = _BaseDeliveryServiceRestTransport._BaseBatchCreateTasks._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDeliveryServiceRestTransport._BaseBatchCreateTasks._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeliveryServiceRestTransport._BaseBatchCreateTasks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeliveryServiceRestTransport._BaseBatchCreateTasks,
+                    "_BaseBatchCreateTasks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -989,21 +987,18 @@ class DeliveryServiceRestTransport(_BaseDeliveryServiceRestTransport):
             """
 
             http_options = _BaseDeliveryServiceRestTransport._BaseCreateDeliveryVehicle._get_http_options()
-
             request, metadata = self._interceptor.pre_create_delivery_vehicle(
                 request, metadata
             )
-            transcoded_request = _BaseDeliveryServiceRestTransport._BaseCreateDeliveryVehicle._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDeliveryServiceRestTransport._BaseCreateDeliveryVehicle._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeliveryServiceRestTransport._BaseCreateDeliveryVehicle._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeliveryServiceRestTransport._BaseCreateDeliveryVehicle,
+                    "_BaseCreateDeliveryVehicle__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1161,19 +1156,16 @@ class DeliveryServiceRestTransport(_BaseDeliveryServiceRestTransport):
             http_options = (
                 _BaseDeliveryServiceRestTransport._BaseCreateTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_task(request, metadata)
-            transcoded_request = _BaseDeliveryServiceRestTransport._BaseCreateTask._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDeliveryServiceRestTransport._BaseCreateTask._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeliveryServiceRestTransport._BaseCreateTask._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeliveryServiceRestTransport._BaseCreateTask,
+                    "_BaseCreateTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1306,17 +1298,18 @@ class DeliveryServiceRestTransport(_BaseDeliveryServiceRestTransport):
             """
 
             http_options = _BaseDeliveryServiceRestTransport._BaseDeleteDeliveryVehicle._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_delivery_vehicle(
                 request, metadata
             )
-            transcoded_request = _BaseDeliveryServiceRestTransport._BaseDeleteDeliveryVehicle._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeliveryServiceRestTransport._BaseDeleteDeliveryVehicle._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeliveryServiceRestTransport._BaseDeleteDeliveryVehicle,
+                    "_BaseDeleteDeliveryVehicle__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1416,15 +1409,16 @@ class DeliveryServiceRestTransport(_BaseDeliveryServiceRestTransport):
             http_options = (
                 _BaseDeliveryServiceRestTransport._BaseDeleteTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_task(request, metadata)
-            transcoded_request = _BaseDeliveryServiceRestTransport._BaseDeleteTask._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeliveryServiceRestTransport._BaseDeleteTask._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeliveryServiceRestTransport._BaseDeleteTask,
+                    "_BaseDeleteTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1537,17 +1531,18 @@ class DeliveryServiceRestTransport(_BaseDeliveryServiceRestTransport):
             """
 
             http_options = _BaseDeliveryServiceRestTransport._BaseGetDeliveryVehicle._get_http_options()
-
             request, metadata = self._interceptor.pre_get_delivery_vehicle(
                 request, metadata
             )
-            transcoded_request = _BaseDeliveryServiceRestTransport._BaseGetDeliveryVehicle._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeliveryServiceRestTransport._BaseGetDeliveryVehicle._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeliveryServiceRestTransport._BaseGetDeliveryVehicle,
+                    "_BaseGetDeliveryVehicle__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1701,19 +1696,16 @@ class DeliveryServiceRestTransport(_BaseDeliveryServiceRestTransport):
             http_options = (
                 _BaseDeliveryServiceRestTransport._BaseGetTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_task(request, metadata)
-            transcoded_request = (
-                _BaseDeliveryServiceRestTransport._BaseGetTask._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDeliveryServiceRestTransport._BaseGetTask._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeliveryServiceRestTransport._BaseGetTask,
+                    "_BaseGetTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1853,17 +1845,18 @@ class DeliveryServiceRestTransport(_BaseDeliveryServiceRestTransport):
             """
 
             http_options = _BaseDeliveryServiceRestTransport._BaseGetTaskTrackingInfo._get_http_options()
-
             request, metadata = self._interceptor.pre_get_task_tracking_info(
                 request, metadata
             )
-            transcoded_request = _BaseDeliveryServiceRestTransport._BaseGetTaskTrackingInfo._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeliveryServiceRestTransport._BaseGetTaskTrackingInfo._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeliveryServiceRestTransport._BaseGetTaskTrackingInfo,
+                    "_BaseGetTaskTrackingInfo__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2000,17 +1993,18 @@ class DeliveryServiceRestTransport(_BaseDeliveryServiceRestTransport):
             """
 
             http_options = _BaseDeliveryServiceRestTransport._BaseListDeliveryVehicles._get_http_options()
-
             request, metadata = self._interceptor.pre_list_delivery_vehicles(
                 request, metadata
             )
-            transcoded_request = _BaseDeliveryServiceRestTransport._BaseListDeliveryVehicles._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeliveryServiceRestTransport._BaseListDeliveryVehicles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeliveryServiceRestTransport._BaseListDeliveryVehicles,
+                    "_BaseListDeliveryVehicles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2151,17 +2145,16 @@ class DeliveryServiceRestTransport(_BaseDeliveryServiceRestTransport):
             http_options = (
                 _BaseDeliveryServiceRestTransport._BaseListTasks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_tasks(request, metadata)
-            transcoded_request = _BaseDeliveryServiceRestTransport._BaseListTasks._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDeliveryServiceRestTransport._BaseListTasks._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeliveryServiceRestTransport._BaseListTasks,
+                    "_BaseListTasks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2309,21 +2302,18 @@ class DeliveryServiceRestTransport(_BaseDeliveryServiceRestTransport):
             """
 
             http_options = _BaseDeliveryServiceRestTransport._BaseUpdateDeliveryVehicle._get_http_options()
-
             request, metadata = self._interceptor.pre_update_delivery_vehicle(
                 request, metadata
             )
-            transcoded_request = _BaseDeliveryServiceRestTransport._BaseUpdateDeliveryVehicle._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDeliveryServiceRestTransport._BaseUpdateDeliveryVehicle._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeliveryServiceRestTransport._BaseUpdateDeliveryVehicle._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeliveryServiceRestTransport._BaseUpdateDeliveryVehicle,
+                    "_BaseUpdateDeliveryVehicle__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2481,19 +2471,16 @@ class DeliveryServiceRestTransport(_BaseDeliveryServiceRestTransport):
             http_options = (
                 _BaseDeliveryServiceRestTransport._BaseUpdateTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_task(request, metadata)
-            transcoded_request = _BaseDeliveryServiceRestTransport._BaseUpdateTask._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDeliveryServiceRestTransport._BaseUpdateTask._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeliveryServiceRestTransport._BaseUpdateTask._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeliveryServiceRestTransport._BaseUpdateTask,
+                    "_BaseUpdateTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

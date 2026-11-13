@@ -30,7 +30,9 @@ __protobuf__ = proto.module(
 
 
 class CesAppSpec(proto.Message):
-    r"""Spec of CES app that the generator can choose from.
+    r"""Deprecated: Use ``CesToolSpec`` instead. Spec of CES app that the
+    generator can choose from.
+
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 

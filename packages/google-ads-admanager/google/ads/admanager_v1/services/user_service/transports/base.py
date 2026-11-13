@@ -149,6 +149,41 @@ class UserServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.list_users: gapic_v1.method.wrap_method(
+                self.list_users,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_user: gapic_v1.method.wrap_method(
+                self.create_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_create_users: gapic_v1.method.wrap_method(
+                self.batch_create_users,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_activate_users: gapic_v1.method.wrap_method(
+                self.batch_activate_users,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_deactivate_users: gapic_v1.method.wrap_method(
+                self.batch_deactivate_users,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_user: gapic_v1.method.wrap_method(
+                self.update_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_update_users: gapic_v1.method.wrap_method(
+                self.batch_update_users,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.cancel_operation: gapic_v1.method.wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
@@ -176,6 +211,83 @@ class UserServiceTransport(abc.ABC):
     ) -> Callable[
         [user_service.GetUserRequest],
         Union[user_messages.User, Awaitable[user_messages.User]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_users(
+        self,
+    ) -> Callable[
+        [user_service.ListUsersRequest],
+        Union[
+            user_service.ListUsersResponse, Awaitable[user_service.ListUsersResponse]
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_user(
+        self,
+    ) -> Callable[
+        [user_service.CreateUserRequest],
+        Union[user_messages.User, Awaitable[user_messages.User]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_create_users(
+        self,
+    ) -> Callable[
+        [user_service.BatchCreateUsersRequest],
+        Union[
+            user_service.BatchCreateUsersResponse,
+            Awaitable[user_service.BatchCreateUsersResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_activate_users(
+        self,
+    ) -> Callable[
+        [user_service.BatchActivateUsersRequest],
+        Union[
+            user_service.BatchActivateUsersResponse,
+            Awaitable[user_service.BatchActivateUsersResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_deactivate_users(
+        self,
+    ) -> Callable[
+        [user_service.BatchDeactivateUsersRequest],
+        Union[
+            user_service.BatchDeactivateUsersResponse,
+            Awaitable[user_service.BatchDeactivateUsersResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_user(
+        self,
+    ) -> Callable[
+        [user_service.UpdateUserRequest],
+        Union[user_messages.User, Awaitable[user_messages.User]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_update_users(
+        self,
+    ) -> Callable[
+        [user_service.BatchUpdateUsersRequest],
+        Union[
+            user_service.BatchUpdateUsersResponse,
+            Awaitable[user_service.BatchUpdateUsersResponse],
+        ],
     ]:
         raise NotImplementedError()
 

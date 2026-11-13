@@ -1,0 +1,91 @@
+{
+    "methodConfig": [
+        {
+            "name": [
+                {"service": "google.showcase.v1beta1.Echo"},
+                {"service": "google.showcase.v1beta1.Messaging"},
+                {"service": "google.showcase.v1beta1.SequenceService"},
+                {"service": "google.showcase.v1beta1.ResumableUploadService"}
+            ],
+            "timeout": "5s"
+        },
+        {
+            "name": [
+                {
+                    "service": "google.showcase.v1beta1.Echo",
+                    "method": "Echo"
+                },
+                {
+                    "service": "google.showcase.v1beta1.Echo",
+                    "method": "Expand"
+                },
+                {
+                    "service": "google.showcase.v1beta1.Echo",
+                    "method": "PagedExpand"
+                },
+                {
+                    "service": "google.showcase.v1beta1.Messaging",
+                    "method": "GetRoom"
+                },
+                {
+                    "service": "google.showcase.v1beta1.Messaging",
+                    "method": "ListRooms"
+                },
+                {
+                    "service": "google.showcase.v1beta1.Messaging",
+                    "method": "GetBlurb"
+                },
+                {
+                    "service": "google.showcase.v1beta1.Messaging",
+                    "method": "ListBlurbs"
+                },
+                {
+                    "service": "google.showcase.v1beta1.Messaging",
+                    "method": "SearchBlurbs"
+                },
+                {
+                    "service": "google.showcase.v1beta1.Messaging",
+                    "method": "Connect"
+                },
+                {
+                  "service": "google.showcase.v1beta1.SequenceService",
+                  "method": "AttemptSequence"
+                }
+            ],
+            "retryPolicy": {
+                "maxAttempts": 3,
+                "maxBackoff": "3s",
+                "initialBackoff": "0.1s",
+                "backoffMultiplier": 2,
+                "retryableStatusCodes": [
+                    "UNAVAILABLE",
+                    "UNKNOWN"
+                ]
+            },
+            "timeout": "10s"
+        },
+        {
+            "name": [
+                {
+                    "service": "google.showcase.v1beta1.Identity",
+                    "method": "GetUser"
+                },
+                {
+                    "service": "google.showcase.v1beta1.Identity",
+                    "method": "ListUsers"
+                }
+            ],
+            "retryPolicy": {
+                "maxAttempts": 5,
+                "maxBackoff": "3s",
+                "initialBackoff": "0.2s",
+                "backoffMultiplier": 2,
+                "retryableStatusCodes": [
+                    "UNAVAILABLE",
+                    "UNKNOWN"
+                ]
+            },
+            "timeout": "5s"
+        }
+    ]
+}

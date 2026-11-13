@@ -28,12 +28,12 @@ from google.api_core.exceptions import (
 from google.protobuf.struct_pb2 import Struct
 
 from google.cloud.aio._cross_sync import CrossSync
-from google.cloud.spanner_v1._async._helpers import _retry
+from google.cloud.spanner_v1._async._helpers import _drain_stream, _retry
 from google.cloud.spanner_v1._async.streamed import StreamedResultSet
 from google.cloud.spanner_v1._helpers import (
-    AtomicCounter,
     _augment_error_with_request_id,
     _check_rst_stream_error,
+    _make_execute_sql_request,
     _make_value_pb,
     _merge_client_context,
     _merge_query_options,
@@ -45,6 +45,9 @@ from google.cloud.spanner_v1._helpers import (
 )
 from google.cloud.spanner_v1._opentelemetry_tracing import add_span_event, trace_call
 from google.cloud.spanner_v1.metrics.metrics_capture import MetricsCapture
+from google.cloud.spanner_v1.metrics.spanner_metrics_tracer_factory import (
+    SpannerMetricsTracerFactory,
+)
 from google.cloud.spanner_v1.types import MultiplexedSessionPrecommitToken
 from google.cloud.spanner_v1.types.mutation import Mutation
 from google.cloud.spanner_v1.types.result_set import PartialResultSet, ResultSet
@@ -67,6 +70,10 @@ _STREAM_RESUMPTION_INTERNAL_ERROR_MESSAGES = (
     "RST_STREAM",
     "Received unexpected EOS on DATA frame from server",
 )
+
+# Maximum time that a request will wait for a concurrent request to begin the
+# transaction before giving up.
+_TRANSACTION_BEGIN_TIMEOUT_SECONDS = 30.0
 
 
 @CrossSync.convert
@@ -114,100 +121,165 @@ async def _restart_on_unavailable(
     attempt = 1
     nth_request = getattr(request_id_manager, "_next_nth_request", 0)
     current_request_id = None
+    stream_finished = False
 
-    while True:
-        try:
-            # Get results iterator.
-            if iterator is None:
-                with (
-                    trace_call(
+    metrics_tracer = None
+    factory = SpannerMetricsTracerFactory()
+    if factory.enabled:
+        metrics_tracer = factory.create_metrics_tracer(resource_info)
+        if metrics_tracer:
+            metrics_tracer.record_operation_start()
+
+    try:
+        while True:
+            try:
+                # Get results iterator.
+                if iterator is None:
+                    with trace_call(
                         trace_name,
                         session,
                         attributes,
                         observability_options=observability_options,
                         metadata=metadata,
-                    ) as span,
-                    MetricsCapture(resource_info),
-                ):
-                    (
-                        call_metadata,
-                        current_request_id,
-                    ) = request_id_manager.metadata_and_request_id(
-                        nth_request,
-                        attempt,
-                        metadata,
-                        span,
-                    )
-                    iterator = await CrossSync.run_if_async(
-                        method,
-                        request=request,
-                        metadata=call_metadata,
-                    )
+                    ) as span:
+                        (
+                            call_metadata,
+                            current_request_id,
+                        ) = request_id_manager.metadata_and_request_id(
+                            nth_request,
+                            attempt,
+                            metadata,
+                            span,
+                        )
+                        token = None
+                        if metrics_tracer is not None:
+                            token = SpannerMetricsTracerFactory.set_current_tracer(
+                                metrics_tracer
+                            )
+                        try:
+                            iterator = await CrossSync.run_if_async(
+                                method,
+                                request=request,
+                                metadata=call_metadata,
+                            )
+                        finally:
+                            if token is not None:
+                                try:
+                                    SpannerMetricsTracerFactory.reset_current_tracer(
+                                        token
+                                    )
+                                except ValueError:
+                                    pass
 
-            # Add items from iterator to buffer.
-            item: PartialResultSet
-            async for item in iterator:
-                item_buffer.append(item)
+                # Add items from iterator to buffer.
+                item: PartialResultSet
+                async for item in iterator:
+                    item_buffer.append(item)
 
-                # Update the transaction from the response.
+                    # Update the transaction from the response.
+                    if transaction is not None:
+                        transaction._update_for_result_set_pb(item)
+                    if (
+                        item._pb is not None
+                        and item._pb.HasField("precommit_token")
+                        and transaction is not None
+                    ):
+                        await transaction._update_for_precommit_token_pb(
+                            item.precommit_token
+                        )
+
+                    try:
+                        item_is_last = item.last
+                    except AttributeError:
+                        item_is_last = False
+
+                    if item_is_last:
+                        stream_finished = True
+                        _drain_stream(iterator)
+                        iterator = None
+                        break
+
+                    if item.resume_token:
+                        resume_token = item.resume_token
+                        break
+                else:
+                    stream_finished = True
+
+            except ServiceUnavailable:
+                del item_buffer[:]
+                request.resume_token = resume_token
                 if transaction is not None:
-                    transaction._update_for_result_set_pb(item)
-                if (
-                    item._pb is not None
-                    and item._pb.HasField("precommit_token")
-                    and transaction is not None
-                ):
-                    await transaction._update_for_precommit_token_pb(
-                        item.precommit_token
-                    )
+                    transaction_selector = transaction._build_transaction_selector_pb()
+                request.transaction = transaction_selector
+                attempt += 1
+                iterator = None
+                continue
 
-                if item.resume_token:
-                    resume_token = item.resume_token
-                    break
+            except InternalServerError as exc:
+                resumable_error = any(
+                    resumable_message in exc.message
+                    for resumable_message in _STREAM_RESUMPTION_INTERNAL_ERROR_MESSAGES
+                )
+                if not resumable_error:
+                    raise _augment_error_with_request_id(exc, current_request_id)
+                del item_buffer[:]
+                request.resume_token = resume_token
+                if transaction is not None:
+                    transaction_selector = transaction._build_transaction_selector_pb()
+                attempt += 1
+                request.transaction = transaction_selector
+                iterator = None
+                continue
 
-        except ServiceUnavailable:
-            del item_buffer[:]
-            request.resume_token = resume_token
-            if transaction is not None:
-                transaction_selector = transaction._build_transaction_selector_pb()
-            request.transaction = transaction_selector
-            attempt += 1
-            iterator = None
-            continue
-
-        except InternalServerError as exc:
-            resumable_error = any(
-                resumable_message in exc.message
-                for resumable_message in _STREAM_RESUMPTION_INTERNAL_ERROR_MESSAGES
-            )
-            if not resumable_error:
+            except Exception as exc:
+                # Augment any other exception with the request ID
                 raise _augment_error_with_request_id(exc, current_request_id)
+
+            if len(item_buffer) == 0:
+                iterator = None
+                break
+
+            if stream_finished and metrics_tracer is not None:
+                try:
+                    metrics_tracer.record_operation_completion()
+                except Exception:
+                    pass
+                finally:
+                    metrics_tracer = None
+
+            for item in item_buffer:
+                yield item
+
             del item_buffer[:]
-            request.resume_token = resume_token
-            if transaction is not None:
-                transaction_selector = transaction._build_transaction_selector_pb()
-            attempt += 1
-            request.transaction = transaction_selector
-            iterator = None
-            continue
 
-        except Exception as exc:
-            # Augment any other exception with the request ID
-            raise _augment_error_with_request_id(exc, current_request_id)
-
-        if len(item_buffer) == 0:
-            break
-
-        for item in item_buffer:
-            yield item
-
-        del item_buffer[:]
+            if stream_finished:
+                iterator = None
+                break
+    finally:
+        try:
+            if metrics_tracer is not None:
+                try:
+                    metrics_tracer.record_operation_completion()
+                except Exception:
+                    pass
+        finally:
+            if iterator is not None and hasattr(iterator, "cancel"):
+                try:
+                    iterator.cancel()
+                except Exception:
+                    pass
 
 
 class _SnapshotBase(_SessionWrapper):
     """Base class for Snapshot.
 
     Allows reuse of API request methods with different transaction selector.
+
+    .. note::
+        Single-use snapshots (``multi_use=False``) are designed for a single read
+        or query operation and are thread-confined; they are not safe for concurrent
+        invocation across multiple threads. Multi-use snapshots and transactions
+        synchronize concurrent operations using internal locks.
 
     :type session: :class:`~google.cloud.spanner_v1.session.Session`
     :param session: the session used to perform transaction operations.
@@ -216,24 +288,71 @@ class _SnapshotBase(_SessionWrapper):
     _read_only: bool = True
     _multi_use: bool = False
 
-    def __init__(self, session, client_context=None):
+    def __init__(self, session, client_context=None, multi_use: Optional[bool] = None):
         super().__init__(session)
         self._client_context = _validate_client_context(client_context)
         self._execute_sql_request_count: int = 0
         self._read_request_count: int = 0
+        self._begin_request_sent: bool = False
+
+        if multi_use is not None:
+            self._multi_use = multi_use
+
+        # Identifier for the transaction.
         self._transaction_id: Optional[bytes] = None
         self._precommit_token: Optional[MultiplexedSessionPrecommitToken] = None
-        self._lock: CrossSync.Lock = CrossSync.Lock()
 
-    @property
-    def _resource_info(self):
-        """Resource information for metrics labels."""
-        database = self._session._database
-        return {
-            "project": database._instance._client.project,
-            "instance": database._instance.instance_id,
-            "database": database.database_id,
-        }
+        # Operations within a transaction can be performed concurrently, so we
+        # need to use a lock when updating the transaction.
+        # Single-use snapshots never execute concurrently or begin transactions,
+        # so we skip allocating Lock and Event for them.
+        if self._multi_use:
+            self._lock: Optional[CrossSync.Lock] = CrossSync.Lock()
+            self._transaction_begin_event: Optional[CrossSync.Event] = CrossSync.Event()
+        else:
+            self._lock = None
+            self._transaction_begin_event = None
+
+    @CrossSync.convert
+    async def _wait_for_transaction_begin(self) -> None:
+        """Claims the inline-begin for this request, or waits for it to complete.
+
+        The first request against the transaction is the one that begins it
+        inline. Requests that are issued concurrently, before the transaction
+        id is available, must wait for that first request to complete instead
+        of assuming that the transaction has not begun.
+
+        For single-use snapshots, this method checks and enforces sequential
+        reuse prevention without synchronization, as single-use snapshots are
+        thread-confined.
+
+        :raises ValueError: if the transaction has already been used to execute
+            a request, but is not a multi-use transaction, or if the concurrent
+            request that began the transaction did not complete in time.
+        """
+
+        if not self._multi_use:
+            if self._begin_request_sent or self._read_request_count > 0:
+                raise ValueError("Cannot re-use single-use snapshot.")
+            self._begin_request_sent = True
+            return
+
+        async with self._lock:
+            if self._begin_request_sent or self._read_request_count > 0:
+                wait_needed = self._transaction_id is None
+            else:
+                wait_needed = False
+                self._begin_request_sent = True
+
+        if not wait_needed:
+            return
+
+        await CrossSync.event_wait(
+            self._transaction_begin_event,
+            timeout=_TRANSACTION_BEGIN_TIMEOUT_SECONDS,
+        )
+        if not self._transaction_begin_event.is_set():
+            raise ValueError("Timed out waiting for transaction to begin.")
 
     @CrossSync.convert
     async def begin(self) -> bytes:
@@ -246,7 +365,6 @@ class _SnapshotBase(_SessionWrapper):
         """
         return await self._begin_transaction()
 
-    @CrossSync.convert
     @CrossSync.convert
     async def read(
         self,
@@ -265,12 +383,88 @@ class _SnapshotBase(_SessionWrapper):
         column_info=None,
         lazy_decode=False,
     ):
-        """Perform a ``StreamingRead`` API request for rows in a table."""
-        if self._read_request_count > 0:
-            if not self._multi_use:
-                raise ValueError("Cannot re-use single-use snapshot.")
-            if self._transaction_id is None:
-                raise ValueError("Transaction has not begun.")
+        """Perform a ``StreamingRead`` API request for rows in a table.
+
+        :type table: str
+        :param table: name of the table from which to fetch data
+
+        :type columns: list of str
+        :param columns: names of columns to be retrieved
+
+        :type keyset: :class:`~google.cloud.spanner_v1.keyset.KeySet`
+        :param keyset: keys / ranges identifying rows to be retrieved
+
+        :type index: str
+        :param index: (Optional) name of index to use, rather than the
+                      table's primary key
+
+        :type limit: int
+        :param limit: (Optional) maximum number of rows to return.
+                      Incompatible with ``partition``.
+
+        :type partition: bytes
+        :param partition: (Optional) one of the partition tokens returned
+                          from :meth:`partition_read`.  Incompatible with
+                          ``limit``.
+
+        :type request_options:
+            :class:`google.cloud.spanner_v1.types.RequestOptions`
+        :param request_options:
+                (Optional) Common options for this request.
+                If a dict is provided, it must be of the same form as the protobuf
+                message :class:`~google.cloud.spanner_v1.types.RequestOptions`.
+                Please note, the `transactionTag` setting will be ignored for
+                snapshot as it's not supported for read-only transactions.
+
+        :type retry: :class:`~google.api_core.retry.Retry`
+        :param retry: (Optional) The retry settings for this request.
+
+        :type timeout: float
+        :param timeout: (Optional) The timeout for this request.
+
+        :type data_boost_enabled:
+        :param data_boost_enabled:
+                (Optional) If this is for a partitioned read and this field is
+                set ``true``, the request will be executed via offline access.
+                If the field is set to ``true`` but the request does not set
+                ``partition_token``, the API will return an
+                ``INVALID_ARGUMENT`` error.
+
+        :type directed_read_options: :class:`~google.cloud.spanner_v1.DirectedReadOptions`
+            or :class:`dict`
+        :param directed_read_options: (Optional) Request level option used to set the directed_read_options
+            for all ReadRequests and ExecuteSqlRequests that indicates which replicas
+            or regions should be used for non-transactional reads or queries.
+
+        :type column_info: dict
+        :param column_info: (Optional) dict of mapping between column names and additional column information.
+            An object where column names as keys and custom objects as corresponding
+            values for deserialization. It's specifically useful for data types like
+            protobuf where deserialization logic is on user-specific code. When provided,
+            the custom object enables deserialization of backend-received column data.
+            If not provided, data remains serialized as bytes for Proto Messages and
+            integer for Proto Enums.
+
+        :type lazy_decode: bool
+        :param lazy_decode:
+            (Optional) If this argument is set to ``true``, the iterator
+            returns the underlying protobuf values instead of decoded Python
+            objects. This reduces the time that is needed to iterate through
+            large result sets. The application is responsible for decoding
+            the data that is needed. The returned row iterator contains two
+            functions that can be used for this. ``iterator.decode_row(row)``
+            decodes all the columns in the given row to an array of Python
+            objects. ``iterator.decode_column(row, column_index)`` decodes one
+            specific column in the given row.
+
+        :rtype: :class:`~google.cloud.spanner_v1.streamed.StreamedResultSet`
+        :returns: a result set instance which can be used to consume rows.
+
+        :raises ValueError: if the Transaction already used to execute a
+            read request, but is not a multi-use transaction or has not begun.
+        """
+
+        await self._wait_for_transaction_begin()
 
         session = self._session
         database = session._database
@@ -287,20 +481,20 @@ class _SnapshotBase(_SessionWrapper):
         )
         request_options = _merge_request_options(request_options, client_context)
 
-        if request_options is None:
-            request_options = RequestOptions()
-        elif type(request_options) is dict:
-            request_options = RequestOptions(request_options)
+        if request_options is not None:
+            if self._read_only:
+                request_options.transaction_tag = None
+            elif self.transaction_tag is not None:
+                request_options.transaction_tag = self.transaction_tag
+        elif not self._read_only and self.transaction_tag is not None:
+            request_options = RequestOptions(transaction_tag=self.transaction_tag)
 
-        if self._read_only:
-            request_options.transaction_tag = None
-            if (
-                directed_read_options is None
-                and database._directed_read_options is not None
-            ):
-                directed_read_options = database._directed_read_options
-        elif self.transaction_tag is not None:
-            request_options.transaction_tag = self.transaction_tag
+        if (
+            self._read_only
+            and directed_read_options is None
+            and database._directed_read_options is not None
+        ):
+            directed_read_options = database._directed_read_options
 
         read_request = ReadRequest(
             session=session.name,
@@ -337,7 +531,6 @@ class _SnapshotBase(_SessionWrapper):
         )
 
     @CrossSync.convert
-    @CrossSync.convert
     async def execute_sql(
         self,
         sql,
@@ -355,12 +548,107 @@ class _SnapshotBase(_SessionWrapper):
         column_info=None,
         lazy_decode=False,
     ):
-        """Perform an ``ExecuteStreamingSql`` API request."""
-        if self._read_request_count > 0:
-            if not self._multi_use:
-                raise ValueError("Cannot re-use single-use snapshot.")
-            if self._transaction_id is None:
-                raise ValueError("Transaction has not begun.")
+        """Perform an ``ExecuteStreamingSql`` API request.
+
+        :type sql: str
+        :param sql: SQL query statement
+
+        :type params: dict, {str -> column value}
+        :param params: values for parameter replacement.  Keys must match
+                       the names used in ``sql``.
+
+        :type param_types: dict[str -> Union[dict, .types.Type]]
+        :param param_types:
+            (Optional) maps explicit types for one or more param values;
+            required if parameters are passed.
+
+        :type query_mode:
+            :class:`~google.cloud.spanner_v1.types.ExecuteSqlRequest.QueryMode`
+        :param query_mode: Mode governing return of results / query plan.
+            See:
+            `QueryMode <https://cloud.google.com/spanner/reference/rpc/google.spanner.v1#google.spanner.v1.ExecuteSqlRequest.QueryMode>`_.
+
+        :type query_options:
+            :class:`~google.cloud.spanner_v1.types.ExecuteSqlRequest.QueryOptions`
+                or :class:`dict`
+        :param query_options:
+                (Optional) Query optimizer configuration to use for the given query.
+                If a dict is provided, it must be of the same form as the protobuf
+                message :class:`~google.cloud.spanner_v1.types.QueryOptions`
+
+        :type request_options:
+            :class:`google.cloud.spanner_v1.types.RequestOptions`
+        :param request_options:
+                (Optional) Common options for this request.
+                If a dict is provided, it must be of the same form as the protobuf
+                message :class:`~google.cloud.spanner_v1.types.RequestOptions`.
+
+        :type last_statement: bool
+        :param last_statement:
+                If set to true, this option marks the end of the transaction. The
+                transaction should be committed or aborted after this statement
+                executes, and attempts to execute any other requests against this
+                transaction (including reads and queries) will be rejected. Mixing
+                mutations with statements that are marked as the last statement is
+                not allowed.
+                For DML statements, setting this option may cause some error
+                reporting to be deferred until commit time (e.g. validation of
+                unique constraints). Given this, successful execution of a DML
+                statement should not be assumed until the transaction commits.
+
+        :type partition: bytes
+        :param partition: (Optional) one of the partition tokens returned
+                          from :meth:`partition_query`.
+
+        :rtype: :class:`~google.cloud.spanner_v1.streamed.StreamedResultSet`
+        :returns: a result set instance which can be used to consume rows.
+
+        :type retry: :class:`~google.api_core.retry.Retry`
+        :param retry: (Optional) The retry settings for this request.
+
+        :type timeout: float
+        :param timeout: (Optional) The timeout for this request.
+
+        :type data_boost_enabled:
+        :param data_boost_enabled:
+                (Optional) If this is for a partitioned query and this field is
+                set ``true``, the request will be executed via offline access.
+                If the field is set to ``true`` but the request does not set
+                ``partition_token``, the API will return an
+                ``INVALID_ARGUMENT`` error.
+
+        :type directed_read_options: :class:`~google.cloud.spanner_v1.DirectedReadOptions`
+            or :class:`dict`
+        :param directed_read_options: (Optional) Request level option used to set the directed_read_options
+            for all ReadRequests and ExecuteSqlRequests that indicates which replicas
+            or regions should be used for non-transactional reads or queries.
+
+        :type column_info: dict
+        :param column_info: (Optional) dict of mapping between column names and additional column information.
+            An object where column names as keys and custom objects as corresponding
+            values for deserialization. It's specifically useful for data types like
+            protobuf where deserialization logic is on user-specific code. When provided,
+            the custom object enables deserialization of backend-received column data.
+            If not provided, data remains serialized as bytes for Proto Messages and
+            integer for Proto Enums.
+
+        :type lazy_decode: bool
+        :param lazy_decode:
+            (Optional) If this argument is set to ``true``, the iterator
+            returns the underlying protobuf values instead of decoded Python
+            objects. This reduces the time that is needed to iterate through
+            large result sets. The application is responsible for decoding
+            the data that is needed. The returned row iterator contains two
+            functions that can be used for this. ``iterator.decode_row(row)``
+            decodes all the columns in the given row to an array of Python
+            objects. ``iterator.decode_column(row, column_index)`` decodes one
+            specific column in the given row.
+
+        :raises ValueError: if the Transaction already used to execute a
+            read request, but is not a multi-use transaction or has not begun.
+        """
+
+        await self._wait_for_transaction_begin()
 
         if params is not None:
             params_pb = Struct(
@@ -387,28 +675,28 @@ class _SnapshotBase(_SessionWrapper):
         )
         request_options = _merge_request_options(request_options, client_context)
 
-        if request_options is None:
-            request_options = RequestOptions()
-        elif type(request_options) is dict:
-            request_options = RequestOptions(request_options)
+        if request_options is not None:
+            if self._read_only:
+                request_options.transaction_tag = None
+            elif self.transaction_tag is not None:
+                request_options.transaction_tag = self.transaction_tag
+        elif not self._read_only and self.transaction_tag is not None:
+            request_options = RequestOptions(transaction_tag=self.transaction_tag)
 
-        if self._read_only:
-            request_options.transaction_tag = None
-            if (
-                directed_read_options is None
-                and database._directed_read_options is not None
-            ):
-                directed_read_options = database._directed_read_options
-        elif self.transaction_tag is not None:
-            request_options.transaction_tag = self.transaction_tag
+        if (
+            self._read_only
+            and directed_read_options is None
+            and database._directed_read_options is not None
+        ):
+            directed_read_options = database._directed_read_options
 
-        execute_sql_request = ExecuteSqlRequest(
-            session=session.name,
+        execute_sql_request = _make_execute_sql_request(
+            session_name=session.name,
             sql=sql,
             params=params_pb,
             param_types=param_types,
             query_mode=query_mode,
-            partition_token=partition,
+            partition=partition,
             seqno=self._execute_sql_request_count,
             query_options=query_options,
             request_options=request_options,
@@ -447,7 +735,7 @@ class _SnapshotBase(_SessionWrapper):
         trace_name = f"CloudSpanner.{type(self).__name__}.{trace_method_name}"
 
         is_inline_begin = False
-        if self._transaction_id is None:
+        if self._multi_use and self._transaction_id is None:
             is_inline_begin = True
             await self._lock.acquire()
 
@@ -544,20 +832,20 @@ class _SnapshotBase(_SessionWrapper):
             MetricsCapture(self._resource_info),
         ):
             nth_request = getattr(database, "_next_nth_request", 0)
-            attempt = AtomicCounter()
+            attempt = 0
 
             async def attempt_tracking_method():
+                nonlocal attempt
+                attempt += 1
                 all_metadata = database.metadata_with_request_id(
-                    nth_request, attempt.increment(), metadata, span
+                    nth_request, attempt, metadata, span
                 )
-                partition_read_method = functools.partial(
-                    api.partition_read,
+                return await api.partition_read(
                     request=partition_read_request,
                     metadata=all_metadata,
                     retry=retry,
                     timeout=timeout,
                 )
-                return await partition_read_method()
 
             response = await _retry(
                 attempt_tracking_method,
@@ -627,20 +915,20 @@ class _SnapshotBase(_SessionWrapper):
             MetricsCapture(self._resource_info),
         ):
             nth_request = getattr(database, "_next_nth_request", 0)
-            attempt = AtomicCounter()
+            attempt = 0
 
             async def attempt_tracking_method():
+                nonlocal attempt
+                attempt += 1
                 all_metadata = database.metadata_with_request_id(
-                    nth_request, attempt.increment(), metadata, span
+                    nth_request, attempt, metadata, span
                 )
-                partition_query_method = functools.partial(
-                    api.partition_query,
+                return await api.partition_query(
                     request=partition_query_request,
                     metadata=all_metadata,
                     retry=retry,
                     timeout=timeout,
                 )
-                return await partition_query_method()
 
             response = await _retry(
                 attempt_tracking_method,
@@ -701,22 +989,22 @@ class _SnapshotBase(_SessionWrapper):
             MetricsCapture(self._resource_info),
         ):
             nth_request = getattr(database, "_next_nth_request", 0)
-            attempt = AtomicCounter()
+            attempt = 0
 
             async def wrapped_method():
+                nonlocal attempt
+                attempt += 1
                 begin_transaction_request = BeginTransactionRequest(
                     **begin_request_kwargs
                 )
                 call_metadata, error_augmenter = database.with_error_augmentation(
-                    nth_request, attempt.increment(), metadata, span
-                )
-                begin_transaction_method = functools.partial(
-                    api.begin_transaction,
-                    request=begin_transaction_request,
-                    metadata=call_metadata,
+                    nth_request, attempt, metadata, span
                 )
                 with error_augmenter:
-                    return await begin_transaction_method()
+                    return await api.begin_transaction(
+                        request=begin_transaction_request,
+                        metadata=call_metadata,
+                    )
 
             async def before_next_retry(nth_retry, delay_in_seconds):
                 add_span_event(
@@ -766,6 +1054,9 @@ class _SnapshotBase(_SessionWrapper):
         """Updates the snapshot for the given transaction."""
         if self._transaction_id is None and transaction_pb.id:
             self._transaction_id = transaction_pb.id
+            # Release any request waiting for this transaction to begin.
+            if self._transaction_begin_event is not None:
+                self._transaction_begin_event.set()
 
         if transaction_pb._pb.HasField("precommit_token"):
             self._update_for_precommit_token_pb_unsafe(transaction_pb.precommit_token)
@@ -775,7 +1066,10 @@ class _SnapshotBase(_SessionWrapper):
         self, precommit_token_pb: MultiplexedSessionPrecommitToken
     ) -> None:
         """Updates the snapshot for the given multiplexed session precommit token."""
-        async with self._lock:
+        if self._lock is not None:
+            async with self._lock:
+                self._update_for_precommit_token_pb_unsafe(precommit_token_pb)
+        else:
             self._update_for_precommit_token_pb_unsafe(precommit_token_pb)
 
     def _update_for_precommit_token_pb_unsafe(
@@ -811,7 +1105,9 @@ class Snapshot(_SnapshotBase):
         transaction_id=None,
         client_context=None,
     ):
-        super(Snapshot, self).__init__(session, client_context=client_context)
+        super(Snapshot, self).__init__(
+            session, client_context=client_context, multi_use=multi_use
+        )
         opts = [read_timestamp, min_read_timestamp, max_staleness, exact_staleness]
         flagged = [opt for opt in opts if opt is not None]
         if len(flagged) > 1:
@@ -829,7 +1125,6 @@ class Snapshot(_SnapshotBase):
         self._min_read_timestamp = min_read_timestamp
         self._max_staleness = max_staleness
         self._exact_staleness = exact_staleness
-        self._multi_use = multi_use
         self._transaction_id = transaction_id
 
     def _build_transaction_options_pb(self) -> TransactionOptions:

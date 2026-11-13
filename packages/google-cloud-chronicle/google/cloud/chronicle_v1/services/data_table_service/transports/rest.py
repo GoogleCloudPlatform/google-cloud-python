@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.chronicle_v1._compat import transcode_request
 from google.cloud.chronicle_v1.types import data_table
 from google.cloud.chronicle_v1.types import data_table as gcc_data_table
 
@@ -1115,21 +1116,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseBulkCreateDataTableRows._get_http_options()
-
             request, metadata = self._interceptor.pre_bulk_create_data_table_rows(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseBulkCreateDataTableRows._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTableServiceRestTransport._BaseBulkCreateDataTableRows._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseBulkCreateDataTableRows._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseBulkCreateDataTableRows,
+                    "_BaseBulkCreateDataTableRows__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1273,21 +1271,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseBulkGetDataTableRows._get_http_options()
-
             request, metadata = self._interceptor.pre_bulk_get_data_table_rows(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseBulkGetDataTableRows._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTableServiceRestTransport._BaseBulkGetDataTableRows._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseBulkGetDataTableRows._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseBulkGetDataTableRows,
+                    "_BaseBulkGetDataTableRows__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1432,21 +1427,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseBulkReplaceDataTableRows._get_http_options()
-
             request, metadata = self._interceptor.pre_bulk_replace_data_table_rows(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseBulkReplaceDataTableRows._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTableServiceRestTransport._BaseBulkReplaceDataTableRows._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseBulkReplaceDataTableRows._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseBulkReplaceDataTableRows,
+                    "_BaseBulkReplaceDataTableRows__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1591,21 +1583,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseBulkUpdateDataTableRows._get_http_options()
-
             request, metadata = self._interceptor.pre_bulk_update_data_table_rows(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseBulkUpdateDataTableRows._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTableServiceRestTransport._BaseBulkUpdateDataTableRows._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseBulkUpdateDataTableRows._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseBulkUpdateDataTableRows,
+                    "_BaseBulkUpdateDataTableRows__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1748,21 +1737,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseCreateDataTable._get_http_options()
-
             request, metadata = self._interceptor.pre_create_data_table(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseCreateDataTable._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTableServiceRestTransport._BaseCreateDataTable._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseCreateDataTable._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseCreateDataTable,
+                    "_BaseCreateDataTable__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1901,21 +1887,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseCreateDataTableRow._get_http_options()
-
             request, metadata = self._interceptor.pre_create_data_table_row(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseCreateDataTableRow._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTableServiceRestTransport._BaseCreateDataTableRow._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseCreateDataTableRow._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseCreateDataTableRow,
+                    "_BaseCreateDataTableRow__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2048,17 +2031,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseDeleteDataTable._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_data_table(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseDeleteDataTable._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseDeleteDataTable._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseDeleteDataTable,
+                    "_BaseDeleteDataTable__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2155,17 +2139,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseDeleteDataTableRow._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_data_table_row(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseDeleteDataTableRow._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseDeleteDataTableRow._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseDeleteDataTableRow,
+                    "_BaseDeleteDataTableRow__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2270,15 +2255,16 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             http_options = (
                 _BaseDataTableServiceRestTransport._BaseGetDataTable._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_data_table(request, metadata)
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseGetDataTable._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseGetDataTable._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseGetDataTable,
+                    "_BaseGetDataTable__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2417,17 +2403,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseGetDataTableOperationErrors._get_http_options()
-
             request, metadata = self._interceptor.pre_get_data_table_operation_errors(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseGetDataTableOperationErrors._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseGetDataTableOperationErrors._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseGetDataTableOperationErrors,
+                    "_BaseGetDataTableOperationErrors__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2568,17 +2555,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseGetDataTableRow._get_http_options()
-
             request, metadata = self._interceptor.pre_get_data_table_row(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseGetDataTableRow._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseGetDataTableRow._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseGetDataTableRow,
+                    "_BaseGetDataTableRow__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2715,17 +2703,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseListDataTableRows._get_http_options()
-
             request, metadata = self._interceptor.pre_list_data_table_rows(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseListDataTableRows._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseListDataTableRows._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseListDataTableRows,
+                    "_BaseListDataTableRows__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2863,17 +2852,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseListDataTables._get_http_options()
-
             request, metadata = self._interceptor.pre_list_data_tables(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseListDataTables._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseListDataTables._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseListDataTables,
+                    "_BaseListDataTables__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3014,21 +3004,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseUpdateDataTable._get_http_options()
-
             request, metadata = self._interceptor.pre_update_data_table(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseUpdateDataTable._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTableServiceRestTransport._BaseUpdateDataTable._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseUpdateDataTable._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseUpdateDataTable,
+                    "_BaseUpdateDataTable__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3167,21 +3154,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseUpdateDataTableRow._get_http_options()
-
             request, metadata = self._interceptor.pre_update_data_table_row(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseUpdateDataTableRow._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTableServiceRestTransport._BaseUpdateDataTableRow._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseUpdateDataTableRow._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseUpdateDataTableRow,
+                    "_BaseUpdateDataTableRow__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3465,21 +3449,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTableServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3583,17 +3564,18 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3700,15 +3682,16 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             http_options = (
                 _BaseDataTableServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3838,15 +3821,16 @@ class DataTableServiceRestTransport(_BaseDataTableServiceRestTransport):
             """
 
             http_options = _BaseDataTableServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseDataTableServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTableServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTableServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

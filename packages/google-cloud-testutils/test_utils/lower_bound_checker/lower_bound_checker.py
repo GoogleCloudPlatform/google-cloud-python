@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import click
+import importlib.metadata as metadata
 from pathlib import Path
-from typing import List, Tuple, Set
+from typing import List, Set, Tuple
 
+import click
 from packaging.requirements import Requirement
 from packaging.version import Version
-
-import importlib.metadata as metadata
 
 
 def _get_package_requirements(package_name: str) -> List[Requirement]:

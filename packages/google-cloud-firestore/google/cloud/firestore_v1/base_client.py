@@ -77,6 +77,14 @@ _ACTIVE_TXN: str = "There is already an active transaction."
 _INACTIVE_TXN: str = "There is no active transaction."
 _CLIENT_INFO: Any = client_info.ClientInfo(client_library_version=__version__)
 _FIRESTORE_EMULATOR_HOST: str = "FIRESTORE_EMULATOR_HOST"
+_GRPC_MSG_SIZE_OPTIONS: List[Tuple[str, int]] = [
+    ("grpc.max_send_message_length", -1),
+    ("grpc.max_receive_message_length", -1),
+]
+_DEFAULT_CHANNEL_OPTIONS: List[Tuple[str, Any]] = [
+    ("grpc.keepalive_time_ms", 30000),
+    *_GRPC_MSG_SIZE_OPTIONS,
+]
 
 
 class BaseClient(ClientWithProject):
@@ -173,7 +181,7 @@ class BaseClient(ClientWithProject):
                 channel = transport.create_channel(
                     self._target,
                     credentials=self._credentials,
-                    options={"grpc.keepalive_time_ms": 30000}.items(),
+                    options=_DEFAULT_CHANNEL_OPTIONS,
                 )
 
             self._transport = transport(host=self._target, channel=channel)
@@ -204,7 +212,10 @@ class BaseClient(ClientWithProject):
             and getattr(self._credentials, "id_token", None) is not None
         ):
             token = self._credentials.id_token
-        options = [("Authorization", f"Bearer {token}")]
+        options = [
+            ("Authorization", f"Bearer {token}"),
+            *_GRPC_MSG_SIZE_OPTIONS,
+        ]
 
         if "GrpcAsyncIOTransport" in str(transport.__name__):
             return grpc.aio.insecure_channel(self._emulator_host, options=options)

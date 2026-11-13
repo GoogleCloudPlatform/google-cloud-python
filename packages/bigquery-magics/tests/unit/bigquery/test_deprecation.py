@@ -14,8 +14,8 @@
 
 import pytest
 
-from bigquery_magics import bigquery as magics
 import bigquery_magics.config
+from bigquery_magics import bigquery as magics
 
 
 @pytest.fixture(autouse=True)

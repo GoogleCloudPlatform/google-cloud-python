@@ -17,18 +17,17 @@
 import warnings
 from typing import Set
 
-from google.api_core import timeout
 from google.api_core.exceptions import (
     Aborted,
     DeadlineExceeded,
     InternalServerError,
     NotFound,
-    RetryError,
     ServiceUnavailable,
 )
 from google.api_core.gapic_v1.method import DEFAULT
 from google.api_core.retry import Retry, if_exception_type
 from google.cloud._helpers import _to_bytes  # type: ignore
+from google.rpc import code_pb2, status_pb2
 
 from google.cloud.bigtable import enums
 from google.cloud.bigtable.backup import Backup
@@ -38,21 +37,31 @@ from google.cloud.bigtable.batcher import (
     MutationsBatcher,
 )
 from google.cloud.bigtable.column_family import ColumnFamily, _gc_rule_from_pb
+from google.cloud.bigtable.data._helpers import (
+    TABLE_DEFAULT,
+    _get_statuses_from_mutations_exception_group,
+)
+from google.cloud.bigtable.data.exceptions import MutationsExceptionGroup
+from google.cloud.bigtable.data.mutations import RowMutationEntry
+from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
 from google.cloud.bigtable.encryption_info import EncryptionInfo
 from google.cloud.bigtable.policy import Policy
-from google.cloud.bigtable.row import AppendRow, ConditionalRow, DirectRow
+from google.cloud.bigtable.row import (
+    AppendRow,
+    ConditionalRow,
+    DirectRow,
+    PartialRowData,
+)
 from google.cloud.bigtable.row_data import (
     DEFAULT_RETRY_READ_ROWS,
     PartialRowsData,
-    _retriable_internal_server_error,
 )
-from google.cloud.bigtable.row_set import RowRange, RowSet
+from google.cloud.bigtable.row_set import RowRange
 from google.cloud.bigtable_admin_v2 import BaseBigtableTableAdminClient
 from google.cloud.bigtable_admin_v2.types import (
     bigtable_table_admin as table_admin_messages_v2_pb2,
 )
 from google.cloud.bigtable_admin_v2.types import table as admin_messages_v2_pb2
-from google.cloud.bigtable_v2.types import bigtable as data_messages_v2_pb2
 
 # Maximum number of mutations in bulk (MutateRowsRequest message):
 # (https://cloud.google.com/bigtable/docs/reference/data/rpc/
@@ -172,6 +181,11 @@ class Table(object):
     def get_iam_policy(self):
         """Gets the IAM access control policy for this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_iam_policy`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -189,6 +203,11 @@ class Table(object):
     def set_iam_policy(self, policy):
         """Sets the IAM access control policy for this table. Replaces any
         existing policy.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.set_iam_policy`
+            instead.
 
         For more information about policy, please see documentation of
         class `google.cloud.bigtable.policy.Policy`
@@ -217,6 +236,11 @@ class Table(object):
         """Tests whether the caller has the given permissions for this table.
         Returns the permissions that the caller has.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.test_iam_permissions`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -244,6 +268,10 @@ class Table(object):
 
     def column_family(self, column_family_id, gc_rule=None):
         """Factory to create a column family associated with this table.
+
+        .. deprecated:: 2.30.0
+            Use :class:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient`
+            instead.
 
         For example:
 
@@ -381,6 +409,11 @@ class Table(object):
     def create(self, initial_split_keys=[], column_families={}):
         """Creates this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.create_table`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -428,6 +461,11 @@ class Table(object):
     def exists(self):
         """Check whether the table exists.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_table`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -448,6 +486,11 @@ class Table(object):
     def delete(self):
         """Delete this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.delete_table`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -460,6 +503,11 @@ class Table(object):
 
     def list_column_families(self):
         """List the column families owned by this table.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_table`
+            instead.
 
         For example:
 
@@ -489,6 +537,11 @@ class Table(object):
     def get_cluster_states(self):
         """List the cluster states owned by this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_table`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -515,6 +568,11 @@ class Table(object):
 
     def get_encryption_info(self):
         """List the encryption info for each cluster owned by this table.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_table`
+            instead.
 
         Gets the current encryption info for the table across all of the clusters.  The
         returned dict will be keyed by cluster id and contain a status for all of the
@@ -563,23 +621,28 @@ class Table(object):
             default value :attr:`DEFAULT_RETRY_READ_ROWS` can be used and
             modified with the :meth:`~google.api_core.retry.Retry.with_delay`
             method or the :meth:`~google.api_core.retry.Retry.with_deadline`
-            method.
+            method. Custom on_error and predicate values will be ignored.
 
         :rtype: :class:`.PartialRowData`, :data:`NoneType <types.NoneType>`
         :returns: The contents of the row if any chunks were returned in
                   the response, otherwise :data:`None`.
-        :raises: :class:`ValueError <exceptions.ValueError>` if a commit row
-                 chunk is never encountered.
         """
-        row_set = RowSet()
-        row_set.add_row_key(row_key)
-        result_iter = iter(
-            self.read_rows(filter_=filter_, row_set=row_set, retry=retry)
+        attempt_timeout = (
+            getattr(retry, "deadline", None)
+            or getattr(retry, "_deadline", None)
+            or TABLE_DEFAULT.READ_ROWS
         )
-        row = next(result_iter, None)
-        if next(result_iter, None) is not None:
-            raise ValueError("More than one row was returned.")
-        return row
+        row = self._table_impl.read_row(
+            row_key,
+            row_filter=filter_,
+            operation_timeout=TABLE_DEFAULT.READ_ROWS,
+            attempt_timeout=attempt_timeout,
+            retryable_errors=TABLE_DEFAULT.READ_ROWS,
+        )
+        if row is None:
+            return None
+
+        return PartialRowData._from_data_client_row(row)
 
     def read_rows(
         self,
@@ -634,24 +697,32 @@ class Table(object):
             default value :attr:`DEFAULT_RETRY_READ_ROWS` can be used and
             modified with the :meth:`~google.api_core.retry.Retry.with_delay`
             method or the :meth:`~google.api_core.retry.Retry.with_deadline`
-            method.
+            method. Custom on_error and predicate values will be ignored.
 
         :rtype: :class:`.PartialRowsData`
         :returns: A :class:`.PartialRowsData` a generator for consuming
                   the streamed results.
         """
-        request_pb = _create_row_request(
-            self.name,
+        attempt_timeout = (
+            getattr(retry, "deadline", None)
+            or getattr(retry, "_deadline", None)
+            or TABLE_DEFAULT.READ_ROWS
+        )
+        query = _create_row_request(
             start_key=start_key,
             end_key=end_key,
             filter_=filter_,
             limit=limit,
             end_inclusive=end_inclusive,
-            app_profile_id=self._app_profile_id,
             row_set=row_set,
         )
-        data_client = self._instance._client.table_data_client
-        return PartialRowsData(data_client.read_rows, request_pb, retry)
+        generator = self._table_impl.read_rows_stream(
+            query,
+            operation_timeout=TABLE_DEFAULT.READ_ROWS,
+            attempt_timeout=attempt_timeout,
+            retryable_errors=TABLE_DEFAULT.READ_ROWS,
+        )
+        return PartialRowsData._from_generator(generator)
 
     def yield_rows(self, **kwargs):
         """Read rows from this table.
@@ -715,6 +786,9 @@ class Table(object):
         specify a ``retry`` strategy of "do-nothing", a deadline of ``0.0``
         can be specified.
 
+        If a deadline of ``None`` is specified, the deadline defaults to
+        a table-default of 600 seconds (10 minutes).
+
         :type rows: list
         :param rows: List or other iterable of :class:`.DirectRow` instances.
 
@@ -723,7 +797,8 @@ class Table(object):
             (Optional) Retry delay and deadline arguments. To override, the
             default value :attr:`DEFAULT_RETRY` can be used and modified with
             the :meth:`~google.api_core.retry.Retry.with_delay` method or the
-            :meth:`~google.api_core.retry.Retry.with_deadline` method.
+            :meth:`~google.api_core.retry.Retry.with_deadline` method. Custom
+            on_error and predicate values will be ignored.
 
         :type timeout: float
         :param timeout: number of seconds bounding retries for the call
@@ -732,18 +807,72 @@ class Table(object):
         :returns: A list of response statuses (`google.rpc.status_pb2.Status`)
                   corresponding to success or failure of each row mutation
                   sent. These will be in the same order as the `rows`.
+
+        :raise: ValueError: If a row entry has no mutations, or too many mutations
         """
         if timeout is DEFAULT:
             timeout = self.mutation_timeout
 
-        retryable_mutate_rows = _RetryableMutateRowsWorker(
-            self._instance._client,
-            self.name,
-            rows,
-            app_profile_id=self._app_profile_id,
-            timeout=timeout,
-        )
-        return retryable_mutate_rows(retry=retry)
+        retryable_errors = RETRYABLE_MUTATION_ERRORS
+
+        # The data client cannot take in zero or null values for deadline, so we set it to
+        # the default if that is the case.
+        if retry is None:
+            operation_timeout = TABLE_DEFAULT.MUTATE_ROWS
+            retryable_errors = []
+        elif retry.deadline is None:
+            operation_timeout = TABLE_DEFAULT.MUTATE_ROWS
+
+        # To adhere to the retry strategy of do-nothing being achievable with a deadline
+        # of 0.0, we modify the retryable errors to be empty if such a deadline is passed.
+        elif retry.deadline == 0:
+            operation_timeout = TABLE_DEFAULT.MUTATE_ROWS
+            retryable_errors = []
+        else:
+            operation_timeout = retry.deadline
+
+        attempt_timeout = timeout
+        # ``rows`` may be any iterable, so keep a reference to each one to
+        # clear the succeeded rows once the statuses are known.
+        row_list = []
+        mutation_entries = []
+        for row in rows:
+            if not isinstance(row, DirectRow):
+                raise TypeError(
+                    "Bulk processing can not be applied for conditional or append mutations."
+                )
+            if row.table is not None and row.table.name != self.name:
+                raise TableMismatchError(
+                    "Row %s is a part of %s table. Current table: %s"
+                    % (row.row_key, row.table.name, self.name)
+                )
+            row_list.append(row)
+            mutation_entries.append(RowMutationEntry(row.row_key, row._get_mutations()))
+
+        try:
+            self._table_impl.bulk_mutate_rows(
+                mutation_entries,
+                operation_timeout=operation_timeout,
+                attempt_timeout=attempt_timeout,
+                retryable_errors=retryable_errors,
+            )
+        except MutationsExceptionGroup as mut_exc_group:
+            return_statuses = _get_statuses_from_mutations_exception_group(
+                mut_exc_group, len(mutation_entries)
+            )
+        else:
+            return_statuses = [
+                status_pb2.Status(code=code_pb2.OK)
+                for _ in range(len(mutation_entries))
+            ]
+
+        # Drop the mutations that were applied. Rows that failed keep theirs so
+        # that they can be applied again separately.
+        for row, status in zip(row_list, return_statuses):
+            if status.code == code_pb2.OK:
+                row.clear()
+
+        return return_statuses
 
     def sample_row_keys(self):
         """Read a sample of row keys in the table.
@@ -793,6 +922,11 @@ class Table(object):
     def truncate(self, timeout=None):
         """Truncate the table
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.drop_row_range`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -824,6 +958,11 @@ class Table(object):
 
     def drop_by_prefix(self, row_key_prefix, timeout=None):
         """
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.drop_row_range`
+            instead.
 
         For example:
 
@@ -897,6 +1036,10 @@ class Table(object):
     def backup(self, backup_id, cluster_id=None, expire_time=None):
         """Factory to create a Backup linked to this Table.
 
+        .. deprecated:: 2.30.0
+            Use :class:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient`
+            instead.
+
         :type backup_id: str
         :param backup_id: The ID of the Backup to be created.
 
@@ -920,6 +1063,11 @@ class Table(object):
 
     def list_backups(self, cluster_id=None, filter_=None, order_by=None, page_size=0):
         """List Backups for this Table.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.list_backups`
+            instead.
 
         :type cluster_id: str
         :param cluster_id: (Optional) Specifies a single cluster to list
@@ -1031,6 +1179,11 @@ class Table(object):
         can be used to track the progress of the operation and to cancel it.
         The ``response`` type is ``Table``, if successful.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.restore_table`
+            instead.
+
         :type new_table_id: str
         :param new_table_id: The ID of the Table to create and restore to.
                          This Table must not already exist.
@@ -1076,133 +1229,6 @@ class Table(object):
                 "backup": backup_name,
             }
         )
-
-
-class _RetryableMutateRowsWorker(object):
-    """A callable worker that can retry to mutate rows with transient errors.
-
-    This class is a callable that can retry mutating rows that result in
-    transient errors. After all rows are successful or none of the rows
-    are retryable, any subsequent call on this callable will be a no-op.
-    """
-
-    def __init__(self, client, table_name, rows, app_profile_id=None, timeout=None):
-        self.client = client
-        self.table_name = table_name
-        self.rows = rows
-        self.app_profile_id = app_profile_id
-        self.responses_statuses = [None] * len(self.rows)
-        self.timeout = timeout
-
-    def __call__(self, retry=DEFAULT_RETRY):
-        """Attempt to mutate all rows and retry rows with transient errors.
-
-        Will retry the rows with transient errors until all rows succeed or
-        ``deadline`` specified in the `retry` is reached.
-
-        :rtype: list
-        :returns: A list of response statuses (`google.rpc.status_pb2.Status`)
-                  corresponding to success or failure of each row mutation
-                  sent. These will be in the same order as the ``rows``.
-        """
-        mutate_rows = self._do_mutate_retryable_rows
-        if retry:
-            mutate_rows = retry(self._do_mutate_retryable_rows)
-
-        try:
-            mutate_rows()
-        except (_BigtableRetryableError, RetryError):
-            # - _BigtableRetryableError raised when no retry strategy is used
-            #   and a retryable error on a mutation occurred.
-            # - RetryError raised when retry deadline is reached.
-            # In both cases, just return current `responses_statuses`.
-            pass
-
-        return self.responses_statuses
-
-    @staticmethod
-    def _is_retryable(status):
-        return status is None or status.code in RETRYABLE_CODES
-
-    def _do_mutate_retryable_rows(self):
-        """Mutate all the rows that are eligible for retry.
-
-        A row is eligible for retry if it has not been tried or if it resulted
-        in a transient error in a previous call.
-
-        :rtype: list
-        :return: The responses statuses, which is a list of
-                 :class:`~google.rpc.status_pb2.Status`.
-        :raises: One of the following:
-
-                 * :exc:`~.table._BigtableRetryableError` if any
-                   row returned a transient error.
-                 * :exc:`RuntimeError` if the number of responses doesn't
-                   match the number of rows that were retried
-        """
-        retryable_rows = []
-        index_into_all_rows = []
-        for index, status in enumerate(self.responses_statuses):
-            if self._is_retryable(status):
-                retryable_rows.append(self.rows[index])
-                index_into_all_rows.append(index)
-
-        if not retryable_rows:
-            # All mutations are either successful or non-retryable now.
-            return self.responses_statuses
-
-        entries = _compile_mutation_entries(self.table_name, retryable_rows)
-        data_client = self.client.table_data_client
-
-        kwargs = {}
-        if self.timeout is not None:
-            kwargs["timeout"] = timeout.ExponentialTimeout(deadline=self.timeout)
-
-        try:
-            responses = data_client.mutate_rows(
-                table_name=self.table_name,
-                entries=entries,
-                app_profile_id=self.app_profile_id,
-                retry=None,
-                **kwargs,
-            )
-        except RETRYABLE_MUTATION_ERRORS as exc:
-            # If an exception, considered retryable by `RETRYABLE_MUTATION_ERRORS`, is
-            # returned from the initial call, consider
-            # it to be retryable. Wrap as a Bigtable Retryable Error.
-            # For InternalServerError, it is only retriable if the message is related to RST Stream messages
-            if _retriable_internal_server_error(exc) or not isinstance(
-                exc, InternalServerError
-            ):
-                raise _BigtableRetryableError
-            else:
-                # re-raise the original exception
-                raise
-
-        num_responses = 0
-        num_retryable_responses = 0
-        for response in responses:
-            for entry in response.entries:
-                num_responses += 1
-                index = index_into_all_rows[entry.index]
-                self.responses_statuses[index] = entry.status
-                if self._is_retryable(entry.status):
-                    num_retryable_responses += 1
-                if entry.status.code == 0:
-                    self.rows[index].clear()
-
-        if len(retryable_rows) != num_responses:
-            raise RuntimeError(
-                "Unexpected number of responses",
-                num_responses,
-                "Expected",
-                len(retryable_rows),
-            )
-
-        if num_retryable_responses:
-            raise _BigtableRetryableError
-
-        return self.responses_statuses
 
 
 class ClusterState(object):
@@ -1281,13 +1307,11 @@ class ClusterState(object):
 
 
 def _create_row_request(
-    table_name,
     start_key=None,
     end_key=None,
     filter_=None,
     limit=None,
     end_inclusive=False,
-    app_profile_id=None,
     row_set=None,
 ):
     """Creates a request to read rows in a table.
@@ -1318,104 +1342,32 @@ def _create_row_request(
     :param end_inclusive: (Optional) Whether the ``end_key`` should be
                   considered inclusive. The default is False (exclusive).
 
-    :type: app_profile_id: str
-    :param app_profile_id: (Optional) The unique name of the AppProfile.
-
     :type row_set: :class:`.RowSet`
     :param row_set: (Optional) The row set containing multiple row keys and
                     row_ranges.
 
-    :rtype: :class:`data_messages_v2_pb2.ReadRowsRequest`
-    :returns: The ``ReadRowsRequest`` protobuf corresponding to the inputs.
+    :rtype: :class:`ReadRowsQuery`
+    :returns: The `ReadRowsQuery` query object corresponding to the inputs.
     :raises: :class:`ValueError <exceptions.ValueError>` if both
-             ``row_set`` and one of ``start_key`` or ``end_key`` are set
+             ``row_set`` and one of ``start_key`` or ``end_key`` are set, or if
+             ``end_key`` is not greater than ``start_key``
     """
-    request_kwargs = {"table_name": table_name}
     if (start_key is not None or end_key is not None) and row_set is not None:
         raise ValueError("Row range and row set cannot be set simultaneously")
 
-    if filter_ is not None:
-        request_kwargs["filter"] = filter_.to_pb()
-    if limit is not None:
-        request_kwargs["rows_limit"] = limit
-    if app_profile_id is not None:
-        request_kwargs["app_profile_id"] = app_profile_id
-
-    message = data_messages_v2_pb2.ReadRowsRequest(**request_kwargs)
+    query = ReadRowsQuery(
+        limit=limit,
+        row_filter=filter_,
+    )
 
     if start_key is not None or end_key is not None:
-        row_set = RowSet()
-        row_set.add_row_range(RowRange(start_key, end_key, end_inclusive=end_inclusive))
+        query.add_range(RowRange(start_key, end_key, end_inclusive=end_inclusive))
 
     if row_set is not None:
-        row_set._update_message_request(message)
+        for row_key in row_set.row_keys:
+            query.add_key(row_key)
 
-    return message
+        for row_range in row_set.row_ranges:
+            query.add_range(row_range)
 
-
-def _compile_mutation_entries(table_name, rows):
-    """Create list of mutation entries
-
-    :type table_name: str
-    :param table_name: The name of the table to write to.
-
-    :type rows: list
-    :param rows: List or other iterable of :class:`.DirectRow` instances.
-
-    :rtype: List[:class:`data_messages_v2_pb2.MutateRowsRequest.Entry`]
-    :returns: entries corresponding to the inputs.
-    :raises: :exc:`~.table.TooManyMutationsError` if the number of mutations is
-             greater than the max ({})
-    """.format(_MAX_BULK_MUTATIONS)
-    entries = []
-    mutations_count = 0
-    entry_klass = data_messages_v2_pb2.MutateRowsRequest.Entry
-
-    for row in rows:
-        _check_row_table_name(table_name, row)
-        _check_row_type(row)
-        mutations = row._get_mutations()
-        entries.append(entry_klass(row_key=row.row_key, mutations=mutations))
-        mutations_count += len(mutations)
-
-    if mutations_count > _MAX_BULK_MUTATIONS:
-        raise TooManyMutationsError(
-            "Maximum number of mutations is %s" % (_MAX_BULK_MUTATIONS,)
-        )
-    return entries
-
-
-def _check_row_table_name(table_name, row):
-    """Checks that a row belongs to a table.
-
-    :type table_name: str
-    :param table_name: The name of the table.
-
-    :type row: :class:`~google.cloud.bigtable.row.Row`
-    :param row: An instance of :class:`~google.cloud.bigtable.row.Row`
-                subclasses.
-
-    :raises: :exc:`~.table.TableMismatchError` if the row does not belong to
-             the table.
-    """
-    if row.table is not None and row.table.name != table_name:
-        raise TableMismatchError(
-            "Row %s is a part of %s table. Current table: %s"
-            % (row.row_key, row.table.name, table_name)
-        )
-
-
-def _check_row_type(row):
-    """Checks that a row is an instance of :class:`.DirectRow`.
-
-    :type row: :class:`~google.cloud.bigtable.row.Row`
-    :param row: An instance of :class:`~google.cloud.bigtable.row.Row`
-                subclasses.
-
-    :raises: :class:`TypeError <exceptions.TypeError>` if the row is not an
-             instance of DirectRow.
-    """
-    if not isinstance(row, DirectRow):
-        raise TypeError(
-            "Bulk processing can not be applied for conditional or append mutations."
-        )
+    return query

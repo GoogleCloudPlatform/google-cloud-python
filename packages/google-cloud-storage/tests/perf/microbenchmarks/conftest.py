@@ -107,7 +107,7 @@ def upload_simple_object(bucket_name, object_name, object_size, chunk_size):
 
 def _upload_worker(args):
     bucket_name, object_name, object_size, chunk_size, bucket_type = args
-    if bucket_type == "zonal":
+    if bucket_type == "rapid":
         uploaded_bytes = asyncio.run(
             upload_appendable_object(bucket_name, object_name, object_size, chunk_size)
         )

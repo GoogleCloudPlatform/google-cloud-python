@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import ad_review_center_ad_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -80,11 +81,27 @@ class AdReviewCenterAdServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_batch_apply_ad_review_center_custom_labels(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_apply_ad_review_center_custom_labels(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_batch_block_ad_review_center_ads(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
 
             def post_batch_block_ad_review_center_ads(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_fetch_ad_review_center_custom_labels(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_fetch_ad_review_center_custom_labels(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -151,6 +168,59 @@ class AdReviewCenterAdServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_batch_apply_ad_review_center_custom_labels(
+        self,
+        request: ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_apply_ad_review_center_custom_labels
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AdReviewCenterAdService server.
+        """
+        return request, metadata
+
+    def post_batch_apply_ad_review_center_custom_labels(
+        self,
+        response: ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse,
+    ) -> ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse:
+        """Post-rpc interceptor for batch_apply_ad_review_center_custom_labels
+
+        DEPRECATED. Please use the `post_batch_apply_ad_review_center_custom_labels_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AdReviewCenterAdService server but before
+        it is returned to user code. This `post_batch_apply_ad_review_center_custom_labels` interceptor runs
+        before the `post_batch_apply_ad_review_center_custom_labels_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_apply_ad_review_center_custom_labels_with_metadata(
+        self,
+        response: ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_apply_ad_review_center_custom_labels
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AdReviewCenterAdService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_apply_ad_review_center_custom_labels_with_metadata`
+        interceptor in new development instead of the `post_batch_apply_ad_review_center_custom_labels` interceptor.
+        When both interceptors are used, this `post_batch_apply_ad_review_center_custom_labels_with_metadata` interceptor runs after the
+        `post_batch_apply_ad_review_center_custom_labels` interceptor. The (possibly modified) response returned by
+        `post_batch_apply_ad_review_center_custom_labels` will be passed to
+        `post_batch_apply_ad_review_center_custom_labels_with_metadata`.
+        """
+        return response, metadata
+
     def pre_batch_block_ad_review_center_ads(
         self,
         request: ad_review_center_ad_service.BatchBlockAdReviewCenterAdsRequest,
@@ -197,6 +267,59 @@ class AdReviewCenterAdServiceRestInterceptor:
         `post_batch_block_ad_review_center_ads` interceptor. The (possibly modified) response returned by
         `post_batch_block_ad_review_center_ads` will be passed to
         `post_batch_block_ad_review_center_ads_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_fetch_ad_review_center_custom_labels(
+        self,
+        request: ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for fetch_ad_review_center_custom_labels
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AdReviewCenterAdService server.
+        """
+        return request, metadata
+
+    def post_fetch_ad_review_center_custom_labels(
+        self,
+        response: ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse,
+    ) -> ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse:
+        """Post-rpc interceptor for fetch_ad_review_center_custom_labels
+
+        DEPRECATED. Please use the `post_fetch_ad_review_center_custom_labels_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AdReviewCenterAdService server but before
+        it is returned to user code. This `post_fetch_ad_review_center_custom_labels` interceptor runs
+        before the `post_fetch_ad_review_center_custom_labels_with_metadata` interceptor.
+        """
+        return response
+
+    def post_fetch_ad_review_center_custom_labels_with_metadata(
+        self,
+        response: ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for fetch_ad_review_center_custom_labels
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AdReviewCenterAdService server but before it is returned to user code.
+
+        We recommend only using this `post_fetch_ad_review_center_custom_labels_with_metadata`
+        interceptor in new development instead of the `post_fetch_ad_review_center_custom_labels` interceptor.
+        When both interceptors are used, this `post_fetch_ad_review_center_custom_labels_with_metadata` interceptor runs after the
+        `post_fetch_ad_review_center_custom_labels` interceptor. The (possibly modified) response returned by
+        `post_fetch_ad_review_center_custom_labels` will be passed to
+        `post_fetch_ad_review_center_custom_labels_with_metadata`.
         """
         return response, metadata
 
@@ -311,7 +434,7 @@ class AdReviewCenterAdServiceRestStub:
 class AdReviewCenterAdServiceRestTransport(_BaseAdReviewCenterAdServiceRestTransport):
     """REST backend synchronous transport for AdReviewCenterAdService.
 
-    Provides methods for handling AdReviewCenterAd objects.
+    Provides methods for handling ``AdReviewCenterAd`` objects.
 
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
@@ -499,21 +622,18 @@ class AdReviewCenterAdServiceRestTransport(_BaseAdReviewCenterAdServiceRestTrans
             """
 
             http_options = _BaseAdReviewCenterAdServiceRestTransport._BaseBatchAllowAdReviewCenterAds._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_allow_ad_review_center_ads(
                 request, metadata
             )
-            transcoded_request = _BaseAdReviewCenterAdServiceRestTransport._BaseBatchAllowAdReviewCenterAds._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdReviewCenterAdServiceRestTransport._BaseBatchAllowAdReviewCenterAds._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdReviewCenterAdServiceRestTransport._BaseBatchAllowAdReviewCenterAds._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdReviewCenterAdServiceRestTransport._BaseBatchAllowAdReviewCenterAds,
+                    "_BaseBatchAllowAdReviewCenterAds__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -593,6 +713,170 @@ class AdReviewCenterAdServiceRestTransport(_BaseAdReviewCenterAdServiceRestTrans
                 )
             return resp
 
+    class _BatchApplyAdReviewCenterCustomLabels(
+        _BaseAdReviewCenterAdServiceRestTransport._BaseBatchApplyAdReviewCenterCustomLabels,
+        AdReviewCenterAdServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "AdReviewCenterAdServiceRestTransport.BatchApplyAdReviewCenterCustomLabels"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse:
+            r"""Call the batch apply ad review
+            center custom labels method over HTTP.
+
+                Args:
+                    request (~.ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest):
+                        The request object. Request object for
+                    ``BatchApplyAdReviewCenterCustomLabels`` method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse:
+                        Response object for
+                    ``BatchApplyAdReviewCenterCustomLabels`` method.
+
+            """
+
+            http_options = _BaseAdReviewCenterAdServiceRestTransport._BaseBatchApplyAdReviewCenterCustomLabels._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_batch_apply_ad_review_center_custom_labels(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdReviewCenterAdServiceRestTransport._BaseBatchApplyAdReviewCenterCustomLabels,
+                    "_BaseBatchApplyAdReviewCenterCustomLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.AdReviewCenterAdServiceClient.BatchApplyAdReviewCenterCustomLabels",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AdReviewCenterAdService",
+                        "rpcName": "BatchApplyAdReviewCenterCustomLabels",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AdReviewCenterAdServiceRestTransport._BatchApplyAdReviewCenterCustomLabels._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse()
+            pb_resp = ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_apply_ad_review_center_custom_labels(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_apply_ad_review_center_custom_labels_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.AdReviewCenterAdServiceClient.batch_apply_ad_review_center_custom_labels",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AdReviewCenterAdService",
+                        "rpcName": "BatchApplyAdReviewCenterCustomLabels",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _BatchBlockAdReviewCenterAds(
         _BaseAdReviewCenterAdServiceRestTransport._BaseBatchBlockAdReviewCenterAds,
         AdReviewCenterAdServiceRestStub,
@@ -657,21 +941,18 @@ class AdReviewCenterAdServiceRestTransport(_BaseAdReviewCenterAdServiceRestTrans
             """
 
             http_options = _BaseAdReviewCenterAdServiceRestTransport._BaseBatchBlockAdReviewCenterAds._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_block_ad_review_center_ads(
                 request, metadata
             )
-            transcoded_request = _BaseAdReviewCenterAdServiceRestTransport._BaseBatchBlockAdReviewCenterAds._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdReviewCenterAdServiceRestTransport._BaseBatchBlockAdReviewCenterAds._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdReviewCenterAdServiceRestTransport._BaseBatchBlockAdReviewCenterAds._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdReviewCenterAdServiceRestTransport._BaseBatchBlockAdReviewCenterAds,
+                    "_BaseBatchBlockAdReviewCenterAds__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -751,6 +1032,168 @@ class AdReviewCenterAdServiceRestTransport(_BaseAdReviewCenterAdServiceRestTrans
                 )
             return resp
 
+    class _FetchAdReviewCenterCustomLabels(
+        _BaseAdReviewCenterAdServiceRestTransport._BaseFetchAdReviewCenterCustomLabels,
+        AdReviewCenterAdServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "AdReviewCenterAdServiceRestTransport.FetchAdReviewCenterCustomLabels"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse:
+            r"""Call the fetch ad review center
+            custom labels method over HTTP.
+
+                Args:
+                    request (~.ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest):
+                        The request object. Request object for ``FetchAdReviewCenterCustomLabels``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse:
+                        Response object for ``FetchAdReviewCenterCustomLabels``
+                    method.
+
+            """
+
+            http_options = _BaseAdReviewCenterAdServiceRestTransport._BaseFetchAdReviewCenterCustomLabels._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_fetch_ad_review_center_custom_labels(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdReviewCenterAdServiceRestTransport._BaseFetchAdReviewCenterCustomLabels,
+                    "_BaseFetchAdReviewCenterCustomLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.AdReviewCenterAdServiceClient.FetchAdReviewCenterCustomLabels",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AdReviewCenterAdService",
+                        "rpcName": "FetchAdReviewCenterCustomLabels",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AdReviewCenterAdServiceRestTransport._FetchAdReviewCenterCustomLabels._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse()
+            pb_resp = (
+                ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse.pb(
+                    resp
+                )
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_fetch_ad_review_center_custom_labels(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_fetch_ad_review_center_custom_labels_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.AdReviewCenterAdServiceClient.fetch_ad_review_center_custom_labels",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.AdReviewCenterAdService",
+                        "rpcName": "FetchAdReviewCenterCustomLabels",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _SearchAdReviewCenterAds(
         _BaseAdReviewCenterAdServiceRestTransport._BaseSearchAdReviewCenterAds,
         AdReviewCenterAdServiceRestStub,
@@ -808,17 +1251,18 @@ class AdReviewCenterAdServiceRestTransport(_BaseAdReviewCenterAdServiceRestTrans
             """
 
             http_options = _BaseAdReviewCenterAdServiceRestTransport._BaseSearchAdReviewCenterAds._get_http_options()
-
             request, metadata = self._interceptor.pre_search_ad_review_center_ads(
                 request, metadata
             )
-            transcoded_request = _BaseAdReviewCenterAdServiceRestTransport._BaseSearchAdReviewCenterAds._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdReviewCenterAdServiceRestTransport._BaseSearchAdReviewCenterAds._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdReviewCenterAdServiceRestTransport._BaseSearchAdReviewCenterAds,
+                    "_BaseSearchAdReviewCenterAds__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -915,6 +1359,19 @@ class AdReviewCenterAdServiceRestTransport(_BaseAdReviewCenterAdServiceRestTrans
         )  # type: ignore
 
     @property
+    def batch_apply_ad_review_center_custom_labels(
+        self,
+    ) -> Callable[
+        [ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest],
+        ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchApplyAdReviewCenterCustomLabels(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def batch_block_ad_review_center_ads(
         self,
     ) -> Callable[
@@ -924,6 +1381,19 @@ class AdReviewCenterAdServiceRestTransport(_BaseAdReviewCenterAdServiceRestTrans
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._BatchBlockAdReviewCenterAds(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def fetch_ad_review_center_custom_labels(
+        self,
+    ) -> Callable[
+        [ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest],
+        ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._FetchAdReviewCenterCustomLabels(
             self._session, self._host, self._interceptor
         )  # type: ignore
 
@@ -996,17 +1466,18 @@ class AdReviewCenterAdServiceRestTransport(_BaseAdReviewCenterAdServiceRestTrans
             """
 
             http_options = _BaseAdReviewCenterAdServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAdReviewCenterAdServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdReviewCenterAdServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdReviewCenterAdServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1114,15 +1585,16 @@ class AdReviewCenterAdServiceRestTransport(_BaseAdReviewCenterAdServiceRestTrans
             """
 
             http_options = _BaseAdReviewCenterAdServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAdReviewCenterAdServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdReviewCenterAdServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdReviewCenterAdServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

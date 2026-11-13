@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.discoveryengine_v1beta._compat import transcode_request
 from google.cloud.discoveryengine_v1beta.types import (
     site_search_engine,
     site_search_engine_service,
@@ -1354,21 +1355,18 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseBatchCreateTargetSites._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_target_sites(
                 request, metadata
             )
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseBatchCreateTargetSites._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSiteSearchEngineServiceRestTransport._BaseBatchCreateTargetSites._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseBatchCreateTargetSites._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseBatchCreateTargetSites,
+                    "_BaseBatchCreateTargetSites__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1508,21 +1506,18 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseBatchVerifyTargetSites._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_verify_target_sites(
                 request, metadata
             )
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseBatchVerifyTargetSites._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSiteSearchEngineServiceRestTransport._BaseBatchVerifyTargetSites._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseBatchVerifyTargetSites._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseBatchVerifyTargetSites,
+                    "_BaseBatchVerifyTargetSites__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1662,19 +1657,16 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseCreateSitemap._get_http_options()
-
             request, metadata = self._interceptor.pre_create_sitemap(request, metadata)
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseCreateSitemap._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSiteSearchEngineServiceRestTransport._BaseCreateSitemap._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseCreateSitemap._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseCreateSitemap,
+                    "_BaseCreateSitemap__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1816,21 +1808,18 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseCreateTargetSite._get_http_options()
-
             request, metadata = self._interceptor.pre_create_target_site(
                 request, metadata
             )
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseCreateTargetSite._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSiteSearchEngineServiceRestTransport._BaseCreateTargetSite._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseCreateTargetSite._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseCreateTargetSite,
+                    "_BaseCreateTargetSite__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1971,15 +1960,16 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseDeleteSitemap._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_sitemap(request, metadata)
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseDeleteSitemap._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseDeleteSitemap._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseDeleteSitemap,
+                    "_BaseDeleteSitemap__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2119,17 +2109,18 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseDeleteTargetSite._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_target_site(
                 request, metadata
             )
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseDeleteTargetSite._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseDeleteTargetSite._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseDeleteTargetSite,
+                    "_BaseDeleteTargetSite__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2273,21 +2264,18 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseDisableAdvancedSiteSearch._get_http_options()
-
             request, metadata = self._interceptor.pre_disable_advanced_site_search(
                 request, metadata
             )
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseDisableAdvancedSiteSearch._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSiteSearchEngineServiceRestTransport._BaseDisableAdvancedSiteSearch._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseDisableAdvancedSiteSearch._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseDisableAdvancedSiteSearch,
+                    "_BaseDisableAdvancedSiteSearch__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2428,21 +2416,18 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseEnableAdvancedSiteSearch._get_http_options()
-
             request, metadata = self._interceptor.pre_enable_advanced_site_search(
                 request, metadata
             )
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseEnableAdvancedSiteSearch._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSiteSearchEngineServiceRestTransport._BaseEnableAdvancedSiteSearch._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseEnableAdvancedSiteSearch._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseEnableAdvancedSiteSearch,
+                    "_BaseEnableAdvancedSiteSearch__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2584,17 +2569,18 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseFetchDomainVerificationStatus._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_domain_verification_status(
                 request, metadata
             )
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseFetchDomainVerificationStatus._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseFetchDomainVerificationStatus._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseFetchDomainVerificationStatus,
+                    "_BaseFetchDomainVerificationStatus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2742,15 +2728,16 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseFetchSitemaps._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_sitemaps(request, metadata)
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseFetchSitemaps._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseFetchSitemaps._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseFetchSitemaps,
+                    "_BaseFetchSitemaps__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2897,17 +2884,18 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseGetSiteSearchEngine._get_http_options()
-
             request, metadata = self._interceptor.pre_get_site_search_engine(
                 request, metadata
             )
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseGetSiteSearchEngine._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseGetSiteSearchEngine._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseGetSiteSearchEngine,
+                    "_BaseGetSiteSearchEngine__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3050,15 +3038,16 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseGetTargetSite._get_http_options()
-
             request, metadata = self._interceptor.pre_get_target_site(request, metadata)
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseGetTargetSite._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseGetTargetSite._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseGetTargetSite,
+                    "_BaseGetTargetSite__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3200,17 +3189,18 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseListTargetSites._get_http_options()
-
             request, metadata = self._interceptor.pre_list_target_sites(
                 request, metadata
             )
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseListTargetSites._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseListTargetSites._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseListTargetSites,
+                    "_BaseListTargetSites__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3357,19 +3347,16 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseRecrawlUris._get_http_options()
-
             request, metadata = self._interceptor.pre_recrawl_uris(request, metadata)
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseRecrawlUris._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSiteSearchEngineServiceRestTransport._BaseRecrawlUris._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseRecrawlUris._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseRecrawlUris,
+                    "_BaseRecrawlUris__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3509,21 +3496,18 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseUpdateTargetSite._get_http_options()
-
             request, metadata = self._interceptor.pre_update_target_site(
                 request, metadata
             )
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseUpdateTargetSite._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSiteSearchEngineServiceRestTransport._BaseUpdateTargetSite._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseUpdateTargetSite._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseUpdateTargetSite,
+                    "_BaseUpdateTargetSite__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3828,21 +3812,18 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSiteSearchEngineServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3951,15 +3932,16 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4090,15 +4072,16 @@ class SiteSearchEngineServiceRestTransport(_BaseSiteSearchEngineServiceRestTrans
             """
 
             http_options = _BaseSiteSearchEngineServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseSiteSearchEngineServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSiteSearchEngineServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSiteSearchEngineServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

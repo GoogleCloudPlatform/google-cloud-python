@@ -55,7 +55,7 @@ A step-by-step guide may also be found in `Get Started with Client Libraries`_.
 .. _Select or create a Cloud Platform project.: https://console.cloud.google.com/project
 .. _Enable billing for your project.: https://cloud.google.com/billing/docs/how-to/modify-project#enable_billing_for_a_project
 .. _Enable the Google Cloud Storage API.:  https://console.cloud.google.com/flows/enableapi?apiid=storage-api.googleapis.com
-.. _Setup Authentication.: https://cloud.google.com/docs/authentication/client-libraries
+.. _Set up Authentication.: https://cloud.google.com/docs/authentication/client-libraries
 
 Installation
 ~~~~~~~~~~~~

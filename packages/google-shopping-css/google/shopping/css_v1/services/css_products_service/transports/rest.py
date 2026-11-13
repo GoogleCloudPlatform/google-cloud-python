@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.css_v1._compat import transcode_request
 from google.shopping.css_v1.types import css_products
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -342,15 +343,16 @@ class CssProductsServiceRestTransport(_BaseCssProductsServiceRestTransport):
             """
 
             http_options = _BaseCssProductsServiceRestTransport._BaseGetCssProduct._get_http_options()
-
             request, metadata = self._interceptor.pre_get_css_product(request, metadata)
-            transcoded_request = _BaseCssProductsServiceRestTransport._BaseGetCssProduct._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCssProductsServiceRestTransport._BaseGetCssProduct._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCssProductsServiceRestTransport._BaseGetCssProduct,
+                    "_BaseGetCssProduct__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -488,17 +490,18 @@ class CssProductsServiceRestTransport(_BaseCssProductsServiceRestTransport):
             """
 
             http_options = _BaseCssProductsServiceRestTransport._BaseListCssProducts._get_http_options()
-
             request, metadata = self._interceptor.pre_list_css_products(
                 request, metadata
             )
-            transcoded_request = _BaseCssProductsServiceRestTransport._BaseListCssProducts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCssProductsServiceRestTransport._BaseListCssProducts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCssProductsServiceRestTransport._BaseListCssProducts,
+                    "_BaseListCssProducts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

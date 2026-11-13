@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_accounts_v1._compat import transcode_request
 from google.shopping.merchant_accounts_v1.types import regions
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -592,21 +593,18 @@ class RegionsServiceRestTransport(_BaseRegionsServiceRestTransport):
             """
 
             http_options = _BaseRegionsServiceRestTransport._BaseBatchCreateRegions._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_regions(
                 request, metadata
             )
-            transcoded_request = _BaseRegionsServiceRestTransport._BaseBatchCreateRegions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionsServiceRestTransport._BaseBatchCreateRegions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionsServiceRestTransport._BaseBatchCreateRegions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionsServiceRestTransport._BaseBatchCreateRegions,
+                    "_BaseBatchCreateRegions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -740,21 +738,18 @@ class RegionsServiceRestTransport(_BaseRegionsServiceRestTransport):
             """
 
             http_options = _BaseRegionsServiceRestTransport._BaseBatchDeleteRegions._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_delete_regions(
                 request, metadata
             )
-            transcoded_request = _BaseRegionsServiceRestTransport._BaseBatchDeleteRegions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionsServiceRestTransport._BaseBatchDeleteRegions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionsServiceRestTransport._BaseBatchDeleteRegions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionsServiceRestTransport._BaseBatchDeleteRegions,
+                    "_BaseBatchDeleteRegions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -856,21 +851,18 @@ class RegionsServiceRestTransport(_BaseRegionsServiceRestTransport):
             """
 
             http_options = _BaseRegionsServiceRestTransport._BaseBatchUpdateRegions._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_regions(
                 request, metadata
             )
-            transcoded_request = _BaseRegionsServiceRestTransport._BaseBatchUpdateRegions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionsServiceRestTransport._BaseBatchUpdateRegions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionsServiceRestTransport._BaseBatchUpdateRegions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionsServiceRestTransport._BaseBatchUpdateRegions,
+                    "_BaseBatchUpdateRegions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1023,19 +1015,16 @@ class RegionsServiceRestTransport(_BaseRegionsServiceRestTransport):
             http_options = (
                 _BaseRegionsServiceRestTransport._BaseCreateRegion._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_region(request, metadata)
-            transcoded_request = _BaseRegionsServiceRestTransport._BaseCreateRegion._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionsServiceRestTransport._BaseCreateRegion._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionsServiceRestTransport._BaseCreateRegion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionsServiceRestTransport._BaseCreateRegion,
+                    "_BaseCreateRegion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1168,15 +1157,16 @@ class RegionsServiceRestTransport(_BaseRegionsServiceRestTransport):
             http_options = (
                 _BaseRegionsServiceRestTransport._BaseDeleteRegion._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_region(request, metadata)
-            transcoded_request = _BaseRegionsServiceRestTransport._BaseDeleteRegion._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionsServiceRestTransport._BaseDeleteRegion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionsServiceRestTransport._BaseDeleteRegion,
+                    "_BaseDeleteRegion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1291,19 +1281,16 @@ class RegionsServiceRestTransport(_BaseRegionsServiceRestTransport):
             http_options = (
                 _BaseRegionsServiceRestTransport._BaseGetRegion._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_region(request, metadata)
-            transcoded_request = (
-                _BaseRegionsServiceRestTransport._BaseGetRegion._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseRegionsServiceRestTransport._BaseGetRegion._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionsServiceRestTransport._BaseGetRegion,
+                    "_BaseGetRegion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1439,15 +1426,16 @@ class RegionsServiceRestTransport(_BaseRegionsServiceRestTransport):
             http_options = (
                 _BaseRegionsServiceRestTransport._BaseListRegions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_regions(request, metadata)
-            transcoded_request = _BaseRegionsServiceRestTransport._BaseListRegions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionsServiceRestTransport._BaseListRegions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionsServiceRestTransport._BaseListRegions,
+                    "_BaseListRegions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1597,19 +1585,16 @@ class RegionsServiceRestTransport(_BaseRegionsServiceRestTransport):
             http_options = (
                 _BaseRegionsServiceRestTransport._BaseUpdateRegion._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_region(request, metadata)
-            transcoded_request = _BaseRegionsServiceRestTransport._BaseUpdateRegion._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionsServiceRestTransport._BaseUpdateRegion._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionsServiceRestTransport._BaseUpdateRegion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionsServiceRestTransport._BaseUpdateRegion,
+                    "_BaseUpdateRegion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

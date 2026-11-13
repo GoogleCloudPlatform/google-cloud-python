@@ -10,6 +10,7 @@ Services for Google Cloud Compute v1beta API
     backend_buckets
     backend_services
     cross_site_networks
+    dhcp_options_configs
     disks
     disk_settings_service
     disk_types
@@ -20,6 +21,7 @@ Services for Google Cloud Compute v1beta API
     future_reservations
     global_addresses
     global_forwarding_rules
+    global_frontend_settings_service
     global_network_endpoint_groups
     global_operations
     global_organization_operations
@@ -48,6 +50,7 @@ Services for Google Cloud Compute v1beta API
     licenses
     machine_images
     machine_types
+    managed_rulesets
     network_attachments
     network_edge_security_services
     network_endpoint_groups
@@ -60,12 +63,14 @@ Services for Google Cloud Compute v1beta API
     organization_rollout_plans
     organization_rollouts
     organization_security_policies
+    organization_snapshot_recycle_bin_policy
     packet_mirrorings
     preview_features
     projects
     project_views
     public_advertised_prefixes
     public_delegated_prefixes
+    recoverable_snapshots
     region_autoscalers
     region_backend_buckets
     region_backend_services
@@ -116,6 +121,7 @@ Services for Google Cloud Compute v1beta API
     security_policies
     service_attachments
     snapshot_groups
+    snapshot_recycle_bin_policy_service
     snapshots
     snapshot_settings_service
     ssl_certificates

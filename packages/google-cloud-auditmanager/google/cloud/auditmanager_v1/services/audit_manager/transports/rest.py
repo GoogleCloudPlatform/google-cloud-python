@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.auditmanager_v1._compat import transcode_request
 from google.cloud.auditmanager_v1.types import auditmanager
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -73,6 +74,14 @@ class AuditManagerRestInterceptor:
 
     .. code-block:: python
         class MyCustomAuditManagerInterceptor(AuditManagerRestInterceptor):
+            def pre_create_audit_schedule(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_audit_schedule(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_enroll_resource(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -105,6 +114,14 @@ class AuditManagerRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_get_audit_schedule(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_audit_schedule(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_get_resource_enrollment_status(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -118,6 +135,14 @@ class AuditManagerRestInterceptor:
                 return request, metadata
 
             def post_list_audit_reports(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_audit_schedules(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_audit_schedules(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -137,11 +162,67 @@ class AuditManagerRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_update_audit_schedule(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_audit_schedule(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
         transport = AuditManagerRestTransport(interceptor=MyCustomAuditManagerInterceptor())
         client = AuditManagerClient(transport=transport)
 
 
     """
+
+    def pre_create_audit_schedule(
+        self,
+        request: auditmanager.CreateAuditScheduleRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        auditmanager.CreateAuditScheduleRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for create_audit_schedule
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AuditManager server.
+        """
+        return request, metadata
+
+    def post_create_audit_schedule(
+        self, response: auditmanager.AuditSchedule
+    ) -> auditmanager.AuditSchedule:
+        """Post-rpc interceptor for create_audit_schedule
+
+        DEPRECATED. Please use the `post_create_audit_schedule_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AuditManager server but before
+        it is returned to user code. This `post_create_audit_schedule` interceptor runs
+        before the `post_create_audit_schedule_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_audit_schedule_with_metadata(
+        self,
+        response: auditmanager.AuditSchedule,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[auditmanager.AuditSchedule, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_audit_schedule
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AuditManager server but before it is returned to user code.
+
+        We recommend only using this `post_create_audit_schedule_with_metadata`
+        interceptor in new development instead of the `post_create_audit_schedule` interceptor.
+        When both interceptors are used, this `post_create_audit_schedule_with_metadata` interceptor runs after the
+        `post_create_audit_schedule` interceptor. The (possibly modified) response returned by
+        `post_create_audit_schedule` will be passed to
+        `post_create_audit_schedule_with_metadata`.
+        """
+        return response, metadata
 
     def pre_enroll_resource(
         self,
@@ -336,6 +417,54 @@ class AuditManagerRestInterceptor:
         """
         return response, metadata
 
+    def pre_get_audit_schedule(
+        self,
+        request: auditmanager.GetAuditScheduleRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        auditmanager.GetAuditScheduleRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for get_audit_schedule
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AuditManager server.
+        """
+        return request, metadata
+
+    def post_get_audit_schedule(
+        self, response: auditmanager.AuditSchedule
+    ) -> auditmanager.AuditSchedule:
+        """Post-rpc interceptor for get_audit_schedule
+
+        DEPRECATED. Please use the `post_get_audit_schedule_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AuditManager server but before
+        it is returned to user code. This `post_get_audit_schedule` interceptor runs
+        before the `post_get_audit_schedule_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_audit_schedule_with_metadata(
+        self,
+        response: auditmanager.AuditSchedule,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[auditmanager.AuditSchedule, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for get_audit_schedule
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AuditManager server but before it is returned to user code.
+
+        We recommend only using this `post_get_audit_schedule_with_metadata`
+        interceptor in new development instead of the `post_get_audit_schedule` interceptor.
+        When both interceptors are used, this `post_get_audit_schedule_with_metadata` interceptor runs after the
+        `post_get_audit_schedule` interceptor. The (possibly modified) response returned by
+        `post_get_audit_schedule` will be passed to
+        `post_get_audit_schedule_with_metadata`.
+        """
+        return response, metadata
+
     def pre_get_resource_enrollment_status(
         self,
         request: auditmanager.GetResourceEnrollmentStatusRequest,
@@ -434,6 +563,56 @@ class AuditManagerRestInterceptor:
         `post_list_audit_reports` interceptor. The (possibly modified) response returned by
         `post_list_audit_reports` will be passed to
         `post_list_audit_reports_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_audit_schedules(
+        self,
+        request: auditmanager.ListAuditSchedulesRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        auditmanager.ListAuditSchedulesRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for list_audit_schedules
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AuditManager server.
+        """
+        return request, metadata
+
+    def post_list_audit_schedules(
+        self, response: auditmanager.ListAuditSchedulesResponse
+    ) -> auditmanager.ListAuditSchedulesResponse:
+        """Post-rpc interceptor for list_audit_schedules
+
+        DEPRECATED. Please use the `post_list_audit_schedules_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AuditManager server but before
+        it is returned to user code. This `post_list_audit_schedules` interceptor runs
+        before the `post_list_audit_schedules_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_audit_schedules_with_metadata(
+        self,
+        response: auditmanager.ListAuditSchedulesResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        auditmanager.ListAuditSchedulesResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for list_audit_schedules
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AuditManager server but before it is returned to user code.
+
+        We recommend only using this `post_list_audit_schedules_with_metadata`
+        interceptor in new development instead of the `post_list_audit_schedules` interceptor.
+        When both interceptors are used, this `post_list_audit_schedules_with_metadata` interceptor runs after the
+        `post_list_audit_schedules` interceptor. The (possibly modified) response returned by
+        `post_list_audit_schedules` will be passed to
+        `post_list_audit_schedules_with_metadata`.
         """
         return response, metadata
 
@@ -536,6 +715,54 @@ class AuditManagerRestInterceptor:
         `post_list_resource_enrollment_statuses` interceptor. The (possibly modified) response returned by
         `post_list_resource_enrollment_statuses` will be passed to
         `post_list_resource_enrollment_statuses_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_audit_schedule(
+        self,
+        request: auditmanager.UpdateAuditScheduleRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        auditmanager.UpdateAuditScheduleRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for update_audit_schedule
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AuditManager server.
+        """
+        return request, metadata
+
+    def post_update_audit_schedule(
+        self, response: auditmanager.AuditSchedule
+    ) -> auditmanager.AuditSchedule:
+        """Post-rpc interceptor for update_audit_schedule
+
+        DEPRECATED. Please use the `post_update_audit_schedule_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AuditManager server but before
+        it is returned to user code. This `post_update_audit_schedule` interceptor runs
+        before the `post_update_audit_schedule_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_audit_schedule_with_metadata(
+        self,
+        response: auditmanager.AuditSchedule,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[auditmanager.AuditSchedule, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_audit_schedule
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AuditManager server but before it is returned to user code.
+
+        We recommend only using this `post_update_audit_schedule_with_metadata`
+        interceptor in new development instead of the `post_update_audit_schedule` interceptor.
+        When both interceptors are used, this `post_update_audit_schedule_with_metadata` interceptor runs after the
+        `post_update_audit_schedule` interceptor. The (possibly modified) response returned by
+        `post_update_audit_schedule` will be passed to
+        `post_update_audit_schedule_with_metadata`.
         """
         return response, metadata
 
@@ -850,6 +1077,158 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
         # Return the client from cache.
         return self._operations_client
 
+    class _CreateAuditSchedule(
+        _BaseAuditManagerRestTransport._BaseCreateAuditSchedule, AuditManagerRestStub
+    ):
+        def __hash__(self):
+            return hash("AuditManagerRestTransport.CreateAuditSchedule")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: auditmanager.CreateAuditScheduleRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> auditmanager.AuditSchedule:
+            r"""Call the create audit schedule method over HTTP.
+
+            Args:
+                request (~.auditmanager.CreateAuditScheduleRequest):
+                    The request object. Request message for
+                [CreateAuditSchedule][google.cloud.auditmanager.v1.AuditManager.CreateAuditSchedule].
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.auditmanager.AuditSchedule:
+                    An audit schedule, in one of the following formats:
+
+                - ``projects/{project}/locations/{location}/auditSchedules/{audit_schedule}``
+                - ``folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}``
+
+            """
+
+            http_options = _BaseAuditManagerRestTransport._BaseCreateAuditSchedule._get_http_options()
+            request, metadata = self._interceptor.pre_create_audit_schedule(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseCreateAuditSchedule,
+                    "_BaseCreateAuditSchedule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.auditmanager_v1.AuditManagerClient.CreateAuditSchedule",
+                    extra={
+                        "serviceName": "google.cloud.auditmanager.v1.AuditManager",
+                        "rpcName": "CreateAuditSchedule",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AuditManagerRestTransport._CreateAuditSchedule._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = auditmanager.AuditSchedule()
+            pb_resp = auditmanager.AuditSchedule.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_audit_schedule(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_create_audit_schedule_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = auditmanager.AuditSchedule.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.auditmanager_v1.AuditManagerClient.create_audit_schedule",
+                    extra={
+                        "serviceName": "google.cloud.auditmanager.v1.AuditManager",
+                        "rpcName": "CreateAuditSchedule",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _EnrollResource(
         _BaseAuditManagerRestTransport._BaseEnrollResource, AuditManagerRestStub
     ):
@@ -911,19 +1290,16 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             http_options = (
                 _BaseAuditManagerRestTransport._BaseEnrollResource._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_enroll_resource(request, metadata)
-            transcoded_request = _BaseAuditManagerRestTransport._BaseEnrollResource._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuditManagerRestTransport._BaseEnrollResource._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditManagerRestTransport._BaseEnrollResource._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseEnrollResource,
+                    "_BaseEnrollResource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1063,21 +1439,18 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             """
 
             http_options = _BaseAuditManagerRestTransport._BaseGenerateAuditReport._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_audit_report(
                 request, metadata
             )
-            transcoded_request = _BaseAuditManagerRestTransport._BaseGenerateAuditReport._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuditManagerRestTransport._BaseGenerateAuditReport._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditManagerRestTransport._BaseGenerateAuditReport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseGenerateAuditReport,
+                    "_BaseGenerateAuditReport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1214,21 +1587,18 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             """
 
             http_options = _BaseAuditManagerRestTransport._BaseGenerateAuditScopeReport._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_audit_scope_report(
                 request, metadata
             )
-            transcoded_request = _BaseAuditManagerRestTransport._BaseGenerateAuditScopeReport._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuditManagerRestTransport._BaseGenerateAuditScopeReport._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditManagerRestTransport._BaseGenerateAuditScopeReport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseGenerateAuditScopeReport,
+                    "_BaseGenerateAuditScopeReport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1368,17 +1738,18 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             http_options = (
                 _BaseAuditManagerRestTransport._BaseGetAuditReport._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_audit_report(
                 request, metadata
             )
-            transcoded_request = _BaseAuditManagerRestTransport._BaseGetAuditReport._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditManagerRestTransport._BaseGetAuditReport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseGetAuditReport,
+                    "_BaseGetAuditReport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1457,6 +1828,158 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
                 )
             return resp
 
+    class _GetAuditSchedule(
+        _BaseAuditManagerRestTransport._BaseGetAuditSchedule, AuditManagerRestStub
+    ):
+        def __hash__(self):
+            return hash("AuditManagerRestTransport.GetAuditSchedule")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: auditmanager.GetAuditScheduleRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> auditmanager.AuditSchedule:
+            r"""Call the get audit schedule method over HTTP.
+
+            Args:
+                request (~.auditmanager.GetAuditScheduleRequest):
+                    The request object. Request message for
+                [GetAuditSchedule][google.cloud.auditmanager.v1.AuditManager.GetAuditSchedule].
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.auditmanager.AuditSchedule:
+                    An audit schedule, in one of the following formats:
+
+                - ``projects/{project}/locations/{location}/auditSchedules/{audit_schedule}``
+                - ``folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}``
+
+            """
+
+            http_options = (
+                _BaseAuditManagerRestTransport._BaseGetAuditSchedule._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_get_audit_schedule(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseGetAuditSchedule,
+                    "_BaseGetAuditSchedule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.auditmanager_v1.AuditManagerClient.GetAuditSchedule",
+                    extra={
+                        "serviceName": "google.cloud.auditmanager.v1.AuditManager",
+                        "rpcName": "GetAuditSchedule",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AuditManagerRestTransport._GetAuditSchedule._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = auditmanager.AuditSchedule()
+            pb_resp = auditmanager.AuditSchedule.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_audit_schedule(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_audit_schedule_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = auditmanager.AuditSchedule.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.auditmanager_v1.AuditManagerClient.get_audit_schedule",
+                    extra={
+                        "serviceName": "google.cloud.auditmanager.v1.AuditManager",
+                        "rpcName": "GetAuditSchedule",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _GetResourceEnrollmentStatus(
         _BaseAuditManagerRestTransport._BaseGetResourceEnrollmentStatus,
         AuditManagerRestStub,
@@ -1517,17 +2040,18 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             """
 
             http_options = _BaseAuditManagerRestTransport._BaseGetResourceEnrollmentStatus._get_http_options()
-
             request, metadata = self._interceptor.pre_get_resource_enrollment_status(
                 request, metadata
             )
-            transcoded_request = _BaseAuditManagerRestTransport._BaseGetResourceEnrollmentStatus._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditManagerRestTransport._BaseGetResourceEnrollmentStatus._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseGetResourceEnrollmentStatus,
+                    "_BaseGetResourceEnrollmentStatus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1672,17 +2196,18 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             http_options = (
                 _BaseAuditManagerRestTransport._BaseListAuditReports._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_audit_reports(
                 request, metadata
             )
-            transcoded_request = _BaseAuditManagerRestTransport._BaseListAuditReports._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditManagerRestTransport._BaseListAuditReports._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseListAuditReports,
+                    "_BaseListAuditReports__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1763,6 +2288,156 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
                 )
             return resp
 
+    class _ListAuditSchedules(
+        _BaseAuditManagerRestTransport._BaseListAuditSchedules, AuditManagerRestStub
+    ):
+        def __hash__(self):
+            return hash("AuditManagerRestTransport.ListAuditSchedules")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: auditmanager.ListAuditSchedulesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> auditmanager.ListAuditSchedulesResponse:
+            r"""Call the list audit schedules method over HTTP.
+
+            Args:
+                request (~.auditmanager.ListAuditSchedulesRequest):
+                    The request object. Request message for
+                [ListAuditSchedules][google.cloud.auditmanager.v1.AuditManager.ListAuditSchedules].
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.auditmanager.ListAuditSchedulesResponse:
+                    Response message for
+                [ListAuditSchedules][google.cloud.auditmanager.v1.AuditManager.ListAuditSchedules].
+
+            """
+
+            http_options = _BaseAuditManagerRestTransport._BaseListAuditSchedules._get_http_options()
+            request, metadata = self._interceptor.pre_list_audit_schedules(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseListAuditSchedules,
+                    "_BaseListAuditSchedules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.auditmanager_v1.AuditManagerClient.ListAuditSchedules",
+                    extra={
+                        "serviceName": "google.cloud.auditmanager.v1.AuditManager",
+                        "rpcName": "ListAuditSchedules",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AuditManagerRestTransport._ListAuditSchedules._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = auditmanager.ListAuditSchedulesResponse()
+            pb_resp = auditmanager.ListAuditSchedulesResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_audit_schedules(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_audit_schedules_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = auditmanager.ListAuditSchedulesResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.auditmanager_v1.AuditManagerClient.list_audit_schedules",
+                    extra={
+                        "serviceName": "google.cloud.auditmanager.v1.AuditManager",
+                        "rpcName": "ListAuditSchedules",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _ListControls(
         _BaseAuditManagerRestTransport._BaseListControls, AuditManagerRestStub
     ):
@@ -1823,17 +2498,16 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             http_options = (
                 _BaseAuditManagerRestTransport._BaseListControls._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_controls(request, metadata)
-            transcoded_request = _BaseAuditManagerRestTransport._BaseListControls._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAuditManagerRestTransport._BaseListControls._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseListControls,
+                    "_BaseListControls__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1974,17 +2648,18 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             """
 
             http_options = _BaseAuditManagerRestTransport._BaseListResourceEnrollmentStatuses._get_http_options()
-
             request, metadata = self._interceptor.pre_list_resource_enrollment_statuses(
                 request, metadata
             )
-            transcoded_request = _BaseAuditManagerRestTransport._BaseListResourceEnrollmentStatuses._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditManagerRestTransport._BaseListResourceEnrollmentStatuses._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseListResourceEnrollmentStatuses,
+                    "_BaseListResourceEnrollmentStatuses__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2071,6 +2746,168 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
                 )
             return resp
 
+    class _UpdateAuditSchedule(
+        _BaseAuditManagerRestTransport._BaseUpdateAuditSchedule, AuditManagerRestStub
+    ):
+        def __hash__(self):
+            return hash("AuditManagerRestTransport.UpdateAuditSchedule")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: auditmanager.UpdateAuditScheduleRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> auditmanager.AuditSchedule:
+            r"""Call the update audit schedule method over HTTP.
+
+            Args:
+                request (~.auditmanager.UpdateAuditScheduleRequest):
+                    The request object. Request message for
+                [UpdateAuditSchedule][google.cloud.auditmanager.v1.AuditManager.UpdateAuditSchedule].
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.auditmanager.AuditSchedule:
+                    An audit schedule, in one of the following formats:
+
+                - ``projects/{project}/locations/{location}/auditSchedules/{audit_schedule}``
+                - ``folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}``
+
+            """
+
+            http_options = _BaseAuditManagerRestTransport._BaseUpdateAuditSchedule._get_http_options()
+            request, metadata = self._interceptor.pre_update_audit_schedule(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseUpdateAuditSchedule,
+                    "_BaseUpdateAuditSchedule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.auditmanager_v1.AuditManagerClient.UpdateAuditSchedule",
+                    extra={
+                        "serviceName": "google.cloud.auditmanager.v1.AuditManager",
+                        "rpcName": "UpdateAuditSchedule",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AuditManagerRestTransport._UpdateAuditSchedule._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = auditmanager.AuditSchedule()
+            pb_resp = auditmanager.AuditSchedule.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_audit_schedule(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_audit_schedule_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = auditmanager.AuditSchedule.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.auditmanager_v1.AuditManagerClient.update_audit_schedule",
+                    extra={
+                        "serviceName": "google.cloud.auditmanager.v1.AuditManager",
+                        "rpcName": "UpdateAuditSchedule",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    @property
+    def create_audit_schedule(
+        self,
+    ) -> Callable[
+        [auditmanager.CreateAuditScheduleRequest], auditmanager.AuditSchedule
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateAuditSchedule(self._session, self._host, self._interceptor)  # type: ignore
+
     @property
     def enroll_resource(
         self,
@@ -2108,6 +2945,14 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
         return self._GetAuditReport(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def get_audit_schedule(
+        self,
+    ) -> Callable[[auditmanager.GetAuditScheduleRequest], auditmanager.AuditSchedule]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetAuditSchedule(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def get_resource_enrollment_status(
         self,
     ) -> Callable[
@@ -2131,6 +2976,17 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
         return self._ListAuditReports(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def list_audit_schedules(
+        self,
+    ) -> Callable[
+        [auditmanager.ListAuditSchedulesRequest],
+        auditmanager.ListAuditSchedulesResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListAuditSchedules(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def list_controls(
         self,
     ) -> Callable[
@@ -2152,6 +3008,16 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
         return self._ListResourceEnrollmentStatuses(
             self._session, self._host, self._interceptor
         )  # type: ignore
+
+    @property
+    def update_audit_schedule(
+        self,
+    ) -> Callable[
+        [auditmanager.UpdateAuditScheduleRequest], auditmanager.AuditSchedule
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateAuditSchedule(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def get_location(self):
@@ -2213,19 +3079,16 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             http_options = (
                 _BaseAuditManagerRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseAuditManagerRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAuditManagerRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2357,15 +3220,16 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             http_options = (
                 _BaseAuditManagerRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseAuditManagerRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditManagerRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2495,21 +3359,18 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             http_options = (
                 _BaseAuditManagerRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAuditManagerRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAuditManagerRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditManagerRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2614,17 +3475,18 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             http_options = (
                 _BaseAuditManagerRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAuditManagerRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditManagerRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2731,17 +3593,16 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             http_options = (
                 _BaseAuditManagerRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAuditManagerRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAuditManagerRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2873,15 +3734,16 @@ class AuditManagerRestTransport(_BaseAuditManagerRestTransport):
             http_options = (
                 _BaseAuditManagerRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseAuditManagerRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuditManagerRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuditManagerRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

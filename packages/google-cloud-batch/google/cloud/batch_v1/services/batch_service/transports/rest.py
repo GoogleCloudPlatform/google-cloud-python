@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.batch_v1._compat import transcode_request
 from google.cloud.batch_v1.types import batch, job, task
 from google.cloud.batch_v1.types import job as gcb_job
 
@@ -803,23 +804,16 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseCancelJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_job(request, metadata)
-            transcoded_request = (
-                _BaseBatchServiceRestTransport._BaseCancelJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseBatchServiceRestTransport._BaseCancelJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBatchServiceRestTransport._BaseCancelJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseCancelJob,
+                    "_BaseCancelJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -955,23 +949,16 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseCreateJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_job(request, metadata)
-            transcoded_request = (
-                _BaseBatchServiceRestTransport._BaseCreateJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseBatchServiceRestTransport._BaseCreateJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBatchServiceRestTransport._BaseCreateJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseCreateJob,
+                    "_BaseCreateJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1111,19 +1098,16 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseDeleteJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_job(request, metadata)
-            transcoded_request = (
-                _BaseBatchServiceRestTransport._BaseDeleteJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBatchServiceRestTransport._BaseDeleteJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseDeleteJob,
+                    "_BaseDeleteJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1255,19 +1239,16 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseGetJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_job(request, metadata)
-            transcoded_request = (
-                _BaseBatchServiceRestTransport._BaseGetJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBatchServiceRestTransport._BaseGetJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseGetJob,
+                    "_BaseGetJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1401,19 +1382,16 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseGetTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_task(request, metadata)
-            transcoded_request = (
-                _BaseBatchServiceRestTransport._BaseGetTask._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBatchServiceRestTransport._BaseGetTask._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseGetTask,
+                    "_BaseGetTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1547,19 +1525,16 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseListJobs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_jobs(request, metadata)
-            transcoded_request = (
-                _BaseBatchServiceRestTransport._BaseListJobs._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBatchServiceRestTransport._BaseListJobs._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseListJobs,
+                    "_BaseListJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1695,19 +1670,16 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseListTasks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_tasks(request, metadata)
-            transcoded_request = (
-                _BaseBatchServiceRestTransport._BaseListTasks._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBatchServiceRestTransport._BaseListTasks._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseListTasks,
+                    "_BaseListTasks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1892,19 +1864,16 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseBatchServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBatchServiceRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2036,15 +2005,16 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseBatchServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBatchServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2174,21 +2144,18 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseBatchServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBatchServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBatchServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2293,17 +2260,18 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseBatchServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBatchServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2410,17 +2378,16 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseBatchServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBatchServiceRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2552,15 +2519,16 @@ class BatchServiceRestTransport(_BaseBatchServiceRestTransport):
             http_options = (
                 _BaseBatchServiceRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseBatchServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBatchServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBatchServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

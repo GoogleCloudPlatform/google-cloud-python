@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.monitoring_dashboard_v1._compat import transcode_request
 from google.cloud.monitoring_dashboard_v1.types import dashboard, dashboards_service
 from google.cloud.monitoring_dashboard_v1.types import dashboard as gmd_dashboard
 
@@ -482,21 +483,18 @@ class DashboardsServiceRestTransport(_BaseDashboardsServiceRestTransport):
             """
 
             http_options = _BaseDashboardsServiceRestTransport._BaseCreateDashboard._get_http_options()
-
             request, metadata = self._interceptor.pre_create_dashboard(
                 request, metadata
             )
-            transcoded_request = _BaseDashboardsServiceRestTransport._BaseCreateDashboard._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDashboardsServiceRestTransport._BaseCreateDashboard._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDashboardsServiceRestTransport._BaseCreateDashboard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDashboardsServiceRestTransport._BaseCreateDashboard,
+                    "_BaseCreateDashboard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -628,17 +626,18 @@ class DashboardsServiceRestTransport(_BaseDashboardsServiceRestTransport):
             """
 
             http_options = _BaseDashboardsServiceRestTransport._BaseDeleteDashboard._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_dashboard(
                 request, metadata
             )
-            transcoded_request = _BaseDashboardsServiceRestTransport._BaseDeleteDashboard._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDashboardsServiceRestTransport._BaseDeleteDashboard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDashboardsServiceRestTransport._BaseDeleteDashboard,
+                    "_BaseDeleteDashboard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -742,15 +741,16 @@ class DashboardsServiceRestTransport(_BaseDashboardsServiceRestTransport):
             """
 
             http_options = _BaseDashboardsServiceRestTransport._BaseGetDashboard._get_http_options()
-
             request, metadata = self._interceptor.pre_get_dashboard(request, metadata)
-            transcoded_request = _BaseDashboardsServiceRestTransport._BaseGetDashboard._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDashboardsServiceRestTransport._BaseGetDashboard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDashboardsServiceRestTransport._BaseGetDashboard,
+                    "_BaseGetDashboard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -885,15 +885,16 @@ class DashboardsServiceRestTransport(_BaseDashboardsServiceRestTransport):
             """
 
             http_options = _BaseDashboardsServiceRestTransport._BaseListDashboards._get_http_options()
-
             request, metadata = self._interceptor.pre_list_dashboards(request, metadata)
-            transcoded_request = _BaseDashboardsServiceRestTransport._BaseListDashboards._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDashboardsServiceRestTransport._BaseListDashboards._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDashboardsServiceRestTransport._BaseListDashboards,
+                    "_BaseListDashboards__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1035,21 +1036,18 @@ class DashboardsServiceRestTransport(_BaseDashboardsServiceRestTransport):
             """
 
             http_options = _BaseDashboardsServiceRestTransport._BaseUpdateDashboard._get_http_options()
-
             request, metadata = self._interceptor.pre_update_dashboard(
                 request, metadata
             )
-            transcoded_request = _BaseDashboardsServiceRestTransport._BaseUpdateDashboard._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDashboardsServiceRestTransport._BaseUpdateDashboard._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDashboardsServiceRestTransport._BaseUpdateDashboard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDashboardsServiceRestTransport._BaseUpdateDashboard,
+                    "_BaseUpdateDashboard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

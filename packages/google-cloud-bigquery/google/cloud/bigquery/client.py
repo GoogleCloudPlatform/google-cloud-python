@@ -26,6 +26,7 @@ import json
 import math
 import os
 import tempfile
+import threading
 import typing
 import uuid
 import warnings
@@ -78,6 +79,9 @@ from google.cloud.bigquery import (
     job,
 )
 from google.cloud.bigquery import exceptions as bq_exceptions
+from google.cloud.bigquery import (
+    version as bq_version,
+)
 from google.cloud.bigquery._helpers import (
     _DEFAULT_HOST,
     _DEFAULT_HOST_TEMPLATE,
@@ -148,7 +152,7 @@ _MULTIPART_URL_TEMPLATE = _BASE_UPLOAD_TEMPLATE + "multipart"
 _RESUMABLE_URL_TEMPLATE = _BASE_UPLOAD_TEMPLATE + "resumable"
 _GENERIC_CONTENT_TYPE = "*/*"
 _READ_LESS_THAN_SIZE = (
-    "Size {:d} was specified but the file-like object only had " "{:d} bytes remaining."
+    "Size {:d} was specified but the file-like object only had {:d} bytes remaining."
 )
 _NEED_TABLE_ARGUMENT = (
     "The table argument should be a table ID string, Table, or TableReference"
@@ -162,6 +166,37 @@ _LIST_ROWS_FROM_QUERY_RESULTS_FIELDS = "jobReference,totalRows,pageToken,rows"
 # connection timeout before data can be downloaded.
 # https://github.com/googleapis/python-bigquery/issues/438
 _MIN_GET_QUERY_RESULTS_TIMEOUT = 120
+
+# While a stream is open and the connection is idle, the shared BigQuery
+# Storage client pings the server after a minute, and closes the connection
+# if a ping isn't answered within a minute. A dropped ReadRows stream is
+# resumed at the next unread row.
+_BQSTORAGE_KEEPALIVE_TIME_MS = 60 * 1000
+_BQSTORAGE_KEEPALIVE_TIMEOUT_MS = 60 * 1000
+
+
+# TODO(https://github.com/googleapis/google-cloud-python/issues/18784): Use the
+# default transport once google-cloud-bigquery-storage sets keepalive itself.
+def _create_bqstorage_transport(**kwargs):
+    """Create a BigQuery Storage gRPC transport whose channel sends keepalive
+    pings.
+
+    ``BigQueryReadClient`` calls this with the arguments it passes to its
+    default transport.
+    """
+    from google.cloud import bigquery_storage
+
+    transport_class = bigquery_storage.BigQueryReadClient.get_transport_class("grpc")
+
+    def create_channel(*args, options=(), **channel_kwargs):
+        options = list(options) + [
+            ("grpc.keepalive_time_ms", _BQSTORAGE_KEEPALIVE_TIME_MS),
+            ("grpc.keepalive_timeout_ms", _BQSTORAGE_KEEPALIVE_TIMEOUT_MS),
+        ]
+        return transport_class.create_channel(*args, options=options, **channel_kwargs)
+
+    return transport_class(channel=create_channel, **kwargs)
+
 
 _LOAD_TABLE_FROM_DATAFRAME_DEPRECATED = (
     "Loading DataFrames via google-cloud-bigquery is deprecated. "
@@ -237,7 +272,9 @@ class Client(ClientWithProject):
         default_job_creation_mode (Optional[str]):
             Sets the default job creation mode used by query methods such as
             query_and_wait().  For lightweight queries, JOB_CREATION_OPTIONAL is
-            generally recommended.
+            generally recommended. If unset, query_and_wait() uses
+            JOB_CREATION_OPTIONAL for ``ARROW`` results and creates a job
+            otherwise.
 
     Raises:
         google.auth.exceptions.DefaultCredentialsError:
@@ -293,9 +330,17 @@ class Client(ClientWithProject):
             _validate_universe(client_universe, self._credentials)
 
         self._connection = Connection(self, **kw_args)
+        self._universe_domain = _get_client_universe(client_options)
         self._location = location
         self._default_load_job_config = copy.deepcopy(default_load_job_config)
         self.default_job_creation_mode = default_job_creation_mode
+
+        # ARROW query results share one BigQuery Storage client. It's created
+        # the first time a query needs a stream, and close() closes it.
+        self._shared_bqstorage_client: Optional[
+            "google.cloud.bigquery_storage.BigQueryReadClient"
+        ] = None
+        self._shared_bqstorage_client_lock = threading.Lock()
 
         # Use property setter so validation can run.
         self.default_query_job_config = default_query_job_config
@@ -345,6 +390,9 @@ class Client(ClientWithProject):
     def close(self):
         """Close the underlying transport objects, releasing system resources.
 
+        This also closes the BigQuery Storage client that ``ARROW`` query
+        results share.
+
         .. note::
 
             The client instance can be used for making additional requests even
@@ -353,6 +401,11 @@ class Client(ClientWithProject):
         """
         self._http._auth_request.session.close()
         self._http.close()
+        with self._shared_bqstorage_client_lock:
+            bqstorage_client = self._shared_bqstorage_client
+            self._shared_bqstorage_client = None
+        if bqstorage_client is not None:
+            bqstorage_client._transport.close()
 
     def get_service_account_email(
         self,
@@ -597,6 +650,7 @@ class Client(ClientWithProject):
         client_info: Optional[
             "google.api_core.gapic_v1.client_info.ClientInfo"
         ] = DEFAULT_BQSTORAGE_CLIENT_INFO,
+        transport: Optional[Callable[..., Any]] = None,
     ) -> Optional["google.cloud.bigquery_storage.BigQueryReadClient"]:
         """Create a BigQuery Storage API client using this client's credentials.
 
@@ -606,10 +660,14 @@ class Client(ClientWithProject):
                 instance is created and returned.
             client_options:
                 Custom options used with a new BigQuery Storage client instance
-                if one is created.
+                if one is created. If ``None``, the new client uses this
+                client's universe domain.
             client_info:
                 The client info used with a new BigQuery Storage client
                 instance if one is created.
+            transport:
+                A callable that creates the transport of a new BigQuery Storage
+                client instance. If ``None``, the default transport is used.
 
         Returns:
             A BigQuery Storage API client.
@@ -641,9 +699,16 @@ class Client(ClientWithProject):
             pandas_gbq = None  # type: ignore
 
         if pandas_gbq is None:
-            user_agent = "pandas-gbq/0.0.0"
+            # Even if pandas-gbq isn't installed, attribute all
+            # to_dataframe/to_arrow usage the same as we do the recommended
+            # (pandas-gbq) code paths.
+            pandas_user_agent = "pandas-gbq/0.0.0"
         else:
-            user_agent = f"pandas-gbq/{pandas_gbq.__version__}"
+            pandas_user_agent = f"pandas-gbq/{pandas_gbq.__version__}"
+
+        # Track the google-cloud-bigquery version as "legacy" because this code
+        # path is intended to be migrated to pandas-gbq itself.
+        user_agent = f"legacy-gcb/{bq_version.__version__} {pandas_user_agent}"
 
         if client_info is None:
             amended_client_info = google.api_core.gapic_v1.client_info.ClientInfo(
@@ -666,13 +731,41 @@ class Client(ClientWithProject):
             )
 
         if bqstorage_client is None:
+            if client_options is None and self._universe_domain != _DEFAULT_UNIVERSE:
+                # Without this, the BigQuery Storage client uses googleapis.com.
+                client_options = google.api_core.client_options.ClientOptions(
+                    universe_domain=self._universe_domain
+                )
             bqstorage_client = bigquery_storage.BigQueryReadClient(
                 credentials=self._credentials,
                 client_options=client_options,
                 client_info=amended_client_info,
+                transport=transport,
             )
 
         return bqstorage_client
+
+    def _get_shared_bqstorage_client(
+        self,
+    ) -> Optional["google.cloud.bigquery_storage.BigQueryReadClient"]:
+        """Return the BigQuery Storage client that ``ARROW`` query results share.
+
+        The client is created on first use, with this client's credentials and
+        universe domain and a gRPC channel that sends keepalive pings.
+        :meth:`close` closes it, and the next call creates a new one. Callers
+        must not close it, unlike the clients from
+        :meth:`_ensure_bqstorage_client`, which each caller owns.
+
+        Returns:
+            A BigQuery Storage API client, or ``None`` if
+            google-cloud-bigquery-storage is missing or outdated.
+        """
+        with self._shared_bqstorage_client_lock:
+            if self._shared_bqstorage_client is None:
+                self._shared_bqstorage_client = self._ensure_bqstorage_client(
+                    transport=_create_bqstorage_transport,
+                )
+            return self._shared_bqstorage_client
 
     def _dataset_from_arg(self, dataset) -> Union[Dataset, DatasetReference]:
         if isinstance(dataset, str):
@@ -2958,13 +3051,8 @@ class Client(ClientWithProject):
                     )
 
             else:
-                dataframe.to_csv(
-                    tmppath,
-                    index=False,
-                    header=False,
-                    encoding="utf-8",
-                    float_format="%.17g",
-                    date_format="%Y-%m-%d %H:%M:%S.%f",
+                _pandas_helpers.dataframe_to_csv(
+                    dataframe, new_job_config.schema, tmppath
                 )
 
             with open(tmppath, "rb") as tmpfile:
@@ -3667,6 +3755,7 @@ class Client(ClientWithProject):
         max_results: Optional[int] = None,
         query_results_format: Optional[str] = None,
         compression_codec: Optional[str] = None,
+        timestamp_precision: Optional[enums.TimestampPrecision] = None,
     ) -> RowIterator:
         """Run the query, wait for it to finish, and return the results.
 
@@ -3716,8 +3805,20 @@ class Client(ClientWithProject):
                 The maximum total number of rows from this request.
             query_results_format (Optional[Union[str, google.cloud.bigquery.enums.QueryResultsFormat]]):
                 [Beta] The format for query results (e.g. "ARROW" or :class:`~google.cloud.bigquery.enums.QueryResultsFormat.ARROW`).
+
+                With ``ARROW``, the query uses ``JOB_CREATION_OPTIONAL``
+                unless :attr:`default_job_creation_mode` is set. Results that
+                fit in one page then have no job, so the returned iterator's
+                ``job_id`` is ``None``. To always create a job, set
+                ``default_job_creation_mode`` to ``JOB_CREATION_REQUIRED`` or
+                use :meth:`query`.
             compression_codec (Optional[Union[str, google.cloud.bigquery.enums.QueryResultsCompressionCodec]]):
                 [Beta] Compression codec for Arrow serialization (e.g. "LZ4_FRAME" or :class:`~google.cloud.bigquery.enums.QueryResultsCompressionCodec.LZ4_FRAME`).
+            timestamp_precision (Optional[enums.TimestampPrecision]):
+                [Private Preview] Precision of picosecond ``TIMESTAMP`` columns
+                in ``ARROW`` results. With ``PICOSECOND``, they arrive at full
+                precision as ISO 8601 strings. Otherwise, they're truncated to
+                microseconds. Requires ``query_results_format=ARROW``.
 
         Returns:
             google.cloud.bigquery.table.RowIterator:
@@ -3736,6 +3837,12 @@ class Client(ClientWithProject):
                 If ``job_config`` is not an instance of
                 :class:`~google.cloud.bigquery.job.QueryJobConfig`
                 class.
+            ValueError:
+                If ``compression_codec`` or ``timestamp_precision`` is set
+                without ``ARROW``.
+            google.cloud.bigquery.exceptions.BigQueryError:
+                If pyarrow or google-cloud-bigquery-storage is missing or too
+                old to read ``ARROW`` results. The query isn't sent.
         """
         return self._query_and_wait_bigframes(
             query,
@@ -3750,6 +3857,7 @@ class Client(ClientWithProject):
             max_results=max_results,
             query_results_format=query_results_format,
             compression_codec=compression_codec,
+            timestamp_precision=timestamp_precision,
         )
 
     def _query_and_wait_bigframes(
@@ -3767,6 +3875,7 @@ class Client(ClientWithProject):
         max_results: Optional[int] = None,
         query_results_format: Optional[str] = None,
         compression_codec: Optional[str] = None,
+        timestamp_precision: Optional[enums.TimestampPrecision] = None,
         callback: Callable = lambda _: None,
     ) -> RowIterator:
         """See query_and_wait.
@@ -3801,6 +3910,7 @@ class Client(ClientWithProject):
             max_results=max_results,
             query_results_format=query_results_format,
             compression_codec=compression_codec,
+            timestamp_precision=timestamp_precision,
             callback=callback,
         )
 

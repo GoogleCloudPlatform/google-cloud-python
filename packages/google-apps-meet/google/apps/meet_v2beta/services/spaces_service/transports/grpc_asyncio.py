@@ -369,7 +369,7 @@ class SpacesServiceGrpcAsyncIOTransport(SpacesServiceTransport):
         Gets details about a meeting space.
 
         For an example, see `Get a meeting
-        space <https://developers.google.com/meet/api/guides/meeting-spaces#get-meeting-space>`__.
+        space <https://developers.google.com/workspace/meet/api/guides/meeting-spaces#get-meeting-space>`__.
 
         Returns:
             Callable[[~.GetSpaceRequest],
@@ -398,7 +398,7 @@ class SpacesServiceGrpcAsyncIOTransport(SpacesServiceTransport):
         Updates details about a meeting space.
 
         For an example, see `Update a meeting
-        space <https://developers.google.com/meet/api/guides/meeting-spaces#update-meeting-space>`__.
+        space <https://developers.google.com/workspace/meet/api/guides/meeting-spaces#update-meeting-space>`__.
 
         Returns:
             Callable[[~.UpdateSpaceRequest],
@@ -437,7 +437,7 @@ class SpacesServiceGrpcAsyncIOTransport(SpacesServiceTransport):
         WebRTC data channels.
 
         See `Meet Media API
-        overview <https://developers.google.com/meet/media-api/guides/overview>`__
+        overview <https://developers.google.com/workspace/meet/media-api/guides/overview>`__
         for more details about this connection.
 
         Returns:
@@ -467,7 +467,7 @@ class SpacesServiceGrpcAsyncIOTransport(SpacesServiceTransport):
         Ends an active conference (if there's one).
 
         For an example, see `End active
-        conference <https://developers.google.com/meet/api/guides/meeting-spaces#end-active-conference>`__.
+        conference <https://developers.google.com/workspace/meet/api/guides/meeting-spaces#end-active-conference>`__.
 
         Returns:
             Callable[[~.EndActiveConferenceRequest],
@@ -493,9 +493,7 @@ class SpacesServiceGrpcAsyncIOTransport(SpacesServiceTransport):
     ) -> Callable[[service.CreateMemberRequest], Awaitable[resource.Member]]:
         r"""Return a callable for the create member method over gRPC.
 
-        `Developer
-        Preview <https://developers.google.com/workspace/preview>`__:
-        Create a member.
+        Creates a member.
 
         This API supports the ``fields`` parameter in
         `SystemParameterContext <https://cloud.google.com/apis/docs/system-parameters>`__.
@@ -526,9 +524,7 @@ class SpacesServiceGrpcAsyncIOTransport(SpacesServiceTransport):
     ) -> Callable[[service.GetMemberRequest], Awaitable[resource.Member]]:
         r"""Return a callable for the get member method over gRPC.
 
-        `Developer
-        Preview <https://developers.google.com/workspace/preview>`__:
-        Get a member.
+        Gets a member.
 
         This API supports the ``fields`` parameter in
         `SystemParameterContext <https://cloud.google.com/apis/docs/system-parameters>`__.
@@ -559,9 +555,7 @@ class SpacesServiceGrpcAsyncIOTransport(SpacesServiceTransport):
     ) -> Callable[[service.ListMembersRequest], Awaitable[service.ListMembersResponse]]:
         r"""Return a callable for the list members method over gRPC.
 
-        `Developer
-        Preview <https://developers.google.com/workspace/preview>`__:
-        List members.
+        Lists members.
 
         This API supports the ``fields`` parameter in
         `SystemParameterContext <https://cloud.google.com/apis/docs/system-parameters>`__.
@@ -592,10 +586,8 @@ class SpacesServiceGrpcAsyncIOTransport(SpacesServiceTransport):
     ) -> Callable[[service.DeleteMemberRequest], Awaitable[empty_pb2.Empty]]:
         r"""Return a callable for the delete member method over gRPC.
 
-        `Developer
-        Preview <https://developers.google.com/workspace/preview>`__:
-        Delete the member who was previously assigned roles in the
-        space.
+        Deletes the member who was previously assigned roles
+        in the space.
 
         Returns:
             Callable[[~.DeleteMemberRequest],
@@ -614,6 +606,61 @@ class SpacesServiceGrpcAsyncIOTransport(SpacesServiceTransport):
                 response_deserializer=empty_pb2.Empty.FromString,
             )
         return self._stubs["delete_member"]
+
+    @property
+    def update_member(
+        self,
+    ) -> Callable[[service.UpdateMemberRequest], Awaitable[resource.Member]]:
+        r"""Return a callable for the update member method over gRPC.
+
+        Updates a member.
+
+        Returns:
+            Callable[[~.UpdateMemberRequest],
+                    Awaitable[~.Member]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_member" not in self._stubs:
+            self._stubs["update_member"] = self._logged_channel.unary_unary(
+                "/google.apps.meet.v2beta.SpacesService/UpdateMember",
+                request_serializer=service.UpdateMemberRequest.serialize,
+                response_deserializer=resource.Member.deserialize,
+            )
+        return self._stubs["update_member"]
+
+    @property
+    def batch_update_members(
+        self,
+    ) -> Callable[
+        [service.BatchUpdateMembersRequest],
+        Awaitable[service.BatchUpdateMembersResponse],
+    ]:
+        r"""Return a callable for the batch update members method over gRPC.
+
+        Updates members of one space within a batch.
+
+        Returns:
+            Callable[[~.BatchUpdateMembersRequest],
+                    Awaitable[~.BatchUpdateMembersResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "batch_update_members" not in self._stubs:
+            self._stubs["batch_update_members"] = self._logged_channel.unary_unary(
+                "/google.apps.meet.v2beta.SpacesService/BatchUpdateMembers",
+                request_serializer=service.BatchUpdateMembersRequest.serialize,
+                response_deserializer=service.BatchUpdateMembersResponse.deserialize,
+            )
+        return self._stubs["batch_update_members"]
 
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
@@ -654,7 +701,7 @@ class SpacesServiceGrpcAsyncIOTransport(SpacesServiceTransport):
             ),
             self.create_member: self._wrap_method(
                 self.create_member,
-                default_timeout=60.0,
+                default_timeout=80.0,
                 client_info=client_info,
             ),
             self.get_member: self._wrap_method(
@@ -669,6 +716,16 @@ class SpacesServiceGrpcAsyncIOTransport(SpacesServiceTransport):
             ),
             self.delete_member: self._wrap_method(
                 self.delete_member,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.update_member: self._wrap_method(
+                self.update_member,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.batch_update_members: self._wrap_method(
+                self.batch_update_members,
                 default_timeout=60.0,
                 client_info=client_info,
             ),

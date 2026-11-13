@@ -14,10 +14,16 @@
 # limitations under the License.
 #
 from .cloudtasks import (
+    BatchCreateTasksMetadata,
+    BatchCreateTasksRequest,
+    BatchCreateTasksResponse,
+    BatchDeleteTasksMetadata,
+    BatchDeleteTasksRequest,
     CreateQueueRequest,
     CreateTaskRequest,
     DeleteQueueRequest,
     DeleteTaskRequest,
+    GetCmekConfigRequest,
     GetQueueRequest,
     GetTaskRequest,
     ListQueuesRequest,
@@ -28,7 +34,11 @@ from .cloudtasks import (
     PurgeQueueRequest,
     ResumeQueueRequest,
     RunTaskRequest,
+    UpdateCmekConfigRequest,
     UpdateQueueRequest,
+)
+from .cmek_config import (
+    CmekConfig,
 )
 from .queue import (
     Queue,
@@ -41,8 +51,12 @@ from .target import (
     AppEngineRouting,
     HttpMethod,
     HttpRequest,
+    HttpTarget,
     OAuthToken,
     OidcToken,
+    PathOverride,
+    QueryOverride,
+    UriOverride,
 )
 from .task import (
     Attempt,
@@ -50,10 +64,16 @@ from .task import (
 )
 
 __all__ = (
+    "BatchCreateTasksMetadata",
+    "BatchCreateTasksRequest",
+    "BatchCreateTasksResponse",
+    "BatchDeleteTasksMetadata",
+    "BatchDeleteTasksRequest",
     "CreateQueueRequest",
     "CreateTaskRequest",
     "DeleteQueueRequest",
     "DeleteTaskRequest",
+    "GetCmekConfigRequest",
     "GetQueueRequest",
     "GetTaskRequest",
     "ListQueuesRequest",
@@ -64,7 +84,9 @@ __all__ = (
     "PurgeQueueRequest",
     "ResumeQueueRequest",
     "RunTaskRequest",
+    "UpdateCmekConfigRequest",
     "UpdateQueueRequest",
+    "CmekConfig",
     "Queue",
     "RateLimits",
     "RetryConfig",
@@ -72,8 +94,12 @@ __all__ = (
     "AppEngineHttpRequest",
     "AppEngineRouting",
     "HttpRequest",
+    "HttpTarget",
     "OAuthToken",
     "OidcToken",
+    "PathOverride",
+    "QueryOverride",
+    "UriOverride",
     "HttpMethod",
     "Attempt",
     "Task",

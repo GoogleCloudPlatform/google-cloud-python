@@ -20,13 +20,15 @@ from unittest import mock
 
 from google.api_core.exceptions import Aborted
 from google.auth.credentials import AnonymousCredentials
+from google.rpc.code_pb2 import ABORTED
+
+from google.cloud import spanner
 from google.cloud.spanner_dbapi.connection import connect
 from google.cloud.spanner_dbapi.parsed_statement import (
     ParsedStatement,
     Statement,
     StatementType,
 )
-from google.rpc.code_pb2 import ABORTED
 
 
 class TestCursor(unittest.TestCase):
@@ -454,6 +456,7 @@ class TestCursor(unittest.TestCase):
 
     def test_execute_integrity_error(self):
         from google.api_core import exceptions
+
         from google.cloud.spanner_dbapi.exceptions import IntegrityError
 
         connection = self._make_connection(self.INSTANCE, mock.MagicMock())
@@ -486,6 +489,7 @@ class TestCursor(unittest.TestCase):
 
     def test_execute_invalid_argument(self):
         from google.api_core import exceptions
+
         from google.cloud.spanner_dbapi.exceptions import ProgrammingError
 
         connection = self._make_connection(self.INSTANCE, mock.MagicMock())
@@ -500,6 +504,7 @@ class TestCursor(unittest.TestCase):
 
     def test_execute_internal_server_error(self):
         from google.api_core import exceptions
+
         from google.cloud.spanner_dbapi.exceptions import OperationalError
 
         connection = self._make_connection(self.INSTANCE, mock.MagicMock())
@@ -763,10 +768,11 @@ class TestCursor(unittest.TestCase):
         transaction.commit.assert_called_once()
 
     def test_executemany_insert_batch_failed(self):
+        from google.rpc.code_pb2 import UNKNOWN
+
         from google.cloud.spanner_dbapi import connect
         from google.cloud.spanner_dbapi.exceptions import OperationalError
         from google.cloud.spanner_v1.types.spanner import Session
-        from google.rpc.code_pb2 import UNKNOWN
 
         sql = """INSERT INTO table (col1, "col2", `col3`, `"col4"`) VALUES (%s, %s, %s, %s)"""
         err_details = "Details here"
@@ -1003,9 +1009,30 @@ class TestCursor(unittest.TestCase):
             sql, None, None, request_options=RequestOptions(priority=1)
         )
 
-    def test_execute_query_with_auto_partition_mode(self):
-        from google.cloud import spanner
+    @mock.patch("google.cloud.spanner_dbapi.cursor.PeekIterator")
+    def test_execute_query_with_unicode_identifier_and_literal(
+        self, MockedPeekIterator
+    ):
+        connection = self._make_connection(self.INSTANCE, mock.MagicMock())
+        connection.autocommit = True
+        mock_snapshot = mock.MagicMock()
+        connection.database.snapshot.return_value.__enter__.return_value = mock_snapshot
+        mock_result_set = mock.Mock()
+        mock_snapshot.execute_sql.return_value = mock_result_set
 
+        cursor = self._make_one(connection)
+        sql = "SELECT `tätä`, name FROM `Tëst` WHERE dept = 'café' AND id = %s"
+        cursor.execute(sql, (42,))
+
+        self.assertEqual(cursor._result_set, mock_result_set)
+        mock_snapshot.execute_sql.assert_called_once_with(
+            "SELECT `tätä`, name FROM `Tëst` WHERE dept = 'café' AND id = @a0",
+            {"a0": 42},
+            {"a0": spanner.param_types.INT64},
+            request_options=None,
+        )
+
+    def test_execute_query_with_auto_partition_mode(self):
         connection = self._make_connection(
             self.INSTANCE,
             mock.MagicMock(),
@@ -1162,6 +1189,7 @@ class TestCursor(unittest.TestCase):
         while streaming the first element with a PeekIterator.
         """
         from google.api_core.exceptions import Aborted
+
         from google.cloud.spanner_dbapi.connection import connect
 
         connection = connect("test-instance", "test-database")
@@ -1341,3 +1369,278 @@ class TestCursor(unittest.TestCase):
         )
 
         self.assertEqual(connection._ddl_statements, EXP_DDLS)
+
+    def test_execute_ddl_statement_not_added_to_transaction_helper(self):
+        connection = self._make_connection(self.INSTANCE, mock.MagicMock())
+        cursor = self._make_one(connection)
+        sql = "CREATE TABLE table_name (row_id INT64) PRIMARY KEY (row_id)"
+        transaction_helper_mock = cursor.transaction_helper = mock.Mock()
+
+        cursor.execute(sql=sql)
+
+        self.assertEqual(connection._ddl_statements, [sql])
+        transaction_helper_mock.add_execute_statement_for_retry.assert_not_called()
+
+    @mock.patch("google.cloud.spanner_dbapi.cursor.PeekIterator")
+    def test_execute_ddl_statement_exception_not_retried_on_aborted_dml(
+        self, mock_peek_iterator
+    ):
+        mock_database = mock.MagicMock()
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        cursor = self._make_one(connection)
+        invalid_ddl_sql = (
+            "CREATE TABLE table_name (row_id INT64) PRIMARY KEY (row_id);"
+            "UPDATE table_name SET row_id = 1"
+        )
+        update_sql = "UPDATE table_name SET row_id = 1"
+
+        orig_batch_ddls = cursor.__class__._batch_DDLs
+        with mock.patch.object(
+            cursor.__class__,
+            "_batch_DDLs",
+            side_effect=lambda sql: orig_batch_ddls(cursor, sql),
+        ) as mock_batch_ddls:
+            with self.assertRaises(ValueError):
+                cursor.execute(sql=invalid_ddl_sql)
+
+            self.assertEqual(connection._ddl_statements, [])
+            self.assertEqual(
+                cursor.transaction_helper._statement_result_details_list, []
+            )
+            self.assertEqual(mock_batch_ddls.call_count, 1)
+
+            metadata_mock = mock.Mock()
+            metadata_mock.trailing_metadata.return_value = {}
+            connection.run_statement = mock.Mock(
+                side_effect=[
+                    Aborted("Aborted", errors=[metadata_mock]),
+                    mock.MagicMock(),
+                ]
+            )
+
+            cursor.execute(sql=update_sql)
+            self.assertEqual(connection.run_statement.call_count, 2)
+            self.assertEqual(mock_batch_ddls.call_count, 1)
+            mock_database.update_ddl.assert_not_called()
+
+    @mock.patch("google.cloud.spanner_dbapi.cursor.PeekIterator")
+    def test_execute_ddl_then_aborted_dml_does_not_requeue_ddl(
+        self, mock_peek_iterator
+    ):
+        mock_database = mock.MagicMock()
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        cursor = self._make_one(connection)
+        ddl_sql = "CREATE TABLE table_name (row_id INT64) PRIMARY KEY (row_id)"
+        insert_sql = "INSERT INTO table_name (row_id) VALUES (1)"
+        select_sql = "SELECT row_id FROM table_name"
+
+        cursor.execute(sql=ddl_sql)
+        self.assertEqual(connection._ddl_statements, [ddl_sql])
+
+        metadata_mock = mock.Mock()
+        metadata_mock.trailing_metadata.return_value = {}
+        connection.run_statement = mock.Mock(
+            side_effect=[
+                Aborted("Aborted", errors=[metadata_mock]),
+                mock.MagicMock(),
+                mock.MagicMock(),
+            ]
+        )
+
+        cursor.execute(sql=insert_sql)
+        self.assertEqual(connection._ddl_statements, [])
+        mock_database.update_ddl.assert_called_once_with([ddl_sql])
+
+        cursor.execute(sql=select_sql)
+        mock_database.update_ddl.assert_called_once_with([ddl_sql])
+
+    @mock.patch("google.cloud.spanner_dbapi.cursor.PeekIterator")
+    def test_execute_ddl_then_dml_retry_replays_prior_dml_without_replaying_ddl(
+        self, mock_peek_iterator
+    ):
+        mock_database = mock.MagicMock()
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        cursor = self._make_one(connection)
+        ddl_sql = "CREATE TABLE table_name (row_id INT64) PRIMARY KEY (row_id)"
+        insert_1_sql = "INSERT INTO table_name (row_id) VALUES (1)"
+        insert_2_sql = "INSERT INTO table_name (row_id) VALUES (2)"
+
+        # 1. Execute DDL
+        cursor.execute(sql=ddl_sql)
+        self.assertEqual(connection._ddl_statements, [ddl_sql])
+
+        metadata_mock = mock.Mock()
+        metadata_mock.trailing_metadata.return_value = {}
+
+        # 2. insert_1 succeeds; insert_2 aborts on attempt 1, triggering retry of insert_1 and retry of insert_2
+        connection.run_statement = mock.Mock(
+            side_effect=[
+                mock.MagicMock(),  # insert_1 (attempt 1 -> succeeds)
+                Aborted(
+                    "Aborted", errors=[metadata_mock]
+                ),  # insert_2 (attempt 1 -> aborts)
+                mock.MagicMock(),  # insert_1 (replayed by retry_transaction)
+                mock.MagicMock(),  # insert_2 (attempt 2 -> succeeds)
+            ]
+        )
+
+        cursor.execute(sql=insert_1_sql)
+        mock_database.update_ddl.assert_called_once_with([ddl_sql])
+        self.assertEqual(connection._ddl_statements, [])
+        self.assertEqual(
+            len(cursor.transaction_helper._statement_result_details_list), 1
+        )
+
+        # 3. insert_2 aborts and triggers retry_transaction()
+        cursor.execute(sql=insert_2_sql)
+
+        # Assert insert_1 was replayed, insert_2 was retried, and update_ddl was NOT called a second time
+        self.assertEqual(connection.run_statement.call_count, 4)
+        mock_database.update_ddl.assert_called_once_with([ddl_sql])
+        self.assertEqual(connection._ddl_statements, [])
+
+    def test_execute_ddl_then_close_clears_ddl(self):
+        mock_database = mock.MagicMock()
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        cursor = self._make_one(connection)
+        ddl_sql = "CREATE TABLE canceled_table (id INT64) PRIMARY KEY (id)"
+
+        cursor.execute(sql=ddl_sql)
+        self.assertEqual(connection._ddl_statements, [ddl_sql])
+
+        connection.close()
+        self.assertEqual(connection._ddl_statements, [])
+        mock_database.update_ddl.assert_not_called()
+
+    def test_execute_ddl_then_rollback_and_close_clears_ddl(self):
+        mock_database = mock.MagicMock()
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        cursor = self._make_one(connection)
+        ddl_sql = "CREATE TABLE canceled_table (id INT64) PRIMARY KEY (id)"
+
+        cursor.execute(sql=ddl_sql)
+        self.assertEqual(connection._ddl_statements, [ddl_sql])
+
+        connection.rollback()
+        self.assertEqual(connection._ddl_statements, [])
+
+        connection.close()
+        mock_database.update_ddl.assert_not_called()
+
+    @mock.patch("google.cloud.spanner_dbapi.cursor.PeekIterator")
+    def test_execute_ddl_then_rollback_and_autocommit_query_does_not_execute_ddl(
+        self, mock_peek_iterator
+    ):
+        mock_database = mock.MagicMock()
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        cursor = self._make_one(connection)
+        ddl_sql = "CREATE TABLE canceled_table (id INT64) PRIMARY KEY (id)"
+
+        cursor.execute(sql=ddl_sql)
+        self.assertEqual(connection._ddl_statements, [ddl_sql])
+
+        connection.rollback()
+        self.assertEqual(connection._ddl_statements, [])
+
+        connection.autocommit = True
+        cursor.execute(sql="SELECT 1")
+
+        mock_database.update_ddl.assert_not_called()
+
+    @mock.patch("google.cloud.spanner_dbapi.cursor.PeekIterator")
+    def test_execute_ddl_then_autocommit_without_rollback_executes_ddl(
+        self, mock_peek_iterator
+    ):
+        mock_database = mock.MagicMock()
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        cursor = self._make_one(connection)
+        ddl_sql = "CREATE TABLE valid_table (id INT64) PRIMARY KEY (id)"
+
+        cursor.execute(sql=ddl_sql)
+        self.assertEqual(connection._ddl_statements, [ddl_sql])
+
+        connection.autocommit = True
+        self.assertEqual(connection._ddl_statements, [])
+        mock_database.update_ddl.assert_called_once_with([ddl_sql])
+
+        cursor.execute(sql="SELECT 1")
+        mock_database.update_ddl.assert_called_once_with([ddl_sql])
+
+    @mock.patch("google.cloud.spanner_dbapi.cursor.PeekIterator")
+    def test_execute_ddl_then_rollback_and_dml_does_not_execute_ddl(
+        self, mock_peek_iterator
+    ):
+        mock_database = mock.MagicMock()
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        cursor = self._make_one(connection)
+        ddl_sql = "CREATE TABLE canceled_table (id INT64) PRIMARY KEY (id)"
+        insert_sql = "INSERT INTO users (id) VALUES (1)"
+
+        cursor.execute(sql=ddl_sql)
+        self.assertEqual(connection._ddl_statements, [ddl_sql])
+
+        connection.rollback()
+
+        connection.run_statement = mock.Mock(return_value=mock.MagicMock())
+        cursor.execute(sql=insert_sql)
+        connection.commit()
+
+        mock_database.update_ddl.assert_not_called()
+
+    @mock.patch("google.cloud.spanner_dbapi.cursor.batch_dml_executor.run_batch_dml")
+    def test_execute_ddl_then_rollback_and_executemany_does_not_execute_ddl(
+        self, mock_run_batch_dml
+    ):
+        mock_database = mock.MagicMock()
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        cursor = self._make_one(connection)
+        ddl_sql = "CREATE TABLE canceled_table (id INT64) PRIMARY KEY (id)"
+        insert_sql = "INSERT INTO users (id) VALUES (%s)"
+
+        cursor.execute(sql=ddl_sql)
+        self.assertEqual(connection._ddl_statements, [ddl_sql])
+
+        connection.rollback()
+
+        cursor.executemany(insert_sql, [(1,), (2,)])
+        connection.commit()
+
+        mock_database.update_ddl.assert_not_called()
+
+    def test_execute_ddl_then_rollback_and_ddl_does_not_execute_canceled_ddl(self):
+        mock_database = mock.MagicMock()
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        cursor = self._make_one(connection)
+        canceled_ddl = "CREATE TABLE canceled_table (id INT64) PRIMARY KEY (id)"
+        valid_ddl = "CREATE TABLE valid_table (id INT64) PRIMARY KEY (id)"
+
+        cursor.execute(sql=canceled_ddl)
+        self.assertEqual(connection._ddl_statements, [canceled_ddl])
+
+        connection.rollback()
+
+        cursor.execute(sql=valid_ddl)
+        connection.commit()
+
+        mock_database.update_ddl.assert_called_once_with([valid_ddl])
+        self.assertEqual(connection._ddl_statements, [])
+
+    @mock.patch("google.cloud.spanner_dbapi.cursor.PeekIterator")
+    def test_execute_dml_then_ddl_then_rollback_discards_ddl(self, mock_peek_iterator):
+        mock_database = mock.MagicMock()
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        cursor = self._make_one(connection)
+        connection.run_statement = mock.Mock(return_value=mock.MagicMock())
+        dml_sql = "INSERT INTO users (id) VALUES (1)"
+        ddl_sql = "CREATE TABLE canceled_table (id INT64) PRIMARY KEY (id)"
+
+        cursor.execute(sql=dml_sql)
+        cursor.execute(sql=ddl_sql)
+        self.assertEqual(connection._ddl_statements, [ddl_sql])
+
+        connection.rollback()
+        self.assertEqual(connection._ddl_statements, [])
+
+        cursor.execute(sql="SELECT 1")
+        connection.commit()
+        mock_database.update_ddl.assert_not_called()

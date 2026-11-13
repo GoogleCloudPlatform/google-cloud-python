@@ -4,6 +4,20 @@
 
 [1]: https://pypi.org/project/google-cloud-dialogflow-cx/#history
 
+## [2.9.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-dialogflow-cx-v2.8.0...google-cloud-dialogflow-cx-v2.9.0) (2026-10-08)
+
+
+### Features
+
+* update API sources and regenerate ([#18593](https://github.com/googleapis/google-cloud-python/issues/18593)) ([d0505e8](https://github.com/googleapis/google-cloud-python/commit/d0505e8bc7615f2c649d3e25ebc7e3ccca45f22b))
+
+## [2.8.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-dialogflow-cx-v2.7.0...google-cloud-dialogflow-cx-v2.8.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [2.7.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-dialogflow-cx-v2.6.0...google-cloud-dialogflow-cx-v2.7.0) (2026-06-25)
 
 

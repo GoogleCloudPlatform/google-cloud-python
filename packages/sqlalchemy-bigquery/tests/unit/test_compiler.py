@@ -21,6 +21,8 @@ import pytest
 import sqlalchemy.exc
 from sqlalchemy.sql.functions import cube, grouping_sets, rollup
 
+from sqlalchemy_bigquery import SafeCast, safe_cast
+
 from .conftest import setup_table, sqlalchemy_2_0_or_higher, sqlalchemy_before_2_0
 
 
@@ -58,7 +60,7 @@ def test_constraints_are_ignored(faux_conn, metadata):
     )
     metadata.create_all(faux_conn.engine)
     assert " ".join(faux_conn.test_data["execute"][-1][0].strip().split()) == (
-        "CREATE TABLE `some_table`" " ( `id` INT64 NOT NULL, `ref_id` INT64 )"
+        "CREATE TABLE `some_table` ( `id` INT64 NOT NULL, `ref_id` INT64 )"
     )
 
 
@@ -111,8 +113,7 @@ def test_no_alias_for_known_tables_cte(faux_conn, metadata):
     q = sqlalchemy.select(table.c.foo, F.unnest(table.c.bars).column_valued("bar"))
 
     expected_initial_sql = (
-        "SELECT `table1`.`foo`, `bar` \n"
-        "FROM `table1`, unnest(`table1`.`bars`) AS `bar`"
+        "SELECT `table1`.`foo`, `bar` \nFROM `table1`, unnest(`table1`.`bars`) AS `bar`"
     )
     found_initial_sql = q.compile(faux_conn).string
     assert found_initial_sql == expected_initial_sql
@@ -338,8 +339,7 @@ def test_grouping_ops_vs_single_column(faux_conn, table, grouping_op, grouping_o
     found_sql = q.compile(faux_conn).string
 
     expected_sql = (
-        f"SELECT `table1`.`foo` \n"
-        f"FROM `table1` GROUP BY {grouping_op}(`table1`.`foo`)"
+        f"SELECT `table1`.`foo` \nFROM `table1` GROUP BY {grouping_op}(`table1`.`foo`)"
     )
 
     assert found_sql == expected_sql
@@ -451,4 +451,123 @@ def test_label_compiler(faux_conn, metadata):
     )
 
     found_sql = q.compile(faux_conn).string
+    assert found_sql == expected_sql
+
+
+def test_type_compiler_double_methods():
+    from sqlalchemy_bigquery.base import BigQueryTypeCompiler
+
+    assert BigQueryTypeCompiler.visit_DOUBLE == BigQueryTypeCompiler.visit_FLOAT
+    assert (
+        BigQueryTypeCompiler.visit_DOUBLE_PRECISION == BigQueryTypeCompiler.visit_FLOAT
+    )
+
+
+_double_types = [
+    getattr(sqlalchemy, name)
+    for name in ("DOUBLE", "DOUBLE_PRECISION", "Double")
+    if hasattr(sqlalchemy, name)
+]
+
+
+@pytest.mark.skipif(
+    not _double_types,
+    reason="DOUBLE types not present in this SQLAlchemy version",
+)
+@pytest.mark.parametrize("type_cls", _double_types or [None])
+def test_double_types_compile_to_float64(type_cls):
+    import sqlalchemy_bigquery
+
+    dialect = sqlalchemy_bigquery.BigQueryDialect()
+    assert dialect.type_compiler.process(type_cls()) == "FLOAT64"
+
+
+def test_float_literal_pyformat_bindparam():
+    import sqlalchemy_bigquery
+
+    dialect = sqlalchemy_bigquery.BigQueryDialect(paramstyle="pyformat")
+    stmt = sqlalchemy.select(sqlalchemy.literal(15.7563))
+    compiled = stmt.compile(dialect=dialect)
+    assert "%(param_1:FLOAT64)s" in str(compiled)
+
+
+def test_now_compiles_to_current_timestamp(faux_conn):
+    # BigQuery has no NOW() function.
+    stmt = sqlalchemy.select(sqlalchemy.func.now().label("ts"))
+    found_sql = stmt.compile(faux_conn).string
+    assert found_sql == "SELECT CURRENT_TIMESTAMP AS `ts`"
+
+
+SAFE_CAST_TYPE_CASES = [
+    pytest.param(sqlalchemy.Integer, "INT64", id="integer_class"),
+    pytest.param(sqlalchemy.Integer(), "INT64", id="integer_instance"),
+    pytest.param(sqlalchemy.String, "STRING", id="string"),
+    pytest.param(sqlalchemy.Float, "FLOAT64", id="float"),
+    pytest.param(sqlalchemy.Boolean, "BOOL", id="boolean"),
+    pytest.param(sqlalchemy.Date, "DATE", id="date"),
+    pytest.param(sqlalchemy.Numeric, "NUMERIC", id="numeric"),
+]
+
+
+@pytest.mark.parametrize("target_type,expected_bq_type", SAFE_CAST_TYPE_CASES)
+def test_safe_cast_column(faux_conn, table, target_type, expected_bq_type):
+    expr = safe_cast(table.c.foo, target_type)
+    assert isinstance(expr, SafeCast)
+    assert expr.inherit_cache is True
+    expected_type_cls = (
+        target_type if isinstance(target_type, type) else type(target_type)
+    )
+    assert isinstance(expr.type, expected_type_cls)
+
+    stmt = sqlalchemy.select(expr.label("casted"))
+    found_sql = stmt.compile(faux_conn).string
+    expected_sql = (
+        f"SELECT SAFE_CAST(`table1`.`foo` AS {expected_bq_type}) AS `casted` \n"
+        "FROM `table1`"
+    )
+    assert found_sql == expected_sql
+
+
+def test_safe_cast_literal(faux_conn):
+    stmt = sqlalchemy.select(safe_cast(sqlalchemy.literal("123"), sqlalchemy.Integer))
+    found_sql = stmt.compile(faux_conn, compile_kwargs={"literal_binds": True}).string
+    assert found_sql == "SELECT SAFE_CAST('123' AS INT64) AS `anon_1`"
+
+
+def test_safe_cast_null(faux_conn):
+    stmt = sqlalchemy.select(
+        safe_cast(sqlalchemy.null(), sqlalchemy.Integer).label("val")
+    )
+    found_sql = stmt.compile(faux_conn).string
+    assert found_sql == "SELECT SAFE_CAST(NULL AS INT64) AS `val`"
+
+
+def test_safe_cast_nested(faux_conn, table):
+    inner = safe_cast(table.c.foo, sqlalchemy.String)
+    outer = safe_cast(inner, sqlalchemy.Integer).label("casted")
+    stmt = sqlalchemy.select(outer)
+    found_sql = stmt.compile(faux_conn).string
+    expected_sql = (
+        "SELECT SAFE_CAST(SAFE_CAST(`table1`.`foo` AS STRING) AS INT64) AS `casted` \n"
+        "FROM `table1`"
+    )
+    assert found_sql == expected_sql
+
+
+@pytest.mark.skipif(
+    not hasattr(sqlalchemy, "try_cast"),
+    reason="sqlalchemy.try_cast requires SQLAlchemy 2.0.14 or higher",
+)
+@pytest.mark.parametrize("target_type,expected_bq_type", SAFE_CAST_TYPE_CASES)
+def test_sqlalchemy_try_cast_compiles_to_safe_cast(
+    faux_conn, table, target_type, expected_bq_type
+):
+    stmt = sqlalchemy.select(
+        sqlalchemy.try_cast(table.c.foo, target_type).label("casted")
+    )
+    found_sql = stmt.compile(faux_conn).string
+    expected_sql = (
+        f"SELECT SAFE_CAST(`table1`.`foo` AS {expected_bq_type}) AS `casted` \n"
+        "FROM `table1`"
+    )
     assert found_sql == expected_sql

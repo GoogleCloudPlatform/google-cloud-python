@@ -1,16 +1,9 @@
 {
-  "api_description": "Google Cloud Spanner DBAPI 2.0 Driver",
-  "api_id": "spanner.googleapis.com",
-  "api_shortname": "spanner",
-  "client_documentation": "https://cloud.google.com/python/docs/reference/spanner-dbapi-driver/latest",
-  "default_version": "v1",
-  "distribution_name": "google-cloud-spanner-dbapi-driver",
-  "issue_tracker": "https://github.com/googleapis/google-cloud-python/issues",
-  "language": "python",
-  "library_type": "MANUAL",
-  "name": "spanner-dbapi-driver",
-  "name_pretty": "Spanner DBAPI Driver",
-  "product_documentation": "https://cloud.google.com/spanner/",
-  "release_level": "preview",
-  "repo": "googleapis/google-cloud-python"
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-spanner-dbapi-driver/latest",
+    "distribution_name": "google-cloud-spanner-dbapi-driver",
+    "language": "python",
+    "library_type": "INTEGRATION",
+    "name": "google-cloud-spanner-dbapi-driver",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
 }

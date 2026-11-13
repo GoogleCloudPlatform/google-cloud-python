@@ -31,18 +31,20 @@ Authorization Code grant flow.
 .. _rfc6749 section 4.1: https://tools.ietf.org/html/rfc6749#section-4.1
 """
 
-from datetime import datetime
 import io
 import json
 import logging
 import warnings
+from datetime import datetime
 
-from google.auth import _cloud_sdk
-from google.auth import _helpers
-from google.auth import _regional_access_boundary_utils
-from google.auth import credentials
-from google.auth import exceptions
-from google.auth import metrics
+from google.auth import (
+    _cloud_sdk,
+    _helpers,
+    _regional_access_boundary_utils,
+    credentials,
+    exceptions,
+    metrics,
+)
 from google.oauth2 import reauth
 
 _LOGGER = logging.getLogger(__name__)

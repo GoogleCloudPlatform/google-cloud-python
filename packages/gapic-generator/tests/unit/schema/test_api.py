@@ -16,31 +16,27 @@ import collections
 import re
 from typing import Any, Dict, Sequence
 from unittest import mock
-import yaml
 
 import pytest
-
-from google.api import annotations_pb2  # type: ignore
-from google.api import client_pb2
-from google.api import field_behavior_pb2
-from google.api import field_info_pb2
-from google.api import resource_pb2
+import yaml
+from google.api import (
+    annotations_pb2,  # type: ignore
+    client_pb2,
+    field_behavior_pb2,
+    field_info_pb2,
+    resource_pb2,
+)
 from google.api_core import exceptions
 from google.cloud import extended_operations_pb2 as ex_ops_pb2
+from google.cloud.location import locations_pb2
 from google.gapic.metadata import gapic_metadata_pb2
+from google.iam.v1 import iam_policy_pb2  # type: ignore
 from google.longrunning import operations_pb2
 from google.protobuf import descriptor_pb2
 from google.protobuf.json_format import MessageToJson
-from google.cloud.location import locations_pb2
-from google.iam.v1 import iam_policy_pb2  # type: ignore
 
-from gapic.schema import api
-from gapic.schema import imp
-from gapic.schema import mixins
-from gapic.schema import naming
-from gapic.schema import wrappers
+from gapic.schema import api, imp, mixins, naming, wrappers
 from gapic.utils import Options
-
 from test_utils.test_utils import (
     make_enum_pb2,
     make_field,
@@ -2836,6 +2832,9 @@ def test_mixin_api_signatures():
     api_schema = api.API.build(fd, "google.example.v1", opts=opts)
     res = api_schema.mixin_api_signatures
     assert res == mixins.MIXINS_MAP
+    assert res["GetOperation"].rpc_name == "google.longrunning.Operations/GetOperation"
+    assert res["GetIamPolicy"].rpc_name == "google.iam.v1.IAMPolicy/GetIamPolicy"
+    assert res["GetLocation"].rpc_name == "google.cloud.location.Locations/GetLocation"
 
 
 def test_mixin_http_options():
@@ -4617,25 +4616,33 @@ def test_file_level_resources_with_aliases():
     res_pb2 = fdp.options.Extensions[resource_pb2.resource_definition]
     resource_definition = res_pb2.add()
     resource_definition.type = "nomenclature.linnaen.com/Species"
-    resource_definition.pattern.append("families/{family}/genera/{genus}/species/{species}")
+    resource_definition.pattern.append(
+        "families/{family}/genera/{genus}/species/{species}"
+    )
 
     # Pass down the resource-name-alias cli option
-    opts = Options.build("resource-name-alias=nomenclature.linnaen.com/Species:CustomSpecies")
-    
+    opts = Options.build(
+        "resource-name-alias=nomenclature.linnaen.com/Species:CustomSpecies"
+    )
+
     api_schema = api.API.build([fdp], package="nomenclature.linneaen.v1", opts=opts)
-    
+
     # Trigger the property that evaluates the CommonResource
     resource_msgs = api_schema.protos["nomenclature.proto"].resource_messages
 
     # Verify that the resource exists with the overriden type
     assert "nomenclature.linnaen.com/Species" in resource_msgs
-    assert resource_msgs["nomenclature.linnaen.com/Species"].resource_type == "CustomSpecies"
+    assert (
+        resource_msgs["nomenclature.linnaen.com/Species"].resource_type
+        == "CustomSpecies"
+    )
 
 
 from test_utils.test_utils import (
     make_file_pb2,
     make_message_pb2,
 )
+
 
 def test_proto_with_selective_generation_returns_none():
     # Proto A: will be omitted because its only method is not in the allow-list.
@@ -4681,19 +4688,20 @@ def test_proto_with_selective_generation_returns_none():
             make_message_pb2("RespB"),
         ),
     )
-    
+
     # Selective generation only including ServiceB.MethodB.
     service_yaml_config = get_service_yaml_for_selective_gapic_tests(
         methods=["google.example.v1.ServiceB.MethodB"]
     )
     opts = Options(service_yaml_config=service_yaml_config)
-    
+
     # Building the API will call with_selective_generation for both protos.
     api_schema = api.API.build([fd_a, fd_b], package="google.example.v1", opts=opts)
-    
+
     # proto_a.proto should be excluded.
     assert "proto_a.proto" not in api_schema.protos
     assert "proto_b.proto" in api_schema.protos
+
 
 def test_api_build_selective_multiple_protos_kept():
     fd1 = make_file_pb2(
@@ -4730,7 +4738,7 @@ def test_api_build_selective_multiple_protos_kept():
         ),
         messages=(make_message_pb2("Req2"), make_message_pb2("Resp2")),
     )
-    
+
     service_yaml_config = get_service_yaml_for_selective_gapic_tests(
         methods=[
             "google.example.v1.Service1.Method1",
@@ -4739,9 +4747,39 @@ def test_api_build_selective_multiple_protos_kept():
     )
     opts = Options(service_yaml_config=service_yaml_config)
     api_schema = api.API.build([fd1, fd2], package="google.example.v1", opts=opts)
-    
+
     # Both protos should be kept. This covers the case where multiple protos
     # are processed in the selective generation loop, taking the 534->528 branch.
     assert len(api_schema.protos) == 2
     assert "proto1.proto" in api_schema.protos
     assert "proto2.proto" in api_schema.protos
+    assert not api_schema.has_resumable_upload_methods
+
+
+def test_api_has_resumable_upload_methods():
+    # Verify that an API containing a recognized resumable upload method
+    # reports has_resumable_upload_methods as True.
+    # Note: In MethodDescriptorProto, output_type is the protobuf RPC response
+    # message defined in the .proto file (e.g. UploadResponse).
+    fd = make_file_pb2(
+        name="upload.proto",
+        package="google.example.v1",
+        services=(
+            descriptor_pb2.ServiceDescriptorProto(
+                name="UploadService",
+                method=(
+                    descriptor_pb2.MethodDescriptorProto(
+                        name="UploadMedia",
+                        input_type="google.example.v1.UploadRequest",
+                        output_type="google.example.v1.UploadResponse",
+                    ),
+                ),
+            ),
+        ),
+        messages=(
+            make_message_pb2("UploadRequest"),
+            make_message_pb2("UploadResponse"),
+        ),
+    )
+    api_schema = api.API.build([fd], package="google.example.v1")
+    assert api_schema.has_resumable_upload_methods

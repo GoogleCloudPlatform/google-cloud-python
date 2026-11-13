@@ -98,7 +98,7 @@ def test_downloads_single_proc_single_coro(
     """
     Benchmarks reads using a single process and a single coroutine.
     It creates chunks based on object size and chunk_size, then passes them to either
-    `download_chunks_using_mrd` (for zonal buckets) or `download_chunks_using_json` (for regional buckets)
+    `download_chunks_using_mrd` (for rapid buckets) or `download_chunks_using_json` (for regional buckets)
     for benchmarking using `benchmark.pedantic`.
     """
     params, files_names = workload_params
@@ -114,8 +114,8 @@ def test_downloads_single_proc_single_coro(
         logging.info("randomizing chunks")
         random.shuffle(chunks)
 
-    if params.bucket_type == "zonal":
-        logging.info("bucket type zonal")
+    if params.bucket_type == "rapid":
+        logging.info("bucket type rapid")
         target_func = download_chunks_using_mrd
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
@@ -252,8 +252,8 @@ def test_downloads_single_proc_multi_coro(
         logging.info("randomizing chunks")
         random.shuffle(chunks)
 
-    if params.bucket_type == "zonal":
-        logging.info("bucket type zonal")
+    if params.bucket_type == "rapid":
+        logging.info("bucket type rapid")
         target_func = download_files_using_mrd_multi_coro
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
@@ -309,7 +309,7 @@ worker_json_client = None
 def _worker_init(bucket_type):
     """Initializes a persistent event loop and client for each worker process."""
     global worker_loop, worker_client, worker_json_client
-    if bucket_type == "zonal":
+    if bucket_type == "rapid":
         worker_loop = asyncio.new_event_loop()
         asyncio.set_event_loop(worker_loop)
         worker_client = worker_loop.run_until_complete(create_client())
@@ -320,7 +320,7 @@ def _worker_init(bucket_type):
 
 
 def _download_files_worker(files_to_download, other_params, chunks, bucket_type):
-    if bucket_type == "zonal":
+    if bucket_type == "rapid":
         # The loop and client are already initialized in _worker_init.
         # download_files_using_mrd_multi_coro returns max latency of coros
         return download_files_using_mrd_multi_coro(

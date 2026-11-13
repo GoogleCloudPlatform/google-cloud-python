@@ -3,9 +3,9 @@
 # license that can be found in the LICENSE file.
 
 import itertools
+import typing
 
 import pandas
-import typing
 
 
 def list_columns_and_indexes(dataframe, index=True):

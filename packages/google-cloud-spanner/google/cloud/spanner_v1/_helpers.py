@@ -14,6 +14,7 @@
 
 """Helper functions for Cloud Spanner."""
 
+import atexit
 import base64
 import datetime
 import decimal
@@ -21,16 +22,17 @@ import logging
 import math
 import operator
 import os
+import queue
 import threading
 import time
 import uuid
-from contextlib import contextmanager
 
+import proto
 from google.api_core import datetime_helpers
 from google.api_core.exceptions import Aborted
 from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper
 from google.protobuf.message import DecodeError, Message
-from google.protobuf.struct_pb2 import ListValue, Value
+from google.protobuf.struct_pb2 import NULL_VALUE, ListValue, Value
 from google.rpc.error_details_pb2 import RetryInfo
 
 from google.cloud.spanner_v1.data_types import Interval, JsonObject
@@ -40,9 +42,11 @@ from google.cloud.spanner_v1.request_id_header import (
     with_request_id_metadata_only,
 )
 from google.cloud.spanner_v1.types import (
+    DirectedReadOptions,
     ExecuteSqlRequest,
     RequestOptions,
     TransactionOptions,
+    Type,
     TypeCode,
 )
 
@@ -141,23 +145,62 @@ def _get_cloud_region() -> str:
     return _cloud_region
 
 
+def _validate_and_decode_bytes(bytestring):
+    try:
+        return bytestring.decode("utf-8")
+    except (ValueError, UnicodeDecodeError):
+        raise ValueError(
+            "Received a bytes that is not base64 encoded. "
+            "Ensure that you either send a Unicode string or a "
+            "base64-encoded bytes."
+        )
+
+
 def _try_to_coerce_bytes(bytestring):
     """Try to coerce a byte string into the right thing based on Python
     version and whether or not it is base64 encoded.
 
     Return a text string or raise ValueError.
     """
-    # Attempt to coerce using google.protobuf.Value, which will expect
-    # something that is utf-8 (and base64 consistently is).
-    try:
-        Value(string_value=bytestring)
-        return bytestring
-    except ValueError:
-        raise ValueError(
-            "Received a bytes that is not base64 encoded. "
-            "Ensure that you either send a Unicode string or a "
-            "base64-encoded bytes."
+    _validate_and_decode_bytes(bytestring)
+    return bytestring
+
+
+_VALID_QUERY_OPTIONS_KEYS = frozenset(
+    ExecuteSqlRequest.QueryOptions._meta.fields.keys()
+)
+
+
+def _to_query_options(options):
+    """Normalize dict or QueryOptions to a non-empty QueryOptions, or None.
+
+    :type options:
+        :class:`~google.cloud.spanner_v1.types.ExecuteSqlRequest.QueryOptions`
+        or :class:`dict` or None
+    :param options: Query options to normalize.
+
+    :rtype:
+        :class:`~google.cloud.spanner_v1.types.ExecuteSqlRequest.QueryOptions`
+        or None
+    :returns:
+        A non-empty QueryOptions instance, or None if options is empty or None.
+
+    :raises TypeError:
+        If options is not a QueryOptions, dict, or None.
+    :raises ValueError:
+        If options is a dict containing unknown fields.
+    """
+    if options is None:
+        return None
+    if isinstance(options, dict):
+        if options.keys() <= _VALID_QUERY_OPTIONS_KEYS and not any(options.values()):
+            return None
+        options = ExecuteSqlRequest.QueryOptions(options)
+    elif not isinstance(options, ExecuteSqlRequest.QueryOptions):
+        raise TypeError(
+            f"query_options must be a QueryOptions or dict, got {type(options).__name__}"
         )
+    return options if type(options).pb(options).ByteSize() > 0 else None
 
 
 def _merge_query_options(base, merge):
@@ -182,24 +225,125 @@ def _merge_query_options(base, merge):
         QueryOptions object formed by merging the two given QueryOptions.
         If the resultant object only has empty fields, returns None.
     """
-    combined = base or ExecuteSqlRequest.QueryOptions()
-    if isinstance(combined, dict):
-        combined = ExecuteSqlRequest.QueryOptions(
-            optimizer_version=combined.get("optimizer_version", ""),
-            optimizer_statistics_package=combined.get(
-                "optimizer_statistics_package", ""
+    if base is None and merge is None:
+        return None
+
+    base = _to_query_options(base)
+    merge = _to_query_options(merge)
+    if base is None:
+        return merge
+    if merge is None:
+        return base
+
+    combined = ExecuteSqlRequest.QueryOptions()
+    combined_pb = type(combined).pb(combined)
+    combined_pb.CopyFrom(type(base).pb(base))
+    combined_pb.MergeFrom(type(merge).pb(merge))
+    return combined
+
+
+# The protobuf class underlying the proto-plus ``ExecuteSqlRequest`` wrapper.
+_EXECUTE_SQL_REQUEST_PB = ExecuteSqlRequest.pb()
+
+
+def _as_raw_pb(value, message_type):
+    """Return the raw protobuf message for ``value``.
+
+    ``value`` may be a proto-plus message, a ``dict``, a raw protobuf message,
+    or ``None``:
+
+    - proto-plus messages are unwrapped directly, which is the hot path;
+    - dicts are converted by proto-plus, because the raw protobuf constructor
+      only accepts dicts whose values are themselves dicts and rejects
+      proto-plus messages nested inside them;
+    - raw protobuf messages and ``None`` are returned unchanged. The raw
+      constructor treats a ``None`` keyword argument as "field not set".
+
+    :type value: :class:`~proto.message.Message` or :class:`dict` or
+        :class:`~google.protobuf.message.Message` or None
+    :param value: the value to convert.
+
+    :type message_type: type
+    :param message_type: the proto-plus class of the target field, used to
+        convert ``value`` when it is a ``dict``.
+
+    :rtype: :class:`~google.protobuf.message.Message` or None
+    :returns: the raw protobuf message, or ``value`` unchanged.
+    """
+    if value is None:
+        return None
+    if isinstance(value, proto.Message):
+        return type(value).pb(value)
+    if isinstance(value, dict):
+        return message_type.pb(message_type(value))
+    return value
+
+
+def _make_execute_sql_request(
+    session_name,
+    sql,
+    seqno,
+    params=None,
+    param_types=None,
+    query_mode=None,
+    partition=None,
+    query_options=None,
+    request_options=None,
+    last_statement=False,
+    data_boost_enabled=False,
+    directed_read_options=None,
+):
+    """Build an :class:`~google.cloud.spanner_v1.types.ExecuteSqlRequest`.
+
+    ``ExecuteSqlRequest(**kwargs)`` marshals every keyword argument through
+    proto-plus, which performs Python-level descriptor lookups and type
+    coercion for each field. Executing a query is a hot path, so the request is
+    built on the underlying protobuf message instead and shallow-wrapped with
+    :meth:`~proto.message.Message.wrap`. The result is an ordinary
+    ``ExecuteSqlRequest`` that serializes to identical bytes, built several
+    times faster.
+
+    Arguments accept the same types as the proto-plus constructor: proto-plus
+    messages, dicts, or raw protobuf messages. ``None`` leaves the
+    corresponding field unset, with two documented exceptions:
+
+    - ``params=None`` is treated as "no parameters", where the proto-plus
+      constructor raises;
+    - a ``params`` dict must hold plain Python values, not raw
+      :class:`~google.protobuf.struct_pb2.Value` messages. ``execute_sql``
+      always passes an already-encoded ``Struct``, so this only affects direct
+      callers of this helper.
+
+    :rtype: :class:`~google.cloud.spanner_v1.types.ExecuteSqlRequest`
+    :returns: the request to send to ``ExecuteStreamingSql``.
+    """
+    if isinstance(query_mode, str):
+        query_mode = ExecuteSqlRequest.QueryMode[query_mode]
+    return ExecuteSqlRequest.wrap(
+        _EXECUTE_SQL_REQUEST_PB(
+            session=session_name,
+            sql=sql,
+            seqno=seqno,
+            params=params,
+            param_types=(
+                {
+                    name: _as_raw_pb(param_type, Type)
+                    for name, param_type in param_types.items()
+                }
+                if param_types
+                else None
+            ),
+            query_mode=query_mode,
+            partition_token=partition,
+            query_options=_as_raw_pb(query_options, ExecuteSqlRequest.QueryOptions),
+            request_options=_as_raw_pb(request_options, RequestOptions),
+            last_statement=last_statement,
+            data_boost_enabled=data_boost_enabled,
+            directed_read_options=_as_raw_pb(
+                directed_read_options, DirectedReadOptions
             ),
         )
-    merge = merge or ExecuteSqlRequest.QueryOptions()
-    if isinstance(merge, dict):
-        merge = ExecuteSqlRequest.QueryOptions(
-            optimizer_version=merge.get("optimizer_version", ""),
-            optimizer_statistics_package=merge.get("optimizer_statistics_package", ""),
-        )
-    type(combined).pb(combined).MergeFrom(type(merge).pb(merge))
-    if not combined.optimizer_version and not combined.optimizer_statistics_package:
-        return None
-    return combined
+    )
 
 
 def _merge_client_context(base, merge):
@@ -312,8 +456,9 @@ def _assert_numeric_precision_and_scale(value):
 
     :raises NotSupportedError: If value is not within supported precision or scale of Spanner.
     """
-    scale = value.as_tuple().exponent
-    precision = len(value.as_tuple().digits)
+    decimal_tuple = value.as_tuple()
+    scale = decimal_tuple.exponent
+    precision = len(decimal_tuple.digits)
 
     if scale < -9:
         raise ValueError(NUMERIC_MAX_SCALE_ERR_MSG.format(abs(scale)))
@@ -359,6 +504,63 @@ def _datetime_to_rfc3339_nanoseconds(value):
     return "{}.{}Z".format(value.isoformat(sep="T", timespec="seconds"), nanos)
 
 
+def _make_list_value_pb(values):
+    """Construct of ListValue protobufs.
+
+    :type values: list of scalar
+    :param values: Row data
+
+    :rtype: :class:`~google.protobuf.struct_pb2.ListValue`
+    :returns: protobuf
+    """
+    return ListValue(values=[_make_value_pb(value) for value in values])
+
+
+def _encode_float(value):
+    if math.isfinite(value):
+        return Value(number_value=value)
+    if math.isnan(value):
+        return Value(string_value="NaN")
+    return Value(string_value="Infinity" if value > 0 else "-Infinity")
+
+
+def _encode_decimal(value):
+    _assert_numeric_precision_and_scale(value)
+    return Value(string_value=str(value))
+
+
+def _encode_bytes(value):
+    return Value(string_value=_validate_and_decode_bytes(value))
+
+
+def _encode_json_object(value):
+    serialized = value.serialize()
+    if serialized is None:
+        return Value(null_value=NULL_VALUE)
+    return Value(string_value=serialized)
+
+
+_TYPE_ENCODERS = {
+    str: lambda value: Value(string_value=value),
+    int: lambda value: Value(string_value=str(value)),
+    bool: lambda value: Value(bool_value=value),
+    float: _encode_float,
+    bytes: _encode_bytes,
+    datetime.date: lambda value: Value(string_value=value.isoformat()),
+    datetime.datetime: lambda value: Value(string_value=_datetime_to_rfc3339(value)),
+    datetime_helpers.DatetimeWithNanoseconds: lambda value: Value(
+        string_value=_datetime_to_rfc3339_nanoseconds(value)
+    ),
+    decimal.Decimal: _encode_decimal,
+    uuid.UUID: lambda value: Value(string_value=str(value)),
+    Interval: lambda value: Value(string_value=str(value)),
+    list: lambda value: Value(list_value=_make_list_value_pb(value)),
+    tuple: lambda value: Value(list_value=_make_list_value_pb(value)),
+    ListValue: lambda value: Value(list_value=value),
+    JsonObject: _encode_json_object,
+}
+
+
 def _make_value_pb(value):
     """Helper for :func:`_make_list_value_pbs`.
 
@@ -370,7 +572,18 @@ def _make_value_pb(value):
     :raises ValueError: if value is not of a known scalar type.
     """
     if value is None:
-        return Value(null_value="NULL_VALUE")
+        return Value(null_value=NULL_VALUE)
+
+    try:
+        encoder = _TYPE_ENCODERS[type(value)]
+    except KeyError:
+        pass
+    else:
+        return encoder(value)
+
+    # Note: The fallback isinstance chain is retained to support subclasses,
+    # custom mock/proxy objects, and dynamic AST inspection in
+    # tests/unit/spanner_dbapi/test_partition_helper.py.
     if isinstance(value, (list, tuple)):
         return Value(list_value=_make_list_value_pb(value))
     if isinstance(value, bool):
@@ -378,14 +591,7 @@ def _make_value_pb(value):
     if isinstance(value, int):
         return Value(string_value=str(value))
     if isinstance(value, float):
-        if math.isnan(value):
-            return Value(string_value="NaN")
-        if math.isinf(value):
-            if value > 0:
-                return Value(string_value="Infinity")
-            else:
-                return Value(string_value="-Infinity")
-        return Value(number_value=value)
+        return _encode_float(value)
     if isinstance(value, datetime_helpers.DatetimeWithNanoseconds):
         return Value(string_value=_datetime_to_rfc3339_nanoseconds(value))
     if isinstance(value, datetime.datetime):
@@ -393,45 +599,27 @@ def _make_value_pb(value):
     if isinstance(value, datetime.date):
         return Value(string_value=value.isoformat())
     if isinstance(value, bytes):
-        value = _try_to_coerce_bytes(value)
-        return Value(string_value=value)
+        return _encode_bytes(value)
     if isinstance(value, str):
         return Value(string_value=value)
     if isinstance(value, ListValue):
         return Value(list_value=value)
     if isinstance(value, decimal.Decimal):
-        _assert_numeric_precision_and_scale(value)
-        return Value(string_value=str(value))
+        return _encode_decimal(value)
     if isinstance(value, JsonObject):
-        value = value.serialize()
-        if value is None:
-            return Value(null_value="NULL_VALUE")
-        else:
-            return Value(string_value=value)
+        return _encode_json_object(value)
     if isinstance(value, Message):
-        value = value.SerializeToString()
-        if value is None:
-            return Value(null_value="NULL_VALUE")
+        serialized = value.SerializeToString()
+        if serialized is None:
+            return Value(null_value=NULL_VALUE)
         else:
-            return Value(string_value=base64.b64encode(value))
+            return Value(string_value=base64.b64encode(serialized).decode("utf-8"))
     if isinstance(value, Interval):
         return Value(string_value=str(value))
     if isinstance(value, uuid.UUID):
         return Value(string_value=str(value))
 
     raise ValueError("Unknown type: %s" % (value,))
-
-
-def _make_list_value_pb(values):
-    """Construct of ListValue protobufs.
-
-    :type values: list of scalar
-    :param values: Row data
-
-    :rtype: :class:`~google.protobuf.struct_pb2.ListValue`
-    :returns: protobuf
-    """
-    return ListValue(values=[_make_value_pb(value) for value in values])
 
 
 def _make_list_value_pbs(values):
@@ -505,47 +693,28 @@ def _get_type_decoder(field_type, field_name, column_info=None):
     """
 
     type_code = field_type.code
-    # Note: STRING and BOOL use operator.attrgetter because direct attribute extraction
-    # is faster in Python. Other types require type transformation, so they use lambdas.
-    if type_code == TypeCode.STRING:
-        return operator.attrgetter("string_value")
-    elif type_code == TypeCode.BYTES:
-        return lambda value_pb: value_pb.string_value.encode("utf8")
-    elif type_code == TypeCode.BOOL:
-        return operator.attrgetter("bool_value")
-    elif type_code == TypeCode.INT64:
-        return lambda value_pb: int(value_pb.string_value)
-    elif type_code == TypeCode.FLOAT64:
-        return _parse_float
-    elif type_code == TypeCode.FLOAT32:
-        return _parse_float
-    elif type_code == TypeCode.DATE:
-        return lambda value_pb: _date_fromisoformat(value_pb.string_value)
-    elif type_code == TypeCode.TIMESTAMP:
-        return _parse_timestamp
-    elif type_code == TypeCode.NUMERIC:
-        return lambda value_pb: _Decimal(value_pb.string_value)
-    elif type_code == TypeCode.JSON:
-        return lambda value_pb: _json_from_str(value_pb.string_value)
-    elif type_code == TypeCode.UUID:
-        return lambda value_pb: _uuid_UUID(value_pb.string_value)
-    elif type_code == TypeCode.PROTO:
+    try:
+        type_code_integer = int(type_code)
+    except (TypeError, ValueError):
+        type_code_integer = None
+
+    if type_code_integer in _SCALAR_DECODERS:
+        return _SCALAR_DECODERS[type_code_integer]
+    elif type_code_integer == _PROTO_TYPE_CODE:
         return lambda value_pb: _parse_proto(value_pb, column_info, field_name)
-    elif type_code == TypeCode.ENUM:
+    elif type_code_integer == _ENUM_TYPE_CODE:
         return lambda value_pb: _parse_proto_enum(value_pb, column_info, field_name)
-    elif type_code == TypeCode.ARRAY:
+    elif type_code_integer == _ARRAY_TYPE_CODE:
         element_decoder = _get_type_decoder(
             field_type.array_element_type, field_name, column_info
         )
         return lambda value_pb: _parse_array(value_pb, element_decoder)
-    elif type_code == TypeCode.STRUCT:
+    elif type_code_integer == _STRUCT_TYPE_CODE:
         element_decoders = [
             _get_type_decoder(item_field.type_, field_name, column_info)
             for item_field in field_type.struct_type.fields
         ]
         return lambda value_pb: _parse_struct(value_pb, element_decoders)
-    elif type_code == TypeCode.INTERVAL:
-        return _parse_interval
     else:
         raise ValueError("Unknown type: %s" % (field_type,))
 
@@ -702,6 +871,45 @@ def _parse_interval(value_pb):
     return Interval.from_str(value_pb)
 
 
+# Note: STRING and BOOL use operator.attrgetter because direct attribute extraction
+# is faster in Python. Other types require type transformation, so they use lambdas.
+_SCALAR_DECODERS = {
+    int(TypeCode.STRING): operator.attrgetter("string_value"),
+    int(TypeCode.BYTES): lambda value_pb: value_pb.string_value.encode("utf8"),
+    int(TypeCode.BOOL): operator.attrgetter("bool_value"),
+    int(TypeCode.INT64): lambda value_pb: int(value_pb.string_value),
+    int(TypeCode.FLOAT64): _parse_float,
+    int(TypeCode.FLOAT32): _parse_float,
+    int(TypeCode.DATE): lambda value_pb: _date_fromisoformat(value_pb.string_value),
+    int(TypeCode.TIMESTAMP): _parse_timestamp,
+    int(TypeCode.NUMERIC): lambda value_pb: _Decimal(value_pb.string_value),
+    int(TypeCode.JSON): lambda value_pb: _json_from_str(value_pb.string_value),
+    int(TypeCode.UUID): lambda value_pb: _uuid_UUID(value_pb.string_value),
+    int(TypeCode.INTERVAL): _parse_interval,
+}
+
+_PROTO_TYPE_CODE = int(TypeCode.PROTO)
+_ENUM_TYPE_CODE = int(TypeCode.ENUM)
+_ARRAY_TYPE_CODE = int(TypeCode.ARRAY)
+_STRUCT_TYPE_CODE = int(TypeCode.STRUCT)
+
+
+def _resource_info_from_database(database):
+    """Resource information dictionary from database instance or fallback."""
+    if database is None:
+        return None
+    resource_info = getattr(database, "_resource_info", None)
+    if resource_info is not None:
+        return resource_info
+    instance = getattr(database, "_instance", None)
+    client = getattr(instance, "_client", None) if instance else None
+    return {
+        "project": getattr(client, "project", None),
+        "instance": getattr(instance, "instance_id", None),
+        "database": getattr(database, "database_id", None),
+    }
+
+
 class _SessionWrapper(object):
     """Base class for objects wrapping a session.
 
@@ -711,6 +919,13 @@ class _SessionWrapper(object):
 
     def __init__(self, session):
         self._session = session
+
+    @property
+    def _resource_info(self):
+        """Resource information for metrics labels."""
+        session = self._session
+        database = getattr(session, "_database", None) if session is not None else None
+        return _resource_info_from_database(database)
 
 
 def _append_routing_headers(metadata):
@@ -856,7 +1071,8 @@ def _delay_until_retry(exc, deadline, attempts, default_retry_delay=None):
     :param attempts: number of call retries
     """
 
-    cause = exc.errors[0]
+    errors = getattr(exc, "errors", None)
+    cause = errors[0] if errors else exc
     now = time.time()
     if now >= deadline:
         raise
@@ -898,6 +1114,8 @@ def _get_retry_delay(cause, attempts, default_retry_delay=None):
 
 
 class AtomicCounter:
+    __slots__ = ("__lock", "__value")
+
     def __init__(self, start_value=0):
         self.__lock = threading.Lock()
         self.__value = start_value
@@ -939,35 +1157,51 @@ class AtomicCounter:
             self.__value = 0
 
 
-def _metadata_with_request_id(*args, **kwargs):
+def _metadata_with_request_id(
+    client_id, channel_id, nth_request, attempt, other_metadata=None, span=None
+):
     """Return metadata with request ID header.
 
     This function returns only the metadata list (not a tuple),
     maintaining backward compatibility with existing code.
 
     Args:
-        *args: Arguments to pass to with_request_id
-        **kwargs: Keyword arguments to pass to with_request_id
+        client_id: The client identifier.
+        channel_id: The channel identifier.
+        nth_request: The request sequence number.
+        attempt: The attempt sequence number.
+        other_metadata: Prior metadata list.
+        span: Optional trace span.
 
     Returns:
         list: gRPC metadata with request ID header
     """
-    return with_request_id_metadata_only(*args, **kwargs)
+    return with_request_id_metadata_only(
+        client_id, channel_id, nth_request, attempt, other_metadata, span
+    )
 
 
-def _metadata_with_request_id_and_req_id(*args, **kwargs):
+def _metadata_with_request_id_and_req_id(
+    client_id, channel_id, nth_request, attempt, other_metadata=None, span=None
+):
     """Return both metadata and request ID string.
 
     This is used when we need to augment errors with the request ID.
 
     Args:
-        *args: Arguments to pass to with_request_id
-        **kwargs: Keyword arguments to pass to with_request_id
+        client_id: The client identifier.
+        channel_id: The channel identifier.
+        nth_request: The request sequence number.
+        attempt: The attempt sequence number.
+        other_metadata: Prior metadata list.
+        span: Optional trace span.
 
     Returns:
         tuple: (metadata, request_id)
     """
-    return with_request_id(*args, **kwargs)
+    return with_request_id(
+        client_id, channel_id, nth_request, attempt, other_metadata, span
+    )
 
 
 def _augment_error_with_request_id(error, request_id=None):
@@ -983,22 +1217,21 @@ def _augment_error_with_request_id(error, request_id=None):
     return wrap_with_request_id(error, request_id)
 
 
-@contextmanager
-def _augment_errors_with_request_id(request_id):
-    """Context manager to augment exceptions with request ID.
+class _augment_errors_with_request_id:
+    """Context manager to augment exceptions with request ID."""
 
-    Args:
-        request_id (str): The request ID to include in exceptions
+    __slots__ = ("_request_id",)
 
-    Yields:
-        None
-    """
-    try:
-        yield
-    except Exception as exc:
-        augmented = _augment_error_with_request_id(exc, request_id)
-        # Use exception chaining to preserve the original exception
-        raise augmented from exc
+    def __init__(self, request_id):
+        self._request_id = request_id
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_val is not None:
+            _augment_error_with_request_id(exc_val, self._request_id)
+        return False
 
 
 def _merge_Transaction_Options(
@@ -1044,6 +1277,7 @@ def _create_spanner_omni_transport(
     client_certificate,
     client_key,
     interceptors=None,
+    credentials=None,
 ):
     """Creates a Spanner Omni transport.
 
@@ -1056,6 +1290,8 @@ def _create_spanner_omni_transport(
         client_certificate (str): Path to the client certificate file for mTLS.
         client_key (str): Path to the client key file for mTLS.
         interceptors (list): Optional list of interceptors to add to the channel.
+        credentials (google.auth.credentials.Credentials, optional): Credentials
+            to use for authentication (e.g. `SpannerOmniCredentials`).
 
     Returns:
         object: An instance of the transport class created by `transport_factory`.
@@ -1067,6 +1303,10 @@ def _create_spanner_omni_transport(
     from google.auth.credentials import AnonymousCredentials
 
     channel = None
+    all_interceptors = list(interceptors) if interceptors is not None else []
+    if credentials is not None and hasattr(credentials, "create_auth_interceptor"):
+        all_interceptors.append(credentials.create_auth_interceptor())
+
     if use_plain_text:
         channel = grpc.insecure_channel(target=host)
     elif ca_certificate:
@@ -1093,9 +1333,12 @@ def _create_spanner_omni_transport(
         raise ValueError(
             "TLS/mTLS connection requires ca_certificate to be set for Spanner Omni"
         )
-    if interceptors is not None:
-        channel = grpc.intercept_channel(channel, *interceptors)
-    return transport_factory(channel=channel, credentials=AnonymousCredentials())
+    if all_interceptors:
+        channel = grpc.intercept_channel(channel, *all_interceptors)
+    actual_credentials = (
+        credentials if credentials is not None else AnonymousCredentials()
+    )
+    return transport_factory(channel=channel, credentials=actual_credentials)
 
 
 def _create_experimental_host_transport(
@@ -1124,3 +1367,138 @@ def _create_experimental_host_transport(
         client_key,
         interceptors=interceptors,
     )
+
+
+_STREAM_DRAIN_QUEUE_SIZE = 512
+_STREAM_DRAIN_WORKER_COUNT = 8
+
+
+class _BoundedStreamDrainer:
+    """Bounded background drainer for synchronous gRPC streams.
+
+    Uses a fixed pool of daemon worker threads and a bounded queue to drain
+    completed streams to EOF, allowing callers to return early upon seeing
+    PartialResultSet.last without blocking on trailing gRPC frames.
+    """
+
+    def __init__(
+        self,
+        queue_size: int = _STREAM_DRAIN_QUEUE_SIZE,
+        worker_count: int = _STREAM_DRAIN_WORKER_COUNT,
+    ):
+        self._queue_size = queue_size
+        self._worker_count = worker_count
+        self._lock = threading.RLock()
+        self._reset()
+
+    def _reset(self):
+        self._queue = queue.Queue(maxsize=self._queue_size)
+        self._started = False
+        self._stopped = False
+        self._workers = []
+
+    def _reset_after_fork(self):
+        self._lock = threading.RLock()
+        self._reset()
+
+    def _ensure_started(self):
+        if not self._started and not self._stopped:
+            with self._lock:
+                if not self._started and not self._stopped:
+                    self._started = True
+                    try:
+                        for index in range(self._worker_count):
+                            worker = threading.Thread(
+                                target=self._worker_loop,
+                                name=f"spanner-stream-drainer-{index}",
+                                daemon=True,
+                            )
+                            worker.start()
+                            self._workers.append(worker)
+                    except Exception:
+                        if not self._workers:
+                            self._started = False
+                        raise
+
+    def _worker_loop(self):
+        while True:
+            iterator = self._queue.get()
+            if iterator is None:
+                self._queue.task_done()
+                break
+            try:
+                for _ in iterator:
+                    pass
+            except Exception:
+                pass
+            finally:
+                self._queue.task_done()
+
+    def drain(self, iterator):
+        if iterator is None:
+            return
+
+        with self._lock:
+            if not self._stopped:
+                try:
+                    self._ensure_started()
+                    self._queue.put_nowait(iterator)
+                    return
+                except Exception:
+                    # Under extreme bursts where the queue is temporarily full, or if thread
+                    # creation fails (e.g. in restricted environments or during shutdown),
+                    # fall through to drain inline on the caller thread.
+                    pass
+
+        # If already shut down or during interpreter exit, or if the queue is full,
+        # drain inline on caller thread rather than cancelling a successful query.
+        # Because trailers are delivered in sub-millisecond time (<0.5ms),
+        # inline draining adds negligible latency while guaranteeing status OK.
+        try:
+            for _ in iterator:
+                pass
+        except Exception:
+            pass
+
+    def shutdown(self, timeout: float = 0.5):
+        """Cleanly terminate worker threads during interpreter shutdown.
+
+        This is a best-effort cleanup at interpreter exit bounded by ``timeout``
+        seconds across all workers.
+        """
+        with self._lock:
+            if self._stopped:
+                return
+            self._stopped = True
+
+        if self._started:
+            deadline = time.monotonic() + timeout
+            for _ in range(len(self._workers)):
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    break
+                try:
+                    self._queue.put(None, timeout=remaining)
+                except queue.Full:
+                    break
+
+            for worker in self._workers:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    break
+                worker.join(timeout=remaining)
+
+
+_GLOBAL_STREAM_DRAINER = _BoundedStreamDrainer()
+atexit.register(_GLOBAL_STREAM_DRAINER.shutdown)
+if hasattr(os, "register_at_fork"):
+    os.register_at_fork(after_in_child=_GLOBAL_STREAM_DRAINER._reset_after_fork)
+
+
+def _drain_stream(iterator):
+    """Drain a stream iterator to EOF in the background.
+
+    Called when PartialResultSet.last is True to allow the caller to return immediately
+    while consuming trailing gRPC metadata so the stream terminates cleanly with status OK.
+    """
+    _GLOBAL_STREAM_DRAINER.drain(iterator)

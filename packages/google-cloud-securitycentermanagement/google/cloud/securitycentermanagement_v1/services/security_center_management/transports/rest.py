@@ -30,6 +30,7 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.securitycentermanagement_v1._compat import transcode_request
 from google.cloud.securitycentermanagement_v1.types import security_center_management
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1478,23 +1479,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseCreateEventThreatDetectionCustomModule._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_create_event_threat_detection_custom_module(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseCreateEventThreatDetectionCustomModule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterManagementRestTransport._BaseCreateEventThreatDetectionCustomModule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseCreateEventThreatDetectionCustomModule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseCreateEventThreatDetectionCustomModule,
+                    "_BaseCreateEventThreatDetectionCustomModule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1653,23 +1651,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseCreateSecurityHealthAnalyticsCustomModule._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_create_security_health_analytics_custom_module(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseCreateSecurityHealthAnalyticsCustomModule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterManagementRestTransport._BaseCreateSecurityHealthAnalyticsCustomModule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseCreateSecurityHealthAnalyticsCustomModule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseCreateSecurityHealthAnalyticsCustomModule,
+                    "_BaseCreateSecurityHealthAnalyticsCustomModule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1815,19 +1810,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseDeleteEventThreatDetectionCustomModule._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_delete_event_threat_detection_custom_module(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseDeleteEventThreatDetectionCustomModule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseDeleteEventThreatDetectionCustomModule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseDeleteEventThreatDetectionCustomModule,
+                    "_BaseDeleteEventThreatDetectionCustomModule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1928,19 +1924,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseDeleteSecurityHealthAnalyticsCustomModule._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_delete_security_health_analytics_custom_module(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseDeleteSecurityHealthAnalyticsCustomModule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseDeleteSecurityHealthAnalyticsCustomModule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseDeleteSecurityHealthAnalyticsCustomModule,
+                    "_BaseDeleteSecurityHealthAnalyticsCustomModule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2054,19 +2051,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseGetEffectiveEventThreatDetectionCustomModule._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_get_effective_event_threat_detection_custom_module(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseGetEffectiveEventThreatDetectionCustomModule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseGetEffectiveEventThreatDetectionCustomModule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseGetEffectiveEventThreatDetectionCustomModule,
+                    "_BaseGetEffectiveEventThreatDetectionCustomModule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2227,19 +2225,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseGetEffectiveSecurityHealthAnalyticsCustomModule._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_get_effective_security_health_analytics_custom_module(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseGetEffectiveSecurityHealthAnalyticsCustomModule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseGetEffectiveSecurityHealthAnalyticsCustomModule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseGetEffectiveSecurityHealthAnalyticsCustomModule,
+                    "_BaseGetEffectiveSecurityHealthAnalyticsCustomModule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2392,19 +2391,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseGetEventThreatDetectionCustomModule._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_get_event_threat_detection_custom_module(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseGetEventThreatDetectionCustomModule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseGetEventThreatDetectionCustomModule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseGetEventThreatDetectionCustomModule,
+                    "_BaseGetEventThreatDetectionCustomModule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2559,17 +2559,18 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseGetSecurityCenterService._get_http_options()
-
             request, metadata = self._interceptor.pre_get_security_center_service(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseGetSecurityCenterService._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseGetSecurityCenterService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseGetSecurityCenterService,
+                    "_BaseGetSecurityCenterService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2722,19 +2723,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseGetSecurityHealthAnalyticsCustomModule._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_get_security_health_analytics_custom_module(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseGetSecurityHealthAnalyticsCustomModule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseGetSecurityHealthAnalyticsCustomModule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseGetSecurityHealthAnalyticsCustomModule,
+                    "_BaseGetSecurityHealthAnalyticsCustomModule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2883,19 +2885,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseListDescendantEventThreatDetectionCustomModules._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_descendant_event_threat_detection_custom_modules(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseListDescendantEventThreatDetectionCustomModules._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseListDescendantEventThreatDetectionCustomModules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseListDescendantEventThreatDetectionCustomModules,
+                    "_BaseListDescendantEventThreatDetectionCustomModules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3044,19 +3047,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseListDescendantSecurityHealthAnalyticsCustomModules._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_descendant_security_health_analytics_custom_modules(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseListDescendantSecurityHealthAnalyticsCustomModules._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseListDescendantSecurityHealthAnalyticsCustomModules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseListDescendantSecurityHealthAnalyticsCustomModules,
+                    "_BaseListDescendantSecurityHealthAnalyticsCustomModules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3205,19 +3209,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseListEffectiveEventThreatDetectionCustomModules._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_effective_event_threat_detection_custom_modules(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseListEffectiveEventThreatDetectionCustomModules._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseListEffectiveEventThreatDetectionCustomModules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseListEffectiveEventThreatDetectionCustomModules,
+                    "_BaseListEffectiveEventThreatDetectionCustomModules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3366,19 +3371,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseListEffectiveSecurityHealthAnalyticsCustomModules._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_effective_security_health_analytics_custom_modules(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseListEffectiveSecurityHealthAnalyticsCustomModules._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseListEffectiveSecurityHealthAnalyticsCustomModules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseListEffectiveSecurityHealthAnalyticsCustomModules,
+                    "_BaseListEffectiveSecurityHealthAnalyticsCustomModules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3527,19 +3533,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseListEventThreatDetectionCustomModules._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_event_threat_detection_custom_modules(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseListEventThreatDetectionCustomModules._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseListEventThreatDetectionCustomModules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseListEventThreatDetectionCustomModules,
+                    "_BaseListEventThreatDetectionCustomModules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3688,17 +3695,18 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseListSecurityCenterServices._get_http_options()
-
             request, metadata = self._interceptor.pre_list_security_center_services(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseListSecurityCenterServices._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseListSecurityCenterServices._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseListSecurityCenterServices,
+                    "_BaseListSecurityCenterServices__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3847,19 +3855,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseListSecurityHealthAnalyticsCustomModules._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_security_health_analytics_custom_modules(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseListSecurityHealthAnalyticsCustomModules._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseListSecurityHealthAnalyticsCustomModules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseListSecurityHealthAnalyticsCustomModules,
+                    "_BaseListSecurityHealthAnalyticsCustomModules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4010,23 +4019,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseSimulateSecurityHealthAnalyticsCustomModule._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_simulate_security_health_analytics_custom_module(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseSimulateSecurityHealthAnalyticsCustomModule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterManagementRestTransport._BaseSimulateSecurityHealthAnalyticsCustomModule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseSimulateSecurityHealthAnalyticsCustomModule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseSimulateSecurityHealthAnalyticsCustomModule,
+                    "_BaseSimulateSecurityHealthAnalyticsCustomModule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4183,23 +4189,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseUpdateEventThreatDetectionCustomModule._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_update_event_threat_detection_custom_module(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseUpdateEventThreatDetectionCustomModule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterManagementRestTransport._BaseUpdateEventThreatDetectionCustomModule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseUpdateEventThreatDetectionCustomModule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseUpdateEventThreatDetectionCustomModule,
+                    "_BaseUpdateEventThreatDetectionCustomModule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4358,21 +4361,18 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseUpdateSecurityCenterService._get_http_options()
-
             request, metadata = self._interceptor.pre_update_security_center_service(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseUpdateSecurityCenterService._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterManagementRestTransport._BaseUpdateSecurityCenterService._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseUpdateSecurityCenterService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseUpdateSecurityCenterService,
+                    "_BaseUpdateSecurityCenterService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4529,23 +4529,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseUpdateSecurityHealthAnalyticsCustomModule._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_update_security_health_analytics_custom_module(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseUpdateSecurityHealthAnalyticsCustomModule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterManagementRestTransport._BaseUpdateSecurityHealthAnalyticsCustomModule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseUpdateSecurityHealthAnalyticsCustomModule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseUpdateSecurityHealthAnalyticsCustomModule,
+                    "_BaseUpdateSecurityHealthAnalyticsCustomModule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4700,23 +4697,20 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseValidateEventThreatDetectionCustomModule._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_validate_event_threat_detection_custom_module(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseValidateEventThreatDetectionCustomModule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityCenterManagementRestTransport._BaseValidateEventThreatDetectionCustomModule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseValidateEventThreatDetectionCustomModule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseValidateEventThreatDetectionCustomModule,
+                    "_BaseValidateEventThreatDetectionCustomModule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5148,15 +5142,16 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5287,15 +5282,16 @@ class SecurityCenterManagementRestTransport(_BaseSecurityCenterManagementRestTra
             """
 
             http_options = _BaseSecurityCenterManagementRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseSecurityCenterManagementRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityCenterManagementRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityCenterManagementRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

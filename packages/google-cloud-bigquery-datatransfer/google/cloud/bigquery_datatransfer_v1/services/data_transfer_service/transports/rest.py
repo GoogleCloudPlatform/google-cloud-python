@@ -30,6 +30,7 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.bigquery_datatransfer_v1._compat import transcode_request
 from google.cloud.bigquery_datatransfer_v1.types import datatransfer, transfer
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1059,21 +1060,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseCheckValidCreds._get_http_options()
-
             request, metadata = self._interceptor.pre_check_valid_creds(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseCheckValidCreds._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTransferServiceRestTransport._BaseCheckValidCreds._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseCheckValidCreds._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseCheckValidCreds,
+                    "_BaseCheckValidCreds__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1232,21 +1230,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseCreateTransferConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_transfer_config(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseCreateTransferConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTransferServiceRestTransport._BaseCreateTransferConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseCreateTransferConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseCreateTransferConfig,
+                    "_BaseCreateTransferConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1383,17 +1378,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseDeleteTransferConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_transfer_config(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseDeleteTransferConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseDeleteTransferConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseDeleteTransferConfig,
+                    "_BaseDeleteTransferConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1493,17 +1489,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseDeleteTransferRun._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_transfer_run(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseDeleteTransferRun._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseDeleteTransferRun._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseDeleteTransferRun,
+                    "_BaseDeleteTransferRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1604,21 +1601,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseEnrollDataSources._get_http_options()
-
             request, metadata = self._interceptor.pre_enroll_data_sources(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseEnrollDataSources._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTransferServiceRestTransport._BaseEnrollDataSources._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseEnrollDataSources._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseEnrollDataSources,
+                    "_BaseEnrollDataSources__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1724,15 +1718,16 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseGetDataSource._get_http_options()
-
             request, metadata = self._interceptor.pre_get_data_source(request, metadata)
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseGetDataSource._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseGetDataSource._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseGetDataSource,
+                    "_BaseGetDataSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1875,17 +1870,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseGetTransferConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_transfer_config(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseGetTransferConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseGetTransferConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseGetTransferConfig,
+                    "_BaseGetTransferConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2023,17 +2019,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseGetTransferRun._get_http_options()
-
             request, metadata = self._interceptor.pre_get_transfer_run(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseGetTransferRun._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseGetTransferRun._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseGetTransferRun,
+                    "_BaseGetTransferRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2172,17 +2169,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseListDataSources._get_http_options()
-
             request, metadata = self._interceptor.pre_list_data_sources(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseListDataSources._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseListDataSources._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseListDataSources,
+                    "_BaseListDataSources__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2322,17 +2320,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseListTransferConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_transfer_configs(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseListTransferConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseListTransferConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseListTransferConfigs,
+                    "_BaseListTransferConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2475,17 +2474,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseListTransferLogs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_transfer_logs(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseListTransferLogs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseListTransferLogs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseListTransferLogs,
+                    "_BaseListTransferLogs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2624,17 +2624,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseListTransferRuns._get_http_options()
-
             request, metadata = self._interceptor.pre_list_transfer_runs(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseListTransferRuns._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseListTransferRuns._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseListTransferRuns,
+                    "_BaseListTransferRuns__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2775,21 +2776,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseScheduleTransferRuns._get_http_options()
-
             request, metadata = self._interceptor.pre_schedule_transfer_runs(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseScheduleTransferRuns._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTransferServiceRestTransport._BaseScheduleTransferRuns._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseScheduleTransferRuns._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseScheduleTransferRuns,
+                    "_BaseScheduleTransferRuns__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2934,21 +2932,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseStartManualTransferRuns._get_http_options()
-
             request, metadata = self._interceptor.pre_start_manual_transfer_runs(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseStartManualTransferRuns._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTransferServiceRestTransport._BaseStartManualTransferRuns._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseStartManualTransferRuns._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseStartManualTransferRuns,
+                    "_BaseStartManualTransferRuns__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3086,21 +3081,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseUnenrollDataSources._get_http_options()
-
             request, metadata = self._interceptor.pre_unenroll_data_sources(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseUnenrollDataSources._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTransferServiceRestTransport._BaseUnenrollDataSources._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseUnenrollDataSources._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseUnenrollDataSources,
+                    "_BaseUnenrollDataSources__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3220,21 +3212,18 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseUpdateTransferConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_transfer_config(
                 request, metadata
             )
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseUpdateTransferConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataTransferServiceRestTransport._BaseUpdateTransferConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseUpdateTransferConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseUpdateTransferConfig,
+                    "_BaseUpdateTransferConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3522,15 +3511,16 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3661,15 +3651,16 @@ class DataTransferServiceRestTransport(_BaseDataTransferServiceRestTransport):
             """
 
             http_options = _BaseDataTransferServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseDataTransferServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataTransferServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataTransferServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

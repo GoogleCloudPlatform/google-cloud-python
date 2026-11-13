@@ -18,9 +18,9 @@ import operator
 import numpy
 import numpy.testing
 import pandas
-from pandas.errors import OutOfBoundsDatetime
 import pandas.testing
 import pytest
+from pandas.errors import OutOfBoundsDatetime
 
 import db_dtypes
 from db_dtypes import pandas_backports

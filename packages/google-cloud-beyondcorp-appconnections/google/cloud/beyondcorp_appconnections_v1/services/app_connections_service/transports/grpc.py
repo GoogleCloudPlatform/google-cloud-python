@@ -131,6 +131,10 @@ class AppConnectionsServiceGrpcTransport(AppConnectionsServiceTransport):
     The AppConnectionsService service provides methods to manage
     (create/read/update/delete) BeyondCorp AppConnections.
 
+    Deprecated: App Connector is deprecated and creation of new App
+    Connector resources is no longer permitted. Use Security Gateway
+    instead.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.

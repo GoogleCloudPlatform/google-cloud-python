@@ -1359,6 +1359,9 @@ class ResponseMetaData(proto.Message):
 
             However if the results are not sampled, this field will not
             be defined.
+        data_truncation_reasons (MutableSequence[google.analytics.data_v1beta.types.ResponseMetaData.DataTruncationReason]):
+            If set, indicate there is data truncation in
+            the report.
     """
 
     class SchemaRestrictionResponse(proto.Message):
@@ -1410,6 +1413,134 @@ class ResponseMetaData(proto.Message):
             message="ResponseMetaData.SchemaRestrictionResponse.ActiveMetricRestriction",
         )
 
+    class DataTruncationReason(proto.Message):
+        r"""Describes a reason for data truncation in the report.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            data_truncation_type (google.analytics.data_v1beta.types.ResponseMetaData.DataTruncationReason.DataTruncationType):
+                The type of data truncation.
+
+                This field is a member of `oneof`_ ``_data_truncation_type``.
+            data_truncation_message (str):
+                A descriptive message explaining the data
+                truncation.
+
+                This field is a member of `oneof`_ ``_data_truncation_message``.
+            data_truncation_date (str):
+                The data truncation date in the format
+                YYYY-MM-DD. Indicates data before this date is
+                truncated.
+
+                This field is a member of `oneof`_ ``_data_truncation_date``.
+            data_truncation_date_ranges (MutableSequence[google.analytics.data_v1beta.types.ResponseMetaData.DataTruncationReason.DataTruncationDateRange]):
+                The truncated date ranges.
+        """
+
+        class DataTruncationType(proto.Enum):
+            r"""The type of data truncation.
+
+            Values:
+                DATA_TRUNCATION_TYPE_UNSPECIFIED (0):
+                    Unspecified type.
+                DATA_TRUNCATION_TYPE_RULES_BASED_MODELS (1):
+                    Data is truncated in attribution report for
+                    rules-based models golden date.
+                DATA_TRUNCATION_TYPE_DATA_DRIVEN_ATTRIBUTION (2):
+                    Data is truncated in attribution report for
+                    data driven attribution golden date.
+                DATA_TRUNCATION_TYPE_DV360 (3):
+                    Data is truncated because DV360 policy does
+                    not permit data older than 2 years from being
+                    returned.
+                DATA_TRUNCATION_TYPE_CM360 (4):
+                    Data is truncated because CM360 policy does
+                    not permit data older than 2 years from being
+                    returned.
+                DATA_TRUNCATION_TYPE_ITEM_SCOPED_ECOMMERCE_METRICS (5):
+                    New item-scoped ecommerce metrics only have
+                    data after a specific date.
+                DATA_TRUNCATION_TYPE_EVENT_SCOPED_ECOMMERCE_METRICS (6):
+                    New event-scoped ecommerce metrics only have
+                    data after a specific date.
+                DATA_TRUNCATION_TYPE_DATE_RANGE (7):
+                    Query date range may not be fully served.
+                DATA_TRUNCATION_TYPE_PROPERTY (8):
+                    Data truncated because the query attempts to
+                    read event data prior to its retention date.
+                DATA_TRUNCATION_TYPE_CONVERSIONS (9):
+                    Data is truncated in conversions report.
+                DATA_TRUNCATION_TYPE_GOOGLE_ADS (10):
+                    Data is truncated due to Google Ads 36 month
+                    retention policy.
+            """
+
+            DATA_TRUNCATION_TYPE_UNSPECIFIED = 0
+            DATA_TRUNCATION_TYPE_RULES_BASED_MODELS = 1
+            DATA_TRUNCATION_TYPE_DATA_DRIVEN_ATTRIBUTION = 2
+            DATA_TRUNCATION_TYPE_DV360 = 3
+            DATA_TRUNCATION_TYPE_CM360 = 4
+            DATA_TRUNCATION_TYPE_ITEM_SCOPED_ECOMMERCE_METRICS = 5
+            DATA_TRUNCATION_TYPE_EVENT_SCOPED_ECOMMERCE_METRICS = 6
+            DATA_TRUNCATION_TYPE_DATE_RANGE = 7
+            DATA_TRUNCATION_TYPE_PROPERTY = 8
+            DATA_TRUNCATION_TYPE_CONVERSIONS = 9
+            DATA_TRUNCATION_TYPE_GOOGLE_ADS = 10
+
+        class DataTruncationDateRange(proto.Message):
+            r"""Define the truncated date range from start_date to end_date.
+
+            .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+            Attributes:
+                start_date (str):
+                    The start date in the format YYYY-MM-DD
+                    (inclusive).
+
+                    This field is a member of `oneof`_ ``_start_date``.
+                end_date (str):
+                    The end date in the format YYYY-MM-DD
+                    (inclusive).
+
+                    This field is a member of `oneof`_ ``_end_date``.
+            """
+
+            start_date: str = proto.Field(
+                proto.STRING,
+                number=1,
+                optional=True,
+            )
+            end_date: str = proto.Field(
+                proto.STRING,
+                number=2,
+                optional=True,
+            )
+
+        data_truncation_type: "ResponseMetaData.DataTruncationReason.DataTruncationType" = proto.Field(
+            proto.ENUM,
+            number=1,
+            optional=True,
+            enum="ResponseMetaData.DataTruncationReason.DataTruncationType",
+        )
+        data_truncation_message: str = proto.Field(
+            proto.STRING,
+            number=2,
+            optional=True,
+        )
+        data_truncation_date: str = proto.Field(
+            proto.STRING,
+            number=3,
+            optional=True,
+        )
+        data_truncation_date_ranges: MutableSequence[
+            "ResponseMetaData.DataTruncationReason.DataTruncationDateRange"
+        ] = proto.RepeatedField(
+            proto.MESSAGE,
+            number=4,
+            message="ResponseMetaData.DataTruncationReason.DataTruncationDateRange",
+        )
+
     data_loss_from_other_row: bool = proto.Field(
         proto.BOOL,
         number=3,
@@ -1444,6 +1575,13 @@ class ResponseMetaData(proto.Message):
         proto.MESSAGE,
         number=9,
         message="SamplingMetadata",
+    )
+    data_truncation_reasons: MutableSequence[DataTruncationReason] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=10,
+            message=DataTruncationReason,
+        )
     )
 
 

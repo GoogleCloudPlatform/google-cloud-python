@@ -32,6 +32,7 @@ from google.cloud.dlp_v2.types import storage
 __protobuf__ = proto.module(
     package="google.privacy.dlp.v2",
     manifest={
+        "ContentPolicyVerdict",
         "TransformationResultStatusType",
         "TransformationContainerType",
         "TransformationType",
@@ -72,6 +73,7 @@ __protobuf__ = proto.module(
         "StringValueBatch",
         "Table",
         "KeyValueMetadataProperty",
+        "FileLabel",
         "InspectResult",
         "Finding",
         "Location",
@@ -330,8 +332,38 @@ __protobuf__ = proto.module(
         "ProcessingLocation",
         "SaveToGcsFindingsOutput",
         "Domain",
+        "CreateContentPolicyRequest",
+        "GetContentPolicyRequest",
+        "ListContentPoliciesRequest",
+        "ListContentPoliciesResponse",
+        "UpdateContentPolicyRequest",
+        "DeleteContentPolicyRequest",
+        "ContentPolicy",
     },
 )
+
+
+class ContentPolicyVerdict(proto.Enum):
+    r"""Possible results of applying a content policy. This may
+    expand to include additional result types in the future.
+
+    Values:
+        CONTENT_POLICY_VERDICT_UNSPECIFIED (0):
+            Not used.
+        ALLOW (1):
+            The policy allows the provided content to be
+            used.
+        BLOCK (2):
+            The policy prevents the provided content from
+            being used. This should result in a blocked file
+            upload, exclusion from training dataset, or
+            other similar block action. (specific action
+            will depend on the caller).
+    """
+
+    CONTENT_POLICY_VERDICT_UNSPECIFIED = 0
+    ALLOW = 1
+    BLOCK = 2
 
 
 class TransformationResultStatusType(proto.Enum):
@@ -957,7 +989,7 @@ class ExcludeByImageFindings(proto.Message):
     Attributes:
         info_types (MutableSequence[google.cloud.dlp_v2.types.InfoType]):
             A list of image-supported infoTypes—excluding `document
-            infoTypes <https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference#documents>`__—to
+            infoTypes <https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#documents>`__—to
             be used as context for the exclusion rule. A finding is
             excluded if its bounding box has the specified spatial
             relationship (defined by ``image_containment_type``) with a
@@ -1127,7 +1159,7 @@ class AdjustByImageFindings(proto.Message):
     Attributes:
         info_types (MutableSequence[google.cloud.dlp_v2.types.InfoType]):
             A list of image-supported infoTypes—excluding `document
-            infoTypes <https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference#documents>`__—to
+            infoTypes <https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#documents>`__—to
             be used as context for the adjustment rule. Sensitive Data
             Protection adjusts the likelihood of an image finding if its
             bounding box has the specified spatial relationship (defined
@@ -1302,7 +1334,7 @@ class InspectConfig(proto.Message):
             Restricts what info_types to look for. The values must
             correspond to InfoType values returned by ListInfoTypes or
             listed at
-            https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference.
+            https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference.
 
             When no InfoTypes or CustomInfoTypes are specified in a
             request, the system may automatically choose a default list
@@ -1319,7 +1351,7 @@ class InspectConfig(proto.Message):
             In general, the highest likelihood setting yields the fewest
             findings in results and the lowest chance of a false
             positive. For more information, see `Match
-            likelihood <https://cloud.google.com/sensitive-data-protection/docs/likelihood>`__.
+            likelihood <https://docs.cloud.google.com/sensitive-data-protection/docs/likelihood>`__.
         min_likelihood_per_info_type (MutableSequence[google.cloud.dlp_v2.types.InspectConfig.InfoTypeLikelihood]):
             Minimum likelihood per infotype. For each infotype, a user
             can specify a minimum likelihood. The system only returns a
@@ -1354,7 +1386,7 @@ class InspectConfig(proto.Message):
             findings. This is not used for data profiling.
         custom_info_types (MutableSequence[google.cloud.dlp_v2.types.CustomInfoType]):
             CustomInfoTypes provided by the user. See
-            https://cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes
+            https://docs.cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes
             to learn more.
         content_options (MutableSequence[google.cloud.dlp_v2.types.ContentOption]):
             Deprecated and unused.
@@ -1540,7 +1572,7 @@ class ByteContentItem(proto.Message):
     class BytesType(proto.Enum):
         r"""The type of data being sent for inspection. To learn more, see
         `Supported file
-        types <https://cloud.google.com/sensitive-data-protection/docs/supported-file-types>`__.
+        types <https://docs.cloud.google.com/sensitive-data-protection/docs/supported-file-types>`__.
 
         Only the first frame of each multiframe image is inspected. Metadata
         and other frames aren't inspected.
@@ -1632,7 +1664,7 @@ class ContentItem(proto.Message):
             This field is a member of `oneof`_ ``data_item``.
         table (google.cloud.dlp_v2.types.Table):
             Structured content for inspection. See
-            https://cloud.google.com/sensitive-data-protection/docs/inspecting-text#inspecting_a_table
+            https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-text#inspecting_a_table
             to learn more.
 
             This field is a member of `oneof`_ ``data_item``.
@@ -1699,12 +1731,20 @@ class ContentMetadata(proto.Message):
         properties (MutableSequence[google.cloud.dlp_v2.types.KeyValueMetadataProperty]):
             User provided key-value pairs of content
             metadata.
+        file_labels (MutableSequence[google.cloud.dlp_v2.types.FileLabel]):
+            Optional. The file labels associated with the
+            content.
     """
 
     properties: MutableSequence["KeyValueMetadataProperty"] = proto.RepeatedField(
         proto.MESSAGE,
         number=2,
         message="KeyValueMetadataProperty",
+    )
+    file_labels: MutableSequence["FileLabel"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=3,
+        message="FileLabel",
     )
 
 
@@ -1819,7 +1859,7 @@ class StringValueBatch(proto.Message):
 class Table(proto.Message):
     r"""Structured content to inspect. Up to 50,000 ``Value``\ s per request
     allowed. See
-    https://cloud.google.com/sensitive-data-protection/docs/inspecting-structured-text#inspecting_a_table
+    https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-structured-text#inspecting_a_table
     to learn more.
 
     Attributes:
@@ -1872,6 +1912,98 @@ class KeyValueMetadataProperty(proto.Message):
     value: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+
+
+class FileLabel(proto.Message):
+    r"""Represents a file label.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        sensitivity_label (google.cloud.dlp_v2.types.FileLabel.SensitivityLabelMetadata):
+            Sensitivity labels published by Microsoft.
+
+            This field is a member of `oneof`_ ``type``.
+        google_drive_label (google.cloud.dlp_v2.types.FileLabel.GoogleDriveLabelMetadata):
+            Google Drive labels published by Google.
+
+            This field is a member of `oneof`_ ``type``.
+    """
+
+    class SensitivityLabelMetadata(proto.Message):
+        r"""Sensitivity labels published by Microsoft.
+
+        Attributes:
+            guid (str):
+                Required. The GUID of the sensitivity label.
+        """
+
+        guid: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+
+    class GoogleDriveLabelMetadata(proto.Message):
+        r"""Google Drive labels published by Google.
+
+        Attributes:
+            label_id (str):
+                The `label
+                ID <https://developers.google.com/workspace/drive/labels/guides/overview>`__
+                of the Google Drive label.
+            label_fields (MutableSequence[google.cloud.dlp_v2.types.FileLabel.GoogleDriveLabelMetadata.LabelFieldMetadata]):
+                The field values of the Google Drive label
+        """
+
+        class LabelFieldMetadata(proto.Message):
+            r"""The field values of the Google Drive label
+
+            Attributes:
+                id (str):
+                    The identifier of the Label Field.
+                value (google.cloud.dlp_v2.types.Value):
+                    The value of the Label Field.
+            """
+
+            id: str = proto.Field(
+                proto.STRING,
+                number=1,
+            )
+            value: "Value" = proto.Field(
+                proto.MESSAGE,
+                number=2,
+                message="Value",
+            )
+
+        label_id: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        label_fields: MutableSequence[
+            "FileLabel.GoogleDriveLabelMetadata.LabelFieldMetadata"
+        ] = proto.RepeatedField(
+            proto.MESSAGE,
+            number=2,
+            message="FileLabel.GoogleDriveLabelMetadata.LabelFieldMetadata",
+        )
+
+    sensitivity_label: SensitivityLabelMetadata = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        oneof="type",
+        message=SensitivityLabelMetadata,
+    )
+    google_drive_label: GoogleDriveLabelMetadata = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="type",
+        message=GoogleDriveLabelMetadata,
     )
 
 
@@ -2501,6 +2633,8 @@ class ImageLocation(proto.Message):
 
 class BoundingBox(proto.Message):
     r"""Bounding box encompassing detected text within an image.
+    Coordinates are in pixels and strictly within the image or frame
+    bounds.
 
     Attributes:
         top (int):
@@ -2543,7 +2677,7 @@ class RedactImageRequest(proto.Message):
 
             The format of this value varies depending on whether you
             have `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -2748,7 +2882,7 @@ class DeidentifyContentRequest(proto.Message):
 
             The format of this value varies depending on whether you
             have `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -2861,7 +2995,7 @@ class ReidentifyContentRequest(proto.Message):
 
             The format of this value varies depending on whether you
             have `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -2979,7 +3113,7 @@ class InspectContentRequest(proto.Message):
 
             The format of this value varies depending on whether you
             have `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -3186,8 +3320,8 @@ class InspectDataSourceDetails(proto.Message):
         requested_options (google.cloud.dlp_v2.types.InspectDataSourceDetails.RequestedOptions):
             The configuration used for this job.
         result (google.cloud.dlp_v2.types.InspectDataSourceDetails.Result):
-            A summary of the outcome of this inspection
-            job.
+            Output only. A summary of the outcome of this
+            inspection job.
     """
 
     class RequestedOptions(proto.Message):
@@ -3195,8 +3329,8 @@ class InspectDataSourceDetails(proto.Message):
 
         Attributes:
             snapshot_inspect_template (google.cloud.dlp_v2.types.InspectTemplate):
-                If run with an InspectTemplate, a snapshot of
-                its state at the time of this run.
+                Output only. If run with an InspectTemplate,
+                a snapshot of its state at the time of this run.
             job_config (google.cloud.dlp_v2.types.InspectJobConfig):
                 Inspect config.
         """
@@ -3976,7 +4110,7 @@ class ListInfoTypesResponse(proto.Message):
 
 class RiskAnalysisJobConfig(proto.Message):
     r"""Configuration for a risk analysis job. See
-    https://cloud.google.com/sensitive-data-protection/docs/concepts-risk-analysis
+    https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-risk-analysis
     to learn more.
 
     Attributes:
@@ -4521,27 +4655,27 @@ class AnalyzeDataSourceRiskDetails(proto.Message):
         requested_source_table (google.cloud.dlp_v2.types.BigQueryTable):
             Input dataset to compute metrics over.
         numerical_stats_result (google.cloud.dlp_v2.types.AnalyzeDataSourceRiskDetails.NumericalStatsResult):
-            Numerical stats result
+            Output only. Numerical stats result
 
             This field is a member of `oneof`_ ``result``.
         categorical_stats_result (google.cloud.dlp_v2.types.AnalyzeDataSourceRiskDetails.CategoricalStatsResult):
-            Categorical stats result
+            Output only. Categorical stats result
 
             This field is a member of `oneof`_ ``result``.
         k_anonymity_result (google.cloud.dlp_v2.types.AnalyzeDataSourceRiskDetails.KAnonymityResult):
-            K-anonymity result
+            Output only. K-anonymity result
 
             This field is a member of `oneof`_ ``result``.
         l_diversity_result (google.cloud.dlp_v2.types.AnalyzeDataSourceRiskDetails.LDiversityResult):
-            L-divesity result
+            Output only. L-divesity result
 
             This field is a member of `oneof`_ ``result``.
         k_map_estimation_result (google.cloud.dlp_v2.types.AnalyzeDataSourceRiskDetails.KMapEstimationResult):
-            K-map result
+            Output only. K-map result
 
             This field is a member of `oneof`_ ``result``.
         delta_presence_estimation_result (google.cloud.dlp_v2.types.AnalyzeDataSourceRiskDetails.DeltaPresenceEstimationResult):
-            Delta-presence result
+            Output only. Delta-presence result
 
             This field is a member of `oneof`_ ``result``.
         requested_options (google.cloud.dlp_v2.types.AnalyzeDataSourceRiskDetails.RequestedRiskAnalysisOptions):
@@ -5686,7 +5820,7 @@ class CryptoHashConfig(proto.Message):
     Outputs a base64 encoded representation of the hashed output
     (for example, L7k0BHmF1ha5U3NfGykjro4xWi1MPVQPjhMAZbSV9mM=).
     Currently, only string and integer values can be hashed. See
-    https://cloud.google.com/sensitive-data-protection/docs/pseudonymization
+    https://docs.cloud.google.com/sensitive-data-protection/docs/pseudonymization
     to learn more.
 
     Attributes:
@@ -5817,7 +5951,7 @@ class ReplaceDictionaryConfig(proto.Message):
     Attributes:
         word_list (google.cloud.dlp_v2.types.CustomInfoType.Dictionary.WordList):
             A list of words to select from for random replacement. The
-            `limits <https://cloud.google.com/sensitive-data-protection/limits>`__
+            `limits <https://docs.cloud.google.com/sensitive-data-protection/limits>`__
             page contains details about the size limits of dictionaries.
 
             This field is a member of `oneof`_ ``type``.
@@ -5994,7 +6128,7 @@ class FixedSizeBucketingConfig(proto.Message):
     to be transformed to match the type of the bound before comparing.
 
     See
-    https://cloud.google.com/sensitive-data-protection/docs/concepts-bucketing
+    https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-bucketing
     to learn more.
 
     Attributes:
@@ -6045,7 +6179,7 @@ class BucketingConfig(proto.Message):
     transformed, we will first attempt converting the type of the data
     to be transformed to match the type of the bound before comparing.
     See
-    https://cloud.google.com/sensitive-data-protection/docs/concepts-bucketing
+    https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-bucketing
     to learn more.
 
     Attributes:
@@ -6102,7 +6236,7 @@ class CryptoReplaceFfxFpeConfig(proto.Message):
     the same surrogate. Identifiers must be at least two characters
     long. In the case that the identifier is the empty string, it will
     be skipped. See
-    https://cloud.google.com/sensitive-data-protection/docs/pseudonymization
+    https://docs.cloud.google.com/sensitive-data-protection/docs/pseudonymization
     to learn more.
 
     Note: We recommend using CryptoDeterministicConfig for all use cases
@@ -6181,7 +6315,7 @@ class CryptoReplaceFfxFpeConfig(proto.Message):
 
             This annotation identifies the surrogate when inspecting
             content using the custom infoType
-            ```SurrogateType`` <https://cloud.google.com/sensitive-data-protection/docs/reference/rest/v2/InspectConfig#surrogatetype>`__.
+            ```SurrogateType`` <https://docs.cloud.google.com/sensitive-data-protection/docs/reference/rest/v2/InspectConfig#surrogatetype>`__.
             This facilitates reversal of the surrogate when it occurs in
             free text.
 
@@ -6350,7 +6484,7 @@ class KmsWrappedCryptoKey(proto.Message):
     dlp.kms.encrypt
 
     For more information, see [Creating a wrapped key]
-    (https://cloud.google.com/sensitive-data-protection/docs/create-wrapped-key).
+    (https://docs.cloud.google.com/sensitive-data-protection/docs/create-wrapped-key).
 
     Note: When you use Cloud KMS for cryptographic operations, `charges
     apply <https://cloud.google.com/kms/pricing>`__.
@@ -6376,7 +6510,7 @@ class KmsWrappedCryptoKey(proto.Message):
 class DateShiftConfig(proto.Message):
     r"""Shifts dates by random number of days, with option to be
     consistent for the same context. See
-    https://cloud.google.com/sensitive-data-protection/docs/concepts-date-shifting
+    https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-date-shifting
     to learn more.
 
 
@@ -7125,7 +7259,7 @@ class InspectTemplate(proto.Message):
     r"""The inspectTemplate contains a configuration (set of types of
     sensitive data to be detected) to be used anywhere you otherwise
     would normally specify InspectConfig. See
-    https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+    https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
     to learn more.
 
     Attributes:
@@ -7148,6 +7282,12 @@ class InspectTemplate(proto.Message):
         inspect_config (google.cloud.dlp_v2.types.InspectConfig):
             The core content of the template.
             Configuration of the scanning process.
+        allow_limited_availability_info_types (bool):
+            Optional. Enables the use of `limited-availability built-in
+            infoTypes <https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#limited-availability-infotypes>`__
+            in inspect_config. These infoTypes are supported only in
+            specific regions and can cause scanning errors if used
+            elsewhere.
     """
 
     name: str = proto.Field(
@@ -7177,12 +7317,16 @@ class InspectTemplate(proto.Message):
         number=6,
         message="InspectConfig",
     )
+    allow_limited_availability_info_types: bool = proto.Field(
+        proto.BOOL,
+        number=8,
+    )
 
 
 class DeidentifyTemplate(proto.Message):
     r"""DeidentifyTemplates contains instructions on how to
     de-identify content. See
-    https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+    https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
     to learn more.
 
     Attributes:
@@ -7287,7 +7431,7 @@ class Error(proto.Message):
 class JobTrigger(proto.Message):
     r"""Contains a configuration to make API calls on a repeating
     basis. See
-    https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
+    https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
     to learn more.
 
 
@@ -7295,8 +7439,9 @@ class JobTrigger(proto.Message):
 
     Attributes:
         name (str):
-            Unique resource name for the triggeredJob, assigned by the
-            service when the triggeredJob is created, for example
+            Output only. Unique resource name for the triggeredJob,
+            assigned by the service when the triggeredJob is created,
+            for example
             ``projects/dlp-test-project/jobTriggers/53234423``.
         display_name (str):
             Display name (max 100 chars)
@@ -7445,7 +7590,7 @@ class JobTrigger(proto.Message):
 class Action(proto.Message):
     r"""A task to execute on the completion of a job.
     See
-    https://cloud.google.com/sensitive-data-protection/docs/concepts-actions
+    https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-actions
     to learn more.
 
     This message has `oneof`_ fields (mutually exclusive fields).
@@ -7489,7 +7634,7 @@ class Action(proto.Message):
         job_notification_emails (google.cloud.dlp_v2.types.Action.JobNotificationEmails):
             Sends an email when the job completes. The email goes to IAM
             project owners and technical `Essential
-            Contacts <https://cloud.google.com/resource-manager/docs/managing-notification-contacts>`__.
+            Contacts <https://docs.cloud.google.com/resource-manager/docs/managing-notification-contacts>`__.
 
             This field is a member of `oneof`_ ``action``.
         publish_to_stackdriver (google.cloud.dlp_v2.types.Action.PublishToStackdriver):
@@ -7519,7 +7664,7 @@ class Action(proto.Message):
         r"""Publish a message into a given Pub/Sub topic when DlpJob has
         completed. The message contains a single field, ``DlpJobName``,
         which is equal to the finished job's
-        ```DlpJob.name`` <https://cloud.google.com/sensitive-data-protection/docs/reference/rest/v2/projects.dlpJobs#DlpJob>`__.
+        ```DlpJob.name`` <https://docs.cloud.google.com/sensitive-data-protection/docs/reference/rest/v2/projects.dlpJobs#DlpJob>`__.
         Compatible with: Inspect, Risk
 
         Attributes:
@@ -7579,7 +7724,7 @@ class Action(proto.Message):
         ``sensitive-data-protection-job-result`` aspect. For more
         information, see `Send inspection results to Dataplex Universal
         Catalog as
-        aspects <https://cloud.google.com/sensitive-data-protection/docs/add-aspects-inspection-job>`__.
+        aspects <https://docs.cloud.google.com/sensitive-data-protection/docs/add-aspects-inspection-job>`__.
 
         Aspects are stored in Dataplex Universal Catalog storage and are
         governed by service-specific policies for Dataplex Universal
@@ -7730,7 +7875,7 @@ class Action(proto.Message):
     class JobNotificationEmails(proto.Message):
         r"""Sends an email when the job completes. The email goes to IAM project
         owners and technical `Essential
-        Contacts <https://cloud.google.com/resource-manager/docs/managing-notification-contacts>`__.
+        Contacts <https://docs.cloud.google.com/resource-manager/docs/managing-notification-contacts>`__.
 
         """
 
@@ -7852,7 +7997,7 @@ class CreateInspectTemplateRequest(proto.Message):
             The format of this value varies depending on the scope of
             the request (project or organization) and whether you have
             `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -7959,7 +8104,7 @@ class ListInspectTemplatesRequest(proto.Message):
             The format of this value varies depending on the scope of
             the request (project or organization) and whether you have
             `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -8081,7 +8226,7 @@ class CreateJobTriggerRequest(proto.Message):
 
             The format of this value varies depending on whether you
             have `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -8400,7 +8545,7 @@ class CreateDlpJobRequest(proto.Message):
 
             The format of this value varies depending on whether you
             have `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -8470,7 +8615,7 @@ class ListJobTriggersRequest(proto.Message):
 
             The format of this value varies depending on whether you
             have `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -8692,7 +8837,7 @@ class DataProfileAction(proto.Message):
             Publishes generated data profiles to Google Security
             Operations. For more information, see `Use Sensitive Data
             Protection data in context-aware
-            analytics <https://cloud.google.com/chronicle/docs/detection/usecase-dlp-high-risk-user-download>`__.
+            analytics <https://docs.cloud.google.com/chronicle/docs/detection/usecase-dlp-high-risk-user-download>`__.
 
             This field is a member of `oneof`_ ``action``.
         publish_to_scc (google.cloud.dlp_v2.types.DataProfileAction.PublishToSecurityCommandCenter):
@@ -8756,9 +8901,9 @@ class DataProfileAction(proto.Message):
                   and table are created, the discovery scan configuration
                   will be updated with the dataset and table names.
                 - See `Analyze data profiles stored in
-                  BigQuery <https://cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles>`__.
+                  BigQuery <https://docs.cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles>`__.
                 - See `Sample queries for your BigQuery
-                  table <https://cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles#sample_sql_queries>`__.
+                  table <https://docs.cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles#sample_sql_queries>`__.
                 - Data is inserted using `streaming
                   insert <https://cloud.google.com/blog/products/bigquery/life-of-a-bigquery-streaming-insert>`__
                   and so data may be in the buffer for a period of time
@@ -8770,7 +8915,7 @@ class DataProfileAction(proto.Message):
                 - The best practice is to use the same table for an entire
                   organization so that you can take advantage of the
                   `provided Data Studio
-                  reports <https://cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles#use_a_premade_report>`__.
+                  reports <https://docs.cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles#use_a_premade_report>`__.
                   If you use VPC Service Controls to define security
                   perimeters, then you must use a separate table for each
                   boundary.
@@ -8876,7 +9021,7 @@ class DataProfileAction(proto.Message):
         r"""Create Dataplex Universal Catalog aspects for profiled
         resources with the aspect type Sensitive Data Protection
         Profile. To learn more about aspects, see
-        https://cloud.google.com/sensitive-data-protection/docs/add-aspects.
+        https://docs.cloud.google.com/sensitive-data-protection/docs/add-aspects.
 
         Attributes:
             lower_data_risk_to_low (bool):
@@ -8897,9 +9042,9 @@ class DataProfileAction(proto.Message):
 
     class TagResources(proto.Message):
         r"""If set, attaches the [tags]
-        (https://cloud.google.com/resource-manager/docs/tags/tags-overview)
+        (https://docs.cloud.google.com/resource-manager/docs/tags/tags-overview)
         provided to profiled resources. Tags support `access
-        control <https://cloud.google.com/iam/docs/tags-access-control>`__.
+        control <https://docs.cloud.google.com/iam/docs/tags-access-control>`__.
         You can conditionally grant or deny access to a resource based on
         whether the resource has a specific tag.
 
@@ -8920,7 +9065,7 @@ class DataProfileAction(proto.Message):
                 Whether applying a tag to a resource should lower the risk
                 of the profile for that resource. For example, in
                 conjunction with an `IAM deny
-                policy <https://cloud.google.com/iam/docs/deny-overview>`__,
+                policy <https://docs.cloud.google.com/iam/docs/deny-overview>`__,
                 you can deny all principals a permission if a tag value is
                 present, mitigating the risk of the resource. This also
                 lowers the data risk of resources at the lower levels of the
@@ -9051,7 +9196,7 @@ class DataProfileFinding(proto.Message):
             omitted.
         infotype (google.cloud.dlp_v2.types.InfoType):
             The `type of
-            content <https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference>`__
+            content <https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference>`__
             that might have been found.
         quote_info (google.cloud.dlp_v2.types.QuoteInfo):
             Contains data parsed from quotes. Currently supported
@@ -9181,7 +9326,7 @@ class DataProfileJobConfig(proto.Message):
 
     The generated data profiles are retained according to the [data
     retention policy]
-    (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
+    (https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
 
     Attributes:
         location (google.cloud.dlp_v2.types.DataProfileLocation):
@@ -9210,7 +9355,7 @@ class DataProfileJobConfig(proto.Message):
             with data, that region's data will not be scanned.
 
             For more information, see
-            https://cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.
+            https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.
         data_profile_actions (MutableSequence[google.cloud.dlp_v2.types.DataProfileAction]):
             Actions to execute at the completion of the
             job.
@@ -9351,12 +9496,13 @@ class DiscoveryConfig(proto.Message):
 
     The generated data profiles are retained according to the [data
     retention policy]
-    (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
+    (https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
 
     Attributes:
         name (str):
-            Unique resource name for the DiscoveryConfig, assigned by
-            the service when the DiscoveryConfig is created, for example
+            Output only. Unique resource name for the DiscoveryConfig,
+            assigned by the service when the DiscoveryConfig is created,
+            for example
             ``projects/dlp-test-project/locations/global/discoveryConfigs/53234423``.
         display_name (str):
             Display name (max 100 chars)
@@ -9381,7 +9527,7 @@ class DiscoveryConfig(proto.Message):
             with data, that region's data will not be scanned.
 
             For more information, see
-            https://cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.
+            https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.
         actions (MutableSequence[google.cloud.dlp_v2.types.DataProfileAction]):
             Actions to execute at the completion of
             scanning.
@@ -10354,7 +10500,7 @@ class SecretsDiscoveryTarget(proto.Message):
     No inspect template should be included in the discovery config for a
     security benchmarks scan. Instead, the built-in list of secrets and
     credentials infoTypes will be used (see
-    https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference#credentials_and_secrets).
+    https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#credentials_and_secrets).
 
     Credentials and secrets discovered will be reported as
     vulnerabilities to Security Command Center.
@@ -10501,7 +10647,7 @@ class FileStoreCollection(proto.Message):
             have all of the provided tags attached. Tags refer to
             Resource Manager tags bound to the resource or its
             ancestors. For more information, see `Manage
-            schedules <https://cloud.google.com/sensitive-data-protection/docs/profile-project-cloud-storage#manage-schedules>`__.
+            schedules <https://docs.cloud.google.com/sensitive-data-protection/docs/profile-project-cloud-storage#manage-schedules>`__.
     """
 
     include_regexes: "FileStoreRegexes" = proto.Field(
@@ -10657,8 +10803,8 @@ class DiscoveryCloudStorageConditions(proto.Message):
 
     class CloudStorageObjectAttribute(proto.Enum):
         r"""The attribute of an object. See
-        https://cloud.google.com/storage/docs/storage-classes for more
-        information on storage classes.
+        https://docs.cloud.google.com/storage/docs/storage-classes for
+        more information on storage classes.
 
         Values:
             CLOUD_STORAGE_OBJECT_ATTRIBUTE_UNSPECIFIED (0):
@@ -10706,12 +10852,12 @@ class DiscoveryCloudStorageConditions(proto.Message):
                 Scan buckets regardless of the attribute.
             AUTOCLASS_DISABLED (2):
                 Buckets with
-                `Autoclass <https://cloud.google.com/storage/docs/autoclass>`__
+                `Autoclass <https://docs.cloud.google.com/storage/docs/autoclass>`__
                 disabled. Only one of AUTOCLASS_DISABLED or
                 AUTOCLASS_ENABLED should be set.
             AUTOCLASS_ENABLED (3):
                 Buckets with
-                `Autoclass <https://cloud.google.com/storage/docs/autoclass>`__
+                `Autoclass <https://docs.cloud.google.com/storage/docs/autoclass>`__
                 enabled. Only one of AUTOCLASS_DISABLED or AUTOCLASS_ENABLED
                 should be set. Scanning Autoclass-enabled buckets can affect
                 object storage classes.
@@ -10780,7 +10926,7 @@ class DiscoveryFileStoreConditions(proto.Message):
 class OtherCloudDiscoveryTarget(proto.Message):
     r"""Target used to match against for discovery of resources from other
     clouds. An `AWS connector in Security Command Center
-    (Enterprise <https://cloud.google.com/security-command-center/docs/connect-scc-to-aws>`__
+    (Enterprise <https://docs.cloud.google.com/security-command-center/docs/connect-scc-to-aws>`__
     is required to use this feature.
 
     This message has `oneof`_ fields (mutually exclusive fields).
@@ -11537,11 +11683,11 @@ class DlpJob(proto.Message):
 
     Attributes:
         name (str):
-            The server-assigned name.
+            Output only. The server-assigned name.
         type_ (google.cloud.dlp_v2.types.DlpJobType):
             The type of job.
         state (google.cloud.dlp_v2.types.DlpJob.JobState):
-            State of a job.
+            Output only. State of a job.
         risk_details (google.cloud.dlp_v2.types.AnalyzeDataSourceRiskDetails):
             Results from analyzing risk of a data source.
 
@@ -11551,23 +11697,24 @@ class DlpJob(proto.Message):
 
             This field is a member of `oneof`_ ``details``.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
-            Time when the job was created.
+            Output only. Time when the job was created.
         start_time (google.protobuf.timestamp_pb2.Timestamp):
-            Time when the job started.
+            Output only. Time when the job started.
         end_time (google.protobuf.timestamp_pb2.Timestamp):
-            Time when the job finished.
+            Output only. Time when the job finished.
         last_modified (google.protobuf.timestamp_pb2.Timestamp):
-            Time when the job was last modified by the
-            system.
+            Output only. Time when the job was last
+            modified by the system.
         job_trigger_name (str):
-            If created by a job trigger, the resource
-            name of the trigger that instantiated the job.
+            Output only. If created by a job trigger, the
+            resource name of the trigger that instantiated
+            the job.
         errors (MutableSequence[google.cloud.dlp_v2.types.Error]):
-            A stream of errors encountered running the
-            job.
+            Output only. A stream of errors encountered
+            running the job.
         action_details (MutableSequence[google.cloud.dlp_v2.types.ActionDetails]):
-            Events that should occur after the job has
-            completed.
+            Output only. Events that should occur after
+            the job has completed.
     """
 
     class JobState(proto.Enum):
@@ -11691,7 +11838,7 @@ class ListDlpJobsRequest(proto.Message):
 
             The format of this value varies depending on whether you
             have `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -11886,7 +12033,7 @@ class CreateDeidentifyTemplateRequest(proto.Message):
             The format of this value varies depending on the scope of
             the request (project or organization) and whether you have
             `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -11993,7 +12140,7 @@ class ListDeidentifyTemplatesRequest(proto.Message):
             The format of this value varies depending on the scope of
             the request (project or organization) and whether you have
             `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -12109,7 +12256,7 @@ class DeleteDeidentifyTemplateRequest(proto.Message):
 class LargeCustomDictionaryConfig(proto.Message):
     r"""Configuration for a custom dictionary created from a data source of
     any size up to the maximum size defined in the
-    `limits <https://cloud.google.com/sensitive-data-protection/limits>`__
+    `limits <https://docs.cloud.google.com/sensitive-data-protection/limits>`__
     page. The artifacts of dictionary creation are stored in the
     specified Cloud Storage location. Consider using
     ``CustomInfoType.Dictionary`` for smaller dictionaries that satisfy
@@ -12179,7 +12326,7 @@ class LargeCustomDictionaryStats(proto.Message):
 class StoredInfoTypeConfig(proto.Message):
     r"""Configuration for stored infoTypes. All fields and subfield
     are provided by the user. For more information, see
-    https://cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes.
+    https://docs.cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes.
 
     This message has `oneof`_ fields (mutually exclusive fields).
     For each oneof, at most one member field can be set at the same time.
@@ -12268,19 +12415,19 @@ class StoredInfoTypeVersion(proto.Message):
         config (google.cloud.dlp_v2.types.StoredInfoTypeConfig):
             StoredInfoType configuration.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
-            Create timestamp of the version. Read-only,
-            determined by the system when the version is
-            created.
+            Output only. Create timestamp of the version.
+            Read-only, determined by the system when the
+            version is created.
         state (google.cloud.dlp_v2.types.StoredInfoTypeState):
-            Stored info type version state. Read-only,
-            updated by the system during dictionary
-            creation.
+            Output only. Stored info type version state.
+            Read-only, updated by the system during
+            dictionary creation.
         errors (MutableSequence[google.cloud.dlp_v2.types.Error]):
-            Errors that occurred when creating this storedInfoType
-            version, or anomalies detected in the storedInfoType data
-            that render it unusable. Only the five most recent errors
-            will be displayed, with the most recent error appearing
-            first.
+            Output only. Errors that occurred when creating this
+            storedInfoType version, or anomalies detected in the
+            storedInfoType data that render it unusable. Only the five
+            most recent errors will be displayed, with the most recent
+            error appearing first.
 
             For example, some of the data for stored custom dictionaries
             is put in the user's Cloud Storage bucket, and if this data
@@ -12293,7 +12440,8 @@ class StoredInfoTypeVersion(proto.Message):
             using it, reusing the same ``config`` if it was not the
             source of the error.
         stats (google.cloud.dlp_v2.types.StoredInfoTypeStats):
-            Statistics about this storedInfoType version.
+            Output only. Statistics about this
+            storedInfoType version.
     """
 
     config: "StoredInfoTypeConfig" = proto.Field(
@@ -12329,7 +12477,7 @@ class StoredInfoType(proto.Message):
 
     Attributes:
         name (str):
-            Resource name.
+            Output only. Resource name.
         current_version (google.cloud.dlp_v2.types.StoredInfoTypeVersion):
             Current version of the stored info type.
         pending_versions (MutableSequence[google.cloud.dlp_v2.types.StoredInfoTypeVersion]):
@@ -12363,7 +12511,7 @@ class CreateStoredInfoTypeRequest(proto.Message):
             The format of this value varies depending on the scope of
             the request (project or organization) and whether you have
             `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -12474,7 +12622,7 @@ class ListStoredInfoTypesRequest(proto.Message):
             The format of this value varies depending on the scope of
             the request (project or organization) and whether you have
             `specified a processing
-            location <https://cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
+            location <https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location>`__:
 
             - Projects scope, location specified:
               ``projects/{project_id}/locations/{location_id}``
@@ -13369,7 +13517,7 @@ class TableDataProfile(proto.Message):
         dataset_location (str):
             If supported, the location where the
             dataset's data is stored. See
-            https://cloud.google.com/bigquery/docs/locations
+            https://docs.cloud.google.com/bigquery/docs/locations
             for supported locations.
         dataset_id (str):
             If the resource is BigQuery, the dataset ID.
@@ -13701,7 +13849,7 @@ class ColumnDataProfile(proto.Message):
         dataset_location (str):
             If supported, the location where the
             dataset's data is stored. See
-            https://cloud.google.com/bigquery/docs/locations
+            https://docs.cloud.google.com/bigquery/docs/locations
             for supported BigQuery locations.
         dataset_id (str):
             The BigQuery dataset ID, if the resource
@@ -13960,7 +14108,7 @@ class FileStoreDataProfile(proto.Message):
             The location of the file store.
 
             - Cloud Storage:
-              https://cloud.google.com/storage/docs/locations#available-locations
+              https://docs.cloud.google.com/storage/docs/locations#available-locations
             - Amazon S3:
               https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints
         data_storage_locations (MutableSequence[str]):
@@ -15084,8 +15232,8 @@ class CloudSqlIamCredential(proto.Message):
     r"""Use IAM authentication to connect. This requires the Cloud
     SQL IAM feature to be enabled on the instance, which is not the
     default for Cloud SQL. See
-    https://cloud.google.com/sql/docs/postgres/authentication and
-    https://cloud.google.com/sql/docs/mysql/authentication.
+    https://docs.cloud.google.com/sql/docs/postgres/authentication
+    and https://docs.cloud.google.com/sql/docs/mysql/authentication.
 
     """
 
@@ -15432,11 +15580,11 @@ class Domain(proto.Message):
                 embeddings.
             VERTEX_PLUGIN (3):
                 The `Cloud SQL Vertex
-                AI <https://cloud.google.com/sql/docs/postgres/integrate-cloud-sql-with-vertex-ai>`__
+                AI <https://docs.cloud.google.com/sql/docs/postgres/integrate-cloud-sql-with-vertex-ai>`__
                 plugin is installed on the database.
             VECTOR_PLUGIN (4):
                 Support for `Cloud SQL vector
-                embeddings <https://cloud.google.com/sql/docs/mysql/enable-vector-search>`__
+                embeddings <https://docs.cloud.google.com/sql/docs/mysql/enable-vector-search>`__
                 is enabled on the database.
             SOURCE_CODE (5):
                 Source code is present.
@@ -15463,6 +15611,440 @@ class Domain(proto.Message):
         proto.ENUM,
         number=2,
         enum=Signal,
+    )
+
+
+class CreateContentPolicyRequest(proto.Message):
+    r"""Request message for CreateContentPolicy.
+
+    Attributes:
+        parent (str):
+            Required. Parent resource name.
+
+            The format of this value varies depending on the scope of
+            the request (project):
+
+            - Projects scope:
+              ``projects/{project_id}/locations/{location_id}``
+        content_policy (google.cloud.dlp_v2.types.ContentPolicy):
+            Required. The content_policy resource.
+        content_policy_id (str):
+            Optional. The content policy ID can contain uppercase and
+            lowercase letters, numbers, and hyphens; that is, it must
+            match the regular expression: ``[a-zA-Z\d-_]+``. The maximum
+            length is 100 characters. If empty, the system will generate
+            a random id.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    content_policy: "ContentPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="ContentPolicy",
+    )
+    content_policy_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class GetContentPolicyRequest(proto.Message):
+    r"""Request message for GetContentPolicy.
+
+    Attributes:
+        name (str):
+            Required. Resource name in the format:
+            ``projects/{project}/locations/{location}/contentPolicies/{content_policy}``.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListContentPoliciesRequest(proto.Message):
+    r"""Request message for ListContentPolicies.
+
+    Attributes:
+        parent (str):
+            Required. Resource name of the project, for example,
+            ``projects/project-id/locations/asia``.
+        page_size (int):
+            Optional. Number of results per page, max
+            1000.
+        page_token (str):
+            Optional. Page token from a previous page to
+            return the next set of results. If set, all
+            other request fields must match the original
+            request.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListContentPoliciesResponse(proto.Message):
+    r"""Response message for ListContentPolicies.
+
+    Attributes:
+        content_policies (MutableSequence[google.cloud.dlp_v2.types.ContentPolicy]):
+            List of content policies.
+        next_page_token (str):
+            Token to retrieve the next page of results.
+            An empty value means there are no more results.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    content_policies: MutableSequence["ContentPolicy"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="ContentPolicy",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class UpdateContentPolicyRequest(proto.Message):
+    r"""Request message for UpdateContentPolicy.
+
+    Attributes:
+        name (str):
+            Required. Resource name in the format:
+            ``projects/{project}/locations/{location}/contentPolicies/{content_policy}``.
+        content_policy (google.cloud.dlp_v2.types.ContentPolicy):
+            Required. The content_policy with new values for the
+            relevant fields.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. Mask to control which fields get
+            updated.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    content_policy: "ContentPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="ContentPolicy",
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
+class DeleteContentPolicyRequest(proto.Message):
+    r"""Request message for DeleteContentPolicy.
+
+    Attributes:
+        name (str):
+            Required. Resource name of the ContentPolicy to be deleted,
+            in the format:
+            ``projects/{project}/locations/{location}/contentPolicies/{content_policy}``.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ContentPolicy(proto.Message):
+    r"""A policy to apply to content based on its inspection
+    findings.
+
+    Attributes:
+        name (str):
+            Output only. Resource name of the policy.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The creation timestamp of a
+            contentPolicy; output-only field.
+        update_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The last update timestamp of a
+            contentPolicy; output-only field.
+        display_name (str):
+            Optional. Display name (max 63 chars)
+        inspect_config (google.cloud.dlp_v2.types.InspectConfig):
+            Optional. InspectConfig to use to produce
+            findings.
+        rules (MutableSequence[google.cloud.dlp_v2.types.ContentPolicy.PolicyRule]):
+            Required. Policies to apply, based on the
+            findings returned by inspection. The first rule
+            to match applies.
+        unsupported_file_type (google.cloud.dlp_v2.types.ContentPolicy.PolicyAction):
+            Optional. Action to take if the content is an
+            unsupported file type.
+        input_too_large (google.cloud.dlp_v2.types.ContentPolicy.PolicyAction):
+            Optional. Action to take if the content is a
+            supported file type but is too large to be
+            scanned.
+        failed_to_scan_supported_file_type (google.cloud.dlp_v2.types.ContentPolicy.PolicyAction):
+            Optional. Action to take if the content is a
+            supported file type and size but fails to be
+            scanned, for example because the file is
+            encrypted or corrupted.
+        default_action (google.cloud.dlp_v2.types.ContentPolicy.PolicyAction):
+            Action to take if the content is scanned and
+            no rules match. Defaults to returning an ALLOW
+            verdict if not set.
+        logging_configs (MutableSequence[google.cloud.dlp_v2.types.ContentPolicy.LoggingConfig]):
+            Optional. Log the actions taken by the
+            content policy to external systems.
+        errors (MutableSequence[google.cloud.dlp_v2.types.Error]):
+            Output only. A stream of errors encountered
+            when the policy was applied. Output only field.
+            Will return the last 100 errors. Whenever the
+            policy is modified this list will be cleared.
+    """
+
+    class PolicyAction(proto.Message):
+        r"""A possible action to take when applying a content policy.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            return_verdict (google.cloud.dlp_v2.types.ContentPolicyVerdict):
+                Optional. If set, the verdict will be
+                returned to the user.
+
+                This field is a member of `oneof`_ ``action``.
+        """
+
+        return_verdict: "ContentPolicyVerdict" = proto.Field(
+            proto.ENUM,
+            number=1,
+            oneof="action",
+            enum="ContentPolicyVerdict",
+        )
+
+    class PolicyRule(proto.Message):
+        r"""A single policy rule. The first rule to match from the list
+        above controls the result.
+
+        Attributes:
+            conditions (MutableSequence[google.cloud.dlp_v2.types.ContentPolicy.PolicyRule.PolicyCondition]):
+                Optional. Conditions that must match for this rule to apply.
+                All conditions must match (``AND``). For ``OR`` conditions,
+                use multiple rules.
+            action (google.cloud.dlp_v2.types.ContentPolicy.PolicyAction):
+                Required. Action to take if this rule
+                applies.
+        """
+
+        class PolicyCondition(proto.Message):
+            r"""A condition that must match for this rule to apply.
+
+            .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+            Attributes:
+                info_type_condition (google.cloud.dlp_v2.types.ContentPolicy.PolicyRule.PolicyCondition.InfoTypeCondition):
+                    A condition based on info types.
+
+                    This field is a member of `oneof`_ ``condition``.
+            """
+
+            class InfoTypeCondition(proto.Message):
+                r"""A info type based condition.
+
+                This message has `oneof`_ fields (mutually exclusive fields).
+                For each oneof, at most one member field can be set at the same time.
+                Setting any member of the oneof automatically clears all other
+                members.
+
+                .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+                Attributes:
+                    min_count (int):
+                        Optional. The minimum total number of
+                        findings of all matching info types required for
+                        this condition to evaluate to true. Defaults to
+                        1 if unset.
+                    info_types (google.cloud.dlp_v2.types.ContentPolicy.PolicyRule.PolicyCondition.InfoTypeCondition.InfoTypes):
+                        match any of these info types.
+
+                        This field is a member of `oneof`_ ``info_type_condition``.
+                    any_info_type (google.protobuf.empty_pb2.Empty):
+                        match any info types.
+
+                        This field is a member of `oneof`_ ``info_type_condition``.
+                """
+
+                class InfoTypes(proto.Message):
+                    r"""Info types to match.
+
+                    Attributes:
+                        info_type_names (MutableSequence[str]):
+                            Required. A list of info types to match.
+                    """
+
+                    info_type_names: MutableSequence[str] = proto.RepeatedField(
+                        proto.STRING,
+                        number=1,
+                    )
+
+                min_count: int = proto.Field(
+                    proto.INT64,
+                    number=3,
+                )
+                info_types: "ContentPolicy.PolicyRule.PolicyCondition.InfoTypeCondition.InfoTypes" = proto.Field(
+                    proto.MESSAGE,
+                    number=1,
+                    oneof="info_type_condition",
+                    message="ContentPolicy.PolicyRule.PolicyCondition.InfoTypeCondition.InfoTypes",
+                )
+                any_info_type: empty_pb2.Empty = proto.Field(
+                    proto.MESSAGE,
+                    number=2,
+                    oneof="info_type_condition",
+                    message=empty_pb2.Empty,
+                )
+
+            info_type_condition: "ContentPolicy.PolicyRule.PolicyCondition.InfoTypeCondition" = proto.Field(
+                proto.MESSAGE,
+                number=1,
+                oneof="condition",
+                message="ContentPolicy.PolicyRule.PolicyCondition.InfoTypeCondition",
+            )
+
+        conditions: MutableSequence["ContentPolicy.PolicyRule.PolicyCondition"] = (
+            proto.RepeatedField(
+                proto.MESSAGE,
+                number=2,
+                message="ContentPolicy.PolicyRule.PolicyCondition",
+            )
+        )
+        action: "ContentPolicy.PolicyAction" = proto.Field(
+            proto.MESSAGE,
+            number=5,
+            message="ContentPolicy.PolicyAction",
+        )
+
+    class LoggingConfig(proto.Message):
+        r"""A single logging configuration.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            log_to_big_query (google.cloud.dlp_v2.types.ContentPolicy.LoggingConfig.LogToBigQuery):
+                Optional. Log the actions taken to a BigQuery
+                table.
+
+                This field is a member of `oneof`_ ``destination``.
+        """
+
+        class LogToBigQuery(proto.Message):
+            r"""Configuration for logging content policy actions to BigQuery.
+
+            Attributes:
+                project_id (str):
+                    Required. The ID of the project containing
+                    the BigQuery table to write to.
+                dataset_id (str):
+                    Required. The ID of the dataset containing
+                    the BigQuery table to write to.
+                table_id (str):
+                    Required. The ID of the BigQuery table to
+                    write to.
+            """
+
+            project_id: str = proto.Field(
+                proto.STRING,
+                number=1,
+            )
+            dataset_id: str = proto.Field(
+                proto.STRING,
+                number=2,
+            )
+            table_id: str = proto.Field(
+                proto.STRING,
+                number=3,
+            )
+
+        log_to_big_query: "ContentPolicy.LoggingConfig.LogToBigQuery" = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            oneof="destination",
+            message="ContentPolicy.LoggingConfig.LogToBigQuery",
+        )
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=12,
+        message=timestamp_pb2.Timestamp,
+    )
+    update_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=13,
+        message=timestamp_pb2.Timestamp,
+    )
+    display_name: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    inspect_config: "InspectConfig" = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        message="InspectConfig",
+    )
+    rules: MutableSequence[PolicyRule] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=3,
+        message=PolicyRule,
+    )
+    unsupported_file_type: PolicyAction = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message=PolicyAction,
+    )
+    input_too_large: PolicyAction = proto.Field(
+        proto.MESSAGE,
+        number=9,
+        message=PolicyAction,
+    )
+    failed_to_scan_supported_file_type: PolicyAction = proto.Field(
+        proto.MESSAGE,
+        number=10,
+        message=PolicyAction,
+    )
+    default_action: PolicyAction = proto.Field(
+        proto.MESSAGE,
+        number=11,
+        message=PolicyAction,
+    )
+    logging_configs: MutableSequence[LoggingConfig] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=5,
+        message=LoggingConfig,
+    )
+    errors: MutableSequence["Error"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=6,
+        message="Error",
     )
 
 

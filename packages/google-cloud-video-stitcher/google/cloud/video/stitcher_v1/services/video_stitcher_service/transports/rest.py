@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.video.stitcher_v1._compat import transcode_request
 from google.cloud.video.stitcher_v1.types import (
     ad_tag_details,
     cdn_keys,
@@ -2119,19 +2120,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseCreateCdnKey._get_http_options()
-
             request, metadata = self._interceptor.pre_create_cdn_key(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseCreateCdnKey._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVideoStitcherServiceRestTransport._BaseCreateCdnKey._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseCreateCdnKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseCreateCdnKey,
+                    "_BaseCreateCdnKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2270,21 +2268,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseCreateLiveConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_live_config(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseCreateLiveConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVideoStitcherServiceRestTransport._BaseCreateLiveConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseCreateLiveConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseCreateLiveConfig,
+                    "_BaseCreateLiveConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2426,21 +2421,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseCreateLiveSession._get_http_options()
-
             request, metadata = self._interceptor.pre_create_live_session(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseCreateLiveSession._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVideoStitcherServiceRestTransport._BaseCreateLiveSession._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseCreateLiveSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseCreateLiveSession,
+                    "_BaseCreateLiveSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2583,19 +2575,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseCreateSlate._get_http_options()
-
             request, metadata = self._interceptor.pre_create_slate(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseCreateSlate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVideoStitcherServiceRestTransport._BaseCreateSlate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseCreateSlate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseCreateSlate,
+                    "_BaseCreateSlate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2734,21 +2723,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseCreateVodConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_vod_config(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseCreateVodConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVideoStitcherServiceRestTransport._BaseCreateVodConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseCreateVodConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseCreateVodConfig,
+                    "_BaseCreateVodConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2887,21 +2873,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseCreateVodSession._get_http_options()
-
             request, metadata = self._interceptor.pre_create_vod_session(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseCreateVodSession._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVideoStitcherServiceRestTransport._BaseCreateVodSession._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseCreateVodSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseCreateVodSession,
+                    "_BaseCreateVodSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3043,15 +3026,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseDeleteCdnKey._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_cdn_key(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseDeleteCdnKey._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseDeleteCdnKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseDeleteCdnKey,
+                    "_BaseDeleteCdnKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3188,17 +3172,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseDeleteLiveConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_live_config(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseDeleteLiveConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseDeleteLiveConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseDeleteLiveConfig,
+                    "_BaseDeleteLiveConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3337,15 +3322,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseDeleteSlate._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_slate(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseDeleteSlate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseDeleteSlate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseDeleteSlate,
+                    "_BaseDeleteSlate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3482,17 +3468,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseDeleteVodConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_vod_config(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseDeleteVodConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseDeleteVodConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseDeleteVodConfig,
+                    "_BaseDeleteVodConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3630,15 +3617,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseGetCdnKey._get_http_options()
-
             request, metadata = self._interceptor.pre_get_cdn_key(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseGetCdnKey._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseGetCdnKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseGetCdnKey,
+                    "_BaseGetCdnKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3779,17 +3767,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseGetLiveAdTagDetail._get_http_options()
-
             request, metadata = self._interceptor.pre_get_live_ad_tag_detail(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseGetLiveAdTagDetail._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseGetLiveAdTagDetail._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseGetLiveAdTagDetail,
+                    "_BaseGetLiveAdTagDetail__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3929,15 +3918,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseGetLiveConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_live_config(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseGetLiveConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseGetLiveConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseGetLiveConfig,
+                    "_BaseGetLiveConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4077,17 +4067,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseGetLiveSession._get_http_options()
-
             request, metadata = self._interceptor.pre_get_live_session(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseGetLiveSession._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseGetLiveSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseGetLiveSession,
+                    "_BaseGetLiveSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4225,15 +4216,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             http_options = (
                 _BaseVideoStitcherServiceRestTransport._BaseGetSlate._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_slate(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseGetSlate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseGetSlate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseGetSlate,
+                    "_BaseGetSlate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4374,17 +4366,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseGetVodAdTagDetail._get_http_options()
-
             request, metadata = self._interceptor.pre_get_vod_ad_tag_detail(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseGetVodAdTagDetail._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseGetVodAdTagDetail._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseGetVodAdTagDetail,
+                    "_BaseGetVodAdTagDetail__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4524,15 +4517,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseGetVodConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_vod_config(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseGetVodConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseGetVodConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseGetVodConfig,
+                    "_BaseGetVodConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4671,15 +4665,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseGetVodSession._get_http_options()
-
             request, metadata = self._interceptor.pre_get_vod_session(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseGetVodSession._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseGetVodSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseGetVodSession,
+                    "_BaseGetVodSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4820,17 +4815,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseGetVodStitchDetail._get_http_options()
-
             request, metadata = self._interceptor.pre_get_vod_stitch_detail(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseGetVodStitchDetail._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseGetVodStitchDetail._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseGetVodStitchDetail,
+                    "_BaseGetVodStitchDetail__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4970,15 +4966,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseListCdnKeys._get_http_options()
-
             request, metadata = self._interceptor.pre_list_cdn_keys(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseListCdnKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseListCdnKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseListCdnKeys,
+                    "_BaseListCdnKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5118,17 +5115,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseListLiveAdTagDetails._get_http_options()
-
             request, metadata = self._interceptor.pre_list_live_ad_tag_details(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseListLiveAdTagDetails._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseListLiveAdTagDetails._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseListLiveAdTagDetails,
+                    "_BaseListLiveAdTagDetails__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5272,17 +5270,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseListLiveConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_live_configs(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseListLiveConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseListLiveConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseListLiveConfigs,
+                    "_BaseListLiveConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5422,15 +5421,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseListSlates._get_http_options()
-
             request, metadata = self._interceptor.pre_list_slates(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseListSlates._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseListSlates._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseListSlates,
+                    "_BaseListSlates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5570,17 +5570,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseListVodAdTagDetails._get_http_options()
-
             request, metadata = self._interceptor.pre_list_vod_ad_tag_details(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseListVodAdTagDetails._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseListVodAdTagDetails._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseListVodAdTagDetails,
+                    "_BaseListVodAdTagDetails__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5724,17 +5725,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseListVodConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_vod_configs(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseListVodConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseListVodConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseListVodConfigs,
+                    "_BaseListVodConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5874,17 +5876,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseListVodStitchDetails._get_http_options()
-
             request, metadata = self._interceptor.pre_list_vod_stitch_details(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseListVodStitchDetails._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseListVodStitchDetails._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseListVodStitchDetails,
+                    "_BaseListVodStitchDetails__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6030,19 +6033,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseUpdateCdnKey._get_http_options()
-
             request, metadata = self._interceptor.pre_update_cdn_key(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseUpdateCdnKey._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVideoStitcherServiceRestTransport._BaseUpdateCdnKey._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseUpdateCdnKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseUpdateCdnKey,
+                    "_BaseUpdateCdnKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6181,21 +6181,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseUpdateLiveConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_live_config(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseUpdateLiveConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVideoStitcherServiceRestTransport._BaseUpdateLiveConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseUpdateLiveConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseUpdateLiveConfig,
+                    "_BaseUpdateLiveConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6336,19 +6333,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseUpdateSlate._get_http_options()
-
             request, metadata = self._interceptor.pre_update_slate(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseUpdateSlate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVideoStitcherServiceRestTransport._BaseUpdateSlate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseUpdateSlate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseUpdateSlate,
+                    "_BaseUpdateSlate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6487,21 +6481,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseUpdateVodConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_vod_config(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseUpdateVodConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVideoStitcherServiceRestTransport._BaseUpdateVodConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseUpdateVodConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseUpdateVodConfig,
+                    "_BaseUpdateVodConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6935,21 +6926,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVideoStitcherServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7053,17 +7041,18 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7169,15 +7158,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7308,15 +7298,16 @@ class VideoStitcherServiceRestTransport(_BaseVideoStitcherServiceRestTransport):
             """
 
             http_options = _BaseVideoStitcherServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseVideoStitcherServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoStitcherServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoStitcherServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

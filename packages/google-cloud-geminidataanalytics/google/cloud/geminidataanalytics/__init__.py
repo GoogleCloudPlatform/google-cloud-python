@@ -40,6 +40,7 @@ from google.cloud.geminidataanalytics_v1.types.context import (
     Context,
     ConversationOptions,
     DatasourceOptions,
+    DynamicField,
     ExampleQuery,
     GlossaryTerm,
     LookerGoldenQuery,
@@ -56,6 +57,7 @@ from google.cloud.geminidataanalytics_v1.types.conversation import (
     GetConversationRequest,
     ListConversationsRequest,
     ListConversationsResponse,
+    UpdateConversationRequest,
 )
 from google.cloud.geminidataanalytics_v1.types.credentials import (
     Credentials,
@@ -71,6 +73,11 @@ from google.cloud.geminidataanalytics_v1.types.data_agent_service import (
     ListDataAgentsRequest,
     ListDataAgentsResponse,
     OperationMetadata,
+    RetrieveAgentOpsObservabilityRequest,
+    RetrieveAgentOpsObservabilityResponse,
+    SetAgentOpsObservabilityMetadata,
+    SetAgentOpsObservabilityRequest,
+    SetAgentOpsObservabilityResponse,
     UpdateDataAgentRequest,
 )
 from google.cloud.geminidataanalytics_v1.types.data_analytics_agent import (
@@ -107,6 +114,7 @@ from google.cloud.geminidataanalytics_v1.types.data_chat_service import (
     UserMessage,
 )
 from google.cloud.geminidataanalytics_v1.types.datasource import (
+    BigQueryDatasetReference,
     BigQueryPropertyGraphReference,
     BigQueryTableReference,
     BigQueryTableReferences,
@@ -119,6 +127,7 @@ from google.cloud.geminidataanalytics_v1.types.datasource import (
     LookerExploreReferences,
     PrivateLookerInstanceInfo,
     Schema,
+    SearchScope,
     StudioDatasourceReference,
     StudioDatasourceReferences,
 )
@@ -137,6 +146,7 @@ __all__ = (
     "Context",
     "ConversationOptions",
     "DatasourceOptions",
+    "DynamicField",
     "ExampleQuery",
     "GlossaryTerm",
     "LookerGoldenQuery",
@@ -151,6 +161,7 @@ __all__ = (
     "GetConversationRequest",
     "ListConversationsRequest",
     "ListConversationsResponse",
+    "UpdateConversationRequest",
     "Credentials",
     "OAuthCredentials",
     "DataAgent",
@@ -162,6 +173,11 @@ __all__ = (
     "ListDataAgentsRequest",
     "ListDataAgentsResponse",
     "OperationMetadata",
+    "RetrieveAgentOpsObservabilityRequest",
+    "RetrieveAgentOpsObservabilityResponse",
+    "SetAgentOpsObservabilityMetadata",
+    "SetAgentOpsObservabilityRequest",
+    "SetAgentOpsObservabilityResponse",
     "UpdateDataAgentRequest",
     "DataAnalyticsAgent",
     "AnalysisEvent",
@@ -192,6 +208,7 @@ __all__ = (
     "SystemMessage",
     "TextMessage",
     "UserMessage",
+    "BigQueryDatasetReference",
     "BigQueryPropertyGraphReference",
     "BigQueryTableReference",
     "BigQueryTableReferences",
@@ -203,6 +220,7 @@ __all__ = (
     "LookerExploreReferences",
     "PrivateLookerInstanceInfo",
     "Schema",
+    "SearchScope",
     "StudioDatasourceReference",
     "StudioDatasourceReferences",
     "DataFilterType",

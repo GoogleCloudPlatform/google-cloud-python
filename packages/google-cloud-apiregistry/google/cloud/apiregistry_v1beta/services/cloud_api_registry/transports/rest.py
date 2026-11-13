@@ -29,6 +29,7 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.apiregistry_v1beta._compat import transcode_request
 from google.cloud.apiregistry_v1beta.types import resources, service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -496,15 +497,16 @@ class CloudApiRegistryRestTransport(_BaseCloudApiRegistryRestTransport):
             http_options = (
                 _BaseCloudApiRegistryRestTransport._BaseGetMcpServer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_mcp_server(request, metadata)
-            transcoded_request = _BaseCloudApiRegistryRestTransport._BaseGetMcpServer._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudApiRegistryRestTransport._BaseGetMcpServer._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudApiRegistryRestTransport._BaseGetMcpServer,
+                    "_BaseGetMcpServer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -640,15 +642,16 @@ class CloudApiRegistryRestTransport(_BaseCloudApiRegistryRestTransport):
             http_options = (
                 _BaseCloudApiRegistryRestTransport._BaseGetMcpTool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_mcp_tool(request, metadata)
-            transcoded_request = _BaseCloudApiRegistryRestTransport._BaseGetMcpTool._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudApiRegistryRestTransport._BaseGetMcpTool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudApiRegistryRestTransport._BaseGetMcpTool,
+                    "_BaseGetMcpTool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -785,17 +788,18 @@ class CloudApiRegistryRestTransport(_BaseCloudApiRegistryRestTransport):
             """
 
             http_options = _BaseCloudApiRegistryRestTransport._BaseListMcpServers._get_http_options()
-
             request, metadata = self._interceptor.pre_list_mcp_servers(
                 request, metadata
             )
-            transcoded_request = _BaseCloudApiRegistryRestTransport._BaseListMcpServers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudApiRegistryRestTransport._BaseListMcpServers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudApiRegistryRestTransport._BaseListMcpServers,
+                    "_BaseListMcpServers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -934,15 +938,16 @@ class CloudApiRegistryRestTransport(_BaseCloudApiRegistryRestTransport):
             http_options = (
                 _BaseCloudApiRegistryRestTransport._BaseListMcpTools._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_mcp_tools(request, metadata)
-            transcoded_request = _BaseCloudApiRegistryRestTransport._BaseListMcpTools._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudApiRegistryRestTransport._BaseListMcpTools._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudApiRegistryRestTransport._BaseListMcpTools,
+                    "_BaseListMcpTools__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1111,15 +1116,16 @@ class CloudApiRegistryRestTransport(_BaseCloudApiRegistryRestTransport):
             http_options = (
                 _BaseCloudApiRegistryRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseCloudApiRegistryRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudApiRegistryRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudApiRegistryRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1249,15 +1255,16 @@ class CloudApiRegistryRestTransport(_BaseCloudApiRegistryRestTransport):
             """
 
             http_options = _BaseCloudApiRegistryRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseCloudApiRegistryRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudApiRegistryRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudApiRegistryRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

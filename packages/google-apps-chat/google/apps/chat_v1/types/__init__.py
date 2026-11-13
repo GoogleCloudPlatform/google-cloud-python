@@ -28,6 +28,9 @@ from .annotation import (
     SlashCommandMetadata,
     UserMentionMetadata,
 )
+from .app_command_metadata import (
+    AppCommandMetadata,
+)
 from .attachment import (
     Attachment,
     AttachmentDataRef,
@@ -49,11 +52,23 @@ from .availability import (
     MarkAsDoNotDisturbRequest,
     UpdateAvailabilityRequest,
 )
+from .citation import (
+    Citation,
+)
+from .cited_source import (
+    CitedSource,
+)
 from .contextual_addon import (
     ContextualAddOnMarkup,
 )
 from .deletion_metadata import (
     DeletionMetadata,
+)
+from .elements import (
+    Elements,
+)
+from .elements_common import (
+    ElementsImage,
 )
 from .event_payload import (
     MembershipBatchCreatedEventData,
@@ -113,11 +128,20 @@ from .message import (
     Message,
     QuotedMessageMetadata,
     QuotedMessageSnapshot,
+    ReplaceMessageCardsRequest,
+    ReplaceMessageCardsResponse,
     SearchMessageResult,
     SearchMessagesRequest,
     SearchMessagesResponse,
     Thread,
     UpdateMessageRequest,
+)
+from .message_pin import (
+    CreateMessagePinRequest,
+    DeleteMessagePinRequest,
+    ListMessagePinsRequest,
+    ListMessagePinsResponse,
+    MessagePin,
 )
 from .reaction import (
     CreateCustomEmojiRequest,
@@ -211,6 +235,7 @@ __all__ = (
     "SlashCommandMetadata",
     "UserMentionMetadata",
     "AnnotationType",
+    "AppCommandMetadata",
     "Attachment",
     "AttachmentDataRef",
     "DriveDataRef",
@@ -226,8 +251,12 @@ __all__ = (
     "MarkAsAwayRequest",
     "MarkAsDoNotDisturbRequest",
     "UpdateAvailabilityRequest",
+    "Citation",
+    "CitedSource",
     "ContextualAddOnMarkup",
     "DeletionMetadata",
+    "Elements",
+    "ElementsImage",
     "MembershipBatchCreatedEventData",
     "MembershipBatchDeletedEventData",
     "MembershipBatchUpdatedEventData",
@@ -273,11 +302,18 @@ __all__ = (
     "Message",
     "QuotedMessageMetadata",
     "QuotedMessageSnapshot",
+    "ReplaceMessageCardsRequest",
+    "ReplaceMessageCardsResponse",
     "SearchMessageResult",
     "SearchMessagesRequest",
     "SearchMessagesResponse",
     "Thread",
     "UpdateMessageRequest",
+    "CreateMessagePinRequest",
+    "DeleteMessagePinRequest",
+    "ListMessagePinsRequest",
+    "ListMessagePinsResponse",
+    "MessagePin",
     "CreateCustomEmojiRequest",
     "CreateReactionRequest",
     "CustomEmoji",

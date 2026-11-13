@@ -340,6 +340,21 @@ class InstancesTransport(abc.ABC):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.get_vm_extension_state: gapic_v1.method.wrap_method(
+                self.get_vm_extension_state,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=600.0,
+                ),
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.insert: gapic_v1.method.wrap_method(
                 self.insert,
                 default_timeout=600.0,
@@ -362,6 +377,21 @@ class InstancesTransport(abc.ABC):
             ),
             self.list_referrers: gapic_v1.method.wrap_method(
                 self.list_referrers,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=600.0,
+                ),
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.list_vm_extension_states: gapic_v1.method.wrap_method(
+                self.list_vm_extension_states,
                 default_retry=retries.Retry(
                     initial=0.1,
                     maximum=60.0,
@@ -736,6 +766,15 @@ class InstancesTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def get_vm_extension_state(
+        self,
+    ) -> Callable[
+        [compute.GetVmExtensionStateInstanceRequest],
+        Union[compute.VmExtensionState, Awaitable[compute.VmExtensionState]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def insert(
         self,
     ) -> Callable[
@@ -759,6 +798,18 @@ class InstancesTransport(abc.ABC):
     ) -> Callable[
         [compute.ListReferrersInstancesRequest],
         Union[compute.InstanceListReferrers, Awaitable[compute.InstanceListReferrers]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_vm_extension_states(
+        self,
+    ) -> Callable[
+        [compute.ListVmExtensionStatesInstancesRequest],
+        Union[
+            compute.ListVmExtensionStatesResponse,
+            Awaitable[compute.ListVmExtensionStatesResponse],
+        ],
     ]:
         raise NotImplementedError()
 

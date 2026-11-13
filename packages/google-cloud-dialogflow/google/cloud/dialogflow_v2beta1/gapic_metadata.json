@@ -223,6 +223,100 @@
         }
       }
     },
+    "CompanionAgents": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CompanionAgentsClient",
+          "rpcs": {
+            "CreateCompanionAgent": {
+              "methods": [
+                "create_companion_agent"
+              ]
+            },
+            "DeleteCompanionAgent": {
+              "methods": [
+                "delete_companion_agent"
+              ]
+            },
+            "GetCompanionAgent": {
+              "methods": [
+                "get_companion_agent"
+              ]
+            },
+            "ListCompanionAgents": {
+              "methods": [
+                "list_companion_agents"
+              ]
+            },
+            "UpdateCompanionAgent": {
+              "methods": [
+                "update_companion_agent"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "CompanionAgentsAsyncClient",
+          "rpcs": {
+            "CreateCompanionAgent": {
+              "methods": [
+                "create_companion_agent"
+              ]
+            },
+            "DeleteCompanionAgent": {
+              "methods": [
+                "delete_companion_agent"
+              ]
+            },
+            "GetCompanionAgent": {
+              "methods": [
+                "get_companion_agent"
+              ]
+            },
+            "ListCompanionAgents": {
+              "methods": [
+                "list_companion_agents"
+              ]
+            },
+            "UpdateCompanionAgent": {
+              "methods": [
+                "update_companion_agent"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "CompanionAgentsClient",
+          "rpcs": {
+            "CreateCompanionAgent": {
+              "methods": [
+                "create_companion_agent"
+              ]
+            },
+            "DeleteCompanionAgent": {
+              "methods": [
+                "delete_companion_agent"
+              ]
+            },
+            "GetCompanionAgent": {
+              "methods": [
+                "get_companion_agent"
+              ]
+            },
+            "ListCompanionAgents": {
+              "methods": [
+                "list_companion_agents"
+              ]
+            },
+            "UpdateCompanionAgent": {
+              "methods": [
+                "update_companion_agent"
+              ]
+            }
+          }
+        }
+      }
+    },
     "Contexts": {
       "clients": {
         "grpc": {
@@ -1591,6 +1685,11 @@
                 "streaming_analyze_content"
               ]
             },
+            "StreamingReactiveCompanionSuggestions": {
+              "methods": [
+                "streaming_reactive_companion_suggestions"
+              ]
+            },
             "SuggestArticles": {
               "methods": [
                 "suggest_articles"
@@ -1661,6 +1760,11 @@
                 "streaming_analyze_content"
               ]
             },
+            "StreamingReactiveCompanionSuggestions": {
+              "methods": [
+                "streaming_reactive_companion_suggestions"
+              ]
+            },
             "SuggestArticles": {
               "methods": [
                 "suggest_articles"
@@ -1729,6 +1833,11 @@
             "StreamingAnalyzeContent": {
               "methods": [
                 "streaming_analyze_content"
+              ]
+            },
+            "StreamingReactiveCompanionSuggestions": {
+              "methods": [
+                "streaming_reactive_companion_suggestions"
               ]
             },
             "SuggestArticles": {

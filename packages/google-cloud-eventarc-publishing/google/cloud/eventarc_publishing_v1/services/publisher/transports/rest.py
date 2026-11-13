@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.eventarc_publishing_v1._compat import transcode_request
 from google.cloud.eventarc_publishing_v1.types import publisher
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -432,23 +433,16 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             """
 
             http_options = _BasePublisherRestTransport._BasePublish._get_http_options()
-
             request, metadata = self._interceptor.pre_publish(request, metadata)
-            transcoded_request = (
-                _BasePublisherRestTransport._BasePublish._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BasePublisherRestTransport._BasePublish._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePublisherRestTransport._BasePublish._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BasePublish,
+                    "_BasePublish__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -589,21 +583,18 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             """
 
             http_options = _BasePublisherRestTransport._BasePublishChannelConnectionEvents._get_http_options()
-
             request, metadata = self._interceptor.pre_publish_channel_connection_events(
                 request, metadata
             )
-            transcoded_request = _BasePublisherRestTransport._BasePublishChannelConnectionEvents._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePublisherRestTransport._BasePublishChannelConnectionEvents._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePublisherRestTransport._BasePublishChannelConnectionEvents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BasePublishChannelConnectionEvents,
+                    "_BasePublishChannelConnectionEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -752,25 +743,16 @@ class PublisherRestTransport(_BasePublisherRestTransport):
             http_options = (
                 _BasePublisherRestTransport._BasePublishEvents._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_publish_events(request, metadata)
-            transcoded_request = (
-                _BasePublisherRestTransport._BasePublishEvents._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BasePublisherRestTransport._BasePublishEvents._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePublisherRestTransport._BasePublishEvents._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePublisherRestTransport._BasePublishEvents,
+                    "_BasePublishEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

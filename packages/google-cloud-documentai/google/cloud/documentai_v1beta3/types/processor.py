@@ -29,6 +29,8 @@ __protobuf__ = proto.module(
         "ProcessorVersion",
         "ProcessorVersionAlias",
         "Processor",
+        "GroundingSettings",
+        "ProcessorVersionOverrides",
     },
 )
 
@@ -81,6 +83,11 @@ class ProcessorVersion(proto.Message):
         gen_ai_model_info (google.cloud.documentai_v1beta3.types.ProcessorVersion.GenAiModelInfo):
             Output only. Information about Generative AI
             model-based processor versions.
+        grounding_settings (google.cloud.documentai_v1beta3.types.GroundingSettings):
+            Output only. The grounding settings of the
+            processor version. This can only be set using
+            TrainProcessorVersionRequest to override the
+            default grounding settings.
     """
 
     class State(proto.Enum):
@@ -322,6 +329,11 @@ class ProcessorVersion(proto.Message):
         number=18,
         message=GenAiModelInfo,
     )
+    grounding_settings: "GroundingSettings" = proto.Field(
+        proto.MESSAGE,
+        number=21,
+        message="GroundingSettings",
+    )
 
 
 class ProcessorVersionAlias(proto.Message):
@@ -478,6 +490,60 @@ class Processor(proto.Message):
     satisfies_pzi: bool = proto.Field(
         proto.BOOL,
         number=13,
+    )
+
+
+class GroundingSettings(proto.Message):
+    r"""Settings for grounding extractions.
+
+    Attributes:
+        grounding_type (google.cloud.documentai_v1beta3.types.GroundingSettings.GroundingType):
+            The type of grounding to apply.
+    """
+
+    class GroundingType(proto.Enum):
+        r"""Grounding type options.
+
+        Values:
+            GROUNDING_TYPE_UNSPECIFIED (0):
+                The default value. Behaves like HARD.
+            HARD (1):
+                Requires exact match with OCR text for
+                extractions.
+            OCR_RELAXED (2):
+                Allows for minor discrepancies between LLM
+                output and OCR text.
+            NO_GROUNDING (3):
+                LLM extractions are used without strict OCR
+                matching. Bounding boxes may be approximated or
+                absent.
+        """
+
+        GROUNDING_TYPE_UNSPECIFIED = 0
+        HARD = 1
+        OCR_RELAXED = 2
+        NO_GROUNDING = 3
+
+    grounding_type: GroundingType = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum=GroundingType,
+    )
+
+
+class ProcessorVersionOverrides(proto.Message):
+    r"""Overrides to apply when creating a new processor version.
+
+    Attributes:
+        grounding_settings (google.cloud.documentai_v1beta3.types.GroundingSettings):
+            Optional. Grounding settings to override the
+            default values.
+    """
+
+    grounding_settings: "GroundingSettings" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="GroundingSettings",
     )
 
 

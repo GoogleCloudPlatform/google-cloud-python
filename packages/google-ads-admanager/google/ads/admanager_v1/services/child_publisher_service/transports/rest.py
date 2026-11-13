@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     child_publisher_messages,
     child_publisher_service,
@@ -83,11 +84,43 @@ class ChildPublisherServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_batch_reject_child_publishers(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_reject_child_publishers(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_renegotiate_child_publisher_agreements(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_renegotiate_child_publisher_agreements(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_resend_child_publisher_invitation_emails(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_resend_child_publisher_invitation_emails(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_batch_update_child_publishers(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
 
             def post_batch_update_child_publishers(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_withdraw_child_publishers(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_withdraw_child_publishers(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -181,6 +214,164 @@ class ChildPublisherServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_batch_reject_child_publishers(
+        self,
+        request: child_publisher_service.BatchRejectChildPublishersRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        child_publisher_service.BatchRejectChildPublishersRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_reject_child_publishers
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the ChildPublisherService server.
+        """
+        return request, metadata
+
+    def post_batch_reject_child_publishers(
+        self, response: child_publisher_service.BatchRejectChildPublishersResponse
+    ) -> child_publisher_service.BatchRejectChildPublishersResponse:
+        """Post-rpc interceptor for batch_reject_child_publishers
+
+        DEPRECATED. Please use the `post_batch_reject_child_publishers_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the ChildPublisherService server but before
+        it is returned to user code. This `post_batch_reject_child_publishers` interceptor runs
+        before the `post_batch_reject_child_publishers_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_reject_child_publishers_with_metadata(
+        self,
+        response: child_publisher_service.BatchRejectChildPublishersResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        child_publisher_service.BatchRejectChildPublishersResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_reject_child_publishers
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the ChildPublisherService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_reject_child_publishers_with_metadata`
+        interceptor in new development instead of the `post_batch_reject_child_publishers` interceptor.
+        When both interceptors are used, this `post_batch_reject_child_publishers_with_metadata` interceptor runs after the
+        `post_batch_reject_child_publishers` interceptor. The (possibly modified) response returned by
+        `post_batch_reject_child_publishers` will be passed to
+        `post_batch_reject_child_publishers_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_renegotiate_child_publisher_agreements(
+        self,
+        request: child_publisher_service.BatchRenegotiateChildPublisherAgreementsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        child_publisher_service.BatchRenegotiateChildPublisherAgreementsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_renegotiate_child_publisher_agreements
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the ChildPublisherService server.
+        """
+        return request, metadata
+
+    def post_batch_renegotiate_child_publisher_agreements(
+        self,
+        response: child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse,
+    ) -> child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse:
+        """Post-rpc interceptor for batch_renegotiate_child_publisher_agreements
+
+        DEPRECATED. Please use the `post_batch_renegotiate_child_publisher_agreements_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the ChildPublisherService server but before
+        it is returned to user code. This `post_batch_renegotiate_child_publisher_agreements` interceptor runs
+        before the `post_batch_renegotiate_child_publisher_agreements_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_renegotiate_child_publisher_agreements_with_metadata(
+        self,
+        response: child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_renegotiate_child_publisher_agreements
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the ChildPublisherService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_renegotiate_child_publisher_agreements_with_metadata`
+        interceptor in new development instead of the `post_batch_renegotiate_child_publisher_agreements` interceptor.
+        When both interceptors are used, this `post_batch_renegotiate_child_publisher_agreements_with_metadata` interceptor runs after the
+        `post_batch_renegotiate_child_publisher_agreements` interceptor. The (possibly modified) response returned by
+        `post_batch_renegotiate_child_publisher_agreements` will be passed to
+        `post_batch_renegotiate_child_publisher_agreements_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_resend_child_publisher_invitation_emails(
+        self,
+        request: child_publisher_service.BatchResendChildPublisherInvitationEmailsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        child_publisher_service.BatchResendChildPublisherInvitationEmailsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_resend_child_publisher_invitation_emails
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the ChildPublisherService server.
+        """
+        return request, metadata
+
+    def post_batch_resend_child_publisher_invitation_emails(
+        self,
+        response: child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse,
+    ) -> child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse:
+        """Post-rpc interceptor for batch_resend_child_publisher_invitation_emails
+
+        DEPRECATED. Please use the `post_batch_resend_child_publisher_invitation_emails_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the ChildPublisherService server but before
+        it is returned to user code. This `post_batch_resend_child_publisher_invitation_emails` interceptor runs
+        before the `post_batch_resend_child_publisher_invitation_emails_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_resend_child_publisher_invitation_emails_with_metadata(
+        self,
+        response: child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_resend_child_publisher_invitation_emails
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the ChildPublisherService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_resend_child_publisher_invitation_emails_with_metadata`
+        interceptor in new development instead of the `post_batch_resend_child_publisher_invitation_emails` interceptor.
+        When both interceptors are used, this `post_batch_resend_child_publisher_invitation_emails_with_metadata` interceptor runs after the
+        `post_batch_resend_child_publisher_invitation_emails` interceptor. The (possibly modified) response returned by
+        `post_batch_resend_child_publisher_invitation_emails` will be passed to
+        `post_batch_resend_child_publisher_invitation_emails_with_metadata`.
+        """
+        return response, metadata
+
     def pre_batch_update_child_publishers(
         self,
         request: child_publisher_service.BatchUpdateChildPublishersRequest,
@@ -230,6 +421,58 @@ class ChildPublisherServiceRestInterceptor:
         `post_batch_update_child_publishers` interceptor. The (possibly modified) response returned by
         `post_batch_update_child_publishers` will be passed to
         `post_batch_update_child_publishers_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_withdraw_child_publishers(
+        self,
+        request: child_publisher_service.BatchWithdrawChildPublishersRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        child_publisher_service.BatchWithdrawChildPublishersRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_withdraw_child_publishers
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the ChildPublisherService server.
+        """
+        return request, metadata
+
+    def post_batch_withdraw_child_publishers(
+        self, response: child_publisher_service.BatchWithdrawChildPublishersResponse
+    ) -> child_publisher_service.BatchWithdrawChildPublishersResponse:
+        """Post-rpc interceptor for batch_withdraw_child_publishers
+
+        DEPRECATED. Please use the `post_batch_withdraw_child_publishers_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the ChildPublisherService server but before
+        it is returned to user code. This `post_batch_withdraw_child_publishers` interceptor runs
+        before the `post_batch_withdraw_child_publishers_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_withdraw_child_publishers_with_metadata(
+        self,
+        response: child_publisher_service.BatchWithdrawChildPublishersResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        child_publisher_service.BatchWithdrawChildPublishersResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_withdraw_child_publishers
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the ChildPublisherService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_withdraw_child_publishers_with_metadata`
+        interceptor in new development instead of the `post_batch_withdraw_child_publishers` interceptor.
+        When both interceptors are used, this `post_batch_withdraw_child_publishers_with_metadata` interceptor runs after the
+        `post_batch_withdraw_child_publishers` interceptor. The (possibly modified) response returned by
+        `post_batch_withdraw_child_publishers` will be passed to
+        `post_batch_withdraw_child_publishers_with_metadata`.
         """
         return response, metadata
 
@@ -624,7 +867,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
                 Args:
                     request (~.child_publisher_service.BatchCreateChildPublishersRequest):
-                        The request object. Request object for [BatchCreateChildPublishers][]
+                        The request object. Request object for ``BatchCreateChildPublishers``
                     method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
@@ -636,27 +879,24 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
                 Returns:
                     ~.child_publisher_service.BatchCreateChildPublishersResponse:
-                        Response object for [BatchCreateChildPublishers][]
+                        Response object for ``BatchCreateChildPublishers``
                     method.
 
             """
 
             http_options = _BaseChildPublisherServiceRestTransport._BaseBatchCreateChildPublishers._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_child_publishers(
                 request, metadata
             )
-            transcoded_request = _BaseChildPublisherServiceRestTransport._BaseBatchCreateChildPublishers._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChildPublisherServiceRestTransport._BaseBatchCreateChildPublishers._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChildPublisherServiceRestTransport._BaseBatchCreateChildPublishers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChildPublisherServiceRestTransport._BaseBatchCreateChildPublishers,
+                    "_BaseBatchCreateChildPublishers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -742,6 +982,494 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
                 )
             return resp
 
+    class _BatchRejectChildPublishers(
+        _BaseChildPublisherServiceRestTransport._BaseBatchRejectChildPublishers,
+        ChildPublisherServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("ChildPublisherServiceRestTransport.BatchRejectChildPublishers")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: child_publisher_service.BatchRejectChildPublishersRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> child_publisher_service.BatchRejectChildPublishersResponse:
+            r"""Call the batch reject child
+            publishers method over HTTP.
+
+                Args:
+                    request (~.child_publisher_service.BatchRejectChildPublishersRequest):
+                        The request object. Request message for ``BatchRejectChildPublishers``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.child_publisher_service.BatchRejectChildPublishersResponse:
+                        Response message for ``BatchRejectChildPublishers``
+                    method.
+
+            """
+
+            http_options = _BaseChildPublisherServiceRestTransport._BaseBatchRejectChildPublishers._get_http_options()
+            request, metadata = self._interceptor.pre_batch_reject_child_publishers(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChildPublisherServiceRestTransport._BaseBatchRejectChildPublishers,
+                    "_BaseBatchRejectChildPublishers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.ChildPublisherServiceClient.BatchRejectChildPublishers",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.ChildPublisherService",
+                        "rpcName": "BatchRejectChildPublishers",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = ChildPublisherServiceRestTransport._BatchRejectChildPublishers._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = child_publisher_service.BatchRejectChildPublishersResponse()
+            pb_resp = child_publisher_service.BatchRejectChildPublishersResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_reject_child_publishers(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_reject_child_publishers_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = child_publisher_service.BatchRejectChildPublishersResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.ChildPublisherServiceClient.batch_reject_child_publishers",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.ChildPublisherService",
+                        "rpcName": "BatchRejectChildPublishers",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchRenegotiateChildPublisherAgreements(
+        _BaseChildPublisherServiceRestTransport._BaseBatchRenegotiateChildPublisherAgreements,
+        ChildPublisherServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "ChildPublisherServiceRestTransport.BatchRenegotiateChildPublisherAgreements"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: child_publisher_service.BatchRenegotiateChildPublisherAgreementsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse:
+            r"""Call the batch renegotiate child
+            publisher agreements method over HTTP.
+
+                Args:
+                    request (~.child_publisher_service.BatchRenegotiateChildPublisherAgreementsRequest):
+                        The request object. Request message for
+                    ``BatchRenegotiateChildPublisherAgreements`` method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse:
+                        Response message for
+                    ``BatchRenegotiateChildPublisherAgreements`` method.
+
+            """
+
+            http_options = _BaseChildPublisherServiceRestTransport._BaseBatchRenegotiateChildPublisherAgreements._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_batch_renegotiate_child_publisher_agreements(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChildPublisherServiceRestTransport._BaseBatchRenegotiateChildPublisherAgreements,
+                    "_BaseBatchRenegotiateChildPublisherAgreements__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.ChildPublisherServiceClient.BatchRenegotiateChildPublisherAgreements",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.ChildPublisherService",
+                        "rpcName": "BatchRenegotiateChildPublisherAgreements",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = ChildPublisherServiceRestTransport._BatchRenegotiateChildPublisherAgreements._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse()
+            pb_resp = child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_renegotiate_child_publisher_agreements(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_renegotiate_child_publisher_agreements_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.ChildPublisherServiceClient.batch_renegotiate_child_publisher_agreements",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.ChildPublisherService",
+                        "rpcName": "BatchRenegotiateChildPublisherAgreements",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchResendChildPublisherInvitationEmails(
+        _BaseChildPublisherServiceRestTransport._BaseBatchResendChildPublisherInvitationEmails,
+        ChildPublisherServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "ChildPublisherServiceRestTransport.BatchResendChildPublisherInvitationEmails"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: child_publisher_service.BatchResendChildPublisherInvitationEmailsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse:
+            r"""Call the batch resend child
+            publisher invitation emails method over HTTP.
+
+                Args:
+                    request (~.child_publisher_service.BatchResendChildPublisherInvitationEmailsRequest):
+                        The request object. Request message for
+                    ``BatchResendChildPublisherInvitationEmails`` method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse:
+                        Response message for
+                    ``BatchResendChildPublisherInvitationEmails`` method.
+
+            """
+
+            http_options = _BaseChildPublisherServiceRestTransport._BaseBatchResendChildPublisherInvitationEmails._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_batch_resend_child_publisher_invitation_emails(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChildPublisherServiceRestTransport._BaseBatchResendChildPublisherInvitationEmails,
+                    "_BaseBatchResendChildPublisherInvitationEmails__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.ChildPublisherServiceClient.BatchResendChildPublisherInvitationEmails",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.ChildPublisherService",
+                        "rpcName": "BatchResendChildPublisherInvitationEmails",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = ChildPublisherServiceRestTransport._BatchResendChildPublisherInvitationEmails._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse()
+            pb_resp = child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = (
+                self._interceptor.post_batch_resend_child_publisher_invitation_emails(
+                    resp
+                )
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_resend_child_publisher_invitation_emails_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.ChildPublisherServiceClient.batch_resend_child_publisher_invitation_emails",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.ChildPublisherService",
+                        "rpcName": "BatchResendChildPublisherInvitationEmails",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _BatchUpdateChildPublishers(
         _BaseChildPublisherServiceRestTransport._BaseBatchUpdateChildPublishers,
         ChildPublisherServiceRestStub,
@@ -785,7 +1513,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
                 Args:
                     request (~.child_publisher_service.BatchUpdateChildPublishersRequest):
-                        The request object. Request object for [BatchUpdateChildPublishers][]
+                        The request object. Request object for ``BatchUpdateChildPublishers``
                     method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
@@ -797,27 +1525,24 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
                 Returns:
                     ~.child_publisher_service.BatchUpdateChildPublishersResponse:
-                        Response object for [BatchUpdateChildPublishers][]
+                        Response object for ``BatchUpdateChildPublishers``
                     method.
 
             """
 
             http_options = _BaseChildPublisherServiceRestTransport._BaseBatchUpdateChildPublishers._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_child_publishers(
                 request, metadata
             )
-            transcoded_request = _BaseChildPublisherServiceRestTransport._BaseBatchUpdateChildPublishers._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChildPublisherServiceRestTransport._BaseBatchUpdateChildPublishers._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChildPublisherServiceRestTransport._BaseBatchUpdateChildPublishers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChildPublisherServiceRestTransport._BaseBatchUpdateChildPublishers,
+                    "_BaseBatchUpdateChildPublishers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -903,6 +1628,166 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
                 )
             return resp
 
+    class _BatchWithdrawChildPublishers(
+        _BaseChildPublisherServiceRestTransport._BaseBatchWithdrawChildPublishers,
+        ChildPublisherServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "ChildPublisherServiceRestTransport.BatchWithdrawChildPublishers"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: child_publisher_service.BatchWithdrawChildPublishersRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> child_publisher_service.BatchWithdrawChildPublishersResponse:
+            r"""Call the batch withdraw child
+            publishers method over HTTP.
+
+                Args:
+                    request (~.child_publisher_service.BatchWithdrawChildPublishersRequest):
+                        The request object. Request message for ``BatchWithdrawChildPublishers``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.child_publisher_service.BatchWithdrawChildPublishersResponse:
+                        Response message for ``BatchWithdrawChildPublishers``
+                    method.
+
+            """
+
+            http_options = _BaseChildPublisherServiceRestTransport._BaseBatchWithdrawChildPublishers._get_http_options()
+            request, metadata = self._interceptor.pre_batch_withdraw_child_publishers(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChildPublisherServiceRestTransport._BaseBatchWithdrawChildPublishers,
+                    "_BaseBatchWithdrawChildPublishers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.ChildPublisherServiceClient.BatchWithdrawChildPublishers",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.ChildPublisherService",
+                        "rpcName": "BatchWithdrawChildPublishers",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = ChildPublisherServiceRestTransport._BatchWithdrawChildPublishers._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = child_publisher_service.BatchWithdrawChildPublishersResponse()
+            pb_resp = child_publisher_service.BatchWithdrawChildPublishersResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_withdraw_child_publishers(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_withdraw_child_publishers_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = child_publisher_service.BatchWithdrawChildPublishersResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.ChildPublisherServiceClient.batch_withdraw_child_publishers",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.ChildPublisherService",
+                        "rpcName": "BatchWithdrawChildPublishers",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _CreateChildPublisher(
         _BaseChildPublisherServiceRestTransport._BaseCreateChildPublisher,
         ChildPublisherServiceRestStub,
@@ -945,7 +1830,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
             Args:
                 request (~.child_publisher_service.CreateChildPublisherRequest):
-                    The request object. Request object for [CreateChildPublisher][] method.
+                    The request object. Request object for ``CreateChildPublisher`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -963,21 +1848,18 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
             """
 
             http_options = _BaseChildPublisherServiceRestTransport._BaseCreateChildPublisher._get_http_options()
-
             request, metadata = self._interceptor.pre_create_child_publisher(
                 request, metadata
             )
-            transcoded_request = _BaseChildPublisherServiceRestTransport._BaseCreateChildPublisher._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChildPublisherServiceRestTransport._BaseCreateChildPublisher._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChildPublisherServiceRestTransport._BaseCreateChildPublisher._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChildPublisherServiceRestTransport._BaseCreateChildPublisher,
+                    "_BaseCreateChildPublisher__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1102,7 +1984,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
             Args:
                 request (~.child_publisher_service.GetChildPublisherRequest):
-                    The request object. Request object for [GetChildPublisher][] method.
+                    The request object. Request object for ``GetChildPublisher`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -1120,17 +2002,18 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
             """
 
             http_options = _BaseChildPublisherServiceRestTransport._BaseGetChildPublisher._get_http_options()
-
             request, metadata = self._interceptor.pre_get_child_publisher(
                 request, metadata
             )
-            transcoded_request = _BaseChildPublisherServiceRestTransport._BaseGetChildPublisher._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChildPublisherServiceRestTransport._BaseGetChildPublisher._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChildPublisherServiceRestTransport._BaseGetChildPublisher,
+                    "_BaseGetChildPublisher__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1254,7 +2137,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
             Args:
                 request (~.child_publisher_service.ListChildPublishersRequest):
-                    The request object. Request object for [ListChildPublishers][] method.
+                    The request object. Request object for ``ListChildPublishers`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -1265,7 +2148,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
             Returns:
                 ~.child_publisher_service.ListChildPublishersResponse:
-                    Response object for [ListChildPublishers][] containing
+                    Response object for ``ListChildPublishers`` containing
                 matching
                 [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
                 objects.
@@ -1273,17 +2156,18 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
             """
 
             http_options = _BaseChildPublisherServiceRestTransport._BaseListChildPublishers._get_http_options()
-
             request, metadata = self._interceptor.pre_list_child_publishers(
                 request, metadata
             )
-            transcoded_request = _BaseChildPublisherServiceRestTransport._BaseListChildPublishers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChildPublisherServiceRestTransport._BaseListChildPublishers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChildPublisherServiceRestTransport._BaseListChildPublishers,
+                    "_BaseListChildPublishers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1410,7 +2294,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
             Args:
                 request (~.child_publisher_service.UpdateChildPublisherRequest):
-                    The request object. Request object for [UpdateChildPublisher][] method.
+                    The request object. Request object for ``UpdateChildPublisher`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -1428,21 +2312,18 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
             """
 
             http_options = _BaseChildPublisherServiceRestTransport._BaseUpdateChildPublisher._get_http_options()
-
             request, metadata = self._interceptor.pre_update_child_publisher(
                 request, metadata
             )
-            transcoded_request = _BaseChildPublisherServiceRestTransport._BaseUpdateChildPublisher._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChildPublisherServiceRestTransport._BaseUpdateChildPublisher._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChildPublisherServiceRestTransport._BaseUpdateChildPublisher._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChildPublisherServiceRestTransport._BaseUpdateChildPublisher,
+                    "_BaseUpdateChildPublisher__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1540,6 +2421,45 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
         )  # type: ignore
 
     @property
+    def batch_reject_child_publishers(
+        self,
+    ) -> Callable[
+        [child_publisher_service.BatchRejectChildPublishersRequest],
+        child_publisher_service.BatchRejectChildPublishersResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchRejectChildPublishers(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_renegotiate_child_publisher_agreements(
+        self,
+    ) -> Callable[
+        [child_publisher_service.BatchRenegotiateChildPublisherAgreementsRequest],
+        child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchRenegotiateChildPublisherAgreements(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_resend_child_publisher_invitation_emails(
+        self,
+    ) -> Callable[
+        [child_publisher_service.BatchResendChildPublisherInvitationEmailsRequest],
+        child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchResendChildPublisherInvitationEmails(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def batch_update_child_publishers(
         self,
     ) -> Callable[
@@ -1549,6 +2469,19 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._BatchUpdateChildPublishers(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_withdraw_child_publishers(
+        self,
+    ) -> Callable[
+        [child_publisher_service.BatchWithdrawChildPublishersRequest],
+        child_publisher_service.BatchWithdrawChildPublishersResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchWithdrawChildPublishers(
             self._session, self._host, self._interceptor
         )  # type: ignore
 
@@ -1652,17 +2585,18 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
             """
 
             http_options = _BaseChildPublisherServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseChildPublisherServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChildPublisherServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChildPublisherServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1770,15 +2704,16 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
             """
 
             http_options = _BaseChildPublisherServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseChildPublisherServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChildPublisherServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChildPublisherServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

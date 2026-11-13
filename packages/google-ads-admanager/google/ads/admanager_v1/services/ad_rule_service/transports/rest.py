@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import ad_rule_messages, ad_rule_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -762,21 +763,18 @@ class AdRuleServiceRestTransport(_BaseAdRuleServiceRestTransport):
             """
 
             http_options = _BaseAdRuleServiceRestTransport._BaseBatchActivateAdRules._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_activate_ad_rules(
                 request, metadata
             )
-            transcoded_request = _BaseAdRuleServiceRestTransport._BaseBatchActivateAdRules._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdRuleServiceRestTransport._BaseBatchActivateAdRules._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdRuleServiceRestTransport._BaseBatchActivateAdRules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdRuleServiceRestTransport._BaseBatchActivateAdRules,
+                    "_BaseBatchActivateAdRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -914,21 +912,18 @@ class AdRuleServiceRestTransport(_BaseAdRuleServiceRestTransport):
             """
 
             http_options = _BaseAdRuleServiceRestTransport._BaseBatchCreateAdRules._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_ad_rules(
                 request, metadata
             )
-            transcoded_request = _BaseAdRuleServiceRestTransport._BaseBatchCreateAdRules._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdRuleServiceRestTransport._BaseBatchCreateAdRules._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdRuleServiceRestTransport._BaseBatchCreateAdRules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdRuleServiceRestTransport._BaseBatchCreateAdRules,
+                    "_BaseBatchCreateAdRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1067,21 +1062,18 @@ class AdRuleServiceRestTransport(_BaseAdRuleServiceRestTransport):
             """
 
             http_options = _BaseAdRuleServiceRestTransport._BaseBatchDeactivateAdRules._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_deactivate_ad_rules(
                 request, metadata
             )
-            transcoded_request = _BaseAdRuleServiceRestTransport._BaseBatchDeactivateAdRules._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdRuleServiceRestTransport._BaseBatchDeactivateAdRules._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdRuleServiceRestTransport._BaseBatchDeactivateAdRules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdRuleServiceRestTransport._BaseBatchDeactivateAdRules,
+                    "_BaseBatchDeactivateAdRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1215,21 +1207,18 @@ class AdRuleServiceRestTransport(_BaseAdRuleServiceRestTransport):
             """
 
             http_options = _BaseAdRuleServiceRestTransport._BaseBatchDeleteAdRules._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_delete_ad_rules(
                 request, metadata
             )
-            transcoded_request = _BaseAdRuleServiceRestTransport._BaseBatchDeleteAdRules._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdRuleServiceRestTransport._BaseBatchDeleteAdRules._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdRuleServiceRestTransport._BaseBatchDeleteAdRules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdRuleServiceRestTransport._BaseBatchDeleteAdRules,
+                    "_BaseBatchDeleteAdRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1331,21 +1320,18 @@ class AdRuleServiceRestTransport(_BaseAdRuleServiceRestTransport):
             """
 
             http_options = _BaseAdRuleServiceRestTransport._BaseBatchUpdateAdRules._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_ad_rules(
                 request, metadata
             )
-            transcoded_request = _BaseAdRuleServiceRestTransport._BaseBatchUpdateAdRules._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdRuleServiceRestTransport._BaseBatchUpdateAdRules._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdRuleServiceRestTransport._BaseBatchUpdateAdRules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdRuleServiceRestTransport._BaseBatchUpdateAdRules,
+                    "_BaseBatchUpdateAdRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1488,19 +1474,16 @@ class AdRuleServiceRestTransport(_BaseAdRuleServiceRestTransport):
             http_options = (
                 _BaseAdRuleServiceRestTransport._BaseCreateAdRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_ad_rule(request, metadata)
-            transcoded_request = _BaseAdRuleServiceRestTransport._BaseCreateAdRule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdRuleServiceRestTransport._BaseCreateAdRule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdRuleServiceRestTransport._BaseCreateAdRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdRuleServiceRestTransport._BaseCreateAdRule,
+                    "_BaseCreateAdRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1640,19 +1623,16 @@ class AdRuleServiceRestTransport(_BaseAdRuleServiceRestTransport):
             http_options = (
                 _BaseAdRuleServiceRestTransport._BaseGetAdRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_ad_rule(request, metadata)
-            transcoded_request = (
-                _BaseAdRuleServiceRestTransport._BaseGetAdRule._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAdRuleServiceRestTransport._BaseGetAdRule._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdRuleServiceRestTransport._BaseGetAdRule,
+                    "_BaseGetAdRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1790,17 +1770,16 @@ class AdRuleServiceRestTransport(_BaseAdRuleServiceRestTransport):
             http_options = (
                 _BaseAdRuleServiceRestTransport._BaseListAdRules._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_ad_rules(request, metadata)
-            transcoded_request = _BaseAdRuleServiceRestTransport._BaseListAdRules._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAdRuleServiceRestTransport._BaseListAdRules._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdRuleServiceRestTransport._BaseListAdRules,
+                    "_BaseListAdRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1942,19 +1921,16 @@ class AdRuleServiceRestTransport(_BaseAdRuleServiceRestTransport):
             http_options = (
                 _BaseAdRuleServiceRestTransport._BaseUpdateAdRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_ad_rule(request, metadata)
-            transcoded_request = _BaseAdRuleServiceRestTransport._BaseUpdateAdRule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdRuleServiceRestTransport._BaseUpdateAdRule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdRuleServiceRestTransport._BaseUpdateAdRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdRuleServiceRestTransport._BaseUpdateAdRule,
+                    "_BaseUpdateAdRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2179,17 +2155,18 @@ class AdRuleServiceRestTransport(_BaseAdRuleServiceRestTransport):
             http_options = (
                 _BaseAdRuleServiceRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAdRuleServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdRuleServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdRuleServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2296,15 +2273,16 @@ class AdRuleServiceRestTransport(_BaseAdRuleServiceRestTransport):
             http_options = (
                 _BaseAdRuleServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAdRuleServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdRuleServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdRuleServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

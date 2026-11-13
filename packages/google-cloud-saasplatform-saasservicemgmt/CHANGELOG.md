@@ -4,6 +4,20 @@
 
 [1]: https://pypi.org/project/google-cloud-saasplatform-saasservicemgmt/#history
 
+## [0.7.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-saasplatform-saasservicemgmt-v0.7.2...google-cloud-saasplatform-saasservicemgmt-v0.7.3) (2026-11-05)
+
+
+### Features
+
+* **google/cloud/saasplatform/saasservicemgmt/v1:** add google-cloud-saasplatform-saasservicemgmt ([#18998](https://github.com/googleapis/google-cloud-python/issues/18998)) ([a952b6b](https://github.com/googleapis/google-cloud-python/commit/a952b6b4d33cac6716f58f5dc66aeae57a90ce6e))
+
+## [0.7.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-saasplatform-saasservicemgmt-v0.7.1...google-cloud-saasplatform-saasservicemgmt-v0.7.2) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [0.7.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-saasplatform-saasservicemgmt-v0.7.0...google-cloud-saasplatform-saasservicemgmt-v0.7.1) (2026-07-07)
 
 

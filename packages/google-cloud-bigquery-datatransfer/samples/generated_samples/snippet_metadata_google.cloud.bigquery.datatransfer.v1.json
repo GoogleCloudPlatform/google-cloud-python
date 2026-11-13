@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-bigquery-datatransfer",
-    "version": "3.23.0"
+    "version": "3.24.0"
   },
   "snippets": [
     {

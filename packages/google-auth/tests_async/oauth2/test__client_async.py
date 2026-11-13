@@ -16,14 +16,13 @@ import asyncio
 import datetime
 import http.client as http_client
 import json
-from unittest import mock
 import urllib
+from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import _helpers
+from google.auth import _helpers, exceptions
 from google.auth import _jwt_async as jwt
-from google.auth import exceptions
 from google.auth.aio import transport as aio_transport
 from google.oauth2 import _client as sync_client
 from google.oauth2 import _client_async as _client

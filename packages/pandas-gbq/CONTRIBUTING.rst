@@ -22,7 +22,7 @@ In order to add a feature:
   documentation.
 
 - The feature must work fully on the following CPython versions:
-  3.10, 3.11, 3.12, 3.13 and 3.14 on both UNIX and Windows.
+  3.11, 3.12, 3.13, 3.14 and 3.15 on both UNIX and Windows.
 
 - The feature must not add unnecessary dependencies (where
   "unnecessary" is of course subjective, but new dependencies should
@@ -195,11 +195,11 @@ configure them just like the System Tests.
 
    # Run all tests in a folder
    $ cd samples/snippets
-   $ nox -s py-3.10
+   $ nox -s py-3.14
 
    # Run a single sample test
    $ cd samples/snippets
-   $ nox -s py-3.10 -- -k <name of test>
+   $ nox -s py-3.14 -- -k <name of test>
 
 ********************************************
 Note About ``README`` as it pertains to PyPI
@@ -221,17 +221,17 @@ Supported Python Versions
 
 We support:
 
--  `Python 3.10`_
 -  `Python 3.11`_
 -  `Python 3.12`_
 -  `Python 3.13`_
 -  `Python 3.14`_
+-  `Python 3.15`_
 
-.. _Python 3.10: https://docs.python.org/3.10/
 .. _Python 3.11: https://docs.python.org/3.11/
 .. _Python 3.12: https://docs.python.org/3.12/
 .. _Python 3.13: https://docs.python.org/3.13/
 .. _Python 3.14: https://docs.python.org/3.14/
+.. _Python 3.15: https://docs.python.org/3.15/
 
 
 Supported versions can be found in our ``noxfile.py`` `config`_.
@@ -239,7 +239,7 @@ Supported versions can be found in our ``noxfile.py`` `config`_.
 .. _config: https://github.com/googleapis/google-cloud-python/blob/main/packages/pandas-gbq/noxfile.py
 
 
-We also explicitly decided to support Python 3 beginning with version 3.10.
+We also explicitly decided to support Python 3 beginning with version 3.11.
 Reasons for this include:
 
 -  Encouraging use of newest versions of Python 3

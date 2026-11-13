@@ -259,6 +259,139 @@ class TestClient(unittest.TestCase):
         self.assertEqual(client.api_endpoint, expected_api_endpoint)
         self.assertEqual(client.universe_domain, universe_domain)
 
+    def test_ctor_w_enable_metrics(self):
+        PROJECT = "PROJECT"
+        credentials = _make_credentials()
+        client = self._make_one(
+            project=PROJECT, credentials=credentials, enable_metrics=True
+        )
+        self.assertTrue(client._enable_metrics)
+
+    def test_ctor_w_enable_debug_metrics(self):
+        PROJECT = "PROJECT"
+        credentials = _make_credentials()
+        client = self._make_one(
+            project=PROJECT, credentials=credentials, enable_debug_metrics=True
+        )
+        self.assertTrue(client._enable_debug_metrics)
+
+    def test_ctor_w_invalid_enable_metrics_raises_type_error(self):
+        PROJECT = "PROJECT"
+        credentials = _make_credentials()
+        with self.assertRaises(TypeError):
+            self._make_one(
+                project=PROJECT, credentials=credentials, enable_metrics="true"
+            )
+        with self.assertRaises(TypeError):
+            self._make_one(
+                project=PROJECT,
+                credentials=credentials,
+                enable_debug_metrics="true",
+            )
+
+    def test_client_metrics_enabled_property(self):
+        from google.cloud.storage import _opentelemetry_metrics
+
+        PROJECT = "PROJECT"
+        credentials = _make_credentials()
+
+        with mock.patch.multiple(
+            _opentelemetry_metrics,
+            HAS_OPENTELEMETRY_METRICS=True,
+            _ENABLE_METRICS_DEV_GATE=True,
+        ):
+            client = self._make_one(
+                project=PROJECT, credentials=credentials, enable_metrics=True
+            )
+            self.assertTrue(client.metrics_enabled)
+
+        with mock.patch.multiple(
+            _opentelemetry_metrics,
+            HAS_OPENTELEMETRY_METRICS=True,
+            _ENABLE_METRICS_DEV_GATE=False,
+        ):
+            client = self._make_one(
+                project=PROJECT, credentials=credentials, enable_metrics=True
+            )
+            self.assertFalse(client.metrics_enabled)
+
+    def test_client_debug_metrics_enabled_property(self):
+        from google.cloud.storage import _opentelemetry_metrics
+
+        PROJECT = "PROJECT"
+        credentials = _make_credentials()
+
+        with mock.patch.multiple(
+            _opentelemetry_metrics,
+            HAS_OPENTELEMETRY_METRICS=True,
+            _ENABLE_METRICS_DEV_GATE=True,
+        ):
+            client = self._make_one(
+                project=PROJECT,
+                credentials=credentials,
+                enable_metrics=True,
+                enable_debug_metrics=True,
+            )
+            self.assertTrue(client.debug_metrics_enabled)
+
+        with mock.patch.multiple(
+            _opentelemetry_metrics,
+            HAS_OPENTELEMETRY_METRICS=True,
+            _ENABLE_METRICS_DEV_GATE=False,
+        ):
+            client = self._make_one(
+                project=PROJECT,
+                credentials=credentials,
+                enable_metrics=True,
+                enable_debug_metrics=True,
+            )
+            self.assertFalse(client.debug_metrics_enabled)
+
+        # Verify that debug metrics are independent when base metrics are disabled
+        with mock.patch.multiple(
+            _opentelemetry_metrics,
+            HAS_OPENTELEMETRY_METRICS=True,
+            _ENABLE_METRICS_DEV_GATE=True,
+        ):
+            client_disabled_base = self._make_one(
+                project=PROJECT,
+                credentials=credentials,
+                enable_metrics=False,
+                enable_debug_metrics=True,
+            )
+            self.assertFalse(client_disabled_base.metrics_enabled)
+            self.assertTrue(client_disabled_base.debug_metrics_enabled)
+
+    def test_ctor_metrics_defaults_and_env_fallback(self):
+        from google.cloud.storage import _opentelemetry_metrics
+
+        PROJECT = "PROJECT"
+        credentials = _make_credentials()
+
+        with mock.patch.multiple(
+            _opentelemetry_metrics,
+            HAS_OPENTELEMETRY_METRICS=True,
+            _ENABLE_METRICS_DEV_GATE=True,
+        ):
+            with mock.patch.dict("os.environ", {}, clear=True):
+                client = self._make_one(project=PROJECT, credentials=credentials)
+                self.assertIsNone(client._enable_metrics)
+                self.assertIsNone(client._enable_debug_metrics)
+                self.assertFalse(client.metrics_enabled)
+                self.assertFalse(client.debug_metrics_enabled)
+
+            with mock.patch.dict(
+                "os.environ",
+                {
+                    "GCP_STORAGE_PYTHON_ENABLE_OTEL_METRICS": "true",
+                    "GCP_STORAGE_PYTHON_ENABLE_OTEL_DEBUG_METRICS": "true",
+                },
+                clear=True,
+            ):
+                client = self._make_one(project=PROJECT, credentials=credentials)
+                self.assertTrue(client.metrics_enabled)
+                self.assertTrue(client.debug_metrics_enabled)
+
     def test_ctor_w_universe_domain_and_mismatched_credentials(self):
         PROJECT = "PROJECT"
         universe_domain = "example.com"
@@ -1122,7 +1255,9 @@ class TestClient(unittest.TestCase):
         cached = client._bucket_metadata_cache.get(bucket_name)
         self.assertIsNotNone(cached)
         dest_id, loc = cached
-        self.assertEqual(dest_id, f"projects/_/buckets/{bucket_name}")
+        self.assertEqual(
+            dest_id, f"//storage.googleapis.com/projects/_/buckets/{bucket_name}"
+        )
         self.assertEqual(loc, "global")
 
     def test_get_bucket_hit_w_string_w_timeout(self):
@@ -1359,7 +1494,9 @@ class TestClient(unittest.TestCase):
         cached = client._bucket_metadata_cache.get(bucket_name)
         self.assertIsNotNone(cached)
         dest_id, loc = cached
-        self.assertEqual(dest_id, f"projects/_/buckets/{bucket_name}")
+        self.assertEqual(
+            dest_id, f"//storage.googleapis.com/projects/_/buckets/{bucket_name}"
+        )
         self.assertEqual(loc, "global")
 
     def test_lookup_bucket_hit_w_timeout(self):

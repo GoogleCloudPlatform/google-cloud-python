@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.hypercomputecluster_v1._compat import transcode_request
 from google.cloud.hypercomputecluster_v1.types import hypercompute_cluster
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -721,19 +722,16 @@ class HypercomputeClusterRestTransport(_BaseHypercomputeClusterRestTransport):
             """
 
             http_options = _BaseHypercomputeClusterRestTransport._BaseCreateCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_create_cluster(request, metadata)
-            transcoded_request = _BaseHypercomputeClusterRestTransport._BaseCreateCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHypercomputeClusterRestTransport._BaseCreateCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHypercomputeClusterRestTransport._BaseCreateCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHypercomputeClusterRestTransport._BaseCreateCluster,
+                    "_BaseCreateCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -871,15 +869,16 @@ class HypercomputeClusterRestTransport(_BaseHypercomputeClusterRestTransport):
             """
 
             http_options = _BaseHypercomputeClusterRestTransport._BaseDeleteCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_cluster(request, metadata)
-            transcoded_request = _BaseHypercomputeClusterRestTransport._BaseDeleteCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHypercomputeClusterRestTransport._BaseDeleteCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHypercomputeClusterRestTransport._BaseDeleteCluster,
+                    "_BaseDeleteCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1025,15 +1024,16 @@ class HypercomputeClusterRestTransport(_BaseHypercomputeClusterRestTransport):
             """
 
             http_options = _BaseHypercomputeClusterRestTransport._BaseGetCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_get_cluster(request, metadata)
-            transcoded_request = _BaseHypercomputeClusterRestTransport._BaseGetCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHypercomputeClusterRestTransport._BaseGetCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHypercomputeClusterRestTransport._BaseGetCluster,
+                    "_BaseGetCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1171,15 +1171,16 @@ class HypercomputeClusterRestTransport(_BaseHypercomputeClusterRestTransport):
             """
 
             http_options = _BaseHypercomputeClusterRestTransport._BaseListClusters._get_http_options()
-
             request, metadata = self._interceptor.pre_list_clusters(request, metadata)
-            transcoded_request = _BaseHypercomputeClusterRestTransport._BaseListClusters._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHypercomputeClusterRestTransport._BaseListClusters._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHypercomputeClusterRestTransport._BaseListClusters,
+                    "_BaseListClusters__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1321,19 +1322,16 @@ class HypercomputeClusterRestTransport(_BaseHypercomputeClusterRestTransport):
             """
 
             http_options = _BaseHypercomputeClusterRestTransport._BaseUpdateCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_update_cluster(request, metadata)
-            transcoded_request = _BaseHypercomputeClusterRestTransport._BaseUpdateCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHypercomputeClusterRestTransport._BaseUpdateCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHypercomputeClusterRestTransport._BaseUpdateCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHypercomputeClusterRestTransport._BaseUpdateCluster,
+                    "_BaseUpdateCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1521,15 +1519,16 @@ class HypercomputeClusterRestTransport(_BaseHypercomputeClusterRestTransport):
             """
 
             http_options = _BaseHypercomputeClusterRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseHypercomputeClusterRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHypercomputeClusterRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHypercomputeClusterRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1660,15 +1659,16 @@ class HypercomputeClusterRestTransport(_BaseHypercomputeClusterRestTransport):
             """
 
             http_options = _BaseHypercomputeClusterRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseHypercomputeClusterRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHypercomputeClusterRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHypercomputeClusterRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1797,21 +1797,18 @@ class HypercomputeClusterRestTransport(_BaseHypercomputeClusterRestTransport):
             """
 
             http_options = _BaseHypercomputeClusterRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseHypercomputeClusterRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHypercomputeClusterRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHypercomputeClusterRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHypercomputeClusterRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1915,17 +1912,18 @@ class HypercomputeClusterRestTransport(_BaseHypercomputeClusterRestTransport):
             """
 
             http_options = _BaseHypercomputeClusterRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseHypercomputeClusterRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHypercomputeClusterRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHypercomputeClusterRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2031,15 +2029,16 @@ class HypercomputeClusterRestTransport(_BaseHypercomputeClusterRestTransport):
             """
 
             http_options = _BaseHypercomputeClusterRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseHypercomputeClusterRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHypercomputeClusterRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHypercomputeClusterRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2170,15 +2169,16 @@ class HypercomputeClusterRestTransport(_BaseHypercomputeClusterRestTransport):
             """
 
             http_options = _BaseHypercomputeClusterRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseHypercomputeClusterRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHypercomputeClusterRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHypercomputeClusterRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

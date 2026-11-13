@@ -18,9 +18,7 @@ This module provides authentication using the `API key`_.
     https://cloud.google.com/docs/authentication/api-keys/
 """
 
-from google.auth import _helpers
-from google.auth import credentials
-from google.auth import exceptions
+from google.auth import _helpers, credentials, exceptions
 
 
 class Credentials(credentials.Credentials):

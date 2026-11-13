@@ -20,11 +20,8 @@ from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import _helpers
-from google.auth import exceptions
-from google.auth import iam
-from google.auth import transport
 import google.auth.credentials
+from google.auth import _helpers, exceptions, iam, transport
 
 
 def make_request(status, data=None):

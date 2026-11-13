@@ -10,6 +10,11 @@
         "grpc": {
           "libraryClient": "AuditManagerClient",
           "rpcs": {
+            "CreateAuditSchedule": {
+              "methods": [
+                "create_audit_schedule"
+              ]
+            },
             "EnrollResource": {
               "methods": [
                 "enroll_resource"
@@ -30,6 +35,11 @@
                 "get_audit_report"
               ]
             },
+            "GetAuditSchedule": {
+              "methods": [
+                "get_audit_schedule"
+              ]
+            },
             "GetResourceEnrollmentStatus": {
               "methods": [
                 "get_resource_enrollment_status"
@@ -40,6 +50,11 @@
                 "list_audit_reports"
               ]
             },
+            "ListAuditSchedules": {
+              "methods": [
+                "list_audit_schedules"
+              ]
+            },
             "ListControls": {
               "methods": [
                 "list_controls"
@@ -48,6 +63,11 @@
             "ListResourceEnrollmentStatuses": {
               "methods": [
                 "list_resource_enrollment_statuses"
+              ]
+            },
+            "UpdateAuditSchedule": {
+              "methods": [
+                "update_audit_schedule"
               ]
             }
           }
@@ -55,6 +75,11 @@
         "grpc-async": {
           "libraryClient": "AuditManagerAsyncClient",
           "rpcs": {
+            "CreateAuditSchedule": {
+              "methods": [
+                "create_audit_schedule"
+              ]
+            },
             "EnrollResource": {
               "methods": [
                 "enroll_resource"
@@ -75,6 +100,11 @@
                 "get_audit_report"
               ]
             },
+            "GetAuditSchedule": {
+              "methods": [
+                "get_audit_schedule"
+              ]
+            },
             "GetResourceEnrollmentStatus": {
               "methods": [
                 "get_resource_enrollment_status"
@@ -85,6 +115,11 @@
                 "list_audit_reports"
               ]
             },
+            "ListAuditSchedules": {
+              "methods": [
+                "list_audit_schedules"
+              ]
+            },
             "ListControls": {
               "methods": [
                 "list_controls"
@@ -93,6 +128,11 @@
             "ListResourceEnrollmentStatuses": {
               "methods": [
                 "list_resource_enrollment_statuses"
+              ]
+            },
+            "UpdateAuditSchedule": {
+              "methods": [
+                "update_audit_schedule"
               ]
             }
           }
@@ -100,6 +140,11 @@
         "rest": {
           "libraryClient": "AuditManagerClient",
           "rpcs": {
+            "CreateAuditSchedule": {
+              "methods": [
+                "create_audit_schedule"
+              ]
+            },
             "EnrollResource": {
               "methods": [
                 "enroll_resource"
@@ -120,6 +165,11 @@
                 "get_audit_report"
               ]
             },
+            "GetAuditSchedule": {
+              "methods": [
+                "get_audit_schedule"
+              ]
+            },
             "GetResourceEnrollmentStatus": {
               "methods": [
                 "get_resource_enrollment_status"
@@ -130,6 +180,11 @@
                 "list_audit_reports"
               ]
             },
+            "ListAuditSchedules": {
+              "methods": [
+                "list_audit_schedules"
+              ]
+            },
             "ListControls": {
               "methods": [
                 "list_controls"
@@ -138,6 +193,11 @@
             "ListResourceEnrollmentStatuses": {
               "methods": [
                 "list_resource_enrollment_statuses"
+              ]
+            },
+            "UpdateAuditSchedule": {
+              "methods": [
+                "update_audit_schedule"
               ]
             }
           }

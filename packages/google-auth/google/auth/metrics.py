@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" We use x-goog-api-client header to report metrics. This module provides
+"""We use x-goog-api-client header to report metrics. This module provides
 the constants and helper methods to construct x-goog-api-client header.
 """
 
 import platform
 
 from google.auth import version
-
 
 API_CLIENT_HEADER = "x-goog-api-client"
 

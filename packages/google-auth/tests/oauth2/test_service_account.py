@@ -19,15 +19,9 @@ from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import _helpers
-from google.auth import crypt
-from google.auth import exceptions
-from google.auth import iam
-from google.auth import jwt
-from google.auth import transport
+from google.auth import _helpers, crypt, exceptions, iam, jwt, transport
 from google.auth.credentials import DEFAULT_UNIVERSE_DOMAIN
 from google.oauth2 import service_account
-
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 

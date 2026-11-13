@@ -31,6 +31,11 @@ FLAKE8_VERSION = "flake8==6.1.0"
 BLACK_VERSION = "black[jupyter]==23.7.0"
 RUFF_VERSION = "ruff==0.14.14"
 ISORT_VERSION = "isort==5.11.0"
+# Temporarily pin pytest<9.2 because pytest 9.2.0 applies filterwarnings=error
+# before pytest_configure hooks run, turning pytest-asyncio's unset
+# asyncio_default_fixture_loop_scope warning into an error. Remove once
+# pytest 9.2+ warning and fixture scope deprecations are resolved.
+PYTEST_VERSION = "pytest<9.2"
 LINT_PATHS = ["docs", "google", "tests", "noxfile.py", "setup.py"]
 
 DEFAULT_PYTHON_VERSION = "3.14"
@@ -46,7 +51,7 @@ ALL_PYTHON: List[str] = [
 UNIT_TEST_STANDARD_DEPENDENCIES = [
     "mock",
     "asyncmock",
-    "pytest",
+    PYTEST_VERSION,
     "pytest-cov",
     "pytest-asyncio",
 ]
@@ -58,7 +63,7 @@ UNIT_TEST_EXTRAS_BY_PYTHON: Dict[str, List[str]] = {}
 
 SYSTEM_TEST_STANDARD_DEPENDENCIES: List[str] = [
     "mock",
-    "pytest",
+    PYTEST_VERSION,
     "google-cloud-testutils",
 ]
 SYSTEM_TEST_EXTERNAL_DEPENDENCIES: List[str] = []
@@ -107,10 +112,24 @@ def lint(session):
     Returns a failure if the linters find linting errors or sufficiently
     serious code quality issues.
     """
-    session.install(FLAKE8_VERSION, BLACK_VERSION)
+    session.install(FLAKE8_VERSION, RUFF_VERSION)
+    # 1. Check imports
     session.run(
-        "black",
+        "ruff",
+        "check",
+        "--select",
+        "I",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+        "--line-length=88",
+        *LINT_PATHS,
+    )
+    # 2. Check formatting
+    session.run(
+        "ruff",
+        "format",
         "--check",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+        "--line-length=88",
         *LINT_PATHS,
     )
     session.run("flake8", "google", "tests")

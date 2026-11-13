@@ -20,8 +20,8 @@ import mock
 import pytest  # type: ignore
 
 from google._async_resumable_media import _upload
-from google.resumable_media import common
 from google.resumable_media import _helpers as sync_helpers
+from google.resumable_media import common
 from tests.unit import test__upload as sync_test
 
 

@@ -46,6 +46,7 @@ nox.options.error_on_missing_interpreters = True
 nox.options.sessions = [
     "system",
     "blacken",
+    "format",
     "mypy",
     "doctest",
 ]
@@ -211,6 +212,20 @@ def lint(session):
         "tests_async",
     )
 
+    # 1. Check imports
+    session.run(
+        "ruff",
+        "check",
+        "--select",
+        "I",
+        f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
+        "--line-length=88",
+        os.path.join("google", "resumable_media"),
+        "tests",
+        os.path.join("google", "_async_resumable_media"),
+        "tests_async",
+    )
+
     # 2. Check formatting
     session.run(
         "ruff",
@@ -246,6 +261,44 @@ def blacken(session):
         "format",
         f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
         "--line-length=88",
+        os.path.join("google", "resumable_media"),
+        "tests",
+        os.path.join("google", "_async_resumable_media"),
+        "tests_async",
+    )
+
+
+@nox.session(python=DEFAULT_PYTHON_VERSION)
+def format(session):
+    """
+    Run ruff to sort imports and format code.
+    """
+    # 1. Install ruff (skipped automatically if you run with --no-venv)
+    session.install(RUFF_VERSION)
+
+    # 2. Run Ruff to fix imports
+    # check --select I: Enables strict import sorting
+    # --fix: Applies the changes automatically
+    session.run(
+        "ruff",
+        "check",
+        "--select",
+        "I",
+        "--fix",
+        f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
+        "--line-length=88",  # Standard Black line length
+        os.path.join("google", "resumable_media"),
+        "tests",
+        os.path.join("google", "_async_resumable_media"),
+        "tests_async",
+    )
+
+    # 3. Run Ruff to format code
+    session.run(
+        "ruff",
+        "format",
+        f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
+        "--line-length=88",  # Standard Black line length
         os.path.join("google", "resumable_media"),
         "tests",
         os.path.join("google", "_async_resumable_media"),

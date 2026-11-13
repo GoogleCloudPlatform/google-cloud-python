@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dialogflow_v2._compat import transcode_request
 from google.cloud.dialogflow_v2.types import intent
 from google.cloud.dialogflow_v2.types import intent as gcd_intent
 
@@ -755,21 +756,18 @@ class IntentsRestTransport(_BaseIntentsRestTransport):
             http_options = (
                 _BaseIntentsRestTransport._BaseBatchDeleteIntents._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_batch_delete_intents(
                 request, metadata
             )
-            transcoded_request = _BaseIntentsRestTransport._BaseBatchDeleteIntents._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIntentsRestTransport._BaseBatchDeleteIntents._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIntentsRestTransport._BaseBatchDeleteIntents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIntentsRestTransport._BaseBatchDeleteIntents,
+                    "_BaseBatchDeleteIntents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -908,21 +906,18 @@ class IntentsRestTransport(_BaseIntentsRestTransport):
             http_options = (
                 _BaseIntentsRestTransport._BaseBatchUpdateIntents._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_batch_update_intents(
                 request, metadata
             )
-            transcoded_request = _BaseIntentsRestTransport._BaseBatchUpdateIntents._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIntentsRestTransport._BaseBatchUpdateIntents._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIntentsRestTransport._BaseBatchUpdateIntents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIntentsRestTransport._BaseBatchUpdateIntents,
+                    "_BaseBatchUpdateIntents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1068,23 +1063,16 @@ class IntentsRestTransport(_BaseIntentsRestTransport):
             http_options = (
                 _BaseIntentsRestTransport._BaseCreateIntent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_intent(request, metadata)
-            transcoded_request = (
-                _BaseIntentsRestTransport._BaseCreateIntent._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseIntentsRestTransport._BaseCreateIntent._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIntentsRestTransport._BaseCreateIntent._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIntentsRestTransport._BaseCreateIntent,
+                    "_BaseCreateIntent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1216,19 +1204,16 @@ class IntentsRestTransport(_BaseIntentsRestTransport):
             http_options = (
                 _BaseIntentsRestTransport._BaseDeleteIntent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_intent(request, metadata)
-            transcoded_request = (
-                _BaseIntentsRestTransport._BaseDeleteIntent._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIntentsRestTransport._BaseDeleteIntent._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIntentsRestTransport._BaseDeleteIntent,
+                    "_BaseDeleteIntent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1338,19 +1323,16 @@ class IntentsRestTransport(_BaseIntentsRestTransport):
             """
 
             http_options = _BaseIntentsRestTransport._BaseGetIntent._get_http_options()
-
             request, metadata = self._interceptor.pre_get_intent(request, metadata)
-            transcoded_request = (
-                _BaseIntentsRestTransport._BaseGetIntent._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIntentsRestTransport._BaseGetIntent._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIntentsRestTransport._BaseGetIntent,
+                    "_BaseGetIntent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1487,19 +1469,16 @@ class IntentsRestTransport(_BaseIntentsRestTransport):
             http_options = (
                 _BaseIntentsRestTransport._BaseListIntents._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_intents(request, metadata)
-            transcoded_request = (
-                _BaseIntentsRestTransport._BaseListIntents._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIntentsRestTransport._BaseListIntents._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIntentsRestTransport._BaseListIntents,
+                    "_BaseListIntents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1646,23 +1625,16 @@ class IntentsRestTransport(_BaseIntentsRestTransport):
             http_options = (
                 _BaseIntentsRestTransport._BaseUpdateIntent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_intent(request, metadata)
-            transcoded_request = (
-                _BaseIntentsRestTransport._BaseUpdateIntent._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseIntentsRestTransport._BaseUpdateIntent._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIntentsRestTransport._BaseUpdateIntent._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIntentsRestTransport._BaseUpdateIntent,
+                    "_BaseUpdateIntent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1852,19 +1824,16 @@ class IntentsRestTransport(_BaseIntentsRestTransport):
             http_options = (
                 _BaseIntentsRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseIntentsRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIntentsRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIntentsRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1994,19 +1963,16 @@ class IntentsRestTransport(_BaseIntentsRestTransport):
             http_options = (
                 _BaseIntentsRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseIntentsRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIntentsRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIntentsRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2135,21 +2101,18 @@ class IntentsRestTransport(_BaseIntentsRestTransport):
             http_options = (
                 _BaseIntentsRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseIntentsRestTransport._BaseCancelOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIntentsRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIntentsRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2254,19 +2217,16 @@ class IntentsRestTransport(_BaseIntentsRestTransport):
             http_options = (
                 _BaseIntentsRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseIntentsRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIntentsRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIntentsRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2398,19 +2358,16 @@ class IntentsRestTransport(_BaseIntentsRestTransport):
             http_options = (
                 _BaseIntentsRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseIntentsRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIntentsRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIntentsRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

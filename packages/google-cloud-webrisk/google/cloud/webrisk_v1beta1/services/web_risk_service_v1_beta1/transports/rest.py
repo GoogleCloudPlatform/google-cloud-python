@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.webrisk_v1beta1._compat import transcode_request
 from google.cloud.webrisk_v1beta1.types import webrisk
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -394,17 +395,18 @@ class WebRiskServiceV1Beta1RestTransport(_BaseWebRiskServiceV1Beta1RestTransport
             """
 
             http_options = _BaseWebRiskServiceV1Beta1RestTransport._BaseComputeThreatListDiff._get_http_options()
-
             request, metadata = self._interceptor.pre_compute_threat_list_diff(
                 request, metadata
             )
-            transcoded_request = _BaseWebRiskServiceV1Beta1RestTransport._BaseComputeThreatListDiff._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWebRiskServiceV1Beta1RestTransport._BaseComputeThreatListDiff._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebRiskServiceV1Beta1RestTransport._BaseComputeThreatListDiff,
+                    "_BaseComputeThreatListDiff__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -544,15 +546,16 @@ class WebRiskServiceV1Beta1RestTransport(_BaseWebRiskServiceV1Beta1RestTransport
             """
 
             http_options = _BaseWebRiskServiceV1Beta1RestTransport._BaseSearchHashes._get_http_options()
-
             request, metadata = self._interceptor.pre_search_hashes(request, metadata)
-            transcoded_request = _BaseWebRiskServiceV1Beta1RestTransport._BaseSearchHashes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWebRiskServiceV1Beta1RestTransport._BaseSearchHashes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebRiskServiceV1Beta1RestTransport._BaseSearchHashes,
+                    "_BaseSearchHashes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -688,15 +691,16 @@ class WebRiskServiceV1Beta1RestTransport(_BaseWebRiskServiceV1Beta1RestTransport
             """
 
             http_options = _BaseWebRiskServiceV1Beta1RestTransport._BaseSearchUris._get_http_options()
-
             request, metadata = self._interceptor.pre_search_uris(request, metadata)
-            transcoded_request = _BaseWebRiskServiceV1Beta1RestTransport._BaseSearchUris._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWebRiskServiceV1Beta1RestTransport._BaseSearchUris._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebRiskServiceV1Beta1RestTransport._BaseSearchUris,
+                    "_BaseSearchUris__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

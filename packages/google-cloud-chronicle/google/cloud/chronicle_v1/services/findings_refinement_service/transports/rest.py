@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.chronicle_v1._compat import transcode_request
 from google.cloud.chronicle_v1.types import findings_refinement
 from google.cloud.chronicle_v1.types import (
     findings_refinement as gcc_findings_refinement,
@@ -880,23 +881,20 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseComputeAllFindingsRefinementActivities._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_compute_all_findings_refinement_activities(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseComputeAllFindingsRefinementActivities._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseFindingsRefinementServiceRestTransport._BaseComputeAllFindingsRefinementActivities._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseComputeAllFindingsRefinementActivities._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseComputeAllFindingsRefinementActivities,
+                    "_BaseComputeAllFindingsRefinementActivities__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1051,23 +1049,20 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseComputeFindingsRefinementActivity._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_compute_findings_refinement_activity(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseComputeFindingsRefinementActivity._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseFindingsRefinementServiceRestTransport._BaseComputeFindingsRefinementActivity._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseComputeFindingsRefinementActivity._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseComputeFindingsRefinementActivity,
+                    "_BaseComputeFindingsRefinementActivity__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1217,21 +1212,18 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseCreateFindingsRefinement._get_http_options()
-
             request, metadata = self._interceptor.pre_create_findings_refinement(
                 request, metadata
             )
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseCreateFindingsRefinement._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseFindingsRefinementServiceRestTransport._BaseCreateFindingsRefinement._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseCreateFindingsRefinement._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseCreateFindingsRefinement,
+                    "_BaseCreateFindingsRefinement__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1373,17 +1365,18 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseGetFindingsRefinement._get_http_options()
-
             request, metadata = self._interceptor.pre_get_findings_refinement(
                 request, metadata
             )
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseGetFindingsRefinement._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseGetFindingsRefinement._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseGetFindingsRefinement,
+                    "_BaseGetFindingsRefinement__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1527,19 +1520,20 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseGetFindingsRefinementDeployment._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_get_findings_refinement_deployment(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseGetFindingsRefinementDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseGetFindingsRefinementDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseGetFindingsRefinementDeployment,
+                    "_BaseGetFindingsRefinementDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1688,19 +1682,20 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseListAllFindingsRefinementDeployments._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_all_findings_refinement_deployments(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseListAllFindingsRefinementDeployments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseListAllFindingsRefinementDeployments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseListAllFindingsRefinementDeployments,
+                    "_BaseListAllFindingsRefinementDeployments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1848,17 +1843,18 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseListFindingsRefinements._get_http_options()
-
             request, metadata = self._interceptor.pre_list_findings_refinements(
                 request, metadata
             )
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseListFindingsRefinements._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseListFindingsRefinements._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseListFindingsRefinements,
+                    "_BaseListFindingsRefinements__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2005,21 +2001,18 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseUpdateFindingsRefinement._get_http_options()
-
             request, metadata = self._interceptor.pre_update_findings_refinement(
                 request, metadata
             )
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseUpdateFindingsRefinement._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseFindingsRefinementServiceRestTransport._BaseUpdateFindingsRefinement._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseUpdateFindingsRefinement._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseUpdateFindingsRefinement,
+                    "_BaseUpdateFindingsRefinement__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2166,23 +2159,20 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseUpdateFindingsRefinementDeployment._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_update_findings_refinement_deployment(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseUpdateFindingsRefinementDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseFindingsRefinementServiceRestTransport._BaseUpdateFindingsRefinementDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseUpdateFindingsRefinementDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseUpdateFindingsRefinementDeployment,
+                    "_BaseUpdateFindingsRefinementDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2440,21 +2430,18 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseFindingsRefinementServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2560,17 +2547,18 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2678,15 +2666,16 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2819,15 +2808,16 @@ class FindingsRefinementServiceRestTransport(
             """
 
             http_options = _BaseFindingsRefinementServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseFindingsRefinementServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFindingsRefinementServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFindingsRefinementServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

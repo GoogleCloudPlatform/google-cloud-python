@@ -347,7 +347,7 @@ replacements:
       .. _Select or create a Cloud Platform project.: https://console.cloud.google.com/project
       .. _Enable billing for your project.: https://cloud.google.com/billing/docs/how-to/modify-project#enable_billing_for_a_project
       .. _Enable the Google Cloud Storage API.:  https://console.cloud.google.com/flows/enableapi?apiid=storage-api.googleapis.com
-      .. _Setup Authentication.: https://cloud.google.com/docs/authentication/client-libraries
+      .. _Set up Authentication.: https://cloud.google.com/docs/authentication/client-libraries
 
       Installation
       ~~~~~~~~~~~~
@@ -590,7 +590,7 @@ replacements:
           # this dependency.
           "google-resumable-media >= 2.7.2, < 3.0.0",
           "requests >= 2.22.0, < 3.0.0",
-          "google-crc32c >= 1.6.0, < 2.0.0",
+          "google-crc32c >= 1.9.0, < 2.0.0",
       ]
       extras = {
           # TODO: Make these extra dependencies as mandatory once gRPC out of
@@ -639,7 +639,7 @@ replacements:
       packages/google-cloud-storage/testing/constraints-3.10.txt
     ]
     before: |
-      google-api-core==2.25.0
+      google-api-core==2.28.0
       google-auth==2.14.1
       grpcio==1.59.0
       proto-plus==1.26.1
@@ -649,7 +649,7 @@ replacements:
       google-auth==2.26.1
       # cryptography is a direct dependency of google-auth
       cryptography==38.0.0
-      google-api-core==2.27.0
+      google-api-core==2.28.0
       google-cloud-core==2.4.2
       google-resumable-media==2.7.2
       grpcio==1.59.0
@@ -659,7 +659,7 @@ replacements:
       grpc-google-iam-v1==0.14.2
       opentelemetry-api==1.1.0
       requests==2.22.0
-      google-crc32c==1.6.0
+      google-crc32c==1.9.0
     count: 1
   - paths: [
       packages/google-cloud-storage/testing/constraints-3.11.txt,
@@ -818,19 +818,4 @@ replacements:
               "google",
               *session.posargs,
           )
-    count: 1
-  - paths: [
-      packages/google-cloud-storage/noxfile.py,
-    ]
-    before: |
-      # Install all test dependencies, then install this package in-place.\n
-          constraints_path = str\(
-    after: |
-      # Install all test dependencies, then install this package in-place.
-
-          if session.python == "3.15":
-              session.skip(
-                  "Skipping 3.15 until compatible wheels are available for google-crc32c"
-              )
-          constraints_path = str(
     count: 1

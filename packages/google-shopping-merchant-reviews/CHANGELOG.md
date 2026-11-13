@@ -4,6 +4,31 @@
 
 [1]: https://pypi.org/project/google-shopping-merchant-reviews/#history
 
+## [0.7.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-reviews-v0.6.2...google-shopping-merchant-reviews-v0.7.0) (2026-11-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* **merchantapi:** remove discontinued Merchant API v1beta ([#19027](https://github.com/googleapis/google-cloud-python/issues/19027))
+
+### Features
+
+* **merchantapi:** remove discontinued Merchant API v1beta ([#19027](https://github.com/googleapis/google-cloud-python/issues/19027)) ([d750513](https://github.com/googleapis/google-cloud-python/commit/d750513ea8fe8e55a7cdc5b8616f182fa19243bf))
+
+## [0.6.2](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-reviews-v0.6.1...google-shopping-merchant-reviews-v0.6.2) (2026-10-23)
+
+
+### Features
+
+* **google/shopping/merchant/reviews/v1:** add google-shopping-merchant-reviews ([#18801](https://github.com/googleapis/google-cloud-python/issues/18801)) ([c4a6a21](https://github.com/googleapis/google-cloud-python/commit/c4a6a211a625e44c2b4e74be995c5ef6d85b4dc2))
+
+## [0.6.1](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-reviews-v0.6.0...google-shopping-merchant-reviews-v0.6.1) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [0.6.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-reviews-v0.5.0...google-shopping-merchant-reviews-v0.6.0) (2026-06-02)
 
 

@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import slate_messages, slate_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -729,21 +730,18 @@ class SlateServiceRestTransport(_BaseSlateServiceRestTransport):
             """
 
             http_options = _BaseSlateServiceRestTransport._BaseBatchArchiveSlates._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_archive_slates(
                 request, metadata
             )
-            transcoded_request = _BaseSlateServiceRestTransport._BaseBatchArchiveSlates._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSlateServiceRestTransport._BaseBatchArchiveSlates._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSlateServiceRestTransport._BaseBatchArchiveSlates._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSlateServiceRestTransport._BaseBatchArchiveSlates,
+                    "_BaseBatchArchiveSlates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -881,21 +879,18 @@ class SlateServiceRestTransport(_BaseSlateServiceRestTransport):
             """
 
             http_options = _BaseSlateServiceRestTransport._BaseBatchCreateSlates._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_slates(
                 request, metadata
             )
-            transcoded_request = _BaseSlateServiceRestTransport._BaseBatchCreateSlates._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSlateServiceRestTransport._BaseBatchCreateSlates._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSlateServiceRestTransport._BaseBatchCreateSlates._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSlateServiceRestTransport._BaseBatchCreateSlates,
+                    "_BaseBatchCreateSlates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1033,21 +1028,18 @@ class SlateServiceRestTransport(_BaseSlateServiceRestTransport):
             """
 
             http_options = _BaseSlateServiceRestTransport._BaseBatchUnarchiveSlates._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_unarchive_slates(
                 request, metadata
             )
-            transcoded_request = _BaseSlateServiceRestTransport._BaseBatchUnarchiveSlates._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSlateServiceRestTransport._BaseBatchUnarchiveSlates._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSlateServiceRestTransport._BaseBatchUnarchiveSlates._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSlateServiceRestTransport._BaseBatchUnarchiveSlates,
+                    "_BaseBatchUnarchiveSlates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1185,21 +1177,18 @@ class SlateServiceRestTransport(_BaseSlateServiceRestTransport):
             """
 
             http_options = _BaseSlateServiceRestTransport._BaseBatchUpdateSlates._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_slates(
                 request, metadata
             )
-            transcoded_request = _BaseSlateServiceRestTransport._BaseBatchUpdateSlates._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSlateServiceRestTransport._BaseBatchUpdateSlates._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSlateServiceRestTransport._BaseBatchUpdateSlates._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSlateServiceRestTransport._BaseBatchUpdateSlates,
+                    "_BaseBatchUpdateSlates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1344,25 +1333,16 @@ class SlateServiceRestTransport(_BaseSlateServiceRestTransport):
             http_options = (
                 _BaseSlateServiceRestTransport._BaseCreateSlate._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_slate(request, metadata)
-            transcoded_request = (
-                _BaseSlateServiceRestTransport._BaseCreateSlate._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseSlateServiceRestTransport._BaseCreateSlate._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSlateServiceRestTransport._BaseCreateSlate._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSlateServiceRestTransport._BaseCreateSlate,
+                    "_BaseCreateSlate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1502,19 +1482,16 @@ class SlateServiceRestTransport(_BaseSlateServiceRestTransport):
             http_options = (
                 _BaseSlateServiceRestTransport._BaseGetSlate._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_slate(request, metadata)
-            transcoded_request = (
-                _BaseSlateServiceRestTransport._BaseGetSlate._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSlateServiceRestTransport._BaseGetSlate._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSlateServiceRestTransport._BaseGetSlate,
+                    "_BaseGetSlate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1650,19 +1627,16 @@ class SlateServiceRestTransport(_BaseSlateServiceRestTransport):
             http_options = (
                 _BaseSlateServiceRestTransport._BaseListSlates._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_slates(request, metadata)
-            transcoded_request = (
-                _BaseSlateServiceRestTransport._BaseListSlates._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSlateServiceRestTransport._BaseListSlates._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSlateServiceRestTransport._BaseListSlates,
+                    "_BaseListSlates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1806,25 +1780,16 @@ class SlateServiceRestTransport(_BaseSlateServiceRestTransport):
             http_options = (
                 _BaseSlateServiceRestTransport._BaseUpdateSlate._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_slate(request, metadata)
-            transcoded_request = (
-                _BaseSlateServiceRestTransport._BaseUpdateSlate._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseSlateServiceRestTransport._BaseUpdateSlate._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSlateServiceRestTransport._BaseUpdateSlate._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSlateServiceRestTransport._BaseUpdateSlate,
+                    "_BaseUpdateSlate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2037,17 +2002,18 @@ class SlateServiceRestTransport(_BaseSlateServiceRestTransport):
             http_options = (
                 _BaseSlateServiceRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSlateServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSlateServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSlateServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2154,17 +2120,16 @@ class SlateServiceRestTransport(_BaseSlateServiceRestTransport):
             http_options = (
                 _BaseSlateServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseSlateServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSlateServiceRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSlateServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

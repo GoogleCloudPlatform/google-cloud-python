@@ -17,9 +17,17 @@ import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
 from google.cloud.logging_v2 import gapic_version as package_version
+from google.cloud.logging_v2._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+    SUPPORTS_DEFAULT_HOST as _SUPPORTS_DEFAULT_HOST,
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
 
 import google.auth  # type: ignore
 import google.api_core
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
@@ -58,6 +66,7 @@ class ConfigServiceV2Transport(abc.ABC):
             client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
             always_use_jwt_access: Optional[bool] = False,
             api_audience: Optional[str] = None,
+            client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
             **kwargs,
             ) -> None:
         """Instantiate the transport.
@@ -88,12 +97,17 @@ class ConfigServiceV2Transport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
         self._scopes = scopes
         if not hasattr(self, "_ignore_credentials"):
             self._ignore_credentials: bool = False
+        if not hasattr(self, "_user_provided_channel"):
+            self._user_provided_channel: bool = False
 
         # If no credentials are provided, then determine the appropriate
         # defaults.
@@ -125,81 +139,183 @@ class ConfigServiceV2Transport(abc.ABC):
             host += ':443'
         self._host = host
 
+        self._client_options = client_options
+        # If a pre-constructed gRPC channel was provided to the subclass before
+        # super().__init__, self._host is not used to create the channel and
+        # cannot be trusted as the default span endpoint.
+        self._default_host: Optional[str] = (
+            None if self._user_provided_channel else self._host
+        )
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            if _SUPPORTS_DEFAULT_HOST:
+                kwargs["default_host"] = self._default_host
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming", "default_host"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            if _SUPPORTS_DEFAULT_HOST:
+                kwargs["default_host"] = self._default_host
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming", "default_host"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_buckets: gapic_v1.method.wrap_method(
+            self.list_buckets: self._wrap_method(
                 self.list_buckets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/ListBuckets",
             ),
-            self.get_bucket: gapic_v1.method.wrap_method(
+            self.get_bucket: self._wrap_method(
                 self.get_bucket,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/GetBucket",
             ),
-            self.create_bucket_async: gapic_v1.method.wrap_method(
+            self.create_bucket_async: self._wrap_method(
                 self.create_bucket_async,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/CreateBucketAsync",
             ),
-            self.update_bucket_async: gapic_v1.method.wrap_method(
+            self.update_bucket_async: self._wrap_method(
                 self.update_bucket_async,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/UpdateBucketAsync",
             ),
-            self.create_bucket: gapic_v1.method.wrap_method(
+            self.create_bucket: self._wrap_method(
                 self.create_bucket,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/CreateBucket",
             ),
-            self.update_bucket: gapic_v1.method.wrap_method(
+            self.update_bucket: self._wrap_method(
                 self.update_bucket,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/UpdateBucket",
             ),
-            self.delete_bucket: gapic_v1.method.wrap_method(
+            self.delete_bucket: self._wrap_method(
                 self.delete_bucket,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/DeleteBucket",
             ),
-            self.undelete_bucket: gapic_v1.method.wrap_method(
+            self.undelete_bucket: self._wrap_method(
                 self.undelete_bucket,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/UndeleteBucket",
             ),
-            self.list_views: gapic_v1.method.wrap_method(
+            self.list_views: self._wrap_method(
                 self.list_views,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/ListViews",
             ),
-            self.get_view: gapic_v1.method.wrap_method(
+            self.get_view: self._wrap_method(
                 self.get_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/GetView",
             ),
-            self.create_view: gapic_v1.method.wrap_method(
+            self.create_view: self._wrap_method(
                 self.create_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/CreateView",
             ),
-            self.update_view: gapic_v1.method.wrap_method(
+            self.update_view: self._wrap_method(
                 self.update_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/UpdateView",
             ),
-            self.delete_view: gapic_v1.method.wrap_method(
+            self.delete_view: self._wrap_method(
                 self.delete_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/DeleteView",
             ),
-            self.list_sinks: gapic_v1.method.wrap_method(
+            self.list_sinks: self._wrap_method(
                 self.list_sinks,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -214,8 +330,9 @@ class ConfigServiceV2Transport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/ListSinks",
             ),
-            self.get_sink: gapic_v1.method.wrap_method(
+            self.get_sink: self._wrap_method(
                 self.get_sink,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -230,13 +347,15 @@ class ConfigServiceV2Transport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/GetSink",
             ),
-            self.create_sink: gapic_v1.method.wrap_method(
+            self.create_sink: self._wrap_method(
                 self.create_sink,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/CreateSink",
             ),
-            self.update_sink: gapic_v1.method.wrap_method(
+            self.update_sink: self._wrap_method(
                 self.update_sink,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -251,8 +370,9 @@ class ConfigServiceV2Transport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/UpdateSink",
             ),
-            self.delete_sink: gapic_v1.method.wrap_method(
+            self.delete_sink: self._wrap_method(
                 self.delete_sink,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -267,28 +387,33 @@ class ConfigServiceV2Transport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/DeleteSink",
             ),
-            self.create_link: gapic_v1.method.wrap_method(
+            self.create_link: self._wrap_method(
                 self.create_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/CreateLink",
             ),
-            self.delete_link: gapic_v1.method.wrap_method(
+            self.delete_link: self._wrap_method(
                 self.delete_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/DeleteLink",
             ),
-            self.list_links: gapic_v1.method.wrap_method(
+            self.list_links: self._wrap_method(
                 self.list_links,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/ListLinks",
             ),
-            self.get_link: gapic_v1.method.wrap_method(
+            self.get_link: self._wrap_method(
                 self.get_link,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/GetLink",
             ),
-            self.list_exclusions: gapic_v1.method.wrap_method(
+            self.list_exclusions: self._wrap_method(
                 self.list_exclusions,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -303,8 +428,9 @@ class ConfigServiceV2Transport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/ListExclusions",
             ),
-            self.get_exclusion: gapic_v1.method.wrap_method(
+            self.get_exclusion: self._wrap_method(
                 self.get_exclusion,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -319,18 +445,21 @@ class ConfigServiceV2Transport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/GetExclusion",
             ),
-            self.create_exclusion: gapic_v1.method.wrap_method(
+            self.create_exclusion: self._wrap_method(
                 self.create_exclusion,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/CreateExclusion",
             ),
-            self.update_exclusion: gapic_v1.method.wrap_method(
+            self.update_exclusion: self._wrap_method(
                 self.update_exclusion,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/UpdateExclusion",
             ),
-            self.delete_exclusion: gapic_v1.method.wrap_method(
+            self.delete_exclusion: self._wrap_method(
                 self.delete_exclusion,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -345,46 +474,55 @@ class ConfigServiceV2Transport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/DeleteExclusion",
             ),
-            self.get_cmek_settings: gapic_v1.method.wrap_method(
+            self.get_cmek_settings: self._wrap_method(
                 self.get_cmek_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/GetCmekSettings",
             ),
-            self.update_cmek_settings: gapic_v1.method.wrap_method(
+            self.update_cmek_settings: self._wrap_method(
                 self.update_cmek_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/UpdateCmekSettings",
             ),
-            self.get_settings: gapic_v1.method.wrap_method(
+            self.get_settings: self._wrap_method(
                 self.get_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/GetSettings",
             ),
-            self.update_settings: gapic_v1.method.wrap_method(
+            self.update_settings: self._wrap_method(
                 self.update_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/UpdateSettings",
             ),
-            self.copy_log_entries: gapic_v1.method.wrap_method(
+            self.copy_log_entries: self._wrap_method(
                 self.copy_log_entries,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.logging.v2.ConfigServiceV2/CopyLogEntries",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
          }
 

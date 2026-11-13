@@ -232,6 +232,7 @@ __protobuf__ = proto.module(
         "Fleet",
         "ControlPlaneEndpointsConfig",
         "LocalNvmeSsdBlockConfig",
+        "DiskIoScheduler",
         "EphemeralStorageLocalSsdConfig",
         "ResourceManagerTags",
         "EnterpriseConfig",
@@ -239,11 +240,15 @@ __protobuf__ = proto.module(
         "BootDisk",
         "SecondaryBootDisk",
         "SecondaryBootDiskUpdateStrategy",
+        "RollbackSafeUpgrade",
         "FetchClusterUpgradeInfoRequest",
         "ClusterUpgradeInfo",
+        "RollbackSafeUpgradeStatus",
         "UpgradeDetails",
         "FetchNodePoolUpgradeInfoRequest",
         "NodePoolUpgradeInfo",
+        "CustomImageInfo",
+        "CompleteControlPlaneUpgradeRequest",
         "ScheduleUpgradeConfig",
         "GkeAutoUpgradeConfig",
         "NetworkTierConfig",
@@ -431,7 +436,7 @@ class LinuxNodeConfig(proto.Message):
             net.netfilter.nf_conntrack_tcp_timeout_established
             net.netfilter.nf_conntrack_acct kernel.keys.maxkeys
             kernel.keys.maxbytes kernel.shmmni kernel.shmmax
-            kernel.shmall kernel.perf_event_paranoid
+            kernel.shmall kernel.core_pattern kernel.perf_event_paranoid
             kernel.sched_rt_runtime_us kernel.softlockup_panic
             kernel.yama.ptrace_scope kernel.kptr_restrict
             kernel.dmesg_restrict kernel.sysrq fs.aio-max-nr fs.file-max
@@ -487,6 +492,12 @@ class LinuxNodeConfig(proto.Message):
             the node pool.
 
             This field is a member of `oneof`_ ``_accurate_time_config``.
+        node_vfio_config (google.cloud.container_v1.types.LinuxNodeConfig.NodeVfioConfig):
+            Optional. Contains VFIO-related
+            configurations for this node.
+        disk_io_scheduler (google.cloud.container_v1.types.DiskIoScheduler):
+            Optional. Controls the configuration for the
+            disk IO scheduler.
     """
 
     class CgroupMode(proto.Enum):
@@ -903,6 +914,37 @@ class LinuxNodeConfig(proto.Message):
             optional=True,
         )
 
+    class NodeVfioConfig(proto.Message):
+        r"""Configuration settings for VFIO (Virtual Function I/O) on a
+        node. VFIO allows safe, unprivileged, userspace drivers to
+        access I/O devices.
+
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            dma_entry_limit (int):
+                Optional. Specifies the maximum number of DMA entries
+                (pages) that can be mapped by the VFIO IOMMU type 1 driver
+                for a container. This limit affects the total amount of host
+                memory that can be pinned for direct device access, which is
+                often critical for high-performance devices like TPUs and
+                GPUs. This setting corresponds to the kernel parameter at:
+                ``/sys/module/vfio_iommu_type1/parameters/dma_entry_limit``.
+                The default value in the kernel is ``65535``. Higher values
+                may be needed for workloads mapping large memory regions.
+                Supported values are integers between ``65535`` and
+                ``4194304``.
+
+                This field is a member of `oneof`_ ``_dma_entry_limit``.
+        """
+
+        dma_entry_limit: int = proto.Field(
+            proto.INT32,
+            number=1,
+            optional=True,
+        )
+
     sysctls: MutableMapping[str, str] = proto.MapField(
         proto.STRING,
         proto.STRING,
@@ -950,6 +992,16 @@ class LinuxNodeConfig(proto.Message):
         number=14,
         optional=True,
         message=AccurateTimeConfig,
+    )
+    node_vfio_config: NodeVfioConfig = proto.Field(
+        proto.MESSAGE,
+        number=15,
+        message=NodeVfioConfig,
+    )
+    disk_io_scheduler: "DiskIoScheduler" = proto.Field(
+        proto.MESSAGE,
+        number=16,
+        message="DiskIoScheduler",
     )
 
 
@@ -1342,9 +1394,12 @@ class NodeKubeletConfig(proto.Message):
 
 
 class TopologyManager(proto.Message):
-    r"""TopologyManager defines the configuration options for
-    Topology Manager feature. See
-    https://kubernetes.io/docs/tasks/administer-cluster/topology-manager/
+    r"""TopologyManager defines the configuration options for the
+    ```kubelet`` Topology Manager
+    component <https://kubernetes.io/docs/tasks/administer-cluster/topology-manager/>`__.
+    For more information about the supported machine types and versions
+    for the Topology Manager in GKE, see `Customizing node system
+    configuration <https://docs.cloud.google.com/kubernetes-engine/docs/how-to/node-system-config#kubelet-resource-managers>`__.
 
     Attributes:
         policy (str):
@@ -2725,12 +2780,17 @@ class ReservationAffinity(proto.Message):
                 Must consume from a specific reservation.
                 Must specify key value fields for specifying the
                 reservations.
+            ANY_RESERVATION_THEN_FAIL (4):
+                Consume any reservation available. If no
+                reservation is available, fail the node
+                creation.
         """
 
         UNSPECIFIED = 0
         NO_RESERVATION = 1
         ANY_RESERVATION = 2
         SPECIFIC_RESERVATION = 3
+        ANY_RESERVATION_THEN_FAIL = 4
 
     consume_reservation_type: Type = proto.Field(
         proto.ENUM,
@@ -4776,6 +4836,17 @@ class Cluster(proto.Message):
         current_master_version (str):
             Output only. The current software version of
             the master endpoint.
+        current_emulated_version (str):
+            Output only. The current emulated version of
+            the master endpoint. The version is in minor
+            version format, e.g. 1.30. No value or empty
+            string means the cluster has no emulated
+            version.
+        rollback_safe_upgrade (google.cloud.container_v1.types.RollbackSafeUpgrade):
+            Optional. The rollback safe upgrade
+            information of the cluster. This field is used
+            when user manually triggers a rollback safe
+            upgrade.
         current_node_version (str):
             Output only. Deprecated, use
             `NodePools.version <https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools>`__
@@ -5171,6 +5242,15 @@ class Cluster(proto.Message):
     current_master_version: str = proto.Field(
         proto.STRING,
         number=104,
+    )
+    current_emulated_version: str = proto.Field(
+        proto.STRING,
+        number=167,
+    )
+    rollback_safe_upgrade: "RollbackSafeUpgrade" = proto.Field(
+        proto.MESSAGE,
+        number=170,
+        message="RollbackSafeUpgrade",
     )
     current_node_version: str = proto.Field(
         proto.STRING,
@@ -6218,6 +6298,9 @@ class ClusterUpdate(proto.Message):
         desired_control_plane_egress (google.cloud.container_v1.types.ControlPlaneEgress):
             The desired control plane egress control
             config for the cluster.
+        desired_rollback_safe_upgrade (google.cloud.container_v1.types.RollbackSafeUpgrade):
+            Optional. The desired rollback safe upgrade
+            configuration.
         desired_managed_opentelemetry_config (google.cloud.container_v1.types.ManagedOpenTelemetryConfig):
             The desired managed open telemetry
             configuration.
@@ -6230,6 +6313,11 @@ class ClusterUpdate(proto.Message):
         desired_node_creation_config (google.cloud.container_v1.types.NodeCreationConfig):
             Optional. The desired NodeCreationConfig for
             the cluster.
+        desired_emulated_version (str):
+            Optional. The desired emulated version for
+            the cluster.
+
+            This field is a member of `oneof`_ ``_desired_emulated_version``.
     """
 
     desired_node_version: str = proto.Field(
@@ -6619,6 +6707,11 @@ class ClusterUpdate(proto.Message):
         number=160,
         message="ControlPlaneEgress",
     )
+    desired_rollback_safe_upgrade: "RollbackSafeUpgrade" = proto.Field(
+        proto.MESSAGE,
+        number=161,
+        message="RollbackSafeUpgrade",
+    )
     desired_managed_opentelemetry_config: "ManagedOpenTelemetryConfig" = proto.Field(
         proto.MESSAGE,
         number=163,
@@ -6638,6 +6731,11 @@ class ClusterUpdate(proto.Message):
         proto.MESSAGE,
         number=171,
         message="NodeCreationConfig",
+    )
+    desired_emulated_version: str = proto.Field(
+        proto.STRING,
+        number=182,
+        optional=True,
     )
 
 
@@ -7532,6 +7630,10 @@ class UpdateNodePoolRequest(proto.Message):
             to the chosen autoscaling profile.
         taint_config (google.cloud.container_v1.types.TaintConfig):
             The taint configuration for the node pool.
+        maintenance_policy (google.cloud.container_v1.types.NodePool.NodePoolMaintenancePolicy):
+            Optional. Specifies the maintenance policy
+            for the node pool, including maintenance
+            exclusion options.
     """
 
     project_id: str = proto.Field(
@@ -7718,6 +7820,11 @@ class UpdateNodePoolRequest(proto.Message):
         proto.MESSAGE,
         number=51,
         message="TaintConfig",
+    )
+    maintenance_policy: "NodePool.NodePoolMaintenancePolicy" = proto.Field(
+        proto.MESSAGE,
+        number=52,
+        message="NodePool.NodePoolMaintenancePolicy",
     )
 
 
@@ -8896,8 +9003,8 @@ class NodePool(proto.Message):
             that can be run simultaneously on a node in the
             node pool.
         conditions (MutableSequence[google.cloud.container_v1.types.StatusCondition]):
-            Which conditions caused the current node pool
-            state.
+            Output only. Which conditions caused the
+            current node pool state.
         pod_ipv4_cidr_size (int):
             Output only. The pod CIDR block size per node
             in this node pool.
@@ -8910,10 +9017,11 @@ class NodePool(proto.Message):
             Output only. Update info contains relevant
             information during a node pool update.
         etag (str):
-            This checksum is computed by the server based
-            on the value of node pool fields, and may be
-            sent on update requests to ensure the client has
-            an up-to-date value before proceeding.
+            Output only. This checksum is computed by the
+            server based on the value of node pool fields,
+            and may be sent on update requests to ensure the
+            client has an up-to-date value before
+            proceeding.
         queued_provisioning (google.cloud.container_v1.types.NodePool.QueuedProvisioning):
             Specifies the configuration of queued
             provisioning.
@@ -8925,6 +9033,9 @@ class NodePool(proto.Message):
         maintenance_policy (google.cloud.container_v1.types.NodePool.NodePoolMaintenancePolicy):
             Optional. Specifies the maintenance policy
             for the node pool.
+        kubelet_cert_info (google.cloud.container_v1.types.NodePool.KubeletCertInfo):
+            Output only. Contains expiry information
+            about the kubelet certificate.
     """
 
     class Status(proto.Enum):
@@ -9315,6 +9426,27 @@ class NodePool(proto.Message):
             )
         )
 
+    class KubeletCertInfo(proto.Message):
+        r"""Contains expiry information about the kubelet certificate.
+
+        Attributes:
+            tpm_bootstrap_cert_expire_time (google.protobuf.timestamp_pb2.Timestamp):
+                Output only.
+            non_tpm_bootstrap_cert_expire_time (google.protobuf.timestamp_pb2.Timestamp):
+                Output only.
+        """
+
+        tpm_bootstrap_cert_expire_time: timestamp_pb2.Timestamp = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            message=timestamp_pb2.Timestamp,
+        )
+        non_tpm_bootstrap_cert_expire_time: timestamp_pb2.Timestamp = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message=timestamp_pb2.Timestamp,
+        )
+
     name: str = proto.Field(
         proto.STRING,
         number=1,
@@ -9420,6 +9552,11 @@ class NodePool(proto.Message):
         proto.MESSAGE,
         number=118,
         message=NodePoolMaintenancePolicy,
+    )
+    kubelet_cert_info: KubeletCertInfo = proto.Field(
+        proto.MESSAGE,
+        number=119,
+        message=KubeletCertInfo,
     )
 
 
@@ -11597,7 +11734,9 @@ class ReleaseChannel(proto.Message):
 
         Values:
             UNSPECIFIED (0):
-                No channel specified.
+                Deprecated: No channel specified. it will be
+                removed in the future, use RAPID, REGULAR,
+                STABLE or EXTENDED instead.
             RAPID (1):
                 RAPID channel is offered on an early access
                 basis for customers who want to test new
@@ -12500,6 +12639,12 @@ class UpgradeEvent(proto.Message):
             The current version before the upgrade.
         target_version (str):
             The target version for the upgrade.
+        current_emulated_version (str):
+            Output only. The current emulated version
+            before the upgrade.
+        target_emulated_version (str):
+            Output only. The target emulated version for
+            the upgrade.
         resource (str):
             Optional relative path to the resource. For
             example in node pool upgrades, the relative path
@@ -12528,6 +12673,14 @@ class UpgradeEvent(proto.Message):
         proto.STRING,
         number=5,
     )
+    current_emulated_version: str = proto.Field(
+        proto.STRING,
+        number=7,
+    )
+    target_emulated_version: str = proto.Field(
+        proto.STRING,
+        number=8,
+    )
     resource: str = proto.Field(
         proto.STRING,
         number=6,
@@ -12555,6 +12708,12 @@ class UpgradeInfoEvent(proto.Message):
             The current version before the upgrade.
         target_version (str):
             The target version for the upgrade.
+        current_emulated_version (str):
+            Output only. The current emulated version
+            before the upgrade.
+        target_emulated_version (str):
+            Output only. The target emulated version for
+            the upgrade.
         resource (str):
             Optional relative path to the resource. For
             example in node pool upgrades, the relative path
@@ -12662,6 +12821,14 @@ class UpgradeInfoEvent(proto.Message):
     target_version: str = proto.Field(
         proto.STRING,
         number=6,
+    )
+    current_emulated_version: str = proto.Field(
+        proto.STRING,
+        number=15,
+    )
+    target_emulated_version: str = proto.Field(
+        proto.STRING,
+        number=16,
     )
     resource: str = proto.Field(
         proto.STRING,
@@ -13117,6 +13284,8 @@ class LoggingComponentConfig(proto.Message):
                 kcp connection logs
             KCP_HPA (9):
                 horizontal pod autoscaler decision logs
+            KCP_VPA (10):
+                vertical pod autoscaler decision logs
         """
 
         COMPONENT_UNSPECIFIED = 0
@@ -13128,6 +13297,7 @@ class LoggingComponentConfig(proto.Message):
         KCP_SSHD = 7
         KCP_CONNECTION = 8
         KCP_HPA = 9
+        KCP_VPA = 10
 
     enable_components: MutableSequence[Component] = proto.RepeatedField(
         proto.ENUM,
@@ -13746,6 +13916,31 @@ class LocalNvmeSsdBlockConfig(proto.Message):
     )
 
 
+class DiskIoScheduler(proto.Message):
+    r"""DiskIoScheduler contains the configuration for the disk IO
+    scheduler.
+
+    Attributes:
+        node_system_io_scheduler (str):
+            Optional. Configures the IO scheduler for the boot disk or
+            ephemeral lssd that runs node system workloads. Supported
+            values are ``mq-deadline``, ``bfq``, ``kyber``, ``none``.
+        node_attached_disk_io_scheduler (str):
+            Optional. Configures the IO scheduler for the attached
+            disks. Supported values are ``mq-deadline``, ``bfq``,
+            ``kyber``, ``none``.
+    """
+
+    node_system_io_scheduler: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    node_attached_disk_io_scheduler: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
 class EphemeralStorageLocalSsdConfig(proto.Message):
     r"""EphemeralStorageLocalSsdConfig contains configuration for the
     node ephemeral storage using Local SSDs.
@@ -14001,6 +14196,24 @@ class SecondaryBootDiskUpdateStrategy(proto.Message):
     """
 
 
+class RollbackSafeUpgrade(proto.Message):
+    r"""RollbackSafeUpgrade is the configuration for the rollback
+    safe upgrade.
+
+    Attributes:
+        control_plane_soak_duration (google.protobuf.duration_pb2.Duration):
+            Optional. A user-defined period for the
+            cluster remains in the rollbackable state. ex:
+            {seconds: 21600}.
+    """
+
+    control_plane_soak_duration: duration_pb2.Duration = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=duration_pb2.Duration,
+    )
+
+
 class FetchClusterUpgradeInfoRequest(proto.Message):
     r"""FetchClusterUpgradeInfoRequest fetches the upgrade
     information of a cluster.
@@ -14060,6 +14273,9 @@ class ClusterUpgradeInfo(proto.Message):
             extended support timestamp.
 
             This field is a member of `oneof`_ ``_end_of_extended_support_timestamp``.
+        rollback_safe_upgrade_status (google.cloud.container_v1.types.RollbackSafeUpgradeStatus):
+            Output only. The cluster's rollback-safe
+            upgrade status.
     """
 
     class AutoUpgradeStatus(proto.Enum):
@@ -14155,6 +14371,58 @@ class ClusterUpgradeInfo(proto.Message):
         number=6,
         optional=True,
     )
+    rollback_safe_upgrade_status: "RollbackSafeUpgradeStatus" = proto.Field(
+        proto.MESSAGE,
+        number=9,
+        message="RollbackSafeUpgradeStatus",
+    )
+
+
+class RollbackSafeUpgradeStatus(proto.Message):
+    r"""RollbackSafeUpgradeStatus contains the rollback-safe upgrade
+    status of a cluster.
+
+    Attributes:
+        mode (google.cloud.container_v1.types.RollbackSafeUpgradeStatus.Mode):
+            Output only. The mode of the rollback-safe
+            upgrade.
+        control_plane_upgrade_rollback_end_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The rollback-safe mode
+            expiration time.
+        previous_version (str):
+            Output only. The GKE version that the cluster
+            previously used before step-one upgrade.
+    """
+
+    class Mode(proto.Enum):
+        r"""Mode indicates the mode of the rollback-safe upgrade.
+
+        Values:
+            MODE_UNSPECIFIED (0):
+                MODE_UNSPECIFIED means it's in regular upgrade mode.
+            KCP_MINOR_UPGRADE_ROLLBACK_SAFE_MODE (1):
+                KCP_MINOR_UPGRADE_ROLLBACK_SAFE_MODE means it's in
+                rollback-safe mode after a KCP minor version step-one
+                upgrade.
+        """
+
+        MODE_UNSPECIFIED = 0
+        KCP_MINOR_UPGRADE_ROLLBACK_SAFE_MODE = 1
+
+    mode: Mode = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum=Mode,
+    )
+    control_plane_upgrade_rollback_end_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=timestamp_pb2.Timestamp,
+    )
+    previous_version: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
 
 
 class UpgradeDetails(proto.Message):
@@ -14181,6 +14449,12 @@ class UpgradeDetails(proto.Message):
             The version after the upgrade.
         start_type (google.cloud.container_v1.types.UpgradeDetails.StartType):
             The start type of the upgrade.
+        initial_emulated_version (str):
+            Output only. The emulated version before the
+            upgrade.
+        target_emulated_version (str):
+            Output only. The emulated version after the
+            upgrade.
     """
 
     class State(proto.Enum):
@@ -14251,6 +14525,14 @@ class UpgradeDetails(proto.Message):
         number=6,
         enum=StartType,
     )
+    initial_emulated_version: str = proto.Field(
+        proto.STRING,
+        number=7,
+    )
+    target_emulated_version: str = proto.Field(
+        proto.STRING,
+        number=8,
+    )
 
 
 class FetchNodePoolUpgradeInfoRequest(proto.Message):
@@ -14312,6 +14594,9 @@ class NodePoolUpgradeInfo(proto.Message):
             of extended support timestamp.
 
             This field is a member of `oneof`_ ``_end_of_extended_support_timestamp``.
+        custom_image_info (google.cloud.container_v1.types.CustomImageInfo):
+            Output only. Upgrade info for the node pool
+            specific to the usage of custom images.
     """
 
     class AutoUpgradeStatus(proto.Enum):
@@ -14397,6 +14682,50 @@ class NodePoolUpgradeInfo(proto.Message):
         proto.STRING,
         number=7,
         optional=True,
+    )
+    custom_image_info: "CustomImageInfo" = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message="CustomImageInfo",
+    )
+
+
+class CustomImageInfo(proto.Message):
+    r"""Contains the custom image info for a node pool.
+
+    Attributes:
+        upgrade_message (str):
+            Output only. The human-readable upgrade
+            message for the custom image.
+    """
+
+    upgrade_message: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class CompleteControlPlaneUpgradeRequest(proto.Message):
+    r"""CompleteControlPlaneUpgradeRequest sets the name of target
+    cluster to complete upgrade.
+
+    Attributes:
+        name (str):
+            Required. The name (project, location, cluster) of the
+            cluster to complete upgrade. Specified in the format
+            ``projects/*/locations/*/clusters/*``.
+        version (str):
+            Optional. API request version that initiates
+            this operation.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    version: str = proto.Field(
+        proto.STRING,
+        number=2,
     )
 
 

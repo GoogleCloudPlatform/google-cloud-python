@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.datamanager_v1._compat import transcode_request
 from google.ads.datamanager_v1.types import (
     user_list_global_license,
     user_list_global_license_service,
@@ -554,21 +555,18 @@ class UserListGlobalLicenseServiceRestTransport(
             """
 
             http_options = _BaseUserListGlobalLicenseServiceRestTransport._BaseCreateUserListGlobalLicense._get_http_options()
-
             request, metadata = self._interceptor.pre_create_user_list_global_license(
                 request, metadata
             )
-            transcoded_request = _BaseUserListGlobalLicenseServiceRestTransport._BaseCreateUserListGlobalLicense._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseUserListGlobalLicenseServiceRestTransport._BaseCreateUserListGlobalLicense._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListGlobalLicenseServiceRestTransport._BaseCreateUserListGlobalLicense._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListGlobalLicenseServiceRestTransport._BaseCreateUserListGlobalLicense,
+                    "_BaseCreateUserListGlobalLicense__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -719,17 +717,18 @@ class UserListGlobalLicenseServiceRestTransport(
             """
 
             http_options = _BaseUserListGlobalLicenseServiceRestTransport._BaseGetUserListGlobalLicense._get_http_options()
-
             request, metadata = self._interceptor.pre_get_user_list_global_license(
                 request, metadata
             )
-            transcoded_request = _BaseUserListGlobalLicenseServiceRestTransport._BaseGetUserListGlobalLicense._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListGlobalLicenseServiceRestTransport._BaseGetUserListGlobalLicense._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListGlobalLicenseServiceRestTransport._BaseGetUserListGlobalLicense,
+                    "_BaseGetUserListGlobalLicense__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -873,19 +872,20 @@ class UserListGlobalLicenseServiceRestTransport(
             """
 
             http_options = _BaseUserListGlobalLicenseServiceRestTransport._BaseListUserListGlobalLicenseCustomerInfos._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_user_list_global_license_customer_infos(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseUserListGlobalLicenseServiceRestTransport._BaseListUserListGlobalLicenseCustomerInfos._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListGlobalLicenseServiceRestTransport._BaseListUserListGlobalLicenseCustomerInfos._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListGlobalLicenseServiceRestTransport._BaseListUserListGlobalLicenseCustomerInfos,
+                    "_BaseListUserListGlobalLicenseCustomerInfos__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1035,17 +1035,18 @@ class UserListGlobalLicenseServiceRestTransport(
             """
 
             http_options = _BaseUserListGlobalLicenseServiceRestTransport._BaseListUserListGlobalLicenses._get_http_options()
-
             request, metadata = self._interceptor.pre_list_user_list_global_licenses(
                 request, metadata
             )
-            transcoded_request = _BaseUserListGlobalLicenseServiceRestTransport._BaseListUserListGlobalLicenses._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListGlobalLicenseServiceRestTransport._BaseListUserListGlobalLicenses._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListGlobalLicenseServiceRestTransport._BaseListUserListGlobalLicenses,
+                    "_BaseListUserListGlobalLicenses__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1198,21 +1199,18 @@ class UserListGlobalLicenseServiceRestTransport(
             """
 
             http_options = _BaseUserListGlobalLicenseServiceRestTransport._BaseUpdateUserListGlobalLicense._get_http_options()
-
             request, metadata = self._interceptor.pre_update_user_list_global_license(
                 request, metadata
             )
-            transcoded_request = _BaseUserListGlobalLicenseServiceRestTransport._BaseUpdateUserListGlobalLicense._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseUserListGlobalLicenseServiceRestTransport._BaseUpdateUserListGlobalLicense._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListGlobalLicenseServiceRestTransport._BaseUpdateUserListGlobalLicense._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListGlobalLicenseServiceRestTransport._BaseUpdateUserListGlobalLicense,
+                    "_BaseUpdateUserListGlobalLicense__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

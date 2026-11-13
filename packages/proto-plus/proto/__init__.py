@@ -13,15 +13,12 @@
 # limitations under the License.
 
 from .enums import Enum
-from .fields import Field
-from .fields import MapField
-from .fields import RepeatedField
+from .fields import Field, MapField, RepeatedField
 from .marshal import Marshal
 from .message import Message
 from .modules import define_module as module
 from .primitives import ProtoType
 from .version import __version__
-
 
 DOUBLE = ProtoType.DOUBLE
 FLOAT = ProtoType.FLOAT

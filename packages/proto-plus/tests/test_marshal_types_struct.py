@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 from google.protobuf import struct_pb2
 
 import proto

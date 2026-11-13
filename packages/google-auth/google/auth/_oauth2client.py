@@ -21,11 +21,11 @@
 
 from __future__ import absolute_import
 
-from google.auth import _helpers
 import google.auth.app_engine
 import google.auth.compute_engine
 import google.oauth2.credentials
 import google.oauth2.service_account
+from google.auth import _helpers
 
 try:
     import oauth2client.client  # type: ignore
@@ -128,9 +128,9 @@ _CLASS_CONVERSION_MAP = {
 }
 
 if _HAS_APPENGINE:  # pragma: no cover
-    _CLASS_CONVERSION_MAP[
-        oauth2client.contrib.appengine.AppAssertionCredentials
-    ] = _convert_appengine_app_assertion_credentials
+    _CLASS_CONVERSION_MAP[oauth2client.contrib.appengine.AppAssertionCredentials] = (
+        _convert_appengine_app_assertion_credentials
+    )
 
 
 def convert(credentials):

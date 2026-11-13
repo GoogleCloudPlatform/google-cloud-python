@@ -109,7 +109,7 @@ def _worker_init(bucket_type):
         )
 
     global worker_loop, worker_client, worker_json_client
-    if bucket_type == "zonal":
+    if bucket_type == "rapid":
         worker_loop = asyncio.new_event_loop()
         asyncio.set_event_loop(worker_loop)
         worker_client = worker_loop.run_until_complete(create_client())
@@ -244,7 +244,7 @@ async def _download_time_based_async(client, filename, params):
 
 
 def _download_files_worker(process_idx, filename, params, bucket_type):
-    if bucket_type == "zonal":
+    if bucket_type == "rapid":
         return worker_loop.run_until_complete(
             _download_time_based_async(worker_client, filename, params)
         )

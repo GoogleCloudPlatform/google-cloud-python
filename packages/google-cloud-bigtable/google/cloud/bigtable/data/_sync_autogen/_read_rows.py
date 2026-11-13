@@ -21,11 +21,13 @@ from __future__ import annotations
 import time
 from typing import TYPE_CHECKING, Sequence
 
-from google.api_core import retry as retries
 from grpc import StatusCode
 
 from google.cloud.bigtable.data._cross_sync import CrossSync
-from google.cloud.bigtable.data._helpers import _attempt_timeout_generator
+from google.cloud.bigtable.data._helpers import (
+    _attempt_timeout_generator,
+    _rst_stream_aware_predicate,
+)
 from google.cloud.bigtable.data._metrics.tracked_retry import tracked_retry
 from google.cloud.bigtable.data.exceptions import (
     InvalidChunk,
@@ -80,7 +82,7 @@ class _ReadRowsOperation:
 
     def __init__(
         self,
-        query: ReadRowsQuery,
+        query: ReadRowsQuery | dict[str, object],
         target: TargetType,
         operation_timeout: float,
         attempt_timeout: float,
@@ -98,7 +100,7 @@ class _ReadRowsOperation:
         else:
             self.request = query._to_pb(target)
         self.target = target
-        self._predicate = retries.if_exception_type(*retryable_exceptions)
+        self._predicate = _rst_stream_aware_predicate(*retryable_exceptions)
         self._last_yielded_row_key: bytes | None = None
         self._remaining_count: int | None = self.request.rows_limit or None
         self._operation_metric = metric

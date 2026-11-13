@@ -95,6 +95,18 @@ CRED_INFO_JSON = {
 CRED_INFO_STRING = json.dumps(CRED_INFO_JSON)
 
 
+@pytest.fixture(autouse=True)
+def disable_mtls_env():
+    with mock.patch.dict(
+        os.environ,
+        {
+            "GOOGLE_API_USE_CLIENT_CERTIFICATE": "false",
+            "CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE": "false",
+        },
+    ):
+        yield
+
+
 async def mock_async_gen(data, chunk_size=1):
     for i in range(0, len(data)):  # pragma: NO COVER
         chunk = data[i : i + chunk_size]
@@ -150,215 +162,6 @@ def set_event_loop():
             asyncio.set_event_loop(None)
 
 
-def test__get_default_mtls_endpoint():
-    api_endpoint = "example.googleapis.com"
-    api_mtls_endpoint = "example.mtls.googleapis.com"
-    sandbox_endpoint = "example.sandbox.googleapis.com"
-    sandbox_mtls_endpoint = "example.mtls.sandbox.googleapis.com"
-    non_googleapi = "api.example.com"
-    custom_endpoint = ".custom"
-
-    assert EvaluationServiceClient._get_default_mtls_endpoint(None) is None
-    assert (
-        EvaluationServiceClient._get_default_mtls_endpoint(api_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        EvaluationServiceClient._get_default_mtls_endpoint(api_mtls_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        EvaluationServiceClient._get_default_mtls_endpoint(sandbox_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        EvaluationServiceClient._get_default_mtls_endpoint(sandbox_mtls_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        EvaluationServiceClient._get_default_mtls_endpoint(non_googleapi)
-        == non_googleapi
-    )
-    assert (
-        EvaluationServiceClient._get_default_mtls_endpoint(custom_endpoint)
-        == custom_endpoint
-    )
-
-
-def test__read_environment_variables():
-    assert EvaluationServiceClient._read_environment_variables() == (
-        False,
-        "auto",
-        None,
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-        assert EvaluationServiceClient._read_environment_variables() == (
-            True,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}):
-        assert EvaluationServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}
-    ):
-        if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-            with pytest.raises(ValueError) as excinfo:
-                EvaluationServiceClient._read_environment_variables()
-            assert (
-                str(excinfo.value)
-                == "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be either `true` or `false`"
-            )
-        else:
-            assert EvaluationServiceClient._read_environment_variables() == (
-                False,
-                "auto",
-                None,
-            )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "never"}):
-        assert EvaluationServiceClient._read_environment_variables() == (
-            False,
-            "never",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "always"}):
-        assert EvaluationServiceClient._read_environment_variables() == (
-            False,
-            "always",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "auto"}):
-        assert EvaluationServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "Unsupported"}):
-        with pytest.raises(MutualTLSChannelError) as excinfo:
-            EvaluationServiceClient._read_environment_variables()
-    assert (
-        str(excinfo.value)
-        == "Environment variable `GOOGLE_API_USE_MTLS_ENDPOINT` must be `never`, `auto` or `always`"
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_CLOUD_UNIVERSE_DOMAIN": "foo.com"}):
-        assert EvaluationServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            "foo.com",
-        )
-
-
-def test_use_client_cert_effective():
-    # Test case 1: Test when `should_use_client_cert` returns True.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=True
-        ):
-            assert EvaluationServiceClient._use_client_cert_effective() is True
-
-    # Test case 2: Test when `should_use_client_cert` returns False.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should NOT be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=False
-        ):
-            assert EvaluationServiceClient._use_client_cert_effective() is False
-
-    # Test case 3: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "true".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-            assert EvaluationServiceClient._use_client_cert_effective() is True
-
-    # Test case 4: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}
-        ):
-            assert EvaluationServiceClient._use_client_cert_effective() is False
-
-    # Test case 5: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "True".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "True"}):
-            assert EvaluationServiceClient._use_client_cert_effective() is True
-
-    # Test case 6: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "False".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "False"}
-        ):
-            assert EvaluationServiceClient._use_client_cert_effective() is False
-
-    # Test case 7: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "TRUE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "TRUE"}):
-            assert EvaluationServiceClient._use_client_cert_effective() is True
-
-    # Test case 8: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "FALSE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "FALSE"}
-        ):
-            assert EvaluationServiceClient._use_client_cert_effective() is False
-
-    # Test case 9: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not set.
-    # In this case, the method should return False, which is the default value.
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, clear=True):
-            assert EvaluationServiceClient._use_client_cert_effective() is False
-
-    # Test case 10: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should raise a ValueError as the environment variable must be either
-    # "true" or "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            with pytest.raises(ValueError):
-                EvaluationServiceClient._use_client_cert_effective()
-
-    # Test case 11: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should return False as the environment variable is set to an invalid value.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            assert EvaluationServiceClient._use_client_cert_effective() is False
-
-    # Test case 12: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is unset. Also,
-    # the GOOGLE_API_CONFIG environment variable is unset.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": ""}):
-            with mock.patch.dict(os.environ, {"GOOGLE_API_CERTIFICATE_CONFIG": ""}):
-                assert EvaluationServiceClient._use_client_cert_effective() is False
-
-
 def test__get_client_cert_source():
     mock_provided_cert_source = mock.Mock()
     mock_default_cert_source = mock.Mock()
@@ -392,99 +195,6 @@ def test__get_client_cert_source():
                 )
                 is mock_provided_cert_source
             )
-
-
-@mock.patch.object(
-    EvaluationServiceClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(EvaluationServiceClient),
-)
-@mock.patch.object(
-    EvaluationServiceAsyncClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(EvaluationServiceAsyncClient),
-)
-def test__get_api_endpoint():
-    api_override = "foo.com"
-    mock_client_cert_source = mock.Mock()
-    default_universe = EvaluationServiceClient._DEFAULT_UNIVERSE
-    default_endpoint = EvaluationServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=default_universe
-    )
-    mock_universe = "bar.com"
-    mock_endpoint = EvaluationServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=mock_universe
-    )
-
-    assert (
-        EvaluationServiceClient._get_api_endpoint(
-            api_override, mock_client_cert_source, default_universe, "always"
-        )
-        == api_override
-    )
-    assert (
-        EvaluationServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "auto"
-        )
-        == EvaluationServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        EvaluationServiceClient._get_api_endpoint(None, None, default_universe, "auto")
-        == default_endpoint
-    )
-    assert (
-        EvaluationServiceClient._get_api_endpoint(
-            None, None, default_universe, "always"
-        )
-        == EvaluationServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        EvaluationServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "always"
-        )
-        == EvaluationServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        EvaluationServiceClient._get_api_endpoint(None, None, mock_universe, "never")
-        == mock_endpoint
-    )
-    assert (
-        EvaluationServiceClient._get_api_endpoint(None, None, default_universe, "never")
-        == default_endpoint
-    )
-
-    with pytest.raises(MutualTLSChannelError) as excinfo:
-        EvaluationServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, mock_universe, "auto"
-        )
-    assert (
-        str(excinfo.value)
-        == "mTLS is not supported in any universe other than googleapis.com."
-    )
-
-
-def test__get_universe_domain():
-    client_universe_domain = "foo.com"
-    universe_domain_env = "bar.com"
-
-    assert (
-        EvaluationServiceClient._get_universe_domain(
-            client_universe_domain, universe_domain_env
-        )
-        == client_universe_domain
-    )
-    assert (
-        EvaluationServiceClient._get_universe_domain(None, universe_domain_env)
-        == universe_domain_env
-    )
-    assert (
-        EvaluationServiceClient._get_universe_domain(None, None)
-        == EvaluationServiceClient._DEFAULT_UNIVERSE
-    )
-
-    with pytest.raises(ValueError) as excinfo:
-        EvaluationServiceClient._get_universe_domain("", None)
-    assert str(excinfo.value) == "Universe Domain cannot be an empty string."
 
 
 @pytest.mark.parametrize(
@@ -1012,6 +722,7 @@ def test_evaluation_service_client_get_mtls_endpoint_and_cert_source(client_clas
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", None)
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", None)
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1066,6 +777,7 @@ def test_evaluation_service_client_get_mtls_endpoint_and_cert_source(client_clas
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", "")
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", "")
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -6242,6 +5954,7 @@ def test_get_evaluation_result(request_type, transport: str = "grpc"):
             changelog="changelog_value",
             execution_state=evaluation.EvaluationResult.ExecutionState.QUEUED,
             golden_run_method=golden_run.GoldenRunMethod.STABLE,
+            outcome_metadata=evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF,
         )
         response = client.get_evaluation_result(request)
 
@@ -6263,6 +5976,10 @@ def test_get_evaluation_result(request_type, transport: str = "grpc"):
     assert response.changelog == "changelog_value"
     assert response.execution_state == evaluation.EvaluationResult.ExecutionState.QUEUED
     assert response.golden_run_method == golden_run.GoldenRunMethod.STABLE
+    assert (
+        response.outcome_metadata
+        == evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF
+    )
 
 
 def test_get_evaluation_result_non_empty_request_with_auto_populated_field():
@@ -6415,6 +6132,7 @@ async def test_get_evaluation_result_async(
                 changelog="changelog_value",
                 execution_state=evaluation.EvaluationResult.ExecutionState.QUEUED,
                 golden_run_method=golden_run.GoldenRunMethod.STABLE,
+                outcome_metadata=evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF,
             )
         )
         response = await client.get_evaluation_result(request)
@@ -6437,6 +6155,10 @@ async def test_get_evaluation_result_async(
     assert response.changelog == "changelog_value"
     assert response.execution_state == evaluation.EvaluationResult.ExecutionState.QUEUED
     assert response.golden_run_method == golden_run.GoldenRunMethod.STABLE
+    assert (
+        response.outcome_metadata
+        == evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF
+    )
 
 
 def test_get_evaluation_result_field_headers():
@@ -15469,19 +15191,19 @@ def test_run_evaluation_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).run_evaluation._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseRunEvaluation,
+        "_BaseRunEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["app"] = "app_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).run_evaluation._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "app" in jsonified_request
@@ -15525,15 +15247,6 @@ def test_run_evaluation_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_run_evaluation_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.run_evaluation._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("app",)))
 
 
 def test_run_evaluation_rest_flattened():
@@ -15649,20 +15362,20 @@ def test_upload_evaluation_audio_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).upload_evaluation_audio._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUploadEvaluationAudio,
+        "_BaseUploadEvaluationAudio__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
     jsonified_request["audioContent"] = b"audio_content_blob"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).upload_evaluation_audio._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -15713,23 +15426,6 @@ def test_upload_evaluation_audio_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_upload_evaluation_audio_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.upload_evaluation_audio._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "name",
-                "audioContent",
-            )
-        )
-    )
 
 
 def test_upload_evaluation_audio_rest_flattened():
@@ -15847,21 +15543,22 @@ def test_create_evaluation_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_evaluation._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateEvaluation,
+        "_BaseCreateEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_evaluation._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("evaluation_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("evaluationId",))
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -15908,23 +15605,6 @@ def test_create_evaluation_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_evaluation_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_evaluation._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("evaluationId",))
-        & set(
-            (
-                "parent",
-                "evaluation",
-            )
-        )
-    )
 
 
 def test_create_evaluation_rest_flattened():
@@ -16076,19 +15756,19 @@ def test_generate_evaluation_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).generate_evaluation._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGenerateEvaluation,
+        "_BaseGenerateEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["conversation"] = "conversation_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).generate_evaluation._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "conversation" in jsonified_request
@@ -16132,15 +15812,6 @@ def test_generate_evaluation_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_generate_evaluation_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.generate_evaluation._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("conversation",)))
 
 
 def test_generate_evaluation_rest_flattened():
@@ -16260,19 +15931,19 @@ def test_import_evaluations_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).import_evaluations._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseImportEvaluations,
+        "_BaseImportEvaluations__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).import_evaluations._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -16316,15 +15987,6 @@ def test_import_evaluations_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_import_evaluations_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.import_evaluations._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("parent",)))
 
 
 def test_import_evaluations_rest_flattened():
@@ -16439,21 +16101,22 @@ def test_create_evaluation_dataset_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_evaluation_dataset._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateEvaluationDataset,
+        "_BaseCreateEvaluationDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_evaluation_dataset._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("evaluation_dataset_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("evaluationDatasetId",))
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -16500,23 +16163,6 @@ def test_create_evaluation_dataset_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_evaluation_dataset_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_evaluation_dataset._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("evaluationDatasetId",))
-        & set(
-            (
-                "parent",
-                "evaluationDataset",
-            )
-        )
-    )
 
 
 def test_create_evaluation_dataset_rest_flattened():
@@ -16633,19 +16279,20 @@ def test_update_evaluation_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_evaluation._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateEvaluation,
+        "_BaseUpdateEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_evaluation._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("update_mask",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("updateMask",))
 
     # verify required fields with non-default values are left alone
 
@@ -16690,15 +16337,6 @@ def test_update_evaluation_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_evaluation_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_evaluation._get_unset_required_fields({})
-    assert set(unset_fields) == (set(("updateMask",)) & set(("evaluation",)))
 
 
 def test_update_evaluation_rest_flattened():
@@ -16848,19 +16486,20 @@ def test_update_evaluation_dataset_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_evaluation_dataset._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateEvaluationDataset,
+        "_BaseUpdateEvaluationDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_evaluation_dataset._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("update_mask",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("updateMask",))
 
     # verify required fields with non-default values are left alone
 
@@ -16905,15 +16544,6 @@ def test_update_evaluation_dataset_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_evaluation_dataset_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_evaluation_dataset._get_unset_required_fields({})
-    assert set(unset_fields) == (set(("updateMask",)) & set(("evaluationDataset",)))
 
 
 def test_update_evaluation_dataset_rest_flattened():
@@ -17033,18 +16663,20 @@ def test_delete_evaluation_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_evaluation._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteEvaluation,
+        "_BaseDeleteEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_evaluation._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
@@ -17052,7 +16684,6 @@ def test_delete_evaluation_rest_required_fields(
             "force",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -17095,23 +16726,6 @@ def test_delete_evaluation_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_evaluation_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_evaluation._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "etag",
-                "force",
-            )
-        )
-        & set(("name",))
-    )
 
 
 def test_delete_evaluation_rest_flattened():
@@ -17228,19 +16842,19 @@ def test_delete_evaluation_result_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_evaluation_result._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteEvaluationResult,
+        "_BaseDeleteEvaluationResult__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_evaluation_result._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -17283,15 +16897,6 @@ def test_delete_evaluation_result_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_evaluation_result_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_evaluation_result._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_delete_evaluation_result_rest_flattened():
@@ -17408,21 +17013,22 @@ def test_delete_evaluation_dataset_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_evaluation_dataset._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteEvaluationDataset,
+        "_BaseDeleteEvaluationDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_evaluation_dataset._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(("etag",))
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -17465,15 +17071,6 @@ def test_delete_evaluation_dataset_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_evaluation_dataset_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_evaluation_dataset._get_unset_required_fields({})
-    assert set(unset_fields) == (set(("etag",)) & set(("name",)))
 
 
 def test_delete_evaluation_dataset_rest_flattened():
@@ -17594,19 +17191,19 @@ def test_delete_evaluation_run_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_evaluation_run._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteEvaluationRun,
+        "_BaseDeleteEvaluationRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_evaluation_run._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -17649,15 +17246,6 @@ def test_delete_evaluation_run_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_evaluation_run_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_evaluation_run._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_delete_evaluation_run_rest_flattened():
@@ -17769,19 +17357,19 @@ def test_get_evaluation_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_evaluation._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetEvaluation,
+        "_BaseGetEvaluation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_evaluation._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -17827,15 +17415,6 @@ def test_get_evaluation_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_evaluation_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_evaluation._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_evaluation_rest_flattened():
@@ -17954,19 +17533,19 @@ def test_get_evaluation_result_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_evaluation_result._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetEvaluationResult,
+        "_BaseGetEvaluationResult__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_evaluation_result._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -18012,15 +17591,6 @@ def test_get_evaluation_result_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_evaluation_result_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_evaluation_result._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_evaluation_result_rest_flattened():
@@ -18139,19 +17709,19 @@ def test_get_evaluation_dataset_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_evaluation_dataset._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetEvaluationDataset,
+        "_BaseGetEvaluationDataset__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_evaluation_dataset._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -18197,15 +17767,6 @@ def test_get_evaluation_dataset_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_evaluation_dataset_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_evaluation_dataset._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_evaluation_dataset_rest_flattened():
@@ -18323,19 +17884,19 @@ def test_get_evaluation_run_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_evaluation_run._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetEvaluationRun,
+        "_BaseGetEvaluationRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_evaluation_run._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -18381,15 +17942,6 @@ def test_get_evaluation_run_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_evaluation_run_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_evaluation_run._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_evaluation_run_rest_flattened():
@@ -18505,31 +18057,32 @@ def test_list_evaluations_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_evaluations._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListEvaluations,
+        "_BaseListEvaluations__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_evaluations._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "evaluation_filter",
-            "evaluation_run_filter",
+            "evaluationFilter",
+            "evaluationRunFilter",
             "filter",
-            "last_ten_results",
-            "order_by",
-            "page_size",
-            "page_token",
+            "lastTenResults",
+            "orderBy",
+            "pageSize",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -18575,28 +18128,6 @@ def test_list_evaluations_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_evaluations_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_evaluations._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "evaluationFilter",
-                "evaluationRunFilter",
-                "filter",
-                "lastTenResults",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_evaluations_rest_flattened():
@@ -18779,28 +18310,29 @@ def test_list_evaluation_results_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_evaluation_results._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListEvaluationResults,
+        "_BaseListEvaluationResults__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_evaluation_results._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
+            "orderBy",
+            "pageSize",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -18848,25 +18380,6 @@ def test_list_evaluation_results_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_evaluation_results_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_evaluation_results._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_evaluation_results_rest_flattened():
@@ -19054,28 +18567,29 @@ def test_list_evaluation_datasets_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_evaluation_datasets._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListEvaluationDatasets,
+        "_BaseListEvaluationDatasets__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_evaluation_datasets._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
+            "orderBy",
+            "pageSize",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -19123,25 +18637,6 @@ def test_list_evaluation_datasets_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_evaluation_datasets_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_evaluation_datasets._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_evaluation_datasets_rest_flattened():
@@ -19326,28 +18821,29 @@ def test_list_evaluation_runs_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_evaluation_runs._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListEvaluationRuns,
+        "_BaseListEvaluationRuns__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_evaluation_runs._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
+            "orderBy",
+            "pageSize",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -19395,25 +18891,6 @@ def test_list_evaluation_runs_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_evaluation_runs_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_evaluation_runs._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_evaluation_runs_rest_flattened():
@@ -19596,28 +19073,29 @@ def test_list_evaluation_expectations_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_evaluation_expectations._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListEvaluationExpectations,
+        "_BaseListEvaluationExpectations__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_evaluation_expectations._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
+            "orderBy",
+            "pageSize",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -19665,25 +19143,6 @@ def test_list_evaluation_expectations_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_evaluation_expectations_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_evaluation_expectations._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_evaluation_expectations_rest_flattened():
@@ -19869,19 +19328,19 @@ def test_get_evaluation_expectation_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_evaluation_expectation._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetEvaluationExpectation,
+        "_BaseGetEvaluationExpectation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_evaluation_expectation._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -19927,15 +19386,6 @@ def test_get_evaluation_expectation_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_evaluation_expectation_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_evaluation_expectation._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_evaluation_expectation_rest_flattened():
@@ -20054,21 +19504,22 @@ def test_create_evaluation_expectation_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_evaluation_expectation._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateEvaluationExpectation,
+        "_BaseCreateEvaluationExpectation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_evaluation_expectation._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("evaluation_expectation_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("evaluationExpectationId",))
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -20115,25 +19566,6 @@ def test_create_evaluation_expectation_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_evaluation_expectation_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_evaluation_expectation._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (
-        set(("evaluationExpectationId",))
-        & set(
-            (
-                "parent",
-                "evaluationExpectation",
-            )
-        )
-    )
 
 
 def test_create_evaluation_expectation_rest_flattened():
@@ -20261,19 +19693,20 @@ def test_update_evaluation_expectation_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_evaluation_expectation._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateEvaluationExpectation,
+        "_BaseUpdateEvaluationExpectation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_evaluation_expectation._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("update_mask",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("updateMask",))
 
     # verify required fields with non-default values are left alone
 
@@ -20318,17 +19751,6 @@ def test_update_evaluation_expectation_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_evaluation_expectation_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_evaluation_expectation._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (set(("updateMask",)) & set(("evaluationExpectation",)))
 
 
 def test_update_evaluation_expectation_rest_flattened():
@@ -20459,21 +19881,22 @@ def test_delete_evaluation_expectation_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_evaluation_expectation._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteEvaluationExpectation,
+        "_BaseDeleteEvaluationExpectation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_evaluation_expectation._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(("etag",))
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -20516,17 +19939,6 @@ def test_delete_evaluation_expectation_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_evaluation_expectation_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_evaluation_expectation._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (set(("etag",)) & set(("name",)))
 
 
 def test_delete_evaluation_expectation_rest_flattened():
@@ -20643,21 +20055,22 @@ def test_create_scheduled_evaluation_run_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_scheduled_evaluation_run._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateScheduledEvaluationRun,
+        "_BaseCreateScheduledEvaluationRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_scheduled_evaluation_run._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("scheduled_evaluation_run_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("scheduledEvaluationRunId",))
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -20704,25 +20117,6 @@ def test_create_scheduled_evaluation_run_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_scheduled_evaluation_run_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_scheduled_evaluation_run._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (
-        set(("scheduledEvaluationRunId",))
-        & set(
-            (
-                "parent",
-                "scheduledEvaluationRun",
-            )
-        )
-    )
 
 
 def test_create_scheduled_evaluation_run_rest_flattened():
@@ -20847,19 +20241,19 @@ def test_get_scheduled_evaluation_run_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_scheduled_evaluation_run._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetScheduledEvaluationRun,
+        "_BaseGetScheduledEvaluationRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_scheduled_evaluation_run._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -20905,15 +20299,6 @@ def test_get_scheduled_evaluation_run_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_scheduled_evaluation_run_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_scheduled_evaluation_run._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_scheduled_evaluation_run_rest_flattened():
@@ -21032,28 +20417,29 @@ def test_list_scheduled_evaluation_runs_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_scheduled_evaluation_runs._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListScheduledEvaluationRuns,
+        "_BaseListScheduledEvaluationRuns__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_scheduled_evaluation_runs._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
+            "orderBy",
+            "pageSize",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -21101,27 +20487,6 @@ def test_list_scheduled_evaluation_runs_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_scheduled_evaluation_runs_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_scheduled_evaluation_runs._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_scheduled_evaluation_runs_rest_flattened():
@@ -21308,19 +20673,20 @@ def test_update_scheduled_evaluation_run_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_scheduled_evaluation_run._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateScheduledEvaluationRun,
+        "_BaseUpdateScheduledEvaluationRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_scheduled_evaluation_run._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("update_mask",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("updateMask",))
 
     # verify required fields with non-default values are left alone
 
@@ -21365,19 +20731,6 @@ def test_update_scheduled_evaluation_run_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_scheduled_evaluation_run_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_scheduled_evaluation_run._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (
-        set(("updateMask",)) & set(("scheduledEvaluationRun",))
-    )
 
 
 def test_update_scheduled_evaluation_run_rest_flattened():
@@ -21504,21 +20857,22 @@ def test_delete_scheduled_evaluation_run_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_scheduled_evaluation_run._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteScheduledEvaluationRun,
+        "_BaseDeleteScheduledEvaluationRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_scheduled_evaluation_run._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(("etag",))
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -21561,17 +20915,6 @@ def test_delete_scheduled_evaluation_run_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_scheduled_evaluation_run_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_scheduled_evaluation_run._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (set(("etag",)) & set(("name",)))
 
 
 def test_delete_scheduled_evaluation_run_rest_flattened():
@@ -21689,9 +21032,14 @@ def test_test_persona_voice_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).test_persona_voice._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseTestPersonaVoice,
+        "_BaseTestPersonaVoice__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -21699,11 +21047,6 @@ def test_test_persona_voice_rest_required_fields(
     jsonified_request["app"] = "app_value"
     jsonified_request["personaId"] = "persona_id_value"
     jsonified_request["text"] = "text_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).test_persona_voice._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "app" in jsonified_request
@@ -21754,24 +21097,6 @@ def test_test_persona_voice_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_test_persona_voice_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.test_persona_voice._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "app",
-                "personaId",
-                "text",
-            )
-        )
-    )
 
 
 def test_test_persona_voice_rest_flattened():
@@ -21892,20 +21217,20 @@ def test_export_evaluations_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).export_evaluations._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseExportEvaluations,
+        "_BaseExportEvaluations__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
     jsonified_request["names"] = "names_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).export_evaluations._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -21951,23 +21276,6 @@ def test_export_evaluations_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_export_evaluations_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.export_evaluations._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "parent",
-                "names",
-            )
-        )
-    )
 
 
 def test_export_evaluations_rest_flattened():
@@ -22087,20 +21395,20 @@ def test_export_evaluation_runs_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).export_evaluation_runs._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseExportEvaluationRuns,
+        "_BaseExportEvaluationRuns__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
     jsonified_request["names"] = "names_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).export_evaluation_runs._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -22146,23 +21454,6 @@ def test_export_evaluation_runs_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_export_evaluation_runs_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.export_evaluation_runs._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "parent",
-                "names",
-            )
-        )
-    )
 
 
 def test_export_evaluation_runs_rest_flattened():
@@ -22284,20 +21575,20 @@ def test_export_evaluation_results_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).export_evaluation_results._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseExportEvaluationResults,
+        "_BaseExportEvaluationResults__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
     jsonified_request["names"] = "names_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).export_evaluation_results._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -22343,23 +21634,6 @@ def test_export_evaluation_results_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_export_evaluation_results_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.export_evaluation_results._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "parent",
-                "names",
-            )
-        )
-    )
 
 
 def test_export_evaluation_results_rest_flattened():
@@ -22482,19 +21756,19 @@ def test_run_evaluation_result_metrics_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).run_evaluation_result_metrics._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseRunEvaluationResultMetrics,
+        "_BaseRunEvaluationResultMetrics__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["evaluationResultId"] = "evaluation_result_id_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).run_evaluation_result_metrics._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "evaluationResultId" in jsonified_request
@@ -22538,17 +21812,6 @@ def test_run_evaluation_result_metrics_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_run_evaluation_result_metrics_rest_unset_required_fields():
-    transport = transports.EvaluationServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.run_evaluation_result_metrics._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (set(()) & set(("evaluationResultId",)))
 
 
 def test_run_evaluation_result_metrics_rest_flattened():
@@ -23897,6 +23160,7 @@ async def test_get_evaluation_result_empty_call_grpc_asyncio():
                 changelog="changelog_value",
                 execution_state=evaluation.EvaluationResult.ExecutionState.QUEUED,
                 golden_run_method=golden_run.GoldenRunMethod.STABLE,
+                outcome_metadata=evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF,
             )
         )
         await client.get_evaluation_result(request=None)
@@ -24864,20 +24128,24 @@ def test_create_evaluation_rest_call_success(request_type):
                                             "id": "id_value",
                                             "display_name": "display_name_value",
                                             "response": {"fields": {}},
+                                            "parent_tool_call_id": "parent_tool_call_id_value",
+                                            "agent_name": "agent_name_value",
                                         }
                                     ]
                                 },
                                 "image": {
                                     "mime_type": "mime_type_value",
                                     "data": b"data_blob",
+                                    "alt_text": "alt_text_value",
                                 },
                                 "blob": {
                                     "mime_type": "mime_type_value",
                                     "data": b"data_blob",
                                 },
                                 "variables": {},
-                                "event": {"event": "event_value"},
+                                "event": {"event": "event_value", "variables": {}},
                                 "will_continue": True,
+                                "recording_control": 1,
                             },
                             "agent_transfer": {
                                 "target_agent": "target_agent_value",
@@ -24890,6 +24158,8 @@ def test_create_evaluation_rest_call_success(request_type):
                                     "id": "id_value",
                                     "display_name": "display_name_value",
                                     "args": {},
+                                    "parent_tool_call_id": "parent_tool_call_id_value",
+                                    "agent_name": "agent_name_value",
                                 },
                                 "tool_response": {},
                                 "agent_response": {
@@ -25184,6 +24454,8 @@ def test_create_evaluation_rest_call_success(request_type):
                 "tool_call_behaviour": 1,
             },
             "golden_run_method": 1,
+            "root_span": {},
+            "outcome_metadata": 1,
         },
         "invalid": True,
         "last_ten_results": {},
@@ -25959,20 +25231,24 @@ def test_update_evaluation_rest_call_success(request_type):
                                             "id": "id_value",
                                             "display_name": "display_name_value",
                                             "response": {"fields": {}},
+                                            "parent_tool_call_id": "parent_tool_call_id_value",
+                                            "agent_name": "agent_name_value",
                                         }
                                     ]
                                 },
                                 "image": {
                                     "mime_type": "mime_type_value",
                                     "data": b"data_blob",
+                                    "alt_text": "alt_text_value",
                                 },
                                 "blob": {
                                     "mime_type": "mime_type_value",
                                     "data": b"data_blob",
                                 },
                                 "variables": {},
-                                "event": {"event": "event_value"},
+                                "event": {"event": "event_value", "variables": {}},
                                 "will_continue": True,
+                                "recording_control": 1,
                             },
                             "agent_transfer": {
                                 "target_agent": "target_agent_value",
@@ -25985,6 +25261,8 @@ def test_update_evaluation_rest_call_success(request_type):
                                     "id": "id_value",
                                     "display_name": "display_name_value",
                                     "args": {},
+                                    "parent_tool_call_id": "parent_tool_call_id_value",
+                                    "agent_name": "agent_name_value",
                                 },
                                 "tool_response": {},
                                 "agent_response": {
@@ -26279,6 +25557,8 @@ def test_update_evaluation_rest_call_success(request_type):
                 "tool_call_behaviour": 1,
             },
             "golden_run_method": 1,
+            "root_span": {},
+            "outcome_metadata": 1,
         },
         "invalid": True,
         "last_ten_results": {},
@@ -27422,6 +26702,7 @@ def test_get_evaluation_result_rest_call_success(request_type):
             changelog="changelog_value",
             execution_state=evaluation.EvaluationResult.ExecutionState.QUEUED,
             golden_run_method=golden_run.GoldenRunMethod.STABLE,
+            outcome_metadata=evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF,
         )
 
         # Wrap the value into a proper Response obj
@@ -27448,6 +26729,10 @@ def test_get_evaluation_result_rest_call_success(request_type):
     assert response.changelog == "changelog_value"
     assert response.execution_state == evaluation.EvaluationResult.ExecutionState.QUEUED
     assert response.golden_run_method == golden_run.GoldenRunMethod.STABLE
+    assert (
+        response.outcome_metadata
+        == evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF
+    )
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])

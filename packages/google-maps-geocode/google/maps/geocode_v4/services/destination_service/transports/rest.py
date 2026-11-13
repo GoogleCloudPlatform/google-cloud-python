@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.maps.geocode_v4._compat import transcode_request
 from google.maps.geocode_v4.types import destination_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -297,21 +298,18 @@ class DestinationServiceRestTransport(_BaseDestinationServiceRestTransport):
             """
 
             http_options = _BaseDestinationServiceRestTransport._BaseSearchDestinations._get_http_options()
-
             request, metadata = self._interceptor.pre_search_destinations(
                 request, metadata
             )
-            transcoded_request = _BaseDestinationServiceRestTransport._BaseSearchDestinations._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDestinationServiceRestTransport._BaseSearchDestinations._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDestinationServiceRestTransport._BaseSearchDestinations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDestinationServiceRestTransport._BaseSearchDestinations,
+                    "_BaseSearchDestinations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

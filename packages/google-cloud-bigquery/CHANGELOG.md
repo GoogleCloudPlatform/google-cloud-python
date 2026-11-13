@@ -4,6 +4,106 @@
 
 [1]: https://pypi.org/project/google-cloud-bigquery/#history
 
+## [3.47.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.46.2...google-cloud-bigquery-v3.47.0) (2026-10-29)
+
+
+### Features
+
+* **bigquery:** add column data policies to SchemaField ([#18710](https://github.com/googleapis/google-cloud-python/issues/18710)) ([157efe4](https://github.com/googleapis/google-cloud-python/commit/157efe49183632f1d93043a7ae6e59d8f48f9523))
+* **bigquery:** add timestamp_precision for Arrow query results ([#18649](https://github.com/googleapis/google-cloud-python/issues/18649)) ([a29d384](https://github.com/googleapis/google-cloud-python/commit/a29d3845606829575a14e654ffa6950aed9834b6))
+* **bigquery:** read Arrow results from explicit destinations ([#18654](https://github.com/googleapis/google-cloud-python/issues/18654)) ([8ac01b9](https://github.com/googleapis/google-cloud-python/commit/8ac01b9ad3e000aec30d50cce9e14f83cf354ae4))
+* **bigquery:** share one BigQuery Storage client per Client ([#18652](https://github.com/googleapis/google-cloud-python/issues/18652)) ([89cbc50](https://github.com/googleapis/google-cloud-python/commit/89cbc50ad0ee039149c370bb4004d34f3393d46d))
+* **bigquery:** skip job creation for ARROW query_and_wait results ([#18799](https://github.com/googleapis/google-cloud-python/issues/18799)) ([ca24f26](https://github.com/googleapis/google-cloud-python/commit/ca24f265c80eb95c4a005d5497a491cb4425d236))
+* **bigquery:** validate Arrow queries before sending them ([#18645](https://github.com/googleapis/google-cloud-python/issues/18645)) ([1ac51ce](https://github.com/googleapis/google-cloud-python/commit/1ac51ce2bbd5b0bc14addd829d537f716baba7ce))
+* support Python 3.15 ([8fceef4](https://github.com/googleapis/google-cloud-python/commit/8fceef49c523bcc8989abf3b6b82bcf143332d50))
+
+
+### Bug Fixes
+
+* **bigquery:** apply max_results to the whole Arrow result ([#18651](https://github.com/googleapis/google-cloud-python/issues/18651)) ([48c022c](https://github.com/googleapis/google-cloud-python/commit/48c022c4bf65eabbd564f94dfedaf67c24e1cc28))
+* **bigquery:** keep the Arrow first page and wait without rows ([#18650](https://github.com/googleapis/google-cloud-python/issues/18650)) ([4eb0e71](https://github.com/googleapis/google-cloud-python/commit/4eb0e7199847417d945749ccb00cb59877de362b))
+* **bigquery:** keep the Arrow schema for empty results ([#18655](https://github.com/googleapis/google-cloud-python/issues/18655)) ([3ccf5ac](https://github.com/googleapis/google-cloud-python/commit/3ccf5ac962fd3d9d4cb72ac3becd374e6bea41f8))
+* **bigquery:** pass universe_domain to the BigQuery Storage client ([#18783](https://github.com/googleapis/google-cloud-python/issues/18783)) ([6ab4063](https://github.com/googleapis/google-cloud-python/commit/6ab4063bf4f00966122658a3a19a02ac4ee4ad57))
+* **bigquery:** raise when an Arrow batch arrives before its schema ([#18791](https://github.com/googleapis/google-cloud-python/issues/18791)) ([7944a4c](https://github.com/googleapis/google-cloud-python/commit/7944a4c0716a7b4518f54e95baebb1e639ec60eb))
+* **bigquery:** require bqstorage 2.43.0 ([#18780](https://github.com/googleapis/google-cloud-python/issues/18780)) ([3cd40ce](https://github.com/googleapis/google-cloud-python/commit/3cd40ce0118b4d8b3ef1f1ec73d88779dc947e2a))
+* **bigquery:** send the same Arrow options on jobs.query and ReadRows ([#18646](https://github.com/googleapis/google-cloud-python/issues/18646)) ([d7a2d27](https://github.com/googleapis/google-cloud-python/commit/d7a2d27077f1fab8a9feba6a57c7fe6f94612e36))
+
+## [3.46.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.46.1...google-cloud-bigquery-v3.46.2) (2026-10-15)
+
+
+### Bug Fixes
+
+* **bigquery:** accept empty sourceFormat fields ([#18472](https://github.com/googleapis/google-cloud-python/issues/18472)) ([590e43d](https://github.com/googleapis/google-cloud-python/commit/590e43da42fea4f08be7b29b3bf63c3c3a33d112))
+* **bigquery:** drop startIndex whenever a page token is sent ([#18603](https://github.com/googleapis/google-cloud-python/issues/18603)) ([fc6eae3](https://github.com/googleapis/google-cloud-python/commit/fc6eae3bbcea47d00f190d4bab51bef80e838a3a))
+* **bigquery:** remove PendingDeprecationWarning from RowIterator.to_arrow ([#18684](https://github.com/googleapis/google-cloud-python/issues/18684)) ([9025061](https://github.com/googleapis/google-cloud-python/commit/9025061801cc8b4e8f2b7d25b3d598074388ba48))
+
+## [3.46.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.46.0...google-cloud-bigquery-v3.46.1) (2026-10-02)
+
+
+### Bug Fixes
+
+* **bigquery:** account for range element type, rounding mode, and foreign type in SchemaField equality ([#18540](https://github.com/googleapis/google-cloud-python/issues/18540)) ([053dbc9](https://github.com/googleapis/google-cloud-python/commit/053dbc9872ad3f26e10c311ff801b1a85faf1c32))
+
+## [3.46.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.45.2...google-cloud-bigquery-v3.46.0) (2026-10-01)
+
+
+### Features
+
+* **bigquery:** Declare Python 3.15 support ([#18525](https://github.com/googleapis/google-cloud-python/issues/18525)) ([6ed8447](https://github.com/googleapis/google-cloud-python/commit/6ed844782d453f1d1ebd3f70f8f0484254ff15b1))
+
+
+### Bug Fixes
+
+* repair broken and stale repository URLs in package metadata ([#18498](https://github.com/googleapis/google-cloud-python/issues/18498)) ([54dbd12](https://github.com/googleapis/google-cloud-python/commit/54dbd12056abcfc007b5b76006751c3b11bea99f)), refs [#18497](https://github.com/googleapis/google-cloud-python/issues/18497)
+
+## [3.45.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.45.1...google-cloud-bigquery-v3.45.2) (2026-09-17)
+
+
+### Bug Fixes
+
+* disambiguate google-cloud-bigquery `to_dataframe` usage from `pandas-gbq` in ua. ([#18369](https://github.com/googleapis/google-cloud-python/issues/18369)) ([0d7d59c](https://github.com/googleapis/google-cloud-python/commit/0d7d59c771ce1b0084cb8c18e4713f37dc73821d))
+
+## [3.45.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.45.0...google-cloud-bigquery-v3.45.1) (2026-09-14)
+
+
+### Bug Fixes
+
+* bump idna from 3.10 to 3.15 in /packages/google-cloud-bigquery/samples/geography ([#18309](https://github.com/googleapis/google-cloud-python/issues/18309)) ([b6fe689](https://github.com/googleapis/google-cloud-python/commit/b6fe6890582acf73e4163fe83af7024b7782b1a8))
+* bump pyarrow from 21.0.0 to 23.0.1 in /packages/google-cloud-bigquery/samples/geography ([#18313](https://github.com/googleapis/google-cloud-python/issues/18313)) ([282ab70](https://github.com/googleapis/google-cloud-python/commit/282ab7039a423fb4e2b781c87cc4b0bca2d9538f))
+* bump pyasn1 from 0.6.2 to 0.6.4 in /packages/google-cloud-bigquery/samples/geography ([#18310](https://github.com/googleapis/google-cloud-python/issues/18310)) ([1d79696](https://github.com/googleapis/google-cloud-python/commit/1d796961baf475b4a77edfda06760e07014095b3))
+* bump pytest from 8.4.2 to 9.0.3 in /packages/google-cloud-bigquery/samples/desktopapp ([#18322](https://github.com/googleapis/google-cloud-python/issues/18322)) ([f55462d](https://github.com/googleapis/google-cloud-python/commit/f55462de2ea192806282065c44133bd768ad80ed))
+* bump pytest from 8.4.2 to 9.0.3 in /packages/google-cloud-bigquery/samples/magics ([#18312](https://github.com/googleapis/google-cloud-python/issues/18312)) ([d0045d4](https://github.com/googleapis/google-cloud-python/commit/d0045d4da87c7bc606734295b726a4707faa53d3))
+* bump requests from 2.32.5 to 2.33.0 in /packages/google-cloud-bigquery/samples/geography ([#18323](https://github.com/googleapis/google-cloud-python/issues/18323)) ([4cc95cb](https://github.com/googleapis/google-cloud-python/commit/4cc95cb821d220cc5c2498947efc9b263d93f1c6))
+* bump urllib3 from 2.6.3 to 2.7.0 in /packages/google-cloud-bigquery/samples/geography ([#18311](https://github.com/googleapis/google-cloud-python/issues/18311)) ([f18eb1e](https://github.com/googleapis/google-cloud-python/commit/f18eb1ec78469e6bf1525c6e3b774e394e834e60))
+
+
+### Documentation
+
+* **bigquery:** fix table rendering in markdown docs ([#18294](https://github.com/googleapis/google-cloud-python/issues/18294)) ([1abfcdd](https://github.com/googleapis/google-cloud-python/commit/1abfcdde234aaacbd58430d7917568c043c8e851))
+* migrate code from googleapis/python-bigquery ([#18303](https://github.com/googleapis/google-cloud-python/issues/18303)) ([23f9a74](https://github.com/googleapis/google-cloud-python/commit/23f9a742ad842a7c133bd167676e195b6cb78f95))
+
+## [3.45.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.44.0...google-cloud-bigquery-v3.45.0) (2026-09-03)
+
+
+### Features
+
+* add user-agent delegation telemetry for pandas-gbq ([#18184](https://github.com/googleapis/google-cloud-python/issues/18184)) ([85ddfe5](https://github.com/googleapis/google-cloud-python/commit/85ddfe5f065ebc7138fae79cdf2bd1d968a37ff3))
+
+## [3.44.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.43.0...google-cloud-bigquery-v3.44.0) (2026-08-21)
+
+
+### Features
+
+* add PendingDeprecationWarning for to_dataframe and to_arrow conversion methods ([#18021](https://github.com/googleapis/google-cloud-python/issues/18021)) ([6bebf30](https://github.com/googleapis/google-cloud-python/commit/6bebf30fe1b9a5d7b468e390280ab3b55149e82a))
+* **bigquery:** add PendingDeprecationWarning for from_dataframe methods ([#18048](https://github.com/googleapis/google-cloud-python/issues/18048)) ([b84b754](https://github.com/googleapis/google-cloud-python/commit/b84b75440e752ef68e467dbc79a48b54622bbb4f))
+* **bigquery:** support queryResultsFormat and compressionCodec in query_and_wait ([#18027](https://github.com/googleapis/google-cloud-python/issues/18027)) ([d172408](https://github.com/googleapis/google-cloud-python/commit/d1724084886cdb649efcefba95f576c5a4c77278))
+* check python and dependency versions in bigquery and ndb ([#18075](https://github.com/googleapis/google-cloud-python/issues/18075)) ([62ff6f3](https://github.com/googleapis/google-cloud-python/commit/62ff6f37f04de1b8a88876bfc1ac379573e42b36))
+
+
+### Documentation
+
+* **handwritten:** centralize CONTRIBUTING.rst pointers ([#17642](https://github.com/googleapis/google-cloud-python/issues/17642)) ([23b9499](https://github.com/googleapis/google-cloud-python/commit/23b94994bd5251493b81d91657d1f79a5d3c4b97))
+
 ## [3.43.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.42.3...google-cloud-bigquery-v3.43.0) (2026-08-06)
 
 

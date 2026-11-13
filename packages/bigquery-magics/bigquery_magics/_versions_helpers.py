@@ -16,8 +16,8 @@
 
 from typing import Any
 
-from google.cloud.bigquery import exceptions
 import packaging.version
+from google.cloud.bigquery import exceptions
 
 _MIN_BQ_STORAGE_VERSION = packaging.version.Version("2.0.0")
 

@@ -10,3 +10,4 @@ google-auth>=2
 grpcio>=1
 proto-plus>=1
 protobuf>=7
+grpc-google-iam-v1>=0

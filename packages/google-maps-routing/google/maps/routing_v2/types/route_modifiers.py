@@ -64,6 +64,14 @@ class RouteModifiers(proto.Message):
             as unknown and tries to return the cash price. Applies only
             to the ``DRIVE`` and ``TWO_WHEELER``
             [``RouteTravelMode``][google.maps.routing.v2.RouteTravelMode].
+        avoid_tunnels (bool):
+            Optional. When set to true, avoids tunnels where reasonable,
+            giving preference to routes not containing tunnels. Applies
+            only to the ``DRIVE`` and ``TWO_WHEELER``
+            [``RouteTravelMode``][google.maps.routing.v2.RouteTravelMode].
+            [``RoutingPreference``][google.maps.routing.v2.RoutingPreference]
+            must be set to ``TRAFFIC_AWARE_OPTIMAL``. This field is not
+            supported in ComputeRouteMatrix.
     """
 
     avoid_tolls: bool = proto.Field(
@@ -91,6 +99,10 @@ class RouteModifiers(proto.Message):
         proto.ENUM,
         number=6,
         enum=gmr_toll_passes.TollPass,
+    )
+    avoid_tunnels: bool = proto.Field(
+        proto.BOOL,
+        number=7,
     )
 
 

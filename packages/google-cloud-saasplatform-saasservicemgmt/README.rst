@@ -14,9 +14,9 @@ Python Client for App Lifecycle Manager
    :target: https://pypi.org/project/google-cloud-saasplatform-saasservicemgmt/
 .. |versions| image:: https://img.shields.io/pypi/pyversions/google-cloud-saasplatform-saasservicemgmt.svg
    :target: https://pypi.org/project/google-cloud-saasplatform-saasservicemgmt/
-.. _App Lifecycle Manager: https://cloud.google.com/saas-runtime/
+.. _App Lifecycle Manager: https://docs.cloud.google.com/app-lifecycle-manager
 .. _Client Library Documentation: https://cloud.google.com/python/docs/reference/google-cloud-saasplatform-saasservicemgmt/latest/summary_overview
-.. _Product Documentation:  https://cloud.google.com/saas-runtime/
+.. _Product Documentation:  https://docs.cloud.google.com/app-lifecycle-manager
 
 Quick Start
 -----------
@@ -30,7 +30,7 @@ In order to use this library, you first need to go through the following steps:
 
 .. _Select or create a Cloud Platform project.: https://console.cloud.google.com/project
 .. _Enable billing for your project.: https://cloud.google.com/billing/docs/how-to/modify-project#enable_billing_for_a_project
-.. _Enable the App Lifecycle Manager.:  https://cloud.google.com/saas-runtime/
+.. _Enable the App Lifecycle Manager.:  https://docs.cloud.google.com/app-lifecycle-manager
 .. _Set up Authentication.: https://googleapis.dev/python/google-api-core/latest/auth.html
 
 Installation
@@ -105,7 +105,7 @@ Next Steps
 -  View this `README`_ to see the full list of Cloud
    APIs that we cover.
 
-.. _App Lifecycle Manager Product documentation:  https://cloud.google.com/saas-runtime/
+.. _App Lifecycle Manager Product documentation:  https://docs.cloud.google.com/app-lifecycle-manager
 .. _README: https://github.com/googleapis/google-cloud-python/blob/main/README.rst
 
 Logging

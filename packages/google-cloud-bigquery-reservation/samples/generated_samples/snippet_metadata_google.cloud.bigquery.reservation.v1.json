@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-bigquery-reservation",
-    "version": "1.25.0"
+    "version": "1.28.0"
   },
   "snippets": [
     {
@@ -4566,6 +4566,175 @@
         }
       ],
       "title": "bigqueryreservation_v1_generated_reservation_service_update_capacity_commitment_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.bigquery_reservation_v1.ReservationServiceAsyncClient",
+          "shortName": "ReservationServiceAsyncClient"
+        },
+        "fullName": "google.cloud.bigquery_reservation_v1.ReservationServiceAsyncClient.update_reservation_group",
+        "method": {
+          "fullName": "google.cloud.bigquery.reservation.v1.ReservationService.UpdateReservationGroup",
+          "service": {
+            "fullName": "google.cloud.bigquery.reservation.v1.ReservationService",
+            "shortName": "ReservationService"
+          },
+          "shortName": "UpdateReservationGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_reservation_v1.types.UpdateReservationGroupRequest"
+          },
+          {
+            "name": "reservation_group",
+            "type": "google.cloud.bigquery_reservation_v1.types.ReservationGroup"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_reservation_v1.types.ReservationGroup",
+        "shortName": "update_reservation_group"
+      },
+      "description": "Sample for UpdateReservationGroup",
+      "file": "bigqueryreservation_v1_generated_reservation_service_update_reservation_group_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigqueryreservation_v1_generated_ReservationService_UpdateReservationGroup_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigqueryreservation_v1_generated_reservation_service_update_reservation_group_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.bigquery_reservation_v1.ReservationServiceClient",
+          "shortName": "ReservationServiceClient"
+        },
+        "fullName": "google.cloud.bigquery_reservation_v1.ReservationServiceClient.update_reservation_group",
+        "method": {
+          "fullName": "google.cloud.bigquery.reservation.v1.ReservationService.UpdateReservationGroup",
+          "service": {
+            "fullName": "google.cloud.bigquery.reservation.v1.ReservationService",
+            "shortName": "ReservationService"
+          },
+          "shortName": "UpdateReservationGroup"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.bigquery_reservation_v1.types.UpdateReservationGroupRequest"
+          },
+          {
+            "name": "reservation_group",
+            "type": "google.cloud.bigquery_reservation_v1.types.ReservationGroup"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.bigquery_reservation_v1.types.ReservationGroup",
+        "shortName": "update_reservation_group"
+      },
+      "description": "Sample for UpdateReservationGroup",
+      "file": "bigqueryreservation_v1_generated_reservation_service_update_reservation_group_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "bigqueryreservation_v1_generated_ReservationService_UpdateReservationGroup_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "bigqueryreservation_v1_generated_reservation_service_update_reservation_group_sync.py"
     },
     {
       "canonical": true,

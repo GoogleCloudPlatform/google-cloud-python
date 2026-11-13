@@ -35,6 +35,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.bare_metal_solution_v2._compat import transcode_request
 from google.cloud.bare_metal_solution_v2.types import (
     instance,
     lun,
@@ -2687,21 +2688,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseCreateNfsShare._get_http_options()
-
             request, metadata = self._interceptor.pre_create_nfs_share(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseCreateNfsShare._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseCreateNfsShare._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseCreateNfsShare._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseCreateNfsShare,
+                    "_BaseCreateNfsShare__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2837,21 +2835,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseCreateProvisioningConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_provisioning_config(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseCreateProvisioningConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseCreateProvisioningConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseCreateProvisioningConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseCreateProvisioningConfig,
+                    "_BaseCreateProvisioningConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2992,19 +2987,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseCreateSSHKey._get_http_options()
-
             request, metadata = self._interceptor.pre_create_ssh_key(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseCreateSSHKey._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseCreateSSHKey._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseCreateSSHKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseCreateSSHKey,
+                    "_BaseCreateSSHKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3144,21 +3136,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseCreateVolumeSnapshot._get_http_options()
-
             request, metadata = self._interceptor.pre_create_volume_snapshot(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseCreateVolumeSnapshot._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseCreateVolumeSnapshot._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseCreateVolumeSnapshot._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseCreateVolumeSnapshot,
+                    "_BaseCreateVolumeSnapshot__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3301,17 +3290,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseDeleteNfsShare._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_nfs_share(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseDeleteNfsShare._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseDeleteNfsShare._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseDeleteNfsShare,
+                    "_BaseDeleteNfsShare__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3440,15 +3430,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseDeleteSSHKey._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_ssh_key(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseDeleteSSHKey._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseDeleteSSHKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseDeleteSSHKey,
+                    "_BaseDeleteSSHKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3546,17 +3537,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseDeleteVolumeSnapshot._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_volume_snapshot(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseDeleteVolumeSnapshot._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseDeleteVolumeSnapshot._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseDeleteVolumeSnapshot,
+                    "_BaseDeleteVolumeSnapshot__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3665,19 +3657,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             http_options = (
                 _BaseBareMetalSolutionRestTransport._BaseDetachLun._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_detach_lun(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseDetachLun._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseDetachLun._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseDetachLun._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseDetachLun,
+                    "_BaseDetachLun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3819,23 +3808,20 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseDisableInteractiveSerialConsole._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_disable_interactive_serial_console(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseDisableInteractiveSerialConsole._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseDisableInteractiveSerialConsole._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseDisableInteractiveSerialConsole._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseDisableInteractiveSerialConsole,
+                    "_BaseDisableInteractiveSerialConsole__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3977,21 +3963,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseEnableInteractiveSerialConsole._get_http_options()
-
             request, metadata = self._interceptor.pre_enable_interactive_serial_console(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseEnableInteractiveSerialConsole._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseEnableInteractiveSerialConsole._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseEnableInteractiveSerialConsole._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseEnableInteractiveSerialConsole,
+                    "_BaseEnableInteractiveSerialConsole__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4133,19 +4116,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             http_options = (
                 _BaseBareMetalSolutionRestTransport._BaseEvictLun._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_evict_lun(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseEvictLun._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseEvictLun._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseEvictLun._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseEvictLun,
+                    "_BaseEvictLun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4285,19 +4265,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             http_options = (
                 _BaseBareMetalSolutionRestTransport._BaseEvictVolume._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_evict_volume(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseEvictVolume._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseEvictVolume._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseEvictVolume._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseEvictVolume,
+                    "_BaseEvictVolume__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4433,15 +4410,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             http_options = (
                 _BaseBareMetalSolutionRestTransport._BaseGetInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_instance(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseGetInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseGetInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseGetInstance,
+                    "_BaseGetInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4580,19 +4558,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             http_options = (
                 _BaseBareMetalSolutionRestTransport._BaseGetLun._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_lun(request, metadata)
-            transcoded_request = (
-                _BaseBareMetalSolutionRestTransport._BaseGetLun._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBareMetalSolutionRestTransport._BaseGetLun._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseGetLun,
+                    "_BaseGetLun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4729,15 +4704,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             http_options = (
                 _BaseBareMetalSolutionRestTransport._BaseGetNetwork._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_network(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseGetNetwork._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseGetNetwork._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseGetNetwork,
+                    "_BaseGetNetwork__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4874,15 +4850,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             http_options = (
                 _BaseBareMetalSolutionRestTransport._BaseGetNfsShare._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_nfs_share(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseGetNfsShare._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseGetNfsShare._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseGetNfsShare,
+                    "_BaseGetNfsShare__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5017,17 +4994,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseGetProvisioningConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_provisioning_config(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseGetProvisioningConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseGetProvisioningConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseGetProvisioningConfig,
+                    "_BaseGetProvisioningConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5166,15 +5144,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             http_options = (
                 _BaseBareMetalSolutionRestTransport._BaseGetVolume._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_volume(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseGetVolume._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseGetVolume._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseGetVolume,
+                    "_BaseGetVolume__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5312,17 +5291,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseGetVolumeSnapshot._get_http_options()
-
             request, metadata = self._interceptor.pre_get_volume_snapshot(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseGetVolumeSnapshot._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseGetVolumeSnapshot._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseGetVolumeSnapshot,
+                    "_BaseGetVolumeSnapshot__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5460,15 +5440,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseListInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_list_instances(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseListInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseListInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseListInstances,
+                    "_BaseListInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5607,15 +5588,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             http_options = (
                 _BaseBareMetalSolutionRestTransport._BaseListLuns._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_luns(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseListLuns._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseListLuns._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseListLuns,
+                    "_BaseListLuns__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5752,15 +5734,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseListNetworks._get_http_options()
-
             request, metadata = self._interceptor.pre_list_networks(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseListNetworks._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseListNetworks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseListNetworks,
+                    "_BaseListNetworks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5895,17 +5878,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseListNetworkUsage._get_http_options()
-
             request, metadata = self._interceptor.pre_list_network_usage(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseListNetworkUsage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseListNetworkUsage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseListNetworkUsage,
+                    "_BaseListNetworkUsage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6045,15 +6029,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseListNfsShares._get_http_options()
-
             request, metadata = self._interceptor.pre_list_nfs_shares(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseListNfsShares._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseListNfsShares._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseListNfsShares,
+                    "_BaseListNfsShares__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6190,15 +6175,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseListOSImages._get_http_options()
-
             request, metadata = self._interceptor.pre_list_os_images(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseListOSImages._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseListOSImages._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseListOSImages,
+                    "_BaseListOSImages__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6336,17 +6322,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseListProvisioningQuotas._get_http_options()
-
             request, metadata = self._interceptor.pre_list_provisioning_quotas(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseListProvisioningQuotas._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseListProvisioningQuotas._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseListProvisioningQuotas,
+                    "_BaseListProvisioningQuotas__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6487,15 +6474,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             http_options = (
                 _BaseBareMetalSolutionRestTransport._BaseListSSHKeys._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_ssh_keys(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseListSSHKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseListSSHKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseListSSHKeys,
+                    "_BaseListSSHKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6634,15 +6622,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             http_options = (
                 _BaseBareMetalSolutionRestTransport._BaseListVolumes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_volumes(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseListVolumes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseListVolumes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseListVolumes,
+                    "_BaseListVolumes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6780,17 +6769,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseListVolumeSnapshots._get_http_options()
-
             request, metadata = self._interceptor.pre_list_volume_snapshots(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseListVolumeSnapshots._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseListVolumeSnapshots._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseListVolumeSnapshots,
+                    "_BaseListVolumeSnapshots__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6931,19 +6921,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseRenameInstance._get_http_options()
-
             request, metadata = self._interceptor.pre_rename_instance(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseRenameInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseRenameInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseRenameInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseRenameInstance,
+                    "_BaseRenameInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7081,19 +7068,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseRenameNetwork._get_http_options()
-
             request, metadata = self._interceptor.pre_rename_network(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseRenameNetwork._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseRenameNetwork._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseRenameNetwork._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseRenameNetwork,
+                    "_BaseRenameNetwork__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7231,21 +7215,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseRenameNfsShare._get_http_options()
-
             request, metadata = self._interceptor.pre_rename_nfs_share(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseRenameNfsShare._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseRenameNfsShare._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseRenameNfsShare._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseRenameNfsShare,
+                    "_BaseRenameNfsShare__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7382,19 +7363,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseRenameVolume._get_http_options()
-
             request, metadata = self._interceptor.pre_rename_volume(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseRenameVolume._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseRenameVolume._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseRenameVolume._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseRenameVolume,
+                    "_BaseRenameVolume__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7534,19 +7512,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseResetInstance._get_http_options()
-
             request, metadata = self._interceptor.pre_reset_instance(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseResetInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseResetInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseResetInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseResetInstance,
+                    "_BaseResetInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7683,19 +7658,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseResizeVolume._get_http_options()
-
             request, metadata = self._interceptor.pre_resize_volume(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseResizeVolume._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseResizeVolume._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseResizeVolume._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseResizeVolume,
+                    "_BaseResizeVolume__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7834,21 +7806,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseRestoreVolumeSnapshot._get_http_options()
-
             request, metadata = self._interceptor.pre_restore_volume_snapshot(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseRestoreVolumeSnapshot._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseRestoreVolumeSnapshot._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseRestoreVolumeSnapshot._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseRestoreVolumeSnapshot,
+                    "_BaseRestoreVolumeSnapshot__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7988,19 +7957,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseStartInstance._get_http_options()
-
             request, metadata = self._interceptor.pre_start_instance(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseStartInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseStartInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseStartInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseStartInstance,
+                    "_BaseStartInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8137,19 +8103,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseStopInstance._get_http_options()
-
             request, metadata = self._interceptor.pre_stop_instance(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseStopInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseStopInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseStopInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseStopInstance,
+                    "_BaseStopInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8287,21 +8250,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseSubmitProvisioningConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_submit_provisioning_config(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseSubmitProvisioningConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseSubmitProvisioningConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseSubmitProvisioningConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseSubmitProvisioningConfig,
+                    "_BaseSubmitProvisioningConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8446,19 +8406,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseUpdateInstance._get_http_options()
-
             request, metadata = self._interceptor.pre_update_instance(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseUpdateInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseUpdateInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseUpdateInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseUpdateInstance,
+                    "_BaseUpdateInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8597,19 +8554,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseUpdateNetwork._get_http_options()
-
             request, metadata = self._interceptor.pre_update_network(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseUpdateNetwork._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseUpdateNetwork._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseUpdateNetwork._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseUpdateNetwork,
+                    "_BaseUpdateNetwork__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8748,21 +8702,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseUpdateNfsShare._get_http_options()
-
             request, metadata = self._interceptor.pre_update_nfs_share(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseUpdateNfsShare._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseUpdateNfsShare._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseUpdateNfsShare._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseUpdateNfsShare,
+                    "_BaseUpdateNfsShare__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8899,21 +8850,18 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseUpdateProvisioningConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_provisioning_config(
                 request, metadata
             )
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseUpdateProvisioningConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseUpdateProvisioningConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseUpdateProvisioningConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseUpdateProvisioningConfig,
+                    "_BaseUpdateProvisioningConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9054,19 +9002,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseUpdateVolume._get_http_options()
-
             request, metadata = self._interceptor.pre_update_volume(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseUpdateVolume._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBareMetalSolutionRestTransport._BaseUpdateVolume._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseUpdateVolume._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseUpdateVolume,
+                    "_BaseUpdateVolume__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9582,15 +9527,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             http_options = (
                 _BaseBareMetalSolutionRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9721,15 +9667,16 @@ class BareMetalSolutionRestTransport(_BaseBareMetalSolutionRestTransport):
             """
 
             http_options = _BaseBareMetalSolutionRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseBareMetalSolutionRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBareMetalSolutionRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBareMetalSolutionRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

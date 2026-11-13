@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ai.generativelanguage_v1alpha._compat import transcode_request
 from google.ai.generativelanguage_v1alpha.types import retriever, retriever_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1252,21 +1253,18 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             """
 
             http_options = _BaseRetrieverServiceRestTransport._BaseBatchCreateChunks._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_chunks(
                 request, metadata
             )
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseBatchCreateChunks._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRetrieverServiceRestTransport._BaseBatchCreateChunks._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseBatchCreateChunks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseBatchCreateChunks,
+                    "_BaseBatchCreateChunks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1401,21 +1399,18 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             """
 
             http_options = _BaseRetrieverServiceRestTransport._BaseBatchDeleteChunks._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_delete_chunks(
                 request, metadata
             )
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseBatchDeleteChunks._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRetrieverServiceRestTransport._BaseBatchDeleteChunks._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseBatchDeleteChunks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseBatchDeleteChunks,
+                    "_BaseBatchDeleteChunks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1520,21 +1515,18 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             """
 
             http_options = _BaseRetrieverServiceRestTransport._BaseBatchUpdateChunks._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_chunks(
                 request, metadata
             )
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseBatchUpdateChunks._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRetrieverServiceRestTransport._BaseBatchUpdateChunks._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseBatchUpdateChunks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseBatchUpdateChunks,
+                    "_BaseBatchUpdateChunks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1678,19 +1670,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseCreateChunk._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_chunk(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseCreateChunk._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRetrieverServiceRestTransport._BaseCreateChunk._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseCreateChunk._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseCreateChunk,
+                    "_BaseCreateChunk__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1830,19 +1819,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseCreateCorpus._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_corpus(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseCreateCorpus._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRetrieverServiceRestTransport._BaseCreateCorpus._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseCreateCorpus._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseCreateCorpus,
+                    "_BaseCreateCorpus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1980,19 +1966,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             """
 
             http_options = _BaseRetrieverServiceRestTransport._BaseCreateDocument._get_http_options()
-
             request, metadata = self._interceptor.pre_create_document(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseCreateDocument._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRetrieverServiceRestTransport._BaseCreateDocument._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseCreateDocument._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseCreateDocument,
+                    "_BaseCreateDocument__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2125,15 +2108,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseDeleteChunk._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_chunk(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseDeleteChunk._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseDeleteChunk._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseDeleteChunk,
+                    "_BaseDeleteChunk__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2231,15 +2215,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseDeleteCorpus._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_corpus(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseDeleteCorpus._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseDeleteCorpus._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseDeleteCorpus,
+                    "_BaseDeleteCorpus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2335,15 +2320,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             """
 
             http_options = _BaseRetrieverServiceRestTransport._BaseDeleteDocument._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_document(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseDeleteDocument._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseDeleteDocument._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseDeleteDocument,
+                    "_BaseDeleteDocument__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2450,17 +2436,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseGetChunk._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_chunk(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseGetChunk._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseRetrieverServiceRestTransport._BaseGetChunk._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseGetChunk,
+                    "_BaseGetChunk__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2599,15 +2584,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseGetCorpus._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_corpus(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseGetCorpus._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseGetCorpus._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseGetCorpus,
+                    "_BaseGetCorpus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2746,15 +2732,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseGetDocument._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_document(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseGetDocument._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseGetDocument._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseGetDocument,
+                    "_BaseGetDocument__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2893,15 +2880,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseListChunks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_chunks(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseListChunks._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseListChunks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseListChunks,
+                    "_BaseListChunks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3042,15 +3030,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseListCorpora._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_corpora(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseListCorpora._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseListCorpora._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseListCorpora,
+                    "_BaseListCorpora__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3189,15 +3178,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             """
 
             http_options = _BaseRetrieverServiceRestTransport._BaseListDocuments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_documents(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseListDocuments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseListDocuments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseListDocuments,
+                    "_BaseListDocuments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3338,19 +3328,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseQueryCorpus._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_query_corpus(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseQueryCorpus._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRetrieverServiceRestTransport._BaseQueryCorpus._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseQueryCorpus._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseQueryCorpus,
+                    "_BaseQueryCorpus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3490,19 +3477,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             """
 
             http_options = _BaseRetrieverServiceRestTransport._BaseQueryDocument._get_http_options()
-
             request, metadata = self._interceptor.pre_query_document(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseQueryDocument._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRetrieverServiceRestTransport._BaseQueryDocument._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseQueryDocument._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseQueryDocument,
+                    "_BaseQueryDocument__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3646,19 +3630,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseUpdateChunk._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_chunk(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseUpdateChunk._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRetrieverServiceRestTransport._BaseUpdateChunk._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseUpdateChunk._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseUpdateChunk,
+                    "_BaseUpdateChunk__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3798,19 +3779,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseUpdateCorpus._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_corpus(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseUpdateCorpus._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRetrieverServiceRestTransport._BaseUpdateCorpus._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseUpdateCorpus._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseUpdateCorpus,
+                    "_BaseUpdateCorpus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3948,19 +3926,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             """
 
             http_options = _BaseRetrieverServiceRestTransport._BaseUpdateDocument._get_http_options()
-
             request, metadata = self._interceptor.pre_update_document(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseUpdateDocument._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRetrieverServiceRestTransport._BaseUpdateDocument._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseUpdateDocument._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseUpdateDocument,
+                    "_BaseUpdateDocument__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4278,15 +4253,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             http_options = (
                 _BaseRetrieverServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4416,15 +4392,16 @@ class RetrieverServiceRestTransport(_BaseRetrieverServiceRestTransport):
             """
 
             http_options = _BaseRetrieverServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseRetrieverServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRetrieverServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRetrieverServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

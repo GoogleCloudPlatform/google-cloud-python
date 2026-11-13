@@ -4,6 +4,39 @@
 
 [1]: https://pypi.org/project/google-crc32c/#history
 
+## [1.9.0](https://github.com/googleapis/google-cloud-python/compare/google-crc32c-v1.9.0-rc0...google-crc32c-v1.9.0) (2026-09-24)
+
+
+### Features
+
+* **crc32c:** support Python 3.15 ([1bf979a](https://github.com/googleapis/google-cloud-python/commit/1bf979a2efc0b8c6ccc738b046698beb7914d21a))
+
+## [1.9.0-rc0](https://github.com/googleapis/google-cloud-python/compare/google-crc32c-v1.8.0...google-crc32c-v1.9.0-rc0) (2026-09-23)
+
+
+### Features
+
+* add unit and cover nox sessions and enforce 100% test coverage for ([9d2e62f](https://github.com/googleapis/google-cloud-python/commit/9d2e62faea7f812a4564c56034eb32113f41edba)), refs [#17052](https://github.com/googleapis/google-cloud-python/issues/17052)
+* **crc32c:** add Python 3.15 classifier ([08291df](https://github.com/googleapis/google-cloud-python/commit/08291df4d20f8742a1f139ff3b896ff8485f567d))
+* **crc32c:** add Python 3.15 wheel build support ([#18416](https://github.com/googleapis/google-cloud-python/issues/18416)) ([47b2845](https://github.com/googleapis/google-cloud-python/commit/47b2845c8b4113fd0633242c439d150b8f684888))
+* **crc32c:** add unit and cover nox sessions ([#18424](https://github.com/googleapis/google-cloud-python/issues/18424)) ([9d2e62f](https://github.com/googleapis/google-cloud-python/commit/9d2e62faea7f812a4564c56034eb32113f41edba))
+
+
+### Bug Fixes
+
+* bump pip from 26.1.1 to 26.2 in /packages/google-crc32c/scripts ([#18259](https://github.com/googleapis/google-cloud-python/issues/18259)) ([ef272c7](https://github.com/googleapis/google-cloud-python/commit/ef272c7ebeef65304c441a8d5136464cc0bd202c))
+* **crc32c:** escape the version dot and anchor the pyenv check regex ([#17555](https://github.com/googleapis/google-cloud-python/issues/17555)) ([b6a0275](https://github.com/googleapis/google-cloud-python/commit/b6a027513422507f99662c840068249b84522a5c))
+
+
+### Documentation
+
+* **handwritten:** centralize CONTRIBUTING.rst pointers ([#17642](https://github.com/googleapis/google-cloud-python/issues/17642)) ([23b9499](https://github.com/googleapis/google-cloud-python/commit/23b94994bd5251493b81d91657d1f79a5d3c4b97))
+
+
+### Miscellaneous Chores
+
+* **crc32c:** document Python 3.15 wheel support ([#18442](https://github.com/googleapis/google-cloud-python/issues/18442)) ([72c6a57](https://github.com/googleapis/google-cloud-python/commit/72c6a5716b8c4f7ecdf185b0da87960192acf578))
+
 ## [1.8.0](https://github.com/googleapis/python-crc32c/compare/v1.7.1...v1.8.0) (2025-12-15)
 
 

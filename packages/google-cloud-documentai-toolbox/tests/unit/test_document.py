@@ -21,8 +21,8 @@ import shutil
 from unittest import mock
 from xml.etree import ElementTree
 
-from google.cloud.vision import AnnotateFileResponse
 import pytest
+from google.cloud.vision import AnnotateFileResponse
 
 from google.cloud import documentai
 from google.cloud.documentai_toolbox import document, gcs_utilities

@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.productregistry_v1._compat import transcode_request
 from google.cloud.productregistry_v1.types import (
     cloud_product_registry_read_service,
     logical_product,
@@ -658,17 +659,18 @@ class CloudProductRegistryReadServiceRestTransport(
             """
 
             http_options = _BaseCloudProductRegistryReadServiceRestTransport._BaseGetLogicalProduct._get_http_options()
-
             request, metadata = self._interceptor.pre_get_logical_product(
                 request, metadata
             )
-            transcoded_request = _BaseCloudProductRegistryReadServiceRestTransport._BaseGetLogicalProduct._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudProductRegistryReadServiceRestTransport._BaseGetLogicalProduct._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudProductRegistryReadServiceRestTransport._BaseGetLogicalProduct,
+                    "_BaseGetLogicalProduct__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -812,17 +814,18 @@ class CloudProductRegistryReadServiceRestTransport(
             """
 
             http_options = _BaseCloudProductRegistryReadServiceRestTransport._BaseGetLogicalProductVariant._get_http_options()
-
             request, metadata = self._interceptor.pre_get_logical_product_variant(
                 request, metadata
             )
-            transcoded_request = _BaseCloudProductRegistryReadServiceRestTransport._BaseGetLogicalProductVariant._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudProductRegistryReadServiceRestTransport._BaseGetLogicalProductVariant._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudProductRegistryReadServiceRestTransport._BaseGetLogicalProductVariant,
+                    "_BaseGetLogicalProductVariant__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -962,17 +965,18 @@ class CloudProductRegistryReadServiceRestTransport(
             """
 
             http_options = _BaseCloudProductRegistryReadServiceRestTransport._BaseGetProductSuite._get_http_options()
-
             request, metadata = self._interceptor.pre_get_product_suite(
                 request, metadata
             )
-            transcoded_request = _BaseCloudProductRegistryReadServiceRestTransport._BaseGetProductSuite._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudProductRegistryReadServiceRestTransport._BaseGetProductSuite._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudProductRegistryReadServiceRestTransport._BaseGetProductSuite,
+                    "_BaseGetProductSuite__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1112,17 +1116,18 @@ class CloudProductRegistryReadServiceRestTransport(
             """
 
             http_options = _BaseCloudProductRegistryReadServiceRestTransport._BaseListLogicalProducts._get_http_options()
-
             request, metadata = self._interceptor.pre_list_logical_products(
                 request, metadata
             )
-            transcoded_request = _BaseCloudProductRegistryReadServiceRestTransport._BaseListLogicalProducts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudProductRegistryReadServiceRestTransport._BaseListLogicalProducts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudProductRegistryReadServiceRestTransport._BaseListLogicalProducts,
+                    "_BaseListLogicalProducts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1267,17 +1272,18 @@ class CloudProductRegistryReadServiceRestTransport(
             """
 
             http_options = _BaseCloudProductRegistryReadServiceRestTransport._BaseListLogicalProductVariants._get_http_options()
-
             request, metadata = self._interceptor.pre_list_logical_product_variants(
                 request, metadata
             )
-            transcoded_request = _BaseCloudProductRegistryReadServiceRestTransport._BaseListLogicalProductVariants._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudProductRegistryReadServiceRestTransport._BaseListLogicalProductVariants._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudProductRegistryReadServiceRestTransport._BaseListLogicalProductVariants,
+                    "_BaseListLogicalProductVariants__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1425,17 +1431,18 @@ class CloudProductRegistryReadServiceRestTransport(
             """
 
             http_options = _BaseCloudProductRegistryReadServiceRestTransport._BaseListProductSuites._get_http_options()
-
             request, metadata = self._interceptor.pre_list_product_suites(
                 request, metadata
             )
-            transcoded_request = _BaseCloudProductRegistryReadServiceRestTransport._BaseListProductSuites._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudProductRegistryReadServiceRestTransport._BaseListProductSuites._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudProductRegistryReadServiceRestTransport._BaseListProductSuites,
+                    "_BaseListProductSuites__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1574,15 +1581,16 @@ class CloudProductRegistryReadServiceRestTransport(
             """
 
             http_options = _BaseCloudProductRegistryReadServiceRestTransport._BaseLookupEntity._get_http_options()
-
             request, metadata = self._interceptor.pre_lookup_entity(request, metadata)
-            transcoded_request = _BaseCloudProductRegistryReadServiceRestTransport._BaseLookupEntity._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudProductRegistryReadServiceRestTransport._BaseLookupEntity._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudProductRegistryReadServiceRestTransport._BaseLookupEntity,
+                    "_BaseLookupEntity__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -4,6 +4,21 @@
 
 [1]: https://pypi.org/project/google-apps-meet/#history
 
+## [0.5.2](https://github.com/googleapis/google-cloud-python/compare/google-apps-meet-v0.5.1...google-apps-meet-v0.5.2) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [0.5.1](https://github.com/googleapis/google-cloud-python/compare/google-apps-meet-v0.5.0...google-apps-meet-v0.5.1) (2026-09-17)
+
+
+### Features
+
+* update API sources and regenerate ([#18396](https://github.com/googleapis/google-cloud-python/issues/18396)) ([e9f8e59](https://github.com/googleapis/google-cloud-python/commit/e9f8e590b7b395e660cc5437535166dfb920d246))
+* update API sources and regenerate. ([e9f8e59](https://github.com/googleapis/google-cloud-python/commit/e9f8e590b7b395e660cc5437535166dfb920d246))
+
 ## [0.5.0](https://github.com/googleapis/google-cloud-python/compare/google-apps-meet-v0.4.0...google-apps-meet-v0.5.0) (2026-06-02)
 
 

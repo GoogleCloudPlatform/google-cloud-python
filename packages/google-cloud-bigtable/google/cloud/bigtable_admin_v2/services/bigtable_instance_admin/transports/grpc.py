@@ -706,6 +706,94 @@ class BigtableInstanceAdminGrpcTransport(BigtableInstanceAdminTransport):
         return self._stubs["delete_cluster"]
 
     @property
+    def update_memory_layer(
+        self,
+    ) -> Callable[
+        [bigtable_instance_admin.UpdateMemoryLayerRequest], operations_pb2.Operation
+    ]:
+        r"""Return a callable for the update memory layer method over gRPC.
+
+        Updates the memory layer of a cluster.
+
+        To enable the memory layer, set the memory_config. To disable
+        the memory layer, unset the memory_config.
+
+        Returns:
+            Callable[[~.UpdateMemoryLayerRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_memory_layer" not in self._stubs:
+            self._stubs["update_memory_layer"] = self._logged_channel.unary_unary(
+                "/google.bigtable.admin.v2.BigtableInstanceAdmin/UpdateMemoryLayer",
+                request_serializer=bigtable_instance_admin.UpdateMemoryLayerRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["update_memory_layer"]
+
+    @property
+    def list_memory_layers(
+        self,
+    ) -> Callable[
+        [bigtable_instance_admin.ListMemoryLayersRequest],
+        bigtable_instance_admin.ListMemoryLayersResponse,
+    ]:
+        r"""Return a callable for the list memory layers method over gRPC.
+
+        Lists information about memory layers.
+
+        Returns:
+            Callable[[~.ListMemoryLayersRequest],
+                    ~.ListMemoryLayersResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_memory_layers" not in self._stubs:
+            self._stubs["list_memory_layers"] = self._logged_channel.unary_unary(
+                "/google.bigtable.admin.v2.BigtableInstanceAdmin/ListMemoryLayers",
+                request_serializer=bigtable_instance_admin.ListMemoryLayersRequest.serialize,
+                response_deserializer=bigtable_instance_admin.ListMemoryLayersResponse.deserialize,
+            )
+        return self._stubs["list_memory_layers"]
+
+    @property
+    def get_memory_layer(
+        self,
+    ) -> Callable[
+        [bigtable_instance_admin.GetMemoryLayerRequest], instance.MemoryLayer
+    ]:
+        r"""Return a callable for the get memory layer method over gRPC.
+
+        Gets information about the memory layer of a cluster.
+
+        Returns:
+            Callable[[~.GetMemoryLayerRequest],
+                    ~.MemoryLayer]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_memory_layer" not in self._stubs:
+            self._stubs["get_memory_layer"] = self._logged_channel.unary_unary(
+                "/google.bigtable.admin.v2.BigtableInstanceAdmin/GetMemoryLayer",
+                request_serializer=bigtable_instance_admin.GetMemoryLayerRequest.serialize,
+                response_deserializer=instance.MemoryLayer.deserialize,
+            )
+        return self._stubs["get_memory_layer"]
+
+    @property
     def create_app_profile(
         self,
     ) -> Callable[

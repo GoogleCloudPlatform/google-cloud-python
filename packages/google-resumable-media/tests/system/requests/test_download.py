@@ -23,13 +23,11 @@ import google.auth  # type: ignore
 import google.auth.transport.requests as tr_requests  # type: ignore
 import pytest  # type: ignore
 
-from google.resumable_media import common
 import google.resumable_media.requests as resumable_requests
-from google.resumable_media import _helpers
-from google.resumable_media.requests import _request_helpers
 import google.resumable_media.requests.download as download_mod
+from google.resumable_media import _helpers, common
+from google.resumable_media.requests import _request_helpers
 from tests.system import utils
-
 
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
 DATA_DIR = os.path.join(CURR_DIR, "..", "..", "data")

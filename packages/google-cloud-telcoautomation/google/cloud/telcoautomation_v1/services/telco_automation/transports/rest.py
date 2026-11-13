@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.telcoautomation_v1._compat import transcode_request
 from google.cloud.telcoautomation_v1.types import telcoautomation
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -2445,21 +2446,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseApplyDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_apply_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseApplyDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseApplyDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseApplyDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseApplyDeployment,
+                    "_BaseApplyDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2601,21 +2599,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseApplyHydratedDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_apply_hydrated_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseApplyHydratedDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseApplyHydratedDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseApplyHydratedDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseApplyHydratedDeployment,
+                    "_BaseApplyHydratedDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2767,21 +2762,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseApproveBlueprint._get_http_options()
-
             request, metadata = self._interceptor.pre_approve_blueprint(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseApproveBlueprint._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseApproveBlueprint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseApproveBlueprint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseApproveBlueprint,
+                    "_BaseApproveBlueprint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2917,17 +2909,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseComputeDeploymentStatus._get_http_options()
-
             request, metadata = self._interceptor.pre_compute_deployment_status(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseComputeDeploymentStatus._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseComputeDeploymentStatus._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseComputeDeploymentStatus,
+                    "_BaseComputeDeploymentStatus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3080,21 +3073,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseCreateBlueprint._get_http_options()
-
             request, metadata = self._interceptor.pre_create_blueprint(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseCreateBlueprint._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseCreateBlueprint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseCreateBlueprint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseCreateBlueprint,
+                    "_BaseCreateBlueprint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3235,21 +3225,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseCreateDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_create_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseCreateDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseCreateDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseCreateDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseCreateDeployment,
+                    "_BaseCreateDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3390,19 +3377,16 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             http_options = (
                 _BaseTelcoAutomationRestTransport._BaseCreateEdgeSlm._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_edge_slm(request, metadata)
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseCreateEdgeSlm._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseCreateEdgeSlm._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseCreateEdgeSlm._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseCreateEdgeSlm,
+                    "_BaseCreateEdgeSlm__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3542,21 +3526,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseCreateOrchestrationCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_create_orchestration_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseCreateOrchestrationCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseCreateOrchestrationCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseCreateOrchestrationCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseCreateOrchestrationCluster,
+                    "_BaseCreateOrchestrationCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3687,17 +3668,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseDeleteBlueprint._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_blueprint(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseDeleteBlueprint._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseDeleteBlueprint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseDeleteBlueprint,
+                    "_BaseDeleteBlueprint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3802,15 +3784,16 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             http_options = (
                 _BaseTelcoAutomationRestTransport._BaseDeleteEdgeSlm._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_edge_slm(request, metadata)
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseDeleteEdgeSlm._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseDeleteEdgeSlm._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseDeleteEdgeSlm,
+                    "_BaseDeleteEdgeSlm__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3948,17 +3931,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseDeleteOrchestrationCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_orchestration_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseDeleteOrchestrationCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseDeleteOrchestrationCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseDeleteOrchestrationCluster,
+                    "_BaseDeleteOrchestrationCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4094,21 +4078,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseDiscardBlueprintChanges._get_http_options()
-
             request, metadata = self._interceptor.pre_discard_blueprint_changes(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseDiscardBlueprintChanges._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseDiscardBlueprintChanges._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseDiscardBlueprintChanges._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseDiscardBlueprintChanges,
+                    "_BaseDiscardBlueprintChanges__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4252,21 +4233,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseDiscardDeploymentChanges._get_http_options()
-
             request, metadata = self._interceptor.pre_discard_deployment_changes(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseDiscardDeploymentChanges._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseDiscardDeploymentChanges._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseDiscardDeploymentChanges._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseDiscardDeploymentChanges,
+                    "_BaseDiscardDeploymentChanges__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4421,15 +4399,16 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             http_options = (
                 _BaseTelcoAutomationRestTransport._BaseGetBlueprint._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_blueprint(request, metadata)
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseGetBlueprint._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseGetBlueprint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseGetBlueprint,
+                    "_BaseGetBlueprint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4570,15 +4549,16 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             http_options = (
                 _BaseTelcoAutomationRestTransport._BaseGetDeployment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_deployment(request, metadata)
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseGetDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseGetDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseGetDeployment,
+                    "_BaseGetDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4719,15 +4699,16 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             http_options = (
                 _BaseTelcoAutomationRestTransport._BaseGetEdgeSlm._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_edge_slm(request, metadata)
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseGetEdgeSlm._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseGetEdgeSlm._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseGetEdgeSlm,
+                    "_BaseGetEdgeSlm__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4866,17 +4847,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseGetHydratedDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_get_hydrated_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseGetHydratedDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseGetHydratedDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseGetHydratedDeployment,
+                    "_BaseGetHydratedDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5019,17 +5001,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseGetOrchestrationCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_get_orchestration_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseGetOrchestrationCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseGetOrchestrationCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseGetOrchestrationCluster,
+                    "_BaseGetOrchestrationCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5177,17 +5160,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseGetPublicBlueprint._get_http_options()
-
             request, metadata = self._interceptor.pre_get_public_blueprint(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseGetPublicBlueprint._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseGetPublicBlueprint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseGetPublicBlueprint,
+                    "_BaseGetPublicBlueprint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5322,17 +5306,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseListBlueprintRevisions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_blueprint_revisions(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseListBlueprintRevisions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseListBlueprintRevisions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseListBlueprintRevisions,
+                    "_BaseListBlueprintRevisions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5470,15 +5455,16 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseListBlueprints._get_http_options()
-
             request, metadata = self._interceptor.pre_list_blueprints(request, metadata)
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseListBlueprints._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseListBlueprints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseListBlueprints,
+                    "_BaseListBlueprints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5618,17 +5604,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseListDeploymentRevisions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_deployment_revisions(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseListDeploymentRevisions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseListDeploymentRevisions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseListDeploymentRevisions,
+                    "_BaseListDeploymentRevisions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5768,17 +5755,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseListDeployments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_deployments(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseListDeployments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseListDeployments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseListDeployments,
+                    "_BaseListDeployments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5919,15 +5907,16 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             http_options = (
                 _BaseTelcoAutomationRestTransport._BaseListEdgeSlms._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_edge_slms(request, metadata)
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseListEdgeSlms._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseListEdgeSlms._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseListEdgeSlms,
+                    "_BaseListEdgeSlms__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6064,17 +6053,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseListHydratedDeployments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_hydrated_deployments(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseListHydratedDeployments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseListHydratedDeployments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseListHydratedDeployments,
+                    "_BaseListHydratedDeployments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6219,17 +6209,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseListOrchestrationClusters._get_http_options()
-
             request, metadata = self._interceptor.pre_list_orchestration_clusters(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseListOrchestrationClusters._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseListOrchestrationClusters._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseListOrchestrationClusters,
+                    "_BaseListOrchestrationClusters__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6370,17 +6361,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseListPublicBlueprints._get_http_options()
-
             request, metadata = self._interceptor.pre_list_public_blueprints(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseListPublicBlueprints._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseListPublicBlueprints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseListPublicBlueprints,
+                    "_BaseListPublicBlueprints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6529,21 +6521,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseProposeBlueprint._get_http_options()
-
             request, metadata = self._interceptor.pre_propose_blueprint(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseProposeBlueprint._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseProposeBlueprint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseProposeBlueprint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseProposeBlueprint,
+                    "_BaseProposeBlueprint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6691,21 +6680,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseRejectBlueprint._get_http_options()
-
             request, metadata = self._interceptor.pre_reject_blueprint(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseRejectBlueprint._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseRejectBlueprint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseRejectBlueprint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseRejectBlueprint,
+                    "_BaseRejectBlueprint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6837,21 +6823,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseRemoveDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseRemoveDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseRemoveDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseRemoveDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseRemoveDeployment,
+                    "_BaseRemoveDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6959,21 +6942,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseRollbackDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_rollback_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseRollbackDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseRollbackDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseRollbackDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseRollbackDeployment,
+                    "_BaseRollbackDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7110,17 +7090,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseSearchBlueprintRevisions._get_http_options()
-
             request, metadata = self._interceptor.pre_search_blueprint_revisions(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseSearchBlueprintRevisions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseSearchBlueprintRevisions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseSearchBlueprintRevisions,
+                    "_BaseSearchBlueprintRevisions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7262,17 +7243,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseSearchDeploymentRevisions._get_http_options()
-
             request, metadata = self._interceptor.pre_search_deployment_revisions(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseSearchDeploymentRevisions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseSearchDeploymentRevisions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseSearchDeploymentRevisions,
+                    "_BaseSearchDeploymentRevisions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7425,21 +7407,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseUpdateBlueprint._get_http_options()
-
             request, metadata = self._interceptor.pre_update_blueprint(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseUpdateBlueprint._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseUpdateBlueprint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseUpdateBlueprint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseUpdateBlueprint,
+                    "_BaseUpdateBlueprint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7580,21 +7559,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseUpdateDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_update_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseUpdateDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseUpdateDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseUpdateDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseUpdateDeployment,
+                    "_BaseUpdateDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7736,21 +7712,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseUpdateHydratedDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_update_hydrated_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseUpdateHydratedDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseUpdateHydratedDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseUpdateHydratedDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseUpdateHydratedDeployment,
+                    "_BaseUpdateHydratedDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8271,15 +8244,16 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             http_options = (
                 _BaseTelcoAutomationRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8411,15 +8385,16 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             http_options = (
                 _BaseTelcoAutomationRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8547,21 +8522,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTelcoAutomationRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8664,17 +8636,18 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8781,15 +8754,16 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             http_options = (
                 _BaseTelcoAutomationRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8919,15 +8893,16 @@ class TelcoAutomationRestTransport(_BaseTelcoAutomationRestTransport):
             """
 
             http_options = _BaseTelcoAutomationRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseTelcoAutomationRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTelcoAutomationRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTelcoAutomationRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

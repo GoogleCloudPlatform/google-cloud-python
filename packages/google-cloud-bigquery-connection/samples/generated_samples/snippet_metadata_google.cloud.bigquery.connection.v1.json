@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-bigquery-connection",
-    "version": "1.22.0"
+    "version": "1.23.0"
   },
   "snippets": [
     {

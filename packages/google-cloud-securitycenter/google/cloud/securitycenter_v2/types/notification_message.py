@@ -47,6 +47,8 @@ class NotificationMessage(proto.Message):
         resource (google.cloud.securitycenter_v2.types.Resource):
             The Cloud resource tied to this
             notification's Finding.
+        deleted_finding (bool):
+            Indicates whether the finding is deleted.
     """
 
     notification_config_name: str = proto.Field(
@@ -63,6 +65,10 @@ class NotificationMessage(proto.Message):
         proto.MESSAGE,
         number=3,
         message=gcs_resource.Resource,
+    )
+    deleted_finding: bool = proto.Field(
+        proto.BOOL,
+        number=5,
     )
 
 

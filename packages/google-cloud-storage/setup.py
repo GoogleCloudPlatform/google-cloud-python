@@ -54,7 +54,7 @@ dependencies = [
     # this dependency.
     "google-resumable-media >= 2.7.2, < 3.0.0",
     "requests >= 2.22.0, < 3.0.0",
-    "google-crc32c >= 1.6.0, < 2.0.0",
+    "google-crc32c >= 1.9.0, < 2.0.0",
 ]
 extras = {
     # TODO: Make these extra dependencies as mandatory once gRPC out of
@@ -132,6 +132,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
         "Operating System :: OS Independent",
         "Topic :: Internet",
     ],

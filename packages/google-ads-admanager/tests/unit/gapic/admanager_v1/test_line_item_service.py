@@ -40,8 +40,12 @@ except ImportError:  # pragma: NO COVER
 
 import google.auth
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.type.dayofweek_pb2 as dayofweek_pb2  # type: ignore
+import google.type.interval_pb2 as interval_pb2  # type: ignore
 import google.type.money_pb2 as money_pb2  # type: ignore
+import google.type.timeofday_pb2 as timeofday_pb2  # type: ignore
 from google.api_core import (
     client_options,
     gapic_v1,
@@ -63,18 +67,25 @@ from google.ads.admanager_v1.services.line_item_service import (
 )
 from google.ads.admanager_v1.types import (
     applied_label,
+    brand_lift_partner_enum,
     child_content_eligibility_enum,
     creative_placeholder,
     creative_targeting,
     custom_field_value,
     custom_pacing_curve,
+    custom_pacing_goal_unit_enum,
+    dayparting_time_zone_enum,
     delivery_enums,
     delivery_indicator,
+    discount_type_enum,
     environment_type_enum,
     exclusion_scope_enum,
     frequency_cap,
     goal,
+    goal_enums,
+    grp_provider_enum,
     grp_settings,
+    grp_target_gender_enum,
     line_item_allowed_format_enum,
     line_item_deal_info,
     line_item_delivery_forecast_source_enum,
@@ -83,9 +94,19 @@ from google.ads.admanager_v1.types import (
     line_item_messages,
     line_item_service,
     line_item_stats,
+    nielsen_ctv_pacing_enum,
+    pacing_device_categorization_enum,
+    reach_partner_enum,
+    request_platform_enum,
+    size,
+    size_type_enum,
     skippable_ad_type_enum,
+    targeted_video_bumper_type_enum,
     targeting,
     third_party_measurement_settings,
+    time_unit_enum,
+    video_position_enum,
+    viewability_partner_enum,
 )
 
 CRED_INFO_JSON = {
@@ -94,6 +115,18 @@ CRED_INFO_JSON = {
     "principal": "service-account@example.com",
 }
 CRED_INFO_STRING = json.dumps(CRED_INFO_JSON)
+
+
+@pytest.fixture(autouse=True)
+def disable_mtls_env():
+    with mock.patch.dict(
+        os.environ,
+        {
+            "GOOGLE_API_USE_CLIENT_CERTIFICATE": "false",
+            "CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE": "false",
+        },
+    ):
+        yield
 
 
 async def mock_async_gen(data, chunk_size=1):
@@ -151,210 +184,6 @@ def set_event_loop():
             asyncio.set_event_loop(None)
 
 
-def test__get_default_mtls_endpoint():
-    api_endpoint = "example.googleapis.com"
-    api_mtls_endpoint = "example.mtls.googleapis.com"
-    sandbox_endpoint = "example.sandbox.googleapis.com"
-    sandbox_mtls_endpoint = "example.mtls.sandbox.googleapis.com"
-    non_googleapi = "api.example.com"
-    custom_endpoint = ".custom"
-
-    assert LineItemServiceClient._get_default_mtls_endpoint(None) is None
-    assert (
-        LineItemServiceClient._get_default_mtls_endpoint(api_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        LineItemServiceClient._get_default_mtls_endpoint(api_mtls_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        LineItemServiceClient._get_default_mtls_endpoint(sandbox_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        LineItemServiceClient._get_default_mtls_endpoint(sandbox_mtls_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        LineItemServiceClient._get_default_mtls_endpoint(non_googleapi) == non_googleapi
-    )
-    assert (
-        LineItemServiceClient._get_default_mtls_endpoint(custom_endpoint)
-        == custom_endpoint
-    )
-
-
-def test__read_environment_variables():
-    assert LineItemServiceClient._read_environment_variables() == (False, "auto", None)
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-        assert LineItemServiceClient._read_environment_variables() == (
-            True,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}):
-        assert LineItemServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}
-    ):
-        if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-            with pytest.raises(ValueError) as excinfo:
-                LineItemServiceClient._read_environment_variables()
-            assert (
-                str(excinfo.value)
-                == "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be either `true` or `false`"
-            )
-        else:
-            assert LineItemServiceClient._read_environment_variables() == (
-                False,
-                "auto",
-                None,
-            )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "never"}):
-        assert LineItemServiceClient._read_environment_variables() == (
-            False,
-            "never",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "always"}):
-        assert LineItemServiceClient._read_environment_variables() == (
-            False,
-            "always",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "auto"}):
-        assert LineItemServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "Unsupported"}):
-        with pytest.raises(MutualTLSChannelError) as excinfo:
-            LineItemServiceClient._read_environment_variables()
-    assert (
-        str(excinfo.value)
-        == "Environment variable `GOOGLE_API_USE_MTLS_ENDPOINT` must be `never`, `auto` or `always`"
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_CLOUD_UNIVERSE_DOMAIN": "foo.com"}):
-        assert LineItemServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            "foo.com",
-        )
-
-
-def test_use_client_cert_effective():
-    # Test case 1: Test when `should_use_client_cert` returns True.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=True
-        ):
-            assert LineItemServiceClient._use_client_cert_effective() is True
-
-    # Test case 2: Test when `should_use_client_cert` returns False.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should NOT be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=False
-        ):
-            assert LineItemServiceClient._use_client_cert_effective() is False
-
-    # Test case 3: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "true".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-            assert LineItemServiceClient._use_client_cert_effective() is True
-
-    # Test case 4: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}
-        ):
-            assert LineItemServiceClient._use_client_cert_effective() is False
-
-    # Test case 5: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "True".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "True"}):
-            assert LineItemServiceClient._use_client_cert_effective() is True
-
-    # Test case 6: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "False".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "False"}
-        ):
-            assert LineItemServiceClient._use_client_cert_effective() is False
-
-    # Test case 7: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "TRUE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "TRUE"}):
-            assert LineItemServiceClient._use_client_cert_effective() is True
-
-    # Test case 8: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "FALSE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "FALSE"}
-        ):
-            assert LineItemServiceClient._use_client_cert_effective() is False
-
-    # Test case 9: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not set.
-    # In this case, the method should return False, which is the default value.
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, clear=True):
-            assert LineItemServiceClient._use_client_cert_effective() is False
-
-    # Test case 10: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should raise a ValueError as the environment variable must be either
-    # "true" or "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            with pytest.raises(ValueError):
-                LineItemServiceClient._use_client_cert_effective()
-
-    # Test case 11: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should return False as the environment variable is set to an invalid value.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            assert LineItemServiceClient._use_client_cert_effective() is False
-
-    # Test case 12: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is unset. Also,
-    # the GOOGLE_API_CONFIG environment variable is unset.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": ""}):
-            with mock.patch.dict(os.environ, {"GOOGLE_API_CERTIFICATE_CONFIG": ""}):
-                assert LineItemServiceClient._use_client_cert_effective() is False
-
-
 def test__get_client_cert_source():
     mock_provided_cert_source = mock.Mock()
     mock_default_cert_source = mock.Mock()
@@ -386,92 +215,6 @@ def test__get_client_cert_source():
                 )
                 is mock_provided_cert_source
             )
-
-
-@mock.patch.object(
-    LineItemServiceClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(LineItemServiceClient),
-)
-def test__get_api_endpoint():
-    api_override = "foo.com"
-    mock_client_cert_source = mock.Mock()
-    default_universe = LineItemServiceClient._DEFAULT_UNIVERSE
-    default_endpoint = LineItemServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=default_universe
-    )
-    mock_universe = "bar.com"
-    mock_endpoint = LineItemServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=mock_universe
-    )
-
-    assert (
-        LineItemServiceClient._get_api_endpoint(
-            api_override, mock_client_cert_source, default_universe, "always"
-        )
-        == api_override
-    )
-    assert (
-        LineItemServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "auto"
-        )
-        == LineItemServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        LineItemServiceClient._get_api_endpoint(None, None, default_universe, "auto")
-        == default_endpoint
-    )
-    assert (
-        LineItemServiceClient._get_api_endpoint(None, None, default_universe, "always")
-        == LineItemServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        LineItemServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "always"
-        )
-        == LineItemServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        LineItemServiceClient._get_api_endpoint(None, None, mock_universe, "never")
-        == mock_endpoint
-    )
-    assert (
-        LineItemServiceClient._get_api_endpoint(None, None, default_universe, "never")
-        == default_endpoint
-    )
-
-    with pytest.raises(MutualTLSChannelError) as excinfo:
-        LineItemServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, mock_universe, "auto"
-        )
-    assert (
-        str(excinfo.value)
-        == "mTLS is not supported in any universe other than googleapis.com."
-    )
-
-
-def test__get_universe_domain():
-    client_universe_domain = "foo.com"
-    universe_domain_env = "bar.com"
-
-    assert (
-        LineItemServiceClient._get_universe_domain(
-            client_universe_domain, universe_domain_env
-        )
-        == client_universe_domain
-    )
-    assert (
-        LineItemServiceClient._get_universe_domain(None, universe_domain_env)
-        == universe_domain_env
-    )
-    assert (
-        LineItemServiceClient._get_universe_domain(None, None)
-        == LineItemServiceClient._DEFAULT_UNIVERSE
-    )
-
-    with pytest.raises(ValueError) as excinfo:
-        LineItemServiceClient._get_universe_domain("", None)
-    assert str(excinfo.value) == "Universe Domain cannot be an empty string."
 
 
 @pytest.mark.parametrize(
@@ -945,6 +688,7 @@ def test_line_item_service_client_get_mtls_endpoint_and_cert_source(client_class
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", None)
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", None)
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -999,6 +743,7 @@ def test_line_item_service_client_get_mtls_endpoint_and_cert_source(client_class
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", "")
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", "")
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1266,19 +1011,19 @@ def test_get_line_item_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_line_item._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetLineItem,
+        "_BaseGetLineItem__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_line_item._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -1324,15 +1069,6 @@ def test_get_line_item_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_line_item_rest_unset_required_fields():
-    transport = transports.LineItemServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_line_item._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_line_item_rest_flattened():
@@ -1442,29 +1178,30 @@ def test_list_line_items_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_line_items._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListLineItems,
+        "_BaseListLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_line_items._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
+            "orderBy",
+            "pageSize",
+            "pageToken",
             "skip",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -1510,26 +1247,6 @@ def test_list_line_items_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_line_items_rest_unset_required_fields():
-    transport = transports.LineItemServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_line_items._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-                "skip",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_line_items_rest_flattened():
@@ -1652,6 +1369,2542 @@ def test_list_line_items_rest_pager(transport: str = "rest"):
         pages = list(client.list_line_items(request=sample_request).pages)
         for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
             assert page_.raw_page.next_page_token == token
+
+
+def test_create_line_item_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.create_line_item in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.create_line_item] = (
+            mock_rpc
+        )
+
+        request = {}
+        client.create_line_item(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.create_line_item(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_create_line_item_rest_required_fields(
+    request_type=line_item_service.CreateLineItemRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseCreateLineItem,
+        "_BaseCreateLineItem__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_messages.LineItem()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_messages.LineItem.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.create_line_item(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_create_line_item_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_messages.LineItem()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            line_item=line_item_messages.LineItem(name="name_value"),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_messages.LineItem.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.create_line_item(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems" % client.transport._host, args[1]
+        )
+
+
+def test_create_line_item_rest_flattened_error(transport: str = "rest"):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.create_line_item(
+            line_item_service.CreateLineItemRequest(),
+            parent="parent_value",
+            line_item=line_item_messages.LineItem(name="name_value"),
+        )
+
+
+def test_batch_create_line_items_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_create_line_items
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_create_line_items
+        ] = mock_rpc
+
+        request = {}
+        client.batch_create_line_items(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_create_line_items(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_create_line_items_rest_required_fields(
+    request_type=line_item_service.BatchCreateLineItemsRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchCreateLineItems,
+        "_BaseBatchCreateLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_service.BatchCreateLineItemsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_service.BatchCreateLineItemsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_create_line_items(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_create_line_items_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchCreateLineItemsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            requests=[line_item_service.CreateLineItemRequest(parent="parent_value")],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchCreateLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_create_line_items(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems:batchCreate" % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_create_line_items_rest_flattened_error(transport: str = "rest"):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_create_line_items(
+            line_item_service.BatchCreateLineItemsRequest(),
+            parent="parent_value",
+            requests=[line_item_service.CreateLineItemRequest(parent="parent_value")],
+        )
+
+
+def test_update_line_item_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.update_line_item in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.update_line_item] = (
+            mock_rpc
+        )
+
+        request = {}
+        client.update_line_item(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.update_line_item(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_update_line_item_rest_required_fields(
+    request_type=line_item_service.UpdateLineItemRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseUpdateLineItem,
+        "_BaseUpdateLineItem__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(("updateMask",))
+
+    # verify required fields with non-default values are left alone
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_messages.LineItem()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "patch",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_messages.LineItem.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.update_line_item(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_update_line_item_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_messages.LineItem()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"line_item": {"name": "networks/sample1/lineItems/sample2"}}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            line_item=line_item_messages.LineItem(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_messages.LineItem.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.update_line_item(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{line_item.name=networks/*/lineItems/*}" % client.transport._host,
+            args[1],
+        )
+
+
+def test_update_line_item_rest_flattened_error(transport: str = "rest"):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.update_line_item(
+            line_item_service.UpdateLineItemRequest(),
+            line_item=line_item_messages.LineItem(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+
+def test_batch_update_line_items_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_update_line_items
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_update_line_items
+        ] = mock_rpc
+
+        request = {}
+        client.batch_update_line_items(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_update_line_items(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_update_line_items_rest_required_fields(
+    request_type=line_item_service.BatchUpdateLineItemsRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchUpdateLineItems,
+        "_BaseBatchUpdateLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_service.BatchUpdateLineItemsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_service.BatchUpdateLineItemsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_update_line_items(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_update_line_items_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchUpdateLineItemsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            requests=[
+                line_item_service.UpdateLineItemRequest(
+                    line_item=line_item_messages.LineItem(name="name_value")
+                )
+            ],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchUpdateLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_update_line_items(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems:batchUpdate" % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_update_line_items_rest_flattened_error(transport: str = "rest"):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_update_line_items(
+            line_item_service.BatchUpdateLineItemsRequest(),
+            parent="parent_value",
+            requests=[
+                line_item_service.UpdateLineItemRequest(
+                    line_item=line_item_messages.LineItem(name="name_value")
+                )
+            ],
+        )
+
+
+def test_batch_activate_line_items_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_activate_line_items
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_activate_line_items
+        ] = mock_rpc
+
+        request = {}
+        client.batch_activate_line_items(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_activate_line_items(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_activate_line_items_rest_required_fields(
+    request_type=line_item_service.BatchActivateLineItemsRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchActivateLineItems,
+        "_BaseBatchActivateLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_service.BatchActivateLineItemsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_service.BatchActivateLineItemsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_activate_line_items(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_activate_line_items_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchActivateLineItemsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchActivateLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_activate_line_items(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems:batchActivate"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_activate_line_items_rest_flattened_error(transport: str = "rest"):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_activate_line_items(
+            line_item_service.BatchActivateLineItemsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
+
+
+def test_batch_pause_line_items_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_pause_line_items
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.batch_pause_line_items] = (
+            mock_rpc
+        )
+
+        request = {}
+        client.batch_pause_line_items(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_pause_line_items(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_pause_line_items_rest_required_fields(
+    request_type=line_item_service.BatchPauseLineItemsRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchPauseLineItems,
+        "_BaseBatchPauseLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_service.BatchPauseLineItemsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_service.BatchPauseLineItemsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_pause_line_items(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_pause_line_items_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchPauseLineItemsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchPauseLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_pause_line_items(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems:batchPause" % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_pause_line_items_rest_flattened_error(transport: str = "rest"):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_pause_line_items(
+            line_item_service.BatchPauseLineItemsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
+
+
+def test_batch_resume_line_items_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_resume_line_items
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_resume_line_items
+        ] = mock_rpc
+
+        request = {}
+        client.batch_resume_line_items(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_resume_line_items(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_resume_line_items_rest_required_fields(
+    request_type=line_item_service.BatchResumeLineItemsRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchResumeLineItems,
+        "_BaseBatchResumeLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_service.BatchResumeLineItemsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_service.BatchResumeLineItemsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_resume_line_items(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_resume_line_items_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchResumeLineItemsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchResumeLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_resume_line_items(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems:batchResume" % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_resume_line_items_rest_flattened_error(transport: str = "rest"):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_resume_line_items(
+            line_item_service.BatchResumeLineItemsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
+
+
+def test_batch_resume_and_overbook_line_items_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_resume_and_overbook_line_items
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_resume_and_overbook_line_items
+        ] = mock_rpc
+
+        request = {}
+        client.batch_resume_and_overbook_line_items(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_resume_and_overbook_line_items(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_resume_and_overbook_line_items_rest_required_fields(
+    request_type=line_item_service.BatchResumeAndOverbookLineItemsRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchResumeAndOverbookLineItems,
+        "_BaseBatchResumeAndOverbookLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_service.BatchResumeAndOverbookLineItemsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_service.BatchResumeAndOverbookLineItemsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_resume_and_overbook_line_items(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_resume_and_overbook_line_items_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchResumeAndOverbookLineItemsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchResumeAndOverbookLineItemsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_resume_and_overbook_line_items(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems:batchResumeAndOverbook"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_resume_and_overbook_line_items_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_resume_and_overbook_line_items(
+            line_item_service.BatchResumeAndOverbookLineItemsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
+
+
+def test_batch_delete_line_items_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_delete_line_items
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_delete_line_items
+        ] = mock_rpc
+
+        request = {}
+        client.batch_delete_line_items(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_delete_line_items(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_delete_line_items_rest_required_fields(
+    request_type=line_item_service.BatchDeleteLineItemsRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchDeleteLineItems,
+        "_BaseBatchDeleteLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = None
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = ""
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_delete_line_items(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_delete_line_items_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = None
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = ""
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_delete_line_items(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems:batchDelete" % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_delete_line_items_rest_flattened_error(transport: str = "rest"):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_delete_line_items(
+            line_item_service.BatchDeleteLineItemsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
+
+
+def test_batch_reserve_line_items_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_reserve_line_items
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_reserve_line_items
+        ] = mock_rpc
+
+        request = {}
+        client.batch_reserve_line_items(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_reserve_line_items(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_reserve_line_items_rest_required_fields(
+    request_type=line_item_service.BatchReserveLineItemsRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchReserveLineItems,
+        "_BaseBatchReserveLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_service.BatchReserveLineItemsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_service.BatchReserveLineItemsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_reserve_line_items(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_reserve_line_items_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchReserveLineItemsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchReserveLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_reserve_line_items(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems:batchReserve" % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_reserve_line_items_rest_flattened_error(transport: str = "rest"):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_reserve_line_items(
+            line_item_service.BatchReserveLineItemsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
+
+
+def test_batch_reserve_and_overbook_line_items_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_reserve_and_overbook_line_items
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_reserve_and_overbook_line_items
+        ] = mock_rpc
+
+        request = {}
+        client.batch_reserve_and_overbook_line_items(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_reserve_and_overbook_line_items(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_reserve_and_overbook_line_items_rest_required_fields(
+    request_type=line_item_service.BatchReserveAndOverbookLineItemsRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchReserveAndOverbookLineItems,
+        "_BaseBatchReserveAndOverbookLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_service.BatchReserveAndOverbookLineItemsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = (
+                line_item_service.BatchReserveAndOverbookLineItemsResponse.pb(
+                    return_value
+                )
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_reserve_and_overbook_line_items(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_reserve_and_overbook_line_items_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchReserveAndOverbookLineItemsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchReserveAndOverbookLineItemsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_reserve_and_overbook_line_items(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems:batchReserveAndOverbook"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_reserve_and_overbook_line_items_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_reserve_and_overbook_line_items(
+            line_item_service.BatchReserveAndOverbookLineItemsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
+
+
+def test_batch_release_line_items_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_release_line_items
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_release_line_items
+        ] = mock_rpc
+
+        request = {}
+        client.batch_release_line_items(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_release_line_items(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_release_line_items_rest_required_fields(
+    request_type=line_item_service.BatchReleaseLineItemsRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchReleaseLineItems,
+        "_BaseBatchReleaseLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_service.BatchReleaseLineItemsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_service.BatchReleaseLineItemsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_release_line_items(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_release_line_items_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchReleaseLineItemsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchReleaseLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_release_line_items(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems:batchRelease" % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_release_line_items_rest_flattened_error(transport: str = "rest"):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_release_line_items(
+            line_item_service.BatchReleaseLineItemsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
+
+
+def test_batch_archive_line_items_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_archive_line_items
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_archive_line_items
+        ] = mock_rpc
+
+        request = {}
+        client.batch_archive_line_items(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_archive_line_items(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_archive_line_items_rest_required_fields(
+    request_type=line_item_service.BatchArchiveLineItemsRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchArchiveLineItems,
+        "_BaseBatchArchiveLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_service.BatchArchiveLineItemsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_service.BatchArchiveLineItemsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_archive_line_items(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_archive_line_items_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchArchiveLineItemsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchArchiveLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_archive_line_items(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems:batchArchive" % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_archive_line_items_rest_flattened_error(transport: str = "rest"):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_archive_line_items(
+            line_item_service.BatchArchiveLineItemsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
+
+
+def test_batch_unarchive_line_items_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_unarchive_line_items
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_unarchive_line_items
+        ] = mock_rpc
+
+        request = {}
+        client.batch_unarchive_line_items(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_unarchive_line_items(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_unarchive_line_items_rest_required_fields(
+    request_type=line_item_service.BatchUnarchiveLineItemsRequest,
+):
+    transport_class = transports.LineItemServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchUnarchiveLineItems,
+        "_BaseBatchUnarchiveLineItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_service.BatchUnarchiveLineItemsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_service.BatchUnarchiveLineItemsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_unarchive_line_items(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_unarchive_line_items_rest_flattened():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchUnarchiveLineItemsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchUnarchiveLineItemsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_unarchive_line_items(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/lineItems:batchUnarchive"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_unarchive_line_items_rest_flattened_error(transport: str = "rest"):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_unarchive_line_items(
+            line_item_service.BatchUnarchiveLineItemsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
 
 
 def test_credentials_transport_error():
@@ -1822,6 +4075,7 @@ def test_get_line_item_rest_call_success(request_type):
             allowed_formats=[
                 line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat.AUDIO
             ],
+            allocation_delivery_profile="allocation_delivery_profile_value",
         )
 
         # Wrap the value into a proper Response obj
@@ -1918,6 +4172,7 @@ def test_get_line_item_rest_call_success(request_type):
     assert response.allowed_formats == [
         line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat.AUDIO
     ]
+    assert response.allocation_delivery_profile == "allocation_delivery_profile_value"
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -2125,6 +4380,3061 @@ def test_list_line_items_rest_interceptors(null_interceptor):
         post_with_metadata.assert_called_once()
 
 
+def test_create_line_item_rest_bad_request(
+    request_type=line_item_service.CreateLineItemRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.create_line_item(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.CreateLineItemRequest,
+        dict,
+    ],
+)
+def test_create_line_item_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request_init["line_item"] = {
+        "name": "name_value",
+        "order": "order_value",
+        "display_name": "display_name_value",
+        "external_line_item_id": "external_line_item_id_value",
+        "order_display_name": "order_display_name_value",
+        "start_time": {"seconds": 751, "nanos": 543},
+        "target_end_time": {},
+        "end_time": {},
+        "auto_extension_days": 2053,
+        "end_time_unlimited": True,
+        "creative_rotation_type": 1,
+        "delivery_rate_type": 3,
+        "delivery_forecast_source": 1,
+        "custom_pacing_curve": {
+            "custom_pacing_goal_unit": 1,
+            "custom_pacing_goals": [
+                {"start_time": {}, "use_line_item_start_time": True, "amount": 660}
+            ],
+        },
+        "roadblocking_type": 1,
+        "skippable_ad_type": 1,
+        "frequency_caps": [
+            {"max_impressions": 1633, "time_amount": 1186, "time_unit": 1}
+        ],
+        "line_item_type": 12,
+        "priority": 898,
+        "rate": {"currency_code": "currency_code_value", "units": 563, "nanos": 543},
+        "value_cpm": {},
+        "cost_type": 1,
+        "discount": {"discount_type": 1, "discount": 0.873},
+        "contracted_units_bought": 2465,
+        "creative_placeholders": [
+            {
+                "size": {"width": 544, "height": 633, "size_type": 1},
+                "companions": [{"size": {}}],
+                "expected_creative_count": 2444,
+                "applied_labels": [{"label": "label_value", "negated": True}],
+                "amp_only": True,
+                "creative_targeting_display_name": "creative_targeting_display_name_value",
+            }
+        ],
+        "environment_type": 1,
+        "companion_delivery_option": 1,
+        "allow_overbook": True,
+        "skip_inventory_check": True,
+        "skip_cross_selling_rule_warning_checks": True,
+        "reserve_on_creation": True,
+        "stats": {
+            "impressions_delivered": 2255,
+            "clicks_delivered": 1676,
+            "video_completions_delivered": 2870,
+            "video_starts_delivered": 2346,
+            "viewable_impressions_delivered": 3197,
+            "delivery_data": [1374, 1375],
+        },
+        "delivery_indicator": {
+            "expected_delivery_percentage": 0.2962,
+            "actual_delivery_percentage": 0.2746,
+        },
+        "budget": {},
+        "status": 1,
+        "reservation_status": 1,
+        "archived": True,
+        "web_property_code": "web_property_code_value",
+        "applied_labels": {},
+        "effective_applied_labels": {},
+        "same_advertiser_exception_enabled": True,
+        "update_source": "update_source_value",
+        "notes": "notes_value",
+        "competitive_constraint_scope": 1,
+        "update_time": {},
+        "create_time": {},
+        "custom_field_values": [
+            {
+                "custom_field": "custom_field_value",
+                "value": {
+                    "dropdown_value": 1513,
+                    "string_value": "string_value_value",
+                    "number_value": 0.1285,
+                    "toggle_value": True,
+                },
+            }
+        ],
+        "missing_creatives": True,
+        "third_party_measurement_settings": {
+            "viewability_partner": 1,
+            "viewability_client_id": "viewability_client_id_value",
+            "viewability_reporting_id": "viewability_reporting_id_value",
+            "publisher_viewability_partner": 1,
+            "publisher_viewability_client_id": "publisher_viewability_client_id_value",
+            "publisher_viewability_reporting_id": "publisher_viewability_reporting_id_value",
+            "brand_lift_partner": 1,
+            "brand_lift_client_id": "brand_lift_client_id_value",
+            "brand_lift_reporting_id": "brand_lift_reporting_id_value",
+            "reach_partner": 1,
+            "reach_client_id": "reach_client_id_value",
+            "reach_reporting_id": "reach_reporting_id_value",
+            "publisher_reach_partner": 1,
+            "publisher_reach_client_id": "publisher_reach_client_id_value",
+            "publisher_reach_reporting_id": "publisher_reach_reporting_id_value",
+        },
+        "youtube_kids_restricted": True,
+        "max_video_creative_duration": {"seconds": 751, "nanos": 543},
+        "goal": {"goal_type": 1, "unit_type": 1, "units": 563},
+        "secondary_goals": {},
+        "grp_settings": {
+            "min_target_age": 1462,
+            "max_target_age": 1464,
+            "target_gender": 1,
+            "provider": 1,
+            "in_target_ratio_estimate_milli_percent": 4028,
+            "nielsen_ctv_pacing_type": 1,
+            "pacing_device_categorization_type": 1,
+            "apply_true_coview": True,
+        },
+        "deal_info": {"external_deal_id": 1668},
+        "viewability_provider_companies": [
+            "viewability_provider_companies_value1",
+            "viewability_provider_companies_value2",
+        ],
+        "child_content_eligibility": 1,
+        "custom_vast_extension": "custom_vast_extension_value",
+        "sponsorship_exclusivity_enabled": True,
+        "repeated_creative_serving_enabled": True,
+        "targeting": {
+            "inventory_url_targeting": {
+                "targeted_inventory_urls": [
+                    "targeted_inventory_urls_value1",
+                    "targeted_inventory_urls_value2",
+                ],
+                "excluded_inventory_urls": [
+                    "excluded_inventory_urls_value1",
+                    "excluded_inventory_urls_value2",
+                ],
+            },
+            "geo_targeting": {
+                "targeted_geos": ["targeted_geos_value1", "targeted_geos_value2"],
+                "excluded_geos": ["excluded_geos_value1", "excluded_geos_value2"],
+            },
+            "technology_targeting": {
+                "bandwidth_targeting": {
+                    "targeted_bandwidth_groups": [
+                        "targeted_bandwidth_groups_value1",
+                        "targeted_bandwidth_groups_value2",
+                    ],
+                    "excluded_bandwidth_groups": [
+                        "excluded_bandwidth_groups_value1",
+                        "excluded_bandwidth_groups_value2",
+                    ],
+                },
+                "browser_targeting": {
+                    "targeted_browsers": [
+                        "targeted_browsers_value1",
+                        "targeted_browsers_value2",
+                    ],
+                    "excluded_browsers": [
+                        "excluded_browsers_value1",
+                        "excluded_browsers_value2",
+                    ],
+                },
+                "browser_language_targeting": {
+                    "targeted_browser_languages": [
+                        "targeted_browser_languages_value1",
+                        "targeted_browser_languages_value2",
+                    ],
+                    "excluded_browser_languages": [
+                        "excluded_browser_languages_value1",
+                        "excluded_browser_languages_value2",
+                    ],
+                },
+                "device_capability_targeting": {
+                    "targeted_capabilities": [
+                        "targeted_capabilities_value1",
+                        "targeted_capabilities_value2",
+                    ],
+                    "excluded_capabilities": [
+                        "excluded_capabilities_value1",
+                        "excluded_capabilities_value2",
+                    ],
+                },
+                "device_category_targeting": {
+                    "targeted_categories": [
+                        "targeted_categories_value1",
+                        "targeted_categories_value2",
+                    ],
+                    "excluded_categories": [
+                        "excluded_categories_value1",
+                        "excluded_categories_value2",
+                    ],
+                },
+                "device_manufacturer_targeting": {
+                    "targeted_device_manufacturers": [
+                        "targeted_device_manufacturers_value1",
+                        "targeted_device_manufacturers_value2",
+                    ],
+                    "excluded_device_manufacturers": [
+                        "excluded_device_manufacturers_value1",
+                        "excluded_device_manufacturers_value2",
+                    ],
+                    "targeted_mobile_devices": [
+                        "targeted_mobile_devices_value1",
+                        "targeted_mobile_devices_value2",
+                    ],
+                    "excluded_mobile_devices": [
+                        "excluded_mobile_devices_value1",
+                        "excluded_mobile_devices_value2",
+                    ],
+                    "targeted_mobile_device_submodels": [
+                        "targeted_mobile_device_submodels_value1",
+                        "targeted_mobile_device_submodels_value2",
+                    ],
+                    "excluded_mobile_device_submodels": [
+                        "excluded_mobile_device_submodels_value1",
+                        "excluded_mobile_device_submodels_value2",
+                    ],
+                },
+                "mobile_carrier_targeting": {
+                    "targeted_mobile_carriers": [
+                        "targeted_mobile_carriers_value1",
+                        "targeted_mobile_carriers_value2",
+                    ],
+                    "excluded_mobile_carriers": [
+                        "excluded_mobile_carriers_value1",
+                        "excluded_mobile_carriers_value2",
+                    ],
+                },
+                "operating_system_targeting": {
+                    "targeted_operating_systems": [
+                        "targeted_operating_systems_value1",
+                        "targeted_operating_systems_value2",
+                    ],
+                    "excluded_operating_systems": [
+                        "excluded_operating_systems_value1",
+                        "excluded_operating_systems_value2",
+                    ],
+                    "targeted_operating_system_versions": [
+                        "targeted_operating_system_versions_value1",
+                        "targeted_operating_system_versions_value2",
+                    ],
+                    "excluded_operating_system_versions": [
+                        "excluded_operating_system_versions_value1",
+                        "excluded_operating_system_versions_value2",
+                    ],
+                },
+            },
+            "inventory_size_targeting": {
+                "targeted_inventory_sizes": {},
+                "excluded_inventory_sizes": {},
+            },
+            "inventory_targeting": {
+                "targeted_ad_units": [
+                    {"include_descendants": True, "ad_unit": "ad_unit_value"}
+                ],
+                "excluded_ad_units": {},
+                "targeted_placements": [
+                    "targeted_placements_value1",
+                    "targeted_placements_value2",
+                ],
+            },
+            "request_platform_targeting": {"request_platforms": [1]},
+            "custom_targeting": {
+                "custom_targeting_clauses": [
+                    {
+                        "custom_targeting_literals": [
+                            {
+                                "negative": True,
+                                "custom_targeting_key": "custom_targeting_key_value",
+                                "custom_targeting_values": [
+                                    "custom_targeting_values_value1",
+                                    "custom_targeting_values_value2",
+                                ],
+                            }
+                        ],
+                        "audience_segment_targetings": [
+                            {
+                                "negative": True,
+                                "audience_segments": [
+                                    "audience_segments_value1",
+                                    "audience_segments_value2",
+                                ],
+                            }
+                        ],
+                        "cms_metadata_targetings": [
+                            {
+                                "negative": True,
+                                "cms_metadata_values": [
+                                    "cms_metadata_values_value1",
+                                    "cms_metadata_values_value2",
+                                ],
+                            }
+                        ],
+                    }
+                ]
+            },
+            "date_time_range_targeting": {
+                "targeted_range": [{"start_time": {}, "end_time": {}}]
+            },
+            "publisher_provided_signals_targeting": {
+                "targeted_taxonomy_categories": [
+                    "targeted_taxonomy_categories_value1",
+                    "targeted_taxonomy_categories_value2",
+                ],
+                "excluded_taxonomy_categories": [
+                    "excluded_taxonomy_categories_value1",
+                    "excluded_taxonomy_categories_value2",
+                ],
+            },
+            "user_domain_targeting": {
+                "targeted_user_domains": [
+                    "targeted_user_domains_value1",
+                    "targeted_user_domains_value2",
+                ],
+                "excluded_user_domains": [
+                    "excluded_user_domains_value1",
+                    "excluded_user_domains_value2",
+                ],
+            },
+            "contextual_targeting": {
+                "targeted_verticals": [
+                    "targeted_verticals_value1",
+                    "targeted_verticals_value2",
+                ],
+                "excluded_verticals": [
+                    "excluded_verticals_value1",
+                    "excluded_verticals_value2",
+                ],
+                "excluded_content_labels": [
+                    "excluded_content_labels_value1",
+                    "excluded_content_labels_value2",
+                ],
+            },
+            "video_position_targeting": {
+                "video_positions": [
+                    {
+                        "midroll_index": 1386,
+                        "reverse_midroll_index": 2245,
+                        "pod_position": 1303,
+                        "ad_spot": "ad_spot_value",
+                        "position_type": 1,
+                        "bumper_type": 1,
+                    }
+                ]
+            },
+            "data_segment_targeting": {"has_data_segment_targeting": True},
+            "request_format_targeting": {
+                "app_open_enabled": True,
+                "rewarded_enabled": True,
+                "rewarded_interstitial_enabled": True,
+                "interstitial_enabled": True,
+                "anchor_enabled": True,
+                "banner_enabled": True,
+                "instream_video_enabled": True,
+                "instream_audio_enabled": True,
+                "native_advanced_enabled": True,
+            },
+            "content_targeting": {
+                "targeted_content": [
+                    "targeted_content_value1",
+                    "targeted_content_value2",
+                ],
+                "excluded_content": [
+                    "excluded_content_value1",
+                    "excluded_content_value2",
+                ],
+                "targeted_content_bundles": [
+                    "targeted_content_bundles_value1",
+                    "targeted_content_bundles_value2",
+                ],
+                "excluded_content_bundles": [
+                    "excluded_content_bundles_value1",
+                    "excluded_content_bundles_value2",
+                ],
+            },
+            "mobile_application_targeting": {
+                "first_party_targeting": {
+                    "targeted_applications": [
+                        "targeted_applications_value1",
+                        "targeted_applications_value2",
+                    ],
+                    "excluded_applications": [
+                        "excluded_applications_value1",
+                        "excluded_applications_value2",
+                    ],
+                }
+            },
+            "day_part_targeting": {
+                "targeted_day_parts": [
+                    {
+                        "day_of_week": 1,
+                        "start_time": {
+                            "hours": 561,
+                            "minutes": 773,
+                            "seconds": 751,
+                            "nanos": 543,
+                        },
+                        "end_time": {},
+                    }
+                ],
+                "dayparting_time_zone": 1,
+            },
+            "buyer_user_list_targeting": {"has_buyer_user_list_targeting": True},
+        },
+        "creative_targetings": [
+            {
+                "creative_targeting_display_name": "creative_targeting_display_name_value",
+                "targeting": {},
+            }
+        ],
+        "allowed_formats": [1],
+        "allocation_delivery_profile": "allocation_delivery_profile_value",
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = line_item_service.CreateLineItemRequest.meta.fields["line_item"]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init["line_item"].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(0, len(request_init["line_item"][field])):
+                    del request_init["line_item"][field][i][subfield]
+            else:
+                del request_init["line_item"][field][subfield]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_messages.LineItem(
+            name="name_value",
+            order="order_value",
+            display_name="display_name_value",
+            external_line_item_id="external_line_item_id_value",
+            order_display_name="order_display_name_value",
+            auto_extension_days=2053,
+            end_time_unlimited=True,
+            creative_rotation_type=delivery_enums.CreativeRotationTypeEnum.CreativeRotationType.EVENLY,
+            delivery_rate_type=delivery_enums.LineItemDeliveryRateTypeEnum.LineItemDeliveryRateType.AS_FAST_AS_POSSIBLE,
+            delivery_forecast_source=line_item_delivery_forecast_source_enum.LineItemDeliveryForecastSourceEnum.LineItemDeliveryForecastSource.CUSTOM_PACING_CURVE,
+            roadblocking_type=delivery_enums.RoadblockingTypeEnum.RoadblockingType.ALL_ROADBLOCK,
+            skippable_ad_type=skippable_ad_type_enum.SkippableAdTypeEnum.SkippableAdType.ANY,
+            line_item_type=line_item_enums.LineItemTypeEnum.LineItemType.SPONSORSHIP,
+            priority=898,
+            cost_type=line_item_enums.LineItemCostTypeEnum.LineItemCostType.CPA,
+            contracted_units_bought=2465,
+            environment_type=environment_type_enum.EnvironmentTypeEnum.EnvironmentType.BROWSER,
+            companion_delivery_option=delivery_enums.CompanionDeliveryOptionEnum.CompanionDeliveryOption.OPTIONAL,
+            allow_overbook=True,
+            skip_inventory_check=True,
+            skip_cross_selling_rule_warning_checks=True,
+            reserve_on_creation=True,
+            status=line_item_enums.LineItemComputedStatusEnum.LineItemComputedStatus.CANCELED,
+            reservation_status=line_item_enums.LineItemReservationStatusEnum.LineItemReservationStatus.RESERVED,
+            archived=True,
+            web_property_code="web_property_code_value",
+            same_advertiser_exception_enabled=True,
+            update_source="update_source_value",
+            notes="notes_value",
+            competitive_constraint_scope=exclusion_scope_enum.ExclusionScopeEnum.ExclusionScope.PAGE,
+            missing_creatives=True,
+            youtube_kids_restricted=True,
+            viewability_provider_companies=["viewability_provider_companies_value"],
+            child_content_eligibility=child_content_eligibility_enum.ChildContentEligibilityEnum.ChildContentEligibility.ALLOWED,
+            custom_vast_extension="custom_vast_extension_value",
+            sponsorship_exclusivity_enabled=True,
+            repeated_creative_serving_enabled=True,
+            allowed_formats=[
+                line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat.AUDIO
+            ],
+            allocation_delivery_profile="allocation_delivery_profile_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_messages.LineItem.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.create_line_item(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, line_item_messages.LineItem)
+    assert response.name == "name_value"
+    assert response.order == "order_value"
+    assert response.display_name == "display_name_value"
+    assert response.external_line_item_id == "external_line_item_id_value"
+    assert response.order_display_name == "order_display_name_value"
+    assert response.auto_extension_days == 2053
+    assert response.end_time_unlimited is True
+    assert (
+        response.creative_rotation_type
+        == delivery_enums.CreativeRotationTypeEnum.CreativeRotationType.EVENLY
+    )
+    assert (
+        response.delivery_rate_type
+        == delivery_enums.LineItemDeliveryRateTypeEnum.LineItemDeliveryRateType.AS_FAST_AS_POSSIBLE
+    )
+    assert (
+        response.delivery_forecast_source
+        == line_item_delivery_forecast_source_enum.LineItemDeliveryForecastSourceEnum.LineItemDeliveryForecastSource.CUSTOM_PACING_CURVE
+    )
+    assert (
+        response.roadblocking_type
+        == delivery_enums.RoadblockingTypeEnum.RoadblockingType.ALL_ROADBLOCK
+    )
+    assert (
+        response.skippable_ad_type
+        == skippable_ad_type_enum.SkippableAdTypeEnum.SkippableAdType.ANY
+    )
+    assert (
+        response.line_item_type
+        == line_item_enums.LineItemTypeEnum.LineItemType.SPONSORSHIP
+    )
+    assert response.priority == 898
+    assert (
+        response.cost_type == line_item_enums.LineItemCostTypeEnum.LineItemCostType.CPA
+    )
+    assert response.contracted_units_bought == 2465
+    assert (
+        response.environment_type
+        == environment_type_enum.EnvironmentTypeEnum.EnvironmentType.BROWSER
+    )
+    assert (
+        response.companion_delivery_option
+        == delivery_enums.CompanionDeliveryOptionEnum.CompanionDeliveryOption.OPTIONAL
+    )
+    assert response.allow_overbook is True
+    assert response.skip_inventory_check is True
+    assert response.skip_cross_selling_rule_warning_checks is True
+    assert response.reserve_on_creation is True
+    assert (
+        response.status
+        == line_item_enums.LineItemComputedStatusEnum.LineItemComputedStatus.CANCELED
+    )
+    assert (
+        response.reservation_status
+        == line_item_enums.LineItemReservationStatusEnum.LineItemReservationStatus.RESERVED
+    )
+    assert response.archived is True
+    assert response.web_property_code == "web_property_code_value"
+    assert response.same_advertiser_exception_enabled is True
+    assert response.update_source == "update_source_value"
+    assert response.notes == "notes_value"
+    assert (
+        response.competitive_constraint_scope
+        == exclusion_scope_enum.ExclusionScopeEnum.ExclusionScope.PAGE
+    )
+    assert response.missing_creatives is True
+    assert response.youtube_kids_restricted is True
+    assert response.viewability_provider_companies == [
+        "viewability_provider_companies_value"
+    ]
+    assert (
+        response.child_content_eligibility
+        == child_content_eligibility_enum.ChildContentEligibilityEnum.ChildContentEligibility.ALLOWED
+    )
+    assert response.custom_vast_extension == "custom_vast_extension_value"
+    assert response.sponsorship_exclusivity_enabled is True
+    assert response.repeated_creative_serving_enabled is True
+    assert response.allowed_formats == [
+        line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat.AUDIO
+    ]
+    assert response.allocation_delivery_profile == "allocation_delivery_profile_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_create_line_item_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "post_create_line_item"
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_create_line_item_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "pre_create_line_item"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.CreateLineItemRequest.pb(
+            line_item_service.CreateLineItemRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_messages.LineItem.to_json(
+            line_item_messages.LineItem()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.CreateLineItemRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_messages.LineItem()
+        post_with_metadata.return_value = line_item_messages.LineItem(), metadata
+
+        client.create_line_item(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_create_line_items_rest_bad_request(
+    request_type=line_item_service.BatchCreateLineItemsRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_create_line_items(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.BatchCreateLineItemsRequest,
+        dict,
+    ],
+)
+def test_batch_create_line_items_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchCreateLineItemsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchCreateLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_create_line_items(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, line_item_service.BatchCreateLineItemsResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_create_line_items_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "post_batch_create_line_items"
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_create_line_items_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "pre_batch_create_line_items"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.BatchCreateLineItemsRequest.pb(
+            line_item_service.BatchCreateLineItemsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_service.BatchCreateLineItemsResponse.to_json(
+            line_item_service.BatchCreateLineItemsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.BatchCreateLineItemsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_service.BatchCreateLineItemsResponse()
+        post_with_metadata.return_value = (
+            line_item_service.BatchCreateLineItemsResponse(),
+            metadata,
+        )
+
+        client.batch_create_line_items(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_update_line_item_rest_bad_request(
+    request_type=line_item_service.UpdateLineItemRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"line_item": {"name": "networks/sample1/lineItems/sample2"}}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.update_line_item(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.UpdateLineItemRequest,
+        dict,
+    ],
+)
+def test_update_line_item_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"line_item": {"name": "networks/sample1/lineItems/sample2"}}
+    request_init["line_item"] = {
+        "name": "networks/sample1/lineItems/sample2",
+        "order": "order_value",
+        "display_name": "display_name_value",
+        "external_line_item_id": "external_line_item_id_value",
+        "order_display_name": "order_display_name_value",
+        "start_time": {"seconds": 751, "nanos": 543},
+        "target_end_time": {},
+        "end_time": {},
+        "auto_extension_days": 2053,
+        "end_time_unlimited": True,
+        "creative_rotation_type": 1,
+        "delivery_rate_type": 3,
+        "delivery_forecast_source": 1,
+        "custom_pacing_curve": {
+            "custom_pacing_goal_unit": 1,
+            "custom_pacing_goals": [
+                {"start_time": {}, "use_line_item_start_time": True, "amount": 660}
+            ],
+        },
+        "roadblocking_type": 1,
+        "skippable_ad_type": 1,
+        "frequency_caps": [
+            {"max_impressions": 1633, "time_amount": 1186, "time_unit": 1}
+        ],
+        "line_item_type": 12,
+        "priority": 898,
+        "rate": {"currency_code": "currency_code_value", "units": 563, "nanos": 543},
+        "value_cpm": {},
+        "cost_type": 1,
+        "discount": {"discount_type": 1, "discount": 0.873},
+        "contracted_units_bought": 2465,
+        "creative_placeholders": [
+            {
+                "size": {"width": 544, "height": 633, "size_type": 1},
+                "companions": [{"size": {}}],
+                "expected_creative_count": 2444,
+                "applied_labels": [{"label": "label_value", "negated": True}],
+                "amp_only": True,
+                "creative_targeting_display_name": "creative_targeting_display_name_value",
+            }
+        ],
+        "environment_type": 1,
+        "companion_delivery_option": 1,
+        "allow_overbook": True,
+        "skip_inventory_check": True,
+        "skip_cross_selling_rule_warning_checks": True,
+        "reserve_on_creation": True,
+        "stats": {
+            "impressions_delivered": 2255,
+            "clicks_delivered": 1676,
+            "video_completions_delivered": 2870,
+            "video_starts_delivered": 2346,
+            "viewable_impressions_delivered": 3197,
+            "delivery_data": [1374, 1375],
+        },
+        "delivery_indicator": {
+            "expected_delivery_percentage": 0.2962,
+            "actual_delivery_percentage": 0.2746,
+        },
+        "budget": {},
+        "status": 1,
+        "reservation_status": 1,
+        "archived": True,
+        "web_property_code": "web_property_code_value",
+        "applied_labels": {},
+        "effective_applied_labels": {},
+        "same_advertiser_exception_enabled": True,
+        "update_source": "update_source_value",
+        "notes": "notes_value",
+        "competitive_constraint_scope": 1,
+        "update_time": {},
+        "create_time": {},
+        "custom_field_values": [
+            {
+                "custom_field": "custom_field_value",
+                "value": {
+                    "dropdown_value": 1513,
+                    "string_value": "string_value_value",
+                    "number_value": 0.1285,
+                    "toggle_value": True,
+                },
+            }
+        ],
+        "missing_creatives": True,
+        "third_party_measurement_settings": {
+            "viewability_partner": 1,
+            "viewability_client_id": "viewability_client_id_value",
+            "viewability_reporting_id": "viewability_reporting_id_value",
+            "publisher_viewability_partner": 1,
+            "publisher_viewability_client_id": "publisher_viewability_client_id_value",
+            "publisher_viewability_reporting_id": "publisher_viewability_reporting_id_value",
+            "brand_lift_partner": 1,
+            "brand_lift_client_id": "brand_lift_client_id_value",
+            "brand_lift_reporting_id": "brand_lift_reporting_id_value",
+            "reach_partner": 1,
+            "reach_client_id": "reach_client_id_value",
+            "reach_reporting_id": "reach_reporting_id_value",
+            "publisher_reach_partner": 1,
+            "publisher_reach_client_id": "publisher_reach_client_id_value",
+            "publisher_reach_reporting_id": "publisher_reach_reporting_id_value",
+        },
+        "youtube_kids_restricted": True,
+        "max_video_creative_duration": {"seconds": 751, "nanos": 543},
+        "goal": {"goal_type": 1, "unit_type": 1, "units": 563},
+        "secondary_goals": {},
+        "grp_settings": {
+            "min_target_age": 1462,
+            "max_target_age": 1464,
+            "target_gender": 1,
+            "provider": 1,
+            "in_target_ratio_estimate_milli_percent": 4028,
+            "nielsen_ctv_pacing_type": 1,
+            "pacing_device_categorization_type": 1,
+            "apply_true_coview": True,
+        },
+        "deal_info": {"external_deal_id": 1668},
+        "viewability_provider_companies": [
+            "viewability_provider_companies_value1",
+            "viewability_provider_companies_value2",
+        ],
+        "child_content_eligibility": 1,
+        "custom_vast_extension": "custom_vast_extension_value",
+        "sponsorship_exclusivity_enabled": True,
+        "repeated_creative_serving_enabled": True,
+        "targeting": {
+            "inventory_url_targeting": {
+                "targeted_inventory_urls": [
+                    "targeted_inventory_urls_value1",
+                    "targeted_inventory_urls_value2",
+                ],
+                "excluded_inventory_urls": [
+                    "excluded_inventory_urls_value1",
+                    "excluded_inventory_urls_value2",
+                ],
+            },
+            "geo_targeting": {
+                "targeted_geos": ["targeted_geos_value1", "targeted_geos_value2"],
+                "excluded_geos": ["excluded_geos_value1", "excluded_geos_value2"],
+            },
+            "technology_targeting": {
+                "bandwidth_targeting": {
+                    "targeted_bandwidth_groups": [
+                        "targeted_bandwidth_groups_value1",
+                        "targeted_bandwidth_groups_value2",
+                    ],
+                    "excluded_bandwidth_groups": [
+                        "excluded_bandwidth_groups_value1",
+                        "excluded_bandwidth_groups_value2",
+                    ],
+                },
+                "browser_targeting": {
+                    "targeted_browsers": [
+                        "targeted_browsers_value1",
+                        "targeted_browsers_value2",
+                    ],
+                    "excluded_browsers": [
+                        "excluded_browsers_value1",
+                        "excluded_browsers_value2",
+                    ],
+                },
+                "browser_language_targeting": {
+                    "targeted_browser_languages": [
+                        "targeted_browser_languages_value1",
+                        "targeted_browser_languages_value2",
+                    ],
+                    "excluded_browser_languages": [
+                        "excluded_browser_languages_value1",
+                        "excluded_browser_languages_value2",
+                    ],
+                },
+                "device_capability_targeting": {
+                    "targeted_capabilities": [
+                        "targeted_capabilities_value1",
+                        "targeted_capabilities_value2",
+                    ],
+                    "excluded_capabilities": [
+                        "excluded_capabilities_value1",
+                        "excluded_capabilities_value2",
+                    ],
+                },
+                "device_category_targeting": {
+                    "targeted_categories": [
+                        "targeted_categories_value1",
+                        "targeted_categories_value2",
+                    ],
+                    "excluded_categories": [
+                        "excluded_categories_value1",
+                        "excluded_categories_value2",
+                    ],
+                },
+                "device_manufacturer_targeting": {
+                    "targeted_device_manufacturers": [
+                        "targeted_device_manufacturers_value1",
+                        "targeted_device_manufacturers_value2",
+                    ],
+                    "excluded_device_manufacturers": [
+                        "excluded_device_manufacturers_value1",
+                        "excluded_device_manufacturers_value2",
+                    ],
+                    "targeted_mobile_devices": [
+                        "targeted_mobile_devices_value1",
+                        "targeted_mobile_devices_value2",
+                    ],
+                    "excluded_mobile_devices": [
+                        "excluded_mobile_devices_value1",
+                        "excluded_mobile_devices_value2",
+                    ],
+                    "targeted_mobile_device_submodels": [
+                        "targeted_mobile_device_submodels_value1",
+                        "targeted_mobile_device_submodels_value2",
+                    ],
+                    "excluded_mobile_device_submodels": [
+                        "excluded_mobile_device_submodels_value1",
+                        "excluded_mobile_device_submodels_value2",
+                    ],
+                },
+                "mobile_carrier_targeting": {
+                    "targeted_mobile_carriers": [
+                        "targeted_mobile_carriers_value1",
+                        "targeted_mobile_carriers_value2",
+                    ],
+                    "excluded_mobile_carriers": [
+                        "excluded_mobile_carriers_value1",
+                        "excluded_mobile_carriers_value2",
+                    ],
+                },
+                "operating_system_targeting": {
+                    "targeted_operating_systems": [
+                        "targeted_operating_systems_value1",
+                        "targeted_operating_systems_value2",
+                    ],
+                    "excluded_operating_systems": [
+                        "excluded_operating_systems_value1",
+                        "excluded_operating_systems_value2",
+                    ],
+                    "targeted_operating_system_versions": [
+                        "targeted_operating_system_versions_value1",
+                        "targeted_operating_system_versions_value2",
+                    ],
+                    "excluded_operating_system_versions": [
+                        "excluded_operating_system_versions_value1",
+                        "excluded_operating_system_versions_value2",
+                    ],
+                },
+            },
+            "inventory_size_targeting": {
+                "targeted_inventory_sizes": {},
+                "excluded_inventory_sizes": {},
+            },
+            "inventory_targeting": {
+                "targeted_ad_units": [
+                    {"include_descendants": True, "ad_unit": "ad_unit_value"}
+                ],
+                "excluded_ad_units": {},
+                "targeted_placements": [
+                    "targeted_placements_value1",
+                    "targeted_placements_value2",
+                ],
+            },
+            "request_platform_targeting": {"request_platforms": [1]},
+            "custom_targeting": {
+                "custom_targeting_clauses": [
+                    {
+                        "custom_targeting_literals": [
+                            {
+                                "negative": True,
+                                "custom_targeting_key": "custom_targeting_key_value",
+                                "custom_targeting_values": [
+                                    "custom_targeting_values_value1",
+                                    "custom_targeting_values_value2",
+                                ],
+                            }
+                        ],
+                        "audience_segment_targetings": [
+                            {
+                                "negative": True,
+                                "audience_segments": [
+                                    "audience_segments_value1",
+                                    "audience_segments_value2",
+                                ],
+                            }
+                        ],
+                        "cms_metadata_targetings": [
+                            {
+                                "negative": True,
+                                "cms_metadata_values": [
+                                    "cms_metadata_values_value1",
+                                    "cms_metadata_values_value2",
+                                ],
+                            }
+                        ],
+                    }
+                ]
+            },
+            "date_time_range_targeting": {
+                "targeted_range": [{"start_time": {}, "end_time": {}}]
+            },
+            "publisher_provided_signals_targeting": {
+                "targeted_taxonomy_categories": [
+                    "targeted_taxonomy_categories_value1",
+                    "targeted_taxonomy_categories_value2",
+                ],
+                "excluded_taxonomy_categories": [
+                    "excluded_taxonomy_categories_value1",
+                    "excluded_taxonomy_categories_value2",
+                ],
+            },
+            "user_domain_targeting": {
+                "targeted_user_domains": [
+                    "targeted_user_domains_value1",
+                    "targeted_user_domains_value2",
+                ],
+                "excluded_user_domains": [
+                    "excluded_user_domains_value1",
+                    "excluded_user_domains_value2",
+                ],
+            },
+            "contextual_targeting": {
+                "targeted_verticals": [
+                    "targeted_verticals_value1",
+                    "targeted_verticals_value2",
+                ],
+                "excluded_verticals": [
+                    "excluded_verticals_value1",
+                    "excluded_verticals_value2",
+                ],
+                "excluded_content_labels": [
+                    "excluded_content_labels_value1",
+                    "excluded_content_labels_value2",
+                ],
+            },
+            "video_position_targeting": {
+                "video_positions": [
+                    {
+                        "midroll_index": 1386,
+                        "reverse_midroll_index": 2245,
+                        "pod_position": 1303,
+                        "ad_spot": "ad_spot_value",
+                        "position_type": 1,
+                        "bumper_type": 1,
+                    }
+                ]
+            },
+            "data_segment_targeting": {"has_data_segment_targeting": True},
+            "request_format_targeting": {
+                "app_open_enabled": True,
+                "rewarded_enabled": True,
+                "rewarded_interstitial_enabled": True,
+                "interstitial_enabled": True,
+                "anchor_enabled": True,
+                "banner_enabled": True,
+                "instream_video_enabled": True,
+                "instream_audio_enabled": True,
+                "native_advanced_enabled": True,
+            },
+            "content_targeting": {
+                "targeted_content": [
+                    "targeted_content_value1",
+                    "targeted_content_value2",
+                ],
+                "excluded_content": [
+                    "excluded_content_value1",
+                    "excluded_content_value2",
+                ],
+                "targeted_content_bundles": [
+                    "targeted_content_bundles_value1",
+                    "targeted_content_bundles_value2",
+                ],
+                "excluded_content_bundles": [
+                    "excluded_content_bundles_value1",
+                    "excluded_content_bundles_value2",
+                ],
+            },
+            "mobile_application_targeting": {
+                "first_party_targeting": {
+                    "targeted_applications": [
+                        "targeted_applications_value1",
+                        "targeted_applications_value2",
+                    ],
+                    "excluded_applications": [
+                        "excluded_applications_value1",
+                        "excluded_applications_value2",
+                    ],
+                }
+            },
+            "day_part_targeting": {
+                "targeted_day_parts": [
+                    {
+                        "day_of_week": 1,
+                        "start_time": {
+                            "hours": 561,
+                            "minutes": 773,
+                            "seconds": 751,
+                            "nanos": 543,
+                        },
+                        "end_time": {},
+                    }
+                ],
+                "dayparting_time_zone": 1,
+            },
+            "buyer_user_list_targeting": {"has_buyer_user_list_targeting": True},
+        },
+        "creative_targetings": [
+            {
+                "creative_targeting_display_name": "creative_targeting_display_name_value",
+                "targeting": {},
+            }
+        ],
+        "allowed_formats": [1],
+        "allocation_delivery_profile": "allocation_delivery_profile_value",
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = line_item_service.UpdateLineItemRequest.meta.fields["line_item"]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init["line_item"].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(0, len(request_init["line_item"][field])):
+                    del request_init["line_item"][field][i][subfield]
+            else:
+                del request_init["line_item"][field][subfield]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_messages.LineItem(
+            name="name_value",
+            order="order_value",
+            display_name="display_name_value",
+            external_line_item_id="external_line_item_id_value",
+            order_display_name="order_display_name_value",
+            auto_extension_days=2053,
+            end_time_unlimited=True,
+            creative_rotation_type=delivery_enums.CreativeRotationTypeEnum.CreativeRotationType.EVENLY,
+            delivery_rate_type=delivery_enums.LineItemDeliveryRateTypeEnum.LineItemDeliveryRateType.AS_FAST_AS_POSSIBLE,
+            delivery_forecast_source=line_item_delivery_forecast_source_enum.LineItemDeliveryForecastSourceEnum.LineItemDeliveryForecastSource.CUSTOM_PACING_CURVE,
+            roadblocking_type=delivery_enums.RoadblockingTypeEnum.RoadblockingType.ALL_ROADBLOCK,
+            skippable_ad_type=skippable_ad_type_enum.SkippableAdTypeEnum.SkippableAdType.ANY,
+            line_item_type=line_item_enums.LineItemTypeEnum.LineItemType.SPONSORSHIP,
+            priority=898,
+            cost_type=line_item_enums.LineItemCostTypeEnum.LineItemCostType.CPA,
+            contracted_units_bought=2465,
+            environment_type=environment_type_enum.EnvironmentTypeEnum.EnvironmentType.BROWSER,
+            companion_delivery_option=delivery_enums.CompanionDeliveryOptionEnum.CompanionDeliveryOption.OPTIONAL,
+            allow_overbook=True,
+            skip_inventory_check=True,
+            skip_cross_selling_rule_warning_checks=True,
+            reserve_on_creation=True,
+            status=line_item_enums.LineItemComputedStatusEnum.LineItemComputedStatus.CANCELED,
+            reservation_status=line_item_enums.LineItemReservationStatusEnum.LineItemReservationStatus.RESERVED,
+            archived=True,
+            web_property_code="web_property_code_value",
+            same_advertiser_exception_enabled=True,
+            update_source="update_source_value",
+            notes="notes_value",
+            competitive_constraint_scope=exclusion_scope_enum.ExclusionScopeEnum.ExclusionScope.PAGE,
+            missing_creatives=True,
+            youtube_kids_restricted=True,
+            viewability_provider_companies=["viewability_provider_companies_value"],
+            child_content_eligibility=child_content_eligibility_enum.ChildContentEligibilityEnum.ChildContentEligibility.ALLOWED,
+            custom_vast_extension="custom_vast_extension_value",
+            sponsorship_exclusivity_enabled=True,
+            repeated_creative_serving_enabled=True,
+            allowed_formats=[
+                line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat.AUDIO
+            ],
+            allocation_delivery_profile="allocation_delivery_profile_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_messages.LineItem.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.update_line_item(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, line_item_messages.LineItem)
+    assert response.name == "name_value"
+    assert response.order == "order_value"
+    assert response.display_name == "display_name_value"
+    assert response.external_line_item_id == "external_line_item_id_value"
+    assert response.order_display_name == "order_display_name_value"
+    assert response.auto_extension_days == 2053
+    assert response.end_time_unlimited is True
+    assert (
+        response.creative_rotation_type
+        == delivery_enums.CreativeRotationTypeEnum.CreativeRotationType.EVENLY
+    )
+    assert (
+        response.delivery_rate_type
+        == delivery_enums.LineItemDeliveryRateTypeEnum.LineItemDeliveryRateType.AS_FAST_AS_POSSIBLE
+    )
+    assert (
+        response.delivery_forecast_source
+        == line_item_delivery_forecast_source_enum.LineItemDeliveryForecastSourceEnum.LineItemDeliveryForecastSource.CUSTOM_PACING_CURVE
+    )
+    assert (
+        response.roadblocking_type
+        == delivery_enums.RoadblockingTypeEnum.RoadblockingType.ALL_ROADBLOCK
+    )
+    assert (
+        response.skippable_ad_type
+        == skippable_ad_type_enum.SkippableAdTypeEnum.SkippableAdType.ANY
+    )
+    assert (
+        response.line_item_type
+        == line_item_enums.LineItemTypeEnum.LineItemType.SPONSORSHIP
+    )
+    assert response.priority == 898
+    assert (
+        response.cost_type == line_item_enums.LineItemCostTypeEnum.LineItemCostType.CPA
+    )
+    assert response.contracted_units_bought == 2465
+    assert (
+        response.environment_type
+        == environment_type_enum.EnvironmentTypeEnum.EnvironmentType.BROWSER
+    )
+    assert (
+        response.companion_delivery_option
+        == delivery_enums.CompanionDeliveryOptionEnum.CompanionDeliveryOption.OPTIONAL
+    )
+    assert response.allow_overbook is True
+    assert response.skip_inventory_check is True
+    assert response.skip_cross_selling_rule_warning_checks is True
+    assert response.reserve_on_creation is True
+    assert (
+        response.status
+        == line_item_enums.LineItemComputedStatusEnum.LineItemComputedStatus.CANCELED
+    )
+    assert (
+        response.reservation_status
+        == line_item_enums.LineItemReservationStatusEnum.LineItemReservationStatus.RESERVED
+    )
+    assert response.archived is True
+    assert response.web_property_code == "web_property_code_value"
+    assert response.same_advertiser_exception_enabled is True
+    assert response.update_source == "update_source_value"
+    assert response.notes == "notes_value"
+    assert (
+        response.competitive_constraint_scope
+        == exclusion_scope_enum.ExclusionScopeEnum.ExclusionScope.PAGE
+    )
+    assert response.missing_creatives is True
+    assert response.youtube_kids_restricted is True
+    assert response.viewability_provider_companies == [
+        "viewability_provider_companies_value"
+    ]
+    assert (
+        response.child_content_eligibility
+        == child_content_eligibility_enum.ChildContentEligibilityEnum.ChildContentEligibility.ALLOWED
+    )
+    assert response.custom_vast_extension == "custom_vast_extension_value"
+    assert response.sponsorship_exclusivity_enabled is True
+    assert response.repeated_creative_serving_enabled is True
+    assert response.allowed_formats == [
+        line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat.AUDIO
+    ]
+    assert response.allocation_delivery_profile == "allocation_delivery_profile_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_update_line_item_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "post_update_line_item"
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_update_line_item_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "pre_update_line_item"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.UpdateLineItemRequest.pb(
+            line_item_service.UpdateLineItemRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_messages.LineItem.to_json(
+            line_item_messages.LineItem()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.UpdateLineItemRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_messages.LineItem()
+        post_with_metadata.return_value = line_item_messages.LineItem(), metadata
+
+        client.update_line_item(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_update_line_items_rest_bad_request(
+    request_type=line_item_service.BatchUpdateLineItemsRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_update_line_items(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.BatchUpdateLineItemsRequest,
+        dict,
+    ],
+)
+def test_batch_update_line_items_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchUpdateLineItemsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchUpdateLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_update_line_items(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, line_item_service.BatchUpdateLineItemsResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_update_line_items_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "post_batch_update_line_items"
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_update_line_items_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "pre_batch_update_line_items"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.BatchUpdateLineItemsRequest.pb(
+            line_item_service.BatchUpdateLineItemsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_service.BatchUpdateLineItemsResponse.to_json(
+            line_item_service.BatchUpdateLineItemsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.BatchUpdateLineItemsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_service.BatchUpdateLineItemsResponse()
+        post_with_metadata.return_value = (
+            line_item_service.BatchUpdateLineItemsResponse(),
+            metadata,
+        )
+
+        client.batch_update_line_items(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_activate_line_items_rest_bad_request(
+    request_type=line_item_service.BatchActivateLineItemsRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_activate_line_items(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.BatchActivateLineItemsRequest,
+        dict,
+    ],
+)
+def test_batch_activate_line_items_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchActivateLineItemsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchActivateLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_activate_line_items(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, line_item_service.BatchActivateLineItemsResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_activate_line_items_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "post_batch_activate_line_items"
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_activate_line_items_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "pre_batch_activate_line_items"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.BatchActivateLineItemsRequest.pb(
+            line_item_service.BatchActivateLineItemsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_service.BatchActivateLineItemsResponse.to_json(
+            line_item_service.BatchActivateLineItemsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.BatchActivateLineItemsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_service.BatchActivateLineItemsResponse()
+        post_with_metadata.return_value = (
+            line_item_service.BatchActivateLineItemsResponse(),
+            metadata,
+        )
+
+        client.batch_activate_line_items(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_pause_line_items_rest_bad_request(
+    request_type=line_item_service.BatchPauseLineItemsRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_pause_line_items(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.BatchPauseLineItemsRequest,
+        dict,
+    ],
+)
+def test_batch_pause_line_items_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchPauseLineItemsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchPauseLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_pause_line_items(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, line_item_service.BatchPauseLineItemsResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_pause_line_items_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "post_batch_pause_line_items"
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_pause_line_items_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "pre_batch_pause_line_items"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.BatchPauseLineItemsRequest.pb(
+            line_item_service.BatchPauseLineItemsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_service.BatchPauseLineItemsResponse.to_json(
+            line_item_service.BatchPauseLineItemsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.BatchPauseLineItemsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_service.BatchPauseLineItemsResponse()
+        post_with_metadata.return_value = (
+            line_item_service.BatchPauseLineItemsResponse(),
+            metadata,
+        )
+
+        client.batch_pause_line_items(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_resume_line_items_rest_bad_request(
+    request_type=line_item_service.BatchResumeLineItemsRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_resume_line_items(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.BatchResumeLineItemsRequest,
+        dict,
+    ],
+)
+def test_batch_resume_line_items_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchResumeLineItemsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchResumeLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_resume_line_items(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, line_item_service.BatchResumeLineItemsResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_resume_line_items_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "post_batch_resume_line_items"
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_resume_line_items_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "pre_batch_resume_line_items"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.BatchResumeLineItemsRequest.pb(
+            line_item_service.BatchResumeLineItemsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_service.BatchResumeLineItemsResponse.to_json(
+            line_item_service.BatchResumeLineItemsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.BatchResumeLineItemsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_service.BatchResumeLineItemsResponse()
+        post_with_metadata.return_value = (
+            line_item_service.BatchResumeLineItemsResponse(),
+            metadata,
+        )
+
+        client.batch_resume_line_items(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_resume_and_overbook_line_items_rest_bad_request(
+    request_type=line_item_service.BatchResumeAndOverbookLineItemsRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_resume_and_overbook_line_items(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.BatchResumeAndOverbookLineItemsRequest,
+        dict,
+    ],
+)
+def test_batch_resume_and_overbook_line_items_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchResumeAndOverbookLineItemsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchResumeAndOverbookLineItemsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_resume_and_overbook_line_items(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, line_item_service.BatchResumeAndOverbookLineItemsResponse
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_resume_and_overbook_line_items_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_resume_and_overbook_line_items",
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_resume_and_overbook_line_items_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "pre_batch_resume_and_overbook_line_items",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.BatchResumeAndOverbookLineItemsRequest.pb(
+            line_item_service.BatchResumeAndOverbookLineItemsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = (
+            line_item_service.BatchResumeAndOverbookLineItemsResponse.to_json(
+                line_item_service.BatchResumeAndOverbookLineItemsResponse()
+            )
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.BatchResumeAndOverbookLineItemsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_service.BatchResumeAndOverbookLineItemsResponse()
+        post_with_metadata.return_value = (
+            line_item_service.BatchResumeAndOverbookLineItemsResponse(),
+            metadata,
+        )
+
+        client.batch_resume_and_overbook_line_items(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_delete_line_items_rest_bad_request(
+    request_type=line_item_service.BatchDeleteLineItemsRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_delete_line_items(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.BatchDeleteLineItemsRequest,
+        dict,
+    ],
+)
+def test_batch_delete_line_items_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = None
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = ""
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_delete_line_items(request)
+
+    # Establish that the response is the type that we expect.
+    assert response is None
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_delete_line_items_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "pre_batch_delete_line_items"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        pb_message = line_item_service.BatchDeleteLineItemsRequest.pb(
+            line_item_service.BatchDeleteLineItemsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        request = line_item_service.BatchDeleteLineItemsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+
+        client.batch_delete_line_items(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+
+
+def test_batch_reserve_line_items_rest_bad_request(
+    request_type=line_item_service.BatchReserveLineItemsRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_reserve_line_items(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.BatchReserveLineItemsRequest,
+        dict,
+    ],
+)
+def test_batch_reserve_line_items_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchReserveLineItemsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchReserveLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_reserve_line_items(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, line_item_service.BatchReserveLineItemsResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_reserve_line_items_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "post_batch_reserve_line_items"
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_reserve_line_items_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "pre_batch_reserve_line_items"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.BatchReserveLineItemsRequest.pb(
+            line_item_service.BatchReserveLineItemsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_service.BatchReserveLineItemsResponse.to_json(
+            line_item_service.BatchReserveLineItemsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.BatchReserveLineItemsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_service.BatchReserveLineItemsResponse()
+        post_with_metadata.return_value = (
+            line_item_service.BatchReserveLineItemsResponse(),
+            metadata,
+        )
+
+        client.batch_reserve_line_items(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_reserve_and_overbook_line_items_rest_bad_request(
+    request_type=line_item_service.BatchReserveAndOverbookLineItemsRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_reserve_and_overbook_line_items(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.BatchReserveAndOverbookLineItemsRequest,
+        dict,
+    ],
+)
+def test_batch_reserve_and_overbook_line_items_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchReserveAndOverbookLineItemsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchReserveAndOverbookLineItemsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_reserve_and_overbook_line_items(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, line_item_service.BatchReserveAndOverbookLineItemsResponse
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_reserve_and_overbook_line_items_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_reserve_and_overbook_line_items",
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_reserve_and_overbook_line_items_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "pre_batch_reserve_and_overbook_line_items",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.BatchReserveAndOverbookLineItemsRequest.pb(
+            line_item_service.BatchReserveAndOverbookLineItemsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = (
+            line_item_service.BatchReserveAndOverbookLineItemsResponse.to_json(
+                line_item_service.BatchReserveAndOverbookLineItemsResponse()
+            )
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.BatchReserveAndOverbookLineItemsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_service.BatchReserveAndOverbookLineItemsResponse()
+        post_with_metadata.return_value = (
+            line_item_service.BatchReserveAndOverbookLineItemsResponse(),
+            metadata,
+        )
+
+        client.batch_reserve_and_overbook_line_items(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_release_line_items_rest_bad_request(
+    request_type=line_item_service.BatchReleaseLineItemsRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_release_line_items(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.BatchReleaseLineItemsRequest,
+        dict,
+    ],
+)
+def test_batch_release_line_items_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchReleaseLineItemsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchReleaseLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_release_line_items(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, line_item_service.BatchReleaseLineItemsResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_release_line_items_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "post_batch_release_line_items"
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_release_line_items_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "pre_batch_release_line_items"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.BatchReleaseLineItemsRequest.pb(
+            line_item_service.BatchReleaseLineItemsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_service.BatchReleaseLineItemsResponse.to_json(
+            line_item_service.BatchReleaseLineItemsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.BatchReleaseLineItemsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_service.BatchReleaseLineItemsResponse()
+        post_with_metadata.return_value = (
+            line_item_service.BatchReleaseLineItemsResponse(),
+            metadata,
+        )
+
+        client.batch_release_line_items(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_archive_line_items_rest_bad_request(
+    request_type=line_item_service.BatchArchiveLineItemsRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_archive_line_items(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.BatchArchiveLineItemsRequest,
+        dict,
+    ],
+)
+def test_batch_archive_line_items_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchArchiveLineItemsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchArchiveLineItemsResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_archive_line_items(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, line_item_service.BatchArchiveLineItemsResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_archive_line_items_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "post_batch_archive_line_items"
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_archive_line_items_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "pre_batch_archive_line_items"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.BatchArchiveLineItemsRequest.pb(
+            line_item_service.BatchArchiveLineItemsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_service.BatchArchiveLineItemsResponse.to_json(
+            line_item_service.BatchArchiveLineItemsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.BatchArchiveLineItemsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_service.BatchArchiveLineItemsResponse()
+        post_with_metadata.return_value = (
+            line_item_service.BatchArchiveLineItemsResponse(),
+            metadata,
+        )
+
+        client.batch_archive_line_items(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_unarchive_line_items_rest_bad_request(
+    request_type=line_item_service.BatchUnarchiveLineItemsRequest,
+):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_unarchive_line_items(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_service.BatchUnarchiveLineItemsRequest,
+        dict,
+    ],
+)
+def test_batch_unarchive_line_items_rest_call_success(request_type):
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_service.BatchUnarchiveLineItemsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_service.BatchUnarchiveLineItemsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_unarchive_line_items(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, line_item_service.BatchUnarchiveLineItemsResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_unarchive_line_items_rest_interceptors(null_interceptor):
+    transport = transports.LineItemServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemServiceRestInterceptor(),
+    )
+    client = LineItemServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "post_batch_unarchive_line_items"
+        ) as post,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor,
+            "post_batch_unarchive_line_items_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemServiceRestInterceptor, "pre_batch_unarchive_line_items"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_service.BatchUnarchiveLineItemsRequest.pb(
+            line_item_service.BatchUnarchiveLineItemsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_service.BatchUnarchiveLineItemsResponse.to_json(
+            line_item_service.BatchUnarchiveLineItemsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_service.BatchUnarchiveLineItemsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_service.BatchUnarchiveLineItemsResponse()
+        post_with_metadata.return_value = (
+            line_item_service.BatchUnarchiveLineItemsResponse(),
+            metadata,
+        )
+
+        client.batch_unarchive_line_items(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
 def test_cancel_operation_rest_bad_request(
     request_type=operations_pb2.CancelOperationRequest,
 ):
@@ -2296,6 +7606,296 @@ def test_list_line_items_empty_call_rest():
         assert args[0] == request_msg
 
 
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_create_line_item_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.create_line_item), "__call__") as call:
+        client.create_line_item(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.CreateLineItemRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_create_line_items_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_create_line_items), "__call__"
+    ) as call:
+        client.batch_create_line_items(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.BatchCreateLineItemsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_update_line_item_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.update_line_item), "__call__") as call:
+        client.update_line_item(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.UpdateLineItemRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_update_line_items_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_update_line_items), "__call__"
+    ) as call:
+        client.batch_update_line_items(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.BatchUpdateLineItemsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_activate_line_items_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_activate_line_items), "__call__"
+    ) as call:
+        client.batch_activate_line_items(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.BatchActivateLineItemsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_pause_line_items_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_pause_line_items), "__call__"
+    ) as call:
+        client.batch_pause_line_items(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.BatchPauseLineItemsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_resume_line_items_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_resume_line_items), "__call__"
+    ) as call:
+        client.batch_resume_line_items(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.BatchResumeLineItemsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_resume_and_overbook_line_items_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_resume_and_overbook_line_items), "__call__"
+    ) as call:
+        client.batch_resume_and_overbook_line_items(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.BatchResumeAndOverbookLineItemsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_delete_line_items_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_delete_line_items), "__call__"
+    ) as call:
+        client.batch_delete_line_items(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.BatchDeleteLineItemsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_reserve_line_items_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_reserve_line_items), "__call__"
+    ) as call:
+        client.batch_reserve_line_items(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.BatchReserveLineItemsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_reserve_and_overbook_line_items_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_reserve_and_overbook_line_items), "__call__"
+    ) as call:
+        client.batch_reserve_and_overbook_line_items(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.BatchReserveAndOverbookLineItemsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_release_line_items_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_release_line_items), "__call__"
+    ) as call:
+        client.batch_release_line_items(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.BatchReleaseLineItemsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_archive_line_items_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_archive_line_items), "__call__"
+    ) as call:
+        client.batch_archive_line_items(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.BatchArchiveLineItemsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_unarchive_line_items_empty_call_rest():
+    client = LineItemServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_unarchive_line_items), "__call__"
+    ) as call:
+        client.batch_unarchive_line_items(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_service.BatchUnarchiveLineItemsRequest()
+        assert args[0] == request_msg
+
+
 def test_line_item_service_base_transport_error():
     # Passing both a credentials object and credentials_file should raise an error
     with pytest.raises(core_exceptions.DuplicateCredentialArgs):
@@ -2320,6 +7920,20 @@ def test_line_item_service_base_transport():
     methods = (
         "get_line_item",
         "list_line_items",
+        "create_line_item",
+        "batch_create_line_items",
+        "update_line_item",
+        "batch_update_line_items",
+        "batch_activate_line_items",
+        "batch_pause_line_items",
+        "batch_resume_line_items",
+        "batch_resume_and_overbook_line_items",
+        "batch_delete_line_items",
+        "batch_reserve_line_items",
+        "batch_reserve_and_overbook_line_items",
+        "batch_release_line_items",
+        "batch_archive_line_items",
+        "batch_unarchive_line_items",
         "get_operation",
         "cancel_operation",
     )
@@ -2471,11 +8085,99 @@ def test_line_item_service_client_transport_session_collision(transport_name):
     session1 = client1.transport.list_line_items._session
     session2 = client2.transport.list_line_items._session
     assert session1 != session2
+    session1 = client1.transport.create_line_item._session
+    session2 = client2.transport.create_line_item._session
+    assert session1 != session2
+    session1 = client1.transport.batch_create_line_items._session
+    session2 = client2.transport.batch_create_line_items._session
+    assert session1 != session2
+    session1 = client1.transport.update_line_item._session
+    session2 = client2.transport.update_line_item._session
+    assert session1 != session2
+    session1 = client1.transport.batch_update_line_items._session
+    session2 = client2.transport.batch_update_line_items._session
+    assert session1 != session2
+    session1 = client1.transport.batch_activate_line_items._session
+    session2 = client2.transport.batch_activate_line_items._session
+    assert session1 != session2
+    session1 = client1.transport.batch_pause_line_items._session
+    session2 = client2.transport.batch_pause_line_items._session
+    assert session1 != session2
+    session1 = client1.transport.batch_resume_line_items._session
+    session2 = client2.transport.batch_resume_line_items._session
+    assert session1 != session2
+    session1 = client1.transport.batch_resume_and_overbook_line_items._session
+    session2 = client2.transport.batch_resume_and_overbook_line_items._session
+    assert session1 != session2
+    session1 = client1.transport.batch_delete_line_items._session
+    session2 = client2.transport.batch_delete_line_items._session
+    assert session1 != session2
+    session1 = client1.transport.batch_reserve_line_items._session
+    session2 = client2.transport.batch_reserve_line_items._session
+    assert session1 != session2
+    session1 = client1.transport.batch_reserve_and_overbook_line_items._session
+    session2 = client2.transport.batch_reserve_and_overbook_line_items._session
+    assert session1 != session2
+    session1 = client1.transport.batch_release_line_items._session
+    session2 = client2.transport.batch_release_line_items._session
+    assert session1 != session2
+    session1 = client1.transport.batch_archive_line_items._session
+    session2 = client2.transport.batch_archive_line_items._session
+    assert session1 != session2
+    session1 = client1.transport.batch_unarchive_line_items._session
+    session2 = client2.transport.batch_unarchive_line_items._session
+    assert session1 != session2
+
+
+def test_ad_category_path():
+    network_code = "squid"
+    ad_category = "clam"
+    expected = "networks/{network_code}/adCategories/{ad_category}".format(
+        network_code=network_code,
+        ad_category=ad_category,
+    )
+    actual = LineItemServiceClient.ad_category_path(network_code, ad_category)
+    assert expected == actual
+
+
+def test_parse_ad_category_path():
+    expected = {
+        "network_code": "whelk",
+        "ad_category": "octopus",
+    }
+    path = LineItemServiceClient.ad_category_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = LineItemServiceClient.parse_ad_category_path(path)
+    assert expected == actual
+
+
+def test_ad_spot_path():
+    network_code = "oyster"
+    ad_spot = "nudibranch"
+    expected = "networks/{network_code}/adSpots/{ad_spot}".format(
+        network_code=network_code,
+        ad_spot=ad_spot,
+    )
+    actual = LineItemServiceClient.ad_spot_path(network_code, ad_spot)
+    assert expected == actual
+
+
+def test_parse_ad_spot_path():
+    expected = {
+        "network_code": "cuttlefish",
+        "ad_spot": "mussel",
+    }
+    path = LineItemServiceClient.ad_spot_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = LineItemServiceClient.parse_ad_spot_path(path)
+    assert expected == actual
 
 
 def test_ad_unit_path():
-    network_code = "squid"
-    ad_unit = "clam"
+    network_code = "winkle"
+    ad_unit = "nautilus"
     expected = "networks/{network_code}/adUnits/{ad_unit}".format(
         network_code=network_code,
         ad_unit=ad_unit,
@@ -2486,13 +8188,38 @@ def test_ad_unit_path():
 
 def test_parse_ad_unit_path():
     expected = {
-        "network_code": "whelk",
-        "ad_unit": "octopus",
+        "network_code": "scallop",
+        "ad_unit": "abalone",
     }
     path = LineItemServiceClient.ad_unit_path(**expected)
 
     # Check that the path construction is reversible.
     actual = LineItemServiceClient.parse_ad_unit_path(path)
+    assert expected == actual
+
+
+def test_allocation_delivery_profile_path():
+    network_code = "squid"
+    allocation_delivery_profile = "clam"
+    expected = "networks/{network_code}/allocationDeliveryProfiles/{allocation_delivery_profile}".format(
+        network_code=network_code,
+        allocation_delivery_profile=allocation_delivery_profile,
+    )
+    actual = LineItemServiceClient.allocation_delivery_profile_path(
+        network_code, allocation_delivery_profile
+    )
+    assert expected == actual
+
+
+def test_parse_allocation_delivery_profile_path():
+    expected = {
+        "network_code": "whelk",
+        "allocation_delivery_profile": "octopus",
+    }
+    path = LineItemServiceClient.allocation_delivery_profile_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = LineItemServiceClient.parse_allocation_delivery_profile_path(path)
     assert expected == actual
 
 
@@ -2705,9 +8432,32 @@ def test_parse_content_bundle_path():
     assert expected == actual
 
 
-def test_custom_field_path():
+def test_content_label_path():
     network_code = "oyster"
-    custom_field = "nudibranch"
+    content_label = "nudibranch"
+    expected = "networks/{network_code}/contentLabels/{content_label}".format(
+        network_code=network_code,
+        content_label=content_label,
+    )
+    actual = LineItemServiceClient.content_label_path(network_code, content_label)
+    assert expected == actual
+
+
+def test_parse_content_label_path():
+    expected = {
+        "network_code": "cuttlefish",
+        "content_label": "mussel",
+    }
+    path = LineItemServiceClient.content_label_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = LineItemServiceClient.parse_content_label_path(path)
+    assert expected == actual
+
+
+def test_custom_field_path():
+    network_code = "winkle"
+    custom_field = "nautilus"
     expected = "networks/{network_code}/customFields/{custom_field}".format(
         network_code=network_code,
         custom_field=custom_field,
@@ -2718,8 +8468,8 @@ def test_custom_field_path():
 
 def test_parse_custom_field_path():
     expected = {
-        "network_code": "cuttlefish",
-        "custom_field": "mussel",
+        "network_code": "scallop",
+        "custom_field": "abalone",
     }
     path = LineItemServiceClient.custom_field_path(**expected)
 
@@ -2729,8 +8479,8 @@ def test_parse_custom_field_path():
 
 
 def test_custom_targeting_key_path():
-    network_code = "winkle"
-    custom_targeting_key = "nautilus"
+    network_code = "squid"
+    custom_targeting_key = "clam"
     expected = (
         "networks/{network_code}/customTargetingKeys/{custom_targeting_key}".format(
             network_code=network_code,
@@ -2745,8 +8495,8 @@ def test_custom_targeting_key_path():
 
 def test_parse_custom_targeting_key_path():
     expected = {
-        "network_code": "scallop",
-        "custom_targeting_key": "abalone",
+        "network_code": "whelk",
+        "custom_targeting_key": "octopus",
     }
     path = LineItemServiceClient.custom_targeting_key_path(**expected)
 
@@ -2756,8 +8506,8 @@ def test_parse_custom_targeting_key_path():
 
 
 def test_custom_targeting_value_path():
-    network_code = "squid"
-    custom_targeting_value = "clam"
+    network_code = "oyster"
+    custom_targeting_value = "nudibranch"
     expected = (
         "networks/{network_code}/customTargetingValues/{custom_targeting_value}".format(
             network_code=network_code,
@@ -2772,8 +8522,8 @@ def test_custom_targeting_value_path():
 
 def test_parse_custom_targeting_value_path():
     expected = {
-        "network_code": "whelk",
-        "custom_targeting_value": "octopus",
+        "network_code": "cuttlefish",
+        "custom_targeting_value": "mussel",
     }
     path = LineItemServiceClient.custom_targeting_value_path(**expected)
 
@@ -2783,8 +8533,8 @@ def test_parse_custom_targeting_value_path():
 
 
 def test_device_capability_path():
-    network_code = "oyster"
-    device_capability = "nudibranch"
+    network_code = "winkle"
+    device_capability = "nautilus"
     expected = "networks/{network_code}/deviceCapabilities/{device_capability}".format(
         network_code=network_code,
         device_capability=device_capability,
@@ -2797,8 +8547,8 @@ def test_device_capability_path():
 
 def test_parse_device_capability_path():
     expected = {
-        "network_code": "cuttlefish",
-        "device_capability": "mussel",
+        "network_code": "scallop",
+        "device_capability": "abalone",
     }
     path = LineItemServiceClient.device_capability_path(**expected)
 
@@ -2808,8 +8558,8 @@ def test_parse_device_capability_path():
 
 
 def test_device_category_path():
-    network_code = "winkle"
-    device_category = "nautilus"
+    network_code = "squid"
+    device_category = "clam"
     expected = "networks/{network_code}/deviceCategories/{device_category}".format(
         network_code=network_code,
         device_category=device_category,
@@ -2820,8 +8570,8 @@ def test_device_category_path():
 
 def test_parse_device_category_path():
     expected = {
-        "network_code": "scallop",
-        "device_category": "abalone",
+        "network_code": "whelk",
+        "device_category": "octopus",
     }
     path = LineItemServiceClient.device_category_path(**expected)
 
@@ -2831,8 +8581,8 @@ def test_parse_device_category_path():
 
 
 def test_device_manufacturer_path():
-    network_code = "squid"
-    device_manufacturer = "clam"
+    network_code = "oyster"
+    device_manufacturer = "nudibranch"
     expected = (
         "networks/{network_code}/deviceManufacturers/{device_manufacturer}".format(
             network_code=network_code,
@@ -2847,8 +8597,8 @@ def test_device_manufacturer_path():
 
 def test_parse_device_manufacturer_path():
     expected = {
-        "network_code": "whelk",
-        "device_manufacturer": "octopus",
+        "network_code": "cuttlefish",
+        "device_manufacturer": "mussel",
     }
     path = LineItemServiceClient.device_manufacturer_path(**expected)
 
@@ -2858,8 +8608,8 @@ def test_parse_device_manufacturer_path():
 
 
 def test_geo_target_path():
-    network_code = "oyster"
-    geo_target = "nudibranch"
+    network_code = "winkle"
+    geo_target = "nautilus"
     expected = "networks/{network_code}/geoTargets/{geo_target}".format(
         network_code=network_code,
         geo_target=geo_target,
@@ -2870,8 +8620,8 @@ def test_geo_target_path():
 
 def test_parse_geo_target_path():
     expected = {
-        "network_code": "cuttlefish",
-        "geo_target": "mussel",
+        "network_code": "scallop",
+        "geo_target": "abalone",
     }
     path = LineItemServiceClient.geo_target_path(**expected)
 
@@ -2880,9 +8630,32 @@ def test_parse_geo_target_path():
     assert expected == actual
 
 
+def test_inventory_url_path():
+    network_code = "squid"
+    inventory_url = "clam"
+    expected = "networks/{network_code}/inventoryUrls/{inventory_url}".format(
+        network_code=network_code,
+        inventory_url=inventory_url,
+    )
+    actual = LineItemServiceClient.inventory_url_path(network_code, inventory_url)
+    assert expected == actual
+
+
+def test_parse_inventory_url_path():
+    expected = {
+        "network_code": "whelk",
+        "inventory_url": "octopus",
+    }
+    path = LineItemServiceClient.inventory_url_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = LineItemServiceClient.parse_inventory_url_path(path)
+    assert expected == actual
+
+
 def test_label_path():
-    network_code = "winkle"
-    label = "nautilus"
+    network_code = "oyster"
+    label = "nudibranch"
     expected = "networks/{network_code}/labels/{label}".format(
         network_code=network_code,
         label=label,
@@ -2893,8 +8666,8 @@ def test_label_path():
 
 def test_parse_label_path():
     expected = {
-        "network_code": "scallop",
-        "label": "abalone",
+        "network_code": "cuttlefish",
+        "label": "mussel",
     }
     path = LineItemServiceClient.label_path(**expected)
 
@@ -2904,8 +8677,8 @@ def test_parse_label_path():
 
 
 def test_line_item_path():
-    network_code = "squid"
-    line_item = "clam"
+    network_code = "winkle"
+    line_item = "nautilus"
     expected = "networks/{network_code}/lineItems/{line_item}".format(
         network_code=network_code,
         line_item=line_item,
@@ -2916,8 +8689,8 @@ def test_line_item_path():
 
 def test_parse_line_item_path():
     expected = {
-        "network_code": "whelk",
-        "line_item": "octopus",
+        "network_code": "scallop",
+        "line_item": "abalone",
     }
     path = LineItemServiceClient.line_item_path(**expected)
 
@@ -2927,8 +8700,8 @@ def test_parse_line_item_path():
 
 
 def test_mobile_carrier_path():
-    network_code = "oyster"
-    mobile_carrier = "nudibranch"
+    network_code = "squid"
+    mobile_carrier = "clam"
     expected = "networks/{network_code}/mobileCarriers/{mobile_carrier}".format(
         network_code=network_code,
         mobile_carrier=mobile_carrier,
@@ -2939,8 +8712,8 @@ def test_mobile_carrier_path():
 
 def test_parse_mobile_carrier_path():
     expected = {
-        "network_code": "cuttlefish",
-        "mobile_carrier": "mussel",
+        "network_code": "whelk",
+        "mobile_carrier": "octopus",
     }
     path = LineItemServiceClient.mobile_carrier_path(**expected)
 
@@ -2950,8 +8723,8 @@ def test_parse_mobile_carrier_path():
 
 
 def test_mobile_device_path():
-    network_code = "winkle"
-    mobile_device = "nautilus"
+    network_code = "oyster"
+    mobile_device = "nudibranch"
     expected = "networks/{network_code}/mobileDevices/{mobile_device}".format(
         network_code=network_code,
         mobile_device=mobile_device,
@@ -2962,8 +8735,8 @@ def test_mobile_device_path():
 
 def test_parse_mobile_device_path():
     expected = {
-        "network_code": "scallop",
-        "mobile_device": "abalone",
+        "network_code": "cuttlefish",
+        "mobile_device": "mussel",
     }
     path = LineItemServiceClient.mobile_device_path(**expected)
 
@@ -2973,8 +8746,8 @@ def test_parse_mobile_device_path():
 
 
 def test_mobile_device_submodel_path():
-    network_code = "squid"
-    mobile_device_submodel = "clam"
+    network_code = "winkle"
+    mobile_device_submodel = "nautilus"
     expected = (
         "networks/{network_code}/mobileDeviceSubmodels/{mobile_device_submodel}".format(
             network_code=network_code,
@@ -2989,8 +8762,8 @@ def test_mobile_device_submodel_path():
 
 def test_parse_mobile_device_submodel_path():
     expected = {
-        "network_code": "whelk",
-        "mobile_device_submodel": "octopus",
+        "network_code": "scallop",
+        "mobile_device_submodel": "abalone",
     }
     path = LineItemServiceClient.mobile_device_submodel_path(**expected)
 
@@ -3000,7 +8773,7 @@ def test_parse_mobile_device_submodel_path():
 
 
 def test_network_path():
-    network_code = "oyster"
+    network_code = "squid"
     expected = "networks/{network_code}".format(
         network_code=network_code,
     )
@@ -3010,7 +8783,7 @@ def test_network_path():
 
 def test_parse_network_path():
     expected = {
-        "network_code": "nudibranch",
+        "network_code": "clam",
     }
     path = LineItemServiceClient.network_path(**expected)
 
@@ -3020,8 +8793,8 @@ def test_parse_network_path():
 
 
 def test_operating_system_path():
-    network_code = "cuttlefish"
-    operating_system = "mussel"
+    network_code = "whelk"
+    operating_system = "octopus"
     expected = "networks/{network_code}/operatingSystems/{operating_system}".format(
         network_code=network_code,
         operating_system=operating_system,
@@ -3032,8 +8805,8 @@ def test_operating_system_path():
 
 def test_parse_operating_system_path():
     expected = {
-        "network_code": "winkle",
-        "operating_system": "nautilus",
+        "network_code": "oyster",
+        "operating_system": "nudibranch",
     }
     path = LineItemServiceClient.operating_system_path(**expected)
 
@@ -3043,8 +8816,8 @@ def test_parse_operating_system_path():
 
 
 def test_operating_system_version_path():
-    network_code = "scallop"
-    operating_system_version = "abalone"
+    network_code = "cuttlefish"
+    operating_system_version = "mussel"
     expected = "networks/{network_code}/operatingSystemVersions/{operating_system_version}".format(
         network_code=network_code,
         operating_system_version=operating_system_version,
@@ -3057,8 +8830,8 @@ def test_operating_system_version_path():
 
 def test_parse_operating_system_version_path():
     expected = {
-        "network_code": "squid",
-        "operating_system_version": "clam",
+        "network_code": "winkle",
+        "operating_system_version": "nautilus",
     }
     path = LineItemServiceClient.operating_system_version_path(**expected)
 
@@ -3068,8 +8841,8 @@ def test_parse_operating_system_version_path():
 
 
 def test_order_path():
-    network_code = "whelk"
-    order = "octopus"
+    network_code = "scallop"
+    order = "abalone"
     expected = "networks/{network_code}/orders/{order}".format(
         network_code=network_code,
         order=order,
@@ -3080,8 +8853,8 @@ def test_order_path():
 
 def test_parse_order_path():
     expected = {
-        "network_code": "oyster",
-        "order": "nudibranch",
+        "network_code": "squid",
+        "order": "clam",
     }
     path = LineItemServiceClient.order_path(**expected)
 
@@ -3091,8 +8864,8 @@ def test_parse_order_path():
 
 
 def test_placement_path():
-    network_code = "cuttlefish"
-    placement = "mussel"
+    network_code = "whelk"
+    placement = "octopus"
     expected = "networks/{network_code}/placements/{placement}".format(
         network_code=network_code,
         placement=placement,
@@ -3103,13 +8876,38 @@ def test_placement_path():
 
 def test_parse_placement_path():
     expected = {
-        "network_code": "winkle",
-        "placement": "nautilus",
+        "network_code": "oyster",
+        "placement": "nudibranch",
     }
     path = LineItemServiceClient.placement_path(**expected)
 
     # Check that the path construction is reversible.
     actual = LineItemServiceClient.parse_placement_path(path)
+    assert expected == actual
+
+
+def test_taxonomy_category_path():
+    network_code = "cuttlefish"
+    taxonomy_category = "mussel"
+    expected = "networks/{network_code}/taxonomyCategories/{taxonomy_category}".format(
+        network_code=network_code,
+        taxonomy_category=taxonomy_category,
+    )
+    actual = LineItemServiceClient.taxonomy_category_path(
+        network_code, taxonomy_category
+    )
+    assert expected == actual
+
+
+def test_parse_taxonomy_category_path():
+    expected = {
+        "network_code": "winkle",
+        "taxonomy_category": "nautilus",
+    }
+    path = LineItemServiceClient.taxonomy_category_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = LineItemServiceClient.parse_taxonomy_category_path(path)
     assert expected == actual
 
 

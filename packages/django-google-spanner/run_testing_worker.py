@@ -67,9 +67,10 @@ delay = random.randint(10, 60)
 print("creating instance with delay: {} seconds".format(delay))
 time.sleep(delay)
 
+suite = os.environ.get("DJANGO_TEST_SUITE", "./django_test_suite_6.0.sh")
 with TestInstance() as instance_name:
     os.system(
-        """DJANGO_TEST_APPS="{apps}" SPANNER_TEST_INSTANCE={instance} bash ./django_test_suite_4.2.sh""".format(
-            apps=" ".join(test_apps), instance=instance_name
+        """DJANGO_TEST_APPS="{apps}" SPANNER_TEST_INSTANCE={instance} bash {suite}""".format(
+            apps=" ".join(test_apps), instance=instance_name, suite=suite
         )
     )

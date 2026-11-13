@@ -351,3 +351,315 @@ class ListParameterVersionsAsyncPager:
 
     def __repr__(self) -> str:
         return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListTemplatesPager:
+    """A pager for iterating through ``list_templates`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.parametermanager_v1.types.ListTemplatesResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``templates`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListTemplates`` requests and continue to iterate
+    through the ``templates`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.parametermanager_v1.types.ListTemplatesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., service.ListTemplatesResponse],
+        request: service.ListTemplatesRequest,
+        response: service.ListTemplatesResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.parametermanager_v1.types.ListTemplatesRequest):
+                The initial request object.
+            response (google.cloud.parametermanager_v1.types.ListTemplatesResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = service.ListTemplatesRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(self) -> Iterator[service.ListTemplatesResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[service.Template]:
+        for page in self.pages:
+            yield from page.templates
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListTemplatesAsyncPager:
+    """A pager for iterating through ``list_templates`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.parametermanager_v1.types.ListTemplatesResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``templates`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListTemplates`` requests and continue to iterate
+    through the ``templates`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.parametermanager_v1.types.ListTemplatesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., Awaitable[service.ListTemplatesResponse]],
+        request: service.ListTemplatesRequest,
+        response: service.ListTemplatesResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.parametermanager_v1.types.ListTemplatesRequest):
+                The initial request object.
+            response (google.cloud.parametermanager_v1.types.ListTemplatesResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = service.ListTemplatesRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(self) -> AsyncIterator[service.ListTemplatesResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(self) -> AsyncIterator[service.Template]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.templates:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListTemplateVersionsPager:
+    """A pager for iterating through ``list_template_versions`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.parametermanager_v1.types.ListTemplateVersionsResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``template_versions`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListTemplateVersions`` requests and continue to iterate
+    through the ``template_versions`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.parametermanager_v1.types.ListTemplateVersionsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., service.ListTemplateVersionsResponse],
+        request: service.ListTemplateVersionsRequest,
+        response: service.ListTemplateVersionsResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.parametermanager_v1.types.ListTemplateVersionsRequest):
+                The initial request object.
+            response (google.cloud.parametermanager_v1.types.ListTemplateVersionsResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = service.ListTemplateVersionsRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(self) -> Iterator[service.ListTemplateVersionsResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[service.TemplateVersion]:
+        for page in self.pages:
+            yield from page.template_versions
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListTemplateVersionsAsyncPager:
+    """A pager for iterating through ``list_template_versions`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.parametermanager_v1.types.ListTemplateVersionsResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``template_versions`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListTemplateVersions`` requests and continue to iterate
+    through the ``template_versions`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.parametermanager_v1.types.ListTemplateVersionsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., Awaitable[service.ListTemplateVersionsResponse]],
+        request: service.ListTemplateVersionsRequest,
+        response: service.ListTemplateVersionsResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.parametermanager_v1.types.ListTemplateVersionsRequest):
+                The initial request object.
+            response (google.cloud.parametermanager_v1.types.ListTemplateVersionsResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = service.ListTemplateVersionsRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(self) -> AsyncIterator[service.ListTemplateVersionsResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(self) -> AsyncIterator[service.TemplateVersion]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.template_versions:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)

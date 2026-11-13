@@ -20,6 +20,7 @@ from typing import MutableMapping, MutableSequence
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
+from google.ads.datamanager_v1.types import call_info as gad_call_info
 from google.ads.datamanager_v1.types import cart_data as gad_cart_data
 from google.ads.datamanager_v1.types import consent as gad_consent
 from google.ads.datamanager_v1.types import (
@@ -155,7 +156,7 @@ class Event(proto.Message):
             defined by the advertiser.
         additional_event_parameters (MutableSequence[google.ads.datamanager_v1.types.EventParameter]):
             Optional. A bucket of any `event
-            parameters <https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events>`__
+            parameters <https://developers.google.com/data-manager/api/reference/analytics/recommended-events>`__
             to be included within the event that were not already
             specified using other structured fields.
         third_party_user_data (google.ads.datamanager_v1.types.UserData):
@@ -169,6 +170,9 @@ class Event(proto.Message):
             Optional. A unique identifier for the user
             instance of an app client for this GA4 app
             stream.
+        call_info (google.ads.datamanager_v1.types.CallInfo):
+            Optional. Information gathered about the call
+            (if any) which led to this event.
     """
 
     destination_references: MutableSequence[str] = proto.RepeatedField(
@@ -283,6 +287,11 @@ class Event(proto.Message):
         proto.STRING,
         number=22,
     )
+    call_info: gad_call_info.CallInfo = proto.Field(
+        proto.MESSAGE,
+        number=24,
+        message=gad_call_info.CallInfo,
+    )
 
 
 class AdIdentifiers(proto.Message):
@@ -325,6 +334,17 @@ class AdIdentifiers(proto.Message):
             this event with a previous event.
         encrypted_user_ids (MutableSequence[google.ads.datamanager_v1.types.EncryptedUserId]):
             Optional. Any number of encrypted user IDs.
+        ppid (str):
+            Optional. A unique identifier for an
+            authenticated user (signed-in), as defined by
+            the publisher.
+        visitor_ppid (str):
+            Optional. A unique identifier for an
+            unauthenticated user (user who is not
+            signed-in), as defined by the publisher.
+        lead_id (str):
+            Optional. Google generated ID issued when
+            user submits a lead form.
     """
 
     session_attributes: str = proto.Field(
@@ -370,6 +390,18 @@ class AdIdentifiers(proto.Message):
             number=10,
             message=encrypted_user_id.EncryptedUserId,
         )
+    )
+    ppid: str = proto.Field(
+        proto.STRING,
+        number=11,
+    )
+    visitor_ppid: str = proto.Field(
+        proto.STRING,
+        number=12,
+    )
+    lead_id: str = proto.Field(
+        proto.STRING,
+        number=13,
     )
 
 

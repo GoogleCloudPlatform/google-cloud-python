@@ -43,6 +43,11 @@ __protobuf__ = proto.module(
         "UpdateClusterMetadata",
         "PartialUpdateClusterMetadata",
         "PartialUpdateClusterRequest",
+        "UpdateMemoryLayerRequest",
+        "UpdateMemoryLayerMetadata",
+        "ListMemoryLayersRequest",
+        "ListMemoryLayersResponse",
+        "GetMemoryLayerRequest",
         "CreateAppProfileRequest",
         "GetAppProfileRequest",
         "ListAppProfilesRequest",
@@ -611,6 +616,156 @@ class PartialUpdateClusterRequest(proto.Message):
         proto.MESSAGE,
         number=2,
         message=field_mask_pb2.FieldMask,
+    )
+
+
+class UpdateMemoryLayerRequest(proto.Message):
+    r"""Request message for BigtableInstanceAdmin.UpdateMemoryLayer.
+
+    Attributes:
+        memory_layer (google.cloud.bigtable_admin_v2.types.MemoryLayer):
+            Required. The memory layer to update.
+
+            The memory layer's ``name`` format is as follows:
+            ``projects/{project}/instances/{instance}/clusters/{cluster}/memoryLayer``.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. The list of fields to update.
+    """
+
+    memory_layer: gba_instance.MemoryLayer = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=gba_instance.MemoryLayer,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
+class UpdateMemoryLayerMetadata(proto.Message):
+    r"""The metadata for the Operation returned by UpdateMemoryLayer.
+
+    Attributes:
+        original_request (google.cloud.bigtable_admin_v2.types.UpdateMemoryLayerRequest):
+            The request that prompted the initiation of
+            this UpdateMemoryLayer operation.
+        request_time (google.protobuf.timestamp_pb2.Timestamp):
+            The time at which the original request was
+            received.
+        finish_time (google.protobuf.timestamp_pb2.Timestamp):
+            The time at which the operation failed or was
+            completed successfully.
+    """
+
+    original_request: "UpdateMemoryLayerRequest" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="UpdateMemoryLayerRequest",
+    )
+    request_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=timestamp_pb2.Timestamp,
+    )
+    finish_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=timestamp_pb2.Timestamp,
+    )
+
+
+class ListMemoryLayersRequest(proto.Message):
+    r"""Request message for BigtableInstanceAdmin.ListMemoryLayers.
+
+    Attributes:
+        parent (str):
+            Required. The unique name of the cluster for which a list of
+            memory layers is requested. Values are of the form
+            ``projects/{project}/instances/{instance}/clusters/{cluster}``.
+            Use ``{cluster} = '-'`` to list MemoryLayers for all
+            Clusters in an instance, e.g.,
+            ``projects/myproject/instances/myinstance/clusters/-``.
+        page_size (int):
+            Optional. The maximum number of memory layers
+            to return. The service may return fewer than
+            this value.
+        page_token (str):
+            Optional. A page token, received from a previous
+            ``ListMemoryLayers`` call. Provide this to retrieve the
+            subsequent page.
+
+            When paginating, all other parameters provided to
+            ``ListMemoryLayers`` must match the call that provided the
+            page token.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListMemoryLayersResponse(proto.Message):
+    r"""Response message for BigtableInstanceAdmin.ListMemoryLayers.
+
+    Attributes:
+        memory_layers (MutableSequence[google.cloud.bigtable_admin_v2.types.MemoryLayer]):
+            The list of requested memory layers.
+        failed_locations (MutableSequence[str]):
+            Locations from which MemoryLayer information could not be
+            retrieved, due to an outage or some other transient
+            condition. MemoryLayers from these locations may be missing
+            from ``memory_layers``, or may only have partial information
+            returned. Values are of the form
+            ``projects/<project>/locations/<zone_id>``
+        next_page_token (str):
+            A token, which can be sent as ``page_token`` to retrieve the
+            next page. If this field is omitted, there are no subsequent
+            pages.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    memory_layers: MutableSequence[gba_instance.MemoryLayer] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=gba_instance.MemoryLayer,
+    )
+    failed_locations: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class GetMemoryLayerRequest(proto.Message):
+    r"""Request message for BigtableInstanceAdmin.GetMemoryLayer.
+
+    Attributes:
+        name (str):
+            Required. The unique name of the requested cluster's memory
+            layer. Values are of the form
+            ``projects/{project}/instances/{instance}/clusters/{cluster}/memoryLayer``.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
     )
 
 

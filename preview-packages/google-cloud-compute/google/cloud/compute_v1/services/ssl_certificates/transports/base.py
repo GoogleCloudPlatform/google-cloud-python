@@ -165,6 +165,21 @@ class SslCertificatesTransport(abc.ABC):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.fetch_encryption_key: gapic_v1.method.wrap_method(
+                self.fetch_encryption_key,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=600.0,
+                ),
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.get: gapic_v1.method.wrap_method(
                 self.get,
                 default_retry=retries.Retry(
@@ -229,6 +244,18 @@ class SslCertificatesTransport(abc.ABC):
     ) -> Callable[
         [compute.DeleteSslCertificateRequest],
         Union[compute.Operation, Awaitable[compute.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def fetch_encryption_key(
+        self,
+    ) -> Callable[
+        [compute.FetchEncryptionKeySslCertificateRequest],
+        Union[
+            compute.SslCertificatesFetchEncryptionKeyResponse,
+            Awaitable[compute.SslCertificatesFetchEncryptionKeyResponse],
+        ],
     ]:
         raise NotImplementedError()
 

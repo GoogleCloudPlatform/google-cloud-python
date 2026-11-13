@@ -16,23 +16,18 @@ import collections
 import collections.abc
 import copy
 import re
-from typing import Any, Dict, List, Optional, Type
 import warnings
+from typing import Any, Dict, List, Optional, Type
 
 import google.protobuf
-from google.protobuf import descriptor_pb2
-from google.protobuf import message
+from google.protobuf import descriptor_pb2, message
 from google.protobuf.json_format import MessageToDict, MessageToJson, Parse
 
-from proto import _file_info
-from proto import _package_info
-from proto.fields import Field
-from proto.fields import MapField
-from proto.fields import RepeatedField
+from proto import _file_info, _package_info
+from proto.fields import Field, MapField, RepeatedField
 from proto.marshal import Marshal
 from proto.primitives import ProtoType
 from proto.utils import has_upb
-
 
 PROTOBUF_VERSION = google.protobuf.__version__
 

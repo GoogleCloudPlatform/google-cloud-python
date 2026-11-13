@@ -5,14 +5,14 @@ reverted. Instead, if you want to place additional content, create an
 pick up on the content and merge the content.
 ]: #
 
-# BeyondCorp API
+# BeyondCorp ClientConnectorServices API
 
-Overview of the APIs available for BeyondCorp API.
+Overview of the APIs available for BeyondCorp ClientConnectorServices API.
 
 ## All entries
 
 Classes, methods and properties & attributes for
-BeyondCorp API.
+BeyondCorp ClientConnectorServices API.
 
 [classes](https://cloud.google.com/python/docs/reference/beyondcorpclientconnectorservices/latest/summary_class.html)
 

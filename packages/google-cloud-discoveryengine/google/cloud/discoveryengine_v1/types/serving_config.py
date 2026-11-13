@@ -26,6 +26,7 @@ __protobuf__ = proto.module(
     package="google.cloud.discoveryengine.v1",
     manifest={
         "ServingConfig",
+        "AnswerGenerationSpec",
     },
 )
 
@@ -202,6 +203,9 @@ class ServingConfig(proto.Message):
             Condition promote specifications.
 
             Maximum number of specifications is 100.
+        answer_generation_spec (google.cloud.discoveryengine_v1.types.AnswerGenerationSpec):
+            Optional. The specification for answer
+            generation.
     """
 
     class MediaConfig(proto.Message):
@@ -391,6 +395,90 @@ class ServingConfig(proto.Message):
     promote_control_ids: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=26,
+    )
+    answer_generation_spec: "AnswerGenerationSpec" = proto.Field(
+        proto.MESSAGE,
+        number=27,
+        message="AnswerGenerationSpec",
+    )
+
+
+class AnswerGenerationSpec(proto.Message):
+    r"""The specification for answer generation.
+
+    Attributes:
+        user_defined_classifier_spec (google.cloud.discoveryengine_v1.types.AnswerGenerationSpec.UserDefinedClassifierSpec):
+            Optional. The specification for user
+            specified classifier spec.
+    """
+
+    class UserDefinedClassifierSpec(proto.Message):
+        r"""The specification for user defined classifier.
+
+        Attributes:
+            enable_user_defined_classifier (bool):
+                Optional. Whether or not to enable and
+                include user defined classifier.
+            preamble (str):
+                Optional. The preamble to be used for the
+                user defined classifier.
+            model_id (str):
+                Optional. The model id to be used for the
+                user defined classifier.
+            task_marker (str):
+                Optional. The task marker to be used for the
+                user defined classifier.
+            top_p (float):
+                Optional. The top-p value to be used for the
+                user defined classifier.
+            top_k (int):
+                Optional. The top-k value to be used for the
+                user defined classifier.
+            temperature (float):
+                Optional. The temperature value to be used
+                for the user defined classifier.
+            seed (int):
+                Optional. The seed value to be used for the
+                user defined classifier.
+        """
+
+        enable_user_defined_classifier: bool = proto.Field(
+            proto.BOOL,
+            number=1,
+        )
+        preamble: str = proto.Field(
+            proto.STRING,
+            number=2,
+        )
+        model_id: str = proto.Field(
+            proto.STRING,
+            number=3,
+        )
+        task_marker: str = proto.Field(
+            proto.STRING,
+            number=4,
+        )
+        top_p: float = proto.Field(
+            proto.DOUBLE,
+            number=5,
+        )
+        top_k: int = proto.Field(
+            proto.INT64,
+            number=6,
+        )
+        temperature: float = proto.Field(
+            proto.DOUBLE,
+            number=7,
+        )
+        seed: int = proto.Field(
+            proto.INT32,
+            number=8,
+        )
+
+    user_defined_classifier_spec: UserDefinedClassifierSpec = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=UserDefinedClassifierSpec,
     )
 
 

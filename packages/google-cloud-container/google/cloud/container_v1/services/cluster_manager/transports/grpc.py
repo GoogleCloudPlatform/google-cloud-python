@@ -1349,6 +1349,38 @@ class ClusterManagerGrpcTransport(ClusterManagerTransport):
             )
         return self._stubs["fetch_node_pool_upgrade_info"]
 
+    @property
+    def complete_control_plane_upgrade(
+        self,
+    ) -> Callable[
+        [cluster_service.CompleteControlPlaneUpgradeRequest], cluster_service.Operation
+    ]:
+        r"""Return a callable for the complete control plane upgrade method over gRPC.
+
+        CompleteControlPlaneUpgrade completes the
+        rollback-safe upgrade by performing the step two upgrade
+        for a specific cluster.
+
+        Returns:
+            Callable[[~.CompleteControlPlaneUpgradeRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "complete_control_plane_upgrade" not in self._stubs:
+            self._stubs["complete_control_plane_upgrade"] = (
+                self._logged_channel.unary_unary(
+                    "/google.container.v1.ClusterManager/CompleteControlPlaneUpgrade",
+                    request_serializer=cluster_service.CompleteControlPlaneUpgradeRequest.serialize,
+                    response_deserializer=cluster_service.Operation.deserialize,
+                )
+            )
+        return self._stubs["complete_control_plane_upgrade"]
+
     def close(self):
         self._logged_channel.close()
 

@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.iamconnectorcredentials_v1alpha._compat import transcode_request
 from google.cloud.iamconnectorcredentials_v1alpha.types import connector_credentials
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -383,21 +384,18 @@ class IAMConnectorCredentialsServiceRestTransport(
             """
 
             http_options = _BaseIAMConnectorCredentialsServiceRestTransport._BaseFinalizeCredentials._get_http_options()
-
             request, metadata = self._interceptor.pre_finalize_credentials(
                 request, metadata
             )
-            transcoded_request = _BaseIAMConnectorCredentialsServiceRestTransport._BaseFinalizeCredentials._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIAMConnectorCredentialsServiceRestTransport._BaseFinalizeCredentials._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIAMConnectorCredentialsServiceRestTransport._BaseFinalizeCredentials._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIAMConnectorCredentialsServiceRestTransport._BaseFinalizeCredentials,
+                    "_BaseFinalizeCredentials__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -544,21 +542,18 @@ class IAMConnectorCredentialsServiceRestTransport(
             """
 
             http_options = _BaseIAMConnectorCredentialsServiceRestTransport._BaseRetrieveCredentials._get_http_options()
-
             request, metadata = self._interceptor.pre_retrieve_credentials(
                 request, metadata
             )
-            transcoded_request = _BaseIAMConnectorCredentialsServiceRestTransport._BaseRetrieveCredentials._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIAMConnectorCredentialsServiceRestTransport._BaseRetrieveCredentials._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIAMConnectorCredentialsServiceRestTransport._BaseRetrieveCredentials._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIAMConnectorCredentialsServiceRestTransport._BaseRetrieveCredentials,
+                    "_BaseRetrieveCredentials__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

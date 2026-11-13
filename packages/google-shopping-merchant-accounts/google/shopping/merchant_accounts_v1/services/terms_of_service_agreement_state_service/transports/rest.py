@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_accounts_v1._compat import transcode_request
 from google.shopping.merchant_accounts_v1.types import termsofserviceagreementstate
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -384,19 +385,20 @@ class TermsOfServiceAgreementStateServiceRestTransport(
             """
 
             http_options = _BaseTermsOfServiceAgreementStateServiceRestTransport._BaseGetTermsOfServiceAgreementState._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_get_terms_of_service_agreement_state(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseTermsOfServiceAgreementStateServiceRestTransport._BaseGetTermsOfServiceAgreementState._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTermsOfServiceAgreementStateServiceRestTransport._BaseGetTermsOfServiceAgreementState._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTermsOfServiceAgreementStateServiceRestTransport._BaseGetTermsOfServiceAgreementState,
+                    "_BaseGetTermsOfServiceAgreementState__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -567,19 +569,20 @@ class TermsOfServiceAgreementStateServiceRestTransport(
             """
 
             http_options = _BaseTermsOfServiceAgreementStateServiceRestTransport._BaseRetrieveForApplicationTermsOfServiceAgreementState._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_retrieve_for_application_terms_of_service_agreement_state(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseTermsOfServiceAgreementStateServiceRestTransport._BaseRetrieveForApplicationTermsOfServiceAgreementState._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTermsOfServiceAgreementStateServiceRestTransport._BaseRetrieveForApplicationTermsOfServiceAgreementState._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTermsOfServiceAgreementStateServiceRestTransport._BaseRetrieveForApplicationTermsOfServiceAgreementState,
+                    "_BaseRetrieveForApplicationTermsOfServiceAgreementState__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

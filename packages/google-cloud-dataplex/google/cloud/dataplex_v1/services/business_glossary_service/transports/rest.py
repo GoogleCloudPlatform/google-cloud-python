@@ -35,6 +35,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dataplex_v1._compat import transcode_request
 from google.cloud.dataplex_v1.types import business_glossary
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1322,19 +1323,16 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossary._get_http_options()
-
             request, metadata = self._interceptor.pre_create_glossary(request, metadata)
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossary._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossary._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossary._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossary,
+                    "_BaseCreateGlossary__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1476,21 +1474,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossaryCategory._get_http_options()
-
             request, metadata = self._interceptor.pre_create_glossary_category(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossaryCategory._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossaryCategory._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossaryCategory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossaryCategory,
+                    "_BaseCreateGlossaryCategory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1635,21 +1630,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossaryTerm._get_http_options()
-
             request, metadata = self._interceptor.pre_create_glossary_term(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossaryTerm._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossaryTerm._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossaryTerm._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseCreateGlossaryTerm,
+                    "_BaseCreateGlossaryTerm__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1790,15 +1782,16 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseDeleteGlossary._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_glossary(request, metadata)
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseDeleteGlossary._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseDeleteGlossary._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseDeleteGlossary,
+                    "_BaseDeleteGlossary__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1929,17 +1922,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseDeleteGlossaryCategory._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_glossary_category(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseDeleteGlossaryCategory._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseDeleteGlossaryCategory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseDeleteGlossaryCategory,
+                    "_BaseDeleteGlossaryCategory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2036,17 +2030,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseDeleteGlossaryTerm._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_glossary_term(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseDeleteGlossaryTerm._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseDeleteGlossaryTerm._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseDeleteGlossaryTerm,
+                    "_BaseDeleteGlossaryTerm__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2156,15 +2151,16 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseGetGlossary._get_http_options()
-
             request, metadata = self._interceptor.pre_get_glossary(request, metadata)
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseGetGlossary._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseGetGlossary._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseGetGlossary,
+                    "_BaseGetGlossary__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2303,17 +2299,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseGetGlossaryCategory._get_http_options()
-
             request, metadata = self._interceptor.pre_get_glossary_category(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseGetGlossaryCategory._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseGetGlossaryCategory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseGetGlossaryCategory,
+                    "_BaseGetGlossaryCategory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2457,17 +2454,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseGetGlossaryTerm._get_http_options()
-
             request, metadata = self._interceptor.pre_get_glossary_term(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseGetGlossaryTerm._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseGetGlossaryTerm._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseGetGlossaryTerm,
+                    "_BaseGetGlossaryTerm__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2604,15 +2602,16 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseListGlossaries._get_http_options()
-
             request, metadata = self._interceptor.pre_list_glossaries(request, metadata)
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseListGlossaries._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseListGlossaries._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseListGlossaries,
+                    "_BaseListGlossaries__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2751,17 +2750,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseListGlossaryCategories._get_http_options()
-
             request, metadata = self._interceptor.pre_list_glossary_categories(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseListGlossaryCategories._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseListGlossaryCategories._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseListGlossaryCategories,
+                    "_BaseListGlossaryCategories__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2900,17 +2900,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseListGlossaryTerms._get_http_options()
-
             request, metadata = self._interceptor.pre_list_glossary_terms(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseListGlossaryTerms._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseListGlossaryTerms._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseListGlossaryTerms,
+                    "_BaseListGlossaryTerms__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3053,19 +3054,16 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossary._get_http_options()
-
             request, metadata = self._interceptor.pre_update_glossary(request, metadata)
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossary._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossary._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossary._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossary,
+                    "_BaseUpdateGlossary__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3206,21 +3204,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossaryCategory._get_http_options()
-
             request, metadata = self._interceptor.pre_update_glossary_category(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossaryCategory._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossaryCategory._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossaryCategory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossaryCategory,
+                    "_BaseUpdateGlossaryCategory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3364,21 +3359,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossaryTerm._get_http_options()
-
             request, metadata = self._interceptor.pre_update_glossary_term(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossaryTerm._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossaryTerm._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossaryTerm._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseUpdateGlossaryTerm,
+                    "_BaseUpdateGlossaryTerm__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3671,15 +3663,16 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3810,15 +3803,16 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3951,15 +3945,16 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4091,19 +4086,16 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBusinessGlossaryServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4236,21 +4228,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBusinessGlossaryServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4382,21 +4371,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBusinessGlossaryServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4502,17 +4488,18 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4620,15 +4607,16 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4759,15 +4747,16 @@ class BusinessGlossaryServiceRestTransport(_BaseBusinessGlossaryServiceRestTrans
             """
 
             http_options = _BaseBusinessGlossaryServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseBusinessGlossaryServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBusinessGlossaryServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBusinessGlossaryServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

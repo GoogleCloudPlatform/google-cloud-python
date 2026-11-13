@@ -16,6 +16,7 @@
 set -e -x
 echo "BUILDING FOR OSX"
 
+export CRC32C_PURE_PYTHON=0
 # set deployment target
 export MACOSX_DEPLOYMENT_TARGET=12
 
@@ -37,18 +38,16 @@ git submodule update --init --recursive
 
 ${OSX_DIR}/build_c_lib.sh
 
-# reinstall pyenv
-rm -rf /Users/kbuilder/.pyenv
-git clone https://github.com/pyenv/pyenv.git /Users/kbuilder/.pyenv
-
-SUPPORTED_PYTHON_VERSIONS=("3.10" "3.11" "3.12" "3.13" "3.14")
-
-for PYTHON_VERSION in ${SUPPORTED_PYTHON_VERSIONS[@]}; do
-    echo "Build wheel for Python ${PYTHON_VERSION}"
-    export PY_BIN=$PYTHON_VERSION
+for VER in $(awk -F': ' '/^versions:/ {print $2}' "${SCRIPTS_DIR}/python_versions.yaml"); do
+    PYTHON_VERSION=$(echo "$VER" | cut -d. -f1,2)
+    echo "Build wheel for Python ${VER} (${PYTHON_VERSION})"
+    export PY_VERSION="${VER}"
+    export PY_BIN="${PYTHON_VERSION}"
     export PY_TAG="cp${PYTHON_VERSION//.}-cp${PYTHON_VERSION//.}"
     . /${OSX_DIR}/build_python_wheel.sh
 done
+
+. /${OSX_DIR}/publish_python_wheel.sh
 
 # Clean up.
 rm -fr ${CRC32C_INSTALL_PREFIX}

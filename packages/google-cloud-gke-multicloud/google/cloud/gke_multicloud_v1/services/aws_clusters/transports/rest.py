@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.gke_multicloud_v1._compat import transcode_request
 from google.cloud.gke_multicloud_v1.types import aws_resources, aws_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1299,21 +1300,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseCreateAwsCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_aws_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseCreateAwsCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAwsClustersRestTransport._BaseCreateAwsCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseCreateAwsCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseCreateAwsCluster,
+                    "_BaseCreateAwsCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1453,21 +1451,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseCreateAwsNodePool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_aws_node_pool(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseCreateAwsNodePool._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAwsClustersRestTransport._BaseCreateAwsNodePool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseCreateAwsNodePool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseCreateAwsNodePool,
+                    "_BaseCreateAwsNodePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1606,17 +1601,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseDeleteAwsCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_aws_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseDeleteAwsCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseDeleteAwsCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseDeleteAwsCluster,
+                    "_BaseDeleteAwsCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1754,17 +1750,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseDeleteAwsNodePool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_aws_node_pool(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseDeleteAwsNodePool._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseDeleteAwsNodePool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseDeleteAwsNodePool,
+                    "_BaseDeleteAwsNodePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1899,17 +1896,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             """
 
             http_options = _BaseAwsClustersRestTransport._BaseGenerateAwsAccessToken._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_aws_access_token(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseGenerateAwsAccessToken._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseGenerateAwsAccessToken._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseGenerateAwsAccessToken,
+                    "_BaseGenerateAwsAccessToken__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2048,21 +2046,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             """
 
             http_options = _BaseAwsClustersRestTransport._BaseGenerateAwsClusterAgentToken._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_aws_cluster_agent_token(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseGenerateAwsClusterAgentToken._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAwsClustersRestTransport._BaseGenerateAwsClusterAgentToken._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseGenerateAwsClusterAgentToken._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseGenerateAwsClusterAgentToken,
+                    "_BaseGenerateAwsClusterAgentToken__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2208,17 +2203,16 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseGetAwsCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_aws_cluster(request, metadata)
-            transcoded_request = _BaseAwsClustersRestTransport._BaseGetAwsCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAwsClustersRestTransport._BaseGetAwsCluster._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseGetAwsCluster,
+                    "_BaseGetAwsCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2360,17 +2354,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseGetAwsJsonWebKeys._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_aws_json_web_keys(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseGetAwsJsonWebKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseGetAwsJsonWebKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseGetAwsJsonWebKeys,
+                    "_BaseGetAwsJsonWebKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2507,17 +2502,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseGetAwsNodePool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_aws_node_pool(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseGetAwsNodePool._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseGetAwsNodePool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseGetAwsNodePool,
+                    "_BaseGetAwsNodePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2658,17 +2654,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             """
 
             http_options = _BaseAwsClustersRestTransport._BaseGetAwsOpenIdConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_aws_open_id_config(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseGetAwsOpenIdConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseGetAwsOpenIdConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseGetAwsOpenIdConfig,
+                    "_BaseGetAwsOpenIdConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2805,17 +2802,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             """
 
             http_options = _BaseAwsClustersRestTransport._BaseGetAwsServerConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_aws_server_config(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseGetAwsServerConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseGetAwsServerConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseGetAwsServerConfig,
+                    "_BaseGetAwsServerConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2954,17 +2952,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseListAwsClusters._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_aws_clusters(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseListAwsClusters._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseListAwsClusters._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseListAwsClusters,
+                    "_BaseListAwsClusters__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3105,17 +3104,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseListAwsNodePools._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_aws_node_pools(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseListAwsNodePools._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseListAwsNodePools._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseListAwsNodePools,
+                    "_BaseListAwsNodePools__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3258,21 +3258,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             """
 
             http_options = _BaseAwsClustersRestTransport._BaseRollbackAwsNodePoolUpdate._get_http_options()
-
             request, metadata = self._interceptor.pre_rollback_aws_node_pool_update(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseRollbackAwsNodePoolUpdate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAwsClustersRestTransport._BaseRollbackAwsNodePoolUpdate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseRollbackAwsNodePoolUpdate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseRollbackAwsNodePoolUpdate,
+                    "_BaseRollbackAwsNodePoolUpdate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3416,21 +3413,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseUpdateAwsCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_aws_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseUpdateAwsCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAwsClustersRestTransport._BaseUpdateAwsCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseUpdateAwsCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseUpdateAwsCluster,
+                    "_BaseUpdateAwsCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3570,21 +3564,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseUpdateAwsNodePool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_aws_node_pool(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseUpdateAwsNodePool._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAwsClustersRestTransport._BaseUpdateAwsNodePool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseUpdateAwsNodePool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseUpdateAwsNodePool,
+                    "_BaseUpdateAwsNodePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3870,21 +3861,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAwsClustersRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3989,17 +3977,18 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAwsClustersRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4106,19 +4095,16 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseAwsClustersRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAwsClustersRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4250,15 +4236,16 @@ class AwsClustersRestTransport(_BaseAwsClustersRestTransport):
             http_options = (
                 _BaseAwsClustersRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseAwsClustersRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAwsClustersRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAwsClustersRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -18,13 +18,12 @@ This utilities are explicitly catered to ``requests``-like transports.
 """
 
 import http.client
+import time
+
 import requests.exceptions
 import urllib3.exceptions  # type: ignore
 
-import time
-
-from google.resumable_media import common
-from google.resumable_media import _helpers
+from google.resumable_media import _helpers, common
 
 _DEFAULT_RETRY_STRATEGY = common.RetryStrategy()
 _SINGLE_GET_CHUNK_SIZE = 8192

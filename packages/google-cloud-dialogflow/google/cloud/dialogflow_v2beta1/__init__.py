@@ -13,15 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import sys
-
 import google.api_core as api_core
 
 from google.cloud.dialogflow_v2beta1 import gapic_version as package_version
 
 __version__ = package_version.__version__
-
-from importlib import metadata
 
 # PEP 0810: Explicit Lazy Imports
 # Python 3.15+ natively intercepts and defers these imports.
@@ -32,6 +28,7 @@ from importlib import metadata
 __lazy_modules__ = {
     "google.cloud.dialogflow_v2beta1.services.agents",
     "google.cloud.dialogflow_v2beta1.services.answer_records",
+    "google.cloud.dialogflow_v2beta1.services.companion_agents",
     "google.cloud.dialogflow_v2beta1.services.contexts",
     "google.cloud.dialogflow_v2beta1.services.conversation_profiles",
     "google.cloud.dialogflow_v2beta1.services.conversations",
@@ -57,6 +54,7 @@ __lazy_modules__ = {
     "google.cloud.dialogflow_v2beta1.types.audio_config",
     "google.cloud.dialogflow_v2beta1.types.ces_app",
     "google.cloud.dialogflow_v2beta1.types.ces_tool",
+    "google.cloud.dialogflow_v2beta1.types.companion_agent",
     "google.cloud.dialogflow_v2beta1.types.context",
     "google.cloud.dialogflow_v2beta1.types.conversation",
     "google.cloud.dialogflow_v2beta1.types.conversation_event",
@@ -69,6 +67,7 @@ __lazy_modules__ = {
     "google.cloud.dialogflow_v2beta1.types.gcs",
     "google.cloud.dialogflow_v2beta1.types.generator",
     "google.cloud.dialogflow_v2beta1.types.generator_evaluation",
+    "google.cloud.dialogflow_v2beta1.types.grounding",
     "google.cloud.dialogflow_v2beta1.types.human_agent_assistant_event",
     "google.cloud.dialogflow_v2beta1.types.intent",
     "google.cloud.dialogflow_v2beta1.types.knowledge_base",
@@ -89,6 +88,7 @@ __lazy_modules__ = {
 
 from .services.agents import AgentsAsyncClient, AgentsClient
 from .services.answer_records import AnswerRecordsAsyncClient, AnswerRecordsClient
+from .services.companion_agents import CompanionAgentsAsyncClient, CompanionAgentsClient
 from .services.contexts import ContextsAsyncClient, ContextsClient
 from .services.conversation_profiles import (
     ConversationProfilesAsyncClient,
@@ -165,6 +165,16 @@ from .types.audio_config import (
 )
 from .types.ces_app import CesAppSpec
 from .types.ces_tool import CesToolSpec
+from .types.companion_agent import (
+    CompanionAgent,
+    CreateCompanionAgentRequest,
+    DeleteCompanionAgentRequest,
+    GetCompanionAgentRequest,
+    GuidanceInstruction,
+    ListCompanionAgentsRequest,
+    ListCompanionAgentsResponse,
+    UpdateCompanionAgentRequest,
+)
 from .types.context import (
     Context,
     CreateContextRequest,
@@ -314,6 +324,13 @@ from .types.generator_evaluation import (
     ListGeneratorEvaluationsResponse,
     SummarizationEvaluationMetrics,
 )
+from .types.grounding import (
+    GroundingChunk,
+    GroundingMetadata,
+    GroundingSupport,
+    SearchEntryPoint,
+    Segment,
+)
 from .types.human_agent_assistant_event import HumanAgentAssistantEvent
 from .types.intent import (
     BatchDeleteIntentsRequest,
@@ -349,6 +366,8 @@ from .types.participant import (
     AutomatedAgentReply,
     BidiStreamingAnalyzeContentRequest,
     BidiStreamingAnalyzeContentResponse,
+    CancelQuery,
+    CompanionSuggestion,
     CompileSuggestionRequest,
     CompileSuggestionResponse,
     CreateParticipantRequest,
@@ -356,6 +375,7 @@ from .types.participant import (
     DialogflowAssistAnswer,
     DtmfParameters,
     FaqAnswer,
+    GenerateCompanionSuggestionsResponse,
     GenerateSuggestionsResponse,
     GetParticipantRequest,
     IngestedContextReferenceDebugInfo,
@@ -377,6 +397,8 @@ from .types.participant import (
     SmartReplyAnswer,
     StreamingAnalyzeContentRequest,
     StreamingAnalyzeContentResponse,
+    StreamingReactiveCompanionSuggestionsRequest,
+    StreamingReactiveCompanionSuggestionsResponse,
     SuggestArticlesRequest,
     SuggestArticlesResponse,
     SuggestDialogflowAssistsResponse,
@@ -390,6 +412,8 @@ from .types.participant import (
     SuggestKnowledgeAssistResponse,
     SuggestSmartRepliesRequest,
     SuggestSmartRepliesResponse,
+    ToolCallEvents,
+    ToolCallSuggestion,
     UpdateParticipantRequest,
 )
 from .types.phone_number import (
@@ -461,92 +485,10 @@ from .types.version import (
 )
 from .types.webhook import OriginalDetectIntentRequest, WebhookRequest, WebhookResponse
 
-if hasattr(api_core, "check_python_version") and hasattr(
-    api_core, "check_dependency_versions"
-):  # pragma: NO COVER
-    api_core.check_python_version("google.cloud.dialogflow_v2beta1")  # type: ignore
-    api_core.check_dependency_versions("google.cloud.dialogflow_v2beta1")  # type: ignore
-else:  # pragma: NO COVER
-    # An older version of api_core is installed which does not define the
-    # functions above. We do equivalent checks manually.
-    try:
-        import warnings
-
-        _py_version_str = sys.version.split()[0]
-        _package_label = "google.cloud.dialogflow_v2beta1"
-        if sys.version_info < (3, 10):
-            warnings.warn(
-                "You are using a non-supported Python version "
-                + f"({_py_version_str}).  Google will not post any further "
-                + f"updates to {_package_label} supporting this Python version. "
-                + "Please upgrade to the latest Python version, or at "
-                + f"least to Python 3.10, and then update {_package_label}.",
-                FutureWarning,
-            )
-
-        def parse_version_to_tuple(version_string: str):
-            """Safely converts a semantic version string to a comparable tuple of integers.
-            Example: "6.33.5" -> (6, 33, 5)
-            Ignores non-numeric parts and handles common version formats.
-            Args:
-                version_string: Version string in the format "x.y.z" or "x.y.z<suffix>"
-            Returns:
-                Tuple of integers for the parsed version string.
-            """
-            parts = []
-            for part in version_string.split("."):
-                try:
-                    parts.append(int(part))
-                except ValueError:
-                    # If it's a non-numeric part (e.g., '1.0.0b1' -> 'b1'), stop here.
-                    # This is a simplification compared to 'packaging.parse_version', but sufficient
-                    # for comparing strictly numeric semantic versions.
-                    break
-            return tuple(parts)
-
-        def _get_version(dependency_name):
-            try:
-                version_string: str = metadata.version(dependency_name)
-                parsed_version = parse_version_to_tuple(version_string)
-                return (parsed_version, version_string)
-            except Exception:
-                # Catch exceptions from metadata.version() (e.g., PackageNotFoundError)
-                # or errors during parse_version_to_tuple
-                return (None, "--")
-
-        _dependency_package = "google.protobuf"
-        _next_supported_version = "6.33.5"
-        _next_supported_version_tuple = (6, 33, 5)
-        _recommendation = " (we recommend 7.x)"
-        (_version_used, _version_used_string) = _get_version(_dependency_package)
-        if _version_used and _version_used < _next_supported_version_tuple:
-            warnings.warn(
-                f"Package {_package_label} depends on "
-                + f"{_dependency_package}, currently installed at version "
-                + f"{_version_used_string}. Future updates to "
-                + f"{_package_label} will require {_dependency_package} at "
-                + f"version {_next_supported_version} or higher{_recommendation}."
-                + " Please ensure "
-                + "that either (a) your Python environment doesn't pin the "
-                + f"version of {_dependency_package}, so that updates to "
-                + f"{_package_label} can require the higher version, or "
-                + "(b) you manually update your Python environment to use at "
-                + f"least version {_next_supported_version} of "
-                + f"{_dependency_package}.",
-                FutureWarning,
-            )
-    except Exception:
-        warnings.warn(
-            "Could not determine the version of Python "
-            + "currently being used. To continue receiving "
-            + "updates for {_package_label}, ensure you are "
-            + "using a supported version of Python; see "
-            + "https://devguide.python.org/versions/"
-        )
-
 __all__ = (
     "AgentsAsyncClient",
     "AnswerRecordsAsyncClient",
+    "CompanionAgentsAsyncClient",
     "ContextsAsyncClient",
     "ConversationProfilesAsyncClient",
     "ConversationsAsyncClient",
@@ -599,11 +541,15 @@ __all__ = (
     "BatchUpdateIntentsResponse",
     "BidiStreamingAnalyzeContentRequest",
     "BidiStreamingAnalyzeContentResponse",
+    "CancelQuery",
     "CesAppSpec",
     "CesToolSpec",
     "ClearSuggestionFeatureConfigOperationMetadata",
     "ClearSuggestionFeatureConfigRequest",
     "CloudConversationDebuggingInfo",
+    "CompanionAgent",
+    "CompanionAgentsClient",
+    "CompanionSuggestion",
     "CompileSuggestionRequest",
     "CompileSuggestionResponse",
     "CompleteConversationRequest",
@@ -617,6 +563,7 @@ __all__ = (
     "ConversationProfile",
     "ConversationProfilesClient",
     "ConversationsClient",
+    "CreateCompanionAgentRequest",
     "CreateContextRequest",
     "CreateConversationProfileRequest",
     "CreateConversationRequest",
@@ -637,6 +584,7 @@ __all__ = (
     "DatastoreResponseReason",
     "DeleteAgentRequest",
     "DeleteAllContextsRequest",
+    "DeleteCompanionAgentRequest",
     "DeleteContextRequest",
     "DeleteConversationProfileRequest",
     "DeleteDocumentRequest",
@@ -679,6 +627,7 @@ __all__ = (
     "GcsDestination",
     "GcsSource",
     "GcsSources",
+    "GenerateCompanionSuggestionsResponse",
     "GenerateStatelessSuggestionRequest",
     "GenerateStatelessSuggestionResponse",
     "GenerateStatelessSummaryRequest",
@@ -694,6 +643,7 @@ __all__ = (
     "GeneratorsClient",
     "GetAgentRequest",
     "GetAnswerRecordRequest",
+    "GetCompanionAgentRequest",
     "GetContextRequest",
     "GetConversationProfileRequest",
     "GetConversationRequest",
@@ -713,6 +663,10 @@ __all__ = (
     "GetToolRequest",
     "GetValidationResultRequest",
     "GetVersionRequest",
+    "GroundingChunk",
+    "GroundingMetadata",
+    "GroundingSupport",
+    "GuidanceInstruction",
     "HumanAgentAssistantConfig",
     "HumanAgentAssistantEvent",
     "HumanAgentHandoffConfig",
@@ -743,6 +697,8 @@ __all__ = (
     "KnowledgeOperationMetadata",
     "ListAnswerRecordsRequest",
     "ListAnswerRecordsResponse",
+    "ListCompanionAgentsRequest",
+    "ListCompanionAgentsResponse",
     "ListContextsRequest",
     "ListContextsResponse",
     "ListConversationProfilesRequest",
@@ -802,10 +758,12 @@ __all__ = (
     "RestoreAgentRequest",
     "SearchAgentsRequest",
     "SearchAgentsResponse",
+    "SearchEntryPoint",
     "SearchKnowledgeAnswer",
     "SearchKnowledgeDebugInfo",
     "SearchKnowledgeRequest",
     "SearchKnowledgeResponse",
+    "Segment",
     "Sentiment",
     "SentimentAnalysisRequestConfig",
     "SentimentAnalysisResult",
@@ -830,6 +788,8 @@ __all__ = (
     "StreamingAnalyzeContentResponse",
     "StreamingDetectIntentRequest",
     "StreamingDetectIntentResponse",
+    "StreamingReactiveCompanionSuggestionsRequest",
+    "StreamingReactiveCompanionSuggestionsResponse",
     "StreamingRecognitionResult",
     "SubAgent",
     "SuggestArticlesRequest",
@@ -860,13 +820,16 @@ __all__ = (
     "TextToSpeechSettings",
     "Tool",
     "ToolCall",
+    "ToolCallEvents",
     "ToolCallResult",
+    "ToolCallSuggestion",
     "ToolsClient",
     "ToolsetTool",
     "TrainAgentRequest",
     "TriggerEvent",
     "UndeletePhoneNumberRequest",
     "UpdateAnswerRecordRequest",
+    "UpdateCompanionAgentRequest",
     "UpdateContextRequest",
     "UpdateConversationProfileRequest",
     "UpdateDocumentRequest",
@@ -890,3 +853,6 @@ __all__ = (
     "WebhookRequest",
     "WebhookResponse",
 )
+
+api_core.check_python_version("google.cloud.dialogflow_v2beta1")
+api_core.check_dependency_versions("google.cloud.dialogflow_v2beta1")

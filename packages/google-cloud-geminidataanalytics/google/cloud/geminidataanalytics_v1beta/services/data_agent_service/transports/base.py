@@ -201,6 +201,16 @@ class DataAgentServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.set_agent_ops_observability: gapic_v1.method.wrap_method(
+                self.set_agent_ops_observability,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.retrieve_agent_ops_observability: gapic_v1.method.wrap_method(
+                self.retrieve_agent_ops_observability,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.get_location: gapic_v1.method.wrap_method(
                 self.get_location,
                 default_timeout=None,
@@ -349,6 +359,27 @@ class DataAgentServiceTransport(abc.ABC):
     ) -> Callable[
         [iam_policy_pb2.SetIamPolicyRequest],
         Union[policy_pb2.Policy, Awaitable[policy_pb2.Policy]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def set_agent_ops_observability(
+        self,
+    ) -> Callable[
+        [data_agent_service.SetAgentOpsObservabilityRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def retrieve_agent_ops_observability(
+        self,
+    ) -> Callable[
+        [data_agent_service.RetrieveAgentOpsObservabilityRequest],
+        Union[
+            data_agent_service.RetrieveAgentOpsObservabilityResponse,
+            Awaitable[data_agent_service.RetrieveAgentOpsObservabilityResponse],
+        ],
     ]:
         raise NotImplementedError()
 

@@ -22,9 +22,7 @@ import json
 import os
 import warnings
 
-from google.auth import _default
-from google.auth import environment_vars
-from google.auth import exceptions
+from google.auth import _default, environment_vars, exceptions
 
 
 def load_credentials_from_file(filename, scopes=None, quota_project_id=None):

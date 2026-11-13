@@ -4,6 +4,20 @@
 
 [1]: https://pypi.org/project/google-cloud-recaptcha-enterprise/#history
 
+## [1.34.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-recaptcha-enterprise-v1.33.0...google-cloud-recaptcha-enterprise-v1.34.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [1.33.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-recaptcha-enterprise-v1.32.0...google-cloud-recaptcha-enterprise-v1.33.0) (2026-08-21)
+
+
+### Features
+
+* update googleapis and regenerate ([#18087](https://github.com/googleapis/google-cloud-python/issues/18087)) ([db1622a](https://github.com/googleapis/google-cloud-python/commit/db1622a9cfac112b40c93842737d7a5deeb3e8bd))
+
 ## [1.32.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-recaptcha-enterprise-v1.31.0...google-cloud-recaptcha-enterprise-v1.32.0) (2026-06-22)
 
 

@@ -1,7 +1,7 @@
 common:
   bucket_types:
     - "regional"
-    - "zonal"
+    - "rapid"
   file_sizes_mib:
     - 10240 # 10GiB
   chunk_sizes_kib: [64] # 16KiB
@@ -25,5 +25,5 @@ workload:
 
 
 defaults:
-  DEFAULT_RAPID_ZONAL_BUCKET: "chandrasiri-benchmarks-zb"
+  DEFAULT_RAPID_BUCKET: "chandrasiri-benchmarks-zb"
   DEFAULT_STANDARD_BUCKET: "chandrasiri-benchmarks-rb"

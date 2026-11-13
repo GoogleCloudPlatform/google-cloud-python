@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.ftp_v1._compat import transcode_request
 from google.cloud.ftp_v1.types import service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1074,23 +1075,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseCreateServer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_server(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseCreateServer._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudFtpRestTransport._BaseCreateServer._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseCreateServer._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseCreateServer,
+                    "_BaseCreateServer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1227,23 +1221,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseCreateUser._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_user(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseCreateUser._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudFtpRestTransport._BaseCreateUser._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseCreateUser._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseCreateUser,
+                    "_BaseCreateUser__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1385,19 +1372,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseDeleteServer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_server(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseDeleteServer._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseDeleteServer._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseDeleteServer,
+                    "_BaseDeleteServer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1532,19 +1516,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseDeleteUser._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_user(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseDeleteUser._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseDeleteUser._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseDeleteUser,
+                    "_BaseDeleteUser__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1674,19 +1655,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             """
 
             http_options = _BaseCloudFtpRestTransport._BaseGetServer._get_http_options()
-
             request, metadata = self._interceptor.pre_get_server(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseGetServer._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseGetServer._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseGetServer,
+                    "_BaseGetServer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1818,19 +1796,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             """
 
             http_options = _BaseCloudFtpRestTransport._BaseGetUser._get_http_options()
-
             request, metadata = self._interceptor.pre_get_user(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseGetUser._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseGetUser._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseGetUser,
+                    "_BaseGetUser__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1967,19 +1942,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseListServers._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_servers(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseListServers._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseListServers._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseListServers,
+                    "_BaseListServers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2111,19 +2083,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             """
 
             http_options = _BaseCloudFtpRestTransport._BaseListUsers._get_http_options()
-
             request, metadata = self._interceptor.pre_list_users(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseListUsers._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseListUsers._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseListUsers,
+                    "_BaseListUsers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2262,23 +2231,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseStartServer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_start_server(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseStartServer._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudFtpRestTransport._BaseStartServer._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseStartServer._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseStartServer,
+                    "_BaseStartServer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2416,23 +2378,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseStopServer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_stop_server(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseStopServer._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudFtpRestTransport._BaseStopServer._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseStopServer._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseStopServer,
+                    "_BaseStopServer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2569,23 +2524,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseUpdateServer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_server(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseUpdateServer._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudFtpRestTransport._BaseUpdateServer._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseUpdateServer._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseUpdateServer,
+                    "_BaseUpdateServer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2722,23 +2670,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseUpdateUser._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_user(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseUpdateUser._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudFtpRestTransport._BaseUpdateUser._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseUpdateUser._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseUpdateUser,
+                    "_BaseUpdateUser__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2966,19 +2907,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3110,19 +3048,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3252,27 +3187,18 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseCancelOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseCloudFtpRestTransport._BaseCancelOperation._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3377,21 +3303,18 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseDeleteOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseDeleteOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3496,19 +3419,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3640,19 +3560,16 @@ class CloudFtpRestTransport(_BaseCloudFtpRestTransport):
             http_options = (
                 _BaseCloudFtpRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseCloudFtpRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudFtpRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudFtpRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

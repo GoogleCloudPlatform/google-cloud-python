@@ -33,6 +33,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.artifactregistry_v1._compat import transcode_request
 from google.cloud.artifactregistry_v1.types import (
     apt_artifact,
     artifact,
@@ -3030,21 +3031,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseBatchDeleteVersions._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_delete_versions(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseBatchDeleteVersions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseBatchDeleteVersions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseBatchDeleteVersions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseBatchDeleteVersions,
+                    "_BaseBatchDeleteVersions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3183,21 +3181,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseCreateAttachment._get_http_options()
-
             request, metadata = self._interceptor.pre_create_attachment(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseCreateAttachment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseCreateAttachment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseCreateAttachment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseCreateAttachment,
+                    "_BaseCreateAttachment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3336,21 +3331,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseCreateRepository._get_http_options()
-
             request, metadata = self._interceptor.pre_create_repository(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseCreateRepository._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseCreateRepository._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseCreateRepository._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseCreateRepository,
+                    "_BaseCreateRepository__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3492,19 +3484,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseCreateRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_rule(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseCreateRule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseCreateRule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseCreateRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseCreateRule,
+                    "_BaseCreateRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3645,19 +3634,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseCreateTag._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_tag(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseCreateTag._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseCreateTag._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseCreateTag._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseCreateTag,
+                    "_BaseCreateTag__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3796,17 +3782,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseDeleteAttachment._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_attachment(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseDeleteAttachment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseDeleteAttachment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseDeleteAttachment,
+                    "_BaseDeleteAttachment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3943,15 +3930,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseDeleteFile._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_file(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseDeleteFile._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseDeleteFile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseDeleteFile,
+                    "_BaseDeleteFile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4086,15 +4074,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseDeletePackage._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_package(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseDeletePackage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseDeletePackage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseDeletePackage,
+                    "_BaseDeletePackage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4230,17 +4219,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseDeleteRepository._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_repository(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseDeleteRepository._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseDeleteRepository._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseDeleteRepository,
+                    "_BaseDeleteRepository__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4370,15 +4360,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseDeleteRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_rule(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseDeleteRule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseDeleteRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseDeleteRule,
+                    "_BaseDeleteRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4476,15 +4467,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseDeleteTag._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_tag(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseDeleteTag._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseDeleteTag._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseDeleteTag,
+                    "_BaseDeleteTag__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4587,15 +4579,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseDeleteVersion._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_version(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseDeleteVersion._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseDeleteVersion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseDeleteVersion,
+                    "_BaseDeleteVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4732,19 +4725,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseExportArtifact._get_http_options()
-
             request, metadata = self._interceptor.pre_export_artifact(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseExportArtifact._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseExportArtifact._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseExportArtifact._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseExportArtifact,
+                    "_BaseExportArtifact__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4883,15 +4873,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseGetAttachment._get_http_options()
-
             request, metadata = self._interceptor.pre_get_attachment(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetAttachment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetAttachment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetAttachment,
+                    "_BaseGetAttachment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5033,17 +5024,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseGetDockerImage._get_http_options()
-
             request, metadata = self._interceptor.pre_get_docker_image(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetDockerImage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetDockerImage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetDockerImage,
+                    "_BaseGetDockerImage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5182,19 +5174,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseGetFile._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_file(request, metadata)
-            transcoded_request = (
-                _BaseArtifactRegistryRestTransport._BaseGetFile._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseArtifactRegistryRestTransport._BaseGetFile._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetFile,
+                    "_BaseGetFile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5405,15 +5394,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5550,17 +5540,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseGetMavenArtifact._get_http_options()
-
             request, metadata = self._interceptor.pre_get_maven_artifact(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetMavenArtifact._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetMavenArtifact._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetMavenArtifact,
+                    "_BaseGetMavenArtifact__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5696,15 +5687,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseGetNpmPackage._get_http_options()
-
             request, metadata = self._interceptor.pre_get_npm_package(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetNpmPackage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetNpmPackage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetNpmPackage,
+                    "_BaseGetNpmPackage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5842,15 +5834,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseGetPackage._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_package(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetPackage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetPackage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetPackage,
+                    "_BaseGetPackage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5988,17 +5981,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseGetProjectSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_get_project_settings(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetProjectSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetProjectSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetProjectSettings,
+                    "_BaseGetProjectSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6135,17 +6129,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseGetPythonPackage._get_http_options()
-
             request, metadata = self._interceptor.pre_get_python_package(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetPythonPackage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetPythonPackage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetPythonPackage,
+                    "_BaseGetPythonPackage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6281,15 +6276,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseGetRepository._get_http_options()
-
             request, metadata = self._interceptor.pre_get_repository(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetRepository._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetRepository._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetRepository,
+                    "_BaseGetRepository__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6431,19 +6427,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseGetRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_rule(request, metadata)
-            transcoded_request = (
-                _BaseArtifactRegistryRestTransport._BaseGetRule._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseArtifactRegistryRestTransport._BaseGetRule._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetRule,
+                    "_BaseGetRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6582,19 +6575,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseGetTag._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_tag(request, metadata)
-            transcoded_request = (
-                _BaseArtifactRegistryRestTransport._BaseGetTag._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseArtifactRegistryRestTransport._BaseGetTag._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetTag,
+                    "_BaseGetTag__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6735,15 +6725,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseGetVersion._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_version(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetVersion._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetVersion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetVersion,
+                    "_BaseGetVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6879,17 +6870,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseGetVPCSCConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_vpcsc_config(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetVPCSCConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetVPCSCConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetVPCSCConfig,
+                    "_BaseGetVPCSCConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7029,21 +7021,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseImportAptArtifacts._get_http_options()
-
             request, metadata = self._interceptor.pre_import_apt_artifacts(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseImportAptArtifacts._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseImportAptArtifacts._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseImportAptArtifacts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseImportAptArtifacts,
+                    "_BaseImportAptArtifacts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7182,21 +7171,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseImportYumArtifacts._get_http_options()
-
             request, metadata = self._interceptor.pre_import_yum_artifacts(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseImportYumArtifacts._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseImportYumArtifacts._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseImportYumArtifacts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseImportYumArtifacts,
+                    "_BaseImportYumArtifacts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7332,17 +7318,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseListAttachments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_attachments(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseListAttachments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseListAttachments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseListAttachments,
+                    "_BaseListAttachments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7481,17 +7468,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseListDockerImages._get_http_options()
-
             request, metadata = self._interceptor.pre_list_docker_images(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseListDockerImages._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseListDockerImages._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseListDockerImages,
+                    "_BaseListDockerImages__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7629,15 +7617,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseListFiles._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_files(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseListFiles._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseListFiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseListFiles,
+                    "_BaseListFiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7774,17 +7763,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseListMavenArtifacts._get_http_options()
-
             request, metadata = self._interceptor.pre_list_maven_artifacts(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseListMavenArtifacts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseListMavenArtifacts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseListMavenArtifacts,
+                    "_BaseListMavenArtifacts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7923,17 +7913,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseListNpmPackages._get_http_options()
-
             request, metadata = self._interceptor.pre_list_npm_packages(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseListNpmPackages._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseListNpmPackages._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseListNpmPackages,
+                    "_BaseListNpmPackages__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8071,15 +8062,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseListPackages._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_packages(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseListPackages._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseListPackages._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseListPackages,
+                    "_BaseListPackages__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8216,17 +8208,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseListPythonPackages._get_http_options()
-
             request, metadata = self._interceptor.pre_list_python_packages(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseListPythonPackages._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseListPythonPackages._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseListPythonPackages,
+                    "_BaseListPythonPackages__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8365,17 +8358,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseListRepositories._get_http_options()
-
             request, metadata = self._interceptor.pre_list_repositories(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseListRepositories._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseListRepositories._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseListRepositories,
+                    "_BaseListRepositories__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8513,15 +8507,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseListRules._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_rules(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseListRules._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseListRules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseListRules,
+                    "_BaseListRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8657,17 +8652,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseListTags._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_tags(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseListTags._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseArtifactRegistryRestTransport._BaseListTags._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseListTags,
+                    "_BaseListTags__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8803,15 +8797,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseListVersions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_versions(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseListVersions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseListVersions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseListVersions,
+                    "_BaseListVersions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9023,19 +9018,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9172,21 +9164,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9327,19 +9316,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseUpdateFile._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_file(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseUpdateFile._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseUpdateFile._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseUpdateFile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseUpdateFile,
+                    "_BaseUpdateFile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9477,19 +9463,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseUpdatePackage._get_http_options()
-
             request, metadata = self._interceptor.pre_update_package(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseUpdatePackage._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseUpdatePackage._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseUpdatePackage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseUpdatePackage,
+                    "_BaseUpdatePackage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9628,21 +9611,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseUpdateProjectSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_update_project_settings(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseUpdateProjectSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseUpdateProjectSettings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseUpdateProjectSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseUpdateProjectSettings,
+                    "_BaseUpdateProjectSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9783,21 +9763,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseUpdateRepository._get_http_options()
-
             request, metadata = self._interceptor.pre_update_repository(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseUpdateRepository._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseUpdateRepository._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseUpdateRepository._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseUpdateRepository,
+                    "_BaseUpdateRepository__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9941,19 +9918,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseUpdateRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_rule(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseUpdateRule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseUpdateRule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseUpdateRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseUpdateRule,
+                    "_BaseUpdateRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10095,19 +10069,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseUpdateTag._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_tag(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseUpdateTag._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseUpdateTag._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseUpdateTag._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseUpdateTag,
+                    "_BaseUpdateTag__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10248,19 +10219,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseUpdateVersion._get_http_options()
-
             request, metadata = self._interceptor.pre_update_version(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseUpdateVersion._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseUpdateVersion._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseUpdateVersion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseUpdateVersion,
+                    "_BaseUpdateVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10399,21 +10367,18 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseUpdateVPCSCConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_vpcsc_config(
                 request, metadata
             )
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseUpdateVPCSCConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseArtifactRegistryRestTransport._BaseUpdateVPCSCConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseUpdateVPCSCConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseUpdateVPCSCConfig,
+                    "_BaseUpdateVPCSCConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10938,15 +10903,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11076,15 +11042,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             """
 
             http_options = _BaseArtifactRegistryRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11216,15 +11183,16 @@ class ArtifactRegistryRestTransport(_BaseArtifactRegistryRestTransport):
             http_options = (
                 _BaseArtifactRegistryRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseArtifactRegistryRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseArtifactRegistryRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseArtifactRegistryRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -38,6 +38,7 @@ __protobuf__ = proto.module(
         "Transcript",
         "DocsDestination",
         "TranscriptEntry",
+        "SmartNote",
     },
 )
 
@@ -57,7 +58,7 @@ class Space(proto.Message):
             example, ``jQCFfuBOdN5z``.
 
             For more information, see `How Meet identifies a meeting
-            space <https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space>`__.
+            space <https://developers.google.com/workspace/meet/api/guides/meeting-spaces#identify-meeting-space>`__.
         meeting_uri (str):
             Output only. URI used to join meetings consisting of
             ``https://meet.google.com/`` followed by the
@@ -79,7 +80,89 @@ class Space(proto.Message):
             space.
         active_conference (google.apps.meet_v2beta.types.ActiveConference):
             Active conference, if it exists.
+        phone_access (MutableSequence[google.apps.meet_v2beta.types.Space.PhoneAccess]):
+            Output only. All regional phone access
+            methods for this meeting space. Can be empty.
+        gateway_sip_access (MutableSequence[google.apps.meet_v2beta.types.Space.GatewaySipAccess]):
+            Output only. The SIP-based access methods
+            that can be used to join the conference. Can be
+            empty.
     """
+
+    class PhoneAccess(proto.Message):
+        r"""Phone access contains information required to dial into a
+        conference using a regional phone number and a PIN that is
+        specific to that phone number.
+
+        Attributes:
+            phone_number (str):
+                The phone number to dial for this meeting
+                space in E.164 format. Full phone number with a
+                leading '+' character.
+            pin (str):
+                The PIN that users must enter after dialing
+                the given number. The PIN consists of only
+                decimal digits and the length may vary.
+            region_code (str):
+                The CLDR/ISO 3166 region code for the country
+                associated with this phone access. To be parsed
+                by the i18n RegionCode utility. Example: "SE"
+                for Sweden.
+            language_code (str):
+                The BCP 47/LDML language code for the
+                language associated with this phone access. To
+                be parsed by the i18n LanguageCode utility.
+                Examples: "es-419" for Latin American Spanish,
+                "fr-CA" for Canadian French.
+        """
+
+        phone_number: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        pin: str = proto.Field(
+            proto.STRING,
+            number=2,
+        )
+        region_code: str = proto.Field(
+            proto.STRING,
+            number=3,
+        )
+        language_code: str = proto.Field(
+            proto.STRING,
+            number=4,
+        )
+
+    class GatewaySipAccess(proto.Message):
+        r"""Details how to join the conference through a SIP gateway.
+
+        Attributes:
+            uri (str):
+                The Session Initiation Protocol (SIP) URI the conference can
+                be reached through.
+
+                The string is in one of these formats:
+
+                - "sip:USER_ID@GATEWAY_ADDRESS"
+                - "sips:USER_ID@GATEWAY_ADDRESS"
+
+                where USER_ID is the 13-digit universal pin (with the future
+                option to support using a Meet meeting code as well), and
+                GATEWAY_ADDRESS is a valid address to be resolved using a
+                DNS SRV lookup, or a dotted quad.
+            sip_access_code (str):
+                The permanent numeric code for manual entry
+                on specially configured devices.
+        """
+
+        uri: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        sip_access_code: str = proto.Field(
+            proto.STRING,
+            number=2,
+        )
 
     name: str = proto.Field(
         proto.STRING,
@@ -103,6 +186,16 @@ class Space(proto.Message):
         number=6,
         message="ActiveConference",
     )
+    phone_access: MutableSequence[PhoneAccess] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=7,
+        message=PhoneAccess,
+    )
+    gateway_sip_access: MutableSequence[GatewaySipAccess] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=8,
+        message=GatewaySipAccess,
+    )
 
 
 class ActiveConference(proto.Message):
@@ -114,11 +207,18 @@ class ActiveConference(proto.Message):
             Format: ``conferenceRecords/{conference_record}`` where
             ``{conference_record}`` is a unique ID for each instance of
             a call within a space.
+        media_api_consenter_present (bool):
+            Output only. Indicates whether a media api
+            consenter is present in the conference.
     """
 
     conference_record: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+    media_api_consenter_present: bool = proto.Field(
+        proto.BOOL,
+        number=2,
     )
 
 
@@ -137,25 +237,21 @@ class SpaceConfig(proto.Message):
             join meetings hosted in this meeting space.
             Default: EntryPointAccess.ALL
         moderation (google.apps.meet_v2beta.types.SpaceConfig.Moderation):
-            `Developer
-            Preview <https://developers.google.com/workspace/preview>`__:
-            The pre-configured moderation mode for the Meeting. Default:
-            Controlled by the user's policies.
+            The pre-configured moderation mode for the
+            Meeting. Default: Controlled by the user's
+            policies.
         moderation_restrictions (google.apps.meet_v2beta.types.SpaceConfig.ModerationRestrictions):
-            `Developer
-            Preview <https://developers.google.com/workspace/preview>`__:
-            When moderation.ON, these restrictions go into effect for
-            the meeting. When moderation.OFF, will be reset to default
+            When moderation.ON, these restrictions go
+            into effect for the meeting. When
+            moderation.OFF, will be reset to default
             ModerationRestrictions.
         attendance_report_generation_type (google.apps.meet_v2beta.types.SpaceConfig.AttendanceReportGenerationType):
-            `Developer
-            Preview <https://developers.google.com/workspace/preview>`__:
-            Whether attendance report is enabled for the meeting space.
+            Whether attendance report is enabled for the
+            meeting space.
         artifact_config (google.apps.meet_v2beta.types.SpaceConfig.ArtifactConfig):
-            `Developer
-            Preview <https://developers.google.com/workspace/preview>`__:
-            Configuration pertaining to the auto-generated artifacts
-            that the meeting supports.
+            Configuration pertaining to the
+            auto-generated artifacts that the meeting
+            supports.
     """
 
     class AccessType(proto.Enum):
@@ -396,9 +492,9 @@ class SpaceConfig(proto.Message):
             )
 
         class SmartNotesConfig(proto.Message):
-            r"""Configuration related to smart notes in a meeting space. More
-            details about smart notes
-            https://support.google.com/meet/answer/14754931?hl=en.
+            r"""Configuration related to smart notes in a meeting space. For more
+            information about smart notes, see `"Take notes for me" in Google
+            Meet <https://support.google.com/meet/answer/14754931>`__.
 
             Attributes:
                 auto_smart_notes_generation (google.apps.meet_v2beta.types.SpaceConfig.ArtifactConfig.AutoGenerationType):
@@ -492,13 +588,12 @@ class Member(proto.Message):
 
         Values:
             ROLE_UNSPECIFIED (0):
-                This is used to indicate the user hasn't
-                specified any value and the user’s role will be
-                determined upon joining the meetings between
-                'contributor' and 'viewer' role depending on
-                meeting configuration. More details about viewer
-                role
-                https://support.google.com/meet/answer/13658394?hl=en.
+                This is used to indicate the user hasn't specified any value
+                and the user’s role will be determined upon joining the
+                meetings between 'contributor' and 'viewer' role depending
+                on meeting configuration. For more information about the
+                viewer role, see `Assign View only roles in Google
+                Meet <https://support.google.com/meet/answer/13658394>`__.
             COHOST (1):
                 Co-host role.
         """
@@ -998,6 +1093,84 @@ class TranscriptEntry(proto.Message):
     end_time: timestamp_pb2.Timestamp = proto.Field(
         proto.MESSAGE,
         number=6,
+        message=timestamp_pb2.Timestamp,
+    )
+
+
+class SmartNote(proto.Message):
+    r"""Metadata for a smart note generated from a conference. It
+    refers to the notes generated from Take Notes with Gemini during
+    the conference.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        docs_destination (google.apps.meet_v2beta.types.DocsDestination):
+            Output only. The Google Doc destination where
+            the smart notes are saved.
+
+            This field is a member of `oneof`_ ``destination``.
+        name (str):
+            Output only. Identifier. Resource name of the smart notes.
+            Format:
+            ``conferenceRecords/{conference_record}/smartNotes/{smart_note}``,
+            where ``{smart_note}`` is a 1:1 mapping to each unique smart
+            notes session of the conference.
+        state (google.apps.meet_v2beta.types.SmartNote.State):
+            Output only. Current state.
+        start_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Timestamp when the smart notes
+            started.
+        end_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Timestamp when the smart notes
+            stopped.
+    """
+
+    class State(proto.Enum):
+        r"""Current state of the smart notes session.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Default, never used.
+            STARTED (1):
+                An active smart notes session has started.
+            ENDED (2):
+                This smart notes session has ended, but the
+                smart notes file hasn't been generated yet.
+            FILE_GENERATED (3):
+                Smart notes file is generated and ready to
+                download.
+        """
+
+        STATE_UNSPECIFIED = 0
+        STARTED = 1
+        ENDED = 2
+        FILE_GENERATED = 3
+
+    docs_destination: "DocsDestination" = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        oneof="destination",
+        message="DocsDestination",
+    )
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum=State,
+    )
+    start_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=timestamp_pb2.Timestamp,
+    )
+    end_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=4,
         message=timestamp_pb2.Timestamp,
     )
 

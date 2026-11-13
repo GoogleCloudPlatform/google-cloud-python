@@ -19,12 +19,17 @@ from typing import MutableMapping, MutableSequence
 
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.type.date_pb2 as date_pb2  # type: ignore
+import google.type.dayofweek_pb2 as dayofweek_pb2  # type: ignore
+import google.type.timeofday_pb2 as timeofday_pb2  # type: ignore
 import proto  # type: ignore
 
 __protobuf__ = proto.module(
     package="google.cloud.lustre.v1",
     manifest={
         "Instance",
+        "DynamicTierOptions",
+        "AccessRulesOptions",
         "ListInstancesRequest",
         "ListInstancesResponse",
         "GetInstanceRequest",
@@ -32,12 +37,17 @@ __protobuf__ = proto.module(
         "UpdateInstanceRequest",
         "DeleteInstanceRequest",
         "OperationMetadata",
+        "MaintenancePolicy",
+        "MaintenanceSchedule",
+        "RescheduleMaintenanceRequest",
     },
 )
 
 
 class Instance(proto.Message):
     r"""A Managed Lustre instance.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
     Attributes:
         name (str):
@@ -50,8 +60,11 @@ class Instance(proto.Message):
             contain letters and numbers.
         capacity_gib (int):
             Required. The storage capacity of the instance in gibibytes
-            (GiB). Allowed values are from ``18000`` to ``954000``, in
-            increments of 9000.
+            (GiB). Allowed values depend on the
+            ``perUnitStorageThroughput``. See `Performance
+            tiers <https://docs.cloud.google.com/managed-lustre/docs/performance-tiers>`__
+            for specific minimums, maximums, and step sizes for each
+            performance tier.
         network (str):
             Required. Immutable. The full name of the VPC network to
             which the instance is connected. Must be in the format
@@ -73,13 +86,68 @@ class Instance(proto.Message):
         labels (MutableMapping[str, str]):
             Optional. Labels as key value pairs.
         per_unit_storage_throughput (int):
-            Required. The throughput of the instance in
-            MB/s/TiB. Valid values are 125, 250, 500, 1000.
+            Optional. The throughput of the instance in MBps per TiB.
+            Valid values are 0, 125, 250, 500, 1000. See `Performance
+            tiers <https://docs.cloud.google.com/managed-lustre/docs/performance-tiers>`__
+            for more information.
+
+            If the instance is using the Dynamic tier, this field must
+            not be set or must be set to zero.
         gke_support_enabled (bool):
-            Optional. Indicates whether you want to
-            enable support for GKE clients. By default, GKE
-            clients are not supported. Deprecated. No longer
-            required for GKE instance creation.
+            Optional. Deprecated: No longer required for
+            GKE instance creation. Indicates whether you
+            want to enable support for GKE clients. By
+            default, GKE clients are not supported.
+        kms_key (str):
+            Optional. Immutable. The Cloud KMS key name to use for data
+            encryption. If not set, the instance will use Google-managed
+            encryption keys. If set, the instance will use
+            customer-managed encryption keys. The key must be in the
+            same region as the instance. The key format is:
+            projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{key}
+        state_reason (str):
+            Output only. The reason why the instance is
+            in a certain state (e.g. SUSPENDED).
+        placement_policy (str):
+            Optional. The placement policy name for the instance in the
+            format of
+            projects/{project}/locations/{location}/resourcePolicies/{resource_policy}
+        access_rules_options (google.cloud.lustre_v1.types.AccessRulesOptions):
+            Optional. The access rules options for the
+            instance.
+        uid (str):
+            Output only. Unique ID of the resource.
+            This is unrelated to the access rules which
+            allow specifying the root squash uid.
+        maintenance_policy (google.cloud.lustre_v1.types.MaintenancePolicy):
+            Optional. The maintenance policy for the
+            instance to determine when to allow or exclude
+            the instance from maintenance updates.
+        upcoming_maintenance_schedule (google.cloud.lustre_v1.types.MaintenanceSchedule):
+            Output only. Date and time of upcoming
+            maintenance for the instance, if a maintenance
+            policy is set.
+        dynamic_tier_options (google.cloud.lustre_v1.types.DynamicTierOptions):
+            Optional. Immutable. Specifies whether the instance is on
+            the Dynamic tier. See `Performance
+            tiers <https://docs.cloud.google.com/managed-lustre/docs/performance-tiers>`__
+            for more information.
+        available_version (str):
+            Output only. The available version that this instance can be
+            upgraded to. Format: ``Lustre_YYYYMMDD.NN_pXX``
+
+            This field is a member of `oneof`_ ``_available_version``.
+        target_version (str):
+            Optional. The target version of the instance. Setting this
+            field triggers a self-service update to the specified
+            version. Format: ``Lustre_YYYYMMDD.NN_pXX`` or ``latest``
+
+            This field is a member of `oneof`_ ``_target_version``.
+        effective_version (str):
+            Output only. The effective version of the instance. Format:
+            ``Lustre_YYYYMMDD.NN_pXX``
+
+            This field is a member of `oneof`_ ``_effective_version``.
     """
 
     class State(proto.Enum):
@@ -103,6 +171,10 @@ class Instance(proto.Message):
                 The instance is stopped.
             UPDATING (7):
                 The instance is being updated.
+            SUSPENDED (8):
+                The instance is suspended due to an issue related to Cloud
+                KMS. The details are available in
+                [state_reason][google.cloud.lustre.v1.Instance.state_reason].
         """
 
         STATE_UNSPECIFIED = 0
@@ -113,6 +185,7 @@ class Instance(proto.Message):
         REPAIRING = 5
         STOPPED = 6
         UPDATING = 7
+        SUSPENDED = 8
 
     name: str = proto.Field(
         proto.STRING,
@@ -165,6 +238,212 @@ class Instance(proto.Message):
     gke_support_enabled: bool = proto.Field(
         proto.BOOL,
         number=12,
+    )
+    kms_key: str = proto.Field(
+        proto.STRING,
+        number=13,
+    )
+    state_reason: str = proto.Field(
+        proto.STRING,
+        number=14,
+    )
+    placement_policy: str = proto.Field(
+        proto.STRING,
+        number=17,
+    )
+    access_rules_options: "AccessRulesOptions" = proto.Field(
+        proto.MESSAGE,
+        number=18,
+        message="AccessRulesOptions",
+    )
+    uid: str = proto.Field(
+        proto.STRING,
+        number=19,
+    )
+    maintenance_policy: "MaintenancePolicy" = proto.Field(
+        proto.MESSAGE,
+        number=20,
+        message="MaintenancePolicy",
+    )
+    upcoming_maintenance_schedule: "MaintenanceSchedule" = proto.Field(
+        proto.MESSAGE,
+        number=21,
+        message="MaintenanceSchedule",
+    )
+    dynamic_tier_options: "DynamicTierOptions" = proto.Field(
+        proto.MESSAGE,
+        number=24,
+        message="DynamicTierOptions",
+    )
+    available_version: str = proto.Field(
+        proto.STRING,
+        number=33,
+        optional=True,
+    )
+    target_version: str = proto.Field(
+        proto.STRING,
+        number=34,
+        optional=True,
+    )
+    effective_version: str = proto.Field(
+        proto.STRING,
+        number=35,
+        optional=True,
+    )
+
+
+class DynamicTierOptions(proto.Message):
+    r"""Dynamic tier options for a Managed Lustre instance.
+
+    Attributes:
+        mode (google.cloud.lustre_v1.types.DynamicTierOptions.Mode):
+            Required. Immutable. The dynamic tier mode of
+            the instance.
+    """
+
+    class Mode(proto.Enum):
+        r"""Specifies the Dynamic performance tier for the instance.
+
+        If this field is set to ``DEFAULT_CACHE``,
+        ``per_unit_storage_throughput`` must not be set or must be set to
+        zero.
+
+        Values:
+            MODE_UNSPECIFIED (0):
+                Unspecified dynamic tier mode.
+            DISABLED (1):
+                The dynamic tier is explicitly disabled.
+            DEFAULT_CACHE (2):
+                The dynamic tier is enabled.
+        """
+
+        MODE_UNSPECIFIED = 0
+        DISABLED = 1
+        DEFAULT_CACHE = 2
+
+    mode: Mode = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum=Mode,
+    )
+
+
+class AccessRulesOptions(proto.Message):
+    r"""IP-based access rules for the Managed Lustre instance. These
+    options define the root user squash configuration.
+
+    Attributes:
+        access_rules (MutableSequence[google.cloud.lustre_v1.types.AccessRulesOptions.AccessRule]):
+            Optional. The access rules for the instance.
+        default_squash_mode (google.cloud.lustre_v1.types.AccessRulesOptions.SquashMode):
+            Required. The squash mode for the default
+            access rule.
+        default_squash_uid (int):
+            Optional. The user squash UID for the default
+            access rule. This user squash UID applies to all
+            root users connecting from clients that are not
+            matched by any of the access rules. If not set,
+            the default is 0 (no UID squash).
+        default_squash_gid (int):
+            Optional. The user squash GID for the default
+            access rule. This user squash GID applies to all
+            root users connecting from clients that are not
+            matched by any of the access rules. If not set,
+            the default is 0 (no GID squash).
+    """
+
+    class SquashMode(proto.Enum):
+        r"""Squash mode for an access rule.
+
+        Values:
+            SQUASH_MODE_UNSPECIFIED (0):
+                Unspecified squash mode.
+            NO_SQUASH (1):
+                Squash is disabled.
+
+                If set inside an
+                [AccessRule][google.cloud.lustre.v1.AccessRulesOptions.AccessRule],
+                root users matching the [ip_ranges][AccessRule.ip_ranges]
+                are not squashed.
+
+                If set as the
+                [default_squash_mode][google.cloud.lustre.v1.AccessRulesOptions.default_squash_mode],
+                root squash is disabled for this instance.
+
+                If the default squash mode is ``NO_SQUASH``, do not set the
+                [default_squash_uid][google.cloud.lustre.v1.AccessRulesOptions.default_squash_uid]
+                or
+                [default_squash_gid][google.cloud.lustre.v1.AccessRulesOptions.default_squash_gid],
+                or an ``invalid argument`` error is returned.
+            ROOT_SQUASH (2):
+                Root user squash is enabled.
+
+                Not supported inside an
+                [AccessRule][google.cloud.lustre.v1.AccessRulesOptions.AccessRule].
+
+                If set as the
+                [default_squash_mode][google.cloud.lustre.v1.AccessRulesOptions.default_squash_mode],
+                root users not matching any of the
+                [access_rules][google.cloud.lustre.v1.AccessRulesOptions.access_rules]
+                are squashed to the
+                [default_squash_uid][google.cloud.lustre.v1.AccessRulesOptions.default_squash_uid]
+                and
+                [default_squash_gid][google.cloud.lustre.v1.AccessRulesOptions.default_squash_gid].
+        """
+
+        SQUASH_MODE_UNSPECIFIED = 0
+        NO_SQUASH = 1
+        ROOT_SQUASH = 2
+
+    class AccessRule(proto.Message):
+        r"""A single policy group with IP-based access rules for the
+        Managed Lustre instance.
+
+        Attributes:
+            name (str):
+                Required. The name of the access rule policy group. Must be
+                16 characters or less and include only alphanumeric
+                characters or '\_'.
+            ip_address_ranges (MutableSequence[str]):
+                Required. The IP address ranges to which to apply this
+                access rule. Accepts non-overlapping CIDR ranges (e.g.,
+                ``192.168.1.0/24``) and IP addresses (e.g.,
+                ``192.168.1.0``).
+            squash_mode (google.cloud.lustre_v1.types.AccessRulesOptions.SquashMode):
+                Required. Squash mode for the access rule.
+        """
+
+        name: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        ip_address_ranges: MutableSequence[str] = proto.RepeatedField(
+            proto.STRING,
+            number=2,
+        )
+        squash_mode: "AccessRulesOptions.SquashMode" = proto.Field(
+            proto.ENUM,
+            number=6,
+            enum="AccessRulesOptions.SquashMode",
+        )
+
+    access_rules: MutableSequence[AccessRule] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=AccessRule,
+    )
+    default_squash_mode: SquashMode = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum=SquashMode,
+    )
+    default_squash_uid: int = proto.Field(
+        proto.INT32,
+        number=3,
+    )
+    default_squash_gid: int = proto.Field(
+        proto.INT32,
+        number=4,
     )
 
 
@@ -404,6 +683,11 @@ class DeleteInstanceRequest(proto.Message):
             The request ID must be a valid UUID with the
             exception that zero UUID is not supported
             (00000000-0000-0000-0000-000000000000).
+        force (bool):
+            Optional. If set to true, any sub-resources
+            from this instance will also be deleted.
+            Otherwise, the request will only work if the
+            instance has no sub-resources.
     """
 
     name: str = proto.Field(
@@ -413,6 +697,10 @@ class DeleteInstanceRequest(proto.Message):
     request_id: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    force: bool = proto.Field(
+        proto.BOOL,
+        number=3,
     )
 
 
@@ -475,6 +763,199 @@ class OperationMetadata(proto.Message):
     api_version: str = proto.Field(
         proto.STRING,
         number=7,
+    )
+
+
+class MaintenancePolicy(proto.Message):
+    r"""Defines a maintenance policy for a resource.
+
+    Attributes:
+        weekly_maintenance_windows (MutableSequence[google.cloud.lustre_v1.types.MaintenancePolicy.WeeklyMaintenanceWindow]):
+            Required. The weekly maintenance windows for
+            the instance. Currently limited to 1 window.
+        maintenance_exclusion_window (MutableSequence[google.cloud.lustre_v1.types.MaintenancePolicy.MaintenanceExclusionWindow]):
+            Optional. The exclusion windows for the
+            instance. Currently limited to 1 window.
+    """
+
+    class WeeklyMaintenanceWindow(proto.Message):
+        r"""Weekly time window in which maintenance updates may occur.
+        Duration of the window is currently fixed at 1 hour. Time zone
+        is UTC.
+
+        Attributes:
+            day_of_week (google.type.dayofweek_pb2.DayOfWeek):
+                Required. Day of the week for the maintenance
+                window.
+            start_time (google.type.timeofday_pb2.TimeOfDay):
+                Required. Start time of the maintenance
+                window in UTC time zone.
+        """
+
+        day_of_week: dayofweek_pb2.DayOfWeek = proto.Field(
+            proto.ENUM,
+            number=1,
+            enum=dayofweek_pb2.DayOfWeek,
+        )
+        start_time: timeofday_pb2.TimeOfDay = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message=timeofday_pb2.TimeOfDay,
+        )
+
+    class MaintenanceExclusionWindow(proto.Message):
+        r"""Exclusion period when maintenance updates should not occur. An
+        exclusion window can be in either of the following two formats:
+
+        - Non-recurring : A full date, with non-zero year, month and day
+          values.
+        - Recurring : A month and day value, with a zero year. Time zone is
+          UTC.
+
+        Attributes:
+            start_date (google.type.date_pb2.Date):
+                Required. Start date of the exclusion period
+                in UTC time zone. This date is inclusive.
+            end_date (google.type.date_pb2.Date):
+                Required. End date of the exclusion period in
+                UTC time zone. This date is inclusive.
+            time (google.type.timeofday_pb2.TimeOfDay):
+                Required. Time in UTC when the exclusion window starts on
+                start_date and ends on end_date. This can be:
+
+                - Full time OR
+                - All zeros for 00:00:00 UTC
+        """
+
+        start_date: date_pb2.Date = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            message=date_pb2.Date,
+        )
+        end_date: date_pb2.Date = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message=date_pb2.Date,
+        )
+        time: timeofday_pb2.TimeOfDay = proto.Field(
+            proto.MESSAGE,
+            number=3,
+            message=timeofday_pb2.TimeOfDay,
+        )
+
+    weekly_maintenance_windows: MutableSequence[WeeklyMaintenanceWindow] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=3,
+            message=WeeklyMaintenanceWindow,
+        )
+    )
+    maintenance_exclusion_window: MutableSequence[MaintenanceExclusionWindow] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=4,
+            message=MaintenanceExclusionWindow,
+        )
+    )
+
+
+class MaintenanceSchedule(proto.Message):
+    r"""Represents a scheduled maintenance event.
+
+    Attributes:
+        start_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The scheduled start time for the
+            maintenance.
+        end_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The scheduled end time for the
+            maintenance.
+    """
+
+    start_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=timestamp_pb2.Timestamp,
+    )
+    end_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=timestamp_pb2.Timestamp,
+    )
+
+
+class RescheduleMaintenanceRequest(proto.Message):
+    r"""Message for requesting to reschedule a maintenance event for
+    a specific instance.
+
+    Attributes:
+        name (str):
+            Required. Format:
+
+            projects/{project}/locations/{location}/instances/{instance}
+        reschedule (google.cloud.lustre_v1.types.RescheduleMaintenanceRequest.Reschedule):
+            Required. The desired reschedule settings.
+        request_id (str):
+            Optional. A unique identifier for this request. A random
+            UUID is recommended. This request is only idempotent if a
+            ``request_id`` is provided.
+    """
+
+    class RescheduleType(proto.Enum):
+        r"""The type of rescheduling event. More reschedule types may be
+        added in the future.
+
+        Values:
+            RESCHEDULE_TYPE_UNSPECIFIED (0):
+                Unspecified schedule type.
+            IMMEDIATE (1):
+                Apply update immediately
+            NEXT_AVAILABLE_WINDOW (2):
+                Reschedule to the next available window.
+            BY_TIME (3):
+                Reschedule to a specific time.
+        """
+
+        RESCHEDULE_TYPE_UNSPECIFIED = 0
+        IMMEDIATE = 1
+        NEXT_AVAILABLE_WINDOW = 2
+        BY_TIME = 3
+
+    class Reschedule(proto.Message):
+        r"""The desired reschedule settings.
+
+        Attributes:
+            reschedule_type (google.cloud.lustre_v1.types.RescheduleMaintenanceRequest.RescheduleType):
+                Required. The type of rescheduling.
+            schedule_time (google.protobuf.timestamp_pb2.Timestamp):
+                Optional. Required if reschedule_type is BY_TIME. Timestamp
+                when the maintenance shall be rescheduled to. This time must
+                be within 28 days of the original scheduled maintenance
+                start time.
+        """
+
+        reschedule_type: "RescheduleMaintenanceRequest.RescheduleType" = proto.Field(
+            proto.ENUM,
+            number=1,
+            enum="RescheduleMaintenanceRequest.RescheduleType",
+        )
+        schedule_time: timestamp_pb2.Timestamp = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message=timestamp_pb2.Timestamp,
+        )
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    reschedule: Reschedule = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=Reschedule,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.datastore_v1._compat import transcode_request
 from google.cloud.datastore_v1.types import datastore
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -773,23 +774,16 @@ class DatastoreRestTransport(_BaseDatastoreRestTransport):
             http_options = (
                 _BaseDatastoreRestTransport._BaseAllocateIds._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_allocate_ids(request, metadata)
-            transcoded_request = (
-                _BaseDatastoreRestTransport._BaseAllocateIds._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDatastoreRestTransport._BaseAllocateIds._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatastoreRestTransport._BaseAllocateIds._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatastoreRestTransport._BaseAllocateIds,
+                    "_BaseAllocateIds__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -930,21 +924,18 @@ class DatastoreRestTransport(_BaseDatastoreRestTransport):
             http_options = (
                 _BaseDatastoreRestTransport._BaseBeginTransaction._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_begin_transaction(
                 request, metadata
             )
-            transcoded_request = _BaseDatastoreRestTransport._BaseBeginTransaction._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatastoreRestTransport._BaseBeginTransaction._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatastoreRestTransport._BaseBeginTransaction._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatastoreRestTransport._BaseBeginTransaction,
+                    "_BaseBeginTransaction__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1083,23 +1074,16 @@ class DatastoreRestTransport(_BaseDatastoreRestTransport):
             """
 
             http_options = _BaseDatastoreRestTransport._BaseCommit._get_http_options()
-
             request, metadata = self._interceptor.pre_commit(request, metadata)
-            transcoded_request = (
-                _BaseDatastoreRestTransport._BaseCommit._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDatastoreRestTransport._BaseCommit._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatastoreRestTransport._BaseCommit._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatastoreRestTransport._BaseCommit,
+                    "_BaseCommit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1236,23 +1220,16 @@ class DatastoreRestTransport(_BaseDatastoreRestTransport):
             """
 
             http_options = _BaseDatastoreRestTransport._BaseLookup._get_http_options()
-
             request, metadata = self._interceptor.pre_lookup(request, metadata)
-            transcoded_request = (
-                _BaseDatastoreRestTransport._BaseLookup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDatastoreRestTransport._BaseLookup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatastoreRestTransport._BaseLookup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatastoreRestTransport._BaseLookup,
+                    "_BaseLookup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1391,23 +1368,16 @@ class DatastoreRestTransport(_BaseDatastoreRestTransport):
             http_options = (
                 _BaseDatastoreRestTransport._BaseReserveIds._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_reserve_ids(request, metadata)
-            transcoded_request = (
-                _BaseDatastoreRestTransport._BaseReserveIds._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDatastoreRestTransport._BaseReserveIds._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatastoreRestTransport._BaseReserveIds._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatastoreRestTransport._BaseReserveIds,
+                    "_BaseReserveIds__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1545,23 +1515,16 @@ class DatastoreRestTransport(_BaseDatastoreRestTransport):
             """
 
             http_options = _BaseDatastoreRestTransport._BaseRollback._get_http_options()
-
             request, metadata = self._interceptor.pre_rollback(request, metadata)
-            transcoded_request = (
-                _BaseDatastoreRestTransport._BaseRollback._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDatastoreRestTransport._BaseRollback._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatastoreRestTransport._BaseRollback._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatastoreRestTransport._BaseRollback,
+                    "_BaseRollback__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1702,21 +1665,18 @@ class DatastoreRestTransport(_BaseDatastoreRestTransport):
             http_options = (
                 _BaseDatastoreRestTransport._BaseRunAggregationQuery._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_run_aggregation_query(
                 request, metadata
             )
-            transcoded_request = _BaseDatastoreRestTransport._BaseRunAggregationQuery._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatastoreRestTransport._BaseRunAggregationQuery._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatastoreRestTransport._BaseRunAggregationQuery._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatastoreRestTransport._BaseRunAggregationQuery,
+                    "_BaseRunAggregationQuery__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1855,23 +1815,16 @@ class DatastoreRestTransport(_BaseDatastoreRestTransport):
             """
 
             http_options = _BaseDatastoreRestTransport._BaseRunQuery._get_http_options()
-
             request, metadata = self._interceptor.pre_run_query(request, metadata)
-            transcoded_request = (
-                _BaseDatastoreRestTransport._BaseRunQuery._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDatastoreRestTransport._BaseRunQuery._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatastoreRestTransport._BaseRunQuery._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatastoreRestTransport._BaseRunQuery,
+                    "_BaseRunQuery__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2072,19 +2025,18 @@ class DatastoreRestTransport(_BaseDatastoreRestTransport):
             http_options = (
                 _BaseDatastoreRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDatastoreRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatastoreRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatastoreRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2188,19 +2140,18 @@ class DatastoreRestTransport(_BaseDatastoreRestTransport):
             http_options = (
                 _BaseDatastoreRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDatastoreRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatastoreRestTransport._BaseDeleteOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatastoreRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2307,19 +2258,16 @@ class DatastoreRestTransport(_BaseDatastoreRestTransport):
             http_options = (
                 _BaseDatastoreRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseDatastoreRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatastoreRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatastoreRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2451,19 +2399,16 @@ class DatastoreRestTransport(_BaseDatastoreRestTransport):
             http_options = (
                 _BaseDatastoreRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseDatastoreRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatastoreRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatastoreRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

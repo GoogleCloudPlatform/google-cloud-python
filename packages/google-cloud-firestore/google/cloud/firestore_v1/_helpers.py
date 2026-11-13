@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import datetime
 import json
+import re
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -43,7 +44,8 @@ from google.type import latlng_pb2  # type: ignore
 
 import google
 from google.cloud import exceptions  # type: ignore
-from google.cloud.firestore_v1 import transforms, types
+from google.cloud.firestore_v1 import bson, transforms, types
+from google.cloud.firestore_v1.bson import BSONType
 from google.cloud.firestore_v1.field_path import FieldPath, parse_field_path
 from google.cloud.firestore_v1.types import common, document, write
 from google.cloud.firestore_v1.types.write import DocumentTransform
@@ -169,8 +171,10 @@ def encode_value(value) -> types.document.Value:
     Args:
         value (Union[NoneType, bool, int, float, datetime.datetime, \
             str, bytes, dict, ~google.cloud.Firestore.GeoPoint, \
-            ~google.cloud.firestore_v1.vector.Vector]): A native
-            Python value to convert to a protobuf field.
+            ~google.cloud.firestore_v1.vector.Vector, \
+            ~google.cloud.firestore_v1.bson._BSONType]): A native \
+            Python value or supported BSON / PyMongo-compatible value to \
+            convert to a protobuf field.
 
     Returns:
         ~google.cloud.firestore_v1.types.Value: A
@@ -178,6 +182,8 @@ def encode_value(value) -> types.document.Value:
 
     Raises:
         TypeError: If the ``value`` is not one of the accepted types.
+        ValueError: If a BSON or duck-typed BSON value has an invalid value
+            or representation (e.g. invalid ObjectId hex or binary subtype).
     """
     if value is None:
         return document.Value(null_value=struct_pb2.NULL_VALUE)
@@ -202,6 +208,9 @@ def encode_value(value) -> types.document.Value:
         return document.Value(string_value=value)
 
     if isinstance(value, bytes):
+        subtype = getattr(value, "subtype", None)
+        if subtype is not None:
+            return encode_value(bson.BSONBinary(value, subtype=subtype)._to_map_value())
         return document.Value(bytes_value=value)
 
     # NOTE: We avoid doing an isinstance() check for a Document
@@ -209,6 +218,9 @@ def encode_value(value) -> types.document.Value:
     document_path = getattr(value, "_document_path", None)
     if document_path is not None:
         return document.Value(reference_value=document_path)
+
+    if isinstance(value, BSONType):
+        return encode_value(value._to_map_value())
 
     if isinstance(value, GeoPoint):
         return document.Value(geo_point_value=value.to_protobuf())
@@ -226,9 +238,71 @@ def encode_value(value) -> types.document.Value:
         value_pb = document.MapValue(fields=value_dict)
         return document.Value(map_value=value_pb)
 
+    # Fallback: Coerce third-party BSON objects (e.g. PyMongo) to Firestore BSON types
+    bson_val = _try_duck_type_bson(value)
+    if bson_val is not None:
+        return encode_value(bson_val._to_map_value())
+
     raise TypeError(
         "Cannot convert to a Firestore Value", value, "Invalid type", type(value)
     )
+
+
+# Mapping of Python standard library regex flags to their canonical BSON regex
+# option characters per the BSON specification (https://bsonspec.org/spec.html, type 0x0B).
+# Stored in alphabetical order of option characters to produce normalized output.
+_REGEX_FLAG_TO_BSON_CHAR: Tuple[Tuple[int, str], ...] = (
+    (re.IGNORECASE, "i"),  # Case-insensitive matching
+    (re.LOCALE, "l"),  # Locale-dependent matching
+    (re.MULTILINE, "m"),  # Multi-line matching
+    (re.DOTALL, "s"),  # Dot matches all (including newline)
+    (re.UNICODE, "u"),  # Unicode matching
+    (re.VERBOSE, "x"),  # Verbose / whitespace-ignored matching
+)
+
+
+def _flags_to_options_string(flags: Any) -> str:
+    """Convert regex flags to a normalized BSON options string.
+
+    Supports string options directly (e.g. ``"i"``), integer bitmasks from
+    the standard library ``re`` module (e.g. ``re.IGNORECASE | re.MULTILINE``),
+    or third-party driver types like PyMongo's ``Regex.flags``.
+
+    Args:
+        flags (Any): A string of flag characters or an integer bitmask of regex flags.
+
+    Returns:
+        str: The corresponding BSON regex options string.
+    """
+    if isinstance(flags, str):
+        return flags
+    if isinstance(flags, int):
+        return "".join(char for flag, char in _REGEX_FLAG_TO_BSON_CHAR if flags & flag)
+    return str(flags)
+
+
+def _try_duck_type_bson(value) -> Optional[BSONType]:
+    """Coerce third-party BSON objects (e.g. PyMongo) to Firestore BSON types."""
+    cls_name = getattr(value.__class__, "__name__", "")
+    if cls_name == "ObjectId" and hasattr(value, "binary"):
+        return bson.BSONObjectId(str(value).lower())
+    if cls_name == "Decimal128" and hasattr(value, "to_decimal"):
+        return bson.BSONDecimal128(value.to_decimal())
+    if cls_name == "Regex" and hasattr(value, "pattern"):
+        raw_opts = getattr(value, "flags", None)
+        if raw_opts is None or raw_opts == "":
+            raw_opts = getattr(value, "options", "")
+        opts = _flags_to_options_string(raw_opts)
+        return bson.BSONRegex(value.pattern, opts)
+    if cls_name == "Timestamp" and hasattr(value, "time") and hasattr(value, "inc"):
+        return bson.BSONTimestamp(value.time, value.inc)
+    if cls_name == "MinKey":
+        return bson.BSONMinKey()
+    if cls_name == "MaxKey":
+        return bson.BSONMaxKey()
+    if cls_name == "Binary" and hasattr(value, "subtype"):
+        return bson.BSONBinary(value, subtype=value.subtype)
+    return None
 
 
 def encode_dict(values_dict) -> dict:
@@ -346,7 +420,18 @@ def reference_value_to_document(reference_value, client) -> Any:
 def decode_value(
     value, client
 ) -> Union[
-    None, bool, int, float, list, datetime.datetime, str, bytes, dict, GeoPoint, Vector
+    None,
+    bool,
+    int,
+    float,
+    list,
+    datetime.datetime,
+    str,
+    bytes,
+    dict,
+    GeoPoint,
+    Vector,
+    BSONType,
 ]:
     """Converts a Firestore protobuf ``Value`` to a native Python value.
 
@@ -358,7 +443,9 @@ def decode_value(
 
     Returns:
         Union[NoneType, bool, int, float, datetime.datetime, \
-            str, bytes, dict, ~google.cloud.Firestore.GeoPoint]: A native
+            str, bytes, dict, ~google.cloud.Firestore.GeoPoint, \
+            ~google.cloud.firestore_v1.vector.Vector, \
+            ~google.cloud.firestore_v1.bson.BSONType]: A native \
         Python value converted from the ``value``.
 
     Raises:
@@ -398,7 +485,10 @@ def decode_value(
         raise ValueError("Unknown ``value_type``", value_type)
 
 
-def decode_dict(value_fields, client) -> Union[dict, Vector]:
+def decode_dict(
+    value_fields,
+    client,
+) -> Union[dict, Vector, BSONType, bytes]:
     """Converts a protobuf map of Firestore ``Value``-s.
 
     Args:
@@ -408,9 +498,9 @@ def decode_dict(value_fields, client) -> Union[dict, Vector]:
             A client that has a document factory.
 
     Returns:
-        Dict[str, Union[NoneType, bool, int, float, datetime.datetime, \
-            str, bytes, dict, ~google.cloud.Firestore.GeoPoint]]: A dictionary
-        of native Python values converted from the ``value_fields``.
+        Union[dict, ~google.cloud.firestore_v1.vector.Vector, \
+            ~google.cloud.firestore_v1.bson.BSONType, bytes]: A dictionary of native \
+        Python values, Vector, BSON object, or bytes converted from ``value_fields``.
     """
     value_fields_pb = getattr(value_fields, "_pb", value_fields)
     res = {key: decode_value(value, client) for key, value in value_fields_pb.items()}
@@ -420,6 +510,10 @@ def decode_dict(value_fields, client) -> Union[dict, Vector]:
         # {"__type__":"__vector__", "value": [1.0, 2.0, 3.0]}.
         values = cast(Sequence[float], res["value"])
         return Vector(values)
+
+    decoded = BSONType._from_dict(res)
+    if decoded is not None:
+        return decoded
 
     return res
 

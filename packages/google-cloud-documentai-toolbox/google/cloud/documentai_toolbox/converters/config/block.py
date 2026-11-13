@@ -72,6 +72,7 @@ class Block:
         page_number:
             Optional.
     """
+
     type_: Any = dataclasses.field(init=True, repr=False)
     text: str = dataclasses.field(init=True, repr=False)
     bounding_box: Optional[Union[SimpleNamespace, List[Any]]] = dataclasses.field(

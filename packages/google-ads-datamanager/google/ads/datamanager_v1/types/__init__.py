@@ -37,6 +37,9 @@ from .audience import (
     PpidData,
     UserIdData,
 )
+from .call_info import (
+    CallInfo,
+)
 from .cart_data import (
     CartData,
     Item,
@@ -88,10 +91,14 @@ from .ingestion_service import (
     IngestAudienceMembersResponse,
     IngestEventsRequest,
     IngestEventsResponse,
+    IngestUsersRequest,
+    IngestUsersResponse,
     RemoveAllAudienceMembersRequest,
     RemoveAllAudienceMembersResponse,
     RemoveAudienceMembersRequest,
     RemoveAudienceMembersResponse,
+    RemoveUsersRequest,
+    RemoveUsersResponse,
     RetrieveRequestStatusRequest,
     RetrieveRequestStatusResponse,
 )
@@ -116,6 +123,14 @@ from .partner_link_service import (
     SearchPartnerLinksRequest,
     SearchPartnerLinksResponse,
 )
+from .partner_match_report_entry import (
+    PartnerMatchAdGroup,
+    PartnerMatchAdvertiserAccount,
+    PartnerMatchCampaign,
+    PartnerMatchLineItem,
+    PartnerMatchReportEntry,
+    PartnerMatchUserList,
+)
 from .processing_errors import (
     ErrorCount,
     ErrorInfo,
@@ -126,12 +141,19 @@ from .processing_errors import (
     WarningInfo,
     WarningReason,
 )
+from .reporting_service import (
+    RetrievePartnerMatchReportRequest,
+    RetrievePartnerMatchReportResponse,
+)
 from .request_status_per_destination import (
     RequestStatusPerDestination,
 )
 from .terms_of_service import (
     TermsOfService,
     TermsOfServiceStatus,
+)
+from .user import (
+    User,
 )
 from .user_data import (
     AddressInfo,
@@ -228,6 +250,7 @@ __all__ = (
     "PartnerProvidedIdData",
     "PpidData",
     "UserIdData",
+    "CallInfo",
     "CartData",
     "Item",
     "ItemCustomVariable",
@@ -257,10 +280,14 @@ __all__ = (
     "IngestAudienceMembersResponse",
     "IngestEventsRequest",
     "IngestEventsResponse",
+    "IngestUsersRequest",
+    "IngestUsersResponse",
     "RemoveAllAudienceMembersRequest",
     "RemoveAllAudienceMembersResponse",
     "RemoveAudienceMembersRequest",
     "RemoveAudienceMembersResponse",
+    "RemoveUsersRequest",
+    "RemoveUsersResponse",
     "RetrieveRequestStatusRequest",
     "RetrieveRequestStatusResponse",
     "Encoding",
@@ -277,6 +304,12 @@ __all__ = (
     "SearchPartnerLinksRequest",
     "SearchPartnerLinksResponse",
     "FeatureSet",
+    "PartnerMatchAdGroup",
+    "PartnerMatchAdvertiserAccount",
+    "PartnerMatchCampaign",
+    "PartnerMatchLineItem",
+    "PartnerMatchReportEntry",
+    "PartnerMatchUserList",
     "ErrorCount",
     "ErrorInfo",
     "FieldWarning",
@@ -285,9 +318,12 @@ __all__ = (
     "ProcessingErrorReason",
     "ProcessingWarningReason",
     "WarningReason",
+    "RetrievePartnerMatchReportRequest",
+    "RetrievePartnerMatchReportResponse",
     "RequestStatusPerDestination",
     "TermsOfService",
     "TermsOfServiceStatus",
+    "User",
     "AddressInfo",
     "UserData",
     "UserIdentifier",

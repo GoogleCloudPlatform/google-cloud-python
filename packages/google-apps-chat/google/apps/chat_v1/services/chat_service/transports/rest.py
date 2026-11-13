@@ -29,11 +29,13 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.apps.chat_v1._compat import transcode_request
 from google.apps.chat_v1.types import (
     attachment,
     availability,
     membership,
     message,
+    message_pin,
     reaction,
     section,
     space,
@@ -46,6 +48,7 @@ from google.apps.chat_v1.types import (
 from google.apps.chat_v1.types import availability as gc_availability
 from google.apps.chat_v1.types import membership as gc_membership
 from google.apps.chat_v1.types import message as gc_message
+from google.apps.chat_v1.types import message_pin as gc_message_pin
 from google.apps.chat_v1.types import reaction as gc_reaction
 from google.apps.chat_v1.types import section as gc_section
 from google.apps.chat_v1.types import space as gc_space
@@ -127,6 +130,14 @@ class ChatServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_create_message_pin(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_message_pin(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_create_reaction(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -164,6 +175,10 @@ class ChatServiceRestInterceptor:
                 return response
 
             def pre_delete_message(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def pre_delete_message_pin(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
 
@@ -291,6 +306,14 @@ class ChatServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_list_message_pins(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_message_pins(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_list_messages(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -376,6 +399,14 @@ class ChatServiceRestInterceptor:
                 return request, metadata
 
             def post_position_section(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_replace_message_cards(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_replace_message_cards(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -665,6 +696,54 @@ class ChatServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_create_message_pin(
+        self,
+        request: gc_message_pin.CreateMessagePinRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gc_message_pin.CreateMessagePinRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for create_message_pin
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the ChatService server.
+        """
+        return request, metadata
+
+    def post_create_message_pin(
+        self, response: gc_message_pin.MessagePin
+    ) -> gc_message_pin.MessagePin:
+        """Post-rpc interceptor for create_message_pin
+
+        DEPRECATED. Please use the `post_create_message_pin_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the ChatService server but before
+        it is returned to user code. This `post_create_message_pin` interceptor runs
+        before the `post_create_message_pin_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_message_pin_with_metadata(
+        self,
+        response: gc_message_pin.MessagePin,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[gc_message_pin.MessagePin, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_message_pin
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the ChatService server but before it is returned to user code.
+
+        We recommend only using this `post_create_message_pin_with_metadata`
+        interceptor in new development instead of the `post_create_message_pin` interceptor.
+        When both interceptors are used, this `post_create_message_pin_with_metadata` interceptor runs after the
+        `post_create_message_pin` interceptor. The (possibly modified) response returned by
+        `post_create_message_pin` will be passed to
+        `post_create_message_pin_with_metadata`.
+        """
+        return response, metadata
+
     def pre_create_reaction(
         self,
         request: gc_reaction.CreateReactionRequest,
@@ -871,6 +950,20 @@ class ChatServiceRestInterceptor:
         metadata: Sequence[Tuple[str, Union[str, bytes]]],
     ) -> Tuple[message.DeleteMessageRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
         """Pre-rpc interceptor for delete_message
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the ChatService server.
+        """
+        return request, metadata
+
+    def pre_delete_message_pin(
+        self,
+        request: message_pin.DeleteMessagePinRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        message_pin.DeleteMessagePinRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for delete_message_pin
 
         Override in a subclass to manipulate the request or metadata
         before they are sent to the ChatService server.
@@ -1579,6 +1672,56 @@ class ChatServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_list_message_pins(
+        self,
+        request: message_pin.ListMessagePinsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        message_pin.ListMessagePinsRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for list_message_pins
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the ChatService server.
+        """
+        return request, metadata
+
+    def post_list_message_pins(
+        self, response: message_pin.ListMessagePinsResponse
+    ) -> message_pin.ListMessagePinsResponse:
+        """Post-rpc interceptor for list_message_pins
+
+        DEPRECATED. Please use the `post_list_message_pins_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the ChatService server but before
+        it is returned to user code. This `post_list_message_pins` interceptor runs
+        before the `post_list_message_pins_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_message_pins_with_metadata(
+        self,
+        response: message_pin.ListMessagePinsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        message_pin.ListMessagePinsResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for list_message_pins
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the ChatService server but before it is returned to user code.
+
+        We recommend only using this `post_list_message_pins_with_metadata`
+        interceptor in new development instead of the `post_list_message_pins` interceptor.
+        When both interceptors are used, this `post_list_message_pins_with_metadata` interceptor runs after the
+        `post_list_message_pins` interceptor. The (possibly modified) response returned by
+        `post_list_message_pins` will be passed to
+        `post_list_message_pins_with_metadata`.
+        """
+        return response, metadata
+
     def pre_list_messages(
         self,
         request: message.ListMessagesRequest,
@@ -2098,6 +2241,56 @@ class ChatServiceRestInterceptor:
         `post_position_section` interceptor. The (possibly modified) response returned by
         `post_position_section` will be passed to
         `post_position_section_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_replace_message_cards(
+        self,
+        request: message.ReplaceMessageCardsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        message.ReplaceMessageCardsRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for replace_message_cards
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the ChatService server.
+        """
+        return request, metadata
+
+    def post_replace_message_cards(
+        self, response: message.ReplaceMessageCardsResponse
+    ) -> message.ReplaceMessageCardsResponse:
+        """Post-rpc interceptor for replace_message_cards
+
+        DEPRECATED. Please use the `post_replace_message_cards_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the ChatService server but before
+        it is returned to user code. This `post_replace_message_cards` interceptor runs
+        before the `post_replace_message_cards_with_metadata` interceptor.
+        """
+        return response
+
+    def post_replace_message_cards_with_metadata(
+        self,
+        response: message.ReplaceMessageCardsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        message.ReplaceMessageCardsResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for replace_message_cards
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the ChatService server but before it is returned to user code.
+
+        We recommend only using this `post_replace_message_cards_with_metadata`
+        interceptor in new development instead of the `post_replace_message_cards` interceptor.
+        When both interceptors are used, this `post_replace_message_cards_with_metadata` interceptor runs after the
+        `post_replace_message_cards` interceptor. The (possibly modified) response returned by
+        `post_replace_message_cards` will be passed to
+        `post_replace_message_cards_with_metadata`.
         """
         return response, metadata
 
@@ -2775,21 +2968,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             """
 
             http_options = _BaseChatServiceRestTransport._BaseCompleteImportSpace._get_http_options()
-
             request, metadata = self._interceptor.pre_complete_import_space(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseCompleteImportSpace._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BaseCompleteImportSpace._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseCompleteImportSpace._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseCompleteImportSpace,
+                    "_BaseCompleteImportSpace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2931,21 +3121,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseCreateCustomEmoji._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_custom_emoji(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseCreateCustomEmoji._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BaseCreateCustomEmoji._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseCreateCustomEmoji._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseCreateCustomEmoji,
+                    "_BaseCreateCustomEmoji__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3088,21 +3275,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseCreateMembership._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_membership(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseCreateMembership._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BaseCreateMembership._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseCreateMembership._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseCreateMembership,
+                    "_BaseCreateMembership__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3240,23 +3424,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseCreateMessage._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_message(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseCreateMessage._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseChatServiceRestTransport._BaseCreateMessage._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseCreateMessage._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseCreateMessage,
+                    "_BaseCreateMessage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3336,6 +3513,158 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
                 )
             return resp
 
+    class _CreateMessagePin(
+        _BaseChatServiceRestTransport._BaseCreateMessagePin, ChatServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("ChatServiceRestTransport.CreateMessagePin")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gc_message_pin.CreateMessagePinRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> gc_message_pin.MessagePin:
+            r"""Call the create message pin method over HTTP.
+
+            Args:
+                request (~.gc_message_pin.CreateMessagePinRequest):
+                    The request object. Request message for creating a
+                message pin.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.gc_message_pin.MessagePin:
+                    A pin on a Chat message. For more information see `Pin a
+                message <https://support.google.com/chat?p=chat-board-hc>`__.
+
+            """
+
+            http_options = (
+                _BaseChatServiceRestTransport._BaseCreateMessagePin._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_create_message_pin(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseCreateMessagePin,
+                    "_BaseCreateMessagePin__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.chat_v1.ChatServiceClient.CreateMessagePin",
+                    extra={
+                        "serviceName": "google.chat.v1.ChatService",
+                        "rpcName": "CreateMessagePin",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = ChatServiceRestTransport._CreateMessagePin._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = gc_message_pin.MessagePin()
+            pb_resp = gc_message_pin.MessagePin.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_message_pin(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_create_message_pin_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = gc_message_pin.MessagePin.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.chat_v1.ChatServiceClient.create_message_pin",
+                    extra={
+                        "serviceName": "google.chat.v1.ChatService",
+                        "rpcName": "CreateMessagePin",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _CreateReaction(
         _BaseChatServiceRestTransport._BaseCreateReaction, ChatServiceRestStub
     ):
@@ -3394,19 +3723,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseCreateReaction._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_reaction(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseCreateReaction._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BaseCreateReaction._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseCreateReaction._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseCreateReaction,
+                    "_BaseCreateReaction__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3565,23 +3891,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseCreateSection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_section(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseCreateSection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseChatServiceRestTransport._BaseCreateSection._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseCreateSection._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseCreateSection,
+                    "_BaseCreateSection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3724,25 +4043,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseCreateSpace._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_space(request, metadata)
-            transcoded_request = (
-                _BaseChatServiceRestTransport._BaseCreateSpace._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseChatServiceRestTransport._BaseCreateSpace._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseCreateSpace._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseCreateSpace,
+                    "_BaseCreateSpace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3875,17 +4185,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseDeleteCustomEmoji._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_custom_emoji(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseDeleteCustomEmoji._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseDeleteCustomEmoji._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseDeleteCustomEmoji,
+                    "_BaseDeleteCustomEmoji__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3992,17 +4303,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseDeleteMembership._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_membership(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseDeleteMembership._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseDeleteMembership._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseDeleteMembership,
+                    "_BaseDeleteMembership__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4134,17 +4446,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseDeleteMessage._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_message(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseDeleteMessage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseDeleteMessage._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseDeleteMessage,
+                    "_BaseDeleteMessage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4176,6 +4487,116 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
 
             # Send the request
             response = ChatServiceRestTransport._DeleteMessage._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+    class _DeleteMessagePin(
+        _BaseChatServiceRestTransport._BaseDeleteMessagePin, ChatServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("ChatServiceRestTransport.DeleteMessagePin")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: message_pin.DeleteMessagePinRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ):
+            r"""Call the delete message pin method over HTTP.
+
+            Args:
+                request (~.message_pin.DeleteMessagePinRequest):
+                    The request object. Request message for deleting a
+                message pin.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+            """
+
+            http_options = (
+                _BaseChatServiceRestTransport._BaseDeleteMessagePin._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_delete_message_pin(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseDeleteMessagePin,
+                    "_BaseDeleteMessagePin__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.chat_v1.ChatServiceClient.DeleteMessagePin",
+                    extra={
+                        "serviceName": "google.chat.v1.ChatService",
+                        "rpcName": "DeleteMessagePin",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = ChatServiceRestTransport._DeleteMessagePin._get_response(
                 self._host,
                 metadata,
                 query_params,
@@ -4242,15 +4663,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseDeleteReaction._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_reaction(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseDeleteReaction._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseDeleteReaction._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseDeleteReaction,
+                    "_BaseDeleteReaction__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4349,17 +4771,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseDeleteSection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_section(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseDeleteSection._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseDeleteSection._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseDeleteSection,
+                    "_BaseDeleteSection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4457,19 +4878,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseDeleteSpace._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_space(request, metadata)
-            transcoded_request = (
-                _BaseChatServiceRestTransport._BaseDeleteSpace._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseDeleteSpace._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseDeleteSpace,
+                    "_BaseDeleteSpace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4576,17 +4994,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseFindDirectMessage._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_find_direct_message(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseFindDirectMessage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseFindDirectMessage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseFindDirectMessage,
+                    "_BaseFindDirectMessage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4726,17 +5145,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseFindGroupChats._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_find_group_chats(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseFindGroupChats._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseFindGroupChats._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseFindGroupChats,
+                    "_BaseFindGroupChats__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4872,17 +5292,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseGetAttachment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_attachment(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseGetAttachment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseGetAttachment._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseGetAttachment,
+                    "_BaseGetAttachment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5023,17 +5442,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseGetAvailability._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_availability(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseGetAvailability._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseGetAvailability._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseGetAvailability,
+                    "_BaseGetAvailability__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5172,17 +5592,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseGetCustomEmoji._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_custom_emoji(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseGetCustomEmoji._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseGetCustomEmoji._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseGetCustomEmoji,
+                    "_BaseGetCustomEmoji__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5323,17 +5744,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseGetMembership._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_membership(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseGetMembership._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseGetMembership._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseGetMembership,
+                    "_BaseGetMembership__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5469,19 +5889,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseGetMessage._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_message(request, metadata)
-            transcoded_request = (
-                _BaseChatServiceRestTransport._BaseGetMessage._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseGetMessage._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseGetMessage,
+                    "_BaseGetMessage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5619,19 +6036,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseGetSpace._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_space(request, metadata)
-            transcoded_request = (
-                _BaseChatServiceRestTransport._BaseGetSpace._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseGetSpace._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseGetSpace,
+                    "_BaseGetSpace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5772,17 +6186,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseGetSpaceEvent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_space_event(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseGetSpaceEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseGetSpaceEvent._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseGetSpaceEvent,
+                    "_BaseGetSpaceEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5923,17 +6336,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             """
 
             http_options = _BaseChatServiceRestTransport._BaseGetSpaceNotificationSetting._get_http_options()
-
             request, metadata = self._interceptor.pre_get_space_notification_setting(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseGetSpaceNotificationSetting._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseGetSpaceNotificationSetting._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseGetSpaceNotificationSetting,
+                    "_BaseGetSpaceNotificationSetting__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6081,17 +6495,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseGetSpaceReadState._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_space_read_state(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseGetSpaceReadState._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseGetSpaceReadState._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseGetSpaceReadState,
+                    "_BaseGetSpaceReadState__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6229,17 +6644,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             """
 
             http_options = _BaseChatServiceRestTransport._BaseGetThreadReadState._get_http_options()
-
             request, metadata = self._interceptor.pre_get_thread_read_state(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseGetThreadReadState._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseGetThreadReadState._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseGetThreadReadState,
+                    "_BaseGetThreadReadState__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6378,17 +6794,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseListCustomEmojis._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_custom_emojis(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseListCustomEmojis._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseListCustomEmojis._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseListCustomEmojis,
+                    "_BaseListCustomEmojis__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6529,17 +6946,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseListMemberships._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_memberships(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseListMemberships._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseListMemberships._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseListMemberships,
+                    "_BaseListMemberships__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6620,6 +7038,158 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
                 )
             return resp
 
+    class _ListMessagePins(
+        _BaseChatServiceRestTransport._BaseListMessagePins, ChatServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("ChatServiceRestTransport.ListMessagePins")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: message_pin.ListMessagePinsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> message_pin.ListMessagePinsResponse:
+            r"""Call the list message pins method over HTTP.
+
+            Args:
+                request (~.message_pin.ListMessagePinsRequest):
+                    The request object. Request message for listing message
+                pins.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.message_pin.ListMessagePinsResponse:
+                    Response message for listing message
+                pins.
+
+            """
+
+            http_options = (
+                _BaseChatServiceRestTransport._BaseListMessagePins._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_list_message_pins(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseListMessagePins,
+                    "_BaseListMessagePins__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.chat_v1.ChatServiceClient.ListMessagePins",
+                    extra={
+                        "serviceName": "google.chat.v1.ChatService",
+                        "rpcName": "ListMessagePins",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = ChatServiceRestTransport._ListMessagePins._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = message_pin.ListMessagePinsResponse()
+            pb_resp = message_pin.ListMessagePinsResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_message_pins(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_message_pins_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = message_pin.ListMessagePinsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.chat_v1.ChatServiceClient.list_message_pins",
+                    extra={
+                        "serviceName": "google.chat.v1.ChatService",
+                        "rpcName": "ListMessagePins",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _ListMessages(
         _BaseChatServiceRestTransport._BaseListMessages, ChatServiceRestStub
     ):
@@ -6680,19 +7250,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseListMessages._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_messages(request, metadata)
-            transcoded_request = (
-                _BaseChatServiceRestTransport._BaseListMessages._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseListMessages._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseListMessages,
+                    "_BaseListMessages__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6828,17 +7395,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseListReactions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_reactions(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseListReactions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseListReactions._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseListReactions,
+                    "_BaseListReactions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6977,17 +7543,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseListSectionItems._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_section_items(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseListSectionItems._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseListSectionItems._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseListSectionItems,
+                    "_BaseListSectionItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7127,19 +7694,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseListSections._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_sections(request, metadata)
-            transcoded_request = (
-                _BaseChatServiceRestTransport._BaseListSections._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseListSections._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseListSections,
+                    "_BaseListSections__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7278,17 +7842,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseListSpaceEvents._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_space_events(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseListSpaceEvents._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseListSpaceEvents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseListSpaceEvents,
+                    "_BaseListSpaceEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7429,19 +7994,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseListSpaces._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_spaces(request, metadata)
-            transcoded_request = (
-                _BaseChatServiceRestTransport._BaseListSpaces._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseListSpaces._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseListSpaces,
+                    "_BaseListSpaces__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7583,25 +8145,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseMarkAsActive._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_mark_as_active(request, metadata)
-            transcoded_request = (
-                _BaseChatServiceRestTransport._BaseMarkAsActive._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseChatServiceRestTransport._BaseMarkAsActive._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseMarkAsActive._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseMarkAsActive,
+                    "_BaseMarkAsActive__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7744,23 +8297,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseMarkAsAway._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_mark_as_away(request, metadata)
-            transcoded_request = (
-                _BaseChatServiceRestTransport._BaseMarkAsAway._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseChatServiceRestTransport._BaseMarkAsAway._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseMarkAsAway._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseMarkAsAway,
+                    "_BaseMarkAsAway__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7901,21 +8447,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             """
 
             http_options = _BaseChatServiceRestTransport._BaseMarkAsDoNotDisturb._get_http_options()
-
             request, metadata = self._interceptor.pre_mark_as_do_not_disturb(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseMarkAsDoNotDisturb._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BaseMarkAsDoNotDisturb._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseMarkAsDoNotDisturb._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseMarkAsDoNotDisturb,
+                    "_BaseMarkAsDoNotDisturb__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8056,21 +8599,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseMoveSectionItem._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_move_section_item(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseMoveSectionItem._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BaseMoveSectionItem._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseMoveSectionItem._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseMoveSectionItem,
+                    "_BaseMoveSectionItem__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8211,21 +8751,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BasePositionSection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_position_section(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BasePositionSection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BasePositionSection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BasePositionSection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BasePositionSection,
+                    "_BasePositionSection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8305,6 +8842,158 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
                 )
             return resp
 
+    class _ReplaceMessageCards(
+        _BaseChatServiceRestTransport._BaseReplaceMessageCards, ChatServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("ChatServiceRestTransport.ReplaceMessageCards")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: message.ReplaceMessageCardsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> message.ReplaceMessageCardsResponse:
+            r"""Call the replace message cards method over HTTP.
+
+            Args:
+                request (~.message.ReplaceMessageCardsRequest):
+                    The request object. Request message for
+                ReplaceMessageCards API method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.message.ReplaceMessageCardsResponse:
+                    Response message for
+                ReplaceMessageCards API.
+
+            """
+
+            http_options = _BaseChatServiceRestTransport._BaseReplaceMessageCards._get_http_options()
+            request, metadata = self._interceptor.pre_replace_message_cards(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseReplaceMessageCards,
+                    "_BaseReplaceMessageCards__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.chat_v1.ChatServiceClient.ReplaceMessageCards",
+                    extra={
+                        "serviceName": "google.chat.v1.ChatService",
+                        "rpcName": "ReplaceMessageCards",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = ChatServiceRestTransport._ReplaceMessageCards._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = message.ReplaceMessageCardsResponse()
+            pb_resp = message.ReplaceMessageCardsResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_replace_message_cards(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_replace_message_cards_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = message.ReplaceMessageCardsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.chat_v1.ChatServiceClient.replace_message_cards",
+                    extra={
+                        "serviceName": "google.chat.v1.ChatService",
+                        "rpcName": "ReplaceMessageCards",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _SearchMessages(
         _BaseChatServiceRestTransport._BaseSearchMessages, ChatServiceRestStub
     ):
@@ -8366,19 +9055,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseSearchMessages._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_messages(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseSearchMessages._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BaseSearchMessages._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseSearchMessages._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseSearchMessages,
+                    "_BaseSearchMessages__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8519,19 +9205,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseSearchSpaces._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_spaces(request, metadata)
-            transcoded_request = (
-                _BaseChatServiceRestTransport._BaseSearchSpaces._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseSearchSpaces._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseSearchSpaces,
+                    "_BaseSearchSpaces__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8673,23 +9356,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseSetUpSpace._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_up_space(request, metadata)
-            transcoded_request = (
-                _BaseChatServiceRestTransport._BaseSetUpSpace._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseChatServiceRestTransport._BaseSetUpSpace._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseSetUpSpace._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseSetUpSpace,
+                    "_BaseSetUpSpace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8830,21 +9506,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             """
 
             http_options = _BaseChatServiceRestTransport._BaseUpdateAvailability._get_http_options()
-
             request, metadata = self._interceptor.pre_update_availability(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseUpdateAvailability._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BaseUpdateAvailability._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseUpdateAvailability._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseUpdateAvailability,
+                    "_BaseUpdateAvailability__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8987,21 +9660,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseUpdateMembership._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_membership(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseUpdateMembership._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BaseUpdateMembership._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseUpdateMembership._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseUpdateMembership,
+                    "_BaseUpdateMembership__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9139,23 +9809,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseUpdateMessage._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_message(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseUpdateMessage._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseChatServiceRestTransport._BaseUpdateMessage._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseUpdateMessage._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseUpdateMessage,
+                    "_BaseUpdateMessage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9314,23 +9977,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseUpdateSection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_section(request, metadata)
-            transcoded_request = _BaseChatServiceRestTransport._BaseUpdateSection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseChatServiceRestTransport._BaseUpdateSection._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseUpdateSection._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseUpdateSection,
+                    "_BaseUpdateSection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9472,25 +10128,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseUpdateSpace._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_space(request, metadata)
-            transcoded_request = (
-                _BaseChatServiceRestTransport._BaseUpdateSpace._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseChatServiceRestTransport._BaseUpdateSpace._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseChatServiceRestTransport._BaseUpdateSpace._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseUpdateSpace,
+                    "_BaseUpdateSpace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9633,21 +10280,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             """
 
             http_options = _BaseChatServiceRestTransport._BaseUpdateSpaceNotificationSetting._get_http_options()
-
             request, metadata = self._interceptor.pre_update_space_notification_setting(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseUpdateSpaceNotificationSetting._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BaseUpdateSpaceNotificationSetting._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseUpdateSpaceNotificationSetting._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseUpdateSpaceNotificationSetting,
+                    "_BaseUpdateSpaceNotificationSetting__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9795,21 +10439,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             """
 
             http_options = _BaseChatServiceRestTransport._BaseUpdateSpaceReadState._get_http_options()
-
             request, metadata = self._interceptor.pre_update_space_read_state(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseUpdateSpaceReadState._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BaseUpdateSpaceReadState._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseUpdateSpaceReadState._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseUpdateSpaceReadState,
+                    "_BaseUpdateSpaceReadState__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9949,21 +10590,18 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
             http_options = (
                 _BaseChatServiceRestTransport._BaseUploadAttachment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_upload_attachment(
                 request, metadata
             )
-            transcoded_request = _BaseChatServiceRestTransport._BaseUploadAttachment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseChatServiceRestTransport._BaseUploadAttachment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseChatServiceRestTransport._BaseUploadAttachment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseChatServiceRestTransport._BaseUploadAttachment,
+                    "_BaseUploadAttachment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10080,6 +10718,14 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
         return self._CreateMessage(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def create_message_pin(
+        self,
+    ) -> Callable[[gc_message_pin.CreateMessagePinRequest], gc_message_pin.MessagePin]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateMessagePin(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def create_reaction(
         self,
     ) -> Callable[[gc_reaction.CreateReactionRequest], gc_reaction.Reaction]:
@@ -10124,6 +10770,14 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._DeleteMessage(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def delete_message_pin(
+        self,
+    ) -> Callable[[message_pin.DeleteMessagePinRequest], empty_pb2.Empty]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DeleteMessagePin(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def delete_reaction(
@@ -10269,6 +10923,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
         return self._ListMemberships(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def list_message_pins(
+        self,
+    ) -> Callable[
+        [message_pin.ListMessagePinsRequest], message_pin.ListMessagePinsResponse
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListMessagePins(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def list_messages(
         self,
     ) -> Callable[[message.ListMessagesRequest], message.ListMessagesResponse]:
@@ -10357,6 +11021,16 @@ class ChatServiceRestTransport(_BaseChatServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._PositionSection(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def replace_message_cards(
+        self,
+    ) -> Callable[
+        [message.ReplaceMessageCardsRequest], message.ReplaceMessageCardsResponse
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ReplaceMessageCards(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def search_messages(

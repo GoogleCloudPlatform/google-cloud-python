@@ -14,7 +14,8 @@
 # limitations under the License.
 
 set -e -x
-MAIN_PYTHON_BIN="/opt/python/cp39-cp39/bin/"
+export CRC32C_PURE_PYTHON=0
+MAIN_PYTHON_BIN="/opt/python/cp312-cp312/bin"
 echo "BUILD_PYTHON: ${BUILD_PYTHON}"
 REPO_ROOT=/var/code/python-crc32c/
 
@@ -45,36 +46,26 @@ make all install
 
 PYTHON_VERSIONS=""
 if [[ -z ${BUILD_PYTHON} ]]; then
-    # Collect all target Python versions.
-    for PYTHON_BIN in /opt/python/*/bin; do
-        # H/T: https://stackoverflow.com/a/229606/1068170
-        if [[ "${PYTHON_BIN}" == *"310"* ]]; then
+    for VER in $(awk -F': ' '/^versions:/ {print $2}' "${REPO_ROOT}/scripts/python_versions.yaml"); do
+        SHORT=$(echo "$VER" | cut -d. -f1,2)
+        ABI="cp${SHORT//.}-cp${SHORT//.}"
+        PYTHON_BIN="/opt/python/${ABI}/bin"
+        if [[ -d "${PYTHON_BIN}" ]]; then
             PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
-            continue
-        elif [[ "${PYTHON_BIN}" == *"311"* ]]; then
-            PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
-            continue
-        elif [[ "${PYTHON_BIN}" == *"312"* ]]; then
-            PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
-            continue
-        elif [[ "${PYTHON_BIN}" == *"313"* && "${PYTHON_BIN}" != *"313t"* ]]; then
-            PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
-            continue
-        elif [[ "${PYTHON_BIN}" == *"314"* && "${PYTHON_BIN}" != *"314t"* ]]; then
-            PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
-            continue
         else
-            echo "Ignoring unsupported version: ${PYTHON_BIN}"
-            echo "====================================="
+            echo "ERROR: Required Python version ${VER} (${PYTHON_BIN}) not found in container."
+            exit 1
         fi
     done
 else
     STRIPPED_PYTHON=$(echo ${BUILD_PYTHON} | sed -e "s/\.//g" | sed -e "s/-dev$//")
-    for PYTHON_BIN in /opt/python/*/bin; do
-        if [[ "${PYTHON_BIN}" == *"${STRIPPED_PYTHON}"* ]]; then
-            PYTHON_VERSIONS="${PYTHON_VERSIONS} ${PYTHON_BIN}"
-        fi
-    done
+    PYTHON_BIN="/opt/python/cp${STRIPPED_PYTHON}-cp${STRIPPED_PYTHON}/bin"
+    if [[ -d "${PYTHON_BIN}" ]]; then
+        PYTHON_VERSIONS="${PYTHON_BIN}"
+    else
+        echo "ERROR: Requested BUILD_PYTHON ${BUILD_PYTHON} (${PYTHON_BIN}) not found in container."
+        exit 1
+    fi
 fi
 
 # Build the wheels.
@@ -93,20 +84,21 @@ done
 
 # Install and test wheels
 for PYTHON_BIN in ${PYTHON_VERSIONS}; do
-    # Identify the short python version e.g. "39", "310"
-                    # Get the ABI tag from the Python binary's path, e.g., "cp310-cp310"
-                    ABI_TAG=$(basename $(dirname ${PYTHON_BIN}))
-                    ARCH=$(uname -m)
-                    # Create a virtual environment to install and test the wheel
-                    ${PYTHON_BIN}/python -m venv /tmp/venv
-                    
-                    # Find the correct wheel file using the precise ABI tag and architecture.
-                    WHEEL_FILE=$(ls ${REPO_ROOT}/wheels/google_crc32c-*-${ABI_TAG}-*manylinux*${ARCH}*.whl)    # Install the wheel
-    /tmp/venv/bin/pip install "${WHEEL_FILE}"
+    # Get the ABI tag from the Python binary's path, e.g., "cp310-cp310"
+    ABI_TAG=$(basename $(dirname ${PYTHON_BIN}))
+    ARCH=$(uname -m)
+    # Create a virtual environment to install and test the wheel
+    ${PYTHON_BIN}/python -m venv /tmp/venv
+
+    # Find the correct wheel file using the precise ABI tag and architecture.
+    WHEEL_FILE=$(ls ${REPO_ROOT}/wheels/google_crc32c-*-${ABI_TAG}-*manylinux*${ARCH}*.whl)
+    # Install the wheel and pytest
+    /tmp/venv/bin/pip install "${WHEEL_FILE}" pytest
 
     # Verify that the module is installed and peek at contents.
     /tmp/venv/bin/python ${REPO_ROOT}/scripts/check_crc32c_extension.py
-    
+    /tmp/venv/bin/pytest ${REPO_ROOT}/tests --junitxml="${REPO_ROOT}/${ABI_TAG}_${ARCH}_sponge_log.xml"
+
     # Clean up the virtual environment
     rm -rf /tmp/venv
 done

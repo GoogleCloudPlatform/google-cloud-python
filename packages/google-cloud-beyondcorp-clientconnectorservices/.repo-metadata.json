@@ -8,7 +8,7 @@
     "language": "python",
     "library_type": "GAPIC_AUTO",
     "name": "beyondcorpclientconnectorservices",
-    "name_pretty": "BeyondCorp",
+    "name_pretty": "BeyondCorp ClientConnectorServices",
     "product_documentation": "https://cloud.google.com/beyondcorp/",
     "release_level": "preview",
     "repo": "googleapis/google-cloud-python"

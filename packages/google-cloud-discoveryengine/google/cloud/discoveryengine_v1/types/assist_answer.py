@@ -17,7 +17,12 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.struct_pb2 as struct_pb2  # type: ignore
+import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.rpc.status_pb2 as status_pb2  # type: ignore
 import proto  # type: ignore
+
+from google.cloud.discoveryengine_v1.types import grounded_generation_service
 
 __protobuf__ = proto.module(
     package="google.cloud.discoveryengine.v1",
@@ -35,17 +40,33 @@ class AssistAnswer(proto.Message):
 
     Attributes:
         name (str):
-            Immutable. Resource name of the ``AssistAnswer``. Format:
+            Immutable. Identifier. Resource name of the
+            ``AssistAnswer``. Format:
             ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/sessions/{session}/assistAnswers/{assist_answer}``
 
             This field must be a UTF-8 encoded string with a length
             limit of 1024 characters.
         state (google.cloud.discoveryengine_v1.types.AssistAnswer.State):
             State of the answer generation.
+        connector_display_names (MutableMapping[str, str]):
+            Output only. Maps an internal connector agent name (the
+            machine identifier embedded in tool names, e.g.
+            ``custom_mcp_<fingerprint>_agent``) to the connector's
+            human-readable display name. Populated at serving time for
+            custom MCP / agent gateway connectors so user-facing
+            surfaces (e.g. the tool-call chip) can show the connector
+            name instead of its internal identifier. Empty when there
+            are no such connectors.
         replies (MutableSequence[google.cloud.discoveryengine_v1.types.AssistAnswer.Reply]):
             Replies of the assistant.
         assist_skipped_reasons (MutableSequence[google.cloud.discoveryengine_v1.types.AssistAnswer.AssistSkippedReason]):
             Reasons for not answering the assist call.
+        customer_policy_enforcement_result (google.cloud.discoveryengine_v1.types.AssistAnswer.CustomerPolicyEnforcementResult):
+            Optional. The field contains information
+            about the various policy checks' results like
+            the banned phrases or the Model Armor checks.
+            This field is populated only if the assist call
+            was skipped due to a policy violation.
     """
 
     class State(proto.Enum):
@@ -62,6 +83,10 @@ class AssistAnswer(proto.Message):
                 Assist operation has succeeded.
             SKIPPED (4):
                 Assist operation has been skipped.
+            CANCELLED (5):
+                Assist operation has been cancelled (e.g.
+                client closed the stream). May contain a partial
+                response.
         """
 
         STATE_UNSPECIFIED = 0
@@ -69,6 +94,7 @@ class AssistAnswer(proto.Message):
         FAILED = 2
         SUCCEEDED = 3
         SKIPPED = 4
+        CANCELLED = 5
 
     class AssistSkippedReason(proto.Enum):
         r"""Possible reasons for not answering an assist call.
@@ -101,6 +127,8 @@ class AssistAnswer(proto.Message):
                 the assistant.
 
                 This field is a member of `oneof`_ ``reply``.
+            create_time (google.protobuf.timestamp_pb2.Timestamp):
+                The time when the reply was created.
         """
 
         grounded_content: "AssistantGroundedContent" = proto.Field(
@@ -108,6 +136,172 @@ class AssistAnswer(proto.Message):
             number=1,
             oneof="reply",
             message="AssistantGroundedContent",
+        )
+        create_time: timestamp_pb2.Timestamp = proto.Field(
+            proto.MESSAGE,
+            number=14,
+            message=timestamp_pb2.Timestamp,
+        )
+
+    class CustomerPolicyEnforcementResult(proto.Message):
+        r"""Customer policy enforcement results. Contains the results of
+        the various policy checks, like the banned phrases or the Model
+        Armor checks.
+
+        Attributes:
+            verdict (google.cloud.discoveryengine_v1.types.AssistAnswer.CustomerPolicyEnforcementResult.Verdict):
+                Final verdict of the customer policy
+                enforcement. If only one policy blocked the
+                processing, the verdict is BLOCK.
+            policy_results (MutableSequence[google.cloud.discoveryengine_v1.types.AssistAnswer.CustomerPolicyEnforcementResult.PolicyEnforcementResult]):
+                Customer policy enforcement results.
+                Populated only if the assist call was skipped
+                due to a policy violation. It contains results
+                from those filters that blocked the processing
+                of the query.
+            violation_source (google.cloud.discoveryengine_v1.types.AssistAnswer.CustomerPolicyEnforcementResult.ViolationSource):
+                Output only. The source of the violation.
+        """
+
+        class Verdict(proto.Enum):
+            r"""The verdict of the customer policy enforcement.
+
+            Values:
+                UNSPECIFIED (0):
+                    Unknown value.
+                ALLOW (1):
+                    There was no policy violation.
+                BLOCK (2):
+                    Processing was blocked by the customer
+                    policy.
+            """
+
+            UNSPECIFIED = 0
+            ALLOW = 1
+            BLOCK = 2
+
+        class ViolationSource(proto.Enum):
+            r"""If the assist call was skipped due to a policy violation,
+            this contains the source of the violation.
+
+            Values:
+                VIOLATION_SOURCE_UNSPECIFIED (0):
+                    Unknown value.
+                SYSTEM (1):
+                    Violation found in the system response.
+                PROMPT (2):
+                    Violation found in the user prompt.
+                ATTACHMENT (3):
+                    Violation found in the user attachment.
+            """
+
+            VIOLATION_SOURCE_UNSPECIFIED = 0
+            SYSTEM = 1
+            PROMPT = 2
+            ATTACHMENT = 3
+
+        class BannedPhraseEnforcementResult(proto.Message):
+            r"""Customer policy enforcement result for the banned phrase
+            policy.
+
+            Attributes:
+                banned_phrases (MutableSequence[str]):
+                    The banned phrases that were found in the
+                    query or the answer.
+            """
+
+            banned_phrases: MutableSequence[str] = proto.RepeatedField(
+                proto.STRING,
+                number=1,
+            )
+
+        class ModelArmorEnforcementResult(proto.Message):
+            r"""Customer policy enforcement result for the Model Armor
+            policy.
+
+            This message has `oneof`_ fields (mutually exclusive fields).
+            For each oneof, at most one member field can be set at the same time.
+            Setting any member of the oneof automatically clears all other
+            members.
+
+            .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+            Attributes:
+                model_armor_violation (str):
+                    The Model Armor violation that was found.
+
+                    This field is a member of `oneof`_ ``result``.
+                error (google.rpc.status_pb2.Status):
+                    The error returned by Model Armor if the
+                    policy enforcement failed for some reason.
+
+                    This field is a member of `oneof`_ ``result``.
+            """
+
+            model_armor_violation: str = proto.Field(
+                proto.STRING,
+                number=1,
+                oneof="result",
+            )
+            error: status_pb2.Status = proto.Field(
+                proto.MESSAGE,
+                number=2,
+                oneof="result",
+                message=status_pb2.Status,
+            )
+
+        class PolicyEnforcementResult(proto.Message):
+            r"""Customer policy enforcement result for a single policy type.
+
+            This message has `oneof`_ fields (mutually exclusive fields).
+            For each oneof, at most one member field can be set at the same time.
+            Setting any member of the oneof automatically clears all other
+            members.
+
+            .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+            Attributes:
+                banned_phrase_enforcement_result (google.cloud.discoveryengine_v1.types.AssistAnswer.CustomerPolicyEnforcementResult.BannedPhraseEnforcementResult):
+                    The policy enforcement result for the banned
+                    phrase policy.
+
+                    This field is a member of `oneof`_ ``enforcement_result``.
+                model_armor_enforcement_result (google.cloud.discoveryengine_v1.types.AssistAnswer.CustomerPolicyEnforcementResult.ModelArmorEnforcementResult):
+                    The policy enforcement result for the Model
+                    Armor policy.
+
+                    This field is a member of `oneof`_ ``enforcement_result``.
+            """
+
+            banned_phrase_enforcement_result: "AssistAnswer.CustomerPolicyEnforcementResult.BannedPhraseEnforcementResult" = proto.Field(
+                proto.MESSAGE,
+                number=3,
+                oneof="enforcement_result",
+                message="AssistAnswer.CustomerPolicyEnforcementResult.BannedPhraseEnforcementResult",
+            )
+            model_armor_enforcement_result: "AssistAnswer.CustomerPolicyEnforcementResult.ModelArmorEnforcementResult" = proto.Field(
+                proto.MESSAGE,
+                number=4,
+                oneof="enforcement_result",
+                message="AssistAnswer.CustomerPolicyEnforcementResult.ModelArmorEnforcementResult",
+            )
+
+        verdict: "AssistAnswer.CustomerPolicyEnforcementResult.Verdict" = proto.Field(
+            proto.ENUM,
+            number=1,
+            enum="AssistAnswer.CustomerPolicyEnforcementResult.Verdict",
+        )
+        policy_results: MutableSequence[
+            "AssistAnswer.CustomerPolicyEnforcementResult.PolicyEnforcementResult"
+        ] = proto.RepeatedField(
+            proto.MESSAGE,
+            number=3,
+            message="AssistAnswer.CustomerPolicyEnforcementResult.PolicyEnforcementResult",
+        )
+        violation_source: "AssistAnswer.CustomerPolicyEnforcementResult.ViolationSource" = proto.Field(
+            proto.ENUM,
+            number=4,
+            enum="AssistAnswer.CustomerPolicyEnforcementResult.ViolationSource",
         )
 
     name: str = proto.Field(
@@ -119,6 +313,11 @@ class AssistAnswer(proto.Message):
         number=2,
         enum=State,
     )
+    connector_display_names: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=14,
+    )
     replies: MutableSequence[Reply] = proto.RepeatedField(
         proto.MESSAGE,
         number=3,
@@ -128,6 +327,11 @@ class AssistAnswer(proto.Message):
         proto.ENUM,
         number=5,
         enum=AssistSkippedReason,
+    )
+    customer_policy_enforcement_result: CustomerPolicyEnforcementResult = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message=CustomerPolicyEnforcementResult,
     )
 
 
@@ -326,6 +530,9 @@ class AssistantGroundedContent(proto.Message):
             This field is a member of `oneof`_ ``metadata``.
         content (google.cloud.discoveryengine_v1.types.AssistantContent):
             The content.
+        citation_metadata (google.cloud.discoveryengine_v1.types.CitationMetadata):
+            Source attribution of the generated content. See also
+            https://cloud.google.com/vertex-ai/generative-ai/docs/learn/overview#citation_check
     """
 
     class TextGroundingMetadata(proto.Message):
@@ -334,6 +541,9 @@ class AssistantGroundedContent(proto.Message):
         Attributes:
             segments (MutableSequence[google.cloud.discoveryengine_v1.types.AssistantGroundedContent.TextGroundingMetadata.Segment]):
                 Grounding information for parts of the text.
+            visual_segments (MutableSequence[google.cloud.discoveryengine_v1.types.AssistantGroundedContent.TextGroundingMetadata.VisualSegment]):
+                Grounding information for parts of the visual
+                content.
             references (MutableSequence[google.cloud.discoveryengine_v1.types.AssistantGroundedContent.TextGroundingMetadata.Reference]):
                 References for the grounded text.
         """
@@ -378,14 +588,42 @@ class AssistantGroundedContent(proto.Message):
                 number=6,
             )
 
+        class VisualSegment(proto.Message):
+            r"""Grounding information for a visual segment.
+
+            Attributes:
+                reference_indices (MutableSequence[int]):
+                    References for the visual segment.
+                content_id (str):
+                    The content id of the visual segment. In order to display
+                    the citation of the visual element, this content_id needs to
+                    match with the
+                    ``grounded_content.content_metadata.content_id`` field.
+            """
+
+            reference_indices: MutableSequence[int] = proto.RepeatedField(
+                proto.INT32,
+                number=1,
+            )
+            content_id: str = proto.Field(
+                proto.STRING,
+                number=2,
+            )
+
         class Reference(proto.Message):
             r"""Referenced content and related document metadata.
 
             Attributes:
                 content (str):
                     Referenced text content.
+                code_snippet (str):
+                    Chunk of code snippet from the referenced
+                    document.
                 document_metadata (google.cloud.discoveryengine_v1.types.AssistantGroundedContent.TextGroundingMetadata.Reference.DocumentMetadata):
                     Document metadata.
+                chunk_metadata (google.protobuf.struct_pb2.Struct):
+                    Output only. Generic structured chunk
+                    metadata from upstream data source connectors.
             """
 
             class DocumentMetadata(proto.Message):
@@ -394,6 +632,8 @@ class AssistantGroundedContent(proto.Message):
                 .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
                 Attributes:
+                    language (google.cloud.discoveryengine_v1.types.AssistantGroundedContent.TextGroundingMetadata.Reference.DocumentMetadata.Language):
+
                     document (str):
                         Document resource name.
 
@@ -418,8 +658,35 @@ class AssistantGroundedContent(proto.Message):
                         the target site.
 
                         This field is a member of `oneof`_ ``_domain``.
+                    mime_type (str):
+                        The mime type of the document.
+                        https://www.iana.org/assignments/media-types/media-types.xhtml.
+
+                        This field is a member of `oneof`_ ``_mime_type``.
                 """
 
+                class Language(proto.Enum):
+                    r"""Language of the referenced content. For now, it is only used
+                    for code.
+
+                    Values:
+                        LANGUAGE_UNSPECIFIED (0):
+                            No description available.
+                        PYTHON (1):
+                            No description available.
+                        SQL (2):
+                            No description available.
+                    """
+
+                    LANGUAGE_UNSPECIFIED = 0
+                    PYTHON = 1
+                    SQL = 2
+
+                language: "AssistantGroundedContent.TextGroundingMetadata.Reference.DocumentMetadata.Language" = proto.Field(
+                    proto.ENUM,
+                    number=8,
+                    enum="AssistantGroundedContent.TextGroundingMetadata.Reference.DocumentMetadata.Language",
+                )
                 document: str = proto.Field(
                     proto.STRING,
                     number=1,
@@ -445,15 +712,29 @@ class AssistantGroundedContent(proto.Message):
                     number=5,
                     optional=True,
                 )
+                mime_type: str = proto.Field(
+                    proto.STRING,
+                    number=7,
+                    optional=True,
+                )
 
             content: str = proto.Field(
                 proto.STRING,
                 number=1,
             )
+            code_snippet: str = proto.Field(
+                proto.STRING,
+                number=4,
+            )
             document_metadata: "AssistantGroundedContent.TextGroundingMetadata.Reference.DocumentMetadata" = proto.Field(
                 proto.MESSAGE,
                 number=2,
                 message="AssistantGroundedContent.TextGroundingMetadata.Reference.DocumentMetadata",
+            )
+            chunk_metadata: struct_pb2.Struct = proto.Field(
+                proto.MESSAGE,
+                number=5,
+                message=struct_pb2.Struct,
             )
 
         segments: MutableSequence[
@@ -462,6 +743,13 @@ class AssistantGroundedContent(proto.Message):
             proto.MESSAGE,
             number=4,
             message="AssistantGroundedContent.TextGroundingMetadata.Segment",
+        )
+        visual_segments: MutableSequence[
+            "AssistantGroundedContent.TextGroundingMetadata.VisualSegment"
+        ] = proto.RepeatedField(
+            proto.MESSAGE,
+            number=6,
+            message="AssistantGroundedContent.TextGroundingMetadata.VisualSegment",
         )
         references: MutableSequence[
             "AssistantGroundedContent.TextGroundingMetadata.Reference"
@@ -481,6 +769,11 @@ class AssistantGroundedContent(proto.Message):
         proto.MESSAGE,
         number=1,
         message="AssistantContent",
+    )
+    citation_metadata: grounded_generation_service.CitationMetadata = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        message=grounded_generation_service.CitationMetadata,
     )
 
 

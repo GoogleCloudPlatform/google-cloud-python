@@ -76,6 +76,8 @@ class Queue(proto.Message):
             Engine tasks][google.cloud.tasks.v2.AppEngineHttpRequest] in
             the queue, no matter what the setting is for the [task-level
             app_engine_routing][google.cloud.tasks.v2.AppEngineHttpRequest.app_engine_routing].
+        http_target (google.cloud.tasks_v2.types.HttpTarget):
+            Modifies HTTP target for HTTP tasks.
         rate_limits (google.cloud.tasks_v2.types.RateLimits):
             Rate limits for task dispatches.
 
@@ -89,7 +91,7 @@ class Queue(proto.Message):
               all traffic dispatched from the queue, regardless of
               whether the dispatch is from a first attempt or a retry).
             - [retry_config][google.cloud.tasks.v2.Queue.retry_config]
-              controls what happens to particular a task after its first
+              controls what happens to a particular task after its first
               attempt fails. That is,
               [retry_config][google.cloud.tasks.v2.Queue.retry_config]
               controls task retries (the second attempt, third attempt,
@@ -202,6 +204,11 @@ class Queue(proto.Message):
         number=2,
         message=target.AppEngineRouting,
     )
+    http_target: target.HttpTarget = proto.Field(
+        proto.MESSAGE,
+        number=10,
+        message=target.HttpTarget,
+    )
     rate_limits: "RateLimits" = proto.Field(
         proto.MESSAGE,
         number=3,
@@ -249,7 +256,7 @@ class RateLimits(proto.Message):
             If unspecified when the queue is created, Cloud Tasks will
             pick the default.
 
-            - The maximum allowed value is 500.
+            The maximum allowed value is 500.
 
             This field has the same meaning as `rate in
             queue.yaml/xml <https://cloud.google.com/appengine/docs/standard/python/config/queueref#rate>`__.
@@ -271,12 +278,14 @@ class RateLimits(proto.Message):
             dispatched, a token is removed from the bucket. Tasks will
             be dispatched until the queue's bucket runs out of tokens.
             The bucket will be continuously refilled with new tokens
-            based on
-            [max_dispatches_per_second][google.cloud.tasks.v2.RateLimits.max_dispatches_per_second].
+            based on ``max_dispatches_per_second``.
 
-            Cloud Tasks will pick the value of ``max_burst_size`` based
-            on the value of
-            [max_dispatches_per_second][google.cloud.tasks.v2.RateLimits.max_dispatches_per_second].
+            Cloud Tasks automatically sets an appropriate
+            ``max_burst_size`` based on the value of
+            ``max_dispatches_per_second``. The value is dynamically
+            optimized to ensure queue stability and throughput. It is
+            generally at least equal to ``max_dispatches_per_second``
+            but might be higher to accommodate bursts of traffic.
 
             For queues that were created or updated using
             ``queue.yaml/xml``, ``max_burst_size`` is equal to
@@ -285,10 +294,8 @@ class RateLimits(proto.Message):
             [UpdateQueue][google.cloud.tasks.v2.CloudTasks.UpdateQueue]
             is called on a queue created by ``queue.yaml/xml``,
             ``max_burst_size`` will be reset based on the value of
-            [max_dispatches_per_second][google.cloud.tasks.v2.RateLimits.max_dispatches_per_second],
-            regardless of whether
-            [max_dispatches_per_second][google.cloud.tasks.v2.RateLimits.max_dispatches_per_second]
-            is updated.
+            ``max_dispatches_per_second``, regardless of whether
+            ``max_dispatches_per_second`` is updated.
         max_concurrent_dispatches (int):
             The maximum number of concurrent tasks that Cloud Tasks
             allows to be dispatched for this queue. After this threshold
@@ -326,16 +333,26 @@ class RetryConfig(proto.Message):
 
     Attributes:
         max_attempts (int):
-            Number of attempts per task.
+            Number of attempts per task, including the first attempt.
+            (If the first attempt fails, there will be
+            ``max_attempts - 1`` retries.)
 
-            Cloud Tasks will attempt the task ``max_attempts`` times
-            (that is, if the first attempt fails, then there will be
-            ``max_attempts - 1`` retries). Must be >= -1.
+            Must be greater than or equal to -1, which indicates
+            unlimited attempts.
+
+            Cloud Tasks stops retrying only when ``max_attempts`` and
+            ``max_retry_duration`` are both satisfied, or when the task
+            is successfully executed. When the task has been attempted
+            ``max_attempts`` times and when the ``max_retry_duration``
+            time has passed, no further attempts are made, and the task
+            is deleted. If ``max_attempts`` is set to -1 and
+            ``max_retry_duration`` is set to 0, the task is retried
+            until the `maximum task
+            retention <https://docs.cloud.google.com/tasks/docs/quotas#limits>`__
+            limit is reached.
 
             If unspecified when the queue is created, Cloud Tasks will
             pick the default.
-
-            -1 indicates unlimited attempts.
 
             This field has the same meaning as `task_retry_limit in
             queue.yaml/xml <https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters>`__.
@@ -345,16 +362,23 @@ class RetryConfig(proto.Message):
             first attempted. Once ``max_retry_duration`` time has passed
             *and* the task has been attempted
             [max_attempts][google.cloud.tasks.v2.RetryConfig.max_attempts]
-            times, no further attempts will be made and the task will be
-            deleted.
+            times, no further attempts are made and the task is deleted.
 
-            If zero, then the task age is unlimited.
+            A zero (0) indicates an unlimited duration, up to the
+            `maximum task
+            retention <https://docs.cloud.google.com/tasks/docs/quotas#limits>`__
+            limit.
+
+            The value must be given as a string that indicates the
+            length of time (in seconds) followed by ``s`` (for
+            "seconds"). For the maximum possible value or the format,
+            see the documentation for
+            `Duration <https://protobuf.dev/reference/protobuf/google.protobuf/#duration>`__.
+            ``max_retry_duration`` will be truncated to the nearest
+            second.
 
             If unspecified when the queue is created, Cloud Tasks will
             pick the default.
-
-            ``max_retry_duration`` will be truncated to the nearest
-            second.
 
             This field has the same meaning as `task_age_limit in
             queue.yaml/xml <https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters>`__.
@@ -369,10 +393,15 @@ class RetryConfig(proto.Message):
             [RetryConfig][google.cloud.tasks.v2.RetryConfig] specifies
             that the task should be retried.
 
+            The value must be given as a string that indicates the
+            length of time (in seconds) followed by ``s`` (for
+            "seconds"). For more information on the format, see the
+            documentation for
+            `Duration <https://protobuf.dev/reference/protobuf/google.protobuf/#duration>`__.
+            ``min_backoff`` will be truncated to the nearest second.
+
             If unspecified when the queue is created, Cloud Tasks will
             pick the default.
-
-            ``min_backoff`` will be truncated to the nearest second.
 
             This field has the same meaning as `min_backoff_seconds in
             queue.yaml/xml <https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters>`__.
@@ -387,10 +416,15 @@ class RetryConfig(proto.Message):
             [RetryConfig][google.cloud.tasks.v2.RetryConfig] specifies
             that the task should be retried.
 
+            The value must be given as a string that indicates the
+            length of time (in seconds) followed by ``s`` (for
+            "seconds"). For more information on the format, see the
+            documentation for
+            `Duration <https://protobuf.dev/reference/protobuf/google.protobuf/#duration>`__.
+            ``max_backoff`` will be truncated to the nearest second.
+
             If unspecified when the queue is created, Cloud Tasks will
             pick the default.
-
-            ``max_backoff`` will be truncated to the nearest second.
 
             This field has the same meaning as `max_backoff_seconds in
             queue.yaml/xml <https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters>`__.

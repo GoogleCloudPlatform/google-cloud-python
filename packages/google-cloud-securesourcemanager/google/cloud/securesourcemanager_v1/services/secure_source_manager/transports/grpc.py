@@ -1261,6 +1261,35 @@ class SecureSourceManagerGrpcTransport(SecureSourceManagerTransport):
         return self._stubs["fetch_blob"]
 
     @property
+    def fetch_refs(
+        self,
+    ) -> Callable[
+        [secure_source_manager.FetchRefsRequest],
+        secure_source_manager.FetchRefsResponse,
+    ]:
+        r"""Return a callable for the fetch refs method over gRPC.
+
+        Fetches git references from a repository.
+
+        Returns:
+            Callable[[~.FetchRefsRequest],
+                    ~.FetchRefsResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "fetch_refs" not in self._stubs:
+            self._stubs["fetch_refs"] = self._logged_channel.unary_unary(
+                "/google.cloud.securesourcemanager.v1.SecureSourceManager/FetchRefs",
+                request_serializer=secure_source_manager.FetchRefsRequest.serialize,
+                response_deserializer=secure_source_manager.FetchRefsResponse.deserialize,
+            )
+        return self._stubs["fetch_refs"]
+
+    @property
     def create_issue(
         self,
     ) -> Callable[[secure_source_manager.CreateIssueRequest], operations_pb2.Operation]:

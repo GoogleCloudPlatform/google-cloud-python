@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.gkerecommender_v1._compat import transcode_request
 from google.cloud.gkerecommender_v1.types import gkerecommender
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -589,21 +590,18 @@ class GkeInferenceQuickstartRestTransport(_BaseGkeInferenceQuickstartRestTranspo
             """
 
             http_options = _BaseGkeInferenceQuickstartRestTransport._BaseFetchBenchmarkingData._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_benchmarking_data(
                 request, metadata
             )
-            transcoded_request = _BaseGkeInferenceQuickstartRestTransport._BaseFetchBenchmarkingData._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGkeInferenceQuickstartRestTransport._BaseFetchBenchmarkingData._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeInferenceQuickstartRestTransport._BaseFetchBenchmarkingData._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeInferenceQuickstartRestTransport._BaseFetchBenchmarkingData,
+                    "_BaseFetchBenchmarkingData__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -744,15 +742,16 @@ class GkeInferenceQuickstartRestTransport(_BaseGkeInferenceQuickstartRestTranspo
             """
 
             http_options = _BaseGkeInferenceQuickstartRestTransport._BaseFetchModels._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_models(request, metadata)
-            transcoded_request = _BaseGkeInferenceQuickstartRestTransport._BaseFetchModels._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeInferenceQuickstartRestTransport._BaseFetchModels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeInferenceQuickstartRestTransport._BaseFetchModels,
+                    "_BaseFetchModels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -892,17 +891,18 @@ class GkeInferenceQuickstartRestTransport(_BaseGkeInferenceQuickstartRestTranspo
             """
 
             http_options = _BaseGkeInferenceQuickstartRestTransport._BaseFetchModelServers._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_model_servers(
                 request, metadata
             )
-            transcoded_request = _BaseGkeInferenceQuickstartRestTransport._BaseFetchModelServers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeInferenceQuickstartRestTransport._BaseFetchModelServers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeInferenceQuickstartRestTransport._BaseFetchModelServers,
+                    "_BaseFetchModelServers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1045,17 +1045,18 @@ class GkeInferenceQuickstartRestTransport(_BaseGkeInferenceQuickstartRestTranspo
             """
 
             http_options = _BaseGkeInferenceQuickstartRestTransport._BaseFetchModelServerVersions._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_model_server_versions(
                 request, metadata
             )
-            transcoded_request = _BaseGkeInferenceQuickstartRestTransport._BaseFetchModelServerVersions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeInferenceQuickstartRestTransport._BaseFetchModelServerVersions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeInferenceQuickstartRestTransport._BaseFetchModelServerVersions,
+                    "_BaseFetchModelServerVersions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1198,19 +1199,16 @@ class GkeInferenceQuickstartRestTransport(_BaseGkeInferenceQuickstartRestTranspo
             """
 
             http_options = _BaseGkeInferenceQuickstartRestTransport._BaseFetchProfiles._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_profiles(request, metadata)
-            transcoded_request = _BaseGkeInferenceQuickstartRestTransport._BaseFetchProfiles._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGkeInferenceQuickstartRestTransport._BaseFetchProfiles._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeInferenceQuickstartRestTransport._BaseFetchProfiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeInferenceQuickstartRestTransport._BaseFetchProfiles,
+                    "_BaseFetchProfiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1353,21 +1351,18 @@ class GkeInferenceQuickstartRestTransport(_BaseGkeInferenceQuickstartRestTranspo
             """
 
             http_options = _BaseGkeInferenceQuickstartRestTransport._BaseGenerateOptimizedManifest._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_optimized_manifest(
                 request, metadata
             )
-            transcoded_request = _BaseGkeInferenceQuickstartRestTransport._BaseGenerateOptimizedManifest._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGkeInferenceQuickstartRestTransport._BaseGenerateOptimizedManifest._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGkeInferenceQuickstartRestTransport._BaseGenerateOptimizedManifest._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGkeInferenceQuickstartRestTransport._BaseGenerateOptimizedManifest,
+                    "_BaseGenerateOptimizedManifest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

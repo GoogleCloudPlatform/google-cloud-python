@@ -1209,7 +1209,9 @@ class Bucket(_PropertyMixin):
                 if cache:
                     try:
                         cache.update_cache(
-                            self.name, f"projects/_/buckets/{self.name}", "global"
+                            self.name,
+                            f"//storage.googleapis.com/projects/_/buckets/{self.name}",
+                            "global",
                         )
                     except Exception:
                         pass

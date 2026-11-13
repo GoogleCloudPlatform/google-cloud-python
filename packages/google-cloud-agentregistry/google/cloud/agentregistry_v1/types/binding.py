@@ -49,7 +49,7 @@ class Binding(proto.Message):
             Optional. User-defined description of a Binding. Can have a
             maximum length of ``2048`` characters.
         source (google.cloud.agentregistry_v1.types.Binding.Source):
-            Required. The target Agent of the Binding.
+            Optional. The source Agent of the Binding.
         target (google.cloud.agentregistry_v1.types.Binding.Target):
             Required. The target Agent Registry Resource
             of the Binding.

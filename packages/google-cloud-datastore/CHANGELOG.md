@@ -4,6 +4,27 @@
 
 [1]: https://pypi.org/project/google-cloud-datastore/#history
 
+## [2.27.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-datastore-v2.27.0...google-cloud-datastore-v2.27.1) (2026-11-12)
+
+
+### Bug Fixes
+
+* **datastore:** pass retry and timeout to begin when commit starts the transaction ([#18939](https://github.com/googleapis/google-cloud-python/issues/18939)) ([cad0a39](https://github.com/googleapis/google-cloud-python/commit/cad0a39ee25727ff7313272f5650fb24debef72f))
+
+## [2.27.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-datastore-v2.26.1...google-cloud-datastore-v2.27.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [2.26.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-datastore-v2.26.0...google-cloud-datastore-v2.26.1) (2026-08-21)
+
+
+### Documentation
+
+* **handwritten:** centralize CONTRIBUTING.rst pointers ([#17642](https://github.com/googleapis/google-cloud-python/issues/17642)) ([23b9499](https://github.com/googleapis/google-cloud-python/commit/23b94994bd5251493b81d91657d1f79a5d3c4b97))
+
 ## [2.26.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-datastore-v2.25.0...google-cloud-datastore-v2.26.0) (2026-07-07)
 
 

@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.parallelstore_v1beta._compat import transcode_request
 from google.cloud.parallelstore_v1beta.types import parallelstore
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -847,19 +848,16 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseCreateInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_instance(request, metadata)
-            transcoded_request = _BaseParallelstoreRestTransport._BaseCreateInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseParallelstoreRestTransport._BaseCreateInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseParallelstoreRestTransport._BaseCreateInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseCreateInstance,
+                    "_BaseCreateInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -997,15 +995,16 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseDeleteInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_instance(request, metadata)
-            transcoded_request = _BaseParallelstoreRestTransport._BaseDeleteInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseParallelstoreRestTransport._BaseDeleteInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseDeleteInstance,
+                    "_BaseDeleteInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1144,25 +1143,16 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseExportData._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_export_data(request, metadata)
-            transcoded_request = (
-                _BaseParallelstoreRestTransport._BaseExportData._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseParallelstoreRestTransport._BaseExportData._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseParallelstoreRestTransport._BaseExportData._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseExportData,
+                    "_BaseExportData__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1297,17 +1287,16 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseGetInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_instance(request, metadata)
-            transcoded_request = _BaseParallelstoreRestTransport._BaseGetInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseParallelstoreRestTransport._BaseGetInstance._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseGetInstance,
+                    "_BaseGetInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1448,25 +1437,16 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseImportData._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_import_data(request, metadata)
-            transcoded_request = (
-                _BaseParallelstoreRestTransport._BaseImportData._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseParallelstoreRestTransport._BaseImportData._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseParallelstoreRestTransport._BaseImportData._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseImportData,
+                    "_BaseImportData__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1603,15 +1583,16 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseListInstances._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_instances(request, metadata)
-            transcoded_request = _BaseParallelstoreRestTransport._BaseListInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseParallelstoreRestTransport._BaseListInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseListInstances,
+                    "_BaseListInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1753,19 +1734,16 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseUpdateInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_instance(request, metadata)
-            transcoded_request = _BaseParallelstoreRestTransport._BaseUpdateInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseParallelstoreRestTransport._BaseUpdateInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseParallelstoreRestTransport._BaseUpdateInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseUpdateInstance,
+                    "_BaseUpdateInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1961,17 +1939,16 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseParallelstoreRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseParallelstoreRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2103,15 +2080,16 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseParallelstoreRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseParallelstoreRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2240,17 +2218,18 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseParallelstoreRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseParallelstoreRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2354,17 +2333,18 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseParallelstoreRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseParallelstoreRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2471,15 +2451,16 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseParallelstoreRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseParallelstoreRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2611,15 +2592,16 @@ class ParallelstoreRestTransport(_BaseParallelstoreRestTransport):
             http_options = (
                 _BaseParallelstoreRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseParallelstoreRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseParallelstoreRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseParallelstoreRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

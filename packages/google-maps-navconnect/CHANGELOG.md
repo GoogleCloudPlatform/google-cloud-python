@@ -4,6 +4,20 @@
 
 [1]: https://pypi.org/project/google-maps-navconnect/#history
 
+## [0.2.3](https://github.com/googleapis/google-cloud-python/compare/google-maps-navconnect-v0.2.2...google-maps-navconnect-v0.2.3) (2026-11-05)
+
+
+### Features
+
+* update API sources and regenerate ([#18986](https://github.com/googleapis/google-cloud-python/issues/18986)) ([8c0f333](https://github.com/googleapis/google-cloud-python/commit/8c0f3331260667eb64c70db80a7ab5c52b8ccf36))
+
+## [0.2.2](https://github.com/googleapis/google-cloud-python/compare/google-maps-navconnect-v0.2.1...google-maps-navconnect-v0.2.2) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [0.2.1](https://github.com/googleapis/google-cloud-python/compare/google-maps-navconnect-v0.2.0...google-maps-navconnect-v0.2.1) (2026-08-06)
 
 

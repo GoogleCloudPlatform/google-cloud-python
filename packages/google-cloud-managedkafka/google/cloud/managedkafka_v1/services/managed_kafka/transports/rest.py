@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.managedkafka_v1._compat import transcode_request
 from google.cloud.managedkafka_v1.types import managed_kafka, resources
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1476,25 +1477,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseAddAclEntry._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_add_acl_entry(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseAddAclEntry._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseManagedKafkaRestTransport._BaseAddAclEntry._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseAddAclEntry._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseAddAclEntry,
+                    "_BaseAddAclEntry__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1637,23 +1629,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseCreateAcl._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_acl(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseCreateAcl._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseManagedKafkaRestTransport._BaseCreateAcl._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseCreateAcl._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseCreateAcl,
+                    "_BaseCreateAcl__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1794,19 +1779,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseCreateCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_cluster(request, metadata)
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseCreateCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseManagedKafkaRestTransport._BaseCreateCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseManagedKafkaRestTransport._BaseCreateCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseCreateCluster,
+                    "_BaseCreateCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1942,25 +1924,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseCreateTopic._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_topic(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseCreateTopic._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseManagedKafkaRestTransport._BaseCreateTopic._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseCreateTopic._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseCreateTopic,
+                    "_BaseCreateTopic__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2093,19 +2066,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseDeleteAcl._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_acl(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseDeleteAcl._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseDeleteAcl._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseDeleteAcl,
+                    "_BaseDeleteAcl__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2210,15 +2180,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseDeleteCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_cluster(request, metadata)
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseDeleteCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseManagedKafkaRestTransport._BaseDeleteCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseDeleteCluster,
+                    "_BaseDeleteCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2346,17 +2317,18 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             """
 
             http_options = _BaseManagedKafkaRestTransport._BaseDeleteConsumerGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_consumer_group(
                 request, metadata
             )
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseDeleteConsumerGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseManagedKafkaRestTransport._BaseDeleteConsumerGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseDeleteConsumerGroup,
+                    "_BaseDeleteConsumerGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2454,19 +2426,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseDeleteTopic._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_topic(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseDeleteTopic._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseDeleteTopic._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseDeleteTopic,
+                    "_BaseDeleteTopic__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2569,19 +2538,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseGetAcl._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_acl(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseGetAcl._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseGetAcl._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseGetAcl,
+                    "_BaseGetAcl__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2719,19 +2685,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseGetCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_cluster(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseGetCluster._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseGetCluster._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseGetCluster,
+                    "_BaseGetCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2869,17 +2832,18 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseGetConsumerGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_consumer_group(
                 request, metadata
             )
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseGetConsumerGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseManagedKafkaRestTransport._BaseGetConsumerGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseGetConsumerGroup,
+                    "_BaseGetConsumerGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3013,19 +2977,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseGetTopic._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_topic(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseGetTopic._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseGetTopic._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseGetTopic,
+                    "_BaseGetTopic__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3159,19 +3120,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseListAcls._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_acls(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseListAcls._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseListAcls._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseListAcls,
+                    "_BaseListAcls__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3307,17 +3265,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseListClusters._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_clusters(request, metadata)
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseListClusters._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseListClusters._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseListClusters,
+                    "_BaseListClusters__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3453,17 +3410,18 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             """
 
             http_options = _BaseManagedKafkaRestTransport._BaseListConsumerGroups._get_http_options()
-
             request, metadata = self._interceptor.pre_list_consumer_groups(
                 request, metadata
             )
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseListConsumerGroups._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseManagedKafkaRestTransport._BaseListConsumerGroups._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseListConsumerGroups,
+                    "_BaseListConsumerGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3601,19 +3559,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseListTopics._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_topics(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseListTopics._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseListTopics._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseListTopics,
+                    "_BaseListTopics__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3752,21 +3707,18 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseRemoveAclEntry._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_remove_acl_entry(
                 request, metadata
             )
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseRemoveAclEntry._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseManagedKafkaRestTransport._BaseRemoveAclEntry._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseManagedKafkaRestTransport._BaseRemoveAclEntry._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseRemoveAclEntry,
+                    "_BaseRemoveAclEntry__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3909,23 +3861,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseUpdateAcl._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_acl(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseUpdateAcl._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseManagedKafkaRestTransport._BaseUpdateAcl._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseUpdateAcl._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseUpdateAcl,
+                    "_BaseUpdateAcl__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4066,19 +4011,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseUpdateCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_cluster(request, metadata)
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseUpdateCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseManagedKafkaRestTransport._BaseUpdateCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseManagedKafkaRestTransport._BaseUpdateCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseUpdateCluster,
+                    "_BaseUpdateCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4214,21 +4156,18 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             """
 
             http_options = _BaseManagedKafkaRestTransport._BaseUpdateConsumerGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_update_consumer_group(
                 request, metadata
             )
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseUpdateConsumerGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseManagedKafkaRestTransport._BaseUpdateConsumerGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseManagedKafkaRestTransport._BaseUpdateConsumerGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseUpdateConsumerGroup,
+                    "_BaseUpdateConsumerGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4366,25 +4305,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseUpdateTopic._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_topic(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseUpdateTopic._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseManagedKafkaRestTransport._BaseUpdateTopic._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseUpdateTopic._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseUpdateTopic,
+                    "_BaseUpdateTopic__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4691,19 +4621,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseManagedKafkaRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4835,15 +4762,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseManagedKafkaRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4973,21 +4901,18 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseManagedKafkaRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseManagedKafkaRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5092,17 +5017,18 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseManagedKafkaRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5209,17 +5135,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseManagedKafkaRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5351,15 +5276,16 @@ class ManagedKafkaRestTransport(_BaseManagedKafkaRestTransport):
             http_options = (
                 _BaseManagedKafkaRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseManagedKafkaRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseManagedKafkaRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseManagedKafkaRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

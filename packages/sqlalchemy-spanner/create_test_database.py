@@ -15,16 +15,17 @@
 # limitations under the License.
 
 import os
+import pathlib
 import re
 import time
+import uuid
 
+from create_test_config import set_test_config
 from google.api_core import datetime_helpers
 from google.api_core.exceptions import AlreadyExists, ResourceExhausted
 from google.cloud.spanner_v1 import Client
 from google.cloud.spanner_v1.database import Database
 from google.cloud.spanner_v1.instance import Instance
-
-from create_test_config import set_test_config
 
 USE_EMULATOR = os.getenv("SPANNER_EMULATOR_HOST") is not None
 
@@ -55,8 +56,6 @@ def delete_stale_test_instances():
         create_time = int(instance.labels["created"])
         if create_time > cutoff:
             continue
-        # Backups are not used in sqlalchemy dialect test,
-        # therefore instance can just be deleted.
         try:
             instance.delete()
             time.sleep(5)  # Sleep for 5 seconds to give time for cooldown.
@@ -69,26 +68,39 @@ def delete_stale_test_instances():
 
 
 def delete_stale_test_databases():
-    """Delete test databases that are older than 10 minutes.
-    
-    In this test suite, active databases typically finish running in ~5 minutes.
-    To prevent concurrent Kokoro runs from accidentally deleting each other's
-    active databases we use a 10-minute safety threshold. Without an aggressive
-    cutoff we quickly bump up against Cloud Spanner's limit of 100 databases per instance.
+    """Delete test databases that are older than 4 hours.
+
+    Uses a .stale_cleanup_done sentinel file gate to ensure this global sweep
+    runs exactly once at the start of a test run across parallel/parametrized sessions,
+    preventing concurrent sessions from interfering with each other.
     """
-    cutoff = (int(time.time()) - 10 * 60) * 1000
+    marker = pathlib.Path(".stale_cleanup_done")
+    if marker.exists():
+        return
+
+    try:
+        marker.touch(exist_ok=False)
+    except FileExistsError:
+        return  # Another parallel process already performed cleanup
+
+    cutoff = (int(time.time()) - 4 * 60 * 60) * 1000
     instance = CLIENT.instance("sqlalchemy-dialect-test")
     if not instance.exists():
         return
     database_pbs = instance.list_databases()
     for database_pb in database_pbs:
         database = Database.from_pb(database_pb, instance)
-        # Parse creation time from database ID first (e.g. "sqlalchemy-test-1779989493809")
-        # to be 100% independent of emulator metadata or GCP Client API create_time gaps!
+
+        # Parse creation time from database ID first (e.g. "sp_test_1787069488_a3f2b1")
         create_time = None
-        match = re.match(r"sqlalchemy-test-(\d+)", database.database_id)
+        match = re.match(r"sp_test_(\d+)", database.database_id)
         if match:
-            create_time = int(match.group(1))
+            ts_str = match.group(1)
+            ts_val = int(ts_str)
+            if len(ts_str) == 10:
+                create_time = ts_val * 1000
+            else:
+                create_time = ts_val
         elif database_pb.create_time is not None:
             create_time = datetime_helpers.to_milliseconds(database_pb.create_time)
 
@@ -105,6 +117,12 @@ def delete_stale_test_databases():
 
 
 def create_test_instance():
+    """Create test instance and a session-isolated ephemeral test database.
+
+    To prevent cross-session test pollution and parallel execution race conditions,
+    each test session generates a unique database ID combining a 10-digit timestamp
+    and a 6-character random hex suffix (conforming to Spanner's regex: ^[a-z][a-z0-9_]{1,29}$).
+    """
     instance_id = "sqlalchemy-dialect-test"
     instance = CLIENT.instance(instance_id)
     if not instance.exists():
@@ -123,8 +141,12 @@ def create_test_instance():
         except AlreadyExists:
             pass  # instance was already created
 
-    unique_resource_id = "%s%d" % ("-", 1000 * time.time())
-    database_id = "sqlalchemy-test" + unique_resource_id
+    # Generate a session-isolated unique database ID within Spanner 30-char limit
+    # Format: sp_test_{timestamp_in_seconds}_{rand_hex6} (compliant with Spanner naming: ^[a-z][a-z0-9_]{1,29}$)
+    creation_timestamp = time.time()
+    timestamp_part = str(int(creation_timestamp))
+    rand_part = uuid.uuid4().hex[:6]
+    database_id = f"sp_test_{timestamp_part}_{rand_part}"
 
     try:
         database = instance.database(database_id)
@@ -136,5 +158,14 @@ def create_test_instance():
     set_test_config(PROJECT, instance_id, database_id)
 
 
-delete_stale_test_databases()
-create_test_instance()
+def main(argv):
+    config_filename = argv[0] if argv else os.getenv("SQLALCHEMY_SPANNER_CONFIG", "test.cfg")
+    os.environ["SQLALCHEMY_SPANNER_CONFIG"] = config_filename
+
+    delete_stale_test_databases()
+    create_test_instance()
+
+
+if __name__ == "__main__":
+    import sys
+    main(sys.argv[1:])

@@ -346,6 +346,32 @@ class TestBigtableDataClient:
             assert client._channel_refresh_task is None
             ping_and_warm.assert_not_called()
 
+    def test__start_background_channel_refresh_task_creation_failure(self, caplog):
+        import logging
+
+        client = self._make_client(
+            project="project-id", _disable_background_refresh=True
+        )
+        client._disable_background_refresh = False
+        client._emulator_host = None
+        with mock.patch.object(
+            CrossSync._Sync_Impl,
+            "create_daemon_task",
+            side_effect=RuntimeError("can't start new thread"),
+        ) as mock_create_task:
+            target_logger = logging.getLogger(client.__class__.__module__)
+            target_logger.addHandler(caplog.handler)
+            with caplog.at_level(logging.WARNING, logger="google.cloud.bigtable.data"):
+                client._start_background_channel_refresh()
+                assert client._channel_refresh_task is None
+                assert "Failed to start background channel refresh task" in caplog.text
+                assert "can't start new thread" in caplog.text
+                mock_create_task.assert_called_once_with(
+                    client._manage_channel,
+                    task_name=f"{client.__class__.__name__} channel refresh",
+                )
+        client.close()
+
     def test__ping_and_warm_instances(self):
         """test ping and warm with mocked asyncio.gather"""
         client_mock = mock.Mock()
@@ -1262,19 +1288,46 @@ class TestTable:
             assert "operation_timeout must be greater than 0" in str(e.value)
         client.close()
 
+    def test_table_ctor_task_creation_failure_warns_and_continues(self, caplog):
+        import logging
+
+        client = self._make_client()
+        with mock.patch.object(
+            CrossSync._Sync_Impl,
+            "create_task",
+            side_effect=RuntimeError("can't start new thread"),
+        ) as mock_create_task:
+            with caplog.at_level(logging.WARNING):
+                table = self._make_one(client)
+                assert table._register_instance_future is None
+                assert "Failed to start background instance registration" in caplog.text
+                assert "can't start new thread" in caplog.text
+                mock_create_task.assert_called_once_with(
+                    client._register_instance,
+                    table.instance_id,
+                    table.app_profile_id,
+                    id(table),
+                    sync_executor=client._executor,
+                )
+        with table:
+            pass
+        table.close()
+        client.close()
+
     @pytest.mark.parametrize(
-        "fn_name,fn_args,is_stream,extra_retryables",
+        "fn_name,fn_args,is_read_rows_fn,is_stream,extra_retryables",
         [
-            ("read_rows_stream", (ReadRowsQuery(),), True, ()),
-            ("read_rows", (ReadRowsQuery(),), True, ()),
-            ("read_row", (b"row_key",), True, ()),
-            ("read_rows_sharded", ([ReadRowsQuery()],), True, ()),
-            ("row_exists", (b"row_key",), True, ()),
-            ("sample_row_keys", (), False, ()),
-            ("mutate_row", (b"row_key", [DeleteAllFromRow()]), False, ()),
+            ("read_rows_stream", (ReadRowsQuery(),), True, True, ()),
+            ("read_rows", (ReadRowsQuery(),), True, True, ()),
+            ("read_row", (b"row_key",), True, True, ()),
+            ("read_rows_sharded", ([ReadRowsQuery()],), True, True, ()),
+            ("row_exists", (b"row_key",), True, True, ()),
+            ("sample_row_keys", (), False, False, ()),
+            ("mutate_row", (b"row_key", [DeleteAllFromRow()]), False, False, ()),
             (
                 "bulk_mutate_rows",
                 ([mutations.RowMutationEntry(b"key", [DeleteAllFromRow()])],),
+                False,
                 False,
                 (_MutateRowsIncomplete,),
             ),
@@ -1310,6 +1363,7 @@ class TestTable:
         expected_retryables,
         fn_name,
         fn_args,
+        is_read_rows_fn,
         is_stream,
         extra_retryables,
     ):
@@ -1319,6 +1373,11 @@ class TestTable:
         if is_stream:
             retry_fn += "_stream"
         retry_fn = f"CrossSync._Sync_Impl.{retry_fn}"
+        subpackage = "_sync_autogen"
+        if is_read_rows_fn:
+            predicate_builder = f"google.cloud.bigtable.data.{subpackage}._read_rows._rst_stream_aware_predicate"
+        else:
+            predicate_builder = "google.api_core.retry.if_exception_type"
         with mock.patch(
             f"google.cloud.bigtable.data._cross_sync.{retry_fn}"
         ) as retry_fn_mock:
@@ -1326,9 +1385,7 @@ class TestTable:
                 table = client.get_table("instance-id", "table-id")
                 expected_predicate = expected_retryables.__contains__
                 retry_fn_mock.side_effect = RuntimeError("stop early")
-                with mock.patch(
-                    "google.api_core.retry.if_exception_type"
-                ) as predicate_builder_mock:
+                with mock.patch(predicate_builder) as predicate_builder_mock:
                     predicate_builder_mock.return_value = expected_predicate
                     with pytest.raises(Exception):
                         test_fn = table.__getattribute__(fn_name)

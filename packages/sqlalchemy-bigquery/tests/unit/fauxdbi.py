@@ -432,8 +432,7 @@ class FauxClient:
 
     def __get_comments(self, cursor, table_name):
         cursor.execute(
-            f"select key, comment"
-            f" from comments where key like {repr(table_name + '%')}"
+            f"select key, comment from comments where key like {repr(table_name + '%')}"
         )
 
         return {key.split(",")[1]: comment for key, comment in cursor}

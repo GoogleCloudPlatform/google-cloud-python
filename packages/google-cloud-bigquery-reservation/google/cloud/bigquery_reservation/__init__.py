@@ -66,6 +66,7 @@ from google.cloud.bigquery_reservation_v1.types.reservation import (
     UpdateAssignmentRequest,
     UpdateBiReservationRequest,
     UpdateCapacityCommitmentRequest,
+    UpdateReservationGroupRequest,
     UpdateReservationRequest,
 )
 
@@ -111,6 +112,7 @@ __all__ = (
     "UpdateAssignmentRequest",
     "UpdateBiReservationRequest",
     "UpdateCapacityCommitmentRequest",
+    "UpdateReservationGroupRequest",
     "UpdateReservationRequest",
     "Edition",
     "FailoverMode",

@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.datamanager_v1._compat import transcode_request
 from google.ads.datamanager_v1.types import user_list, user_list_service
 from google.ads.datamanager_v1.types import user_list as gad_user_list
 
@@ -471,21 +472,18 @@ class UserListServiceRestTransport(_BaseUserListServiceRestTransport):
             """
 
             http_options = _BaseUserListServiceRestTransport._BaseCreateUserList._get_http_options()
-
             request, metadata = self._interceptor.pre_create_user_list(
                 request, metadata
             )
-            transcoded_request = _BaseUserListServiceRestTransport._BaseCreateUserList._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseUserListServiceRestTransport._BaseCreateUserList._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListServiceRestTransport._BaseCreateUserList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListServiceRestTransport._BaseCreateUserList,
+                    "_BaseCreateUserList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -616,17 +614,18 @@ class UserListServiceRestTransport(_BaseUserListServiceRestTransport):
             """
 
             http_options = _BaseUserListServiceRestTransport._BaseDeleteUserList._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_user_list(
                 request, metadata
             )
-            transcoded_request = _BaseUserListServiceRestTransport._BaseDeleteUserList._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListServiceRestTransport._BaseDeleteUserList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListServiceRestTransport._BaseDeleteUserList,
+                    "_BaseDeleteUserList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -728,15 +727,16 @@ class UserListServiceRestTransport(_BaseUserListServiceRestTransport):
             http_options = (
                 _BaseUserListServiceRestTransport._BaseGetUserList._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_user_list(request, metadata)
-            transcoded_request = _BaseUserListServiceRestTransport._BaseGetUserList._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListServiceRestTransport._BaseGetUserList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListServiceRestTransport._BaseGetUserList,
+                    "_BaseGetUserList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -872,15 +872,16 @@ class UserListServiceRestTransport(_BaseUserListServiceRestTransport):
             http_options = (
                 _BaseUserListServiceRestTransport._BaseListUserLists._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_user_lists(request, metadata)
-            transcoded_request = _BaseUserListServiceRestTransport._BaseListUserLists._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListServiceRestTransport._BaseListUserLists._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListServiceRestTransport._BaseListUserLists,
+                    "_BaseListUserLists__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1017,21 +1018,18 @@ class UserListServiceRestTransport(_BaseUserListServiceRestTransport):
             """
 
             http_options = _BaseUserListServiceRestTransport._BaseUpdateUserList._get_http_options()
-
             request, metadata = self._interceptor.pre_update_user_list(
                 request, metadata
             )
-            transcoded_request = _BaseUserListServiceRestTransport._BaseUpdateUserList._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseUserListServiceRestTransport._BaseUpdateUserList._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListServiceRestTransport._BaseUpdateUserList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListServiceRestTransport._BaseUpdateUserList,
+                    "_BaseUpdateUserList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

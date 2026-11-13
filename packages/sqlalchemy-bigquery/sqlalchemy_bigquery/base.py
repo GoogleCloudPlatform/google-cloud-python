@@ -20,14 +20,22 @@
 """Integration between SQLAlchemy and BigQuery."""
 
 import datetime
-from decimal import Decimal
 import operator
 import random
 import re
 import uuid
+from decimal import Decimal
+from typing import Any
 
-from google import auth
 import google.api_core.exceptions
+import packaging.version
+import sqlalchemy
+import sqlalchemy.sql.expression
+import sqlalchemy.sql.functions
+import sqlalchemy.sql.sqltypes
+import sqlalchemy.sql.type_api
+import sqlalchemy_bigquery_vendored.sqlalchemy.postgresql.base as vendored_postgresql
+from google import auth
 from google.api_core.exceptions import NotFound
 from google.cloud.bigquery import ConnectionProperty, QueryJobConfig, dbapi
 from google.cloud.bigquery.table import (
@@ -35,8 +43,6 @@ from google.cloud.bigquery.table import (
     TableReference,
     TimePartitioning,
 )
-import packaging.version
-import sqlalchemy
 from sqlalchemy import util
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.engine.default import DefaultDialect, DefaultExecutionContext
@@ -49,14 +55,9 @@ from sqlalchemy.sql.compiler import (
     IdentifierPreparer,
     SQLCompiler,
 )
-import sqlalchemy.sql.expression
-import sqlalchemy.sql.functions
 from sqlalchemy.sql.schema import Column, Table
 from sqlalchemy.sql.selectable import CTE
-import sqlalchemy.sql.sqltypes
 from sqlalchemy.sql.sqltypes import Integer, NullType, Numeric, String
-import sqlalchemy.sql.type_api
-import sqlalchemy_bigquery_vendored.sqlalchemy.postgresql.base as vendored_postgresql
 
 from . import _helpers, _types
 from .parse_url import parse_url
@@ -587,6 +588,17 @@ class BigQueryCompiler(vendored_postgresql.PGCompiler, SQLCompiler):
     def visit_mod_binary(self, binary, operator, **kw):
         return f"MOD({self.process(binary.left, **kw)}, {self.process(binary.right, **kw)})"
 
+    def visit_now_func(self, fn, **kw):
+        # BigQuery has no NOW() function, use CURRENT_TIMESTAMP instead.
+        return "CURRENT_TIMESTAMP"
+
+    def visit_try_cast(self, cast: elements.Cast, **kwargs: Any) -> str:
+        """Compile a ``SAFE_CAST`` / ``try_cast`` expression for BigQuery."""
+        return "SAFE_CAST(%s AS %s)" % (
+            self.process(cast.clause, **kwargs),
+            self.process(cast.typeclause, **kwargs),
+        )
+
 
 class BigQueryTypeCompiler(GenericTypeCompiler):
     def visit_INTEGER(self, type_, **kw):
@@ -600,7 +612,7 @@ class BigQueryTypeCompiler(GenericTypeCompiler):
     def visit_FLOAT(self, type_, **kw):
         return "FLOAT64"
 
-    visit_REAL = visit_FLOAT
+    visit_REAL = visit_DOUBLE = visit_DOUBLE_PRECISION = visit_FLOAT
 
     def visit_STRING(self, type_, **kw):
         if (type_.length is not None) and isinstance(
@@ -1380,6 +1392,32 @@ class BigQueryDialect(DefaultDialect):
             view_name = f"{self.dataset_id}.{view_name}"
         view = client.get_table(view_name)
         return view.view_query
+
+
+_BaseTryCast = getattr(elements, "TryCast", elements.Cast)
+
+
+class SafeCast(_BaseTryCast):
+    """Represent a BigQuery ``SAFE_CAST`` expression."""
+
+    __visit_name__ = "try_cast"
+    inherit_cache = True
+
+
+def safe_cast(expression: Any, type_: Any) -> SafeCast:
+    """Produce a BigQuery ``SAFE_CAST`` expression.
+
+    ``SAFE_CAST`` is identical to ``CAST``, except that it returns ``NULL``
+    instead of raising an error when a cast fails.
+
+    Args:
+        expression: A SQL expression, column, or literal to be cast.
+        type_: The target SQLAlchemy ``TypeEngine`` class or instance.
+
+    Returns:
+        A ``SafeCast`` clause element that compiles to ``SAFE_CAST(...)``.
+    """
+    return SafeCast(expression, type_)
 
 
 class unnest(sqlalchemy.sql.functions.GenericFunction):

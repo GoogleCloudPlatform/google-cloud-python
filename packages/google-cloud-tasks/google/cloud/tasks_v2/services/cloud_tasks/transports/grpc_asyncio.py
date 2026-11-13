@@ -27,15 +27,17 @@ import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
 from google.api_core import exceptions as core_exceptions
-from google.api_core import gapic_v1, grpc_helpers_async
+from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
+from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
-from google.cloud.tasks_v2.types import cloudtasks, queue, task
+from google.cloud.tasks_v2.types import cloudtasks, cmek_config, queue, task
+from google.cloud.tasks_v2.types import cmek_config as gct_cmek_config
 from google.cloud.tasks_v2.types import queue as gct_queue
 from google.cloud.tasks_v2.types import task as gct_task
 
@@ -256,6 +258,7 @@ class CloudTasksGrpcAsyncIOTransport(CloudTasksTransport):
         self._grpc_channel = None
         self._ssl_channel_credentials = ssl_channel_credentials
         self._stubs: Dict[str, Callable] = {}
+        self._operations_client: Optional[operations_v1.OperationsAsyncClient] = None
 
         if api_mtls_endpoint:
             warnings.warn("api_mtls_endpoint is deprecated", DeprecationWarning)
@@ -339,6 +342,22 @@ class CloudTasksGrpcAsyncIOTransport(CloudTasksTransport):
         """
         # Return the channel from cache.
         return self._grpc_channel
+
+    @property
+    def operations_client(self) -> operations_v1.OperationsAsyncClient:
+        """Create the client designed to process long-running operations.
+
+        This property caches on the instance; repeated calls return the same
+        client.
+        """
+        # Quick check: Only create a new client if we do not already have one.
+        if self._operations_client is None:
+            self._operations_client = operations_v1.OperationsAsyncClient(
+                self._logged_channel
+            )
+
+        # Return the client from cache.
+        return self._operations_client
 
     @property
     def list_queues(
@@ -481,8 +500,16 @@ class CloudTasksGrpcAsyncIOTransport(CloudTasksTransport):
 
         This command will delete the queue even if it has tasks in it.
 
-        Note: If you delete a queue, a queue with the same name can't be
-        created for 7 days.
+        Note: If you delete a queue, you may be prevented from creating
+        a new queue with the same name as the deleted queue for a
+        tombstone window of up to 3 days. During this window, the
+        CreateQueue operation may appear to recreate the queue, but this
+        can be misleading. If you attempt to create a queue with the
+        same name as one that is in the tombstone window, run GetQueue
+        to confirm that the queue creation was successful. If GetQueue
+        returns 200 response code, your queue was successfully created
+        with the name of the previously deleted queue. Otherwise, your
+        queue did not successfully recreate.
 
         WARNING: Using this method may have unintended side effects if
         you are using an App Engine ``queue.yaml`` or ``queue.xml`` file
@@ -766,6 +793,10 @@ class CloudTasksGrpcAsyncIOTransport(CloudTasksTransport):
 
         Gets a task.
 
+        After a task is successfully executed or has exhausted its retry
+        attempts, the task is deleted. A ``GetTask`` request for a
+        deleted task returns a ``NOT_FOUND`` error.
+
         Returns:
             Callable[[~.GetTaskRequest],
                     Awaitable[~.Task]]:
@@ -816,6 +847,37 @@ class CloudTasksGrpcAsyncIOTransport(CloudTasksTransport):
         return self._stubs["create_task"]
 
     @property
+    def batch_create_tasks(
+        self,
+    ) -> Callable[
+        [cloudtasks.BatchCreateTasksRequest], Awaitable[operations_pb2.Operation]
+    ]:
+        r"""Return a callable for the batch create tasks method over gRPC.
+
+        Creates a batch of tasks and adds them to a queue.
+
+        All tasks must be for the same queue.
+        A maximum of 100 tasks can be created in a single batch.
+
+        Returns:
+            Callable[[~.BatchCreateTasksRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "batch_create_tasks" not in self._stubs:
+            self._stubs["batch_create_tasks"] = self._logged_channel.unary_unary(
+                "/google.cloud.tasks.v2.CloudTasks/BatchCreateTasks",
+                request_serializer=cloudtasks.BatchCreateTasksRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["batch_create_tasks"]
+
+    @property
     def delete_task(
         self,
     ) -> Callable[[cloudtasks.DeleteTaskRequest], Awaitable[empty_pb2.Empty]]:
@@ -846,6 +908,39 @@ class CloudTasksGrpcAsyncIOTransport(CloudTasksTransport):
         return self._stubs["delete_task"]
 
     @property
+    def batch_delete_tasks(
+        self,
+    ) -> Callable[
+        [cloudtasks.BatchDeleteTasksRequest], Awaitable[operations_pb2.Operation]
+    ]:
+        r"""Return a callable for the batch delete tasks method over gRPC.
+
+        Deletes a batch of tasks.
+        This is a non-atomic operation: if deletion fails for
+        some tasks, it can still succeed for others. The
+        metadata field of google.longrunning.Operation contains
+        details of failed deletions. A maximum of 1000 tasks can
+        be deleted in a batch.
+
+        Returns:
+            Callable[[~.BatchDeleteTasksRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "batch_delete_tasks" not in self._stubs:
+            self._stubs["batch_delete_tasks"] = self._logged_channel.unary_unary(
+                "/google.cloud.tasks.v2.CloudTasks/BatchDeleteTasks",
+                request_serializer=cloudtasks.BatchDeleteTasksRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["batch_delete_tasks"]
+
+    @property
     def run_task(self) -> Callable[[cloudtasks.RunTaskRequest], Awaitable[task.Task]]:
         r"""Return a callable for the run task method over gRPC.
 
@@ -860,10 +955,6 @@ class CloudTasksGrpcAsyncIOTransport(CloudTasksTransport):
         example, [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] can
         be used to retry a failed task after a fix has been made or to
         manually force a task to be dispatched now.
-
-        The dispatched task is returned. That is, the task that is
-        returned contains the [status][Task.status] after the task is
-        dispatched but before the task is received by its target.
 
         If Cloud Tasks receives a successful response from the task's
         target, then the task will be deleted; otherwise the task's
@@ -894,6 +985,69 @@ class CloudTasksGrpcAsyncIOTransport(CloudTasksTransport):
                 response_deserializer=task.Task.deserialize,
             )
         return self._stubs["run_task"]
+
+    @property
+    def update_cmek_config(
+        self,
+    ) -> Callable[
+        [cloudtasks.UpdateCmekConfigRequest], Awaitable[gct_cmek_config.CmekConfig]
+    ]:
+        r"""Return a callable for the update cmek config method over gRPC.
+
+        Creates or Updates a CMEK config.
+
+        Updates the Customer Managed Encryption Key associated
+        with the Cloud Tasks location (Creates if the key does
+        not already exist). All new tasks created in the
+        location will be encrypted at-rest with the KMS-key
+        provided in the config.
+
+        Returns:
+            Callable[[~.UpdateCmekConfigRequest],
+                    Awaitable[~.CmekConfig]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_cmek_config" not in self._stubs:
+            self._stubs["update_cmek_config"] = self._logged_channel.unary_unary(
+                "/google.cloud.tasks.v2.CloudTasks/UpdateCmekConfig",
+                request_serializer=cloudtasks.UpdateCmekConfigRequest.serialize,
+                response_deserializer=gct_cmek_config.CmekConfig.deserialize,
+            )
+        return self._stubs["update_cmek_config"]
+
+    @property
+    def get_cmek_config(
+        self,
+    ) -> Callable[[cloudtasks.GetCmekConfigRequest], Awaitable[cmek_config.CmekConfig]]:
+        r"""Return a callable for the get cmek config method over gRPC.
+
+        Gets the CMEK config.
+
+        Gets the Customer Managed Encryption Key configured with the
+        Cloud Tasks location. By default there is no kms_key configured.
+
+        Returns:
+            Callable[[~.GetCmekConfigRequest],
+                    Awaitable[~.CmekConfig]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_cmek_config" not in self._stubs:
+            self._stubs["get_cmek_config"] = self._logged_channel.unary_unary(
+                "/google.cloud.tasks.v2.CloudTasks/GetCmekConfig",
+                request_serializer=cloudtasks.GetCmekConfigRequest.serialize,
+                response_deserializer=cmek_config.CmekConfig.deserialize,
+            )
+        return self._stubs["get_cmek_config"]
 
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
@@ -1038,6 +1192,11 @@ class CloudTasksGrpcAsyncIOTransport(CloudTasksTransport):
                 default_timeout=20.0,
                 client_info=client_info,
             ),
+            self.batch_create_tasks: self._wrap_method(
+                self.batch_create_tasks,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_task: self._wrap_method(
                 self.delete_task,
                 default_retry=retries.AsyncRetry(
@@ -1053,8 +1212,23 @@ class CloudTasksGrpcAsyncIOTransport(CloudTasksTransport):
                 default_timeout=20.0,
                 client_info=client_info,
             ),
+            self.batch_delete_tasks: self._wrap_method(
+                self.batch_delete_tasks,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.run_task: self._wrap_method(
                 self.run_task,
+                default_timeout=20.0,
+                client_info=client_info,
+            ),
+            self.update_cmek_config: self._wrap_method(
+                self.update_cmek_config,
+                default_timeout=20.0,
+                client_info=client_info,
+            ),
+            self.get_cmek_config: self._wrap_method(
+                self.get_cmek_config,
                 default_timeout=20.0,
                 client_info=client_info,
             ),
@@ -1065,6 +1239,11 @@ class CloudTasksGrpcAsyncIOTransport(CloudTasksTransport):
             ),
             self.list_locations: self._wrap_method(
                 self.list_locations,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_operation: self._wrap_method(
+                self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -1081,6 +1260,23 @@ class CloudTasksGrpcAsyncIOTransport(CloudTasksTransport):
     @property
     def kind(self) -> str:
         return "grpc_asyncio"
+
+    @property
+    def get_operation(
+        self,
+    ) -> Callable[[operations_pb2.GetOperationRequest], operations_pb2.Operation]:
+        r"""Return a callable for the get_operation method over gRPC."""
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_operation" not in self._stubs:
+            self._stubs["get_operation"] = self._logged_channel.unary_unary(
+                "/google.longrunning.Operations/GetOperation",
+                request_serializer=operations_pb2.GetOperationRequest.SerializeToString,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["get_operation"]
 
     @property
     def list_locations(

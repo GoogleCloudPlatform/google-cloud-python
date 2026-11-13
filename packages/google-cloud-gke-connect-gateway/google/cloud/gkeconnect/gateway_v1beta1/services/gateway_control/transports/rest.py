@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.gkeconnect.gateway_v1beta1._compat import transcode_request
 from google.cloud.gkeconnect.gateway_v1beta1.types import control
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -292,17 +293,18 @@ class GatewayControlRestTransport(_BaseGatewayControlRestTransport):
             """
 
             http_options = _BaseGatewayControlRestTransport._BaseGenerateCredentials._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_credentials(
                 request, metadata
             )
-            transcoded_request = _BaseGatewayControlRestTransport._BaseGenerateCredentials._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGatewayControlRestTransport._BaseGenerateCredentials._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGatewayControlRestTransport._BaseGenerateCredentials,
+                    "_BaseGenerateCredentials__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

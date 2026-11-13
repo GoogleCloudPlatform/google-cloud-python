@@ -17,8 +17,8 @@ from __future__ import annotations
 from typing import List
 from unittest import mock
 
-from IPython.testing import globalipapp
 import pytest
+from IPython.testing import globalipapp
 
 
 @pytest.mark.parametrize(

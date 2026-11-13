@@ -51,6 +51,16 @@ from test__helpers import (
 from google.cloud import firestore_v1 as firestore
 from google.cloud.firestore_v1.base_query import And, FieldFilter, Or
 from google.cloud.firestore_v1.base_vector_query import DistanceMeasure
+from google.cloud.firestore_v1.bson import (
+    BSONBinary,
+    BSONDecimal128,
+    BSONInt32,
+    BSONMaxKey,
+    BSONMinKey,
+    BSONObjectId,
+    BSONRegex,
+    BSONTimestamp,
+)
 from google.cloud.firestore_v1.query_profile import (
     ExecutionStats,
     ExplainMetrics,
@@ -1243,6 +1253,75 @@ async def test_list_collections_with_read_time(client, cleanup, database):
     ) == {
         document_ref1,
         document_ref2,
+    }
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("database", [FIRESTORE_ENTERPRISE_DB], indirect=True)
+async def test_async_bson_document_read_and_write(client, cleanup, database):
+    """Test async read and write operations for BSON types on Enterprise DB."""
+    collection_id = "async_bson_type_read_write_" + UNIQUE_RESOURCE_ID
+    doc_ref = client.collection(collection_id).document("bson_doc")
+    cleanup(doc_ref.delete)
+
+    bson_payload = {
+        "user_id": BSONObjectId("507f191e810c19729de860ea"),
+        "min_key": BSONMinKey(),
+        "max_key": BSONMaxKey(),
+        "int32_val": BSONInt32(42),
+        "binary_val_sub0": b"hello",
+        "binary_val_sub128": BSONBinary(b"world", subtype=128),
+        "timestamp_val": BSONTimestamp(1700000000, 1),
+        "regex_val": BSONRegex("^hello.*$", options="i"),
+        "decimal128_val": BSONDecimal128("123.45"),
+    }
+
+    await doc_ref.set(bson_payload)
+
+    snapshot = await doc_ref.get()
+    assert snapshot.exists
+    assert snapshot.to_dict() == bson_payload
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("database", [FIRESTORE_ENTERPRISE_DB], indirect=True)
+async def test_async_bson_regex_invalid_options(client, cleanup, database):
+    """Test async write operations for BSONRegex with invalid options against backend."""
+    collection_id = "async_bson_regex_invalid_" + UNIQUE_RESOURCE_ID
+    doc_ref = client.collection(collection_id).document("invalid_regex")
+    cleanup(doc_ref.delete)
+
+    # Backend enforces supported BSON regex flags ('i', 'm', 's', 'u', 'x')
+    # and rejects unsupported options (e.g. 'l') with InvalidArgument.
+    with pytest.raises(InvalidArgument) as exc_info:
+        await doc_ref.set({"regex_val": BSONRegex("hello", options="l")})
+    assert "Invalid regex option" in exc_info.value.message
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("database", [FIRESTORE_ENTERPRISE_DB], indirect=True)
+async def test_async_bson_decimal128_special_values(client, cleanup, database):
+    """Test async write and read operations for BSONDecimal128 special values against backend."""
+    collection_id = "async_bson_decimal128_special_" + UNIQUE_RESOURCE_ID
+    doc_ref = client.collection(collection_id).document("special_decimals")
+    cleanup(doc_ref.delete)
+
+    # Firestore backend accepts "inf", "-inf", and "NaN", automatically
+    # normalizing them to "Infinity", "-Infinity", and "NaN" upon storage.
+    await doc_ref.set(
+        {
+            "inf_val": BSONDecimal128("inf"),
+            "neg_inf_val": BSONDecimal128("-inf"),
+            "nan_val": BSONDecimal128("NaN"),
+        }
+    )
+
+    snapshot = await doc_ref.get()
+    assert snapshot.exists
+    assert snapshot.to_dict() == {
+        "inf_val": BSONDecimal128("Infinity"),
+        "neg_inf_val": BSONDecimal128("-Infinity"),
+        "nan_val": BSONDecimal128("NaN"),
     }
 
 
@@ -3708,3 +3787,41 @@ async def test_query_in_transaction_with_read_time(client, cleanup, database):
         await in_transaction(transaction)
         # make sure we didn't skip assertions in inner function
         assert inner_fn_ran is True
+
+
+@pytest.mark.skip(reason="Temporarily skipped. Not yet in production.")
+@pytest.mark.parametrize("database", [FIRESTORE_ENTERPRISE_DB], indirect=True)
+async def test_large_document_standard_writes_async(client, cleanup, database):
+    """Test standard write and read operations for 5MB document on Enterprise DB (async)."""
+    collection_id = "large_docs_async_" + UNIQUE_RESOURCE_ID
+    doc_ref = client.collection(collection_id).document("large_doc")
+    cleanup(doc_ref.delete)
+
+    large_payload = "c" * (5 * 1024 * 1024)
+    await doc_ref.set({"payload": large_payload})
+
+    snapshot = await doc_ref.get()
+    assert snapshot.exists
+    assert snapshot.to_dict() == {"payload": large_payload}
+
+
+@pytest.mark.skip(reason="Temporarily skipped. Not yet in production.")
+@pytest.mark.parametrize("method", ["execute", "stream"])
+@pytest.mark.parametrize("database", [FIRESTORE_ENTERPRISE_DB], indirect=True)
+async def test_large_document_pipeline_async(client, cleanup, database, method):
+    """Test async pipeline execution over 5MB document on Enterprise DB."""
+    collection_id = "large_pipeline_async_" + UNIQUE_RESOURCE_ID
+    col_ref = client.collection(collection_id)
+    doc_ref = col_ref.document("large_doc")
+    cleanup(doc_ref.delete)
+
+    large_payload = "d" * (5 * 1024 * 1024)
+    await doc_ref.set({"payload": large_payload})
+
+    pipeline = client.pipeline().collection(collection_id)
+    if method == "execute":
+        results = await pipeline.execute()
+    else:
+        results = [doc async for doc in pipeline.stream()]
+
+    assert [doc.data() for doc in results] == [{"payload": large_payload}]

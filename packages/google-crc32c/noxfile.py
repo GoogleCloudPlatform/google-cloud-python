@@ -29,7 +29,6 @@ UNIT_TEST_PYTHON_VERSIONS = ["3.10", "3.11", "3.12", "3.13", "3.14", "3.15"]
 ALL_PYTHON = list(UNIT_TEST_PYTHON_VERSIONS)
 
 FLAKE8_VERSION = "flake8==6.1.0"
-BLACK_VERSION = "black[jupyter]==23.7.0"
 RUFF_VERSION = "ruff==0.14.14"
 ISORT_VERSION = "isort==5.11.0"
 LINT_PATHS = ["src", "tests", "noxfile.py", "setup.py"]
@@ -41,6 +40,7 @@ nox.options.sessions = [
     "blacken",
     "format",
     "lint_setup_py",
+    "cover",
     "mypy",
     "prerelease_deps",
     "core_deps_from_source",
@@ -67,11 +67,13 @@ def build_libcrc32c(session):
 
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
 def check(session):
-    session.install("pytest")
+    session.install("pytest", "pytest-cov")
     session.install("--no-index", f"--find-links={HERE}/wheels", "google-crc32c")
 
     # Run py.test against the unit tests.
-    session.run("py.test", "tests")
+    session.run(
+        "pytest", "--cov=google_crc32c", "--cov=tests", "tests", *session.posargs
+    )
     session.run("python", f"{HERE}/scripts/check_crc32c_extension.py", *session.posargs)
 
 
@@ -94,10 +96,24 @@ def lint(session):
     Returns a failure if the linters find linting errors or sufficiently
     serious code quality issues.
     """
-    session.install(FLAKE8_VERSION, BLACK_VERSION)
+    session.install(FLAKE8_VERSION, RUFF_VERSION)
+    # 1. Check imports
     session.run(
-        "black",
+        "ruff",
+        "check",
+        "--select",
+        "I",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+        "--line-length=88",
+        *LINT_PATHS,
+    )
+    # 2. Check formatting
+    session.run(
+        "ruff",
+        "format",
         "--check",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+        "--line-length=88",
         *LINT_PATHS,
     )
     session.run("flake8", *LINT_PATHS)
@@ -105,10 +121,18 @@ def lint(session):
 
 @nox.session(python=DEFAULT_PYTHON_VERSION)
 def blacken(session):
-    """Run black. Format code to uniform standard."""
-    session.install(BLACK_VERSION)
+    """(Deprecated) Legacy session. Please use 'nox -s format'."""
+    session.log(
+        "WARNING: The 'blacken' session is deprecated and will be removed in a future release. Please use 'nox -s format' in the future."
+    )
+
+    # Just run the ruff formatter (keeping legacy behavior of only formatting, not sorting imports)
+    session.install(RUFF_VERSION)
     session.run(
-        "black",
+        "ruff",
+        "format",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+        "--line-length=88",
         *LINT_PATHS,
     )
 
@@ -153,9 +177,9 @@ def lint_setup_py(session):
 @nox.session(python=DEFAULT_PYTHON_VERSION)
 def prerelease_deps(session):
     """Run all tests with prerelease versions of dependencies installed."""
-    # TODO(https://github.com/googleapis/google-cloud-python/issues/16014):
-    # Add prerelease deps tests
-    session.skip("prerelease deps tests are not yet supported")
+    session.skip(
+        "prerelease_deps session is not applicable as google-crc32c has no runtime dependencies"
+    )
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION)
@@ -163,15 +187,30 @@ def core_deps_from_source(session):
     """Run all tests with core dependencies installed from source
     rather than pulling the dependencies from PyPI.
     """
-    # TODO(https://github.com/googleapis/google-cloud-python/issues/16014):
-    # Add core deps from source tests
-    session.skip("Core deps from source tests are not yet supported")
+    session.skip(
+        "core_deps_from_source session is not applicable as google-crc32c has no core dependencies"
+    )
 
 
-@nox.session(python=ALL_PYTHON)
+@nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
 def unit(session):
     """Run all unit tests."""
-    session.skip("Unit tests are not supported")
+    session.env["CRC32C_PURE_PYTHON"] = "1"
+    session.env["PYTHONPATH"] = "src"
+    session.install("pytest", "pytest-cov")
+    session.run("pytest", "--cov=src/google_crc32c", "tests", *session.posargs)
+
+
+@nox.session(python=DEFAULT_PYTHON_VERSION)
+def cover(session):
+    """Run the final coverage report.
+
+    This outputs the coverage report aggregating coverage from the unit
+    test runs (not system test runs), and then erases coverage data.
+    """
+    session.install("coverage", "pytest-cov")
+    session.run("coverage", "report", "--show-missing", "--fail-under=100")
+    session.run("coverage", "erase")
 
 
 @nox.session(python="3.10")

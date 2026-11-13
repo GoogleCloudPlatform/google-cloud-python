@@ -20,7 +20,10 @@ from typing import MutableMapping, MutableSequence
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
-from google.cloud.discoveryengine_v1.types import common
+from google.cloud.discoveryengine_v1.types import (
+    agent_gateway_setting as gcd_agent_gateway_setting,
+)
+from google.cloud.discoveryengine_v1.types import cmek_config_service, common, logging
 
 __protobuf__ = proto.module(
     package="google.cloud.discoveryengine.v1",
@@ -131,10 +134,200 @@ class Engine(proto.Message):
         common_config (google.cloud.discoveryengine_v1.types.Engine.CommonConfig):
             Common config spec that specifies the
             metadata of the engine.
+        knowledge_graph_config (google.cloud.discoveryengine_v1.types.Engine.KnowledgeGraphConfig):
+            Optional. Configurations for the Knowledge Graph. Only
+            applicable if
+            [solution_type][google.cloud.discoveryengine.v1.Engine.solution_type]
+            is
+            [SOLUTION_TYPE_SEARCH][google.cloud.discoveryengine.v1.SolutionType.SOLUTION_TYPE_SEARCH].
+        app_type (google.cloud.discoveryengine_v1.types.Engine.AppType):
+            Optional. Immutable. This the application
+            type which this engine resource represents.
+            NOTE: this is a new concept independ of existing
+            industry vertical or solution type.
         disable_analytics (bool):
             Optional. Whether to disable analytics for
             searches performed on this engine.
+        session_config (google.cloud.discoveryengine_v1.types.SessionConfig):
+            Optional. Non-empty default. Session config
+            for the engine.
+        features (MutableMapping[str, google.cloud.discoveryengine_v1.types.Engine.FeatureState]):
+            Optional. Feature config for the engine to opt in or opt out
+            of features. Supported keys:
+
+            - ``*``: all features, if it's present, all other feature
+              state settings are ignored.
+            - ``agent-gallery``
+            - ``no-code-agent-builder``
+            - ``prompt-gallery``
+            - ``model-selector``
+            - ``notebook-lm``
+            - ``people-search``
+            - ``people-search-org-chart``
+            - ``bi-directional-audio``
+            - ``speech-to-text``
+            - ``feedback``
+            - ``session-sharing``
+            - ``personalization-memory``
+            - ``personalization-suggested-highlights``
+            - ``mobile-app-access``
+            - ``disable-agent-sharing``
+            - ``disable-image-generation``
+            - ``disable-video-generation``
+            - ``disable-onedrive-upload``
+            - ``disable-talk-to-content``
+            - ``disable-google-drive-upload``
+            - ``disable-welcome-emails``
+            - ``disable-canvas``
+            - ``canvas-workspace``
+            - ``canvas-app-builder``
+            - ``skills``
+            - ``skill-sharing``
+            - ``skill-sharing-without-admin-approval``
+            - ``disable-projects``
+            - ``sobi``
+            - ``enable-end-user-sharing-with-groups``
+            - ``single-agent-orchestration``
+            - ``multi-agent-orchestration``
+            - ``cross-product-intelligence``
+            - ``workflow-agents``
+            - ``in-app-notifications``
+            - ``code-extraction``
+        cmek_config (google.cloud.discoveryengine_v1.types.CmekConfig):
+            Output only. CMEK-related information for the
+            Engine.
+        configurable_billing_approach (google.cloud.discoveryengine_v1.types.Engine.ConfigurableBillingApproach):
+            Optional. Configuration for configurable
+            billing approach.
+        model_configs (MutableMapping[str, google.cloud.discoveryengine_v1.types.Engine.ModelState]):
+            Optional. Maps a model name to its specific configuration
+            for this engine. This allows admin users to turn on/off
+            individual models. This only stores models whose states are
+            overridden by the admin.
+
+            When the state is unspecified, or model_configs is empty for
+            this model, the system will decide if this model should be
+            available or not based on the default configuration. For
+            example, a preview model should be disabled by default if
+            the admin has not chosen to enable it.
+        observability_config (google.cloud.discoveryengine_v1.types.ObservabilityConfig):
+            Optional. Observability config for the
+            engine.
+        connector_tenant_info (MutableMapping[str, str]):
+            Optional. Maps a connector ID (e.g.,
+            "hybrid-github", "shopify") to tenant-specific
+            information required for that connector. The
+            structure of the tenant information string is
+            connector-dependent.
+        agent_gateway_setting (google.cloud.discoveryengine_v1.types.AgentGatewaySetting):
+            Optional. The agent gateway setting for the
+            engine.
+        marketplace_agent_visibility (google.cloud.discoveryengine_v1.types.Engine.MarketplaceAgentVisibility):
+            Optional. The visibility of marketplace
+            agents in the agent gallery.
+        procurement_contact_emails (MutableSequence[str]):
+            Optional. The emails of the procurement
+            contacts.
+        associated_agent_registry (str):
+            Output only. The Agent registry containing
+            the agents, MCP servers and tools associated
+            with this engine. Derived server-side from the
+            linked Agent Gateway's registry.
     """
+
+    class AppType(proto.Enum):
+        r"""The app of the engine.
+
+        Values:
+            APP_TYPE_UNSPECIFIED (0):
+                All non specified apps.
+            APP_TYPE_INTRANET (1):
+                App type for intranet search and Agentspace.
+        """
+
+        APP_TYPE_UNSPECIFIED = 0
+        APP_TYPE_INTRANET = 1
+
+    class FeatureState(proto.Enum):
+        r"""The state of the feature for the engine.
+
+        Values:
+            FEATURE_STATE_UNSPECIFIED (0):
+                The feature state is unspecified.
+            FEATURE_STATE_ON (1):
+                The feature is turned on to be accessible.
+            FEATURE_STATE_OFF (2):
+                The feature is turned off to be inaccessible.
+        """
+
+        FEATURE_STATE_UNSPECIFIED = 0
+        FEATURE_STATE_ON = 1
+        FEATURE_STATE_OFF = 2
+
+    class ConfigurableBillingApproach(proto.Enum):
+        r"""Configuration for configurable billing approach.
+
+        Values:
+            CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED (0):
+                Default value. For Spark and non-Spark
+                non-configurable billing approach. General
+                pricing model.
+            CONFIGURABLE_BILLING_APPROACH_ENABLED (1):
+                The billing approach follows configurations
+                specified by customer.
+        """
+
+        CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED = 0
+        CONFIGURABLE_BILLING_APPROACH_ENABLED = 1
+
+    class ModelState(proto.Enum):
+        r"""The status of the model for the engine.
+
+        Values:
+            MODEL_STATE_UNSPECIFIED (0):
+                The model state is unspecified.
+            MODEL_ENABLED (1):
+                The model is enabled by admin.
+            MODEL_DISABLED (2):
+                The model is disabled by admin.
+        """
+
+        MODEL_STATE_UNSPECIFIED = 0
+        MODEL_ENABLED = 1
+        MODEL_DISABLED = 2
+
+    class MarketplaceAgentVisibility(proto.Enum):
+        r"""Represents which marketplace agents are visible to any users
+        in agent gallery.
+
+        Values:
+            MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED (0):
+                Defaults to ``MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED``.
+            SHOW_AVAILABLE_AGENTS_ONLY (1):
+                Only agents that are currently available for
+                use by the user are visible.
+            SHOW_AGENTS_ALREADY_INTEGRATED (2):
+                Show marketplace agents that the user does not yet have
+                access to but are integrated into the engine. This level
+                also includes all agents visible with
+                ``SHOW_AVAILABLE_AGENTS_ONLY``.
+            SHOW_AGENTS_ALREADY_PURCHASED (3):
+                Show all agents visible with
+                ``SHOW_AGENTS_ALREADY_INTEGRATED``, plus agents that have
+                already been purchased by the project/organization, even if
+                they are not currently integrated into the engine.
+            SHOW_ALL_AGENTS (4):
+                All agents in the marketplace are visible,
+                regardless of access or purchase status. This
+                level encompasses all agents shown in the
+                previous levels.
+        """
+
+        MARKETPLACE_AGENT_VISIBILITY_UNSPECIFIED = 0
+        SHOW_AVAILABLE_AGENTS_ONLY = 1
+        SHOW_AGENTS_ALREADY_INTEGRATED = 2
+        SHOW_AGENTS_ALREADY_PURCHASED = 3
+        SHOW_ALL_AGENTS = 4
 
     class SearchEngineConfig(proto.Message):
         r"""Configurations for a Search Engine.
@@ -149,6 +342,16 @@ class Engine(proto.Message):
                 Defaults to
                 [SearchTier.SEARCH_TIER_STANDARD][google.cloud.discoveryengine.v1.SearchTier.SEARCH_TIER_STANDARD]
                 if not specified.
+            required_subscription_tier (google.cloud.discoveryengine_v1.types.SubscriptionTier):
+                Optional. The required subscription tier of this engine.
+
+                If the required subscription tier is search, user with
+                higher license tier like assist can still access the
+                standalone app associated with this engine.
+
+                Web grounding feature is only available on the app if it is
+                set as
+                [SubscriptionTier.SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT][google.cloud.discoveryengine.v1.SubscriptionTier.SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT].
             search_add_ons (MutableSequence[google.cloud.discoveryengine_v1.types.SearchAddOn]):
                 The add-on that this search engine enables.
         """
@@ -157,6 +360,11 @@ class Engine(proto.Message):
             proto.ENUM,
             number=1,
             enum=common.SearchTier,
+        )
+        required_subscription_tier: common.SubscriptionTier = proto.Field(
+            proto.ENUM,
+            number=3,
+            enum=common.SubscriptionTier,
         )
         search_add_ons: MutableSequence[common.SearchAddOn] = proto.RepeatedField(
             proto.ENUM,
@@ -484,6 +692,88 @@ class Engine(proto.Message):
             number=1,
         )
 
+    class KnowledgeGraphConfig(proto.Message):
+        r"""Configuration message for the Knowledge Graph.
+
+        Attributes:
+            enable_cloud_knowledge_graph (bool):
+                Whether to enable the Cloud Knowledge Graph
+                for the engine.
+                Defaults to false if not specified.
+            cloud_knowledge_graph_types (MutableSequence[str]):
+                Specify entity types to support.
+            enable_private_knowledge_graph (bool):
+                Whether to enable the Private Knowledge Graph
+                for the engine.
+                Defaults to false if not specified.
+            private_knowledge_graph_types (MutableSequence[str]):
+                Specify entity types to support.
+            feature_config (google.cloud.discoveryengine_v1.types.Engine.KnowledgeGraphConfig.FeatureConfig):
+                Optional. Feature config for the Knowledge
+                Graph.
+        """
+
+        class FeatureConfig(proto.Message):
+            r"""Feature config for the Knowledge Graph.
+
+            Attributes:
+                disable_private_kg_query_understanding (bool):
+                    Whether to disable the private KG query
+                    understanding for the engine.
+                    Defaults to false if not specified.
+                disable_private_kg_enrichment (bool):
+                    Whether to disable the private KG enrichment
+                    for the engine.
+                    Defaults to false if not specified.
+                disable_private_kg_auto_complete (bool):
+                    Whether to disable the private KG auto
+                    complete for the engine.
+                    Defaults to false if not specified.
+                disable_private_kg_query_ui_chips (bool):
+                    Whether to disable the private KG for query
+                    UI chips.
+                    Defaults to false if not specified.
+            """
+
+            disable_private_kg_query_understanding: bool = proto.Field(
+                proto.BOOL,
+                number=1,
+            )
+            disable_private_kg_enrichment: bool = proto.Field(
+                proto.BOOL,
+                number=2,
+            )
+            disable_private_kg_auto_complete: bool = proto.Field(
+                proto.BOOL,
+                number=3,
+            )
+            disable_private_kg_query_ui_chips: bool = proto.Field(
+                proto.BOOL,
+                number=4,
+            )
+
+        enable_cloud_knowledge_graph: bool = proto.Field(
+            proto.BOOL,
+            number=1,
+        )
+        cloud_knowledge_graph_types: MutableSequence[str] = proto.RepeatedField(
+            proto.STRING,
+            number=2,
+        )
+        enable_private_knowledge_graph: bool = proto.Field(
+            proto.BOOL,
+            number=3,
+        )
+        private_knowledge_graph_types: MutableSequence[str] = proto.RepeatedField(
+            proto.STRING,
+            number=4,
+        )
+        feature_config: "Engine.KnowledgeGraphConfig.FeatureConfig" = proto.Field(
+            proto.MESSAGE,
+            number=5,
+            message="Engine.KnowledgeGraphConfig.FeatureConfig",
+        )
+
     class ChatEngineMetadata(proto.Message):
         r"""Additional information of a Chat Engine.
         Fields in this message are output only.
@@ -563,9 +853,74 @@ class Engine(proto.Message):
         number=15,
         message=CommonConfig,
     )
+    knowledge_graph_config: KnowledgeGraphConfig = proto.Field(
+        proto.MESSAGE,
+        number=23,
+        message=KnowledgeGraphConfig,
+    )
+    app_type: AppType = proto.Field(
+        proto.ENUM,
+        number=24,
+        enum=AppType,
+    )
     disable_analytics: bool = proto.Field(
         proto.BOOL,
         number=26,
+    )
+    session_config: common.SessionConfig = proto.Field(
+        proto.MESSAGE,
+        number=29,
+        message=common.SessionConfig,
+    )
+    features: MutableMapping[str, FeatureState] = proto.MapField(
+        proto.STRING,
+        proto.ENUM,
+        number=30,
+        enum=FeatureState,
+    )
+    cmek_config: cmek_config_service.CmekConfig = proto.Field(
+        proto.MESSAGE,
+        number=32,
+        message=cmek_config_service.CmekConfig,
+    )
+    configurable_billing_approach: ConfigurableBillingApproach = proto.Field(
+        proto.ENUM,
+        number=36,
+        enum=ConfigurableBillingApproach,
+    )
+    model_configs: MutableMapping[str, ModelState] = proto.MapField(
+        proto.STRING,
+        proto.ENUM,
+        number=37,
+        enum=ModelState,
+    )
+    observability_config: logging.ObservabilityConfig = proto.Field(
+        proto.MESSAGE,
+        number=39,
+        message=logging.ObservabilityConfig,
+    )
+    connector_tenant_info: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=42,
+    )
+    agent_gateway_setting: gcd_agent_gateway_setting.AgentGatewaySetting = proto.Field(
+        proto.MESSAGE,
+        number=43,
+        message=gcd_agent_gateway_setting.AgentGatewaySetting,
+    )
+    marketplace_agent_visibility: MarketplaceAgentVisibility = proto.Field(
+        proto.ENUM,
+        number=44,
+        enum=MarketplaceAgentVisibility,
+    )
+    procurement_contact_emails: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=45,
+    )
+    associated_agent_registry: str = proto.Field(
+        proto.STRING,
+        number=50,
     )
 
 

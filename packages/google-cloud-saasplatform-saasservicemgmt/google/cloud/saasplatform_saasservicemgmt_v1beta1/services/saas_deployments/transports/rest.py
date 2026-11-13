@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.saasplatform_saasservicemgmt_v1beta1._compat import transcode_request
 from google.cloud.saasplatform_saasservicemgmt_v1beta1.types import (
     deployments_resources,
     deployments_service,
@@ -1777,19 +1778,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseCreateRelease._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_release(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseCreateRelease._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasDeploymentsRestTransport._BaseCreateRelease._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseCreateRelease._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseCreateRelease,
+                    "_BaseCreateRelease__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1930,19 +1928,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseCreateSaas._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_saas(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseCreateSaas._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasDeploymentsRestTransport._BaseCreateSaas._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseCreateSaas._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseCreateSaas,
+                    "_BaseCreateSaas__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2094,19 +2089,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseCreateTenant._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_tenant(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseCreateTenant._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasDeploymentsRestTransport._BaseCreateTenant._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseCreateTenant._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseCreateTenant,
+                    "_BaseCreateTenant__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2252,19 +2244,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseCreateUnit._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_unit(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseCreateUnit._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasDeploymentsRestTransport._BaseCreateUnit._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseCreateUnit._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseCreateUnit,
+                    "_BaseCreateUnit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2407,21 +2396,18 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             """
 
             http_options = _BaseSaasDeploymentsRestTransport._BaseCreateUnitKind._get_http_options()
-
             request, metadata = self._interceptor.pre_create_unit_kind(
                 request, metadata
             )
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseCreateUnitKind._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasDeploymentsRestTransport._BaseCreateUnitKind._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseCreateUnitKind._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseCreateUnitKind,
+                    "_BaseCreateUnitKind__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2575,21 +2561,18 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             """
 
             http_options = _BaseSaasDeploymentsRestTransport._BaseCreateUnitOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_create_unit_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseCreateUnitOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasDeploymentsRestTransport._BaseCreateUnitOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseCreateUnitOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseCreateUnitOperation,
+                    "_BaseCreateUnitOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2725,15 +2708,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseDeleteRelease._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_release(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseDeleteRelease._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseDeleteRelease._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseDeleteRelease,
+                    "_BaseDeleteRelease__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2832,15 +2816,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseDeleteSaas._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_saas(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseDeleteSaas._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseDeleteSaas._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseDeleteSaas,
+                    "_BaseDeleteSaas__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2939,15 +2924,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseDeleteTenant._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_tenant(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseDeleteTenant._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseDeleteTenant._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseDeleteTenant,
+                    "_BaseDeleteTenant__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3046,15 +3032,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseDeleteUnit._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_unit(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseDeleteUnit._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseDeleteUnit._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseDeleteUnit,
+                    "_BaseDeleteUnit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3151,17 +3138,18 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             """
 
             http_options = _BaseSaasDeploymentsRestTransport._BaseDeleteUnitKind._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_unit_kind(
                 request, metadata
             )
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseDeleteUnitKind._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseDeleteUnitKind._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseDeleteUnitKind,
+                    "_BaseDeleteUnitKind__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3259,17 +3247,18 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             """
 
             http_options = _BaseSaasDeploymentsRestTransport._BaseDeleteUnitOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_unit_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseDeleteUnitOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseDeleteUnitOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseDeleteUnitOperation,
+                    "_BaseDeleteUnitOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3378,15 +3367,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseGetRelease._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_release(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseGetRelease._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseGetRelease._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseGetRelease,
+                    "_BaseGetRelease__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3525,19 +3515,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseGetSaas._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_saas(request, metadata)
-            transcoded_request = (
-                _BaseSaasDeploymentsRestTransport._BaseGetSaas._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSaasDeploymentsRestTransport._BaseGetSaas._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseGetSaas,
+                    "_BaseGetSaas__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3687,17 +3674,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseGetTenant._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_tenant(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseGetTenant._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSaasDeploymentsRestTransport._BaseGetTenant._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseGetTenant,
+                    "_BaseGetTenant__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3841,19 +3827,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseGetUnit._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_unit(request, metadata)
-            transcoded_request = (
-                _BaseSaasDeploymentsRestTransport._BaseGetUnit._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSaasDeploymentsRestTransport._BaseGetUnit._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseGetUnit,
+                    "_BaseGetUnit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3996,15 +3979,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseGetUnitKind._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_unit_kind(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseGetUnitKind._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseGetUnitKind._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseGetUnitKind,
+                    "_BaseGetUnitKind__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4155,17 +4139,18 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             """
 
             http_options = _BaseSaasDeploymentsRestTransport._BaseGetUnitOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_unit_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseGetUnitOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseGetUnitOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseGetUnitOperation,
+                    "_BaseGetUnitOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4306,15 +4291,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseListReleases._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_releases(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseListReleases._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseListReleases._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseListReleases,
+                    "_BaseListReleases__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4455,19 +4441,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseListSaas._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_saas(request, metadata)
-            transcoded_request = (
-                _BaseSaasDeploymentsRestTransport._BaseListSaas._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSaasDeploymentsRestTransport._BaseListSaas._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseListSaas,
+                    "_BaseListSaas__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4608,15 +4591,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseListTenants._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_tenants(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseListTenants._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseListTenants._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseListTenants,
+                    "_BaseListTenants__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4757,15 +4741,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseListUnitKinds._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_unit_kinds(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseListUnitKinds._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseListUnitKinds._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseListUnitKinds,
+                    "_BaseListUnitKinds__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4905,17 +4890,18 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             """
 
             http_options = _BaseSaasDeploymentsRestTransport._BaseListUnitOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_unit_operations(
                 request, metadata
             )
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseListUnitOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseListUnitOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseListUnitOperations,
+                    "_BaseListUnitOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5056,17 +5042,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseListUnits._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_units(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseListUnits._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSaasDeploymentsRestTransport._BaseListUnits._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseListUnits,
+                    "_BaseListUnits__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5212,19 +5197,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseUpdateRelease._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_release(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseUpdateRelease._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasDeploymentsRestTransport._BaseUpdateRelease._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseUpdateRelease._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseUpdateRelease,
+                    "_BaseUpdateRelease__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5365,19 +5347,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseUpdateSaas._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_saas(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseUpdateSaas._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasDeploymentsRestTransport._BaseUpdateSaas._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseUpdateSaas._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseUpdateSaas,
+                    "_BaseUpdateSaas__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5529,19 +5508,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseUpdateTenant._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_tenant(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseUpdateTenant._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasDeploymentsRestTransport._BaseUpdateTenant._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseUpdateTenant._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseUpdateTenant,
+                    "_BaseUpdateTenant__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5687,19 +5663,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseUpdateUnit._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_unit(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseUpdateUnit._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasDeploymentsRestTransport._BaseUpdateUnit._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseUpdateUnit._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseUpdateUnit,
+                    "_BaseUpdateUnit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5842,21 +5815,18 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             """
 
             http_options = _BaseSaasDeploymentsRestTransport._BaseUpdateUnitKind._get_http_options()
-
             request, metadata = self._interceptor.pre_update_unit_kind(
                 request, metadata
             )
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseUpdateUnitKind._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasDeploymentsRestTransport._BaseUpdateUnitKind._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseUpdateUnitKind._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseUpdateUnitKind,
+                    "_BaseUpdateUnitKind__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6010,21 +5980,18 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             """
 
             http_options = _BaseSaasDeploymentsRestTransport._BaseUpdateUnitOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_update_unit_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseUpdateUnitOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSaasDeploymentsRestTransport._BaseUpdateUnitOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseUpdateUnitOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseUpdateUnitOperation,
+                    "_BaseUpdateUnitOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6447,15 +6414,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6587,15 +6555,16 @@ class SaasDeploymentsRestTransport(_BaseSaasDeploymentsRestTransport):
             http_options = (
                 _BaseSaasDeploymentsRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseSaasDeploymentsRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSaasDeploymentsRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSaasDeploymentsRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -30,6 +30,7 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dlp_v2._compat import transcode_request
 from google.cloud.dlp_v2.types import dlp
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -93,6 +94,14 @@ class DlpServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_create_content_policy(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_content_policy(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_create_deidentify_template(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -153,6 +162,10 @@ class DlpServiceRestInterceptor:
                 logging.log(f"Received request: {request}")
                 return request, metadata
 
+            def pre_delete_content_policy(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
             def pre_delete_deidentify_template(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -202,6 +215,14 @@ class DlpServiceRestInterceptor:
                 return request, metadata
 
             def post_get_connection(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_get_content_policy(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_content_policy(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -317,6 +338,14 @@ class DlpServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_list_content_policies(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_content_policies(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_list_deidentify_templates(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -426,6 +455,14 @@ class DlpServiceRestInterceptor:
                 return request, metadata
 
             def post_update_connection(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_content_policy(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_content_policy(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -570,6 +607,52 @@ class DlpServiceRestInterceptor:
         `post_create_connection` interceptor. The (possibly modified) response returned by
         `post_create_connection` will be passed to
         `post_create_connection_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_create_content_policy(
+        self,
+        request: dlp.CreateContentPolicyRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[dlp.CreateContentPolicyRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for create_content_policy
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DlpService server.
+        """
+        return request, metadata
+
+    def post_create_content_policy(
+        self, response: dlp.ContentPolicy
+    ) -> dlp.ContentPolicy:
+        """Post-rpc interceptor for create_content_policy
+
+        DEPRECATED. Please use the `post_create_content_policy_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DlpService server but before
+        it is returned to user code. This `post_create_content_policy` interceptor runs
+        before the `post_create_content_policy_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_content_policy_with_metadata(
+        self,
+        response: dlp.ContentPolicy,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[dlp.ContentPolicy, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_content_policy
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DlpService server but before it is returned to user code.
+
+        We recommend only using this `post_create_content_policy_with_metadata`
+        interceptor in new development instead of the `post_create_content_policy` interceptor.
+        When both interceptors are used, this `post_create_content_policy_with_metadata` interceptor runs after the
+        `post_create_content_policy` interceptor. The (possibly modified) response returned by
+        `post_create_content_policy` will be passed to
+        `post_create_content_policy_with_metadata`.
         """
         return response, metadata
 
@@ -909,6 +992,18 @@ class DlpServiceRestInterceptor:
         """
         return request, metadata
 
+    def pre_delete_content_policy(
+        self,
+        request: dlp.DeleteContentPolicyRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[dlp.DeleteContentPolicyRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for delete_content_policy
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DlpService server.
+        """
+        return request, metadata
+
     def pre_delete_deidentify_template(
         self,
         request: dlp.DeleteDeidentifyTemplateRequest,
@@ -1118,6 +1213,50 @@ class DlpServiceRestInterceptor:
         `post_get_connection` interceptor. The (possibly modified) response returned by
         `post_get_connection` will be passed to
         `post_get_connection_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_get_content_policy(
+        self,
+        request: dlp.GetContentPolicyRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[dlp.GetContentPolicyRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for get_content_policy
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DlpService server.
+        """
+        return request, metadata
+
+    def post_get_content_policy(self, response: dlp.ContentPolicy) -> dlp.ContentPolicy:
+        """Post-rpc interceptor for get_content_policy
+
+        DEPRECATED. Please use the `post_get_content_policy_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DlpService server but before
+        it is returned to user code. This `post_get_content_policy` interceptor runs
+        before the `post_get_content_policy_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_content_policy_with_metadata(
+        self,
+        response: dlp.ContentPolicy,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[dlp.ContentPolicy, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for get_content_policy
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DlpService server but before it is returned to user code.
+
+        We recommend only using this `post_get_content_policy_with_metadata`
+        interceptor in new development instead of the `post_get_content_policy` interceptor.
+        When both interceptors are used, this `post_get_content_policy_with_metadata` interceptor runs after the
+        `post_get_content_policy` interceptor. The (possibly modified) response returned by
+        `post_get_content_policy` will be passed to
+        `post_get_content_policy_with_metadata`.
         """
         return response, metadata
 
@@ -1768,6 +1907,54 @@ class DlpServiceRestInterceptor:
         `post_list_connections` interceptor. The (possibly modified) response returned by
         `post_list_connections` will be passed to
         `post_list_connections_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_content_policies(
+        self,
+        request: dlp.ListContentPoliciesRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[dlp.ListContentPoliciesRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for list_content_policies
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DlpService server.
+        """
+        return request, metadata
+
+    def post_list_content_policies(
+        self, response: dlp.ListContentPoliciesResponse
+    ) -> dlp.ListContentPoliciesResponse:
+        """Post-rpc interceptor for list_content_policies
+
+        DEPRECATED. Please use the `post_list_content_policies_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DlpService server but before
+        it is returned to user code. This `post_list_content_policies` interceptor runs
+        before the `post_list_content_policies_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_content_policies_with_metadata(
+        self,
+        response: dlp.ListContentPoliciesResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        dlp.ListContentPoliciesResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for list_content_policies
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DlpService server but before it is returned to user code.
+
+        We recommend only using this `post_list_content_policies_with_metadata`
+        interceptor in new development instead of the `post_list_content_policies` interceptor.
+        When both interceptors are used, this `post_list_content_policies_with_metadata` interceptor runs after the
+        `post_list_content_policies` interceptor. The (possibly modified) response returned by
+        `post_list_content_policies` will be passed to
+        `post_list_content_policies_with_metadata`.
         """
         return response, metadata
 
@@ -2439,6 +2626,52 @@ class DlpServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_update_content_policy(
+        self,
+        request: dlp.UpdateContentPolicyRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[dlp.UpdateContentPolicyRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for update_content_policy
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DlpService server.
+        """
+        return request, metadata
+
+    def post_update_content_policy(
+        self, response: dlp.ContentPolicy
+    ) -> dlp.ContentPolicy:
+        """Post-rpc interceptor for update_content_policy
+
+        DEPRECATED. Please use the `post_update_content_policy_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DlpService server but before
+        it is returned to user code. This `post_update_content_policy` interceptor runs
+        before the `post_update_content_policy_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_content_policy_with_metadata(
+        self,
+        response: dlp.ContentPolicy,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[dlp.ContentPolicy, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_content_policy
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DlpService server but before it is returned to user code.
+
+        We recommend only using this `post_update_content_policy_with_metadata`
+        interceptor in new development instead of the `post_update_content_policy` interceptor.
+        When both interceptors are used, this `post_update_content_policy_with_metadata` interceptor runs after the
+        `post_update_content_policy` interceptor. The (possibly modified) response returned by
+        `post_update_content_policy` will be passed to
+        `post_update_content_policy_with_metadata`.
+        """
+        return response, metadata
+
     def pre_update_deidentify_template(
         self,
         request: dlp.UpdateDeidentifyTemplateRequest,
@@ -2691,7 +2924,7 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
     platform that works on text, images, and Google Cloud storage
     repositories. To learn more about concepts and find how-to
     guides see
-    https://cloud.google.com/sensitive-data-protection/docs/.
+    https://docs.cloud.google.com/sensitive-data-protection/docs/.
 
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
@@ -2835,21 +3068,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseActivateJobTrigger._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_activate_job_trigger(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseActivateJobTrigger._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseActivateJobTrigger._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseActivateJobTrigger._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseActivateJobTrigger,
+                    "_BaseActivateJobTrigger__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2984,25 +3214,16 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseCancelDlpJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_dlp_job(request, metadata)
-            transcoded_request = (
-                _BaseDlpServiceRestTransport._BaseCancelDlpJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseDlpServiceRestTransport._BaseCancelDlpJob._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDlpServiceRestTransport._BaseCancelDlpJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseCancelDlpJob,
+                    "_BaseCancelDlpJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3109,21 +3330,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseCreateConnection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_connection(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseCreateConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseCreateConnection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseCreateConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseCreateConnection,
+                    "_BaseCreateConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3203,6 +3421,156 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                 )
             return resp
 
+    class _CreateContentPolicy(
+        _BaseDlpServiceRestTransport._BaseCreateContentPolicy, DlpServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("DlpServiceRestTransport.CreateContentPolicy")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: dlp.CreateContentPolicyRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> dlp.ContentPolicy:
+            r"""Call the create content policy method over HTTP.
+
+            Args:
+                request (~.dlp.CreateContentPolicyRequest):
+                    The request object. Request message for
+                CreateContentPolicy.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.dlp.ContentPolicy:
+                    A policy to apply to content based on
+                its inspection findings.
+
+            """
+
+            http_options = _BaseDlpServiceRestTransport._BaseCreateContentPolicy._get_http_options()
+            request, metadata = self._interceptor.pre_create_content_policy(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseCreateContentPolicy,
+                    "_BaseCreateContentPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.privacy.dlp_v2.DlpServiceClient.CreateContentPolicy",
+                    extra={
+                        "serviceName": "google.privacy.dlp.v2.DlpService",
+                        "rpcName": "CreateContentPolicy",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DlpServiceRestTransport._CreateContentPolicy._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = dlp.ContentPolicy()
+            pb_resp = dlp.ContentPolicy.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_content_policy(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_create_content_policy_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = dlp.ContentPolicy.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.privacy.dlp_v2.DlpServiceClient.create_content_policy",
+                    extra={
+                        "serviceName": "google.privacy.dlp.v2.DlpService",
+                        "rpcName": "CreateContentPolicy",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _CreateDeidentifyTemplate(
         _BaseDlpServiceRestTransport._BaseCreateDeidentifyTemplate, DlpServiceRestStub
     ):
@@ -3260,27 +3628,24 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                         DeidentifyTemplates contains
                     instructions on how to de-identify
                     content. See
-                    https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+                    https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
                     to learn more.
 
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseCreateDeidentifyTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_create_deidentify_template(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseCreateDeidentifyTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseCreateDeidentifyTemplate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseCreateDeidentifyTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseCreateDeidentifyTemplate,
+                    "_BaseCreateDeidentifyTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3419,26 +3784,23 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
 
                 The generated data profiles are retained according to
                 the [data retention policy]
-                (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
+                (https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
 
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseCreateDiscoveryConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_discovery_config(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseCreateDiscoveryConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseCreateDiscoveryConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseCreateDiscoveryConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseCreateDiscoveryConfig,
+                    "_BaseCreateDiscoveryConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3582,25 +3944,16 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseCreateDlpJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_dlp_job(request, metadata)
-            transcoded_request = (
-                _BaseDlpServiceRestTransport._BaseCreateDlpJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseDlpServiceRestTransport._BaseCreateDlpJob._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDlpServiceRestTransport._BaseCreateDlpJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseCreateDlpJob,
+                    "_BaseCreateDlpJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3738,27 +4091,24 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                 data to be detected) to be used anywhere
                 you otherwise would normally specify
                 InspectConfig. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
                 to learn more.
 
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseCreateInspectTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_create_inspect_template(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseCreateInspectTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseCreateInspectTemplate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseCreateInspectTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseCreateInspectTemplate,
+                    "_BaseCreateInspectTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3892,7 +4242,7 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                 ~.dlp.JobTrigger:
                     Contains a configuration to make API
                 calls on a repeating basis. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
                 to learn more.
 
             """
@@ -3900,21 +4250,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseCreateJobTrigger._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_job_trigger(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseCreateJobTrigger._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseCreateJobTrigger._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseCreateJobTrigger._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseCreateJobTrigger,
+                    "_BaseCreateJobTrigger__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4054,21 +4401,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseCreateStoredInfoType._get_http_options()
-
             request, metadata = self._interceptor.pre_create_stored_info_type(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseCreateStoredInfoType._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseCreateStoredInfoType._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseCreateStoredInfoType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseCreateStoredInfoType,
+                    "_BaseCreateStoredInfoType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4208,21 +4552,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseDeidentifyContent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_deidentify_content(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseDeidentifyContent._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseDeidentifyContent._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseDeidentifyContent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseDeidentifyContent,
+                    "_BaseDeidentifyContent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4355,17 +4696,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseDeleteConnection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_connection(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseDeleteConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseDeleteConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseDeleteConnection,
+                    "_BaseDeleteConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4397,6 +4739,114 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
 
             # Send the request
             response = DlpServiceRestTransport._DeleteConnection._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+    class _DeleteContentPolicy(
+        _BaseDlpServiceRestTransport._BaseDeleteContentPolicy, DlpServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("DlpServiceRestTransport.DeleteContentPolicy")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: dlp.DeleteContentPolicyRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ):
+            r"""Call the delete content policy method over HTTP.
+
+            Args:
+                request (~.dlp.DeleteContentPolicyRequest):
+                    The request object. Request message for
+                DeleteContentPolicy.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+            """
+
+            http_options = _BaseDlpServiceRestTransport._BaseDeleteContentPolicy._get_http_options()
+            request, metadata = self._interceptor.pre_delete_content_policy(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseDeleteContentPolicy,
+                    "_BaseDeleteContentPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.privacy.dlp_v2.DlpServiceClient.DeleteContentPolicy",
+                    extra={
+                        "serviceName": "google.privacy.dlp.v2.DlpService",
+                        "rpcName": "DeleteContentPolicy",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DlpServiceRestTransport._DeleteContentPolicy._get_response(
                 self._host,
                 metadata,
                 query_params,
@@ -4463,17 +4913,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseDeleteDeidentifyTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_deidentify_template(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseDeleteDeidentifyTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseDeleteDeidentifyTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseDeleteDeidentifyTemplate,
+                    "_BaseDeleteDeidentifyTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4570,17 +5021,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseDeleteDiscoveryConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_discovery_config(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseDeleteDiscoveryConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseDeleteDiscoveryConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseDeleteDiscoveryConfig,
+                    "_BaseDeleteDiscoveryConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4679,19 +5131,16 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseDeleteDlpJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_dlp_job(request, metadata)
-            transcoded_request = (
-                _BaseDlpServiceRestTransport._BaseDeleteDlpJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDlpServiceRestTransport._BaseDeleteDlpJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseDeleteDlpJob,
+                    "_BaseDeleteDlpJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4789,17 +5238,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseDeleteFileStoreDataProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_file_store_data_profile(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseDeleteFileStoreDataProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseDeleteFileStoreDataProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseDeleteFileStoreDataProfile,
+                    "_BaseDeleteFileStoreDataProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4898,17 +5348,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseDeleteInspectTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_inspect_template(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseDeleteInspectTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseDeleteInspectTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseDeleteInspectTemplate,
+                    "_BaseDeleteInspectTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5006,17 +5457,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseDeleteJobTrigger._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_job_trigger(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseDeleteJobTrigger._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseDeleteJobTrigger._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseDeleteJobTrigger,
+                    "_BaseDeleteJobTrigger__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5113,17 +5565,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseDeleteStoredInfoType._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_stored_info_type(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseDeleteStoredInfoType._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseDeleteStoredInfoType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseDeleteStoredInfoType,
+                    "_BaseDeleteStoredInfoType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5220,17 +5673,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseDeleteTableDataProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_table_data_profile(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseDeleteTableDataProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseDeleteTableDataProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseDeleteTableDataProfile,
+                    "_BaseDeleteTableDataProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5330,25 +5784,16 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseFinishDlpJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_finish_dlp_job(request, metadata)
-            transcoded_request = (
-                _BaseDlpServiceRestTransport._BaseFinishDlpJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseDlpServiceRestTransport._BaseFinishDlpJob._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDlpServiceRestTransport._BaseFinishDlpJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseFinishDlpJob,
+                    "_BaseFinishDlpJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5451,17 +5896,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseGetColumnDataProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_get_column_data_profile(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseGetColumnDataProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseGetColumnDataProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseGetColumnDataProfile,
+                    "_BaseGetColumnDataProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5600,19 +6046,16 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseGetConnection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_connection(request, metadata)
-            transcoded_request = (
-                _BaseDlpServiceRestTransport._BaseGetConnection._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDlpServiceRestTransport._BaseGetConnection._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseGetConnection,
+                    "_BaseGetConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5691,6 +6134,155 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                 )
             return resp
 
+    class _GetContentPolicy(
+        _BaseDlpServiceRestTransport._BaseGetContentPolicy, DlpServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("DlpServiceRestTransport.GetContentPolicy")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: dlp.GetContentPolicyRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> dlp.ContentPolicy:
+            r"""Call the get content policy method over HTTP.
+
+            Args:
+                request (~.dlp.GetContentPolicyRequest):
+                    The request object. Request message for GetContentPolicy.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.dlp.ContentPolicy:
+                    A policy to apply to content based on
+                its inspection findings.
+
+            """
+
+            http_options = (
+                _BaseDlpServiceRestTransport._BaseGetContentPolicy._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_get_content_policy(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseGetContentPolicy,
+                    "_BaseGetContentPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.privacy.dlp_v2.DlpServiceClient.GetContentPolicy",
+                    extra={
+                        "serviceName": "google.privacy.dlp.v2.DlpService",
+                        "rpcName": "GetContentPolicy",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DlpServiceRestTransport._GetContentPolicy._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = dlp.ContentPolicy()
+            pb_resp = dlp.ContentPolicy.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_content_policy(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_content_policy_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = dlp.ContentPolicy.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.privacy.dlp_v2.DlpServiceClient.get_content_policy",
+                    extra={
+                        "serviceName": "google.privacy.dlp.v2.DlpService",
+                        "rpcName": "GetContentPolicy",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _GetDeidentifyTemplate(
         _BaseDlpServiceRestTransport._BaseGetDeidentifyTemplate, DlpServiceRestStub
     ):
@@ -5746,23 +6338,24 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                     DeidentifyTemplates contains
                 instructions on how to de-identify
                 content. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
                 to learn more.
 
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseGetDeidentifyTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_get_deidentify_template(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseGetDeidentifyTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseGetDeidentifyTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseGetDeidentifyTemplate,
+                    "_BaseGetDeidentifyTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5899,24 +6492,25 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
 
                 The generated data profiles are retained according to
                 the [data retention policy]
-                (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
+                (https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
 
             """
 
             http_options = (
                 _BaseDlpServiceRestTransport._BaseGetDiscoveryConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_discovery_config(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseGetDiscoveryConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseGetDiscoveryConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseGetDiscoveryConfig,
+                    "_BaseGetDiscoveryConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6053,19 +6647,16 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseGetDlpJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_dlp_job(request, metadata)
-            transcoded_request = (
-                _BaseDlpServiceRestTransport._BaseGetDlpJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDlpServiceRestTransport._BaseGetDlpJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseGetDlpJob,
+                    "_BaseGetDlpJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6205,17 +6796,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseGetFileStoreDataProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_get_file_store_data_profile(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseGetFileStoreDataProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseGetFileStoreDataProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseGetFileStoreDataProfile,
+                    "_BaseGetFileStoreDataProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6351,7 +6943,7 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                 data to be detected) to be used anywhere
                 you otherwise would normally specify
                 InspectConfig. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
                 to learn more.
 
             """
@@ -6359,17 +6951,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseGetInspectTemplate._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_inspect_template(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseGetInspectTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseGetInspectTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseGetInspectTemplate,
+                    "_BaseGetInspectTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6501,7 +7094,7 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                 ~.dlp.JobTrigger:
                     Contains a configuration to make API
                 calls on a repeating basis. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
                 to learn more.
 
             """
@@ -6509,19 +7102,16 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseGetJobTrigger._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_job_trigger(request, metadata)
-            transcoded_request = (
-                _BaseDlpServiceRestTransport._BaseGetJobTrigger._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDlpServiceRestTransport._BaseGetJobTrigger._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseGetJobTrigger,
+                    "_BaseGetJobTrigger__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6659,17 +7249,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseGetProjectDataProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_get_project_data_profile(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseGetProjectDataProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseGetProjectDataProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseGetProjectDataProfile,
+                    "_BaseGetProjectDataProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6809,17 +7400,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseGetStoredInfoType._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_stored_info_type(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseGetStoredInfoType._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseGetStoredInfoType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseGetStoredInfoType,
+                    "_BaseGetStoredInfoType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6953,17 +7545,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseGetTableDataProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_get_table_data_profile(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseGetTableDataProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseGetTableDataProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseGetTableDataProfile,
+                    "_BaseGetTableDataProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7101,21 +7694,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseHybridInspectDlpJob._get_http_options()
-
             request, metadata = self._interceptor.pre_hybrid_inspect_dlp_job(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseHybridInspectDlpJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseHybridInspectDlpJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseHybridInspectDlpJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseHybridInspectDlpJob,
+                    "_BaseHybridInspectDlpJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7255,21 +7845,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseHybridInspectJobTrigger._get_http_options()
-
             request, metadata = self._interceptor.pre_hybrid_inspect_job_trigger(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseHybridInspectJobTrigger._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseHybridInspectJobTrigger._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseHybridInspectJobTrigger._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseHybridInspectJobTrigger,
+                    "_BaseHybridInspectJobTrigger__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7408,23 +7995,16 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseInspectContent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_inspect_content(request, metadata)
-            transcoded_request = _BaseDlpServiceRestTransport._BaseInspectContent._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseDlpServiceRestTransport._BaseInspectContent._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDlpServiceRestTransport._BaseInspectContent._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseInspectContent,
+                    "_BaseInspectContent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7563,17 +8143,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseListColumnDataProfiles._get_http_options()
-
             request, metadata = self._interceptor.pre_list_column_data_profiles(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseListColumnDataProfiles._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseListColumnDataProfiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListColumnDataProfiles,
+                    "_BaseListColumnDataProfiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7711,17 +8292,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseListConnections._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_connections(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseListConnections._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseListConnections._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListConnections,
+                    "_BaseListConnections__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7800,6 +8382,154 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                 )
             return resp
 
+    class _ListContentPolicies(
+        _BaseDlpServiceRestTransport._BaseListContentPolicies, DlpServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("DlpServiceRestTransport.ListContentPolicies")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: dlp.ListContentPoliciesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> dlp.ListContentPoliciesResponse:
+            r"""Call the list content policies method over HTTP.
+
+            Args:
+                request (~.dlp.ListContentPoliciesRequest):
+                    The request object. Request message for
+                ListContentPolicies.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.dlp.ListContentPoliciesResponse:
+                    Response message for
+                ListContentPolicies.
+
+            """
+
+            http_options = _BaseDlpServiceRestTransport._BaseListContentPolicies._get_http_options()
+            request, metadata = self._interceptor.pre_list_content_policies(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListContentPolicies,
+                    "_BaseListContentPolicies__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.privacy.dlp_v2.DlpServiceClient.ListContentPolicies",
+                    extra={
+                        "serviceName": "google.privacy.dlp.v2.DlpService",
+                        "rpcName": "ListContentPolicies",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DlpServiceRestTransport._ListContentPolicies._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = dlp.ListContentPoliciesResponse()
+            pb_resp = dlp.ListContentPoliciesResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_content_policies(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_content_policies_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = dlp.ListContentPoliciesResponse.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.privacy.dlp_v2.DlpServiceClient.list_content_policies",
+                    extra={
+                        "serviceName": "google.privacy.dlp.v2.DlpService",
+                        "rpcName": "ListContentPolicies",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _ListDeidentifyTemplates(
         _BaseDlpServiceRestTransport._BaseListDeidentifyTemplates, DlpServiceRestStub
     ):
@@ -7858,17 +8588,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseListDeidentifyTemplates._get_http_options()
-
             request, metadata = self._interceptor.pre_list_deidentify_templates(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseListDeidentifyTemplates._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseListDeidentifyTemplates._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListDeidentifyTemplates,
+                    "_BaseListDeidentifyTemplates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8007,17 +8738,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseListDiscoveryConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_discovery_configs(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseListDiscoveryConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseListDiscoveryConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListDiscoveryConfigs,
+                    "_BaseListDiscoveryConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8158,19 +8890,16 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseListDlpJobs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_dlp_jobs(request, metadata)
-            transcoded_request = (
-                _BaseDlpServiceRestTransport._BaseListDlpJobs._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDlpServiceRestTransport._BaseListDlpJobs._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListDlpJobs,
+                    "_BaseListDlpJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8310,17 +9039,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseListFileStoreDataProfiles._get_http_options()
-
             request, metadata = self._interceptor.pre_list_file_store_data_profiles(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseListFileStoreDataProfiles._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseListFileStoreDataProfiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListFileStoreDataProfiles,
+                    "_BaseListFileStoreDataProfiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8462,19 +9192,16 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseListInfoTypes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_info_types(request, metadata)
-            transcoded_request = (
-                _BaseDlpServiceRestTransport._BaseListInfoTypes._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDlpServiceRestTransport._BaseListInfoTypes._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListInfoTypes,
+                    "_BaseListInfoTypes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8611,17 +9338,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseListInspectTemplates._get_http_options()
-
             request, metadata = self._interceptor.pre_list_inspect_templates(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseListInspectTemplates._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseListInspectTemplates._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListInspectTemplates,
+                    "_BaseListInspectTemplates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8759,17 +9487,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseListJobTriggers._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_job_triggers(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseListJobTriggers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseListJobTriggers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListJobTriggers,
+                    "_BaseListJobTriggers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8908,17 +9637,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseListProjectDataProfiles._get_http_options()
-
             request, metadata = self._interceptor.pre_list_project_data_profiles(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseListProjectDataProfiles._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseListProjectDataProfiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListProjectDataProfiles,
+                    "_BaseListProjectDataProfiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9057,17 +9787,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseListStoredInfoTypes._get_http_options()
-
             request, metadata = self._interceptor.pre_list_stored_info_types(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseListStoredInfoTypes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseListStoredInfoTypes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListStoredInfoTypes,
+                    "_BaseListStoredInfoTypes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9205,17 +9936,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseListTableDataProfiles._get_http_options()
-
             request, metadata = self._interceptor.pre_list_table_data_profiles(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseListTableDataProfiles._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseListTableDataProfiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseListTableDataProfiles,
+                    "_BaseListTableDataProfiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9356,23 +10088,16 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseRedactImage._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_redact_image(request, metadata)
-            transcoded_request = (
-                _BaseDlpServiceRestTransport._BaseRedactImage._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseRedactImage._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDlpServiceRestTransport._BaseRedactImage._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseRedactImage,
+                    "_BaseRedactImage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9510,21 +10235,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseReidentifyContent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_reidentify_content(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseReidentifyContent._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseReidentifyContent._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseReidentifyContent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseReidentifyContent,
+                    "_BaseReidentifyContent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9664,17 +10386,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseSearchConnections._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_connections(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseSearchConnections._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseSearchConnections._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseSearchConnections,
+                    "_BaseSearchConnections__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9814,21 +10537,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseUpdateConnection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_connection(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseUpdateConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseUpdateConnection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseUpdateConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseUpdateConnection,
+                    "_BaseUpdateConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9908,6 +10628,156 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                 )
             return resp
 
+    class _UpdateContentPolicy(
+        _BaseDlpServiceRestTransport._BaseUpdateContentPolicy, DlpServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("DlpServiceRestTransport.UpdateContentPolicy")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: dlp.UpdateContentPolicyRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> dlp.ContentPolicy:
+            r"""Call the update content policy method over HTTP.
+
+            Args:
+                request (~.dlp.UpdateContentPolicyRequest):
+                    The request object. Request message for
+                UpdateContentPolicy.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.dlp.ContentPolicy:
+                    A policy to apply to content based on
+                its inspection findings.
+
+            """
+
+            http_options = _BaseDlpServiceRestTransport._BaseUpdateContentPolicy._get_http_options()
+            request, metadata = self._interceptor.pre_update_content_policy(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseUpdateContentPolicy,
+                    "_BaseUpdateContentPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.privacy.dlp_v2.DlpServiceClient.UpdateContentPolicy",
+                    extra={
+                        "serviceName": "google.privacy.dlp.v2.DlpService",
+                        "rpcName": "UpdateContentPolicy",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DlpServiceRestTransport._UpdateContentPolicy._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = dlp.ContentPolicy()
+            pb_resp = dlp.ContentPolicy.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_content_policy(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_content_policy_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = dlp.ContentPolicy.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.privacy.dlp_v2.DlpServiceClient.update_content_policy",
+                    extra={
+                        "serviceName": "google.privacy.dlp.v2.DlpService",
+                        "rpcName": "UpdateContentPolicy",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _UpdateDeidentifyTemplate(
         _BaseDlpServiceRestTransport._BaseUpdateDeidentifyTemplate, DlpServiceRestStub
     ):
@@ -9965,27 +10835,24 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                         DeidentifyTemplates contains
                     instructions on how to de-identify
                     content. See
-                    https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+                    https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
                     to learn more.
 
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseUpdateDeidentifyTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_update_deidentify_template(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseUpdateDeidentifyTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseUpdateDeidentifyTemplate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseUpdateDeidentifyTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseUpdateDeidentifyTemplate,
+                    "_BaseUpdateDeidentifyTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10124,26 +10991,23 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
 
                 The generated data profiles are retained according to
                 the [data retention policy]
-                (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
+                (https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
 
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseUpdateDiscoveryConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_discovery_config(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseUpdateDiscoveryConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseUpdateDiscoveryConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseUpdateDiscoveryConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseUpdateDiscoveryConfig,
+                    "_BaseUpdateDiscoveryConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10281,27 +11145,24 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                 data to be detected) to be used anywhere
                 you otherwise would normally specify
                 InspectConfig. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
                 to learn more.
 
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseUpdateInspectTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_update_inspect_template(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseUpdateInspectTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseUpdateInspectTemplate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseUpdateInspectTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseUpdateInspectTemplate,
+                    "_BaseUpdateInspectTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10435,7 +11296,7 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
                 ~.dlp.JobTrigger:
                     Contains a configuration to make API
                 calls on a repeating basis. See
-                https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
+                https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
                 to learn more.
 
             """
@@ -10443,21 +11304,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             http_options = (
                 _BaseDlpServiceRestTransport._BaseUpdateJobTrigger._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_job_trigger(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseUpdateJobTrigger._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseUpdateJobTrigger._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseUpdateJobTrigger._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseUpdateJobTrigger,
+                    "_BaseUpdateJobTrigger__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10597,21 +11455,18 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
             """
 
             http_options = _BaseDlpServiceRestTransport._BaseUpdateStoredInfoType._get_http_options()
-
             request, metadata = self._interceptor.pre_update_stored_info_type(
                 request, metadata
             )
-            transcoded_request = _BaseDlpServiceRestTransport._BaseUpdateStoredInfoType._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDlpServiceRestTransport._BaseUpdateStoredInfoType._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDlpServiceRestTransport._BaseUpdateStoredInfoType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDlpServiceRestTransport._BaseUpdateStoredInfoType,
+                    "_BaseUpdateStoredInfoType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10714,6 +11569,14 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
         return self._CreateConnection(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def create_content_policy(
+        self,
+    ) -> Callable[[dlp.CreateContentPolicyRequest], dlp.ContentPolicy]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateContentPolicy(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def create_deidentify_template(
         self,
     ) -> Callable[[dlp.CreateDeidentifyTemplateRequest], dlp.DeidentifyTemplate]:
@@ -10776,6 +11639,14 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._DeleteConnection(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def delete_content_policy(
+        self,
+    ) -> Callable[[dlp.DeleteContentPolicyRequest], empty_pb2.Empty]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DeleteContentPolicy(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def delete_deidentify_template(
@@ -10864,6 +11735,14 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._GetConnection(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def get_content_policy(
+        self,
+    ) -> Callable[[dlp.GetContentPolicyRequest], dlp.ContentPolicy]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetContentPolicy(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def get_deidentify_template(
@@ -10980,6 +11859,14 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListConnections(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def list_content_policies(
+        self,
+    ) -> Callable[[dlp.ListContentPoliciesRequest], dlp.ListContentPoliciesResponse]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListContentPolicies(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def list_deidentify_templates(
@@ -11106,6 +11993,14 @@ class DlpServiceRestTransport(_BaseDlpServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._UpdateConnection(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_content_policy(
+        self,
+    ) -> Callable[[dlp.UpdateContentPolicyRequest], dlp.ContentPolicy]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateContentPolicy(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def update_deidentify_template(

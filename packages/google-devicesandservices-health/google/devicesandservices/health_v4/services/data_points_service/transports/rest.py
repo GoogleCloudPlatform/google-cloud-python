@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.devicesandservices.health_v4._compat import transcode_request
 from google.devicesandservices.health_v4.types import data_points
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -779,21 +780,18 @@ class DataPointsServiceRestTransport(_BaseDataPointsServiceRestTransport):
             """
 
             http_options = _BaseDataPointsServiceRestTransport._BaseBatchDeleteDataPoints._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_delete_data_points(
                 request, metadata
             )
-            transcoded_request = _BaseDataPointsServiceRestTransport._BaseBatchDeleteDataPoints._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataPointsServiceRestTransport._BaseBatchDeleteDataPoints._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataPointsServiceRestTransport._BaseBatchDeleteDataPoints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataPointsServiceRestTransport._BaseBatchDeleteDataPoints,
+                    "_BaseBatchDeleteDataPoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -934,21 +932,18 @@ class DataPointsServiceRestTransport(_BaseDataPointsServiceRestTransport):
             """
 
             http_options = _BaseDataPointsServiceRestTransport._BaseCreateDataPoint._get_http_options()
-
             request, metadata = self._interceptor.pre_create_data_point(
                 request, metadata
             )
-            transcoded_request = _BaseDataPointsServiceRestTransport._BaseCreateDataPoint._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataPointsServiceRestTransport._BaseCreateDataPoint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataPointsServiceRestTransport._BaseCreateDataPoint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataPointsServiceRestTransport._BaseCreateDataPoint,
+                    "_BaseCreateDataPoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1086,21 +1081,18 @@ class DataPointsServiceRestTransport(_BaseDataPointsServiceRestTransport):
             """
 
             http_options = _BaseDataPointsServiceRestTransport._BaseDailyRollUpDataPoints._get_http_options()
-
             request, metadata = self._interceptor.pre_daily_roll_up_data_points(
                 request, metadata
             )
-            transcoded_request = _BaseDataPointsServiceRestTransport._BaseDailyRollUpDataPoints._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataPointsServiceRestTransport._BaseDailyRollUpDataPoints._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataPointsServiceRestTransport._BaseDailyRollUpDataPoints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataPointsServiceRestTransport._BaseDailyRollUpDataPoints,
+                    "_BaseDailyRollUpDataPoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1243,17 +1235,18 @@ class DataPointsServiceRestTransport(_BaseDataPointsServiceRestTransport):
             """
 
             http_options = _BaseDataPointsServiceRestTransport._BaseExportExerciseTcx._get_http_options()
-
             request, metadata = self._interceptor.pre_export_exercise_tcx(
                 request, metadata
             )
-            transcoded_request = _BaseDataPointsServiceRestTransport._BaseExportExerciseTcx._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataPointsServiceRestTransport._BaseExportExerciseTcx._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataPointsServiceRestTransport._BaseExportExerciseTcx,
+                    "_BaseExportExerciseTcx__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1390,15 +1383,16 @@ class DataPointsServiceRestTransport(_BaseDataPointsServiceRestTransport):
             """
 
             http_options = _BaseDataPointsServiceRestTransport._BaseGetDataPoint._get_http_options()
-
             request, metadata = self._interceptor.pre_get_data_point(request, metadata)
-            transcoded_request = _BaseDataPointsServiceRestTransport._BaseGetDataPoint._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataPointsServiceRestTransport._BaseGetDataPoint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataPointsServiceRestTransport._BaseGetDataPoint,
+                    "_BaseGetDataPoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1535,17 +1529,18 @@ class DataPointsServiceRestTransport(_BaseDataPointsServiceRestTransport):
             """
 
             http_options = _BaseDataPointsServiceRestTransport._BaseListDataPoints._get_http_options()
-
             request, metadata = self._interceptor.pre_list_data_points(
                 request, metadata
             )
-            transcoded_request = _BaseDataPointsServiceRestTransport._BaseListDataPoints._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataPointsServiceRestTransport._BaseListDataPoints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataPointsServiceRestTransport._BaseListDataPoints,
+                    "_BaseListDataPoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1685,17 +1680,18 @@ class DataPointsServiceRestTransport(_BaseDataPointsServiceRestTransport):
             """
 
             http_options = _BaseDataPointsServiceRestTransport._BaseReconcileDataPoints._get_http_options()
-
             request, metadata = self._interceptor.pre_reconcile_data_points(
                 request, metadata
             )
-            transcoded_request = _BaseDataPointsServiceRestTransport._BaseReconcileDataPoints._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataPointsServiceRestTransport._BaseReconcileDataPoints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataPointsServiceRestTransport._BaseReconcileDataPoints,
+                    "_BaseReconcileDataPoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1838,21 +1834,18 @@ class DataPointsServiceRestTransport(_BaseDataPointsServiceRestTransport):
             """
 
             http_options = _BaseDataPointsServiceRestTransport._BaseRollUpDataPoints._get_http_options()
-
             request, metadata = self._interceptor.pre_roll_up_data_points(
                 request, metadata
             )
-            transcoded_request = _BaseDataPointsServiceRestTransport._BaseRollUpDataPoints._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataPointsServiceRestTransport._BaseRollUpDataPoints._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataPointsServiceRestTransport._BaseRollUpDataPoints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataPointsServiceRestTransport._BaseRollUpDataPoints,
+                    "_BaseRollUpDataPoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1995,21 +1988,18 @@ class DataPointsServiceRestTransport(_BaseDataPointsServiceRestTransport):
             """
 
             http_options = _BaseDataPointsServiceRestTransport._BaseUpdateDataPoint._get_http_options()
-
             request, metadata = self._interceptor.pre_update_data_point(
                 request, metadata
             )
-            transcoded_request = _BaseDataPointsServiceRestTransport._BaseUpdateDataPoint._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataPointsServiceRestTransport._BaseUpdateDataPoint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataPointsServiceRestTransport._BaseUpdateDataPoint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataPointsServiceRestTransport._BaseUpdateDataPoint,
+                    "_BaseUpdateDataPoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

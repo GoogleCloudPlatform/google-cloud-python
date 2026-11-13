@@ -206,6 +206,19 @@ class CrossSync(metaclass=MappingMeta):
         return task
 
     @staticmethod
+    def create_daemon_task(
+        fn: Callable[..., Coroutine[Any, Any, T]],
+        *fn_args,
+        task_name: str | None = None,
+        **fn_kwargs,
+    ) -> CrossSync.Task[T]:
+        """
+        Abstraction over asyncio.create_task for long-lived background tasks.
+        Sync version runs on a dedicated daemon thread instead of a ThreadPoolExecutor.
+        """
+        return CrossSync.create_task(fn, *fn_args, task_name=task_name, **fn_kwargs)
+
+    @staticmethod
     async def yield_to_event_loop() -> None:
         """
         Call asyncio.sleep(0) to yield to allow other tasks to run
@@ -318,6 +331,30 @@ class CrossSync(metaclass=MappingMeta):
             if not sync_executor:
                 raise ValueError("sync_executor is required for sync version")
             return sync_executor.submit(fn, *fn_args, **fn_kwargs)
+
+        @staticmethod
+        def create_daemon_task(
+            fn: Callable[..., T],
+            *fn_args,
+            task_name: str | None = None,
+            **fn_kwargs,
+        ) -> CrossSync._Sync_Impl.Task[T]:
+            """
+            Run a long-lived background task on a dedicated daemon thread and
+            return a Future representing its completion.
+            """
+            future: concurrent.futures.Future[T] = concurrent.futures.Future()
+
+            def _run() -> None:
+                if not future.set_running_or_notify_cancel():  # pragma: NO COVER
+                    return
+                try:
+                    future.set_result(fn(*fn_args, **fn_kwargs))
+                except BaseException as exc:
+                    future.set_exception(exc)
+
+            threading.Thread(target=_run, name=task_name, daemon=True).start()
+            return future
 
         @staticmethod
         def yield_to_event_loop() -> None:

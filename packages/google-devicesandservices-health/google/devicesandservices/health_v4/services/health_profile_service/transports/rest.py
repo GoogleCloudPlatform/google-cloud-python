@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.devicesandservices.health_v4._compat import transcode_request
 from google.devicesandservices.health_v4.types import health_profile
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -681,15 +682,16 @@ class HealthProfileServiceRestTransport(_BaseHealthProfileServiceRestTransport):
             """
 
             http_options = _BaseHealthProfileServiceRestTransport._BaseGetIdentity._get_http_options()
-
             request, metadata = self._interceptor.pre_get_identity(request, metadata)
-            transcoded_request = _BaseHealthProfileServiceRestTransport._BaseGetIdentity._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHealthProfileServiceRestTransport._BaseGetIdentity._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHealthProfileServiceRestTransport._BaseGetIdentity,
+                    "_BaseGetIdentity__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -834,15 +836,16 @@ class HealthProfileServiceRestTransport(_BaseHealthProfileServiceRestTransport):
             """
 
             http_options = _BaseHealthProfileServiceRestTransport._BaseGetIrnProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_get_irn_profile(request, metadata)
-            transcoded_request = _BaseHealthProfileServiceRestTransport._BaseGetIrnProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHealthProfileServiceRestTransport._BaseGetIrnProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHealthProfileServiceRestTransport._BaseGetIrnProfile,
+                    "_BaseGetIrnProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -984,17 +987,18 @@ class HealthProfileServiceRestTransport(_BaseHealthProfileServiceRestTransport):
             """
 
             http_options = _BaseHealthProfileServiceRestTransport._BaseGetPairedDevice._get_http_options()
-
             request, metadata = self._interceptor.pre_get_paired_device(
                 request, metadata
             )
-            transcoded_request = _BaseHealthProfileServiceRestTransport._BaseGetPairedDevice._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHealthProfileServiceRestTransport._BaseGetPairedDevice._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHealthProfileServiceRestTransport._BaseGetPairedDevice,
+                    "_BaseGetPairedDevice__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1130,15 +1134,16 @@ class HealthProfileServiceRestTransport(_BaseHealthProfileServiceRestTransport):
             """
 
             http_options = _BaseHealthProfileServiceRestTransport._BaseGetProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_get_profile(request, metadata)
-            transcoded_request = _BaseHealthProfileServiceRestTransport._BaseGetProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHealthProfileServiceRestTransport._BaseGetProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHealthProfileServiceRestTransport._BaseGetProfile,
+                    "_BaseGetProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1274,15 +1279,16 @@ class HealthProfileServiceRestTransport(_BaseHealthProfileServiceRestTransport):
             """
 
             http_options = _BaseHealthProfileServiceRestTransport._BaseGetSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_get_settings(request, metadata)
-            transcoded_request = _BaseHealthProfileServiceRestTransport._BaseGetSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHealthProfileServiceRestTransport._BaseGetSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHealthProfileServiceRestTransport._BaseGetSettings,
+                    "_BaseGetSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1419,17 +1425,18 @@ class HealthProfileServiceRestTransport(_BaseHealthProfileServiceRestTransport):
             """
 
             http_options = _BaseHealthProfileServiceRestTransport._BaseListPairedDevices._get_http_options()
-
             request, metadata = self._interceptor.pre_list_paired_devices(
                 request, metadata
             )
-            transcoded_request = _BaseHealthProfileServiceRestTransport._BaseListPairedDevices._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHealthProfileServiceRestTransport._BaseListPairedDevices._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHealthProfileServiceRestTransport._BaseListPairedDevices,
+                    "_BaseListPairedDevices__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1570,19 +1577,16 @@ class HealthProfileServiceRestTransport(_BaseHealthProfileServiceRestTransport):
             """
 
             http_options = _BaseHealthProfileServiceRestTransport._BaseUpdateProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_update_profile(request, metadata)
-            transcoded_request = _BaseHealthProfileServiceRestTransport._BaseUpdateProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHealthProfileServiceRestTransport._BaseUpdateProfile._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHealthProfileServiceRestTransport._BaseUpdateProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHealthProfileServiceRestTransport._BaseUpdateProfile,
+                    "_BaseUpdateProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1720,19 +1724,16 @@ class HealthProfileServiceRestTransport(_BaseHealthProfileServiceRestTransport):
             """
 
             http_options = _BaseHealthProfileServiceRestTransport._BaseUpdateSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_update_settings(request, metadata)
-            transcoded_request = _BaseHealthProfileServiceRestTransport._BaseUpdateSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHealthProfileServiceRestTransport._BaseUpdateSettings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHealthProfileServiceRestTransport._BaseUpdateSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHealthProfileServiceRestTransport._BaseUpdateSettings,
+                    "_BaseUpdateSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

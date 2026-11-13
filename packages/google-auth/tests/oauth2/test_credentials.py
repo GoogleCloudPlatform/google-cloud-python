@@ -21,12 +21,9 @@ from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import _helpers
-from google.auth import exceptions
-from google.auth import transport
+from google.auth import _helpers, exceptions, transport
 from google.auth.credentials import TokenState
 from google.oauth2 import credentials
-
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 

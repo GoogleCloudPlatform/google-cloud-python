@@ -37,6 +37,7 @@ from google.apps.chat_v1.types import (
     availability,
     membership,
     message,
+    message_pin,
     reaction,
     section,
     space,
@@ -49,6 +50,7 @@ from google.apps.chat_v1.types import (
 from google.apps.chat_v1.types import availability as gc_availability
 from google.apps.chat_v1.types import membership as gc_membership
 from google.apps.chat_v1.types import message as gc_message
+from google.apps.chat_v1.types import message_pin as gc_message_pin
 from google.apps.chat_v1.types import reaction as gc_reaction
 from google.apps.chat_v1.types import section as gc_section
 from google.apps.chat_v1.types import space as gc_space
@@ -1809,6 +1811,118 @@ class ChatServiceGrpcAsyncIOTransport(ChatServiceTransport):
         return self._stubs["delete_reaction"]
 
     @property
+    def list_message_pins(
+        self,
+    ) -> Callable[
+        [message_pin.ListMessagePinsRequest],
+        Awaitable[message_pin.ListMessagePinsResponse],
+    ]:
+        r"""Return a callable for the list message pins method over gRPC.
+
+        Lists message pins in a space. Users can pin important messages
+        in spaces for easy access. For more information, see `Pin or
+        unpin a conversation in Google
+        Chat <https://support.google.com/chat/answer/15622437>`__.
+
+        Requires `user
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__
+        with one of the following `authorization
+        scopes <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.spaces.pins.readonly``
+        - ``https://www.googleapis.com/auth/chat.spaces.pins``
+        - ``https://www.googleapis.com/auth/chat.spaces.readonly``
+        - ``https://www.googleapis.com/auth/chat.spaces``
+
+        Returns:
+            Callable[[~.ListMessagePinsRequest],
+                    Awaitable[~.ListMessagePinsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_message_pins" not in self._stubs:
+            self._stubs["list_message_pins"] = self._logged_channel.unary_unary(
+                "/google.chat.v1.ChatService/ListMessagePins",
+                request_serializer=message_pin.ListMessagePinsRequest.serialize,
+                response_deserializer=message_pin.ListMessagePinsResponse.deserialize,
+            )
+        return self._stubs["list_message_pins"]
+
+    @property
+    def create_message_pin(
+        self,
+    ) -> Callable[
+        [gc_message_pin.CreateMessagePinRequest], Awaitable[gc_message_pin.MessagePin]
+    ]:
+        r"""Return a callable for the create message pin method over gRPC.
+
+        Creates a message pin.
+
+        Requires `user
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__
+        with one of the following `authorization
+        scopes <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.spaces.pins``
+        - ``https://www.googleapis.com/auth/chat.spaces``
+
+        Returns:
+            Callable[[~.CreateMessagePinRequest],
+                    Awaitable[~.MessagePin]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_message_pin" not in self._stubs:
+            self._stubs["create_message_pin"] = self._logged_channel.unary_unary(
+                "/google.chat.v1.ChatService/CreateMessagePin",
+                request_serializer=gc_message_pin.CreateMessagePinRequest.serialize,
+                response_deserializer=gc_message_pin.MessagePin.deserialize,
+            )
+        return self._stubs["create_message_pin"]
+
+    @property
+    def delete_message_pin(
+        self,
+    ) -> Callable[[message_pin.DeleteMessagePinRequest], Awaitable[empty_pb2.Empty]]:
+        r"""Return a callable for the delete message pin method over gRPC.
+
+        Deletes a message pin.
+
+        Requires `user
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__
+        with one of the following `authorization
+        scopes <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.spaces.pins``
+        - ``https://www.googleapis.com/auth/chat.spaces``
+
+        Returns:
+            Callable[[~.DeleteMessagePinRequest],
+                    Awaitable[~.Empty]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_message_pin" not in self._stubs:
+            self._stubs["delete_message_pin"] = self._logged_channel.unary_unary(
+                "/google.chat.v1.ChatService/DeleteMessagePin",
+                request_serializer=message_pin.DeleteMessagePinRequest.serialize,
+                response_deserializer=empty_pb2.Empty.FromString,
+            )
+        return self._stubs["delete_message_pin"]
+
+    @property
     def create_custom_emoji(
         self,
     ) -> Callable[[reaction.CreateCustomEmojiRequest], Awaitable[reaction.CustomEmoji]]:
@@ -2801,6 +2915,50 @@ class ChatServiceGrpcAsyncIOTransport(ChatServiceTransport):
             )
         return self._stubs["move_section_item"]
 
+    @property
+    def replace_message_cards(
+        self,
+    ) -> Callable[
+        [message.ReplaceMessageCardsRequest],
+        Awaitable[message.ReplaceMessageCardsResponse],
+    ]:
+        r"""Return a callable for the replace message cards method over gRPC.
+
+        Replaces the cards included in a message.
+
+        A Chat app can only replace cards on a human-created message if
+        the message already contains cards, and the cards were created
+        by the app.
+
+        If the app replaces the cards with an empty list, the cards are
+        removed. After removing the cards, the app cannot add cards back
+        to the message.
+
+        Requires `app
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-app>`__
+        with the `authorization
+        scope <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.bot``
+
+        Returns:
+            Callable[[~.ReplaceMessageCardsRequest],
+                    Awaitable[~.ReplaceMessageCardsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "replace_message_cards" not in self._stubs:
+            self._stubs["replace_message_cards"] = self._logged_channel.unary_unary(
+                "/google.chat.v1.ChatService/ReplaceMessageCards",
+                request_serializer=message.ReplaceMessageCardsRequest.serialize,
+                response_deserializer=message.ReplaceMessageCardsResponse.deserialize,
+            )
+        return self._stubs["replace_message_cards"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -3168,6 +3326,21 @@ class ChatServiceGrpcAsyncIOTransport(ChatServiceTransport):
                 default_timeout=30.0,
                 client_info=client_info,
             ),
+            self.list_message_pins: self._wrap_method(
+                self.list_message_pins,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_message_pin: self._wrap_method(
+                self.create_message_pin,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_message_pin: self._wrap_method(
+                self.delete_message_pin,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.create_custom_emoji: self._wrap_method(
                 self.create_custom_emoji,
                 default_retry=retries.AsyncRetry(
@@ -3478,6 +3651,20 @@ class ChatServiceGrpcAsyncIOTransport(ChatServiceTransport):
             ),
             self.move_section_item: self._wrap_method(
                 self.move_section_item,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=30.0,
+                ),
+                default_timeout=30.0,
+                client_info=client_info,
+            ),
+            self.replace_message_cards: self._wrap_method(
+                self.replace_message_cards,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
                     maximum=10.0,

@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-vpc-access/#history
 
+## [1.18.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-vpc-access-v1.17.0...google-cloud-vpc-access-v1.18.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [1.17.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-vpc-access-v1.16.0...google-cloud-vpc-access-v1.17.0) (2026-06-22)
 
 

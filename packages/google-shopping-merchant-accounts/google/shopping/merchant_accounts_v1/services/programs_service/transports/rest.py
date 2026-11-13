@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_accounts_v1._compat import transcode_request
 from google.shopping.merchant_accounts_v1.types import programs
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -466,19 +467,16 @@ class ProgramsServiceRestTransport(_BaseProgramsServiceRestTransport):
             """
 
             http_options = _BaseProgramsServiceRestTransport._BaseDisableProgram._get_http_options()
-
             request, metadata = self._interceptor.pre_disable_program(request, metadata)
-            transcoded_request = _BaseProgramsServiceRestTransport._BaseDisableProgram._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProgramsServiceRestTransport._BaseDisableProgram._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProgramsServiceRestTransport._BaseDisableProgram._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProgramsServiceRestTransport._BaseDisableProgram,
+                    "_BaseDisableProgram__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -635,19 +633,16 @@ class ProgramsServiceRestTransport(_BaseProgramsServiceRestTransport):
             http_options = (
                 _BaseProgramsServiceRestTransport._BaseEnableProgram._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_enable_program(request, metadata)
-            transcoded_request = _BaseProgramsServiceRestTransport._BaseEnableProgram._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProgramsServiceRestTransport._BaseEnableProgram._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProgramsServiceRestTransport._BaseEnableProgram._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProgramsServiceRestTransport._BaseEnableProgram,
+                    "_BaseEnableProgram__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -803,15 +798,16 @@ class ProgramsServiceRestTransport(_BaseProgramsServiceRestTransport):
             http_options = (
                 _BaseProgramsServiceRestTransport._BaseGetProgram._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_program(request, metadata)
-            transcoded_request = _BaseProgramsServiceRestTransport._BaseGetProgram._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProgramsServiceRestTransport._BaseGetProgram._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProgramsServiceRestTransport._BaseGetProgram,
+                    "_BaseGetProgram__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -950,15 +946,16 @@ class ProgramsServiceRestTransport(_BaseProgramsServiceRestTransport):
             http_options = (
                 _BaseProgramsServiceRestTransport._BaseListPrograms._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_programs(request, metadata)
-            transcoded_request = _BaseProgramsServiceRestTransport._BaseListPrograms._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProgramsServiceRestTransport._BaseListPrograms._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProgramsServiceRestTransport._BaseListPrograms,
+                    "_BaseListPrograms__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

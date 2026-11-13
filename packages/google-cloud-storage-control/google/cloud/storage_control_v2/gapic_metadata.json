@@ -50,6 +50,11 @@
                 "disable_anywhere_cache"
               ]
             },
+            "DisableRapidCache": {
+              "methods": [
+                "disable_rapid_cache"
+              ]
+            },
             "GetAnywhereCache": {
               "methods": [
                 "get_anywhere_cache"
@@ -245,6 +250,11 @@
                 "disable_anywhere_cache"
               ]
             },
+            "DisableRapidCache": {
+              "methods": [
+                "disable_rapid_cache"
+              ]
+            },
             "GetAnywhereCache": {
               "methods": [
                 "get_anywhere_cache"
@@ -438,6 +448,11 @@
             "DisableAnywhereCache": {
               "methods": [
                 "disable_anywhere_cache"
+              ]
+            },
+            "DisableRapidCache": {
+              "methods": [
+                "disable_rapid_cache"
               ]
             },
             "GetAnywhereCache": {

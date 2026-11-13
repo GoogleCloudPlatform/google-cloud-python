@@ -44,15 +44,20 @@ try:
 except AttributeError:  # pragma: NO COVER
     OptionalRetry = Union[retries.AsyncRetry, object, None]  # type: ignore
 
+import google.api_core.operation as operation  # type: ignore
+import google.api_core.operation_async as operation_async  # type: ignore
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
+import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
+from google.longrunning import operations_pb2  # type: ignore
 
 from google.cloud.tasks_v2.services.cloud_tasks import pagers
-from google.cloud.tasks_v2.types import cloudtasks, queue, target, task
+from google.cloud.tasks_v2.types import cloudtasks, cmek_config, queue, target, task
+from google.cloud.tasks_v2.types import cmek_config as gct_cmek_config
 from google.cloud.tasks_v2.types import queue as gct_queue
 from google.cloud.tasks_v2.types import task as gct_task
 
@@ -84,6 +89,10 @@ class CloudTasksAsyncClient:
     _DEFAULT_ENDPOINT_TEMPLATE = CloudTasksClient._DEFAULT_ENDPOINT_TEMPLATE
     _DEFAULT_UNIVERSE = CloudTasksClient._DEFAULT_UNIVERSE
 
+    cmek_config_path = staticmethod(CloudTasksClient.cmek_config_path)
+    parse_cmek_config_path = staticmethod(CloudTasksClient.parse_cmek_config_path)
+    crypto_key_path = staticmethod(CloudTasksClient.crypto_key_path)
+    parse_crypto_key_path = staticmethod(CloudTasksClient.parse_crypto_key_path)
     queue_path = staticmethod(CloudTasksClient.queue_path)
     parse_queue_path = staticmethod(CloudTasksClient.parse_queue_path)
     task_path = staticmethod(CloudTasksClient.task_path)
@@ -847,8 +856,16 @@ class CloudTasksAsyncClient:
 
         This command will delete the queue even if it has tasks in it.
 
-        Note: If you delete a queue, a queue with the same name can't be
-        created for 7 days.
+        Note: If you delete a queue, you may be prevented from creating
+        a new queue with the same name as the deleted queue for a
+        tombstone window of up to 3 days. During this window, the
+        CreateQueue operation may appear to recreate the queue, but this
+        can be misleading. If you attempt to create a queue with the
+        same name as one that is in the tombstone window, run GetQueue
+        to confirm that the queue creation was successful. If GetQueue
+        returns 200 response code, your queue was successfully created
+        with the name of the previously deleted queue. Otherwise, your
+        queue did not successfully recreate.
 
         WARNING: Using this method may have unintended side effects if
         you are using an App Engine ``queue.yaml`` or ``queue.xml`` file
@@ -1888,6 +1905,10 @@ class CloudTasksAsyncClient:
     ) -> task.Task:
         r"""Gets a task.
 
+        After a task is successfully executed or has exhausted its retry
+        attempts, the task is deleted. A ``GetTask`` request for a
+        deleted task returns a ``NOT_FOUND`` error.
+
         .. code-block:: python
 
             # This snippet has been automatically generated and should be regarded as a
@@ -2062,14 +2083,12 @@ class CloudTasksAsyncClient:
                 de-duplication. If a task's ID is identical to that of
                 an existing task or a task that was deleted or executed
                 recently then the call will fail with
-                [ALREADY_EXISTS][google.rpc.Code.ALREADY_EXISTS]. If the
-                task's queue was created using Cloud Tasks, then another
-                task with the same name can't be created for ~1hour
-                after the original task was deleted or executed. If the
-                task's queue was created using queue.yaml or queue.xml,
-                then another task with the same name can't be created
-                for ~9days after the original task was deleted or
-                executed.
+                [ALREADY_EXISTS][google.rpc.Code.ALREADY_EXISTS]. The
+                IDs of deleted tasks are not immediately available for
+                reuse. It can take up to 24 hours (or 9 days if the
+                task's queue was created using a queue.yaml or
+                queue.xml) for the task ID to be released and made
+                available again.
 
                 Because there is an extra lookup cost to identify
                 duplicate task names, these
@@ -2144,6 +2163,158 @@ class CloudTasksAsyncClient:
             retry=retry,
             timeout=timeout,
             metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def batch_create_tasks(
+        self,
+        request: Optional[Union[cloudtasks.BatchCreateTasksRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        requests: Optional[MutableSequence[cloudtasks.CreateTaskRequest]] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Creates a batch of tasks and adds them to a queue.
+
+        All tasks must be for the same queue.
+        A maximum of 100 tasks can be created in a single batch.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import tasks_v2
+
+            async def sample_batch_create_tasks():
+                # Create a client
+                client = tasks_v2.CloudTasksAsyncClient()
+
+                # Initialize request argument(s)
+                requests = tasks_v2.CreateTaskRequest()
+                requests.parent = "parent_value"
+
+                request = tasks_v2.BatchCreateTasksRequest(
+                    parent="parent_value",
+                    requests=requests,
+                )
+
+                # Make the request
+                operation = await client.batch_create_tasks(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.tasks_v2.types.BatchCreateTasksRequest, dict]]):
+                The request object. Request message for [BatchCreateTasks].
+            parent (:class:`str`):
+                Required. The queue name. For example:
+                ``projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID``
+
+                The queue must already exist.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            requests (:class:`MutableSequence[google.cloud.tasks_v2.types.CreateTaskRequest]`):
+                Required. The list of requests to
+                create tasks. The queue specified in
+                parent field of each CreateTaskRequest
+                will be the same. This validation
+                happens on the client side as well as in
+                the handler.
+                BatchCreateTasksRequest.parent will also
+                be the same value as the individual
+                CreateTaskRequest.parent.
+                The maximum number of requests is 100.
+
+                This corresponds to the ``requests`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.tasks_v2.types.BatchCreateTasksResponse`
+                Response message for [BatchCreateTasks].
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, requests]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloudtasks.BatchCreateTasksRequest):
+            request = cloudtasks.BatchCreateTasksRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+        if requests:
+            request.requests.extend(requests)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.batch_create_tasks
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            cloudtasks.BatchCreateTasksResponse,
+            metadata_type=cloudtasks.BatchCreateTasksMetadata,
         )
 
         # Done; return the response.
@@ -2252,6 +2423,157 @@ class CloudTasksAsyncClient:
             metadata=metadata,
         )
 
+    async def batch_delete_tasks(
+        self,
+        request: Optional[Union[cloudtasks.BatchDeleteTasksRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        names: Optional[MutableSequence[str]] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Deletes a batch of tasks.
+        This is a non-atomic operation: if deletion fails for
+        some tasks, it can still succeed for others. The
+        metadata field of google.longrunning.Operation contains
+        details of failed deletions. A maximum of 1000 tasks can
+        be deleted in a batch.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import tasks_v2
+
+            async def sample_batch_delete_tasks():
+                # Create a client
+                client = tasks_v2.CloudTasksAsyncClient()
+
+                # Initialize request argument(s)
+                request = tasks_v2.BatchDeleteTasksRequest(
+                    parent="parent_value",
+                    names=['names_value1', 'names_value2'],
+                )
+
+                # Make the request
+                operation = await client.batch_delete_tasks(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.tasks_v2.types.BatchDeleteTasksRequest, dict]]):
+                The request object. Request message for deleting a batch of tasks using
+                [BatchDeleteTasks][google.cloud.tasks.v2.CloudTasks.BatchDeleteTasks].
+            parent (:class:`str`):
+                Required. The queue name. For example: Format:
+                ``projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            names (:class:`MutableSequence[str]`):
+                Required. The names of the tasks to delete. A maximum of
+                1000 tasks can be deleted in a batch. For example:
+                Format:
+                ``projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID``
+
+                This corresponds to the ``names`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.protobuf.empty_pb2.Empty` A generic empty message that you can re-use to avoid defining duplicated
+                   empty messages in your APIs. A typical example is to
+                   use it as the request or the response type of an API
+                   method. For instance:
+
+                      service Foo {
+                         rpc Bar(google.protobuf.Empty) returns
+                         (google.protobuf.Empty);
+
+                      }
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, names]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloudtasks.BatchDeleteTasksRequest):
+            request = cloudtasks.BatchDeleteTasksRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+        if names:
+            request.names.extend(names)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.batch_delete_tasks
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            empty_pb2.Empty,
+            metadata_type=cloudtasks.BatchDeleteTasksMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
     async def run_task(
         self,
         request: Optional[Union[cloudtasks.RunTaskRequest, dict]] = None,
@@ -2272,10 +2594,6 @@ class CloudTasksAsyncClient:
         example, [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] can
         be used to retry a failed task after a fix has been made or to
         manually force a task to be dispatched now.
-
-        The dispatched task is returned. That is, the task that is
-        returned contains the [status][Task.status] after the task is
-        dispatched but before the task is received by its target.
 
         If Cloud Tasks receives a successful response from the task's
         target, then the task will be deleted; otherwise the task's
@@ -2377,6 +2695,309 @@ class CloudTasksAsyncClient:
         # Send the request.
         response = await rpc(
             request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_cmek_config(
+        self,
+        request: Optional[Union[cloudtasks.UpdateCmekConfigRequest, dict]] = None,
+        *,
+        cmek_config: Optional[gct_cmek_config.CmekConfig] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> gct_cmek_config.CmekConfig:
+        r"""Creates or Updates a CMEK config.
+
+        Updates the Customer Managed Encryption Key associated
+        with the Cloud Tasks location (Creates if the key does
+        not already exist). All new tasks created in the
+        location will be encrypted at-rest with the KMS-key
+        provided in the config.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import tasks_v2
+
+            async def sample_update_cmek_config():
+                # Create a client
+                client = tasks_v2.CloudTasksAsyncClient()
+
+                # Initialize request argument(s)
+                request = tasks_v2.UpdateCmekConfigRequest(
+                )
+
+                # Make the request
+                response = await client.update_cmek_config(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.tasks_v2.types.UpdateCmekConfigRequest, dict]]):
+                The request object. Request message for
+                [UpdateCmekConfig][google.cloud.tasks.v2.CloudTasks.UpdateCmekConfig].
+            cmek_config (:class:`google.cloud.tasks_v2.types.CmekConfig`):
+                Required. The config to update.  Its
+                name attribute distinguishes it.
+
+                This corresponds to the ``cmek_config`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                List of fields to be updated in this
+                request.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.tasks_v2.types.CmekConfig:
+                Describes the customer-managed
+                encryption key (CMEK) configuration
+                associated with a project and location.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [cmek_config, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloudtasks.UpdateCmekConfigRequest):
+            request = cloudtasks.UpdateCmekConfigRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if cmek_config is not None:
+            request.cmek_config = cmek_config
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_cmek_config
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("cmek_config.name", request.cmek_config.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_cmek_config(
+        self,
+        request: Optional[Union[cloudtasks.GetCmekConfigRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cmek_config.CmekConfig:
+        r"""Gets the CMEK config.
+
+        Gets the Customer Managed Encryption Key configured with the
+        Cloud Tasks location. By default there is no kms_key configured.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import tasks_v2
+
+            async def sample_get_cmek_config():
+                # Create a client
+                client = tasks_v2.CloudTasksAsyncClient()
+
+                # Initialize request argument(s)
+                request = tasks_v2.GetCmekConfigRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_cmek_config(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.tasks_v2.types.GetCmekConfigRequest, dict]]):
+                The request object. Request message for
+                [GetCmekConfig][google.cloud.tasks.v2.CloudTasks.GetCmekConfig].
+            name (:class:`str`):
+                Required. The config. For example:
+                ``projects/PROJECT_ID/locations/LOCATION_ID/CmekConfig``
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.tasks_v2.types.CmekConfig:
+                Describes the customer-managed
+                encryption key (CMEK) configuration
+                associated with a project and location.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloudtasks.GetCmekConfigRequest):
+            request = cloudtasks.GetCmekConfigRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_cmek_config
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_operation(
+        self,
+        request: Optional[Union[operations_pb2.GetOperationRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operations_pb2.Operation:
+        r"""Gets the latest state of a long-running operation.
+
+        Args:
+            request (:class:`~.operations_pb2.GetOperationRequest`):
+                The request object. Request message for
+                `GetOperation` method.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors,
+                    if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        Returns:
+            ~.operations_pb2.Operation:
+                An ``Operation`` object.
+        """
+        # Create or coerce a protobuf request object.
+        # The request isn't a proto-plus wrapped type,
+        # so it must be constructed via keyword expansion.
+        if request is None:
+            request_pb = operations_pb2.GetOperationRequest()
+        elif isinstance(request, dict):
+            request_pb = operations_pb2.GetOperationRequest(**request)
+        else:
+            request_pb = request
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self.transport._wrapped_methods[self._client._transport.get_operation]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request_pb.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request_pb,
             retry=retry,
             timeout=timeout,
             metadata=metadata,

@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.resourcemanager_v3._compat import transcode_request
 from google.cloud.resourcemanager_v3.types import projects
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -899,23 +900,16 @@ class ProjectsRestTransport(_BaseProjectsRestTransport):
             http_options = (
                 _BaseProjectsRestTransport._BaseCreateProject._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_project(request, metadata)
-            transcoded_request = (
-                _BaseProjectsRestTransport._BaseCreateProject._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseProjectsRestTransport._BaseCreateProject._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProjectsRestTransport._BaseCreateProject._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProjectsRestTransport._BaseCreateProject,
+                    "_BaseCreateProject__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1054,19 +1048,16 @@ class ProjectsRestTransport(_BaseProjectsRestTransport):
             http_options = (
                 _BaseProjectsRestTransport._BaseDeleteProject._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_project(request, metadata)
-            transcoded_request = (
-                _BaseProjectsRestTransport._BaseDeleteProject._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProjectsRestTransport._BaseDeleteProject._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProjectsRestTransport._BaseDeleteProject,
+                    "_BaseDeleteProject__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1274,23 +1265,16 @@ class ProjectsRestTransport(_BaseProjectsRestTransport):
             http_options = (
                 _BaseProjectsRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseProjectsRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseProjectsRestTransport._BaseGetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProjectsRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProjectsRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1431,19 +1415,16 @@ class ProjectsRestTransport(_BaseProjectsRestTransport):
             http_options = (
                 _BaseProjectsRestTransport._BaseGetProject._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_project(request, metadata)
-            transcoded_request = (
-                _BaseProjectsRestTransport._BaseGetProject._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProjectsRestTransport._BaseGetProject._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProjectsRestTransport._BaseGetProject,
+                    "_BaseGetProject__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1590,19 +1571,16 @@ class ProjectsRestTransport(_BaseProjectsRestTransport):
             http_options = (
                 _BaseProjectsRestTransport._BaseListProjects._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_projects(request, metadata)
-            transcoded_request = (
-                _BaseProjectsRestTransport._BaseListProjects._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProjectsRestTransport._BaseListProjects._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProjectsRestTransport._BaseListProjects,
+                    "_BaseListProjects__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1742,23 +1720,16 @@ class ProjectsRestTransport(_BaseProjectsRestTransport):
             http_options = (
                 _BaseProjectsRestTransport._BaseMoveProject._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_move_project(request, metadata)
-            transcoded_request = (
-                _BaseProjectsRestTransport._BaseMoveProject._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseProjectsRestTransport._BaseMoveProject._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProjectsRestTransport._BaseMoveProject._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProjectsRestTransport._BaseMoveProject,
+                    "_BaseMoveProject__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1902,19 +1873,16 @@ class ProjectsRestTransport(_BaseProjectsRestTransport):
             http_options = (
                 _BaseProjectsRestTransport._BaseSearchProjects._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_projects(request, metadata)
-            transcoded_request = (
-                _BaseProjectsRestTransport._BaseSearchProjects._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProjectsRestTransport._BaseSearchProjects._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProjectsRestTransport._BaseSearchProjects,
+                    "_BaseSearchProjects__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2124,23 +2092,16 @@ class ProjectsRestTransport(_BaseProjectsRestTransport):
             http_options = (
                 _BaseProjectsRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseProjectsRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseProjectsRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProjectsRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProjectsRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2278,21 +2239,18 @@ class ProjectsRestTransport(_BaseProjectsRestTransport):
             http_options = (
                 _BaseProjectsRestTransport._BaseTestIamPermissions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseProjectsRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseProjectsRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseProjectsRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProjectsRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2435,27 +2393,18 @@ class ProjectsRestTransport(_BaseProjectsRestTransport):
             http_options = (
                 _BaseProjectsRestTransport._BaseUndeleteProject._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_undelete_project(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseProjectsRestTransport._BaseUndeleteProject._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseProjectsRestTransport._BaseUndeleteProject._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProjectsRestTransport._BaseUndeleteProject._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProjectsRestTransport._BaseUndeleteProject,
+                    "_BaseUndeleteProject__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2601,23 +2550,16 @@ class ProjectsRestTransport(_BaseProjectsRestTransport):
             http_options = (
                 _BaseProjectsRestTransport._BaseUpdateProject._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_project(request, metadata)
-            transcoded_request = (
-                _BaseProjectsRestTransport._BaseUpdateProject._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseProjectsRestTransport._BaseUpdateProject._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProjectsRestTransport._BaseUpdateProject._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProjectsRestTransport._BaseUpdateProject,
+                    "_BaseUpdateProject__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2842,19 +2784,16 @@ class ProjectsRestTransport(_BaseProjectsRestTransport):
             http_options = (
                 _BaseProjectsRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseProjectsRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseProjectsRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseProjectsRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

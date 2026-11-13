@@ -38,11 +38,26 @@ from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
 from google.cloud.backupdr_v1.types import (
+    appliedautoprotectionpolicy,
+    autoprotectionpolicy,
+    autoprotectionpolicybinding,
     backupdr,
     backupplan,
     backupplanassociation,
     backupvault,
+    bindingmatchingresource,
     datasourcereference,
+    restore_template,
+    restore_template_execution,
+    restore_verification_plan,
+    restore_verification_plan_association,
+)
+from google.cloud.backupdr_v1.types import restore_template as gcb_restore_template
+from google.cloud.backupdr_v1.types import (
+    restore_verification_plan as gcb_restore_verification_plan,
+)
+from google.cloud.backupdr_v1.types import (
+    restore_verification_plan_association as gcb_restore_verification_plan_association,
 )
 
 from .base import DEFAULT_CLIENT_INFO, BackupDRTransport
@@ -1449,6 +1464,943 @@ class BackupDRGrpcAsyncIOTransport(BackupDRTransport):
             )
         return self._stubs["initialize_service"]
 
+    @property
+    def create_auto_protection_policy(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicy.CreateAutoProtectionPolicyRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the create auto protection policy method over gRPC.
+
+        Creates a new AutoProtectionPolicy in a given project
+        and location.
+
+        Returns:
+            Callable[[~.CreateAutoProtectionPolicyRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_auto_protection_policy" not in self._stubs:
+            self._stubs["create_auto_protection_policy"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/CreateAutoProtectionPolicy",
+                    request_serializer=autoprotectionpolicy.CreateAutoProtectionPolicyRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["create_auto_protection_policy"]
+
+    @property
+    def list_auto_protection_policies(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicy.ListAutoProtectionPoliciesRequest],
+        Awaitable[autoprotectionpolicy.ListAutoProtectionPoliciesResponse],
+    ]:
+        r"""Return a callable for the list auto protection policies method over gRPC.
+
+        Lists AutoProtectionPolicies for a given project and
+        location.
+
+        Returns:
+            Callable[[~.ListAutoProtectionPoliciesRequest],
+                    Awaitable[~.ListAutoProtectionPoliciesResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_auto_protection_policies" not in self._stubs:
+            self._stubs["list_auto_protection_policies"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/ListAutoProtectionPolicies",
+                    request_serializer=autoprotectionpolicy.ListAutoProtectionPoliciesRequest.serialize,
+                    response_deserializer=autoprotectionpolicy.ListAutoProtectionPoliciesResponse.deserialize,
+                )
+            )
+        return self._stubs["list_auto_protection_policies"]
+
+    @property
+    def get_auto_protection_policy(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicy.GetAutoProtectionPolicyRequest],
+        Awaitable[autoprotectionpolicy.AutoProtectionPolicy],
+    ]:
+        r"""Return a callable for the get auto protection policy method over gRPC.
+
+        Gets details of a single AutoProtectionPolicy.
+
+        Returns:
+            Callable[[~.GetAutoProtectionPolicyRequest],
+                    Awaitable[~.AutoProtectionPolicy]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_auto_protection_policy" not in self._stubs:
+            self._stubs["get_auto_protection_policy"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/GetAutoProtectionPolicy",
+                    request_serializer=autoprotectionpolicy.GetAutoProtectionPolicyRequest.serialize,
+                    response_deserializer=autoprotectionpolicy.AutoProtectionPolicy.deserialize,
+                )
+            )
+        return self._stubs["get_auto_protection_policy"]
+
+    @property
+    def update_auto_protection_policy(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicy.UpdateAutoProtectionPolicyRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the update auto protection policy method over gRPC.
+
+        Updates the parameters of a single
+        AutoProtectionPolicy.
+
+        Returns:
+            Callable[[~.UpdateAutoProtectionPolicyRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_auto_protection_policy" not in self._stubs:
+            self._stubs["update_auto_protection_policy"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/UpdateAutoProtectionPolicy",
+                    request_serializer=autoprotectionpolicy.UpdateAutoProtectionPolicyRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["update_auto_protection_policy"]
+
+    @property
+    def delete_auto_protection_policy(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicy.DeleteAutoProtectionPolicyRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the delete auto protection policy method over gRPC.
+
+        Deletes a single AutoProtectionPolicy.
+
+        Returns:
+            Callable[[~.DeleteAutoProtectionPolicyRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_auto_protection_policy" not in self._stubs:
+            self._stubs["delete_auto_protection_policy"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/DeleteAutoProtectionPolicy",
+                    request_serializer=autoprotectionpolicy.DeleteAutoProtectionPolicyRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["delete_auto_protection_policy"]
+
+    @property
+    def create_auto_protection_policy_binding(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicybinding.CreateAutoProtectionPolicyBindingRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the create auto protection policy
+        binding method over gRPC.
+
+        Creates a new AutoProtectionPolicyBinding in a given
+        project and location.
+
+        Returns:
+            Callable[[~.CreateAutoProtectionPolicyBindingRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_auto_protection_policy_binding" not in self._stubs:
+            self._stubs["create_auto_protection_policy_binding"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/CreateAutoProtectionPolicyBinding",
+                    request_serializer=autoprotectionpolicybinding.CreateAutoProtectionPolicyBindingRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["create_auto_protection_policy_binding"]
+
+    @property
+    def get_auto_protection_policy_binding(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicybinding.GetAutoProtectionPolicyBindingRequest],
+        Awaitable[autoprotectionpolicybinding.AutoProtectionPolicyBinding],
+    ]:
+        r"""Return a callable for the get auto protection policy
+        binding method over gRPC.
+
+        Returns the auto protection policy binding read from
+        the CCFE tables.
+
+        Returns:
+            Callable[[~.GetAutoProtectionPolicyBindingRequest],
+                    Awaitable[~.AutoProtectionPolicyBinding]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_auto_protection_policy_binding" not in self._stubs:
+            self._stubs["get_auto_protection_policy_binding"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/GetAutoProtectionPolicyBinding",
+                    request_serializer=autoprotectionpolicybinding.GetAutoProtectionPolicyBindingRequest.serialize,
+                    response_deserializer=autoprotectionpolicybinding.AutoProtectionPolicyBinding.deserialize,
+                )
+            )
+        return self._stubs["get_auto_protection_policy_binding"]
+
+    @property
+    def list_auto_protection_policy_bindings(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsRequest],
+        Awaitable[autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsResponse],
+    ]:
+        r"""Return a callable for the list auto protection policy
+        bindings method over gRPC.
+
+        Returns the auto protection policy bindings read from
+        the CCFE tables.
+
+        Returns:
+            Callable[[~.ListAutoProtectionPolicyBindingsRequest],
+                    Awaitable[~.ListAutoProtectionPolicyBindingsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_auto_protection_policy_bindings" not in self._stubs:
+            self._stubs["list_auto_protection_policy_bindings"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/ListAutoProtectionPolicyBindings",
+                    request_serializer=autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsRequest.serialize,
+                    response_deserializer=autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsResponse.deserialize,
+                )
+            )
+        return self._stubs["list_auto_protection_policy_bindings"]
+
+    @property
+    def list_applied_auto_protection_policies(
+        self,
+    ) -> Callable[
+        [appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesRequest],
+        Awaitable[
+            appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesResponse
+        ],
+    ]:
+        r"""Return a callable for the list applied auto protection
+        policies method over gRPC.
+
+        Lists AppliedAutoProtectionPolicies in a given
+        project and location.
+
+        Returns:
+            Callable[[~.ListAppliedAutoProtectionPoliciesRequest],
+                    Awaitable[~.ListAppliedAutoProtectionPoliciesResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_applied_auto_protection_policies" not in self._stubs:
+            self._stubs["list_applied_auto_protection_policies"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/ListAppliedAutoProtectionPolicies",
+                    request_serializer=appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesRequest.serialize,
+                    response_deserializer=appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesResponse.deserialize,
+                )
+            )
+        return self._stubs["list_applied_auto_protection_policies"]
+
+    @property
+    def initiate_delete_auto_protection_policy_binding(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicybinding.InitiateDeleteAutoProtectionPolicyBindingRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the initiate delete auto
+        protection policy binding method over gRPC.
+
+        InitiateDeleteAutoProtectionPolicyBinding initiates
+        delete for AutoProtectionPolicy Binding
+
+        Returns:
+            Callable[[~.InitiateDeleteAutoProtectionPolicyBindingRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "initiate_delete_auto_protection_policy_binding" not in self._stubs:
+            self._stubs["initiate_delete_auto_protection_policy_binding"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/InitiateDeleteAutoProtectionPolicyBinding",
+                    request_serializer=autoprotectionpolicybinding.InitiateDeleteAutoProtectionPolicyBindingRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["initiate_delete_auto_protection_policy_binding"]
+
+    @property
+    def list_binding_matching_resources(
+        self,
+    ) -> Callable[
+        [bindingmatchingresource.ListBindingMatchingResourcesRequest],
+        Awaitable[bindingmatchingresource.ListBindingMatchingResourcesResponse],
+    ]:
+        r"""Return a callable for the list binding matching
+        resources method over gRPC.
+
+        Lists Binding Matching Resources for a given
+        AutoProtectionPolicyBinding.
+
+        Returns:
+            Callable[[~.ListBindingMatchingResourcesRequest],
+                    Awaitable[~.ListBindingMatchingResourcesResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_binding_matching_resources" not in self._stubs:
+            self._stubs["list_binding_matching_resources"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/ListBindingMatchingResources",
+                    request_serializer=bindingmatchingresource.ListBindingMatchingResourcesRequest.serialize,
+                    response_deserializer=bindingmatchingresource.ListBindingMatchingResourcesResponse.deserialize,
+                )
+            )
+        return self._stubs["list_binding_matching_resources"]
+
+    @property
+    def create_restore_template(
+        self,
+    ) -> Callable[
+        [gcb_restore_template.CreateRestoreTemplateRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the create restore template method over gRPC.
+
+        Creates a new RestoreTemplate in a given project and
+        location.
+
+        Returns:
+            Callable[[~.CreateRestoreTemplateRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_restore_template" not in self._stubs:
+            self._stubs["create_restore_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1.BackupDR/CreateRestoreTemplate",
+                request_serializer=gcb_restore_template.CreateRestoreTemplateRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["create_restore_template"]
+
+    @property
+    def get_restore_template(
+        self,
+    ) -> Callable[
+        [restore_template.GetRestoreTemplateRequest],
+        Awaitable[restore_template.RestoreTemplate],
+    ]:
+        r"""Return a callable for the get restore template method over gRPC.
+
+        Gets details of a RestoreTemplate.
+
+        Returns:
+            Callable[[~.GetRestoreTemplateRequest],
+                    Awaitable[~.RestoreTemplate]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_restore_template" not in self._stubs:
+            self._stubs["get_restore_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1.BackupDR/GetRestoreTemplate",
+                request_serializer=restore_template.GetRestoreTemplateRequest.serialize,
+                response_deserializer=restore_template.RestoreTemplate.deserialize,
+            )
+        return self._stubs["get_restore_template"]
+
+    @property
+    def list_restore_templates(
+        self,
+    ) -> Callable[
+        [restore_template.ListRestoreTemplatesRequest],
+        Awaitable[restore_template.ListRestoreTemplatesResponse],
+    ]:
+        r"""Return a callable for the list restore templates method over gRPC.
+
+        Lists RestoreTemplates in a given project and
+        location.
+
+        Returns:
+            Callable[[~.ListRestoreTemplatesRequest],
+                    Awaitable[~.ListRestoreTemplatesResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_restore_templates" not in self._stubs:
+            self._stubs["list_restore_templates"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1.BackupDR/ListRestoreTemplates",
+                request_serializer=restore_template.ListRestoreTemplatesRequest.serialize,
+                response_deserializer=restore_template.ListRestoreTemplatesResponse.deserialize,
+            )
+        return self._stubs["list_restore_templates"]
+
+    @property
+    def update_restore_template(
+        self,
+    ) -> Callable[
+        [gcb_restore_template.UpdateRestoreTemplateRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the update restore template method over gRPC.
+
+        Updates the settings of a RestoreTemplate.
+
+        Returns:
+            Callable[[~.UpdateRestoreTemplateRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_restore_template" not in self._stubs:
+            self._stubs["update_restore_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1.BackupDR/UpdateRestoreTemplate",
+                request_serializer=gcb_restore_template.UpdateRestoreTemplateRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["update_restore_template"]
+
+    @property
+    def delete_restore_template(
+        self,
+    ) -> Callable[
+        [restore_template.DeleteRestoreTemplateRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the delete restore template method over gRPC.
+
+        Deletes a RestoreTemplate.
+
+        Returns:
+            Callable[[~.DeleteRestoreTemplateRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_restore_template" not in self._stubs:
+            self._stubs["delete_restore_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1.BackupDR/DeleteRestoreTemplate",
+                request_serializer=restore_template.DeleteRestoreTemplateRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["delete_restore_template"]
+
+    @property
+    def run_restore_template(
+        self,
+    ) -> Callable[
+        [restore_template.RunRestoreTemplateRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the run restore template method over gRPC.
+
+        Runs a RestoreTemplate.
+
+        Returns:
+            Callable[[~.RunRestoreTemplateRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "run_restore_template" not in self._stubs:
+            self._stubs["run_restore_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1.BackupDR/RunRestoreTemplate",
+                request_serializer=restore_template.RunRestoreTemplateRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["run_restore_template"]
+
+    @property
+    def get_restore_template_execution(
+        self,
+    ) -> Callable[
+        [restore_template_execution.GetRestoreTemplateExecutionRequest],
+        Awaitable[restore_template_execution.RestoreTemplateExecution],
+    ]:
+        r"""Return a callable for the get restore template execution method over gRPC.
+
+        Gets details of a RestoreTemplateExecution.
+
+        Returns:
+            Callable[[~.GetRestoreTemplateExecutionRequest],
+                    Awaitable[~.RestoreTemplateExecution]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_restore_template_execution" not in self._stubs:
+            self._stubs["get_restore_template_execution"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/GetRestoreTemplateExecution",
+                    request_serializer=restore_template_execution.GetRestoreTemplateExecutionRequest.serialize,
+                    response_deserializer=restore_template_execution.RestoreTemplateExecution.deserialize,
+                )
+            )
+        return self._stubs["get_restore_template_execution"]
+
+    @property
+    def list_restore_template_executions(
+        self,
+    ) -> Callable[
+        [restore_template_execution.ListRestoreTemplateExecutionsRequest],
+        Awaitable[restore_template_execution.ListRestoreTemplateExecutionsResponse],
+    ]:
+        r"""Return a callable for the list restore template
+        executions method over gRPC.
+
+        Lists RestoreTemplateExecutions in a given project,
+        location and restore template.
+
+        Returns:
+            Callable[[~.ListRestoreTemplateExecutionsRequest],
+                    Awaitable[~.ListRestoreTemplateExecutionsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_restore_template_executions" not in self._stubs:
+            self._stubs["list_restore_template_executions"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/ListRestoreTemplateExecutions",
+                    request_serializer=restore_template_execution.ListRestoreTemplateExecutionsRequest.serialize,
+                    response_deserializer=restore_template_execution.ListRestoreTemplateExecutionsResponse.deserialize,
+                )
+            )
+        return self._stubs["list_restore_template_executions"]
+
+    @property
+    def trigger_restore_cleanup(
+        self,
+    ) -> Callable[
+        [restore_template_execution.TriggerRestoreCleanupRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the trigger restore cleanup method over gRPC.
+
+        Triggers cleanup of restored resources created during
+        execution.
+
+        Returns:
+            Callable[[~.TriggerRestoreCleanupRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "trigger_restore_cleanup" not in self._stubs:
+            self._stubs["trigger_restore_cleanup"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1.BackupDR/TriggerRestoreCleanup",
+                request_serializer=restore_template_execution.TriggerRestoreCleanupRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["trigger_restore_cleanup"]
+
+    @property
+    def create_restore_verification_plan(
+        self,
+    ) -> Callable[
+        [gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the create restore verification
+        plan method over gRPC.
+
+        Creates a new RestoreVerificationPlan in a given
+        project and location.
+
+        Returns:
+            Callable[[~.CreateRestoreVerificationPlanRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_restore_verification_plan" not in self._stubs:
+            self._stubs["create_restore_verification_plan"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/CreateRestoreVerificationPlan",
+                    request_serializer=gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["create_restore_verification_plan"]
+
+    @property
+    def create_restore_verification_plan_association(
+        self,
+    ) -> Callable[
+        [
+            gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest
+        ],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the create restore verification
+        plan association method over gRPC.
+
+        Creates a new RestoreVerificationPlanAssociation in a
+        given RestoreVerificationPlan.
+
+        Returns:
+            Callable[[~.CreateRestoreVerificationPlanAssociationRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_restore_verification_plan_association" not in self._stubs:
+            self._stubs["create_restore_verification_plan_association"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/CreateRestoreVerificationPlanAssociation",
+                    request_serializer=gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["create_restore_verification_plan_association"]
+
+    @property
+    def get_restore_verification_plan_association(
+        self,
+    ) -> Callable[
+        [
+            restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest
+        ],
+        Awaitable[
+            restore_verification_plan_association.RestoreVerificationPlanAssociation
+        ],
+    ]:
+        r"""Return a callable for the get restore verification plan
+        association method over gRPC.
+
+        Gets details of a single
+        RestoreVerificationPlanAssociation in a given
+        RestoreVerificationPlan.
+
+        Returns:
+            Callable[[~.GetRestoreVerificationPlanAssociationRequest],
+                    Awaitable[~.RestoreVerificationPlanAssociation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_restore_verification_plan_association" not in self._stubs:
+            self._stubs["get_restore_verification_plan_association"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/GetRestoreVerificationPlanAssociation",
+                    request_serializer=restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest.serialize,
+                    response_deserializer=restore_verification_plan_association.RestoreVerificationPlanAssociation.deserialize,
+                )
+            )
+        return self._stubs["get_restore_verification_plan_association"]
+
+    @property
+    def list_restore_verification_plan_associations(
+        self,
+    ) -> Callable[
+        [
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest
+        ],
+        Awaitable[
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse
+        ],
+    ]:
+        r"""Return a callable for the list restore verification plan
+        associations method over gRPC.
+
+        Lists RestoreVerificationPlanAssociations in a given
+        RestoreVerificationPlan.
+
+        Returns:
+            Callable[[~.ListRestoreVerificationPlanAssociationsRequest],
+                    Awaitable[~.ListRestoreVerificationPlanAssociationsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_restore_verification_plan_associations" not in self._stubs:
+            self._stubs["list_restore_verification_plan_associations"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/ListRestoreVerificationPlanAssociations",
+                    request_serializer=restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest.serialize,
+                    response_deserializer=restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse.deserialize,
+                )
+            )
+        return self._stubs["list_restore_verification_plan_associations"]
+
+    @property
+    def delete_restore_verification_plan_association(
+        self,
+    ) -> Callable[
+        [
+            restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest
+        ],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the delete restore verification
+        plan association method over gRPC.
+
+        Deletes a single RestoreVerificationPlanAssociation
+        in a given RestoreVerificationPlan.
+
+        Returns:
+            Callable[[~.DeleteRestoreVerificationPlanAssociationRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_restore_verification_plan_association" not in self._stubs:
+            self._stubs["delete_restore_verification_plan_association"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/DeleteRestoreVerificationPlanAssociation",
+                    request_serializer=restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["delete_restore_verification_plan_association"]
+
+    @property
+    def trigger_restore_verification(
+        self,
+    ) -> Callable[
+        [restore_verification_plan_association.TriggerRestoreVerificationRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the trigger restore verification method over gRPC.
+
+        Triggers a new Restore Verification for the
+        association in a given RestoreVerificationPlan.
+
+        Returns:
+            Callable[[~.TriggerRestoreVerificationRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "trigger_restore_verification" not in self._stubs:
+            self._stubs["trigger_restore_verification"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/TriggerRestoreVerification",
+                    request_serializer=restore_verification_plan_association.TriggerRestoreVerificationRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["trigger_restore_verification"]
+
+    @property
+    def get_restore_verification_plan(
+        self,
+    ) -> Callable[
+        [restore_verification_plan.GetRestoreVerificationPlanRequest],
+        Awaitable[restore_verification_plan.RestoreVerificationPlan],
+    ]:
+        r"""Return a callable for the get restore verification plan method over gRPC.
+
+        Gets details of a single RestoreVerificationPlan.
+        Returns the requested RestoreVerificationPlan.
+
+        Returns:
+            Callable[[~.GetRestoreVerificationPlanRequest],
+                    Awaitable[~.RestoreVerificationPlan]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_restore_verification_plan" not in self._stubs:
+            self._stubs["get_restore_verification_plan"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/GetRestoreVerificationPlan",
+                    request_serializer=restore_verification_plan.GetRestoreVerificationPlanRequest.serialize,
+                    response_deserializer=restore_verification_plan.RestoreVerificationPlan.deserialize,
+                )
+            )
+        return self._stubs["get_restore_verification_plan"]
+
+    @property
+    def list_restore_verification_plans(
+        self,
+    ) -> Callable[
+        [restore_verification_plan.ListRestoreVerificationPlansRequest],
+        Awaitable[restore_verification_plan.ListRestoreVerificationPlansResponse],
+    ]:
+        r"""Return a callable for the list restore verification
+        plans method over gRPC.
+
+        Lists RestoreVerificationPlans in a given project and
+        location.
+
+        Returns:
+            Callable[[~.ListRestoreVerificationPlansRequest],
+                    Awaitable[~.ListRestoreVerificationPlansResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_restore_verification_plans" not in self._stubs:
+            self._stubs["list_restore_verification_plans"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/ListRestoreVerificationPlans",
+                    request_serializer=restore_verification_plan.ListRestoreVerificationPlansRequest.serialize,
+                    response_deserializer=restore_verification_plan.ListRestoreVerificationPlansResponse.deserialize,
+                )
+            )
+        return self._stubs["list_restore_verification_plans"]
+
+    @property
+    def delete_restore_verification_plan(
+        self,
+    ) -> Callable[
+        [restore_verification_plan.DeleteRestoreVerificationPlanRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the delete restore verification
+        plan method over gRPC.
+
+        Deletes a single RestoreVerificationPlan. If the ``force`` flag
+        is set to ``true``, any RestoreVerificationPlanAssociations
+        linked to this RestoreVerificationPlan will also be deleted.
+
+        Returns:
+            Callable[[~.DeleteRestoreVerificationPlanRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_restore_verification_plan" not in self._stubs:
+            self._stubs["delete_restore_verification_plan"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1.BackupDR/DeleteRestoreVerificationPlan",
+                    request_serializer=restore_verification_plan.DeleteRestoreVerificationPlanRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["delete_restore_verification_plan"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -1742,6 +2694,277 @@ class BackupDRGrpcAsyncIOTransport(BackupDRTransport):
                     ),
                     deadline=60.0,
                 ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_auto_protection_policy: self._wrap_method(
+                self.create_auto_protection_policy,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_auto_protection_policies: self._wrap_method(
+                self.list_auto_protection_policies,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_auto_protection_policy: self._wrap_method(
+                self.get_auto_protection_policy,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.update_auto_protection_policy: self._wrap_method(
+                self.update_auto_protection_policy,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.delete_auto_protection_policy: self._wrap_method(
+                self.delete_auto_protection_policy,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_auto_protection_policy_binding: self._wrap_method(
+                self.create_auto_protection_policy_binding,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_auto_protection_policy_binding: self._wrap_method(
+                self.get_auto_protection_policy_binding,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_auto_protection_policy_bindings: self._wrap_method(
+                self.list_auto_protection_policy_bindings,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_applied_auto_protection_policies: self._wrap_method(
+                self.list_applied_auto_protection_policies,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.initiate_delete_auto_protection_policy_binding: self._wrap_method(
+                self.initiate_delete_auto_protection_policy_binding,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_binding_matching_resources: self._wrap_method(
+                self.list_binding_matching_resources,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_restore_template: self._wrap_method(
+                self.create_restore_template,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_restore_template: self._wrap_method(
+                self.get_restore_template,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_restore_templates: self._wrap_method(
+                self.list_restore_templates,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.update_restore_template: self._wrap_method(
+                self.update_restore_template,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.delete_restore_template: self._wrap_method(
+                self.delete_restore_template,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.run_restore_template: self._wrap_method(
+                self.run_restore_template,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_restore_template_execution: self._wrap_method(
+                self.get_restore_template_execution,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_restore_template_executions: self._wrap_method(
+                self.list_restore_template_executions,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.trigger_restore_cleanup: self._wrap_method(
+                self.trigger_restore_cleanup,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_restore_verification_plan: self._wrap_method(
+                self.create_restore_verification_plan,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_restore_verification_plan_association: self._wrap_method(
+                self.create_restore_verification_plan_association,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_restore_verification_plan_association: self._wrap_method(
+                self.get_restore_verification_plan_association,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_restore_verification_plan_associations: self._wrap_method(
+                self.list_restore_verification_plan_associations,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.delete_restore_verification_plan_association: self._wrap_method(
+                self.delete_restore_verification_plan_association,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.trigger_restore_verification: self._wrap_method(
+                self.trigger_restore_verification,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_restore_verification_plan: self._wrap_method(
+                self.get_restore_verification_plan,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_restore_verification_plans: self._wrap_method(
+                self.list_restore_verification_plans,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.delete_restore_verification_plan: self._wrap_method(
+                self.delete_restore_verification_plan,
                 default_timeout=60.0,
                 client_info=client_info,
             ),

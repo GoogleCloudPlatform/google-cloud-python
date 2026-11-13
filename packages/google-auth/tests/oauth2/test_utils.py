@@ -19,7 +19,6 @@ import pytest  # type: ignore
 from google.auth import exceptions
 from google.oauth2 import utils
 
-
 CLIENT_ID = "username"
 CLIENT_SECRET = "password"
 # Base64 encoding of "username:password"

@@ -183,4 +183,16 @@ texinfo_documents = [
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {"https://docs.python.org/3/": None}
+intersphinx_mapping = {}
+
+# Check reachability of the Python standard library inventory before attaching it.
+# Because Sphinx is run with `-W` (warnings as errors) in CI, an external network
+# failure or upstream outage on docs.python.org would otherwise treat the missing
+# inventory as a fatal error and fail the build.
+try:
+    import urllib.request
+
+    with urllib.request.urlopen("https://docs.python.org/3/objects.inv", timeout=2):
+        intersphinx_mapping["https://docs.python.org/3/"] = None
+except Exception:
+    pass

@@ -16,15 +16,22 @@ from __future__ import annotations
 
 import atexit
 import concurrent.futures
+import contextlib
+import inspect
+import logging
+import threading
 import time
 import warnings
 from collections import deque
-from typing import TYPE_CHECKING, Sequence, cast
+from typing import TYPE_CHECKING, Any, Callable, Sequence, cast
+
+from google.rpc import code_pb2, status_pb2
 
 from google.cloud.bigtable.data._cross_sync import CrossSync
 from google.cloud.bigtable.data._helpers import (
     TABLE_DEFAULT,
     _get_retryable_errors,
+    _get_statuses_from_mutations_exception_group,
     _get_timeouts,
 )
 from google.cloud.bigtable.data._metrics import ActiveOperationMetric, OperationType
@@ -38,7 +45,6 @@ from google.cloud.bigtable.data.mutations import (
 )
 
 if TYPE_CHECKING:
-    from google.cloud.bigtable.data._metrics import BigtableClientSideMetricsController
     from google.cloud.bigtable.data.mutations import RowMutationEntry
 
     if CrossSync.is_async:
@@ -54,6 +60,7 @@ __CROSS_SYNC_OUTPUT__ = "google.cloud.bigtable.data._sync_autogen.mutations_batc
 
 # used to make more readable default values
 _MB_SIZE = 1024 * 1024
+_LOGGER = logging.getLogger(__name__)
 
 
 @CrossSync.convert_class(sync_name="_FlowControl", add_mapping_for_name="_FlowControl")
@@ -188,17 +195,18 @@ class _FlowControlAsync:
     async def add_to_flow_with_metrics(
         self,
         mutations: RowMutationEntry | list[RowMutationEntry],
-        metrics_controller: BigtableClientSideMetricsController,
+        target: TargetType,
     ):
         inner_generator = self.add_to_flow(mutations)
         while True:
-            # start a new metric
-            metric = metrics_controller.create_operation(OperationType.BULK_MUTATE_ROWS)
             flow_start_time = time.monotonic_ns()
             try:
                 value = await inner_generator.__anext__()
             except CrossSync.StopIteration:
                 return
+            # Include flow-control waiting without creating a metric on exhaustion.
+            metric = target._create_operation(OperationType.BULK_MUTATE_ROWS)
+            metric.start_time_ns = flow_start_time
             metric.flow_throttling_time_ns = time.monotonic_ns() - flow_start_time
             yield value, metric
 
@@ -257,6 +265,9 @@ class MutationsBatcherAsync:
         )
 
         self._closed = CrossSync.Event()
+        self._stage_lock: contextlib.AbstractContextManager[Any] = (
+            threading.RLock() if not CrossSync.is_async else contextlib.nullcontext()
+        )
         self._target = table
         self._staged_entries: list[RowMutationEntry] = []
         self._staged_count, self._staged_bytes = 0, 0
@@ -281,18 +292,22 @@ class MutationsBatcherAsync:
             if not CrossSync.is_async
             else None
         )
-        self._flush_timer = CrossSync.create_task(
-            self._timer_routine, flush_interval, sync_executor=self._sync_flush_executor
-        )
         self._flush_jobs: set[CrossSync.Future[None]] = set()
         # MutationExceptionGroup reports number of successful entries along with failures
         self._entries_processed_since_last_raise: int = 0
         self._exceptions_since_last_raise: int = 0
         # keep track of the first and last _exception_list_limit exceptions
         self._exception_list_limit: int = 10
-        self._oldest_exceptions: list[Exception] = []
-        self._newest_exceptions: deque[Exception] = deque(
+        self._oldest_exceptions: list[FailedMutationEntryError] = []
+        self._newest_exceptions: deque[FailedMutationEntryError] = deque(
             maxlen=self._exception_list_limit
+        )
+        # only used by the shim right now.
+        self._user_batch_completed_callback: (
+            Callable[[list[status_pb2.Status]], Any] | None
+        ) = None
+        self._flush_timer = CrossSync.create_daemon_task(
+            self._timer_routine, flush_interval
         )
         # clean up on program exit
         atexit.register(self._on_exit)
@@ -315,8 +330,9 @@ class MutationsBatcherAsync:
             await CrossSync.event_wait(
                 self._closed, timeout=interval, async_break_early=False
             )
-            if not self._closed.is_set() and self._staged_entries:
-                self._schedule_flush()
+            with self._stage_lock:
+                if not self._closed.is_set() and self._staged_entries:
+                    self._schedule_flush()
 
     @CrossSync.convert
     async def append(self, mutation_entry: RowMutationEntry):
@@ -330,21 +346,25 @@ class MutationsBatcherAsync:
             ValueError: if an invalid mutation type is added
         """
         # TODO: return a future to track completion of this entry
-        if self._closed.is_set():
-            raise RuntimeError("Cannot append to closed MutationsBatcher")
-        if isinstance(cast(Mutation, mutation_entry), Mutation):
-            raise ValueError(
-                f"invalid mutation type: {type(mutation_entry).__name__}. Only RowMutationEntry objects are supported by batcher"
-            )
-        self._staged_entries.append(mutation_entry)
-        # start a new flush task if limits exceeded
-        self._staged_count += len(mutation_entry.mutations)
-        self._staged_bytes += mutation_entry.size()
-        if (
-            self._staged_count >= self._flush_limit_count
-            or self._staged_bytes >= self._flush_limit_bytes
-        ):
-            self._schedule_flush()
+        should_flush = False
+        with self._stage_lock:
+            if self._closed.is_set():
+                raise RuntimeError("Cannot append to closed MutationsBatcher")
+            if isinstance(cast(Mutation, mutation_entry), Mutation):
+                raise ValueError(
+                    f"invalid mutation type: {type(mutation_entry).__name__}. Only RowMutationEntry objects are supported by batcher"
+                )
+            self._staged_entries.append(mutation_entry)
+            # start a new flush task if limits exceeded
+            self._staged_count += len(mutation_entry.mutations)
+            self._staged_bytes += mutation_entry.size()
+            if (
+                self._staged_count >= self._flush_limit_count
+                or self._staged_bytes >= self._flush_limit_bytes
+            ):
+                self._schedule_flush()
+                should_flush = True
+        if should_flush:
             # yield to the event loop to allow flush to run
             await CrossSync.yield_to_event_loop()
 
@@ -356,16 +376,25 @@ class MutationsBatcherAsync:
             Future[None] | None:
                 future representing the background task, if started
         """
-        if self._staged_entries:
-            entries, self._staged_entries = self._staged_entries, []
-            self._staged_count, self._staged_bytes = 0, 0
-            new_task = CrossSync.create_task(
-                self._flush_internal, entries, sync_executor=self._sync_flush_executor
-            )
-            if not new_task.done():
-                self._flush_jobs.add(new_task)
-                new_task.add_done_callback(self._flush_jobs.remove)
-            return new_task
+        with self._stage_lock:
+            if self._staged_entries:
+                entries, self._staged_entries = self._staged_entries, []
+                self._staged_count, self._staged_bytes = 0, 0
+                try:
+                    new_task = CrossSync.create_task(
+                        self._flush_internal,
+                        entries,
+                        sync_executor=self._sync_flush_executor,
+                    )
+                except RuntimeError:
+                    self._staged_entries = entries + self._staged_entries
+                    self._staged_count += sum(len(e.mutations) for e in entries)
+                    self._staged_bytes += sum(e.size() for e in entries)
+                    raise
+                if not new_task.done():
+                    self._flush_jobs.add(new_task)
+                    new_task.add_done_callback(self._flush_jobs.discard)
+                return new_task
         return None
 
     @CrossSync.convert
@@ -377,22 +406,34 @@ class MutationsBatcherAsync:
             new_entries list of RowMutationEntry objects to flush
         """
         # flush new entries
-        in_process_requests: list[CrossSync.Future[list[FailedMutationEntryError]]] = []
+        in_process_requests: list[
+            tuple[
+                CrossSync.Future[list[FailedMutationEntryError]], list[RowMutationEntry]
+            ]
+        ] = []
+        found_exceptions: list[FailedMutationEntryError] = []
         async for batch, metric in self._flow_control.add_to_flow_with_metrics(
-            new_entries, self._target.client._metrics
+            new_entries, self._target
         ):
-            batch_task = CrossSync.create_task(
-                self._execute_mutate_rows,
-                batch,
-                metric,
-                sync_executor=self._sync_rpc_executor,
-            )
-            in_process_requests.append(batch_task)
+            try:
+                batch_task = CrossSync.create_task(
+                    self._execute_mutate_rows,
+                    batch,
+                    metric,
+                    sync_executor=self._sync_rpc_executor,
+                )
+                in_process_requests.append((batch_task, batch))
+            except RuntimeError:
+                # Executor is already shut down (e.g. during atexit); flush synchronously.
+                found_exceptions.extend(await self._execute_mutate_rows(batch, metric))
         # wait for all inflight requests to complete
-        found_exceptions = await self._wait_for_batch_results(*in_process_requests)
+        found_exceptions.extend(
+            await self._wait_for_batch_results(*in_process_requests)
+        )
         # update exception data to reflect any new errors
-        self._entries_processed_since_last_raise += len(new_entries)
-        self._add_exceptions(found_exceptions)
+        with self._stage_lock:
+            self._entries_processed_since_last_raise += len(new_entries)
+            self._add_exceptions(found_exceptions)
 
     @CrossSync.convert
     async def _execute_mutate_rows(
@@ -410,6 +451,7 @@ class MutationsBatcherAsync:
                 list of FailedMutationEntryError objects for mutations that failed.
                 FailedMutationEntryError objects will not contain index information
         """
+        statuses = [status_pb2.Status(code=code_pb2.UNKNOWN) for _ in range(len(batch))]
         try:
             operation = CrossSync._MutateRowsOperation(
                 self._target.client._gapic_client,
@@ -422,16 +464,41 @@ class MutationsBatcherAsync:
             )
             await operation.start()
         except MutationsExceptionGroup as e:
+            statuses = _get_statuses_from_mutations_exception_group(e, len(batch))
+
             # strip index information from exceptions, since it is not useful in a batch context
             for subexc in e.exceptions:
                 subexc.index = None
             return list(e.exceptions)
+        else:
+            statuses = [status_pb2.Status(code=code_pb2.OK) for _ in range(len(batch))]
         finally:
             # mark batch as complete in flow control
             await self._flow_control.remove_from_flow(batch)
+
+            # Call batch done callback with list of statuses.
+            # This is an internal callback used by the legacy synchronous shim,
+            # though async callbacks are awaited when running in async mode.
+            if self._user_batch_completed_callback:
+                try:
+                    result = self._user_batch_completed_callback(statuses)
+                    if CrossSync.is_async:
+                        if inspect.isawaitable(result):
+                            await result
+                    else:
+                        if inspect.isawaitable(result):
+                            if inspect.iscoroutine(result):
+                                result.close()
+                            raise TypeError(
+                                "_user_batch_completed_callback must be a synchronous callable"
+                            )
+                except Exception as exc:
+                    _LOGGER.warning(
+                        f"Exception raised in user batch completion callback: {exc}"
+                    )
         return []
 
-    def _add_exceptions(self, excs: list[Exception]):
+    def _add_exceptions(self, excs: list[FailedMutationEntryError]):
         """
         Add new list of exceptions to internal store. To avoid unbounded memory,
         the batcher will store the first and last _exception_list_limit exceptions,
@@ -457,24 +524,25 @@ class MutationsBatcherAsync:
         Raises:
             MutationsExceptionGroup: exception group with all unreported exceptions
         """
-        if self._oldest_exceptions or self._newest_exceptions:
-            oldest, self._oldest_exceptions = self._oldest_exceptions, []
-            newest = list(self._newest_exceptions)
-            self._newest_exceptions.clear()
-            entry_count, self._entries_processed_since_last_raise = (
-                self._entries_processed_since_last_raise,
-                0,
-            )
-            exc_count, self._exceptions_since_last_raise = (
-                self._exceptions_since_last_raise,
-                0,
-            )
-            raise MutationsExceptionGroup.from_truncated_lists(
-                first_list=oldest,
-                last_list=newest,
-                total_excs=exc_count,
-                entry_count=entry_count,
-            )
+        with self._stage_lock:
+            if self._oldest_exceptions or self._newest_exceptions:
+                oldest, self._oldest_exceptions = self._oldest_exceptions, []
+                newest = list(self._newest_exceptions)
+                self._newest_exceptions.clear()
+                entry_count, self._entries_processed_since_last_raise = (
+                    self._entries_processed_since_last_raise,
+                    0,
+                )
+                exc_count, self._exceptions_since_last_raise = (
+                    self._exceptions_since_last_raise,
+                    0,
+                )
+                raise MutationsExceptionGroup.from_truncated_lists(
+                    first_list=oldest,
+                    last_list=newest,
+                    total_excs=exc_count,
+                    entry_count=entry_count,
+                )
 
     @CrossSync.convert(sync_name="__enter__")
     async def __aenter__(self):
@@ -503,9 +571,18 @@ class MutationsBatcherAsync:
         """
         Flush queue and clean up resources
         """
-        self._closed.set()
-        self._flush_timer.cancel()
-        self._schedule_flush()
+        with self._stage_lock:
+            self._closed.set()
+            self._flush_timer.cancel()
+            try:
+                self._schedule_flush()
+                entries: list[RowMutationEntry] = []
+            except RuntimeError:
+                # Executor is already shut down (e.g. during atexit); flush synchronously.
+                entries, self._staged_entries = self._staged_entries, []
+                self._staged_count, self._staged_bytes = 0, 0
+        if entries:
+            await self._flush_internal(entries)
         # shut down executors
         if self._sync_flush_executor:
             with self._sync_flush_executor:
@@ -522,40 +599,43 @@ class MutationsBatcherAsync:
         """
         Called when program is exited. Raises warning if unflushed mutations remain
         """
-        if not self._closed.is_set() and self._staged_entries:
-            warnings.warn(
-                f"MutationsBatcher for target {self._target!r} was not closed. "
-                f"{len(self._staged_entries)} Unflushed mutations will not be sent to the server."
-            )
+        with self._stage_lock:
+            if not self._closed.is_set() and self._staged_entries:
+                warnings.warn(
+                    f"MutationsBatcher for target {self._target!r} was not closed. "
+                    f"{len(self._staged_entries)} Unflushed mutations will not be sent to the server."
+                )
 
     @staticmethod
     @CrossSync.convert
     async def _wait_for_batch_results(
-        *tasks: CrossSync.Future[list[FailedMutationEntryError]]
-        | CrossSync.Future[None],
-    ) -> list[Exception]:
+        *tasks: tuple[
+            CrossSync.Future[list[FailedMutationEntryError]] | CrossSync.Future[None],
+            list[RowMutationEntry],
+        ],
+    ) -> list[FailedMutationEntryError]:
         """
         Takes in a list of futures representing _execute_mutate_rows tasks,
         waits for them to complete, and returns a list of errors encountered.
 
         Args:
-            *tasks: futures representing _execute_mutate_rows or _flush_internal tasks
+            *tasks: Tuples of futures representing _execute_mutate_rows or
+                    _flush_internal tasks, and their associated batches
         Returns:
-            list[Exception]:
-                list of Exceptions encountered by any of the tasks. Errors are expected
-                to be FailedMutationEntryError, representing a failed mutation operation.
-                If a task fails with a different exception, it will be included in the
-                output list. Successful tasks will not be represented in the output list.
+            list[FailedMutationEntryError]:
+                list of FailedMutationEntryError encountered by any of the tasks,
+                representing a failed mutation operation.
+                Successful tasks will not be represented in the output list.
         """
         if not tasks:
             return []
-        exceptions: list[Exception] = []
-        for task in tasks:
-            if CrossSync.is_async:
-                # futures don't need to be awaited in sync mode
-                await task
+        exceptions: list[FailedMutationEntryError] = []
+        for task, batch in tasks:
             try:
-                exc_list = task.result()
+                if CrossSync.is_async:
+                    exc_list = await task
+                else:
+                    exc_list = task.result()
                 if exc_list:
                     # expect a list of FailedMutationEntryError objects
                     for exc in exc_list:
@@ -563,5 +643,13 @@ class MutationsBatcherAsync:
                         exc.index = None
                     exceptions.extend(exc_list)
             except Exception as e:
-                exceptions.append(e)
+                exceptions.extend(
+                    [
+                        FailedMutationEntryError(
+                            failed_idx=None, failed_mutation_entry=entry, cause=e
+                        )
+                        for entry in batch
+                    ]
+                )
+
         return exceptions

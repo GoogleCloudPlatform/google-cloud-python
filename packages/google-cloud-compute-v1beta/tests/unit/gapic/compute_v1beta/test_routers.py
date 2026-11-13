@@ -69,6 +69,18 @@ CRED_INFO_JSON = {
 CRED_INFO_STRING = json.dumps(CRED_INFO_JSON)
 
 
+@pytest.fixture(autouse=True)
+def disable_mtls_env():
+    with mock.patch.dict(
+        os.environ,
+        {
+            "GOOGLE_API_USE_CLIENT_CERTIFICATE": "false",
+            "CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE": "false",
+        },
+    ):
+        yield
+
+
 async def mock_async_gen(data, chunk_size=1):
     for i in range(0, len(data)):  # pragma: NO COVER
         chunk = data[i : i + chunk_size]
@@ -124,177 +136,6 @@ def set_event_loop():
             asyncio.set_event_loop(None)
 
 
-def test__get_default_mtls_endpoint():
-    api_endpoint = "example.googleapis.com"
-    api_mtls_endpoint = "example.mtls.googleapis.com"
-    sandbox_endpoint = "example.sandbox.googleapis.com"
-    sandbox_mtls_endpoint = "example.mtls.sandbox.googleapis.com"
-    non_googleapi = "api.example.com"
-    custom_endpoint = ".custom"
-
-    assert RoutersClient._get_default_mtls_endpoint(None) is None
-    assert RoutersClient._get_default_mtls_endpoint(api_endpoint) == api_mtls_endpoint
-    assert (
-        RoutersClient._get_default_mtls_endpoint(api_mtls_endpoint) == api_mtls_endpoint
-    )
-    assert (
-        RoutersClient._get_default_mtls_endpoint(sandbox_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        RoutersClient._get_default_mtls_endpoint(sandbox_mtls_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert RoutersClient._get_default_mtls_endpoint(non_googleapi) == non_googleapi
-    assert RoutersClient._get_default_mtls_endpoint(custom_endpoint) == custom_endpoint
-
-
-def test__read_environment_variables():
-    assert RoutersClient._read_environment_variables() == (False, "auto", None)
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-        assert RoutersClient._read_environment_variables() == (True, "auto", None)
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}):
-        assert RoutersClient._read_environment_variables() == (False, "auto", None)
-
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}
-    ):
-        if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-            with pytest.raises(ValueError) as excinfo:
-                RoutersClient._read_environment_variables()
-            assert (
-                str(excinfo.value)
-                == "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be either `true` or `false`"
-            )
-        else:
-            assert RoutersClient._read_environment_variables() == (
-                False,
-                "auto",
-                None,
-            )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "never"}):
-        assert RoutersClient._read_environment_variables() == (False, "never", None)
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "always"}):
-        assert RoutersClient._read_environment_variables() == (False, "always", None)
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "auto"}):
-        assert RoutersClient._read_environment_variables() == (False, "auto", None)
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "Unsupported"}):
-        with pytest.raises(MutualTLSChannelError) as excinfo:
-            RoutersClient._read_environment_variables()
-    assert (
-        str(excinfo.value)
-        == "Environment variable `GOOGLE_API_USE_MTLS_ENDPOINT` must be `never`, `auto` or `always`"
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_CLOUD_UNIVERSE_DOMAIN": "foo.com"}):
-        assert RoutersClient._read_environment_variables() == (False, "auto", "foo.com")
-
-
-def test_use_client_cert_effective():
-    # Test case 1: Test when `should_use_client_cert` returns True.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=True
-        ):
-            assert RoutersClient._use_client_cert_effective() is True
-
-    # Test case 2: Test when `should_use_client_cert` returns False.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should NOT be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=False
-        ):
-            assert RoutersClient._use_client_cert_effective() is False
-
-    # Test case 3: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "true".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-            assert RoutersClient._use_client_cert_effective() is True
-
-    # Test case 4: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}
-        ):
-            assert RoutersClient._use_client_cert_effective() is False
-
-    # Test case 5: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "True".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "True"}):
-            assert RoutersClient._use_client_cert_effective() is True
-
-    # Test case 6: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "False".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "False"}
-        ):
-            assert RoutersClient._use_client_cert_effective() is False
-
-    # Test case 7: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "TRUE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "TRUE"}):
-            assert RoutersClient._use_client_cert_effective() is True
-
-    # Test case 8: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "FALSE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "FALSE"}
-        ):
-            assert RoutersClient._use_client_cert_effective() is False
-
-    # Test case 9: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not set.
-    # In this case, the method should return False, which is the default value.
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, clear=True):
-            assert RoutersClient._use_client_cert_effective() is False
-
-    # Test case 10: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should raise a ValueError as the environment variable must be either
-    # "true" or "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            with pytest.raises(ValueError):
-                RoutersClient._use_client_cert_effective()
-
-    # Test case 11: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should return False as the environment variable is set to an invalid value.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            assert RoutersClient._use_client_cert_effective() is False
-
-    # Test case 12: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is unset. Also,
-    # the GOOGLE_API_CONFIG environment variable is unset.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": ""}):
-            with mock.patch.dict(os.environ, {"GOOGLE_API_CERTIFICATE_CONFIG": ""}):
-                assert RoutersClient._use_client_cert_effective() is False
-
-
 def test__get_client_cert_source():
     mock_provided_cert_source = mock.Mock()
     mock_default_cert_source = mock.Mock()
@@ -323,90 +164,6 @@ def test__get_client_cert_source():
                 RoutersClient._get_client_cert_source(mock_provided_cert_source, "true")
                 is mock_provided_cert_source
             )
-
-
-@mock.patch.object(
-    RoutersClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(RoutersClient),
-)
-def test__get_api_endpoint():
-    api_override = "foo.com"
-    mock_client_cert_source = mock.Mock()
-    default_universe = RoutersClient._DEFAULT_UNIVERSE
-    default_endpoint = RoutersClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=default_universe
-    )
-    mock_universe = "bar.com"
-    mock_endpoint = RoutersClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=mock_universe
-    )
-
-    assert (
-        RoutersClient._get_api_endpoint(
-            api_override, mock_client_cert_source, default_universe, "always"
-        )
-        == api_override
-    )
-    assert (
-        RoutersClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "auto"
-        )
-        == RoutersClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        RoutersClient._get_api_endpoint(None, None, default_universe, "auto")
-        == default_endpoint
-    )
-    assert (
-        RoutersClient._get_api_endpoint(None, None, default_universe, "always")
-        == RoutersClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        RoutersClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "always"
-        )
-        == RoutersClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        RoutersClient._get_api_endpoint(None, None, mock_universe, "never")
-        == mock_endpoint
-    )
-    assert (
-        RoutersClient._get_api_endpoint(None, None, default_universe, "never")
-        == default_endpoint
-    )
-
-    with pytest.raises(MutualTLSChannelError) as excinfo:
-        RoutersClient._get_api_endpoint(
-            None, mock_client_cert_source, mock_universe, "auto"
-        )
-    assert (
-        str(excinfo.value)
-        == "mTLS is not supported in any universe other than googleapis.com."
-    )
-
-
-def test__get_universe_domain():
-    client_universe_domain = "foo.com"
-    universe_domain_env = "bar.com"
-
-    assert (
-        RoutersClient._get_universe_domain(client_universe_domain, universe_domain_env)
-        == client_universe_domain
-    )
-    assert (
-        RoutersClient._get_universe_domain(None, universe_domain_env)
-        == universe_domain_env
-    )
-    assert (
-        RoutersClient._get_universe_domain(None, None)
-        == RoutersClient._DEFAULT_UNIVERSE
-    )
-
-    with pytest.raises(ValueError) as excinfo:
-        RoutersClient._get_universe_domain("", None)
-    assert str(excinfo.value) == "Universe Domain cannot be an empty string."
 
 
 @pytest.mark.parametrize(
@@ -860,6 +617,7 @@ def test_routers_client_get_mtls_endpoint_and_cert_source(client_class):
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", None)
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", None)
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -914,6 +672,7 @@ def test_routers_client_get_mtls_endpoint_and_cert_source(client_class):
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", "")
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", "")
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1181,31 +940,32 @@ def test_aggregated_list_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).aggregated_list._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseAggregatedList,
+        "_BaseAggregatedList__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["project"] = "project_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).aggregated_list._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "include_all_scopes",
-            "max_results",
-            "order_by",
-            "page_token",
-            "return_partial_success",
-            "service_project_number",
+            "includeAllScopes",
+            "maxResults",
+            "orderBy",
+            "pageToken",
+            "returnPartialSuccess",
+            "serviceProjectNumber",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -1251,28 +1011,6 @@ def test_aggregated_list_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_aggregated_list_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.aggregated_list._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "includeAllScopes",
-                "maxResults",
-                "orderBy",
-                "pageToken",
-                "returnPartialSuccess",
-                "serviceProjectNumber",
-            )
-        )
-        & set(("project",))
-    )
 
 
 def test_aggregated_list_rest_flattened():
@@ -1461,9 +1199,14 @@ def test_delete_rest_required_fields(request_type=compute.DeleteRouterRequest):
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDelete,
+        "_BaseDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -1472,12 +1215,13 @@ def test_delete_rest_required_fields(request_type=compute.DeleteRouterRequest):
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(
+        (
+            "etag",
+            "requestId",
+        )
+    )
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -1527,24 +1271,6 @@ def test_delete_rest_required_fields(request_type=compute.DeleteRouterRequest):
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_delete_rest_flattened():
@@ -1668,9 +1394,14 @@ def test_delete_unary_rest_required_fields(request_type=compute.DeleteRouterRequ
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDelete,
+        "_BaseDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -1679,12 +1410,13 @@ def test_delete_unary_rest_required_fields(request_type=compute.DeleteRouterRequ
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(
+        (
+            "etag",
+            "requestId",
+        )
+    )
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -1734,24 +1466,6 @@ def test_delete_unary_rest_required_fields(request_type=compute.DeleteRouterRequ
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_unary_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_delete_unary_rest_flattened():
@@ -1879,9 +1593,14 @@ def test_delete_named_set_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_named_set._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteNamedSet,
+        "_BaseDeleteNamedSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -1890,17 +1609,13 @@ def test_delete_named_set_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_named_set._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "named_set",
-            "request_id",
+            "namedSet",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -1950,29 +1665,6 @@ def test_delete_named_set_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_named_set_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_named_set._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "namedSet",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_delete_named_set_rest_flattened():
@@ -2100,9 +1792,14 @@ def test_delete_named_set_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_named_set._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteNamedSet,
+        "_BaseDeleteNamedSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2111,17 +1808,13 @@ def test_delete_named_set_unary_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_named_set._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "named_set",
-            "request_id",
+            "namedSet",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -2171,29 +1864,6 @@ def test_delete_named_set_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_named_set_unary_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_named_set._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "namedSet",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_delete_named_set_unary_rest_flattened():
@@ -2323,9 +1993,14 @@ def test_delete_route_policy_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_route_policy._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteRoutePolicy,
+        "_BaseDeleteRoutePolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2334,17 +2009,13 @@ def test_delete_route_policy_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_route_policy._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "policy",
-            "request_id",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -2394,29 +2065,6 @@ def test_delete_route_policy_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_route_policy_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_route_policy._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "policy",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_delete_route_policy_rest_flattened():
@@ -2546,9 +2194,14 @@ def test_delete_route_policy_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_route_policy._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteRoutePolicy,
+        "_BaseDeleteRoutePolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2557,17 +2210,13 @@ def test_delete_route_policy_unary_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_route_policy._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "policy",
-            "request_id",
+            "requestId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -2617,29 +2266,6 @@ def test_delete_route_policy_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_route_policy_unary_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_route_policy._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "policy",
-                "requestId",
-            )
-        )
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_delete_route_policy_unary_rest_flattened():
@@ -2759,9 +2385,14 @@ def test_get_rest_required_fields(request_type=compute.GetRouterRequest):
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGet,
+        "_BaseGet__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2769,11 +2400,6 @@ def test_get_rest_required_fields(request_type=compute.GetRouterRequest):
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -2823,24 +2449,6 @@ def test_get_rest_required_fields(request_type=compute.GetRouterRequest):
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_get_rest_flattened():
@@ -2962,9 +2570,14 @@ def test_get_named_set_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_named_set._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetNamedSet,
+        "_BaseGetNamedSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2973,12 +2586,8 @@ def test_get_named_set_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_named_set._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("named_set",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("namedSet",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -3028,24 +2637,6 @@ def test_get_named_set_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_named_set_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_named_set._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("namedSet",))
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_get_named_set_rest_flattened():
@@ -3167,9 +2758,14 @@ def test_get_nat_ip_info_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_nat_ip_info._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetNatIpInfo,
+        "_BaseGetNatIpInfo__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -3178,12 +2774,8 @@ def test_get_nat_ip_info_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_nat_ip_info._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("nat_name",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("natName",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -3233,24 +2825,6 @@ def test_get_nat_ip_info_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_nat_ip_info_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_nat_ip_info._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("natName",))
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_get_nat_ip_info_rest_flattened():
@@ -3376,9 +2950,14 @@ def test_get_nat_mapping_info_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_nat_mapping_info._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetNatMappingInfo,
+        "_BaseGetNatMappingInfo__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -3387,21 +2966,17 @@ def test_get_nat_mapping_info_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_nat_mapping_info._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "max_results",
-            "nat_name",
-            "order_by",
-            "page_token",
-            "return_partial_success",
+            "maxResults",
+            "natName",
+            "orderBy",
+            "pageToken",
+            "returnPartialSuccess",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -3451,33 +3026,6 @@ def test_get_nat_mapping_info_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_nat_mapping_info_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_nat_mapping_info._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "maxResults",
-                "natName",
-                "orderBy",
-                "pageToken",
-                "returnPartialSuccess",
-            )
-        )
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_get_nat_mapping_info_rest_flattened():
@@ -3669,9 +3217,14 @@ def test_get_route_policy_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_route_policy._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetRoutePolicy,
+        "_BaseGetRoutePolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -3680,12 +3233,8 @@ def test_get_route_policy_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_route_policy._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(("policy",))
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -3735,24 +3284,6 @@ def test_get_route_policy_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_route_policy_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_route_policy._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("policy",))
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_get_route_policy_rest_flattened():
@@ -3876,9 +3407,14 @@ def test_get_router_status_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_router_status._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetRouterStatus,
+        "_BaseGetRouterStatus__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -3886,11 +3422,6 @@ def test_get_router_status_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_router_status._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -3940,24 +3471,6 @@ def test_get_router_status_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_router_status_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_router_status._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_get_router_status_rest_flattened():
@@ -4080,9 +3593,14 @@ def test_insert_rest_required_fields(request_type=compute.InsertRouterRequest):
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).insert._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseInsert,
+        "_BaseInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -4090,12 +3608,8 @@ def test_insert_rest_required_fields(request_type=compute.InsertRouterRequest):
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).insert._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -4144,24 +3658,6 @@ def test_insert_rest_required_fields(request_type=compute.InsertRouterRequest):
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_insert_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.insert._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "region",
-                "routerResource",
-            )
-        )
-    )
 
 
 def test_insert_rest_flattened():
@@ -4284,9 +3780,14 @@ def test_insert_unary_rest_required_fields(request_type=compute.InsertRouterRequ
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).insert._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseInsert,
+        "_BaseInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -4294,12 +3795,8 @@ def test_insert_unary_rest_required_fields(request_type=compute.InsertRouterRequ
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).insert._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -4348,24 +3845,6 @@ def test_insert_unary_rest_required_fields(request_type=compute.InsertRouterRequ
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_insert_unary_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.insert._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "region",
-                "routerResource",
-            )
-        )
-    )
 
 
 def test_insert_unary_rest_flattened():
@@ -4484,9 +3963,14 @@ def test_list_rest_required_fields(request_type=compute.ListRoutersRequest):
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseList,
+        "_BaseList__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -4494,20 +3978,16 @@ def test_list_rest_required_fields(request_type=compute.ListRoutersRequest):
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "max_results",
-            "order_by",
-            "page_token",
-            "return_partial_success",
+            "maxResults",
+            "orderBy",
+            "pageToken",
+            "returnPartialSuccess",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -4555,31 +4035,6 @@ def test_list_rest_required_fields(request_type=compute.ListRoutersRequest):
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "maxResults",
-                "orderBy",
-                "pageToken",
-                "returnPartialSuccess",
-            )
-        )
-        & set(
-            (
-                "project",
-                "region",
-            )
-        )
-    )
 
 
 def test_list_rest_flattened():
@@ -4759,9 +4214,14 @@ def test_list_bgp_routes_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_bgp_routes._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListBgpRoutes,
+        "_BaseListBgpRoutes__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -4770,25 +4230,21 @@ def test_list_bgp_routes_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_bgp_routes._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "address_family",
-            "destination_prefix",
+            "addressFamily",
+            "destinationPrefix",
             "filter",
-            "max_results",
-            "order_by",
-            "page_token",
+            "maxResults",
+            "orderBy",
+            "pageToken",
             "peer",
-            "policy_applied",
-            "return_partial_success",
-            "route_type",
+            "policyApplied",
+            "returnPartialSuccess",
+            "routeType",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -4838,37 +4294,6 @@ def test_list_bgp_routes_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_bgp_routes_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_bgp_routes._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "addressFamily",
-                "destinationPrefix",
-                "filter",
-                "maxResults",
-                "orderBy",
-                "pageToken",
-                "peer",
-                "policyApplied",
-                "returnPartialSuccess",
-                "routeType",
-            )
-        )
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_list_bgp_routes_rest_flattened():
@@ -5058,9 +4483,14 @@ def test_list_named_sets_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_named_sets._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListNamedSets,
+        "_BaseListNamedSets__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -5069,20 +4499,16 @@ def test_list_named_sets_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_named_sets._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "max_results",
-            "order_by",
-            "page_token",
-            "return_partial_success",
+            "maxResults",
+            "orderBy",
+            "pageToken",
+            "returnPartialSuccess",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -5132,32 +4558,6 @@ def test_list_named_sets_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_named_sets_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_named_sets._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "maxResults",
-                "orderBy",
-                "pageToken",
-                "returnPartialSuccess",
-            )
-        )
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_list_named_sets_rest_flattened():
@@ -5351,9 +4751,14 @@ def test_list_route_policies_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_route_policies._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListRoutePolicies,
+        "_BaseListRoutePolicies__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -5362,20 +4767,16 @@ def test_list_route_policies_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_route_policies._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "max_results",
-            "order_by",
-            "page_token",
-            "return_partial_success",
+            "maxResults",
+            "orderBy",
+            "pageToken",
+            "returnPartialSuccess",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -5425,32 +4826,6 @@ def test_list_route_policies_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_route_policies_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_route_policies._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "maxResults",
-                "orderBy",
-                "pageToken",
-                "returnPartialSuccess",
-            )
-        )
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_list_route_policies_rest_flattened():
@@ -5642,9 +5017,14 @@ def test_patch_rest_required_fields(request_type=compute.PatchRouterRequest):
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePatch,
+        "_BasePatch__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -5653,12 +5033,8 @@ def test_patch_rest_required_fields(request_type=compute.PatchRouterRequest):
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -5709,25 +5085,6 @@ def test_patch_rest_required_fields(request_type=compute.PatchRouterRequest):
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_patch_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.patch._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-                "routerResource",
-            )
-        )
-    )
 
 
 def test_patch_rest_flattened():
@@ -5857,9 +5214,14 @@ def test_patch_unary_rest_required_fields(request_type=compute.PatchRouterReques
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePatch,
+        "_BasePatch__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -5868,12 +5230,8 @@ def test_patch_unary_rest_required_fields(request_type=compute.PatchRouterReques
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -5924,25 +5282,6 @@ def test_patch_unary_rest_required_fields(request_type=compute.PatchRouterReques
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_patch_unary_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.patch._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-                "routerResource",
-            )
-        )
-    )
 
 
 def test_patch_unary_rest_flattened():
@@ -6074,9 +5413,14 @@ def test_patch_named_set_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch_named_set._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePatchNamedSet,
+        "_BasePatchNamedSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -6085,12 +5429,8 @@ def test_patch_named_set_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch_named_set._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -6141,25 +5481,6 @@ def test_patch_named_set_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_patch_named_set_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.patch_named_set._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "namedSetResource",
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_patch_named_set_rest_flattened():
@@ -6287,9 +5608,14 @@ def test_patch_named_set_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch_named_set._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePatchNamedSet,
+        "_BasePatchNamedSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -6298,12 +5624,8 @@ def test_patch_named_set_unary_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch_named_set._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -6354,25 +5676,6 @@ def test_patch_named_set_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_patch_named_set_unary_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.patch_named_set._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "namedSetResource",
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_patch_named_set_unary_rest_flattened():
@@ -6504,9 +5807,14 @@ def test_patch_route_policy_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch_route_policy._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePatchRoutePolicy,
+        "_BasePatchRoutePolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -6515,12 +5823,8 @@ def test_patch_route_policy_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch_route_policy._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -6571,25 +5875,6 @@ def test_patch_route_policy_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_patch_route_policy_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.patch_route_policy._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "region",
-                "routePolicyResource",
-                "router",
-            )
-        )
-    )
 
 
 def test_patch_route_policy_rest_flattened():
@@ -6721,9 +6006,14 @@ def test_patch_route_policy_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch_route_policy._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePatchRoutePolicy,
+        "_BasePatchRoutePolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -6732,12 +6022,8 @@ def test_patch_route_policy_unary_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).patch_route_policy._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -6788,25 +6074,6 @@ def test_patch_route_policy_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_patch_route_policy_unary_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.patch_route_policy._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "region",
-                "routePolicyResource",
-                "router",
-            )
-        )
-    )
 
 
 def test_patch_route_policy_unary_rest_flattened():
@@ -6928,9 +6195,14 @@ def test_preview_rest_required_fields(request_type=compute.PreviewRouterRequest)
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).preview._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePreview,
+        "_BasePreview__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -6938,11 +6210,6 @@ def test_preview_rest_required_fields(request_type=compute.PreviewRouterRequest)
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).preview._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -6993,25 +6260,6 @@ def test_preview_rest_required_fields(request_type=compute.PreviewRouterRequest)
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_preview_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.preview._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-                "routerResource",
-            )
-        )
-    )
 
 
 def test_preview_rest_flattened():
@@ -7143,9 +6391,14 @@ def test_test_iam_permissions_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).test_iam_permissions._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseTestIamPermissions,
+        "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -7153,11 +6406,6 @@ def test_test_iam_permissions_rest_required_fields(
     jsonified_request["project"] = "project_value"
     jsonified_request["region"] = "region_value"
     jsonified_request["resource"] = "resource_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).test_iam_permissions._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -7208,25 +6456,6 @@ def test_test_iam_permissions_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_test_iam_permissions_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.test_iam_permissions._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "project",
-                "region",
-                "resource",
-                "testPermissionsRequestResource",
-            )
-        )
-    )
 
 
 def test_test_iam_permissions_rest_flattened():
@@ -7356,9 +6585,14 @@ def test_update_rest_required_fields(request_type=compute.UpdateRouterRequest):
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdate,
+        "_BaseUpdate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -7367,12 +6601,8 @@ def test_update_rest_required_fields(request_type=compute.UpdateRouterRequest):
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -7423,25 +6653,6 @@ def test_update_rest_required_fields(request_type=compute.UpdateRouterRequest):
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-                "routerResource",
-            )
-        )
-    )
 
 
 def test_update_rest_flattened():
@@ -7571,9 +6782,14 @@ def test_update_unary_rest_required_fields(request_type=compute.UpdateRouterRequ
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdate,
+        "_BaseUpdate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -7582,12 +6798,8 @@ def test_update_unary_rest_required_fields(request_type=compute.UpdateRouterRequ
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -7638,25 +6850,6 @@ def test_update_unary_rest_required_fields(request_type=compute.UpdateRouterRequ
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_unary_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "region",
-                "router",
-                "routerResource",
-            )
-        )
-    )
 
 
 def test_update_unary_rest_flattened():
@@ -7790,9 +6983,14 @@ def test_update_named_set_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_named_set._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateNamedSet,
+        "_BaseUpdateNamedSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -7801,12 +6999,8 @@ def test_update_named_set_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_named_set._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -7857,25 +7051,6 @@ def test_update_named_set_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_named_set_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_named_set._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "namedSetResource",
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_update_named_set_rest_flattened():
@@ -8005,9 +7180,14 @@ def test_update_named_set_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_named_set._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateNamedSet,
+        "_BaseUpdateNamedSet__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -8016,12 +7196,8 @@ def test_update_named_set_unary_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_named_set._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -8072,25 +7248,6 @@ def test_update_named_set_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_named_set_unary_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_named_set._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "namedSetResource",
-                "project",
-                "region",
-                "router",
-            )
-        )
-    )
 
 
 def test_update_named_set_unary_rest_flattened():
@@ -8222,9 +7379,14 @@ def test_update_route_policy_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_route_policy._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateRoutePolicy,
+        "_BaseUpdateRoutePolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -8233,12 +7395,8 @@ def test_update_route_policy_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_route_policy._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -8289,25 +7447,6 @@ def test_update_route_policy_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_route_policy_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_route_policy._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "region",
-                "routePolicyResource",
-                "router",
-            )
-        )
-    )
 
 
 def test_update_route_policy_rest_flattened():
@@ -8439,9 +7578,14 @@ def test_update_route_policy_unary_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_route_policy._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateRoutePolicy,
+        "_BaseUpdateRoutePolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -8450,12 +7594,8 @@ def test_update_route_policy_unary_rest_required_fields(
     jsonified_request["region"] = "region_value"
     jsonified_request["router"] = "router_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_route_policy._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("request_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("requestId",))
 
     # verify required fields with non-default values are left alone
     assert "project" in jsonified_request
@@ -8506,25 +7646,6 @@ def test_update_route_policy_unary_rest_required_fields(
             expected_params = []
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_route_policy_unary_rest_unset_required_fields():
-    transport = transports.RoutersRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_route_policy._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("requestId",))
-        & set(
-            (
-                "project",
-                "region",
-                "routePolicyResource",
-                "router",
-            )
-        )
-    )
 
 
 def test_update_route_policy_unary_rest_flattened():
@@ -9364,6 +8485,7 @@ def test_get_rest_call_success(request_type):
             creation_timestamp="creation_timestamp_value",
             description="description_value",
             encrypted_interconnect_router=True,
+            etag="etag_value",
             id=205,
             kind="kind_value",
             name="name_value",
@@ -9390,6 +8512,7 @@ def test_get_rest_call_success(request_type):
     assert response.creation_timestamp == "creation_timestamp_value"
     assert response.description == "description_value"
     assert response.encrypted_interconnect_router is True
+    assert response.etag == "etag_value"
     assert response.id == 205
     assert response.kind == "kind_value"
     assert response.name == "name_value"
@@ -10182,6 +9305,7 @@ def test_insert_rest_call_success(request_type):
                 "ip_address": "ip_address_value",
                 "ipv4_nexthop_address": "ipv4_nexthop_address_value",
                 "ipv6_nexthop_address": "ipv6_nexthop_address_value",
+                "linked_custom_hardware": "linked_custom_hardware_value",
                 "management_type": "management_type_value",
                 "md5_authentication_key_name": "md5_authentication_key_name_value",
                 "name": "name_value",
@@ -10195,6 +9319,7 @@ def test_insert_rest_call_success(request_type):
         "creation_timestamp": "creation_timestamp_value",
         "description": "description_value",
         "encrypted_interconnect_router": True,
+        "etag": "etag_value",
         "id": 205,
         "interfaces": [
             {
@@ -10251,6 +9376,10 @@ def test_insert_rest_call_success(request_type):
                         "description": "description_value",
                         "match": "match_value",
                         "rule_number": 1184,
+                        "source_workload_identities": [
+                            "source_workload_identities_value1",
+                            "source_workload_identities_value2",
+                        ],
                     }
                 ],
                 "source_subnetwork_ip_ranges_to_nat": "source_subnetwork_ip_ranges_to_nat_value",
@@ -11096,6 +10225,7 @@ def test_patch_rest_call_success(request_type):
                 "ip_address": "ip_address_value",
                 "ipv4_nexthop_address": "ipv4_nexthop_address_value",
                 "ipv6_nexthop_address": "ipv6_nexthop_address_value",
+                "linked_custom_hardware": "linked_custom_hardware_value",
                 "management_type": "management_type_value",
                 "md5_authentication_key_name": "md5_authentication_key_name_value",
                 "name": "name_value",
@@ -11109,6 +10239,7 @@ def test_patch_rest_call_success(request_type):
         "creation_timestamp": "creation_timestamp_value",
         "description": "description_value",
         "encrypted_interconnect_router": True,
+        "etag": "etag_value",
         "id": 205,
         "interfaces": [
             {
@@ -11165,6 +10296,10 @@ def test_patch_rest_call_success(request_type):
                         "description": "description_value",
                         "match": "match_value",
                         "rule_number": 1184,
+                        "source_workload_identities": [
+                            "source_workload_identities_value1",
+                            "source_workload_identities_value2",
+                        ],
                     }
                 ],
                 "source_subnetwork_ip_ranges_to_nat": "source_subnetwork_ip_ranges_to_nat_value",
@@ -11976,6 +11111,7 @@ def test_preview_rest_call_success(request_type):
                 "ip_address": "ip_address_value",
                 "ipv4_nexthop_address": "ipv4_nexthop_address_value",
                 "ipv6_nexthop_address": "ipv6_nexthop_address_value",
+                "linked_custom_hardware": "linked_custom_hardware_value",
                 "management_type": "management_type_value",
                 "md5_authentication_key_name": "md5_authentication_key_name_value",
                 "name": "name_value",
@@ -11989,6 +11125,7 @@ def test_preview_rest_call_success(request_type):
         "creation_timestamp": "creation_timestamp_value",
         "description": "description_value",
         "encrypted_interconnect_router": True,
+        "etag": "etag_value",
         "id": 205,
         "interfaces": [
             {
@@ -12045,6 +11182,10 @@ def test_preview_rest_call_success(request_type):
                         "description": "description_value",
                         "match": "match_value",
                         "rule_number": 1184,
+                        "source_workload_identities": [
+                            "source_workload_identities_value1",
+                            "source_workload_identities_value2",
+                        ],
                     }
                 ],
                 "source_subnetwork_ip_ranges_to_nat": "source_subnetwork_ip_ranges_to_nat_value",
@@ -12509,6 +11650,7 @@ def test_update_rest_call_success(request_type):
                 "ip_address": "ip_address_value",
                 "ipv4_nexthop_address": "ipv4_nexthop_address_value",
                 "ipv6_nexthop_address": "ipv6_nexthop_address_value",
+                "linked_custom_hardware": "linked_custom_hardware_value",
                 "management_type": "management_type_value",
                 "md5_authentication_key_name": "md5_authentication_key_name_value",
                 "name": "name_value",
@@ -12522,6 +11664,7 @@ def test_update_rest_call_success(request_type):
         "creation_timestamp": "creation_timestamp_value",
         "description": "description_value",
         "encrypted_interconnect_router": True,
+        "etag": "etag_value",
         "id": 205,
         "interfaces": [
             {
@@ -12578,6 +11721,10 @@ def test_update_rest_call_success(request_type):
                         "description": "description_value",
                         "match": "match_value",
                         "rule_number": 1184,
+                        "source_workload_identities": [
+                            "source_workload_identities_value1",
+                            "source_workload_identities_value2",
+                        ],
                     }
                 ],
                 "source_subnetwork_ip_ranges_to_nat": "source_subnetwork_ip_ranges_to_nat_value",

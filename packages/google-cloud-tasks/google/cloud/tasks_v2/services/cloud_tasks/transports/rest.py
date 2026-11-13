@@ -24,15 +24,18 @@ import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 from google.api_core import exceptions as core_exceptions
-from google.api_core import gapic_v1, rest_helpers, rest_streaming
+from google.api_core import gapic_v1, operations_v1, rest_helpers, rest_streaming
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
+from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
-from google.cloud.tasks_v2.types import cloudtasks, queue, task
+from google.cloud.tasks_v2._compat import transcode_request
+from google.cloud.tasks_v2.types import cloudtasks, cmek_config, queue, task
+from google.cloud.tasks_v2.types import cmek_config as gct_cmek_config
 from google.cloud.tasks_v2.types import queue as gct_queue
 from google.cloud.tasks_v2.types import task as gct_task
 
@@ -77,6 +80,22 @@ class CloudTasksRestInterceptor:
 
     .. code-block:: python
         class MyCustomCloudTasksInterceptor(CloudTasksRestInterceptor):
+            def pre_batch_create_tasks(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_create_tasks(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_delete_tasks(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_delete_tasks(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_create_queue(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -100,6 +119,14 @@ class CloudTasksRestInterceptor:
             def pre_delete_task(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
+
+            def pre_get_cmek_config(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_cmek_config(self, response):
+                logging.log(f"Received response: {response}")
+                return response
 
             def pre_get_iam_policy(self, request, metadata):
                 logging.log(f"Received request: {request}")
@@ -189,6 +216,14 @@ class CloudTasksRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_update_cmek_config(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_cmek_config(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_update_queue(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -202,6 +237,102 @@ class CloudTasksRestInterceptor:
 
 
     """
+
+    def pre_batch_create_tasks(
+        self,
+        request: cloudtasks.BatchCreateTasksRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloudtasks.BatchCreateTasksRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for batch_create_tasks
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the CloudTasks server.
+        """
+        return request, metadata
+
+    def post_batch_create_tasks(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for batch_create_tasks
+
+        DEPRECATED. Please use the `post_batch_create_tasks_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the CloudTasks server but before
+        it is returned to user code. This `post_batch_create_tasks` interceptor runs
+        before the `post_batch_create_tasks_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_create_tasks_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for batch_create_tasks
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the CloudTasks server but before it is returned to user code.
+
+        We recommend only using this `post_batch_create_tasks_with_metadata`
+        interceptor in new development instead of the `post_batch_create_tasks` interceptor.
+        When both interceptors are used, this `post_batch_create_tasks_with_metadata` interceptor runs after the
+        `post_batch_create_tasks` interceptor. The (possibly modified) response returned by
+        `post_batch_create_tasks` will be passed to
+        `post_batch_create_tasks_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_delete_tasks(
+        self,
+        request: cloudtasks.BatchDeleteTasksRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloudtasks.BatchDeleteTasksRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for batch_delete_tasks
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the CloudTasks server.
+        """
+        return request, metadata
+
+    def post_batch_delete_tasks(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for batch_delete_tasks
+
+        DEPRECATED. Please use the `post_batch_delete_tasks_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the CloudTasks server but before
+        it is returned to user code. This `post_batch_delete_tasks` interceptor runs
+        before the `post_batch_delete_tasks_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_delete_tasks_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for batch_delete_tasks
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the CloudTasks server but before it is returned to user code.
+
+        We recommend only using this `post_batch_delete_tasks_with_metadata`
+        interceptor in new development instead of the `post_batch_delete_tasks` interceptor.
+        When both interceptors are used, this `post_batch_delete_tasks_with_metadata` interceptor runs after the
+        `post_batch_delete_tasks` interceptor. The (possibly modified) response returned by
+        `post_batch_delete_tasks` will be passed to
+        `post_batch_delete_tasks_with_metadata`.
+        """
+        return response, metadata
 
     def pre_create_queue(
         self,
@@ -312,6 +443,54 @@ class CloudTasksRestInterceptor:
         before they are sent to the CloudTasks server.
         """
         return request, metadata
+
+    def pre_get_cmek_config(
+        self,
+        request: cloudtasks.GetCmekConfigRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloudtasks.GetCmekConfigRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for get_cmek_config
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the CloudTasks server.
+        """
+        return request, metadata
+
+    def post_get_cmek_config(
+        self, response: cmek_config.CmekConfig
+    ) -> cmek_config.CmekConfig:
+        """Post-rpc interceptor for get_cmek_config
+
+        DEPRECATED. Please use the `post_get_cmek_config_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the CloudTasks server but before
+        it is returned to user code. This `post_get_cmek_config` interceptor runs
+        before the `post_get_cmek_config_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_cmek_config_with_metadata(
+        self,
+        response: cmek_config.CmekConfig,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[cmek_config.CmekConfig, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for get_cmek_config
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the CloudTasks server but before it is returned to user code.
+
+        We recommend only using this `post_get_cmek_config_with_metadata`
+        interceptor in new development instead of the `post_get_cmek_config` interceptor.
+        When both interceptors are used, this `post_get_cmek_config_with_metadata` interceptor runs after the
+        `post_get_cmek_config` interceptor. The (possibly modified) response returned by
+        `post_get_cmek_config` will be passed to
+        `post_get_cmek_config_with_metadata`.
+        """
+        return response, metadata
 
     def pre_get_iam_policy(
         self,
@@ -801,6 +980,54 @@ class CloudTasksRestInterceptor:
         """
         return response, metadata
 
+    def pre_update_cmek_config(
+        self,
+        request: cloudtasks.UpdateCmekConfigRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloudtasks.UpdateCmekConfigRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for update_cmek_config
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the CloudTasks server.
+        """
+        return request, metadata
+
+    def post_update_cmek_config(
+        self, response: gct_cmek_config.CmekConfig
+    ) -> gct_cmek_config.CmekConfig:
+        """Post-rpc interceptor for update_cmek_config
+
+        DEPRECATED. Please use the `post_update_cmek_config_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the CloudTasks server but before
+        it is returned to user code. This `post_update_cmek_config` interceptor runs
+        before the `post_update_cmek_config_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_cmek_config_with_metadata(
+        self,
+        response: gct_cmek_config.CmekConfig,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[gct_cmek_config.CmekConfig, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_cmek_config
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the CloudTasks server but before it is returned to user code.
+
+        We recommend only using this `post_update_cmek_config_with_metadata`
+        interceptor in new development instead of the `post_update_cmek_config` interceptor.
+        When both interceptors are used, this `post_update_cmek_config_with_metadata` interceptor runs after the
+        `post_update_cmek_config` interceptor. The (possibly modified) response returned by
+        `post_update_cmek_config` will be passed to
+        `post_update_cmek_config_with_metadata`.
+        """
+        return response, metadata
+
     def pre_update_queue(
         self,
         request: cloudtasks.UpdateQueueRequest,
@@ -888,6 +1115,31 @@ class CloudTasksRestInterceptor:
         self, response: locations_pb2.ListLocationsResponse
     ) -> locations_pb2.ListLocationsResponse:
         """Post-rpc interceptor for list_locations
+
+        Override in a subclass to manipulate the response
+        after it is returned by the CloudTasks server but before
+        it is returned to user code.
+        """
+        return response
+
+    def pre_get_operation(
+        self,
+        request: operations_pb2.GetOperationRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        operations_pb2.GetOperationRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for get_operation
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the CloudTasks server.
+        """
+        return request, metadata
+
+    def post_get_operation(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for get_operation
 
         Override in a subclass to manipulate the response
         after it is returned by the CloudTasks server but before
@@ -985,10 +1237,346 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST
         )
+        self._operations_client: Optional[operations_v1.AbstractOperationsClient] = None
         if client_cert_source_for_mtls:
             self._session.configure_mtls_channel(client_cert_source_for_mtls)
         self._interceptor = interceptor or CloudTasksRestInterceptor()
         self._prep_wrapped_messages(client_info)
+
+    @property
+    def operations_client(self) -> operations_v1.AbstractOperationsClient:
+        """Create the client designed to process long-running operations.
+
+        This property caches on the instance; repeated calls return the same
+        client.
+        """
+        # Only create a new client if we do not already have one.
+        if self._operations_client is None:
+            http_options: Dict[str, List[Dict[str, str]]] = {
+                "google.longrunning.Operations.GetOperation": [
+                    {
+                        "method": "get",
+                        "uri": "/v2/{name=projects/*/locations/*/operations/*}",
+                    },
+                ],
+            }
+
+            rest_transport = operations_v1.OperationsRestTransport(
+                host=self._host,
+                # use the credentials which are saved
+                credentials=self._credentials,
+                scopes=self._scopes,
+                http_options=http_options,
+                path_prefix="v2",
+            )
+
+            self._operations_client = operations_v1.AbstractOperationsClient(
+                transport=rest_transport
+            )
+
+        # Return the client from cache.
+        return self._operations_client
+
+    class _BatchCreateTasks(
+        _BaseCloudTasksRestTransport._BaseBatchCreateTasks, CloudTasksRestStub
+    ):
+        def __hash__(self):
+            return hash("CloudTasksRestTransport.BatchCreateTasks")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: cloudtasks.BatchCreateTasksRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the batch create tasks method over HTTP.
+
+            Args:
+                request (~.cloudtasks.BatchCreateTasksRequest):
+                    The request object. Request message for [BatchCreateTasks].
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = (
+                _BaseCloudTasksRestTransport._BaseBatchCreateTasks._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_batch_create_tasks(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseBatchCreateTasks,
+                    "_BaseBatchCreateTasks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.tasks_v2.CloudTasksClient.BatchCreateTasks",
+                    extra={
+                        "serviceName": "google.cloud.tasks.v2.CloudTasks",
+                        "rpcName": "BatchCreateTasks",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = CloudTasksRestTransport._BatchCreateTasks._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_create_tasks(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_batch_create_tasks_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.tasks_v2.CloudTasksClient.batch_create_tasks",
+                    extra={
+                        "serviceName": "google.cloud.tasks.v2.CloudTasks",
+                        "rpcName": "BatchCreateTasks",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchDeleteTasks(
+        _BaseCloudTasksRestTransport._BaseBatchDeleteTasks, CloudTasksRestStub
+    ):
+        def __hash__(self):
+            return hash("CloudTasksRestTransport.BatchDeleteTasks")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: cloudtasks.BatchDeleteTasksRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the batch delete tasks method over HTTP.
+
+            Args:
+                request (~.cloudtasks.BatchDeleteTasksRequest):
+                    The request object. Request message for deleting a batch of tasks using
+                [BatchDeleteTasks][google.cloud.tasks.v2.CloudTasks.BatchDeleteTasks].
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = (
+                _BaseCloudTasksRestTransport._BaseBatchDeleteTasks._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_batch_delete_tasks(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseBatchDeleteTasks,
+                    "_BaseBatchDeleteTasks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.tasks_v2.CloudTasksClient.BatchDeleteTasks",
+                    extra={
+                        "serviceName": "google.cloud.tasks.v2.CloudTasks",
+                        "rpcName": "BatchDeleteTasks",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = CloudTasksRestTransport._BatchDeleteTasks._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_delete_tasks(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_batch_delete_tasks_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.tasks_v2.CloudTasksClient.batch_delete_tasks",
+                    extra={
+                        "serviceName": "google.cloud.tasks.v2.CloudTasks",
+                        "rpcName": "BatchDeleteTasks",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
 
     class _CreateQueue(
         _BaseCloudTasksRestTransport._BaseCreateQueue, CloudTasksRestStub
@@ -1055,23 +1643,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseCreateQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseCreateQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseCreateQueue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseCreateQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseCreateQueue,
+                    "_BaseCreateQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1208,23 +1789,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseCreateTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_task(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseCreateTask._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseCreateTask._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseCreateTask._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseCreateTask,
+                    "_BaseCreateTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1358,19 +1932,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseDeleteQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseDeleteQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseDeleteQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseDeleteQueue,
+                    "_BaseDeleteQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1467,19 +2038,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseDeleteTask._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_task(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseDeleteTask._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseDeleteTask._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseDeleteTask,
+                    "_BaseDeleteTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1523,6 +2091,155 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             # subclass.
             if response.status_code >= 400:
                 raise core_exceptions.from_http_response(response)
+
+    class _GetCmekConfig(
+        _BaseCloudTasksRestTransport._BaseGetCmekConfig, CloudTasksRestStub
+    ):
+        def __hash__(self):
+            return hash("CloudTasksRestTransport.GetCmekConfig")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: cloudtasks.GetCmekConfigRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> cmek_config.CmekConfig:
+            r"""Call the get cmek config method over HTTP.
+
+            Args:
+                request (~.cloudtasks.GetCmekConfigRequest):
+                    The request object. Request message for
+                [GetCmekConfig][google.cloud.tasks.v2.CloudTasks.GetCmekConfig].
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.cmek_config.CmekConfig:
+                    Describes the customer-managed
+                encryption key (CMEK) configuration
+                associated with a project and location.
+
+            """
+
+            http_options = (
+                _BaseCloudTasksRestTransport._BaseGetCmekConfig._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_get_cmek_config(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseGetCmekConfig,
+                    "_BaseGetCmekConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.tasks_v2.CloudTasksClient.GetCmekConfig",
+                    extra={
+                        "serviceName": "google.cloud.tasks.v2.CloudTasks",
+                        "rpcName": "GetCmekConfig",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = CloudTasksRestTransport._GetCmekConfig._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = cmek_config.CmekConfig()
+            pb_resp = cmek_config.CmekConfig.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_cmek_config(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_cmek_config_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = cmek_config.CmekConfig.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.tasks_v2.CloudTasksClient.get_cmek_config",
+                    extra={
+                        "serviceName": "google.cloud.tasks.v2.CloudTasks",
+                        "rpcName": "GetCmekConfig",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
 
     class _GetIamPolicy(
         _BaseCloudTasksRestTransport._BaseGetIamPolicy, CloudTasksRestStub
@@ -1657,25 +2374,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseCloudTasksRestTransport._BaseGetIamPolicy._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1817,19 +2525,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseGetQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseGetQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseGetQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseGetQueue,
+                    "_BaseGetQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1962,19 +2667,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             """
 
             http_options = _BaseCloudTasksRestTransport._BaseGetTask._get_http_options()
-
             request, metadata = self._interceptor.pre_get_task(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseGetTask._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseGetTask._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseGetTask,
+                    "_BaseGetTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2111,19 +2813,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseListQueues._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_queues(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseListQueues._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseListQueues._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseListQueues,
+                    "_BaseListQueues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2260,19 +2959,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseListTasks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_tasks(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseListTasks._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseListTasks._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseListTasks,
+                    "_BaseListTasks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2414,23 +3110,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BasePauseQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_pause_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BasePauseQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BasePauseQueue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BasePauseQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BasePauseQueue,
+                    "_BasePauseQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2573,23 +3262,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BasePurgeQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_purge_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BasePurgeQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BasePurgeQueue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BasePurgeQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BasePurgeQueue,
+                    "_BasePurgeQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2734,23 +3416,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseResumeQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_resume_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseResumeQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseResumeQueue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseResumeQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseResumeQueue,
+                    "_BaseResumeQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2885,23 +3560,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             """
 
             http_options = _BaseCloudTasksRestTransport._BaseRunTask._get_http_options()
-
             request, metadata = self._interceptor.pre_run_task(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseRunTask._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseRunTask._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseRunTask._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseRunTask,
+                    "_BaseRunTask__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3114,25 +3782,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseCloudTasksRestTransport._BaseSetIamPolicy._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3270,21 +3929,18 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseTestIamPermissions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseCloudTasksRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudTasksRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3364,6 +4020,159 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
                 )
             return resp
 
+    class _UpdateCmekConfig(
+        _BaseCloudTasksRestTransport._BaseUpdateCmekConfig, CloudTasksRestStub
+    ):
+        def __hash__(self):
+            return hash("CloudTasksRestTransport.UpdateCmekConfig")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: cloudtasks.UpdateCmekConfigRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> gct_cmek_config.CmekConfig:
+            r"""Call the update cmek config method over HTTP.
+
+            Args:
+                request (~.cloudtasks.UpdateCmekConfigRequest):
+                    The request object. Request message for
+                [UpdateCmekConfig][google.cloud.tasks.v2.CloudTasks.UpdateCmekConfig].
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.gct_cmek_config.CmekConfig:
+                    Describes the customer-managed
+                encryption key (CMEK) configuration
+                associated with a project and location.
+
+            """
+
+            http_options = (
+                _BaseCloudTasksRestTransport._BaseUpdateCmekConfig._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_update_cmek_config(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseUpdateCmekConfig,
+                    "_BaseUpdateCmekConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.tasks_v2.CloudTasksClient.UpdateCmekConfig",
+                    extra={
+                        "serviceName": "google.cloud.tasks.v2.CloudTasks",
+                        "rpcName": "UpdateCmekConfig",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = CloudTasksRestTransport._UpdateCmekConfig._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = gct_cmek_config.CmekConfig()
+            pb_resp = gct_cmek_config.CmekConfig.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_cmek_config(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_cmek_config_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = gct_cmek_config.CmekConfig.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.tasks_v2.CloudTasksClient.update_cmek_config",
+                    extra={
+                        "serviceName": "google.cloud.tasks.v2.CloudTasks",
+                        "rpcName": "UpdateCmekConfig",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _UpdateQueue(
         _BaseCloudTasksRestTransport._BaseUpdateQueue, CloudTasksRestStub
     ):
@@ -3429,23 +4238,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseUpdateQueue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_queue(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseUpdateQueue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCloudTasksRestTransport._BaseUpdateQueue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseUpdateQueue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseUpdateQueue,
+                    "_BaseUpdateQueue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3526,6 +4328,22 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             return resp
 
     @property
+    def batch_create_tasks(
+        self,
+    ) -> Callable[[cloudtasks.BatchCreateTasksRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchCreateTasks(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def batch_delete_tasks(
+        self,
+    ) -> Callable[[cloudtasks.BatchDeleteTasksRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchDeleteTasks(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def create_queue(
         self,
     ) -> Callable[[cloudtasks.CreateQueueRequest], gct_queue.Queue]:
@@ -3552,6 +4370,14 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._DeleteTask(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def get_cmek_config(
+        self,
+    ) -> Callable[[cloudtasks.GetCmekConfigRequest], cmek_config.CmekConfig]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetCmekConfig(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def get_iam_policy(
@@ -3633,6 +4459,14 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
         return self._TestIamPermissions(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def update_cmek_config(
+        self,
+    ) -> Callable[[cloudtasks.UpdateCmekConfigRequest], gct_cmek_config.CmekConfig]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateCmekConfig(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def update_queue(
         self,
     ) -> Callable[[cloudtasks.UpdateQueueRequest], gct_queue.Queue]:
@@ -3700,19 +4534,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3844,19 +4675,16 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
             http_options = (
                 _BaseCloudTasksRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseCloudTasksRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudTasksRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3922,6 +4750,147 @@ class CloudTasksRestTransport(_BaseCloudTasksRestTransport):
                     extra={
                         "serviceName": "google.cloud.tasks.v2.CloudTasks",
                         "rpcName": "ListLocations",
+                        "httpResponse": http_response,
+                        "metadata": http_response["headers"],
+                    },
+                )
+            return resp
+
+    @property
+    def get_operation(self):
+        return self._GetOperation(self._session, self._host, self._interceptor)  # type: ignore
+
+    class _GetOperation(
+        _BaseCloudTasksRestTransport._BaseGetOperation, CloudTasksRestStub
+    ):
+        def __hash__(self):
+            return hash("CloudTasksRestTransport.GetOperation")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: operations_pb2.GetOperationRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the get operation method over HTTP.
+
+            Args:
+                request (operations_pb2.GetOperationRequest):
+                    The request object for GetOperation method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                operations_pb2.Operation: Response from GetOperation method.
+            """
+
+            http_options = (
+                _BaseCloudTasksRestTransport._BaseGetOperation._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_get_operation(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudTasksRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = json_format.MessageToJson(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.tasks_v2.CloudTasksClient.GetOperation",
+                    extra={
+                        "serviceName": "google.cloud.tasks.v2.CloudTasks",
+                        "rpcName": "GetOperation",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = CloudTasksRestTransport._GetOperation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            content = response.content.decode("utf-8")
+            resp = operations_pb2.Operation()
+            resp = json_format.Parse(content, resp)
+            resp = self._interceptor.post_get_operation(resp)
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.tasks_v2.CloudTasksAsyncClient.GetOperation",
+                    extra={
+                        "serviceName": "google.cloud.tasks.v2.CloudTasks",
+                        "rpcName": "GetOperation",
                         "httpResponse": http_response,
                         "metadata": http_response["headers"],
                     },

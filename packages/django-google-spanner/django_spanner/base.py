@@ -6,6 +6,7 @@
 
 import os
 
+from asgiref.sync import sync_to_async
 from django.db.backends.base.base import BaseDatabaseWrapper
 from google.cloud import spanner, spanner_dbapi
 
@@ -15,6 +16,7 @@ from .features import DatabaseFeatures
 from .introspection import DatabaseIntrospection
 from .operations import DatabaseOperations
 from .schema import DatabaseSchemaEditor
+from .version import __version__
 
 # Global cache for Spanner client to prevent multiple initializations
 # which can cause OpenTelemetry 'MeterProvider override' crashes.
@@ -159,7 +161,7 @@ class DatabaseWrapper(BaseDatabaseWrapper):
             "project": self._get_project_id(),
             "instance_id": self.settings_dict["INSTANCE"],
             "database_id": self.settings_dict["NAME"],
-            "user_agent": "django_spanner/2.2.0a1",
+            "user_agent": f"django_spanner/{__version__}",
             **self.settings_dict["OPTIONS"],
         }
 
@@ -215,6 +217,11 @@ class DatabaseWrapper(BaseDatabaseWrapper):
         """
         with self.wrap_database_errors:
             self.connection.autocommit = autocommit
+
+    async def _a_set_autocommit(self, autocommit):
+        return await sync_to_async(self._set_autocommit, thread_sensitive=True)(
+            autocommit
+        )
 
     def is_usable(self):
         """Check whether the connection is valid.

@@ -57,6 +57,7 @@ from google.cloud.run_v2.types import (
     condition,
     k8s_min,
     revision,
+    sandbox,
     status,
     vendor_settings,
 )
@@ -409,7 +410,7 @@ class RevisionsAsyncClient:
             self._client._transport.get_revision
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)(?:/.*)?$"
@@ -538,7 +539,7 @@ class RevisionsAsyncClient:
             self._client._transport.list_revisions
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)(?:/.*)?$"
@@ -680,7 +681,7 @@ class RevisionsAsyncClient:
             self._client._transport.delete_revision
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)(?:/.*)?$"

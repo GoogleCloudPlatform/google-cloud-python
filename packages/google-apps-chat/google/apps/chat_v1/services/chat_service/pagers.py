@@ -41,6 +41,7 @@ except AttributeError:  # pragma: NO COVER
 from google.apps.chat_v1.types import (
     membership,
     message,
+    message_pin,
     reaction,
     section,
     space,
@@ -1132,6 +1133,162 @@ class ListReactionsAsyncPager:
         async def async_generator():
             async for page in self.pages:
                 for response in page.reactions:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListMessagePinsPager:
+    """A pager for iterating through ``list_message_pins`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.apps.chat_v1.types.ListMessagePinsResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``message_pins`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListMessagePins`` requests and continue to iterate
+    through the ``message_pins`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.apps.chat_v1.types.ListMessagePinsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., message_pin.ListMessagePinsResponse],
+        request: message_pin.ListMessagePinsRequest,
+        response: message_pin.ListMessagePinsResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.apps.chat_v1.types.ListMessagePinsRequest):
+                The initial request object.
+            response (google.apps.chat_v1.types.ListMessagePinsResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = message_pin.ListMessagePinsRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(self) -> Iterator[message_pin.ListMessagePinsResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[message_pin.MessagePin]:
+        for page in self.pages:
+            yield from page.message_pins
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListMessagePinsAsyncPager:
+    """A pager for iterating through ``list_message_pins`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.apps.chat_v1.types.ListMessagePinsResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``message_pins`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListMessagePins`` requests and continue to iterate
+    through the ``message_pins`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.apps.chat_v1.types.ListMessagePinsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., Awaitable[message_pin.ListMessagePinsResponse]],
+        request: message_pin.ListMessagePinsRequest,
+        response: message_pin.ListMessagePinsResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.apps.chat_v1.types.ListMessagePinsRequest):
+                The initial request object.
+            response (google.apps.chat_v1.types.ListMessagePinsResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = message_pin.ListMessagePinsRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(self) -> AsyncIterator[message_pin.ListMessagePinsResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(self) -> AsyncIterator[message_pin.MessagePin]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.message_pins:
                     yield response
 
         return async_generator()

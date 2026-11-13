@@ -390,7 +390,7 @@ class VehicleServiceAsyncClient:
             self._client._transport.create_vehicle
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.parent)
@@ -479,7 +479,7 @@ class VehicleServiceAsyncClient:
             self._client._transport.get_vehicle
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)
@@ -592,7 +592,7 @@ class VehicleServiceAsyncClient:
             self._client._transport.delete_vehicle
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)
@@ -695,7 +695,7 @@ class VehicleServiceAsyncClient:
             self._client._transport.update_vehicle
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)
@@ -795,7 +795,7 @@ class VehicleServiceAsyncClient:
             self._client._transport.update_vehicle_attributes
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)
@@ -891,7 +891,7 @@ class VehicleServiceAsyncClient:
             self._client._transport.list_vehicles
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.parent)
@@ -997,7 +997,7 @@ class VehicleServiceAsyncClient:
             self._client._transport.search_vehicles
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.parent)

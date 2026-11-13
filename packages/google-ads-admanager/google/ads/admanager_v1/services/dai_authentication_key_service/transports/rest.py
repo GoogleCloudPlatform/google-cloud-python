@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     dai_authentication_key_messages,
     dai_authentication_key_service,
@@ -772,23 +773,20 @@ class DaiAuthenticationKeyServiceRestTransport(
             """
 
             http_options = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchActivateDaiAuthenticationKeys._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_activate_dai_authentication_keys(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchActivateDaiAuthenticationKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchActivateDaiAuthenticationKeys._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchActivateDaiAuthenticationKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchActivateDaiAuthenticationKeys,
+                    "_BaseBatchActivateDaiAuthenticationKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -937,23 +935,20 @@ class DaiAuthenticationKeyServiceRestTransport(
             """
 
             http_options = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchCreateDaiAuthenticationKeys._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_create_dai_authentication_keys(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchCreateDaiAuthenticationKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchCreateDaiAuthenticationKeys._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchCreateDaiAuthenticationKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchCreateDaiAuthenticationKeys,
+                    "_BaseBatchCreateDaiAuthenticationKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1104,23 +1099,20 @@ class DaiAuthenticationKeyServiceRestTransport(
             """
 
             http_options = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchDeactivateDaiAuthenticationKeys._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_deactivate_dai_authentication_keys(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchDeactivateDaiAuthenticationKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchDeactivateDaiAuthenticationKeys._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchDeactivateDaiAuthenticationKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchDeactivateDaiAuthenticationKeys,
+                    "_BaseBatchDeactivateDaiAuthenticationKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1269,23 +1261,20 @@ class DaiAuthenticationKeyServiceRestTransport(
             """
 
             http_options = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchUpdateDaiAuthenticationKeys._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_update_dai_authentication_keys(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchUpdateDaiAuthenticationKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchUpdateDaiAuthenticationKeys._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchUpdateDaiAuthenticationKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiAuthenticationKeyServiceRestTransport._BaseBatchUpdateDaiAuthenticationKeys,
+                    "_BaseBatchUpdateDaiAuthenticationKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1435,21 +1424,18 @@ class DaiAuthenticationKeyServiceRestTransport(
             """
 
             http_options = _BaseDaiAuthenticationKeyServiceRestTransport._BaseCreateDaiAuthenticationKey._get_http_options()
-
             request, metadata = self._interceptor.pre_create_dai_authentication_key(
                 request, metadata
             )
-            transcoded_request = _BaseDaiAuthenticationKeyServiceRestTransport._BaseCreateDaiAuthenticationKey._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDaiAuthenticationKeyServiceRestTransport._BaseCreateDaiAuthenticationKey._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiAuthenticationKeyServiceRestTransport._BaseCreateDaiAuthenticationKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiAuthenticationKeyServiceRestTransport._BaseCreateDaiAuthenticationKey,
+                    "_BaseCreateDaiAuthenticationKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1597,17 +1583,18 @@ class DaiAuthenticationKeyServiceRestTransport(
             """
 
             http_options = _BaseDaiAuthenticationKeyServiceRestTransport._BaseGetDaiAuthenticationKey._get_http_options()
-
             request, metadata = self._interceptor.pre_get_dai_authentication_key(
                 request, metadata
             )
-            transcoded_request = _BaseDaiAuthenticationKeyServiceRestTransport._BaseGetDaiAuthenticationKey._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiAuthenticationKeyServiceRestTransport._BaseGetDaiAuthenticationKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiAuthenticationKeyServiceRestTransport._BaseGetDaiAuthenticationKey,
+                    "_BaseGetDaiAuthenticationKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1751,17 +1738,18 @@ class DaiAuthenticationKeyServiceRestTransport(
             """
 
             http_options = _BaseDaiAuthenticationKeyServiceRestTransport._BaseListDaiAuthenticationKeys._get_http_options()
-
             request, metadata = self._interceptor.pre_list_dai_authentication_keys(
                 request, metadata
             )
-            transcoded_request = _BaseDaiAuthenticationKeyServiceRestTransport._BaseListDaiAuthenticationKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiAuthenticationKeyServiceRestTransport._BaseListDaiAuthenticationKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiAuthenticationKeyServiceRestTransport._BaseListDaiAuthenticationKeys,
+                    "_BaseListDaiAuthenticationKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1910,21 +1898,18 @@ class DaiAuthenticationKeyServiceRestTransport(
             """
 
             http_options = _BaseDaiAuthenticationKeyServiceRestTransport._BaseUpdateDaiAuthenticationKey._get_http_options()
-
             request, metadata = self._interceptor.pre_update_dai_authentication_key(
                 request, metadata
             )
-            transcoded_request = _BaseDaiAuthenticationKeyServiceRestTransport._BaseUpdateDaiAuthenticationKey._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDaiAuthenticationKeyServiceRestTransport._BaseUpdateDaiAuthenticationKey._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiAuthenticationKeyServiceRestTransport._BaseUpdateDaiAuthenticationKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiAuthenticationKeyServiceRestTransport._BaseUpdateDaiAuthenticationKey,
+                    "_BaseUpdateDaiAuthenticationKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2170,17 +2155,18 @@ class DaiAuthenticationKeyServiceRestTransport(
             """
 
             http_options = _BaseDaiAuthenticationKeyServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDaiAuthenticationKeyServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiAuthenticationKeyServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiAuthenticationKeyServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2288,15 +2274,16 @@ class DaiAuthenticationKeyServiceRestTransport(
             """
 
             http_options = _BaseDaiAuthenticationKeyServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseDaiAuthenticationKeyServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDaiAuthenticationKeyServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDaiAuthenticationKeyServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

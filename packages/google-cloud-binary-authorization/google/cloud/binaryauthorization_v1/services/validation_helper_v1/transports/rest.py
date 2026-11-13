@@ -32,6 +32,7 @@ from google.iam.v1 import (
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.binaryauthorization_v1._compat import transcode_request
 from google.cloud.binaryauthorization_v1.types import service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -368,21 +369,18 @@ class ValidationHelperV1RestTransport(_BaseValidationHelperV1RestTransport):
             """
 
             http_options = _BaseValidationHelperV1RestTransport._BaseValidateAttestationOccurrence._get_http_options()
-
             request, metadata = self._interceptor.pre_validate_attestation_occurrence(
                 request, metadata
             )
-            transcoded_request = _BaseValidationHelperV1RestTransport._BaseValidateAttestationOccurrence._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseValidationHelperV1RestTransport._BaseValidateAttestationOccurrence._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseValidationHelperV1RestTransport._BaseValidateAttestationOccurrence._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseValidationHelperV1RestTransport._BaseValidateAttestationOccurrence,
+                    "_BaseValidateAttestationOccurrence__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -538,15 +536,16 @@ class ValidationHelperV1RestTransport(_BaseValidationHelperV1RestTransport):
             """
 
             http_options = _BaseValidationHelperV1RestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseValidationHelperV1RestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseValidationHelperV1RestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseValidationHelperV1RestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -678,19 +677,16 @@ class ValidationHelperV1RestTransport(_BaseValidationHelperV1RestTransport):
             """
 
             http_options = _BaseValidationHelperV1RestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseValidationHelperV1RestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseValidationHelperV1RestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseValidationHelperV1RestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseValidationHelperV1RestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -823,21 +819,18 @@ class ValidationHelperV1RestTransport(_BaseValidationHelperV1RestTransport):
             """
 
             http_options = _BaseValidationHelperV1RestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseValidationHelperV1RestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseValidationHelperV1RestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseValidationHelperV1RestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseValidationHelperV1RestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

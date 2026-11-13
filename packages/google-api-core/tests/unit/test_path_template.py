@@ -64,28 +64,27 @@ from google.api_core import path_template
             {"name": "parent/child/object"},
             "/v1/a/parent/child/object",
         ],
-        # Encoding / Metacharacters in positional and named params
-        ["/v1/*", ["..?$httpMethod=DELETE#"], {}, "/v1/..%3F%24httpMethod%3DDELETE%23"],
-        ["/v1/**", ["path/sub/with/?and#"], {}, "/v1/path/sub/with/%3Fand%23"],
+        # Legitimate resource name patterns preserved in expand
+        [
+            "projects/{project}/databases/{database}",
+            [],
+            {"project": "my-project", "database": "(default)"},
+            "projects/my-project/databases/(default)",
+        ],
         [
             "/v1/{name}",
             [],
-            {"name": "..?$httpMethod=DELETE#"},
-            "/v1/..%3F%24httpMethod%3DDELETE%23",
+            {"name": "my-instance:cluster-1"},
+            "/v1/my-instance:cluster-1",
         ],
         [
-            "/v1/{name=**}",
-            [],
-            {"name": "path/sub/with/?and#"},
-            "/v1/path/sub/with/%3Fand%23",
-        ],
-        [
-            "/v3/{session=projects/*/locations/*/agents/*/sessions/*}:detectIntent",
+            "projects/{project}/serviceAccounts/{account}",
             [],
             {
-                "session": "projects/cx/locations/global/agents/a1/sessions/..?$httpMethod=DELETE#"
+                "project": "my-project",
+                "account": "service@my-project.iam.gserviceaccount.com",
             },
-            "/v3/projects/cx/locations/global/agents/a1/sessions/..%3F%24httpMethod%3DDELETE%23:detectIntent",
+            "projects/my-project/serviceAccounts/service@my-project.iam.gserviceaccount.com",
         ],
     ],
 )
@@ -131,6 +130,18 @@ def test_expanded_failure(tmpl, args, kwargs, exc_match):
 def test_get_field(request_obj, field, expected_result):
     result = path_template.get_field(request_obj, field)
     assert result == expected_result
+
+
+def test_get_field_encode():
+    assert (
+        path_template.get_field({"name": "a$b?c=d#e f"}, "name", encode=True)
+        == "a%24b%3Fc%3Dd%23e%20f"
+    )
+    assert (
+        path_template.get_field({"name": "abc-._~"}, "name", encode=True) == "abc-._~"
+    )
+    assert path_template.get_field({"name": None}, "name", encode=True) is None
+    assert path_template.get_field({}, "name", encode=True) is None
 
 
 @pytest.mark.parametrize(
@@ -416,6 +427,43 @@ def test_transcode_subfields(http_options, message, request_kwargs, expected_res
                 None,
                 auth_pb2.AuthenticationRule(oauth=auth_pb2.OAuthRequirements()),
             ],
+        ],
+        # Special characters, colons, and parentheses in URI variable transcoding
+        [
+            [["get", "/v1/projects/{p}/databases/{d}", ""]],
+            None,
+            {"p": "proj", "d": "(default)", "foo": "bar"},
+            ["get", "/v1/projects/proj/databases/%28default%29", {}, {"foo": "bar"}],
+        ],
+        [
+            [["get", "/v1/{name}", ""]],
+            None,
+            {"name": "inst:1", "foo": "bar"},
+            ["get", "/v1/inst%3A1", {}, {"foo": "bar"}],
+        ],
+        [
+            [["get", "/v1/{name}", ""]],
+            None,
+            {"name": "a$b?c=d#e f", "foo": "bar"},
+            ["get", "/v1/a%24b%3Fc%3Dd%23e%20f", {}, {"foo": "bar"}],
+        ],
+        [
+            [["get", "/v1/{name}", ""]],
+            None,
+            {"name": "..?$httpMethod=DELETE#", "foo": "bar"},
+            ["get", "/v1/..%3F%24httpMethod%3DDELETE%23", {}, {"foo": "bar"}],
+        ],
+        [
+            [["get", "/v1/{name=**}", ""]],
+            None,
+            {"name": "sub/?and#", "foo": "bar"},
+            ["get", "/v1/sub/%3Fand%23", {}, {"foo": "bar"}],
+        ],
+        [
+            [["post", "/v1/{name=a/*}:verb", ""]],
+            None,
+            {"name": "a/..?$httpMethod=DELETE#", "foo": "bar"},
+            ["post", "/v1/a/..%3F%24httpMethod%3DDELETE%23:verb", {}, {"foo": "bar"}],
         ],
     ],
 )
@@ -790,23 +838,6 @@ def test_path_traversal_dots_validation_double_star_invalid(name_val):
             "/v3/{name=projects/*/monitoredResourceDescriptors/**}",
             name=name_val,
         )
-
-
-@pytest.mark.parametrize(
-    "tmpl, kwargs, expected_result",
-    [
-        ["/v1/{name}", {"name": "abc-._~"}, "/v1/abc-._~"],
-        ["/v1/{name=**}", {"name": "abc-._~/"}, "/v1/abc-._~/"],
-        ["/v1/{name}", {"name": "a/b"}, "/v1/a/b"],
-        ["/v1/{name}", {"name": "a$b?c=d#e f"}, "/v1/a%24b%3Fc%3Dd%23e%20f"],
-    ],
-)
-def test_percent_encoding_unreserved_characters(tmpl, kwargs, expected_result):
-    result = path_template.expand(tmpl, **kwargs)
-    assert result == expected_result
-    # For single-segment with '/', validate should fail because '/' is preserved
-    if "/" in kwargs.get("name", "") and tmpl == "/v1/{name}":
-        assert not path_template.validate(tmpl, result)
 
 
 @pytest.mark.parametrize(

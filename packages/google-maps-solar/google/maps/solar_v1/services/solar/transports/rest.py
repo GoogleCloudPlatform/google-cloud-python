@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.maps.solar_v1._compat import transcode_request
 from google.maps.solar_v1.types import solar_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -402,17 +403,18 @@ class SolarRestTransport(_BaseSolarRestTransport):
             """
 
             http_options = _BaseSolarRestTransport._BaseFindClosestBuildingInsights._get_http_options()
-
             request, metadata = self._interceptor.pre_find_closest_building_insights(
                 request, metadata
             )
-            transcoded_request = _BaseSolarRestTransport._BaseFindClosestBuildingInsights._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSolarRestTransport._BaseFindClosestBuildingInsights._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSolarRestTransport._BaseFindClosestBuildingInsights,
+                    "_BaseFindClosestBuildingInsights__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -560,19 +562,16 @@ class SolarRestTransport(_BaseSolarRestTransport):
             http_options = (
                 _BaseSolarRestTransport._BaseGetDataLayers._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_data_layers(request, metadata)
-            transcoded_request = (
-                _BaseSolarRestTransport._BaseGetDataLayers._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSolarRestTransport._BaseGetDataLayers._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSolarRestTransport._BaseGetDataLayers,
+                    "_BaseGetDataLayers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -753,19 +752,16 @@ class SolarRestTransport(_BaseSolarRestTransport):
             """
 
             http_options = _BaseSolarRestTransport._BaseGetGeoTiff._get_http_options()
-
             request, metadata = self._interceptor.pre_get_geo_tiff(request, metadata)
-            transcoded_request = (
-                _BaseSolarRestTransport._BaseGetGeoTiff._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSolarRestTransport._BaseGetGeoTiff._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSolarRestTransport._BaseGetGeoTiff,
+                    "_BaseGetGeoTiff__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

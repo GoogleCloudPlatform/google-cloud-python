@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.datamanager_v1._compat import transcode_request
 from google.ads.datamanager_v1.types import (
     user_list_direct_license,
     user_list_direct_license_service,
@@ -491,21 +492,18 @@ class UserListDirectLicenseServiceRestTransport(
             """
 
             http_options = _BaseUserListDirectLicenseServiceRestTransport._BaseCreateUserListDirectLicense._get_http_options()
-
             request, metadata = self._interceptor.pre_create_user_list_direct_license(
                 request, metadata
             )
-            transcoded_request = _BaseUserListDirectLicenseServiceRestTransport._BaseCreateUserListDirectLicense._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseUserListDirectLicenseServiceRestTransport._BaseCreateUserListDirectLicense._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListDirectLicenseServiceRestTransport._BaseCreateUserListDirectLicense._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListDirectLicenseServiceRestTransport._BaseCreateUserListDirectLicense,
+                    "_BaseCreateUserListDirectLicense__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -656,17 +654,18 @@ class UserListDirectLicenseServiceRestTransport(
             """
 
             http_options = _BaseUserListDirectLicenseServiceRestTransport._BaseGetUserListDirectLicense._get_http_options()
-
             request, metadata = self._interceptor.pre_get_user_list_direct_license(
                 request, metadata
             )
-            transcoded_request = _BaseUserListDirectLicenseServiceRestTransport._BaseGetUserListDirectLicense._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListDirectLicenseServiceRestTransport._BaseGetUserListDirectLicense._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListDirectLicenseServiceRestTransport._BaseGetUserListDirectLicense,
+                    "_BaseGetUserListDirectLicense__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -810,17 +809,18 @@ class UserListDirectLicenseServiceRestTransport(
             """
 
             http_options = _BaseUserListDirectLicenseServiceRestTransport._BaseListUserListDirectLicenses._get_http_options()
-
             request, metadata = self._interceptor.pre_list_user_list_direct_licenses(
                 request, metadata
             )
-            transcoded_request = _BaseUserListDirectLicenseServiceRestTransport._BaseListUserListDirectLicenses._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListDirectLicenseServiceRestTransport._BaseListUserListDirectLicenses._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListDirectLicenseServiceRestTransport._BaseListUserListDirectLicenses,
+                    "_BaseListUserListDirectLicenses__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -973,21 +973,18 @@ class UserListDirectLicenseServiceRestTransport(
             """
 
             http_options = _BaseUserListDirectLicenseServiceRestTransport._BaseUpdateUserListDirectLicense._get_http_options()
-
             request, metadata = self._interceptor.pre_update_user_list_direct_license(
                 request, metadata
             )
-            transcoded_request = _BaseUserListDirectLicenseServiceRestTransport._BaseUpdateUserListDirectLicense._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseUserListDirectLicenseServiceRestTransport._BaseUpdateUserListDirectLicense._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseUserListDirectLicenseServiceRestTransport._BaseUpdateUserListDirectLicense._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserListDirectLicenseServiceRestTransport._BaseUpdateUserListDirectLicense,
+                    "_BaseUpdateUserListDirectLicense__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

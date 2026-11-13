@@ -17,10 +17,7 @@ from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import _helpers
-from google.auth import crypt
-from google.auth import jwt
-from google.auth import transport
+from google.auth import _helpers, crypt, jwt, transport
 from google.oauth2 import _service_account_async as service_account
 from tests.oauth2 import test_service_account
 
@@ -242,14 +239,17 @@ class TestCredentials(object):
         request = mock.AsyncMock(spec=["transport.Request"])
         headers1 = {}
 
-        with mock.patch.object(
-            credentials,
-            "_lookup_regional_access_boundary",
-            new_callable=mock.AsyncMock,
-        ) as mock_lookup, mock.patch.object(
-            credentials,
-            "_is_regional_access_boundary_lookup_required",
-            return_value=True,
+        with (
+            mock.patch.object(
+                credentials,
+                "_lookup_regional_access_boundary",
+                new_callable=mock.AsyncMock,
+            ) as mock_lookup,
+            mock.patch.object(
+                credentials,
+                "_is_regional_access_boundary_lookup_required",
+                return_value=True,
+            ),
         ):
             mock_lookup.return_value = {
                 "locations": ["us-central1", "europe-west1"],
@@ -281,15 +281,18 @@ class TestCredentials(object):
         request = mock.AsyncMock(spec=["transport.Request"])
         headers = {}
 
-        with mock.patch.object(
-            credentials,
-            "_lookup_regional_access_boundary",
-            new_callable=mock.AsyncMock,
-            side_effect=Exception("Transport failed"),
-        ) as mock_lookup, mock.patch.object(
-            credentials,
-            "_is_regional_access_boundary_lookup_required",
-            return_value=True,
+        with (
+            mock.patch.object(
+                credentials,
+                "_lookup_regional_access_boundary",
+                new_callable=mock.AsyncMock,
+                side_effect=Exception("Transport failed"),
+            ) as mock_lookup,
+            mock.patch.object(
+                credentials,
+                "_is_regional_access_boundary_lookup_required",
+                return_value=True,
+            ),
         ):
             # Any transport/lookup failure must be caught gracefully during refresh.
             await credentials.before_request(
@@ -311,14 +314,17 @@ class TestCredentials(object):
         request = mock.AsyncMock(spec=["transport.Request"])
         headers = {}
 
-        with mock.patch.object(
-            credentials,
-            "_lookup_regional_access_boundary",
-            new_callable=mock.AsyncMock,
-        ) as mock_lookup, mock.patch.object(
-            credentials,
-            "_is_regional_access_boundary_lookup_required",
-            return_value=True,
+        with (
+            mock.patch.object(
+                credentials,
+                "_lookup_regional_access_boundary",
+                new_callable=mock.AsyncMock,
+            ) as mock_lookup,
+            mock.patch.object(
+                credentials,
+                "_is_regional_access_boundary_lookup_required",
+                return_value=True,
+            ),
         ):
             mock_lookup.return_value = {
                 "locations": ["us-central1", "europe-west1"],

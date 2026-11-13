@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.network_security_v1._compat import transcode_request
 from google.cloud.network_security_v1.types import (
     security_profile_group,
     security_profile_group_service,
@@ -1116,21 +1117,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseCreateSecurityProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_create_security_profile(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseCreateSecurityProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityProfileGroupServiceRestTransport._BaseCreateSecurityProfile._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseCreateSecurityProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseCreateSecurityProfile,
+                    "_BaseCreateSecurityProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1272,21 +1270,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseCreateSecurityProfileGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_create_security_profile_group(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseCreateSecurityProfileGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityProfileGroupServiceRestTransport._BaseCreateSecurityProfileGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseCreateSecurityProfileGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseCreateSecurityProfileGroup,
+                    "_BaseCreateSecurityProfileGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1428,17 +1423,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseDeleteSecurityProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_security_profile(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseDeleteSecurityProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseDeleteSecurityProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseDeleteSecurityProfile,
+                    "_BaseDeleteSecurityProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1578,17 +1574,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseDeleteSecurityProfileGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_security_profile_group(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseDeleteSecurityProfileGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseDeleteSecurityProfileGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseDeleteSecurityProfileGroup,
+                    "_BaseDeleteSecurityProfileGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1727,17 +1724,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseGetSecurityProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_get_security_profile(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseGetSecurityProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseGetSecurityProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseGetSecurityProfile,
+                    "_BaseGetSecurityProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1881,17 +1879,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseGetSecurityProfileGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_get_security_profile_group(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseGetSecurityProfileGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseGetSecurityProfileGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseGetSecurityProfileGroup,
+                    "_BaseGetSecurityProfileGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2034,17 +2033,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseListSecurityProfileGroups._get_http_options()
-
             request, metadata = self._interceptor.pre_list_security_profile_groups(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseListSecurityProfileGroups._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseListSecurityProfileGroups._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseListSecurityProfileGroups,
+                    "_BaseListSecurityProfileGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2188,17 +2188,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseListSecurityProfiles._get_http_options()
-
             request, metadata = self._interceptor.pre_list_security_profiles(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseListSecurityProfiles._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseListSecurityProfiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseListSecurityProfiles,
+                    "_BaseListSecurityProfiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2344,21 +2345,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseUpdateSecurityProfile._get_http_options()
-
             request, metadata = self._interceptor.pre_update_security_profile(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseUpdateSecurityProfile._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityProfileGroupServiceRestTransport._BaseUpdateSecurityProfile._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseUpdateSecurityProfile._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseUpdateSecurityProfile,
+                    "_BaseUpdateSecurityProfile__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2500,21 +2498,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseUpdateSecurityProfileGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_update_security_profile_group(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseUpdateSecurityProfileGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityProfileGroupServiceRestTransport._BaseUpdateSecurityProfileGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseUpdateSecurityProfileGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseUpdateSecurityProfileGroup,
+                    "_BaseUpdateSecurityProfileGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2773,15 +2768,16 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2914,15 +2910,16 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3055,15 +3052,16 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3197,19 +3195,16 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityProfileGroupServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3344,21 +3339,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityProfileGroupServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3488,21 +3480,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSecurityProfileGroupServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3608,17 +3597,18 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3726,15 +3716,16 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3867,15 +3858,16 @@ class SecurityProfileGroupServiceRestTransport(
             """
 
             http_options = _BaseSecurityProfileGroupServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseSecurityProfileGroupServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSecurityProfileGroupServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSecurityProfileGroupServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

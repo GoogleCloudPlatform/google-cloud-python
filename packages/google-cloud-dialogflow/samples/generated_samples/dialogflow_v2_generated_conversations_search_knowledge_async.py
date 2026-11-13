@@ -40,7 +40,6 @@ async def sample_search_knowledge():
 
     # Initialize request argument(s)
     query = dialogflow_v2.TextInput()
-    query.text = "text_value"
     query.language_code = "language_code_value"
 
     request = dialogflow_v2.SearchKnowledgeRequest(

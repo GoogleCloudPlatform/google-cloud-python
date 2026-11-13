@@ -359,7 +359,6 @@ texinfo_documents = [
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    "python": ("https://python.readthedocs.org/en/latest/", None),
     "google-auth": ("https://googleapis.dev/python/google-auth/latest/", None),
     "google.api_core": (
         "https://googleapis.dev/python/google-api-core/latest/",
@@ -370,6 +369,21 @@ intersphinx_mapping = {
     "protobuf": ("https://googleapis.dev/python/protobuf/latest/", None),
     "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
 }
+
+# Check reachability of the Python standard library inventory before attaching it.
+# Because Sphinx is run with `-W` (warnings as errors) in CI, an external network
+# failure or upstream outage on docs.python.org would otherwise treat the missing
+# inventory as a fatal error and fail the build.
+try:
+    import urllib.request
+
+    with urllib.request.urlopen("https://docs.python.org/3/objects.inv", timeout=2):
+        intersphinx_mapping["python"] = (
+            "https://python.readthedocs.org/en/latest/",
+            None,
+        )
+except Exception:
+    pass
 
 
 # Napoleon settings

@@ -440,6 +440,9 @@ class InputAudioConfig(proto.Message):
     r"""Instructs the speech recognizer on how to process the audio
     content.
 
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         audio_encoding (google.cloud.dialogflow_v2beta1.types.AudioEncoding):
             Required. Audio encoding of the audio content
@@ -534,6 +537,18 @@ class InputAudioConfig(proto.Message):
             migration takes place in June 2024. Please refer to
             `Dialogflow ES Speech model
             migration <https://cloud.google.com/dialogflow/es/docs/speech-model-migration>`__.
+        gemini_asr_config (google.cloud.dialogflow_v2beta1.types.SpeechToTextConfig.GeminiAsrConfig):
+            Optional. Configuration for using Gemini ASR models served
+            via Vertex AI. This field is only used when
+            ``use_gemini_asr`` is true.
+        use_gemini_asr (bool):
+            Optional. If true, Gemini ASR will be used
+            for transcription instead of Cloud
+            Speech-to-Text. If false, Cloud Speech-to-Text
+            will be used. If unset, this setting is
+            inherited from the ConversationProfile.
+
+            This field is a member of `oneof`_ ``_use_gemini_asr``.
     """
 
     audio_encoding: "AudioEncoding" = proto.Field(
@@ -604,6 +619,16 @@ class InputAudioConfig(proto.Message):
     opt_out_conformer_model_migration: bool = proto.Field(
         proto.BOOL,
         number=26,
+    )
+    gemini_asr_config: "SpeechToTextConfig.GeminiAsrConfig" = proto.Field(
+        proto.MESSAGE,
+        number=30,
+        message="SpeechToTextConfig.GeminiAsrConfig",
+    )
+    use_gemini_asr: bool = proto.Field(
+        proto.BOOL,
+        number=31,
+        optional=True,
     )
 
 
@@ -884,7 +909,97 @@ class SpeechToTextConfig(proto.Message):
             Use timeout based endpointing, interpreting
             endpointer sensitivity as seconds of timeout
             value.
+        gemini_asr_config (google.cloud.dialogflow_v2beta1.types.SpeechToTextConfig.GeminiAsrConfig):
+            Optional. Configuration for using Gemini ASR models served
+            via Vertex AI, overriding the default Gemini ASR model or
+            providing additional advanced parameters. This field is only
+            used when ``use_gemini_asr`` is true.
+        use_gemini_asr (bool):
+            Optional. If true, Gemini ASR will be used
+            for transcription instead of Cloud
+            Speech-to-Text.
     """
+
+    class GeminiAsrConfig(proto.Message):
+        r"""Configuration for using Gemini ASR models served via Vertex
+        AI. This message is used to override the default Gemini ASR
+        model or provide additional advanced parameters.
+
+        Attributes:
+            model_id (str):
+                Optional. The Gemini ASR model ID used for
+                transcription. This value overrides the default
+                model ID configured on the server. Example:
+                "gemini-3-flash-lite-asr-preview".
+            silence_duration_ms (int):
+                Optional. The required duration of detected
+                silence (or non-speech) before end-of-speech is
+                committed.
+            prefix_padding_ms (int):
+                Optional. The required duration of detected
+                speech before start-of-speech is committed.
+            start_of_speech_sensitivity (google.cloud.dialogflow_v2beta1.types.SpeechToTextConfig.GeminiAsrConfig.StartSensitivity):
+                Optional. Start of speech sensitivity.
+            end_of_speech_sensitivity (google.cloud.dialogflow_v2beta1.types.SpeechToTextConfig.GeminiAsrConfig.EndSensitivity):
+                Optional. End of speech sensitivity.
+        """
+
+        class StartSensitivity(proto.Enum):
+            r"""Start of speech sensitivity.
+
+            Values:
+                START_SENSITIVITY_UNSPECIFIED (0):
+                    The default is START_SENSITIVITY_LOW.
+                START_SENSITIVITY_HIGH (1):
+                    Automatic detection will detect the start of
+                    speech more often.
+                START_SENSITIVITY_LOW (2):
+                    Automatic detection will detect the start of
+                    speech less often.
+            """
+
+            START_SENSITIVITY_UNSPECIFIED = 0
+            START_SENSITIVITY_HIGH = 1
+            START_SENSITIVITY_LOW = 2
+
+        class EndSensitivity(proto.Enum):
+            r"""End of speech sensitivity.
+
+            Values:
+                END_SENSITIVITY_UNSPECIFIED (0):
+                    The default is END_SENSITIVITY_LOW.
+                END_SENSITIVITY_HIGH (1):
+                    Automatic detection ends speech more often.
+                END_SENSITIVITY_LOW (2):
+                    Automatic detection ends speech less often.
+            """
+
+            END_SENSITIVITY_UNSPECIFIED = 0
+            END_SENSITIVITY_HIGH = 1
+            END_SENSITIVITY_LOW = 2
+
+        model_id: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        silence_duration_ms: int = proto.Field(
+            proto.INT32,
+            number=2,
+        )
+        prefix_padding_ms: int = proto.Field(
+            proto.INT32,
+            number=3,
+        )
+        start_of_speech_sensitivity: "SpeechToTextConfig.GeminiAsrConfig.StartSensitivity" = proto.Field(
+            proto.ENUM,
+            number=4,
+            enum="SpeechToTextConfig.GeminiAsrConfig.StartSensitivity",
+        )
+        end_of_speech_sensitivity: "SpeechToTextConfig.GeminiAsrConfig.EndSensitivity" = proto.Field(
+            proto.ENUM,
+            number=5,
+            enum="SpeechToTextConfig.GeminiAsrConfig.EndSensitivity",
+        )
 
     speech_model_variant: "SpeechModelVariant" = proto.Field(
         proto.ENUM,
@@ -919,6 +1034,15 @@ class SpeechToTextConfig(proto.Message):
     use_timeout_based_endpointing: bool = proto.Field(
         proto.BOOL,
         number=11,
+    )
+    gemini_asr_config: GeminiAsrConfig = proto.Field(
+        proto.MESSAGE,
+        number=15,
+        message=GeminiAsrConfig,
+    )
+    use_gemini_asr: bool = proto.Field(
+        proto.BOOL,
+        number=16,
     )
 
 

@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.network_security_v1._compat import transcode_request
 from google.cloud.network_security_v1.types import address_group
 from google.cloud.network_security_v1.types import address_group as gcn_address_group
 
@@ -1051,21 +1052,18 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseAddAddressGroupItems._get_http_options()
-
             request, metadata = self._interceptor.pre_add_address_group_items(
                 request, metadata
             )
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseAddAddressGroupItems._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrganizationAddressGroupServiceRestTransport._BaseAddAddressGroupItems._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseAddAddressGroupItems._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseAddAddressGroupItems,
+                    "_BaseAddAddressGroupItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1206,21 +1204,18 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseCloneAddressGroupItems._get_http_options()
-
             request, metadata = self._interceptor.pre_clone_address_group_items(
                 request, metadata
             )
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseCloneAddressGroupItems._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrganizationAddressGroupServiceRestTransport._BaseCloneAddressGroupItems._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseCloneAddressGroupItems._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseCloneAddressGroupItems,
+                    "_BaseCloneAddressGroupItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1361,21 +1356,18 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseCreateAddressGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_create_address_group(
                 request, metadata
             )
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseCreateAddressGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrganizationAddressGroupServiceRestTransport._BaseCreateAddressGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseCreateAddressGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseCreateAddressGroup,
+                    "_BaseCreateAddressGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1515,17 +1507,18 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseDeleteAddressGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_address_group(
                 request, metadata
             )
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseDeleteAddressGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseDeleteAddressGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseDeleteAddressGroup,
+                    "_BaseDeleteAddressGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1662,17 +1655,18 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseGetAddressGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_get_address_group(
                 request, metadata
             )
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseGetAddressGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseGetAddressGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseGetAddressGroup,
+                    "_BaseGetAddressGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1813,17 +1807,18 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseListAddressGroupReferences._get_http_options()
-
             request, metadata = self._interceptor.pre_list_address_group_references(
                 request, metadata
             )
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseListAddressGroupReferences._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseListAddressGroupReferences._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseListAddressGroupReferences,
+                    "_BaseListAddressGroupReferences__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1969,17 +1964,18 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseListAddressGroups._get_http_options()
-
             request, metadata = self._interceptor.pre_list_address_groups(
                 request, metadata
             )
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseListAddressGroups._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseListAddressGroups._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseListAddressGroups,
+                    "_BaseListAddressGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2124,21 +2120,18 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseRemoveAddressGroupItems._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_address_group_items(
                 request, metadata
             )
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseRemoveAddressGroupItems._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrganizationAddressGroupServiceRestTransport._BaseRemoveAddressGroupItems._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseRemoveAddressGroupItems._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseRemoveAddressGroupItems,
+                    "_BaseRemoveAddressGroupItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2279,21 +2272,18 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseUpdateAddressGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_update_address_group(
                 request, metadata
             )
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseUpdateAddressGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrganizationAddressGroupServiceRestTransport._BaseUpdateAddressGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseUpdateAddressGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseUpdateAddressGroup,
+                    "_BaseUpdateAddressGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2524,15 +2514,16 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2665,15 +2656,16 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2804,15 +2796,16 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2944,19 +2937,16 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrganizationAddressGroupServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3091,21 +3081,18 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrganizationAddressGroupServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3235,21 +3222,18 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrganizationAddressGroupServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3353,17 +3337,18 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3469,15 +3454,16 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3608,15 +3594,16 @@ class OrganizationAddressGroupServiceRestTransport(
             """
 
             http_options = _BaseOrganizationAddressGroupServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseOrganizationAddressGroupServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrganizationAddressGroupServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrganizationAddressGroupServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -13,15 +13,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+from .directory_policy import (
+    CreateDirectoryPolicyRequest,
+    DeleteDirectoryPolicyRequest,
+    DirectoryPolicy,
+    GetDirectoryPolicyRequest,
+    ListDirectoryPoliciesRequest,
+    ListDirectoryPoliciesResponse,
+)
 from .instance import (
+    AccessRulesOptions,
     CreateInstanceRequest,
     DeleteInstanceRequest,
+    DynamicTierOptions,
     GetInstanceRequest,
     Instance,
     ListInstancesRequest,
     ListInstancesResponse,
+    MaintenancePolicy,
+    MaintenanceSchedule,
     OperationMetadata,
+    RescheduleMaintenanceRequest,
     UpdateInstanceRequest,
+)
+from .mirror import (
+    CreateMirrorMetadata,
+    CreateMirrorRequest,
+    DeleteMirrorRequest,
+    GetMirrorRequest,
+    ListMirrorsRequest,
+    ListMirrorsResponse,
+    Mirror,
+    UpdateMirrorRequest,
 )
 from .transfer import (
     ErrorLogEntry,
@@ -40,14 +63,33 @@ from .transfer import (
 )
 
 __all__ = (
+    "CreateDirectoryPolicyRequest",
+    "DeleteDirectoryPolicyRequest",
+    "DirectoryPolicy",
+    "GetDirectoryPolicyRequest",
+    "ListDirectoryPoliciesRequest",
+    "ListDirectoryPoliciesResponse",
+    "AccessRulesOptions",
     "CreateInstanceRequest",
     "DeleteInstanceRequest",
+    "DynamicTierOptions",
     "GetInstanceRequest",
     "Instance",
     "ListInstancesRequest",
     "ListInstancesResponse",
+    "MaintenancePolicy",
+    "MaintenanceSchedule",
     "OperationMetadata",
+    "RescheduleMaintenanceRequest",
     "UpdateInstanceRequest",
+    "CreateMirrorMetadata",
+    "CreateMirrorRequest",
+    "DeleteMirrorRequest",
+    "GetMirrorRequest",
+    "ListMirrorsRequest",
+    "ListMirrorsResponse",
+    "Mirror",
+    "UpdateMirrorRequest",
     "ErrorLogEntry",
     "ErrorSummary",
     "ExportDataMetadata",

@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import ad_unit_messages, ad_unit_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -860,21 +861,18 @@ class AdUnitServiceRestTransport(_BaseAdUnitServiceRestTransport):
             """
 
             http_options = _BaseAdUnitServiceRestTransport._BaseBatchActivateAdUnits._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_activate_ad_units(
                 request, metadata
             )
-            transcoded_request = _BaseAdUnitServiceRestTransport._BaseBatchActivateAdUnits._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdUnitServiceRestTransport._BaseBatchActivateAdUnits._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdUnitServiceRestTransport._BaseBatchActivateAdUnits._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdUnitServiceRestTransport._BaseBatchActivateAdUnits,
+                    "_BaseBatchActivateAdUnits__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1012,21 +1010,18 @@ class AdUnitServiceRestTransport(_BaseAdUnitServiceRestTransport):
             """
 
             http_options = _BaseAdUnitServiceRestTransport._BaseBatchArchiveAdUnits._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_archive_ad_units(
                 request, metadata
             )
-            transcoded_request = _BaseAdUnitServiceRestTransport._BaseBatchArchiveAdUnits._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdUnitServiceRestTransport._BaseBatchArchiveAdUnits._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdUnitServiceRestTransport._BaseBatchArchiveAdUnits._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdUnitServiceRestTransport._BaseBatchArchiveAdUnits,
+                    "_BaseBatchArchiveAdUnits__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1164,21 +1159,18 @@ class AdUnitServiceRestTransport(_BaseAdUnitServiceRestTransport):
             """
 
             http_options = _BaseAdUnitServiceRestTransport._BaseBatchCreateAdUnits._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_ad_units(
                 request, metadata
             )
-            transcoded_request = _BaseAdUnitServiceRestTransport._BaseBatchCreateAdUnits._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdUnitServiceRestTransport._BaseBatchCreateAdUnits._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdUnitServiceRestTransport._BaseBatchCreateAdUnits._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdUnitServiceRestTransport._BaseBatchCreateAdUnits,
+                    "_BaseBatchCreateAdUnits__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1317,21 +1309,18 @@ class AdUnitServiceRestTransport(_BaseAdUnitServiceRestTransport):
             """
 
             http_options = _BaseAdUnitServiceRestTransport._BaseBatchDeactivateAdUnits._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_deactivate_ad_units(
                 request, metadata
             )
-            transcoded_request = _BaseAdUnitServiceRestTransport._BaseBatchDeactivateAdUnits._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdUnitServiceRestTransport._BaseBatchDeactivateAdUnits._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdUnitServiceRestTransport._BaseBatchDeactivateAdUnits._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdUnitServiceRestTransport._BaseBatchDeactivateAdUnits,
+                    "_BaseBatchDeactivateAdUnits__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1469,21 +1458,18 @@ class AdUnitServiceRestTransport(_BaseAdUnitServiceRestTransport):
             """
 
             http_options = _BaseAdUnitServiceRestTransport._BaseBatchUpdateAdUnits._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_ad_units(
                 request, metadata
             )
-            transcoded_request = _BaseAdUnitServiceRestTransport._BaseBatchUpdateAdUnits._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdUnitServiceRestTransport._BaseBatchUpdateAdUnits._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdUnitServiceRestTransport._BaseBatchUpdateAdUnits._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdUnitServiceRestTransport._BaseBatchUpdateAdUnits,
+                    "_BaseBatchUpdateAdUnits__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1623,19 +1609,16 @@ class AdUnitServiceRestTransport(_BaseAdUnitServiceRestTransport):
             http_options = (
                 _BaseAdUnitServiceRestTransport._BaseCreateAdUnit._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_ad_unit(request, metadata)
-            transcoded_request = _BaseAdUnitServiceRestTransport._BaseCreateAdUnit._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdUnitServiceRestTransport._BaseCreateAdUnit._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdUnitServiceRestTransport._BaseCreateAdUnit._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdUnitServiceRestTransport._BaseCreateAdUnit,
+                    "_BaseCreateAdUnit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1772,19 +1755,16 @@ class AdUnitServiceRestTransport(_BaseAdUnitServiceRestTransport):
             http_options = (
                 _BaseAdUnitServiceRestTransport._BaseGetAdUnit._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_ad_unit(request, metadata)
-            transcoded_request = (
-                _BaseAdUnitServiceRestTransport._BaseGetAdUnit._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAdUnitServiceRestTransport._BaseGetAdUnit._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdUnitServiceRestTransport._BaseGetAdUnit,
+                    "_BaseGetAdUnit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1924,17 +1904,16 @@ class AdUnitServiceRestTransport(_BaseAdUnitServiceRestTransport):
             http_options = (
                 _BaseAdUnitServiceRestTransport._BaseListAdUnits._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_ad_units(request, metadata)
-            transcoded_request = _BaseAdUnitServiceRestTransport._BaseListAdUnits._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAdUnitServiceRestTransport._BaseListAdUnits._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdUnitServiceRestTransport._BaseListAdUnits,
+                    "_BaseListAdUnits__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2076,17 +2055,18 @@ class AdUnitServiceRestTransport(_BaseAdUnitServiceRestTransport):
             http_options = (
                 _BaseAdUnitServiceRestTransport._BaseListAdUnitSizes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_ad_unit_sizes(
                 request, metadata
             )
-            transcoded_request = _BaseAdUnitServiceRestTransport._BaseListAdUnitSizes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdUnitServiceRestTransport._BaseListAdUnitSizes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdUnitServiceRestTransport._BaseListAdUnitSizes,
+                    "_BaseListAdUnitSizes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2225,19 +2205,16 @@ class AdUnitServiceRestTransport(_BaseAdUnitServiceRestTransport):
             http_options = (
                 _BaseAdUnitServiceRestTransport._BaseUpdateAdUnit._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_ad_unit(request, metadata)
-            transcoded_request = _BaseAdUnitServiceRestTransport._BaseUpdateAdUnit._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdUnitServiceRestTransport._BaseUpdateAdUnit._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdUnitServiceRestTransport._BaseUpdateAdUnit._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdUnitServiceRestTransport._BaseUpdateAdUnit,
+                    "_BaseUpdateAdUnit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2476,17 +2453,18 @@ class AdUnitServiceRestTransport(_BaseAdUnitServiceRestTransport):
             http_options = (
                 _BaseAdUnitServiceRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAdUnitServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdUnitServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdUnitServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2593,15 +2571,16 @@ class AdUnitServiceRestTransport(_BaseAdUnitServiceRestTransport):
             http_options = (
                 _BaseAdUnitServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAdUnitServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdUnitServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdUnitServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

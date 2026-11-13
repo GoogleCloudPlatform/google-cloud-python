@@ -4,6 +4,34 @@
 
 [1]: https://pypi.org/project/google-cloud-alloydb/#history
 
+## [0.11.4](https://github.com/googleapis/google-cloud-python/compare/google-cloud-alloydb-v0.11.3...google-cloud-alloydb-v0.11.4) (2026-10-15)
+
+
+### Features
+
+* update API sources and regenerate ([#18699](https://github.com/googleapis/google-cloud-python/issues/18699)) ([1aa57db](https://github.com/googleapis/google-cloud-python/commit/1aa57db6309e47e1a0505be80ed0443d2ca5a4d0))
+
+## [0.11.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-alloydb-v0.11.2...google-cloud-alloydb-v0.11.3) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [0.11.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-alloydb-v0.11.1...google-cloud-alloydb-v0.11.2) (2026-09-14)
+
+
+### Features
+
+* update API sources and regenerate ([#18324](https://github.com/googleapis/google-cloud-python/issues/18324)) ([0766fb6](https://github.com/googleapis/google-cloud-python/commit/0766fb69c28973d5d51cffc490f195c60e8eee10))
+
+## [0.11.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-alloydb-v0.11.0...google-cloud-alloydb-v0.11.1) (2026-08-21)
+
+
+### Features
+
+* update sources and regenerate ([#18164](https://github.com/googleapis/google-cloud-python/issues/18164)) ([5ff8274](https://github.com/googleapis/google-cloud-python/commit/5ff8274ac2eb9375e918dff68303d3abdc3e6d6f))
+
 ## [0.11.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-alloydb-v0.10.0...google-cloud-alloydb-v0.11.0) (2026-06-11)
 
 

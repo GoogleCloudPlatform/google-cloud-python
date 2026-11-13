@@ -16,8 +16,7 @@ import enum
 
 from google.protobuf import descriptor_pb2
 
-from proto import _file_info
-from proto import _package_info
+from proto import _file_info, _package_info
 from proto.marshal.rules.enums import EnumRule
 
 

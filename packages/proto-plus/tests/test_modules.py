@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from unittest import mock
 import inspect
 import sys
+from unittest import mock
 
 from google.protobuf import wrappers_pb2
 

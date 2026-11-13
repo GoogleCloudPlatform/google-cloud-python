@@ -78,7 +78,6 @@ from sqlalchemy.testing.suite.test_ddl import (
     LongNameBlowoutTest as _LongNameBlowoutTest,
 )
 from sqlalchemy.testing.suite.test_ddl import TableDDLTest as _TableDDLTest
-from sqlalchemy.testing.suite.test_deprecations import *  # noqa: F401, F403
 from sqlalchemy.testing.suite.test_dialect import *  # noqa: F401, F403
 from sqlalchemy.testing.suite.test_dialect import (
     DifficultParametersTest as _DifficultParametersTest,
@@ -224,6 +223,15 @@ from tests._helpers import (
     get_db_url,
     get_project,
 )
+
+try:
+    # SQLAlchemy 2.1+ removed test_deprecations from sqlalchemy.testing.suite.
+    # Guard this import so the test suite remains compatible with both 2.0.x and 2.1+.
+    # Tell flake8 to ignore F401 (unused import) and F403 (wildcard import) since
+    # pytest discovers the imported SQLAlchemy compliance test classes at module scope.
+    from sqlalchemy.testing.suite.test_deprecations import *  # noqa: F401, F403
+except ModuleNotFoundError:
+    pass
 
 config.test_schema = ""
 
@@ -721,6 +729,7 @@ class ComponentReflectionTest(_ComponentReflectionTest):
                             [
                                 types.Integer,
                                 types.Numeric,
+                                types.Float,
                                 types.DateTime,
                                 types.Date,
                                 types.Time,
@@ -2917,6 +2926,10 @@ class HasTableTest(_HasTableTest):
         pass
 
     @pytest.mark.skip("Not supported by Cloud Spanner")
+    def test_has_multi_table_schema(self):
+        pass
+
+    @pytest.mark.skip("Not supported by Cloud Spanner")
     def test_has_table_cache(self):
         pass
 
@@ -3066,17 +3079,24 @@ class JSONTest(_JSONTest):
         pass
 
     @pytest.mark.skip(
-        "Spanner JSON_VALUE() always returns STRING,"
+        "Spanner JSON_VALUE() always returns STRING, "
         "thus, this test case can't be executed."
     )
     def test_index_typed_comparison(self):
         pass
 
     @pytest.mark.skip(
-        "Spanner JSON_VALUE() always returns STRING,"
+        "Spanner JSON_VALUE() always returns STRING, "
         "thus, this test case can't be executed."
     )
     def test_path_typed_comparison(self):
+        pass
+
+    @pytest.mark.skip(
+        "Spanner JSON_VALUE() always returns STRING, "
+        "thus, this test case can't be executed."
+    )
+    def test_index_cross_casts(self):
         pass
 
     @pytest.mark.skip("Custom JSON de-/serializers are not supported.")

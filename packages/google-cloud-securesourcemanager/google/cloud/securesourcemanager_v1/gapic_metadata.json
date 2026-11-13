@@ -105,6 +105,11 @@
                 "fetch_blob"
               ]
             },
+            "FetchRefs": {
+              "methods": [
+                "fetch_refs"
+              ]
+            },
             "FetchTree": {
               "methods": [
                 "fetch_tree"
@@ -370,6 +375,11 @@
                 "fetch_blob"
               ]
             },
+            "FetchRefs": {
+              "methods": [
+                "fetch_refs"
+              ]
+            },
             "FetchTree": {
               "methods": [
                 "fetch_tree"
@@ -633,6 +643,11 @@
             "FetchBlob": {
               "methods": [
                 "fetch_blob"
+              ]
+            },
+            "FetchRefs": {
+              "methods": [
+                "fetch_refs"
               ]
             },
             "FetchTree": {

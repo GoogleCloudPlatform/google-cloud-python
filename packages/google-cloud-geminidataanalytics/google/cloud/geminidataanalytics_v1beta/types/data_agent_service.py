@@ -35,6 +35,11 @@ __protobuf__ = proto.module(
         "UpdateDataAgentRequest",
         "DeleteDataAgentRequest",
         "OperationMetadata",
+        "SetAgentOpsObservabilityRequest",
+        "SetAgentOpsObservabilityResponse",
+        "SetAgentOpsObservabilityMetadata",
+        "RetrieveAgentOpsObservabilityRequest",
+        "RetrieveAgentOpsObservabilityResponse",
     },
 )
 
@@ -68,6 +73,9 @@ class ListDataAgentsRequest(proto.Message):
             Optional. If true, the list results will
             include soft-deleted DataAgents. Defaults to
             false.
+        creator_filter (google.cloud.geminidataanalytics_v1beta.types.ListAccessibleDataAgentsRequest.CreatorFilter):
+            Optional. Filter for the creator of the
+            agent.
     """
 
     parent: str = proto.Field(
@@ -93,6 +101,11 @@ class ListDataAgentsRequest(proto.Message):
     show_deleted: bool = proto.Field(
         proto.BOOL,
         number=6,
+    )
+    creator_filter: "ListAccessibleDataAgentsRequest.CreatorFilter" = proto.Field(
+        proto.ENUM,
+        number=8,
+        enum="ListAccessibleDataAgentsRequest.CreatorFilter",
     )
 
 
@@ -465,6 +478,161 @@ class OperationMetadata(proto.Message):
     )
     api_version: str = proto.Field(
         proto.STRING,
+        number=7,
+    )
+
+
+class SetAgentOpsObservabilityRequest(proto.Message):
+    r"""Request for SetAgentOpsObservability.
+
+    Attributes:
+        parent (str):
+            Required. Parent value for
+            SetAgentOpsObservabilityRequest. Format:
+            projects/{project}/locations/{location}
+        telemetry_enabled (bool):
+            Optional. Whether to enable or disable AgentOps
+            observability. When update_mask is provided, this field is
+            ignored unless specified in the mask.
+        data_source_type (str):
+            Required. The data source type for which to
+            set observability settings. Examples:
+            "bigquery", "looker".
+        bqaa_enabled (bool):
+            Optional. Whether BigQuery Agent Analytics is enabled. Note:
+            An explicit ``update_mask`` containing "bqaa_enabled" is
+            required to modify this field. If ``update_mask`` is
+            omitted, this field is ignored and an existing enabled
+            setting cannot be disabled.
+
+            This is a project-level setting and does not by itself
+            enable trace logging for any individual agent. Per-agent
+            trace logging is controlled by
+            ``DataAgent.bigquery_agent_analytics_enabled`` together with
+            ``DataAgent.bigquery_agent_analytics_table``; an agent does
+            not inherit this setting.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. Field mask is used to specify the fields to be
+            overwritten by the update. The fields specified in the
+            update_mask are relative to the resource. A field will be
+            overwritten if it is in the mask.
+
+            If the user does not provide a mask, only
+            ``telemetry_enabled`` will be updated (for backward
+            compatibility with legacy callers). Note that disabling
+            BigQuery Agent Analytics (``bqaa_enabled = false``) requires
+            providing an explicit ``update_mask`` containing
+            "bqaa_enabled".
+
+            Per AIP-161:
+
+            - The special wildcard value '\*' is supported to update all
+              fields.
+            - Field paths should use snake_case, though camelCase
+              equivalents (``telemetryEnabled``, ``bqaaEnabled``) are
+              accepted for REST/JSON transcoding compatibility.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    telemetry_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=2,
+    )
+    data_source_type: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    bqaa_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=4,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
+class SetAgentOpsObservabilityResponse(proto.Message):
+    r"""Response for SetAgentOpsObservability."""
+
+
+class SetAgentOpsObservabilityMetadata(proto.Message):
+    r"""Metadata for SetAgentOpsObservability."""
+
+
+class RetrieveAgentOpsObservabilityRequest(proto.Message):
+    r"""Request for RetrieveAgentOpsObservability.
+
+    Attributes:
+        parent (str):
+            Required. Parent value for
+            RetrieveAgentOpsObservabilityRequest. Format:
+            projects/{project}/locations/{location}
+        data_source_type (str):
+            Required. The data source type for which to
+            retrieve observability settings. Examples:
+            "bigquery", "looker".
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    data_source_type: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class RetrieveAgentOpsObservabilityResponse(proto.Message):
+    r"""Response for RetrieveAgentOpsObservability.
+
+    Attributes:
+        telemetry_enabled (bool):
+            Output only. Whether AgentOps observability
+            telemetry is enabled.
+        bigquery_enabled (bool):
+            Output only. Whether BigQuery API is enabled.
+        cloud_trace_enabled (bool):
+            Output only. Whether Cloud Trace API is
+            enabled.
+        cloud_monitoring_enabled (bool):
+            Output only. Whether Cloud Monitoring API is
+            enabled.
+        cloud_logging_enabled (bool):
+            Output only. Whether Cloud Logging API is
+            enabled.
+        bqaa_enabled (bool):
+            Output only. Whether BigQuery Agent Analytics
+            is enabled.
+    """
+
+    telemetry_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=1,
+    )
+    bigquery_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=3,
+    )
+    cloud_trace_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=4,
+    )
+    cloud_monitoring_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=5,
+    )
+    cloud_logging_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=6,
+    )
+    bqaa_enabled: bool = proto.Field(
+        proto.BOOL,
         number=7,
     )
 

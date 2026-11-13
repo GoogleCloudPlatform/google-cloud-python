@@ -84,6 +84,8 @@ class AlphaAnalyticsDataAsyncClient:
     )
     metadata_path = staticmethod(AlphaAnalyticsDataClient.metadata_path)
     parse_metadata_path = staticmethod(AlphaAnalyticsDataClient.parse_metadata_path)
+    property_path = staticmethod(AlphaAnalyticsDataClient.property_path)
+    parse_property_path = staticmethod(AlphaAnalyticsDataClient.parse_property_path)
     property_quotas_snapshot_path = staticmethod(
         AlphaAnalyticsDataClient.property_quotas_snapshot_path
     )
@@ -2039,6 +2041,98 @@ class AlphaAnalyticsDataAsyncClient:
             method=rpc,
             request=request,
             response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def chat(
+        self,
+        request: Optional[Union[analytics_data_api.ChatRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> analytics_data_api.ChatResponse:
+        r"""Provides a chat interface for interacting with Google Analytics
+        data through the API.
+
+        This product uses AI and may display inaccurate info. Your chat
+        activity may be used to improve the product and your use is
+        subject to Google's
+        `Terms <https://policies.google.com/terms>`__, `AI Use
+        Policy <https://policies.google.com/terms/generative-ai/use-policy>`__,
+        and `Privacy Policy <https://policies.google.com/privacy>`__.
+        `Learn more about Chat AI
+        Privacy <https://support.google.com/helpguide/answer/14185196>`__.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.analytics import data_v1alpha
+
+            async def sample_chat():
+                # Create a client
+                client = data_v1alpha.AlphaAnalyticsDataAsyncClient()
+
+                # Initialize request argument(s)
+                request = data_v1alpha.ChatRequest(
+                    property="property_value",
+                    user_query="user_query_value",
+                )
+
+                # Make the request
+                response = await client.chat(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.analytics.data_v1alpha.types.ChatRequest, dict]]):
+                The request object. Request message for the Chat method.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.analytics.data_v1alpha.types.ChatResponse:
+                Response message for the Chat method.
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, analytics_data_api.ChatRequest):
+            request = analytics_data_api.ChatRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[self._client._transport.chat]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("property", request.property),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
             retry=retry,
             timeout=timeout,
             metadata=metadata,

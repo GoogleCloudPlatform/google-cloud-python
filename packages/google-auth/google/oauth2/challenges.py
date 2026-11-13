@@ -12,23 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Challenges for reauthentication.
-"""
+"""Challenges for reauthentication."""
 
 import abc
 import base64
 import getpass
 import sys
 
-from google.auth import _helpers
-from google.auth import exceptions
+from google.auth import _helpers, exceptions
 from google.oauth2 import webauthn_handler_factory
 from google.oauth2.webauthn_types import (
     AuthenticationExtensionsClientInputs,
     GetRequest,
     PublicKeyCredentialDescriptor,
 )
-
 
 REAUTH_ORIGIN = "https://accounts.google.com"
 SAML_CHALLENGE_MESSAGE = (

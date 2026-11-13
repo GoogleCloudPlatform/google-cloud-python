@@ -242,6 +242,61 @@ class ParameterManagerTransport(abc.ABC):
                 default_timeout=60.0,
                 client_info=client_info,
             ),
+            self.list_templates: gapic_v1.method.wrap_method(
+                self.list_templates,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_template: gapic_v1.method.wrap_method(
+                self.get_template,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_template: gapic_v1.method.wrap_method(
+                self.create_template,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_template: gapic_v1.method.wrap_method(
+                self.update_template,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_template: gapic_v1.method.wrap_method(
+                self.delete_template,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_template_versions: gapic_v1.method.wrap_method(
+                self.list_template_versions,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_template_version: gapic_v1.method.wrap_method(
+                self.get_template_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_template_version: gapic_v1.method.wrap_method(
+                self.create_template_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_template_version: gapic_v1.method.wrap_method(
+                self.update_template_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_template_version: gapic_v1.method.wrap_method(
+                self.delete_template_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.render_template_version: gapic_v1.method.wrap_method(
+                self.render_template_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.get_location: gapic_v1.method.wrap_method(
                 self.get_location,
                 default_timeout=None,
@@ -367,6 +422,111 @@ class ParameterManagerTransport(abc.ABC):
     ) -> Callable[
         [service.DeleteParameterVersionRequest],
         Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_templates(
+        self,
+    ) -> Callable[
+        [service.ListTemplatesRequest],
+        Union[service.ListTemplatesResponse, Awaitable[service.ListTemplatesResponse]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_template(
+        self,
+    ) -> Callable[
+        [service.GetTemplateRequest],
+        Union[service.Template, Awaitable[service.Template]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_template(
+        self,
+    ) -> Callable[
+        [service.CreateTemplateRequest],
+        Union[service.Template, Awaitable[service.Template]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_template(
+        self,
+    ) -> Callable[
+        [service.UpdateTemplateRequest],
+        Union[service.Template, Awaitable[service.Template]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_template(
+        self,
+    ) -> Callable[
+        [service.DeleteTemplateRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_template_versions(
+        self,
+    ) -> Callable[
+        [service.ListTemplateVersionsRequest],
+        Union[
+            service.ListTemplateVersionsResponse,
+            Awaitable[service.ListTemplateVersionsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_template_version(
+        self,
+    ) -> Callable[
+        [service.GetTemplateVersionRequest],
+        Union[service.TemplateVersion, Awaitable[service.TemplateVersion]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_template_version(
+        self,
+    ) -> Callable[
+        [service.CreateTemplateVersionRequest],
+        Union[service.TemplateVersion, Awaitable[service.TemplateVersion]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_template_version(
+        self,
+    ) -> Callable[
+        [service.UpdateTemplateVersionRequest],
+        Union[service.TemplateVersion, Awaitable[service.TemplateVersion]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_template_version(
+        self,
+    ) -> Callable[
+        [service.DeleteTemplateVersionRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def render_template_version(
+        self,
+    ) -> Callable[
+        [service.RenderTemplateVersionRequest],
+        Union[
+            service.RenderTemplateVersionResponse,
+            Awaitable[service.RenderTemplateVersionResponse],
+        ],
     ]:
         raise NotImplementedError()
 

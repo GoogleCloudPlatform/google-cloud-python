@@ -534,7 +534,15 @@ def test_any(dtype):
         try:
             return a.any()
         except TypeError as e:
-            if "does not support operation" in str(e):
+            # Truth reduction ('any'/'all') is disallowed on datetime64 arrays (pandas GH#34479).
+            # Known messages across pandas versions:
+            #   - pandas < 3.0:  "datetime64 type does not support operation 'any'"
+            #   - pandas >= 3.0: "'any' with datetime64 dtypes is not supported"
+            #   - test mock:     "does not support operation"
+            msg = str(e)
+            if "does not support operation" in msg or (
+                "datetime64" in msg and "is not supported" in msg
+            ):
                 return
             raise e
 
@@ -571,7 +579,15 @@ def test_all(dtype):
         try:
             return a.all()
         except TypeError as e:
-            if "does not support operation" in str(e):
+            # Truth reduction ('any'/'all') is disallowed on datetime64 arrays (pandas GH#34479).
+            # Known messages across pandas versions:
+            #   - pandas < 3.0:  "datetime64 type does not support operation 'all'"
+            #   - pandas >= 3.0: "'all' with datetime64 dtypes is not supported"
+            #   - test mock:     "does not support operation"
+            msg = str(e)
+            if "does not support operation" in msg or (
+                "datetime64" in msg and "is not supported" in msg
+            ):
                 return
             raise e
 
@@ -704,3 +720,19 @@ def test_date_sub():
     do = pd.Series([pd.DateOffset(days=i) for i in range(4)])
     expect = dates.astype("object") - do
     np.testing.assert_array_equal(dates - do, expect)
+
+
+@for_date_and_time
+def test_cast_pointwise_result(dtype):
+    cls = _cls(dtype)
+    a = _make_one(dtype)
+    res = a._cast_pointwise_result(SAMPLE_RAW_VALUES[dtype])
+    assert isinstance(res, cls)
+
+    import unittest.mock
+
+    with unittest.mock.patch.object(
+        cls, "_from_scalars", side_effect=TypeError("cannot cast"), create=True
+    ):
+        fallback = a._cast_pointwise_result(SAMPLE_RAW_VALUES[dtype])
+        assert fallback is not None

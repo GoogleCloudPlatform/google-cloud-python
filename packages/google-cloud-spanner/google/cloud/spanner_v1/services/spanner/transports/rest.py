@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.spanner_v1._compat import transcode_request
 from google.cloud.spanner_v1.metrics.metrics_interceptor import MetricsInterceptor
 from google.cloud.spanner_v1.types import (
     commit_response,
@@ -1096,21 +1097,18 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             http_options = (
                 _BaseSpannerRestTransport._BaseBatchCreateSessions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_batch_create_sessions(
                 request, metadata
             )
-            transcoded_request = _BaseSpannerRestTransport._BaseBatchCreateSessions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSpannerRestTransport._BaseBatchCreateSessions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSpannerRestTransport._BaseBatchCreateSessions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseBatchCreateSessions,
+                    "_BaseBatchCreateSessions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1250,23 +1248,16 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             """
 
             http_options = _BaseSpannerRestTransport._BaseBatchWrite._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_write(request, metadata)
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseBatchWrite._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpannerRestTransport._BaseBatchWrite._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BaseBatchWrite._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseBatchWrite,
+                    "_BaseBatchWrite__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1397,27 +1388,18 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             http_options = (
                 _BaseSpannerRestTransport._BaseBeginTransaction._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_begin_transaction(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseBeginTransaction._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseSpannerRestTransport._BaseBeginTransaction._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BaseBeginTransaction._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseBeginTransaction,
+                    "_BaseBeginTransaction__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1554,21 +1536,16 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             """
 
             http_options = _BaseSpannerRestTransport._BaseCommit._get_http_options()
-
             request, metadata = self._interceptor.pre_commit(request, metadata)
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseCommit._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpannerRestTransport._BaseCommit._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSpannerRestTransport._BaseCommit._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseCommit,
+                    "_BaseCommit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1705,23 +1682,16 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             http_options = (
                 _BaseSpannerRestTransport._BaseCreateSession._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_session(request, metadata)
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseCreateSession._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpannerRestTransport._BaseCreateSession._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BaseCreateSession._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseCreateSession,
+                    "_BaseCreateSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1853,19 +1823,16 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             http_options = (
                 _BaseSpannerRestTransport._BaseDeleteSession._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_session(request, metadata)
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseDeleteSession._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BaseDeleteSession._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseDeleteSession,
+                    "_BaseDeleteSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2007,27 +1974,18 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             http_options = (
                 _BaseSpannerRestTransport._BaseExecuteBatchDml._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_execute_batch_dml(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseExecuteBatchDml._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseSpannerRestTransport._BaseExecuteBatchDml._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BaseExecuteBatchDml._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseExecuteBatchDml,
+                    "_BaseExecuteBatchDml__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2165,23 +2123,16 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             """
 
             http_options = _BaseSpannerRestTransport._BaseExecuteSql._get_http_options()
-
             request, metadata = self._interceptor.pre_execute_sql(request, metadata)
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseExecuteSql._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpannerRestTransport._BaseExecuteSql._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BaseExecuteSql._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseExecuteSql,
+                    "_BaseExecuteSql__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2327,21 +2278,18 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             http_options = (
                 _BaseSpannerRestTransport._BaseExecuteStreamingSql._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_execute_streaming_sql(
                 request, metadata
             )
-            transcoded_request = _BaseSpannerRestTransport._BaseExecuteStreamingSql._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSpannerRestTransport._BaseExecuteStreamingSql._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSpannerRestTransport._BaseExecuteStreamingSql._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseExecuteStreamingSql,
+                    "_BaseExecuteStreamingSql__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2483,27 +2431,18 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             http_options = (
                 _BaseSpannerRestTransport._BaseFetchCacheUpdate._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_fetch_cache_update(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseFetchCacheUpdate._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseSpannerRestTransport._BaseFetchCacheUpdate._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BaseFetchCacheUpdate._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseFetchCacheUpdate,
+                    "_BaseFetchCacheUpdate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2629,19 +2568,16 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             """
 
             http_options = _BaseSpannerRestTransport._BaseGetSession._get_http_options()
-
             request, metadata = self._interceptor.pre_get_session(request, metadata)
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseGetSession._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BaseGetSession._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseGetSession,
+                    "_BaseGetSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2778,19 +2714,16 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             http_options = (
                 _BaseSpannerRestTransport._BaseListSessions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_sessions(request, metadata)
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseListSessions._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BaseListSessions._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseListSessions,
+                    "_BaseListSessions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2932,23 +2865,16 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             http_options = (
                 _BaseSpannerRestTransport._BasePartitionQuery._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_partition_query(request, metadata)
-            transcoded_request = (
-                _BaseSpannerRestTransport._BasePartitionQuery._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpannerRestTransport._BasePartitionQuery._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BasePartitionQuery._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BasePartitionQuery,
+                    "_BasePartitionQuery__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3089,23 +3015,16 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             http_options = (
                 _BaseSpannerRestTransport._BasePartitionRead._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_partition_read(request, metadata)
-            transcoded_request = (
-                _BaseSpannerRestTransport._BasePartitionRead._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpannerRestTransport._BasePartitionRead._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BasePartitionRead._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BasePartitionRead,
+                    "_BasePartitionRead__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3243,21 +3162,16 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             """
 
             http_options = _BaseSpannerRestTransport._BaseRead._get_http_options()
-
             request, metadata = self._interceptor.pre_read(request, metadata)
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseRead._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpannerRestTransport._BaseRead._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSpannerRestTransport._BaseRead._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseRead,
+                    "_BaseRead__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3386,23 +3300,16 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             """
 
             http_options = _BaseSpannerRestTransport._BaseRollback._get_http_options()
-
             request, metadata = self._interceptor.pre_rollback(request, metadata)
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseRollback._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpannerRestTransport._BaseRollback._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BaseRollback._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseRollback,
+                    "_BaseRollback__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3512,23 +3419,16 @@ class SpannerRestTransport(_BaseSpannerRestTransport):
             http_options = (
                 _BaseSpannerRestTransport._BaseStreamingRead._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_streaming_read(request, metadata)
-            transcoded_request = (
-                _BaseSpannerRestTransport._BaseStreamingRead._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseSpannerRestTransport._BaseStreamingRead._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpannerRestTransport._BaseStreamingRead._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpannerRestTransport._BaseStreamingRead,
+                    "_BaseStreamingRead__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

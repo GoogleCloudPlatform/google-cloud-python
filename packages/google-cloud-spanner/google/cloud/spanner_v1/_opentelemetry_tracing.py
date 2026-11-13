@@ -15,6 +15,7 @@
 """Manages OpenTelemetry trace creation and handling"""
 
 import os
+from collections.abc import Mapping
 from contextlib import contextmanager
 from datetime import datetime
 
@@ -26,7 +27,6 @@ from google.cloud.spanner_v1._helpers import (
     _metadata_with_span_context,
 )
 from google.cloud.spanner_v1.gapic_version import __version__ as gapic_version
-from google.cloud.spanner_v1.metrics.metrics_capture import MetricsCapture
 from google.cloud.spanner_v1.services.spanner.client import SpannerClient
 
 TRACER_NAME = "cloud.google.com/python/spanner"
@@ -38,6 +38,16 @@ extended_tracing_globally_disabled = (
 end_to_end_tracing_globally_enabled = (
     os.getenv("SPANNER_ENABLE_END_TO_END_TRACING", "").lower() == "true"
 )
+
+
+def _is_tracer_noop(tracer: trace.Tracer) -> bool:
+    """Check if a tracer is a no-op tracer or an uninitialized proxy tracer."""
+    if tracer is None or isinstance(tracer, trace.NoOpTracer):
+        return True
+    if isinstance(tracer, trace.ProxyTracer):
+        underlying = getattr(tracer, "_tracer", None)
+        return isinstance(underlying, trace.NoOpTracer)
+    return False
 
 
 def get_tracer(tracer_provider=None):
@@ -63,31 +73,54 @@ def trace_call(
         session._last_use_time = datetime.now()
 
     tracer_provider = None
-
-    # By default enable_extended_tracing=True because in a bid to minimize
-    # breaking changes and preserve legacy behavior, we are keeping it turned
-    # on by default.
-    enable_extended_tracing = True
-
     enable_end_to_end_tracing = False
 
+    has_options = isinstance(observability_options, Mapping)
+    if has_options:
+        tracer_provider = observability_options.get("tracer_provider", None)
+        enable_end_to_end_tracing = observability_options.get(
+            "enable_end_to_end_tracing", False
+        )
+
+    if end_to_end_tracing_globally_enabled:
+        enable_end_to_end_tracing = True
+
+    tracer = get_tracer(tracer_provider)
+
+    # Fast path: when no TracerProvider is registered or a no-op tracer is active,
+    # skip attribute dictionary construction and span creation entirely.
+    if _is_tracer_noop(tracer):
+        current_span = trace.get_current_span()
+        if (
+            current_span is not trace.INVALID_SPAN
+            and current_span.get_span_context().is_valid
+        ):
+            child_span = trace.NonRecordingSpan(current_span.get_span_context())
+            with trace.use_span(child_span):
+                if enable_end_to_end_tracing:
+                    _metadata_with_span_context(metadata)
+                yield child_span
+            return
+
+        if enable_end_to_end_tracing:
+            _metadata_with_span_context(metadata)
+        yield trace.INVALID_SPAN
+        return
+
+    # Slow path: resolve attributes and configure span when tracing is active.
+    enable_extended_tracing = True
     db_name = ""
-    cloud_region = None
+
     if session and getattr(session, "_database", None):
         db_name = session._database.name
 
-    if isinstance(observability_options, dict):  # Avoid false positives with mock.Mock
-        tracer_provider = observability_options.get("tracer_provider", None)
+    if has_options:
         enable_extended_tracing = observability_options.get(
             "enable_extended_tracing", enable_extended_tracing
-        )
-        enable_end_to_end_tracing = observability_options.get(
-            "enable_end_to_end_tracing", enable_end_to_end_tracing
         )
         db_name = observability_options.get("db_name", db_name)
 
     cloud_region = _get_cloud_region()
-    tracer = get_tracer(tracer_provider)
 
     # Set base attributes that we know for every trace created
     attributes = {
@@ -119,35 +152,31 @@ def trace_call(
     if not enable_extended_tracing:
         attributes.pop("db.statement", False)
 
-    if end_to_end_tracing_globally_enabled:
-        enable_end_to_end_tracing = True
-
     with tracer.start_as_current_span(
         name, kind=trace.SpanKind.CLIENT, attributes=attributes
     ) as span:
-        with MetricsCapture():
-            try:
-                if enable_end_to_end_tracing:
-                    _metadata_with_span_context(metadata)
-                yield span
-            except Exception as error:
-                span.set_status(Status(StatusCode.ERROR, str(error)))
-                # OpenTelemetry-Python imposes invoking span.record_exception on __exit__
-                # on any exception. We should file a bug later on with them to only
-                # invoke .record_exception if not already invoked, hence we should not
-                # invoke .record_exception on our own else we shall have 2 exceptions.
-                raise
-            else:
-                # All spans still have set_status available even if for example
-                # NonRecordingSpan doesn't have "_status".
-                absent_span_status = getattr(span, "_status", None) is None
-                if absent_span_status or span._status.status_code == StatusCode.UNSET:
-                    # OpenTelemetry-Python only allows a status change
-                    # if the current code is UNSET or ERROR. At the end
-                    # of the generator's consumption, only set it to OK
-                    # it wasn't previously set otherwise.
-                    # https://github.com/googleapis/python-spanner/issues/1246
-                    span.set_status(Status(StatusCode.OK))
+        try:
+            if enable_end_to_end_tracing:
+                _metadata_with_span_context(metadata)
+            yield span
+        except Exception as error:
+            span.set_status(Status(StatusCode.ERROR, str(error)))
+            # OpenTelemetry-Python imposes invoking span.record_exception on __exit__
+            # on any exception. We should file a bug later on with them to only
+            # invoke .record_exception if not already invoked, hence we should not
+            # invoke .record_exception on our own else we shall have 2 exceptions.
+            raise
+        else:
+            # All spans still have set_status available even if for example
+            # NonRecordingSpan doesn't have "_status".
+            absent_span_status = getattr(span, "_status", None) is None
+            if absent_span_status or span._status.status_code == StatusCode.UNSET:
+                # OpenTelemetry-Python only allows a status change
+                # if the current code is UNSET or ERROR. At the end
+                # of the generator's consumption, only set it to OK
+                # it wasn't previously set otherwise.
+                # https://github.com/googleapis/python-spanner/issues/1246
+                span.set_status(Status(StatusCode.OK))
 
 
 def get_current_span():
@@ -155,4 +184,5 @@ def get_current_span():
 
 
 def add_span_event(span, event_name, event_attributes=None):
-    span.add_event(event_name, event_attributes)
+    if span and span.is_recording():
+        span.add_event(event_name, event_attributes)

@@ -19,14 +19,11 @@ from unittest import mock
 
 import pytest  # type: ignore
 
+import google.oauth2.credentials
 from google.auth import _credentials_async as credentials
 from google.auth import _default_async as _default
-from google.auth import app_engine
-from google.auth import compute_engine
-from google.auth import environment_vars
-from google.auth import exceptions
+from google.auth import app_engine, compute_engine, environment_vars, exceptions
 from google.oauth2 import _service_account_async as service_account
-import google.oauth2.credentials
 from tests import test__default as test_default
 
 MOCK_CREDENTIALS = mock.Mock(spec=credentials.CredentialsWithQuotaProject)
@@ -307,9 +304,9 @@ def test__get_gae_credentials_gen1(app_identity):
 
 @mock.patch.dict(os.environ)
 def test__get_gae_credentials_gen2():
-    os.environ[
-        "GAE_RUNTIME"
-    ] = f"python{sys.version_info.major}{sys.version_info.minor}"
+    os.environ["GAE_RUNTIME"] = (
+        f"python{sys.version_info.major}{sys.version_info.minor}"
+    )
     credentials, project_id = _default._get_gae_credentials()
     assert credentials is None
     assert project_id is None

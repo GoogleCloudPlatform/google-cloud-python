@@ -15,8 +15,8 @@
 import http.client
 
 import flask
-from google.auth import exceptions
 import pytest
+from google.auth import exceptions
 from pytest_localserver.http import WSGIServer
 
 # .invalid will never resolve, see https://tools.ietf.org/html/rfc2606

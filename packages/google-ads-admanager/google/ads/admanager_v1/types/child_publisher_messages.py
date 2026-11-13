@@ -125,8 +125,8 @@ class ChildPublisher(proto.Message):
             Output only. The pending onboarding tasks that must be
             completed by the child publisher before Google's policy
             compliance (i.e.
-            [DelegationApprovalStatus.PENDING_GOOGLE_APPROVAL][]) can be
-            verified.
+            [DelegationApprovalStatusEnum.DelegationApprovalStatus.PENDING_GOOGLE_APPROVAL][google.ads.admanager.v1.DelegationApprovalStatusEnum.DelegationApprovalStatus.PENDING_GOOGLE_APPROVAL])
+            can be verified.
         account_status (google.ads.admanager_v1.types.DelegationAccountStatusEnum.DelegationAccountStatus):
             Output only. The account status of the
             [ChildPublisher][google.ads.admanager.v1.ChildPublisher].

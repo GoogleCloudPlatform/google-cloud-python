@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dialogflow_v2beta1._compat import transcode_request
 from google.cloud.dialogflow_v2beta1.types import conversation, participant
 from google.cloud.dialogflow_v2beta1.types import conversation as gcd_conversation
 
@@ -1059,21 +1060,18 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             """
 
             http_options = _BaseConversationsRestTransport._BaseBatchCreateMessages._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_messages(
                 request, metadata
             )
-            transcoded_request = _BaseConversationsRestTransport._BaseBatchCreateMessages._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConversationsRestTransport._BaseBatchCreateMessages._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseBatchCreateMessages._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseBatchCreateMessages,
+                    "_BaseBatchCreateMessages__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1219,21 +1217,18 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             """
 
             http_options = _BaseConversationsRestTransport._BaseCompleteConversation._get_http_options()
-
             request, metadata = self._interceptor.pre_complete_conversation(
                 request, metadata
             )
-            transcoded_request = _BaseConversationsRestTransport._BaseCompleteConversation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConversationsRestTransport._BaseCompleteConversation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseCompleteConversation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseCompleteConversation,
+                    "_BaseCompleteConversation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1377,21 +1372,18 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             """
 
             http_options = _BaseConversationsRestTransport._BaseCreateConversation._get_http_options()
-
             request, metadata = self._interceptor.pre_create_conversation(
                 request, metadata
             )
-            transcoded_request = _BaseConversationsRestTransport._BaseCreateConversation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConversationsRestTransport._BaseCreateConversation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseCreateConversation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseCreateConversation,
+                    "_BaseCreateConversation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1532,21 +1524,18 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             """
 
             http_options = _BaseConversationsRestTransport._BaseGenerateStatelessSuggestion._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_stateless_suggestion(
                 request, metadata
             )
-            transcoded_request = _BaseConversationsRestTransport._BaseGenerateStatelessSuggestion._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConversationsRestTransport._BaseGenerateStatelessSuggestion._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseGenerateStatelessSuggestion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseGenerateStatelessSuggestion,
+                    "_BaseGenerateStatelessSuggestion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1695,21 +1684,18 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             """
 
             http_options = _BaseConversationsRestTransport._BaseGenerateStatelessSummary._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_stateless_summary(
                 request, metadata
             )
-            transcoded_request = _BaseConversationsRestTransport._BaseGenerateStatelessSummary._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConversationsRestTransport._BaseGenerateStatelessSummary._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseGenerateStatelessSummary._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseGenerateStatelessSummary,
+                    "_BaseGenerateStatelessSummary__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1852,21 +1838,18 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             """
 
             http_options = _BaseConversationsRestTransport._BaseGenerateSuggestions._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_suggestions(
                 request, metadata
             )
-            transcoded_request = _BaseConversationsRestTransport._BaseGenerateSuggestions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConversationsRestTransport._BaseGenerateSuggestions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseGenerateSuggestions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseGenerateSuggestions,
+                    "_BaseGenerateSuggestions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2013,17 +1996,18 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             http_options = (
                 _BaseConversationsRestTransport._BaseGetConversation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_conversation(
                 request, metadata
             )
-            transcoded_request = _BaseConversationsRestTransport._BaseGetConversation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseGetConversation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseGetConversation,
+                    "_BaseGetConversation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2162,21 +2146,18 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             """
 
             http_options = _BaseConversationsRestTransport._BaseIngestContextReferences._get_http_options()
-
             request, metadata = self._interceptor.pre_ingest_context_references(
                 request, metadata
             )
-            transcoded_request = _BaseConversationsRestTransport._BaseIngestContextReferences._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConversationsRestTransport._BaseIngestContextReferences._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseIngestContextReferences._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseIngestContextReferences,
+                    "_BaseIngestContextReferences__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2320,17 +2301,18 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             """
 
             http_options = _BaseConversationsRestTransport._BaseListConversations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_conversations(
                 request, metadata
             )
-            transcoded_request = _BaseConversationsRestTransport._BaseListConversations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseListConversations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseListConversations,
+                    "_BaseListConversations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2471,15 +2453,16 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             http_options = (
                 _BaseConversationsRestTransport._BaseListMessages._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_messages(request, metadata)
-            transcoded_request = _BaseConversationsRestTransport._BaseListMessages._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseListMessages._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseListMessages,
+                    "_BaseListMessages__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2621,21 +2604,18 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             http_options = (
                 _BaseConversationsRestTransport._BaseSearchKnowledge._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_knowledge(
                 request, metadata
             )
-            transcoded_request = _BaseConversationsRestTransport._BaseSearchKnowledge._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConversationsRestTransport._BaseSearchKnowledge._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseSearchKnowledge._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseSearchKnowledge,
+                    "_BaseSearchKnowledge__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2778,21 +2758,18 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             """
 
             http_options = _BaseConversationsRestTransport._BaseSuggestConversationSummary._get_http_options()
-
             request, metadata = self._interceptor.pre_suggest_conversation_summary(
                 request, metadata
             )
-            transcoded_request = _BaseConversationsRestTransport._BaseSuggestConversationSummary._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConversationsRestTransport._BaseSuggestConversationSummary._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseSuggestConversationSummary._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseSuggestConversationSummary,
+                    "_BaseSuggestConversationSummary__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3070,17 +3047,16 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             http_options = (
                 _BaseConversationsRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseConversationsRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseConversationsRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3212,15 +3188,16 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             http_options = (
                 _BaseConversationsRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseConversationsRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3349,17 +3326,18 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             http_options = (
                 _BaseConversationsRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseConversationsRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3466,15 +3444,16 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             http_options = (
                 _BaseConversationsRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseConversationsRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3606,15 +3585,16 @@ class ConversationsRestTransport(_BaseConversationsRestTransport):
             http_options = (
                 _BaseConversationsRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseConversationsRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConversationsRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConversationsRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

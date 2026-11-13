@@ -16,10 +16,7 @@ import collections
 import inspect
 import logging
 
-from google.protobuf import descriptor_pb2
-from google.protobuf import descriptor_pool
-from google.protobuf import message
-from google.protobuf import reflection
+from google.protobuf import descriptor_pb2, descriptor_pool, message, reflection
 
 from proto.marshal.rules.message import MessageRule
 

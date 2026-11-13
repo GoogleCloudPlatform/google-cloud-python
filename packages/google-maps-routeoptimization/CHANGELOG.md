@@ -4,6 +4,20 @@
 
 [1]: https://pypi.org/project/google-maps-routeoptimization/#history
 
+## [0.5.2](https://github.com/googleapis/google-cloud-python/compare/google-maps-routeoptimization-v0.5.1...google-maps-routeoptimization-v0.5.2) (2026-11-05)
+
+
+### Features
+
+* update API sources and regenerate ([#18986](https://github.com/googleapis/google-cloud-python/issues/18986)) ([8c0f333](https://github.com/googleapis/google-cloud-python/commit/8c0f3331260667eb64c70db80a7ab5c52b8ccf36))
+
+## [0.5.1](https://github.com/googleapis/google-cloud-python/compare/google-maps-routeoptimization-v0.5.0...google-maps-routeoptimization-v0.5.1) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [0.5.0](https://github.com/googleapis/google-cloud-python/compare/google-maps-routeoptimization-v0.4.0...google-maps-routeoptimization-v0.5.0) (2026-06-02)
 
 

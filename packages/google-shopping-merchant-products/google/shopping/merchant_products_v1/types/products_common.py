@@ -1101,9 +1101,8 @@ class ProductAttributes(proto.Message):
             Product Certifications, for example for energy efficiency
             labeling of products recorded in the `EU
             EPREL <https://eprel.ec.europa.eu/screen/home>`__ database.
-            See the `Help
-            Center <https://support.google.com/merchants/answer/13528839>`__
-            article for more information.
+            For more information, see
+            `Certification <https://support.google.com/merchants/answer/13528839>`__.
         structured_title (google.shopping.merchant_products_v1.types.StructuredTitle):
             Structured title, for algorithmically
             (AI)-generated titles.
@@ -1138,6 +1137,10 @@ class ProductAttributes(proto.Message):
             Supports multiple minimum order values. Different minimum
             order values can be specified per country, service and
             surface. Maximum entries: 100.
+        warranty (google.shopping.merchant_products_v1.types.ProductAttributes.Warranty):
+            The
+            `warranty <https://support.google.com/merchants/answer/15957626>`__
+            of the product.
         vin (str):
             The `Vehicle Identification Number
             (VIN) <https://support.google.com/google-ads/answer/14154510>`__
@@ -1232,10 +1235,10 @@ class ProductAttributes(proto.Message):
             fees of the vehicle. See the `Vehicle
             expenses <https://support.google.com/google-ads/answer/15957154>`__
             for more information.
-        warranty (google.shopping.merchant_products_v1.types.ProductAttributes.Warranty):
-            The
-            `warranty <https://support.google.com/google-ads/answer/15957626>`__
-            of the vehicle.
+        returns (MutableSequence[google.shopping.merchant_products_v1.types.ProductAttributes.Returns]):
+            Optional. `Return
+            rules <https://support.google.com/merchants/answer/17081382>`__
+            for the product.
         display_address (google.shopping.merchant_products_v1.types.ProductAttributes.DisplayAddress):
             The display address of the property.
         latitude (float):
@@ -1291,6 +1294,8 @@ class ProductAttributes(proto.Message):
             The short title of the item.
 
             This field is a member of `oneof`_ ``_short_title``.
+        lease_term (google.shopping.merchant_products_v1.types.ProductAttributes.LeaseTerm):
+            The lease term of the property.
         questions_and_answers (MutableSequence[google.shopping.merchant_products_v1.types.ProductAttributes.QuestionAndAnswer]):
             Optional. Contains user-, merchant-, and
             manufacturer-authored `questions and
@@ -2357,10 +2362,34 @@ class ProductAttributes(proto.Message):
 
         Attributes:
             duration (int):
-                The warranty duration in months.
+                The warranty duration in units. Default is in months, can be
+                overridden by the ``duration_unit`` field.
             mileage (google.shopping.merchant_products_v1.types.ProductAttributes.Mileage):
-                The warranty mileage.
+                The warranty mileage (only applies to
+                vehicles).
+            duration_unit (google.shopping.merchant_products_v1.types.ProductAttributes.Warranty.WarrantyDurationUnit):
+                The unit for the warranty duration. Assumed to be ``MONTH``
+                if equal to ``WARRANTY_DURATION_UNIT_UNSPECIFIED``.
         """
+
+        class WarrantyDurationUnit(proto.Enum):
+            r"""The warranty duration unit of the product.
+
+            Values:
+                WARRANTY_DURATION_UNIT_UNSPECIFIED (0):
+                    Indicates that the warranty duration unit is
+                    unspecified.
+                MONTH (1):
+                    Indicates that the warranty duration unit is
+                    month.
+                YEAR (2):
+                    Indicates that the warranty duration unit is
+                    year.
+            """
+
+            WARRANTY_DURATION_UNIT_UNSPECIFIED = 0
+            MONTH = 1
+            YEAR = 2
 
         duration: int = proto.Field(
             proto.INT64,
@@ -2370,6 +2399,11 @@ class ProductAttributes(proto.Message):
             proto.MESSAGE,
             number=2,
             message="ProductAttributes.Mileage",
+        )
+        duration_unit: "ProductAttributes.Warranty.WarrantyDurationUnit" = proto.Field(
+            proto.ENUM,
+            number=3,
+            enum="ProductAttributes.Warranty.WarrantyDurationUnit",
         )
 
     class ProductFee(proto.Message):
@@ -2529,6 +2563,291 @@ class ProductAttributes(proto.Message):
                 number=2,
                 enum="ProductAttributes.PetPolicy.PetType",
             )
+        )
+
+    class LeaseTerm(proto.Message):
+        r"""The lease term of the property.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            type_ (google.shopping.merchant_products_v1.types.ProductAttributes.LeaseTerm.LeaseTermType):
+                The type of lease term.
+            duration_value (int):
+                The duration value of the lease term.
+
+                This field is a member of `oneof`_ ``_duration_value``.
+            duration_unit (google.shopping.merchant_products_v1.types.ProductAttributes.LeaseTerm.DurationUnit):
+                The duration unit of the lease term.
+        """
+
+        class LeaseTermType(proto.Enum):
+            r"""The type of lease term.
+
+            Values:
+                LEASE_TERM_TYPE_UNSPECIFIED (0):
+                    Unspecified lease term type.
+                FIXED_TERM (1):
+                    Fixed term.
+            """
+
+            LEASE_TERM_TYPE_UNSPECIFIED = 0
+            FIXED_TERM = 1
+
+        class DurationUnit(proto.Enum):
+            r"""The unit of duration.
+
+            Values:
+                DURATION_UNIT_UNSPECIFIED (0):
+                    Unspecified duration unit.
+                MONTHS (1):
+                    Month.
+                WEEKS (2):
+                    Week.
+            """
+
+            DURATION_UNIT_UNSPECIFIED = 0
+            MONTHS = 1
+            WEEKS = 2
+
+        type_: "ProductAttributes.LeaseTerm.LeaseTermType" = proto.Field(
+            proto.ENUM,
+            number=1,
+            enum="ProductAttributes.LeaseTerm.LeaseTermType",
+        )
+        duration_value: int = proto.Field(
+            proto.INT64,
+            number=2,
+            optional=True,
+        )
+        duration_unit: "ProductAttributes.LeaseTerm.DurationUnit" = proto.Field(
+            proto.ENUM,
+            number=3,
+            enum="ProductAttributes.LeaseTerm.DurationUnit",
+        )
+
+    class Returns(proto.Message):
+        r"""The returns of the product.
+
+        This message has `oneof`_ fields (mutually exclusive fields).
+        For each oneof, at most one member field can be set at the same time.
+        Setting any member of the oneof automatically clears all other
+        members.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            restocking_fee (google.shopping.type.types.Price):
+                A flat restocking fee penalty.
+
+                This field is a member of `oneof`_ ``restocking_fee_oneof``.
+            restocking_percentage_fee (float):
+                A percentage restocking fee penalty.
+
+                This field is a member of `oneof`_ ``restocking_fee_oneof``.
+            countries (MutableSequence[str]):
+                The `CLDR territory
+                code <http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml>`__
+                of the countries to which an item can be returned.
+            window_days (int):
+                The duration of the return window in days.
+
+                This field is a member of `oneof`_ ``_window_days``.
+            window_type (google.shopping.merchant_products_v1.types.ProductAttributes.Returns.ReturnWindowType):
+                Special return window behavior.
+
+                This field is a member of `oneof`_ ``_window_type``.
+            item_conditions (MutableSequence[google.shopping.merchant_products_v1.types.ProductAttributes.Returns.ItemCondition]):
+                The condition the item must be in to be
+                accepted.
+            methods (MutableSequence[google.shopping.merchant_products_v1.types.ProductAttributes.Returns.ReturnMethod]):
+                The physical methods by which the item can be
+                returned.
+            outcomes (MutableSequence[google.shopping.merchant_products_v1.types.ProductAttributes.Returns.ReturnOutcome]):
+                The financial outcomes available for a
+                return.
+            shipping_fee (google.shopping.type.types.Price):
+                The fixed cost out-of-pocket for a customer
+                to return an item.
+
+                This field is a member of `oneof`_ ``_shipping_fee``.
+            shipping_fee_type (google.shopping.merchant_products_v1.types.ProductAttributes.Returns.ReturnShippingFeeType):
+                The type of return shipping fee.
+
+                This field is a member of `oneof`_ ``_shipping_fee_type``.
+            policy_url (str):
+                The URL of the return policy.
+
+                This field is a member of `oneof`_ ``_policy_url``.
+        """
+
+        class ReturnWindowType(proto.Enum):
+            r"""Type of return window for the return policy.
+
+            Values:
+                RETURN_WINDOW_TYPE_UNSPECIFIED (0):
+                    The return window type is unspecified.
+                FINITE_RETURN_WINDOW (1):
+                    Window with a fixed number of days. If this is set, the
+                    ``window_days`` field must be set.
+                NO_RETURNS (2):
+                    No returns accepted.
+                LIFETIME (3):
+                    Lifetime returns accepted.
+            """
+
+            RETURN_WINDOW_TYPE_UNSPECIFIED = 0
+            FINITE_RETURN_WINDOW = 1
+            NO_RETURNS = 2
+            LIFETIME = 3
+
+        class ReturnMethod(proto.Enum):
+            r"""The physical method by which the item can be returned.
+
+            Values:
+                RETURN_METHOD_UNSPECIFIED (0):
+                    The return method is unspecified.
+                BY_MAIL (1):
+                    Customer returns the item by mail.
+                IN_STORE (2):
+                    Customer returns the item in a store.
+                AT_A_KIOSK (3):
+                    Customer drops off the item at a kiosk.
+                DROP_OFF_LOCATION (4):
+                    Customer drops off the item at a 3rd party
+                    partner location.
+            """
+
+            RETURN_METHOD_UNSPECIFIED = 0
+            BY_MAIL = 1
+            IN_STORE = 2
+            AT_A_KIOSK = 3
+            DROP_OFF_LOCATION = 4
+
+        class ItemCondition(proto.Enum):
+            r"""The acceptable item condition for a return.
+
+            Values:
+                ITEM_CONDITION_UNSPECIFIED (0):
+                    The item condition is unspecified.
+                NEW (1):
+                    New condition.
+                LIKE_NEW (2):
+                    Like new condition.
+                USED (3):
+                    Used condition.
+                DEFECTIVE_ONLY (4):
+                    Only defective items are accepted.
+            """
+
+            ITEM_CONDITION_UNSPECIFIED = 0
+            NEW = 1
+            LIKE_NEW = 2
+            USED = 3
+            DEFECTIVE_ONLY = 4
+
+        class ReturnOutcome(proto.Enum):
+            r"""The financial outcome of a return.
+
+            Values:
+                RETURN_OUTCOME_UNSPECIFIED (0):
+                    The return outcome is unspecified.
+                REFUND (1):
+                    Customer receives a refund.
+                EXCHANGE (2):
+                    Customer receives an exchange.
+                STORE_CREDIT (3):
+                    Customer receives store credit.
+            """
+
+            RETURN_OUTCOME_UNSPECIFIED = 0
+            REFUND = 1
+            EXCHANGE = 2
+            STORE_CREDIT = 3
+
+        class ReturnShippingFeeType(proto.Enum):
+            r"""The type of the return shipping fee.
+
+            Values:
+                RETURN_SHIPPING_FEE_TYPE_UNSPECIFIED (0):
+                    The return shipping fee type is unspecified.
+                CUSTOMER_RESPONSIBILITY (1):
+                    The customer is responsible for shipping
+                    costs.
+                DEDUCTED_FROM_REFUND (2):
+                    The shipping cost is deducted from the
+                    refund.
+            """
+
+            RETURN_SHIPPING_FEE_TYPE_UNSPECIFIED = 0
+            CUSTOMER_RESPONSIBILITY = 1
+            DEDUCTED_FROM_REFUND = 2
+
+        restocking_fee: types.Price = proto.Field(
+            proto.MESSAGE,
+            number=9,
+            oneof="restocking_fee_oneof",
+            message=types.Price,
+        )
+        restocking_percentage_fee: float = proto.Field(
+            proto.DOUBLE,
+            number=10,
+            oneof="restocking_fee_oneof",
+        )
+        countries: MutableSequence[str] = proto.RepeatedField(
+            proto.STRING,
+            number=1,
+        )
+        window_days: int = proto.Field(
+            proto.INT64,
+            number=2,
+            optional=True,
+        )
+        window_type: "ProductAttributes.Returns.ReturnWindowType" = proto.Field(
+            proto.ENUM,
+            number=3,
+            optional=True,
+            enum="ProductAttributes.Returns.ReturnWindowType",
+        )
+        item_conditions: MutableSequence["ProductAttributes.Returns.ItemCondition"] = (
+            proto.RepeatedField(
+                proto.ENUM,
+                number=4,
+                enum="ProductAttributes.Returns.ItemCondition",
+            )
+        )
+        methods: MutableSequence["ProductAttributes.Returns.ReturnMethod"] = (
+            proto.RepeatedField(
+                proto.ENUM,
+                number=5,
+                enum="ProductAttributes.Returns.ReturnMethod",
+            )
+        )
+        outcomes: MutableSequence["ProductAttributes.Returns.ReturnOutcome"] = (
+            proto.RepeatedField(
+                proto.ENUM,
+                number=6,
+                enum="ProductAttributes.Returns.ReturnOutcome",
+            )
+        )
+        shipping_fee: types.Price = proto.Field(
+            proto.MESSAGE,
+            number=7,
+            optional=True,
+            message=types.Price,
+        )
+        shipping_fee_type: "ProductAttributes.Returns.ReturnShippingFeeType" = (
+            proto.Field(
+                proto.ENUM,
+                number=8,
+                optional=True,
+                enum="ProductAttributes.Returns.ReturnShippingFeeType",
+            )
+        )
+        policy_url: str = proto.Field(
+            proto.STRING,
+            number=11,
+            optional=True,
         )
 
     class QuestionAndAnswer(proto.Message):
@@ -3180,6 +3499,11 @@ class ProductAttributes(proto.Message):
             message="ProductMinimumOrderValue",
         )
     )
+    warranty: Warranty = proto.Field(
+        proto.MESSAGE,
+        number=168,
+        message=Warranty,
+    )
     vin: str = proto.Field(
         proto.STRING,
         number=147,
@@ -3273,10 +3597,10 @@ class ProductAttributes(proto.Message):
         number=167,
         message=types.Price,
     )
-    warranty: Warranty = proto.Field(
+    returns: MutableSequence[Returns] = proto.RepeatedField(
         proto.MESSAGE,
-        number=168,
-        message=Warranty,
+        number=171,
+        message=Returns,
     )
     display_address: DisplayAddress = proto.Field(
         proto.MESSAGE,
@@ -3355,6 +3679,11 @@ class ProductAttributes(proto.Message):
         proto.STRING,
         number=194,
         optional=True,
+    )
+    lease_term: LeaseTerm = proto.Field(
+        proto.MESSAGE,
+        number=195,
+        message=LeaseTerm,
     )
     questions_and_answers: MutableSequence[QuestionAndAnswer] = proto.RepeatedField(
         proto.MESSAGE,
@@ -3530,6 +3859,12 @@ class ProductInstallment(proto.Message):
             including interest.
 
             This field is a member of `oneof`_ ``_total_amount``.
+        mileage_allowance (google.shopping.merchant_products_v1.types.ProductAttributes.Mileage):
+            Optional. The mileage allowance for the lease
+            of the vehicle. Only applicable to vehicle
+            products.
+
+            This field is a member of `oneof`_ ``_mileage_allowance``.
     """
 
     months: int = proto.Field(
@@ -3563,6 +3898,12 @@ class ProductInstallment(proto.Message):
         number=6,
         optional=True,
         message=types.Price,
+    )
+    mileage_allowance: "ProductAttributes.Mileage" = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        optional=True,
+        message="ProductAttributes.Mileage",
     )
 
 
@@ -3600,6 +3941,10 @@ class LoyaltyPoints(proto.Message):
 
 class LoyaltyProgram(proto.Message):
     r"""A message that represents loyalty program.
+
+    For more information on loyalty programs, see `Overview of loyalty
+    programs </merchant/api/guides/loyalty/loyalty-programs>`__.
+
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
@@ -3979,6 +4324,23 @@ class ProductCertification(proto.Message):
             Maximum length is 2000 characters.
 
             This field is a member of `oneof`_ ``_certification_value``.
+        certification_document_link (str):
+            Optional. URL to the certification document (eg.
+            ``https://www.example.com/document``), for example, the
+            product data sheet or fiche required by UK's DESNZ or EU's
+            EPREL. Maximum length is 2000 characters. For more
+            information, see
+            `Certification <https://support.google.com/merchants/answer/13528839>`__.
+
+            This field is a member of `oneof`_ ``_certification_document_link``.
+        certification_label_link (str):
+            Optional. URL to the certification label (eg.
+            ``https://www.example.com/label``), for example, the energy
+            efficiency label required by UK's DESNZ or EU's EPREL.
+            Maximum length is 2000 characters. For more information, see
+            `Certification <https://support.google.com/merchants/answer/13528839>`__.
+
+            This field is a member of `oneof`_ ``_certification_label_link``.
     """
 
     certification_authority: "CertificationAuthority" = proto.Field(
@@ -4001,6 +4363,16 @@ class ProductCertification(proto.Message):
     certification_value: str = proto.Field(
         proto.STRING,
         number=4,
+        optional=True,
+    )
+    certification_document_link: str = proto.Field(
+        proto.STRING,
+        number=5,
+        optional=True,
+    )
+    certification_label_link: str = proto.Field(
+        proto.STRING,
+        number=6,
         optional=True,
     )
 

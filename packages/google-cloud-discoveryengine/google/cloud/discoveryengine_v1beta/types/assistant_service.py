@@ -96,6 +96,9 @@ class StreamAssistRequest(proto.Message):
         user_metadata (google.cloud.discoveryengine_v1beta.types.AssistUserMetadata):
             Optional. Information about the user
             initiating the query.
+        agents_spec (google.cloud.discoveryengine_v1beta.types.StreamAssistRequest.AgentsSpec):
+            Optional. Specification of agents that are
+            used to serve the request.
         tools_spec (google.cloud.discoveryengine_v1beta.types.StreamAssistRequest.ToolsSpec):
             Optional. Specification of tools that are
             used to serve the request.
@@ -103,6 +106,41 @@ class StreamAssistRequest(proto.Message):
             Optional. Specification of the generation
             configuration for the request.
     """
+
+    class AgentsSpec(proto.Message):
+        r"""Specification of agents that are used to serve the request.
+
+        Attributes:
+            agent_specs (MutableSequence[google.cloud.discoveryengine_v1beta.types.StreamAssistRequest.AgentsSpec.AgentSpec]):
+                Optional. Specification of agents that are
+                used to serve the request.
+        """
+
+        class AgentSpec(proto.Message):
+            r"""Specification of an agent.
+
+            Attributes:
+                agent_id (str):
+                    Required. ID to identify the agent resource serving the
+                    request.
+
+                    This field must conform to
+                    `RFC-1034 <https://tools.ietf.org/html/rfc1034>`__ with a
+                    length limit of 63 characters.
+            """
+
+            agent_id: str = proto.Field(
+                proto.STRING,
+                number=1,
+            )
+
+        agent_specs: MutableSequence["StreamAssistRequest.AgentsSpec.AgentSpec"] = (
+            proto.RepeatedField(
+                proto.MESSAGE,
+                number=1,
+                message="StreamAssistRequest.AgentsSpec.AgentSpec",
+            )
+        )
 
     class ToolsSpec(proto.Message):
         r"""Specification of tools that are used to serve the request.
@@ -242,6 +280,11 @@ class StreamAssistRequest(proto.Message):
         proto.MESSAGE,
         number=6,
         message="AssistUserMetadata",
+    )
+    agents_spec: AgentsSpec = proto.Field(
+        proto.MESSAGE,
+        number=22,
+        message=AgentsSpec,
     )
     tools_spec: ToolsSpec = proto.Field(
         proto.MESSAGE,

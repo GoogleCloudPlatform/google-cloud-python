@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.resourcemanager_v3._compat import transcode_request
 from google.cloud.resourcemanager_v3.types import folders
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -894,23 +895,16 @@ class FoldersRestTransport(_BaseFoldersRestTransport):
             http_options = (
                 _BaseFoldersRestTransport._BaseCreateFolder._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_folder(request, metadata)
-            transcoded_request = (
-                _BaseFoldersRestTransport._BaseCreateFolder._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseFoldersRestTransport._BaseCreateFolder._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFoldersRestTransport._BaseCreateFolder._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFoldersRestTransport._BaseCreateFolder,
+                    "_BaseCreateFolder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1046,19 +1040,16 @@ class FoldersRestTransport(_BaseFoldersRestTransport):
             http_options = (
                 _BaseFoldersRestTransport._BaseDeleteFolder._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_folder(request, metadata)
-            transcoded_request = (
-                _BaseFoldersRestTransport._BaseDeleteFolder._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFoldersRestTransport._BaseDeleteFolder._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFoldersRestTransport._BaseDeleteFolder,
+                    "_BaseDeleteFolder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1191,19 +1182,16 @@ class FoldersRestTransport(_BaseFoldersRestTransport):
             """
 
             http_options = _BaseFoldersRestTransport._BaseGetFolder._get_http_options()
-
             request, metadata = self._interceptor.pre_get_folder(request, metadata)
-            transcoded_request = (
-                _BaseFoldersRestTransport._BaseGetFolder._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFoldersRestTransport._BaseGetFolder._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFoldersRestTransport._BaseGetFolder,
+                    "_BaseGetFolder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1413,23 +1401,16 @@ class FoldersRestTransport(_BaseFoldersRestTransport):
             http_options = (
                 _BaseFoldersRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseFoldersRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseFoldersRestTransport._BaseGetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFoldersRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFoldersRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1564,19 +1545,16 @@ class FoldersRestTransport(_BaseFoldersRestTransport):
             http_options = (
                 _BaseFoldersRestTransport._BaseListFolders._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_folders(request, metadata)
-            transcoded_request = (
-                _BaseFoldersRestTransport._BaseListFolders._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFoldersRestTransport._BaseListFolders._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFoldersRestTransport._BaseListFolders,
+                    "_BaseListFolders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1712,23 +1690,16 @@ class FoldersRestTransport(_BaseFoldersRestTransport):
             """
 
             http_options = _BaseFoldersRestTransport._BaseMoveFolder._get_http_options()
-
             request, metadata = self._interceptor.pre_move_folder(request, metadata)
-            transcoded_request = (
-                _BaseFoldersRestTransport._BaseMoveFolder._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseFoldersRestTransport._BaseMoveFolder._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFoldersRestTransport._BaseMoveFolder._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFoldersRestTransport._BaseMoveFolder,
+                    "_BaseMoveFolder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1864,19 +1835,16 @@ class FoldersRestTransport(_BaseFoldersRestTransport):
             http_options = (
                 _BaseFoldersRestTransport._BaseSearchFolders._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_folders(request, metadata)
-            transcoded_request = (
-                _BaseFoldersRestTransport._BaseSearchFolders._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFoldersRestTransport._BaseSearchFolders._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFoldersRestTransport._BaseSearchFolders,
+                    "_BaseSearchFolders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2086,23 +2054,16 @@ class FoldersRestTransport(_BaseFoldersRestTransport):
             http_options = (
                 _BaseFoldersRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseFoldersRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseFoldersRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFoldersRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFoldersRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2240,21 +2201,18 @@ class FoldersRestTransport(_BaseFoldersRestTransport):
             http_options = (
                 _BaseFoldersRestTransport._BaseTestIamPermissions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseFoldersRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseFoldersRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseFoldersRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFoldersRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2395,23 +2353,16 @@ class FoldersRestTransport(_BaseFoldersRestTransport):
             http_options = (
                 _BaseFoldersRestTransport._BaseUndeleteFolder._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_undelete_folder(request, metadata)
-            transcoded_request = (
-                _BaseFoldersRestTransport._BaseUndeleteFolder._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseFoldersRestTransport._BaseUndeleteFolder._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFoldersRestTransport._BaseUndeleteFolder._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFoldersRestTransport._BaseUndeleteFolder,
+                    "_BaseUndeleteFolder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2555,23 +2506,16 @@ class FoldersRestTransport(_BaseFoldersRestTransport):
             http_options = (
                 _BaseFoldersRestTransport._BaseUpdateFolder._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_folder(request, metadata)
-            transcoded_request = (
-                _BaseFoldersRestTransport._BaseUpdateFolder._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseFoldersRestTransport._BaseUpdateFolder._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFoldersRestTransport._BaseUpdateFolder._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFoldersRestTransport._BaseUpdateFolder,
+                    "_BaseUpdateFolder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2796,19 +2740,16 @@ class FoldersRestTransport(_BaseFoldersRestTransport):
             http_options = (
                 _BaseFoldersRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseFoldersRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseFoldersRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseFoldersRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

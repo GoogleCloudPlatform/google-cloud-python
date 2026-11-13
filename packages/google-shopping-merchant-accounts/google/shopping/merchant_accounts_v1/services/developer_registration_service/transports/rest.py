@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_accounts_v1._compat import transcode_request
 from google.shopping.merchant_accounts_v1.types import developerregistration
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -440,17 +441,18 @@ class DeveloperRegistrationServiceRestTransport(
             """
 
             http_options = _BaseDeveloperRegistrationServiceRestTransport._BaseGetAccountForGcpRegistration._get_http_options()
-
             request, metadata = self._interceptor.pre_get_account_for_gcp_registration(
                 request, metadata
             )
-            transcoded_request = _BaseDeveloperRegistrationServiceRestTransport._BaseGetAccountForGcpRegistration._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeveloperRegistrationServiceRestTransport._BaseGetAccountForGcpRegistration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperRegistrationServiceRestTransport._BaseGetAccountForGcpRegistration,
+                    "_BaseGetAccountForGcpRegistration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -597,17 +599,18 @@ class DeveloperRegistrationServiceRestTransport(
             """
 
             http_options = _BaseDeveloperRegistrationServiceRestTransport._BaseGetDeveloperRegistration._get_http_options()
-
             request, metadata = self._interceptor.pre_get_developer_registration(
                 request, metadata
             )
-            transcoded_request = _BaseDeveloperRegistrationServiceRestTransport._BaseGetDeveloperRegistration._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeveloperRegistrationServiceRestTransport._BaseGetDeveloperRegistration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperRegistrationServiceRestTransport._BaseGetDeveloperRegistration,
+                    "_BaseGetDeveloperRegistration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -748,19 +751,16 @@ class DeveloperRegistrationServiceRestTransport(
             """
 
             http_options = _BaseDeveloperRegistrationServiceRestTransport._BaseRegisterGcp._get_http_options()
-
             request, metadata = self._interceptor.pre_register_gcp(request, metadata)
-            transcoded_request = _BaseDeveloperRegistrationServiceRestTransport._BaseRegisterGcp._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDeveloperRegistrationServiceRestTransport._BaseRegisterGcp._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeveloperRegistrationServiceRestTransport._BaseRegisterGcp._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperRegistrationServiceRestTransport._BaseRegisterGcp,
+                    "_BaseRegisterGcp__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -898,19 +898,16 @@ class DeveloperRegistrationServiceRestTransport(
             """
 
             http_options = _BaseDeveloperRegistrationServiceRestTransport._BaseUnregisterGcp._get_http_options()
-
             request, metadata = self._interceptor.pre_unregister_gcp(request, metadata)
-            transcoded_request = _BaseDeveloperRegistrationServiceRestTransport._BaseUnregisterGcp._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDeveloperRegistrationServiceRestTransport._BaseUnregisterGcp._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDeveloperRegistrationServiceRestTransport._BaseUnregisterGcp._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperRegistrationServiceRestTransport._BaseUnregisterGcp,
+                    "_BaseUnregisterGcp__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

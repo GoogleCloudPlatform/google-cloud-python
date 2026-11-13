@@ -353,6 +353,121 @@ class AuditManagerGrpcAsyncIOTransport(AuditManagerTransport):
         return self._operations_client
 
     @property
+    def create_audit_schedule(
+        self,
+    ) -> Callable[
+        [auditmanager.CreateAuditScheduleRequest], Awaitable[auditmanager.AuditSchedule]
+    ]:
+        r"""Return a callable for the create audit schedule method over gRPC.
+
+        Creates a new audit schedule in a given project and
+        location.
+
+        Returns:
+            Callable[[~.CreateAuditScheduleRequest],
+                    Awaitable[~.AuditSchedule]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_audit_schedule" not in self._stubs:
+            self._stubs["create_audit_schedule"] = self._logged_channel.unary_unary(
+                "/google.cloud.auditmanager.v1.AuditManager/CreateAuditSchedule",
+                request_serializer=auditmanager.CreateAuditScheduleRequest.serialize,
+                response_deserializer=auditmanager.AuditSchedule.deserialize,
+            )
+        return self._stubs["create_audit_schedule"]
+
+    @property
+    def update_audit_schedule(
+        self,
+    ) -> Callable[
+        [auditmanager.UpdateAuditScheduleRequest], Awaitable[auditmanager.AuditSchedule]
+    ]:
+        r"""Return a callable for the update audit schedule method over gRPC.
+
+        Updates an existing audit schedule.
+
+        Returns:
+            Callable[[~.UpdateAuditScheduleRequest],
+                    Awaitable[~.AuditSchedule]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_audit_schedule" not in self._stubs:
+            self._stubs["update_audit_schedule"] = self._logged_channel.unary_unary(
+                "/google.cloud.auditmanager.v1.AuditManager/UpdateAuditSchedule",
+                request_serializer=auditmanager.UpdateAuditScheduleRequest.serialize,
+                response_deserializer=auditmanager.AuditSchedule.deserialize,
+            )
+        return self._stubs["update_audit_schedule"]
+
+    @property
+    def get_audit_schedule(
+        self,
+    ) -> Callable[
+        [auditmanager.GetAuditScheduleRequest], Awaitable[auditmanager.AuditSchedule]
+    ]:
+        r"""Return a callable for the get audit schedule method over gRPC.
+
+        Gets details of a single audit schedule.
+
+        Returns:
+            Callable[[~.GetAuditScheduleRequest],
+                    Awaitable[~.AuditSchedule]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_audit_schedule" not in self._stubs:
+            self._stubs["get_audit_schedule"] = self._logged_channel.unary_unary(
+                "/google.cloud.auditmanager.v1.AuditManager/GetAuditSchedule",
+                request_serializer=auditmanager.GetAuditScheduleRequest.serialize,
+                response_deserializer=auditmanager.AuditSchedule.deserialize,
+            )
+        return self._stubs["get_audit_schedule"]
+
+    @property
+    def list_audit_schedules(
+        self,
+    ) -> Callable[
+        [auditmanager.ListAuditSchedulesRequest],
+        Awaitable[auditmanager.ListAuditSchedulesResponse],
+    ]:
+        r"""Return a callable for the list audit schedules method over gRPC.
+
+        Lists audit schedules in a given project and
+        location.
+
+        Returns:
+            Callable[[~.ListAuditSchedulesRequest],
+                    Awaitable[~.ListAuditSchedulesResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_audit_schedules" not in self._stubs:
+            self._stubs["list_audit_schedules"] = self._logged_channel.unary_unary(
+                "/google.cloud.auditmanager.v1.AuditManager/ListAuditSchedules",
+                request_serializer=auditmanager.ListAuditSchedulesRequest.serialize,
+                response_deserializer=auditmanager.ListAuditSchedulesResponse.deserialize,
+            )
+        return self._stubs["list_audit_schedules"]
+
+    @property
     def enroll_resource(
         self,
     ) -> Callable[
@@ -608,6 +723,44 @@ class AuditManagerGrpcAsyncIOTransport(AuditManagerTransport):
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
+            self.create_audit_schedule: self._wrap_method(
+                self.create_audit_schedule,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.update_audit_schedule: self._wrap_method(
+                self.update_audit_schedule,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_audit_schedule: self._wrap_method(
+                self.get_audit_schedule,
+                default_retry=retries.AsyncRetry(
+                    initial=0.1,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_audit_schedules: self._wrap_method(
+                self.list_audit_schedules,
+                default_retry=retries.AsyncRetry(
+                    initial=0.1,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
             self.enroll_resource: self._wrap_method(
                 self.enroll_resource,
                 default_timeout=60.0,

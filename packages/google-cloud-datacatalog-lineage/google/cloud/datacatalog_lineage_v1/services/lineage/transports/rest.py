@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.datacatalog_lineage_v1._compat import transcode_request
 from google.cloud.datacatalog_lineage_v1.types import lineage
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1326,21 +1327,18 @@ class LineageRestTransport(_BaseLineageRestTransport):
             """
 
             http_options = _BaseLineageRestTransport._BaseBatchSearchLinkProcesses._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_search_link_processes(
                 request, metadata
             )
-            transcoded_request = _BaseLineageRestTransport._BaseBatchSearchLinkProcesses._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLineageRestTransport._BaseBatchSearchLinkProcesses._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLineageRestTransport._BaseBatchSearchLinkProcesses._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseBatchSearchLinkProcesses,
+                    "_BaseBatchSearchLinkProcesses__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1486,21 +1484,18 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseCreateLineageEvent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_lineage_event(
                 request, metadata
             )
-            transcoded_request = _BaseLineageRestTransport._BaseCreateLineageEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLineageRestTransport._BaseCreateLineageEvent._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLineageRestTransport._BaseCreateLineageEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseCreateLineageEvent,
+                    "_BaseCreateLineageEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1639,23 +1634,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseCreateProcess._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_process(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseCreateProcess._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseLineageRestTransport._BaseCreateProcess._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseCreateProcess._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseCreateProcess,
+                    "_BaseCreateProcess__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1793,23 +1781,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             """
 
             http_options = _BaseLineageRestTransport._BaseCreateRun._get_http_options()
-
             request, metadata = self._interceptor.pre_create_run(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseCreateRun._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseLineageRestTransport._BaseCreateRun._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseCreateRun._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseCreateRun,
+                    "_BaseCreateRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1943,17 +1924,18 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseDeleteLineageEvent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_lineage_event(
                 request, metadata
             )
-            transcoded_request = _BaseLineageRestTransport._BaseDeleteLineageEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLineageRestTransport._BaseDeleteLineageEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseDeleteLineageEvent,
+                    "_BaseDeleteLineageEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2057,19 +2039,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseDeleteProcess._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_process(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseDeleteProcess._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseDeleteProcess._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseDeleteProcess,
+                    "_BaseDeleteProcess__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2203,19 +2182,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             """
 
             http_options = _BaseLineageRestTransport._BaseDeleteRun._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_run(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseDeleteRun._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseDeleteRun._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseDeleteRun,
+                    "_BaseDeleteRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2355,21 +2331,18 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseGetLineageEvent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_lineage_event(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseGetLineageEvent._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseGetLineageEvent._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseGetLineageEvent,
+                    "_BaseGetLineageEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2504,19 +2477,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             """
 
             http_options = _BaseLineageRestTransport._BaseGetProcess._get_http_options()
-
             request, metadata = self._interceptor.pre_get_process(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseGetProcess._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseGetProcess._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseGetProcess,
+                    "_BaseGetProcess__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2652,17 +2622,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             """
 
             http_options = _BaseLineageRestTransport._BaseGetRun._get_http_options()
-
             request, metadata = self._interceptor.pre_get_run(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseGetRun._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLineageRestTransport._BaseGetRun._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseGetRun,
+                    "_BaseGetRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2801,19 +2770,18 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseListLineageEvents._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_lineage_events(
                 request, metadata
             )
-            transcoded_request = _BaseLineageRestTransport._BaseListLineageEvents._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseListLineageEvents._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseListLineageEvents,
+                    "_BaseListLineageEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2952,19 +2920,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseListProcesses._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_processes(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseListProcesses._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseListProcesses._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseListProcesses,
+                    "_BaseListProcesses__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3099,19 +3064,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             """
 
             http_options = _BaseLineageRestTransport._BaseListRuns._get_http_options()
-
             request, metadata = self._interceptor.pre_list_runs(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseListRuns._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseListRuns._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseListRuns,
+                    "_BaseListRuns__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3250,21 +3212,18 @@ class LineageRestTransport(_BaseLineageRestTransport):
             """
 
             http_options = _BaseLineageRestTransport._BaseProcessOpenLineageRunEvent._get_http_options()
-
             request, metadata = self._interceptor.pre_process_open_lineage_run_event(
                 request, metadata
             )
-            transcoded_request = _BaseLineageRestTransport._BaseProcessOpenLineageRunEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLineageRestTransport._BaseProcessOpenLineageRunEvent._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLineageRestTransport._BaseProcessOpenLineageRunEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseProcessOpenLineageRunEvent,
+                    "_BaseProcessOpenLineageRunEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3408,21 +3367,18 @@ class LineageRestTransport(_BaseLineageRestTransport):
             """
 
             http_options = _BaseLineageRestTransport._BaseSearchLineageStreaming._get_http_options()
-
             request, metadata = self._interceptor.pre_search_lineage_streaming(
                 request, metadata
             )
-            transcoded_request = _BaseLineageRestTransport._BaseSearchLineageStreaming._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLineageRestTransport._BaseSearchLineageStreaming._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLineageRestTransport._BaseSearchLineageStreaming._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseSearchLineageStreaming,
+                    "_BaseSearchLineageStreaming__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3555,23 +3511,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseSearchLinks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_links(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseSearchLinks._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseLineageRestTransport._BaseSearchLinks._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseSearchLinks._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseSearchLinks,
+                    "_BaseSearchLinks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3710,23 +3659,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseUpdateProcess._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_process(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseUpdateProcess._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseLineageRestTransport._BaseUpdateProcess._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseUpdateProcess._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseUpdateProcess,
+                    "_BaseUpdateProcess__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3864,23 +3806,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             """
 
             http_options = _BaseLineageRestTransport._BaseUpdateRun._get_http_options()
-
             request, metadata = self._interceptor.pre_update_run(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseUpdateRun._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseLineageRestTransport._BaseUpdateRun._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseUpdateRun._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseUpdateRun,
+                    "_BaseUpdateRun__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4170,27 +4105,18 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseCancelOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseLineageRestTransport._BaseCancelOperation._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4295,21 +4221,18 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseDeleteOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseDeleteOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4414,19 +4337,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4558,19 +4478,16 @@ class LineageRestTransport(_BaseLineageRestTransport):
             http_options = (
                 _BaseLineageRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseLineageRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLineageRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineageRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

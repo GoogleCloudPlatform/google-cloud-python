@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 from google.protobuf import empty_pb2
 
 from proto.marshal.marshal import BaseMarshal

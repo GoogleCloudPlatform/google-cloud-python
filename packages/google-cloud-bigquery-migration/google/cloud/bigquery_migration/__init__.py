@@ -29,10 +29,12 @@ from google.cloud.bigquery_migration_v2.types.assessment_task import (
     AssessmentTaskDetails,
 )
 from google.cloud.bigquery_migration_v2.types.migration_entities import (
+    LineageOutput,
     MigrationSubtask,
     MigrationTask,
     MigrationTaskResult,
     MigrationWorkflow,
+    TaskOutput,
     TranslationTaskResult,
 )
 from google.cloud.bigquery_migration_v2.types.migration_error_details import (
@@ -105,10 +107,12 @@ __all__ = (
     "MigrationServiceAsyncClient",
     "AssessmentFeatureHandle",
     "AssessmentTaskDetails",
+    "LineageOutput",
     "MigrationSubtask",
     "MigrationTask",
     "MigrationTaskResult",
     "MigrationWorkflow",
+    "TaskOutput",
     "TranslationTaskResult",
     "ErrorDetail",
     "ErrorLocation",

@@ -347,14 +347,17 @@ async def test_optimize_restored_table(
         admin_v2.StorageType.HDD,
     )
 
-    instance_to_restore, _ = await create_instance(
-        instance_admin_client,
-        table_admin_client,
-        data_client,
-        admin_overlay_project_id,
-        instances_to_delete,
-        second_instance_storage_type,
-    )
+    if second_instance_storage_type == admin_v2.StorageType.HDD:
+        instance_to_restore = instance_with_backup
+    else:
+        instance_to_restore, _ = await create_instance(
+            instance_admin_client,
+            table_admin_client,
+            data_client,
+            admin_overlay_project_id,
+            instances_to_delete,
+            second_instance_storage_type,
+        )
 
     backup = await create_backup(
         instance_admin_client,

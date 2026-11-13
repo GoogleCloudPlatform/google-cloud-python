@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dialogflow_v2beta1._compat import transcode_request
 from google.cloud.dialogflow_v2beta1.types import phone_number
 from google.cloud.dialogflow_v2beta1.types import phone_number as gcd_phone_number
 
@@ -585,17 +586,18 @@ class PhoneNumbersRestTransport(_BasePhoneNumbersRestTransport):
             """
 
             http_options = _BasePhoneNumbersRestTransport._BaseDeletePhoneNumber._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_phone_number(
                 request, metadata
             )
-            transcoded_request = _BasePhoneNumbersRestTransport._BaseDeletePhoneNumber._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePhoneNumbersRestTransport._BaseDeletePhoneNumber._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePhoneNumbersRestTransport._BaseDeletePhoneNumber,
+                    "_BaseDeletePhoneNumber__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -734,17 +736,18 @@ class PhoneNumbersRestTransport(_BasePhoneNumbersRestTransport):
             http_options = (
                 _BasePhoneNumbersRestTransport._BaseListPhoneNumbers._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_phone_numbers(
                 request, metadata
             )
-            transcoded_request = _BasePhoneNumbersRestTransport._BaseListPhoneNumbers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePhoneNumbersRestTransport._BaseListPhoneNumbers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePhoneNumbersRestTransport._BaseListPhoneNumbers,
+                    "_BaseListPhoneNumbers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -886,21 +889,18 @@ class PhoneNumbersRestTransport(_BasePhoneNumbersRestTransport):
             """
 
             http_options = _BasePhoneNumbersRestTransport._BaseUndeletePhoneNumber._get_http_options()
-
             request, metadata = self._interceptor.pre_undelete_phone_number(
                 request, metadata
             )
-            transcoded_request = _BasePhoneNumbersRestTransport._BaseUndeletePhoneNumber._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePhoneNumbersRestTransport._BaseUndeletePhoneNumber._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePhoneNumbersRestTransport._BaseUndeletePhoneNumber._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePhoneNumbersRestTransport._BaseUndeletePhoneNumber,
+                    "_BaseUndeletePhoneNumber__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1041,21 +1041,18 @@ class PhoneNumbersRestTransport(_BasePhoneNumbersRestTransport):
             """
 
             http_options = _BasePhoneNumbersRestTransport._BaseUpdatePhoneNumber._get_http_options()
-
             request, metadata = self._interceptor.pre_update_phone_number(
                 request, metadata
             )
-            transcoded_request = _BasePhoneNumbersRestTransport._BaseUpdatePhoneNumber._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePhoneNumbersRestTransport._BaseUpdatePhoneNumber._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePhoneNumbersRestTransport._BaseUpdatePhoneNumber._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePhoneNumbersRestTransport._BaseUpdatePhoneNumber,
+                    "_BaseUpdatePhoneNumber__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1231,19 +1228,16 @@ class PhoneNumbersRestTransport(_BasePhoneNumbersRestTransport):
             http_options = (
                 _BasePhoneNumbersRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BasePhoneNumbersRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePhoneNumbersRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePhoneNumbersRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1375,15 +1369,16 @@ class PhoneNumbersRestTransport(_BasePhoneNumbersRestTransport):
             http_options = (
                 _BasePhoneNumbersRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BasePhoneNumbersRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePhoneNumbersRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePhoneNumbersRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1512,17 +1507,18 @@ class PhoneNumbersRestTransport(_BasePhoneNumbersRestTransport):
             http_options = (
                 _BasePhoneNumbersRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BasePhoneNumbersRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePhoneNumbersRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePhoneNumbersRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1629,17 +1625,16 @@ class PhoneNumbersRestTransport(_BasePhoneNumbersRestTransport):
             http_options = (
                 _BasePhoneNumbersRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BasePhoneNumbersRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePhoneNumbersRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePhoneNumbersRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1771,15 +1766,16 @@ class PhoneNumbersRestTransport(_BasePhoneNumbersRestTransport):
             http_options = (
                 _BasePhoneNumbersRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BasePhoneNumbersRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePhoneNumbersRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePhoneNumbersRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.billing_v1._compat import transcode_request
 from google.cloud.billing_v1.types import cloud_catalog
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -342,17 +343,16 @@ class CloudCatalogRestTransport(_BaseCloudCatalogRestTransport):
             http_options = (
                 _BaseCloudCatalogRestTransport._BaseListServices._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_services(request, metadata)
-            transcoded_request = _BaseCloudCatalogRestTransport._BaseListServices._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudCatalogRestTransport._BaseListServices._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudCatalogRestTransport._BaseListServices,
+                    "_BaseListServices__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -488,19 +488,16 @@ class CloudCatalogRestTransport(_BaseCloudCatalogRestTransport):
             http_options = (
                 _BaseCloudCatalogRestTransport._BaseListSkus._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_skus(request, metadata)
-            transcoded_request = (
-                _BaseCloudCatalogRestTransport._BaseListSkus._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudCatalogRestTransport._BaseListSkus._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudCatalogRestTransport._BaseListSkus,
+                    "_BaseListSkus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

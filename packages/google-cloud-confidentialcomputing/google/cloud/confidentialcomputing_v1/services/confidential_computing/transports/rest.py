@@ -29,6 +29,7 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.confidentialcomputing_v1._compat import transcode_request
 from google.cloud.confidentialcomputing_v1.types import service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -507,21 +508,18 @@ class ConfidentialComputingRestTransport(_BaseConfidentialComputingRestTransport
             """
 
             http_options = _BaseConfidentialComputingRestTransport._BaseCreateChallenge._get_http_options()
-
             request, metadata = self._interceptor.pre_create_challenge(
                 request, metadata
             )
-            transcoded_request = _BaseConfidentialComputingRestTransport._BaseCreateChallenge._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConfidentialComputingRestTransport._BaseCreateChallenge._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfidentialComputingRestTransport._BaseCreateChallenge._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfidentialComputingRestTransport._BaseCreateChallenge,
+                    "_BaseCreateChallenge__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -666,21 +664,18 @@ class ConfidentialComputingRestTransport(_BaseConfidentialComputingRestTransport
             """
 
             http_options = _BaseConfidentialComputingRestTransport._BaseVerifyAttestation._get_http_options()
-
             request, metadata = self._interceptor.pre_verify_attestation(
                 request, metadata
             )
-            transcoded_request = _BaseConfidentialComputingRestTransport._BaseVerifyAttestation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConfidentialComputingRestTransport._BaseVerifyAttestation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfidentialComputingRestTransport._BaseVerifyAttestation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfidentialComputingRestTransport._BaseVerifyAttestation,
+                    "_BaseVerifyAttestation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -830,21 +825,18 @@ class ConfidentialComputingRestTransport(_BaseConfidentialComputingRestTransport
             """
 
             http_options = _BaseConfidentialComputingRestTransport._BaseVerifyConfidentialGke._get_http_options()
-
             request, metadata = self._interceptor.pre_verify_confidential_gke(
                 request, metadata
             )
-            transcoded_request = _BaseConfidentialComputingRestTransport._BaseVerifyConfidentialGke._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConfidentialComputingRestTransport._BaseVerifyConfidentialGke._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfidentialComputingRestTransport._BaseVerifyConfidentialGke._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfidentialComputingRestTransport._BaseVerifyConfidentialGke,
+                    "_BaseVerifyConfidentialGke__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -992,21 +984,18 @@ class ConfidentialComputingRestTransport(_BaseConfidentialComputingRestTransport
             """
 
             http_options = _BaseConfidentialComputingRestTransport._BaseVerifyConfidentialSpace._get_http_options()
-
             request, metadata = self._interceptor.pre_verify_confidential_space(
                 request, metadata
             )
-            transcoded_request = _BaseConfidentialComputingRestTransport._BaseVerifyConfidentialSpace._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseConfidentialComputingRestTransport._BaseVerifyConfidentialSpace._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfidentialComputingRestTransport._BaseVerifyConfidentialSpace._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfidentialComputingRestTransport._BaseVerifyConfidentialSpace,
+                    "_BaseVerifyConfidentialSpace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1188,15 +1177,16 @@ class ConfidentialComputingRestTransport(_BaseConfidentialComputingRestTransport
             """
 
             http_options = _BaseConfidentialComputingRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseConfidentialComputingRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfidentialComputingRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfidentialComputingRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1327,15 +1317,16 @@ class ConfidentialComputingRestTransport(_BaseConfidentialComputingRestTransport
             """
 
             http_options = _BaseConfidentialComputingRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseConfidentialComputingRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseConfidentialComputingRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseConfidentialComputingRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

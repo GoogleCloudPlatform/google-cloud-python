@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dialogflow_v2._compat import transcode_request
 from google.cloud.dialogflow_v2.types import answer_record
 from google.cloud.dialogflow_v2.types import answer_record as gcd_answer_record
 
@@ -471,17 +472,18 @@ class AnswerRecordsRestTransport(_BaseAnswerRecordsRestTransport):
             """
 
             http_options = _BaseAnswerRecordsRestTransport._BaseListAnswerRecords._get_http_options()
-
             request, metadata = self._interceptor.pre_list_answer_records(
                 request, metadata
             )
-            transcoded_request = _BaseAnswerRecordsRestTransport._BaseListAnswerRecords._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnswerRecordsRestTransport._BaseListAnswerRecords._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnswerRecordsRestTransport._BaseListAnswerRecords,
+                    "_BaseListAnswerRecords__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -651,21 +653,18 @@ class AnswerRecordsRestTransport(_BaseAnswerRecordsRestTransport):
             """
 
             http_options = _BaseAnswerRecordsRestTransport._BaseUpdateAnswerRecord._get_http_options()
-
             request, metadata = self._interceptor.pre_update_answer_record(
                 request, metadata
             )
-            transcoded_request = _BaseAnswerRecordsRestTransport._BaseUpdateAnswerRecord._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAnswerRecordsRestTransport._BaseUpdateAnswerRecord._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnswerRecordsRestTransport._BaseUpdateAnswerRecord._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnswerRecordsRestTransport._BaseUpdateAnswerRecord,
+                    "_BaseUpdateAnswerRecord__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -826,17 +825,16 @@ class AnswerRecordsRestTransport(_BaseAnswerRecordsRestTransport):
             http_options = (
                 _BaseAnswerRecordsRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseAnswerRecordsRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAnswerRecordsRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnswerRecordsRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -968,15 +966,16 @@ class AnswerRecordsRestTransport(_BaseAnswerRecordsRestTransport):
             http_options = (
                 _BaseAnswerRecordsRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseAnswerRecordsRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnswerRecordsRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnswerRecordsRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1105,17 +1104,18 @@ class AnswerRecordsRestTransport(_BaseAnswerRecordsRestTransport):
             http_options = (
                 _BaseAnswerRecordsRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAnswerRecordsRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnswerRecordsRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnswerRecordsRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1222,15 +1222,16 @@ class AnswerRecordsRestTransport(_BaseAnswerRecordsRestTransport):
             http_options = (
                 _BaseAnswerRecordsRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAnswerRecordsRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnswerRecordsRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnswerRecordsRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1362,15 +1363,16 @@ class AnswerRecordsRestTransport(_BaseAnswerRecordsRestTransport):
             http_options = (
                 _BaseAnswerRecordsRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseAnswerRecordsRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAnswerRecordsRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAnswerRecordsRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

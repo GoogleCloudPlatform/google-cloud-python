@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_accounts_v1._compat import transcode_request
 from google.shopping.merchant_accounts_v1.types import automaticimprovements
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -358,17 +359,18 @@ class AutomaticImprovementsServiceRestTransport(
             """
 
             http_options = _BaseAutomaticImprovementsServiceRestTransport._BaseGetAutomaticImprovements._get_http_options()
-
             request, metadata = self._interceptor.pre_get_automatic_improvements(
                 request, metadata
             )
-            transcoded_request = _BaseAutomaticImprovementsServiceRestTransport._BaseGetAutomaticImprovements._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutomaticImprovementsServiceRestTransport._BaseGetAutomaticImprovements._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutomaticImprovementsServiceRestTransport._BaseGetAutomaticImprovements,
+                    "_BaseGetAutomaticImprovements__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -513,21 +515,18 @@ class AutomaticImprovementsServiceRestTransport(
             """
 
             http_options = _BaseAutomaticImprovementsServiceRestTransport._BaseUpdateAutomaticImprovements._get_http_options()
-
             request, metadata = self._interceptor.pre_update_automatic_improvements(
                 request, metadata
             )
-            transcoded_request = _BaseAutomaticImprovementsServiceRestTransport._BaseUpdateAutomaticImprovements._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAutomaticImprovementsServiceRestTransport._BaseUpdateAutomaticImprovements._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAutomaticImprovementsServiceRestTransport._BaseUpdateAutomaticImprovements._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAutomaticImprovementsServiceRestTransport._BaseUpdateAutomaticImprovements,
+                    "_BaseUpdateAutomaticImprovements__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

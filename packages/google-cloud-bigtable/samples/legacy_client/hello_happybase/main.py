@@ -29,7 +29,7 @@ import argparse
 # [START bigtable_hw_imports_happybase]
 from google.cloud import bigtable, happybase
 
-from ..utils import wait_for_table
+from ...utils import wait_for_table
 
 # [END bigtable_hw_imports_happybase]
 

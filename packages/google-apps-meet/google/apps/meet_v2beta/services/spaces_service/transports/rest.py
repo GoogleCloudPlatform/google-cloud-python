@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.apps.meet_v2beta._compat import transcode_request
 from google.apps.meet_v2beta.types import resource, service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -72,6 +73,14 @@ class SpacesServiceRestInterceptor:
 
     .. code-block:: python
         class MyCustomSpacesServiceInterceptor(SpacesServiceRestInterceptor):
+            def pre_batch_update_members(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_update_members(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_connect_active_conference(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -128,6 +137,14 @@ class SpacesServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_update_member(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_member(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_update_space(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -141,6 +158,56 @@ class SpacesServiceRestInterceptor:
 
 
     """
+
+    def pre_batch_update_members(
+        self,
+        request: service.BatchUpdateMembersRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        service.BatchUpdateMembersRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for batch_update_members
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the SpacesService server.
+        """
+        return request, metadata
+
+    def post_batch_update_members(
+        self, response: service.BatchUpdateMembersResponse
+    ) -> service.BatchUpdateMembersResponse:
+        """Post-rpc interceptor for batch_update_members
+
+        DEPRECATED. Please use the `post_batch_update_members_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the SpacesService server but before
+        it is returned to user code. This `post_batch_update_members` interceptor runs
+        before the `post_batch_update_members_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_update_members_with_metadata(
+        self,
+        response: service.BatchUpdateMembersResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        service.BatchUpdateMembersResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for batch_update_members
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the SpacesService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_update_members_with_metadata`
+        interceptor in new development instead of the `post_batch_update_members` interceptor.
+        When both interceptors are used, this `post_batch_update_members_with_metadata` interceptor runs after the
+        `post_batch_update_members` interceptor. The (possibly modified) response returned by
+        `post_batch_update_members` will be passed to
+        `post_batch_update_members_with_metadata`.
+        """
+        return response, metadata
 
     def pre_connect_active_conference(
         self,
@@ -440,6 +507,50 @@ class SpacesServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_update_member(
+        self,
+        request: service.UpdateMemberRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[service.UpdateMemberRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for update_member
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the SpacesService server.
+        """
+        return request, metadata
+
+    def post_update_member(self, response: resource.Member) -> resource.Member:
+        """Post-rpc interceptor for update_member
+
+        DEPRECATED. Please use the `post_update_member_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the SpacesService server but before
+        it is returned to user code. This `post_update_member` interceptor runs
+        before the `post_update_member_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_member_with_metadata(
+        self,
+        response: resource.Member,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[resource.Member, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_member
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the SpacesService server but before it is returned to user code.
+
+        We recommend only using this `post_update_member_with_metadata`
+        interceptor in new development instead of the `post_update_member` interceptor.
+        When both interceptors are used, this `post_update_member_with_metadata` interceptor runs after the
+        `post_update_member` interceptor. The (possibly modified) response returned by
+        `post_update_member` will be passed to
+        `post_update_member_with_metadata`.
+        """
+        return response, metadata
+
     def pre_update_space(
         self,
         request: service.UpdateSpaceRequest,
@@ -578,6 +689,156 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
         self._interceptor = interceptor or SpacesServiceRestInterceptor()
         self._prep_wrapped_messages(client_info)
 
+    class _BatchUpdateMembers(
+        _BaseSpacesServiceRestTransport._BaseBatchUpdateMembers, SpacesServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("SpacesServiceRestTransport.BatchUpdateMembers")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: service.BatchUpdateMembersRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> service.BatchUpdateMembersResponse:
+            r"""Call the batch update members method over HTTP.
+
+            Args:
+                request (~.service.BatchUpdateMembersRequest):
+                    The request object. Request to update members of one
+                space within a batch.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.service.BatchUpdateMembersResponse:
+                    Response of batch update members.
+            """
+
+            http_options = _BaseSpacesServiceRestTransport._BaseBatchUpdateMembers._get_http_options()
+            request, metadata = self._interceptor.pre_batch_update_members(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpacesServiceRestTransport._BaseBatchUpdateMembers,
+                    "_BaseBatchUpdateMembers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.apps.meet_v2beta.SpacesServiceClient.BatchUpdateMembers",
+                    extra={
+                        "serviceName": "google.apps.meet.v2beta.SpacesService",
+                        "rpcName": "BatchUpdateMembers",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = SpacesServiceRestTransport._BatchUpdateMembers._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = service.BatchUpdateMembersResponse()
+            pb_resp = service.BatchUpdateMembersResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_update_members(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_batch_update_members_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = service.BatchUpdateMembersResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.apps.meet_v2beta.SpacesServiceClient.batch_update_members",
+                    extra={
+                        "serviceName": "google.apps.meet.v2beta.SpacesService",
+                        "rpcName": "BatchUpdateMembers",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _ConnectActiveConference(
         _BaseSpacesServiceRestTransport._BaseConnectActiveConference,
         SpacesServiceRestStub,
@@ -640,27 +901,24 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
                 WebRTC.
 
                 See `Meet Media API
-                overview <https://developers.google.com/meet/media-api/guides/overview>`__
+                overview <https://developers.google.com/workspace/meet/media-api/guides/overview>`__
                 for more details about this connection.
 
             """
 
             http_options = _BaseSpacesServiceRestTransport._BaseConnectActiveConference._get_http_options()
-
             request, metadata = self._interceptor.pre_connect_active_conference(
                 request, metadata
             )
-            transcoded_request = _BaseSpacesServiceRestTransport._BaseConnectActiveConference._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSpacesServiceRestTransport._BaseConnectActiveConference._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSpacesServiceRestTransport._BaseConnectActiveConference._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpacesServiceRestTransport._BaseConnectActiveConference,
+                    "_BaseConnectActiveConference__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -806,19 +1064,16 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
             http_options = (
                 _BaseSpacesServiceRestTransport._BaseCreateMember._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_member(request, metadata)
-            transcoded_request = _BaseSpacesServiceRestTransport._BaseCreateMember._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSpacesServiceRestTransport._BaseCreateMember._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSpacesServiceRestTransport._BaseCreateMember._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpacesServiceRestTransport._BaseCreateMember,
+                    "_BaseCreateMember__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -959,23 +1214,16 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
             http_options = (
                 _BaseSpacesServiceRestTransport._BaseCreateSpace._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_space(request, metadata)
-            transcoded_request = _BaseSpacesServiceRestTransport._BaseCreateSpace._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseSpacesServiceRestTransport._BaseCreateSpace._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpacesServiceRestTransport._BaseCreateSpace._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpacesServiceRestTransport._BaseCreateSpace,
+                    "_BaseCreateSpace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1109,15 +1357,16 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
             http_options = (
                 _BaseSpacesServiceRestTransport._BaseDeleteMember._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_member(request, metadata)
-            transcoded_request = _BaseSpacesServiceRestTransport._BaseDeleteMember._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSpacesServiceRestTransport._BaseDeleteMember._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpacesServiceRestTransport._BaseDeleteMember,
+                    "_BaseDeleteMember__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1215,21 +1464,18 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
             """
 
             http_options = _BaseSpacesServiceRestTransport._BaseEndActiveConference._get_http_options()
-
             request, metadata = self._interceptor.pre_end_active_conference(
                 request, metadata
             )
-            transcoded_request = _BaseSpacesServiceRestTransport._BaseEndActiveConference._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSpacesServiceRestTransport._BaseEndActiveConference._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSpacesServiceRestTransport._BaseEndActiveConference._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpacesServiceRestTransport._BaseEndActiveConference,
+                    "_BaseEndActiveConference__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1335,19 +1581,16 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
             http_options = (
                 _BaseSpacesServiceRestTransport._BaseGetMember._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_member(request, metadata)
-            transcoded_request = (
-                _BaseSpacesServiceRestTransport._BaseGetMember._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpacesServiceRestTransport._BaseGetMember._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpacesServiceRestTransport._BaseGetMember,
+                    "_BaseGetMember__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1486,19 +1729,16 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
             http_options = (
                 _BaseSpacesServiceRestTransport._BaseGetSpace._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_space(request, metadata)
-            transcoded_request = (
-                _BaseSpacesServiceRestTransport._BaseGetSpace._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpacesServiceRestTransport._BaseGetSpace._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpacesServiceRestTransport._BaseGetSpace,
+                    "_BaseGetSpace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1635,17 +1875,16 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
             http_options = (
                 _BaseSpacesServiceRestTransport._BaseListMembers._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_members(request, metadata)
-            transcoded_request = _BaseSpacesServiceRestTransport._BaseListMembers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpacesServiceRestTransport._BaseListMembers._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpacesServiceRestTransport._BaseListMembers,
+                    "_BaseListMembers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1724,6 +1963,156 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
                 )
             return resp
 
+    class _UpdateMember(
+        _BaseSpacesServiceRestTransport._BaseUpdateMember, SpacesServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("SpacesServiceRestTransport.UpdateMember")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: service.UpdateMemberRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> resource.Member:
+            r"""Call the update member method over HTTP.
+
+            Args:
+                request (~.service.UpdateMemberRequest):
+                    The request object. Request to update a member.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.resource.Member:
+                    Users who are configured to have a
+                role in the space. These users can join
+                the space without knocking.
+
+            """
+
+            http_options = (
+                _BaseSpacesServiceRestTransport._BaseUpdateMember._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_update_member(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpacesServiceRestTransport._BaseUpdateMember,
+                    "_BaseUpdateMember__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.apps.meet_v2beta.SpacesServiceClient.UpdateMember",
+                    extra={
+                        "serviceName": "google.apps.meet.v2beta.SpacesService",
+                        "rpcName": "UpdateMember",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = SpacesServiceRestTransport._UpdateMember._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = resource.Member()
+            pb_resp = resource.Member.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_member(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_member_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = resource.Member.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.apps.meet_v2beta.SpacesServiceClient.update_member",
+                    extra={
+                        "serviceName": "google.apps.meet.v2beta.SpacesService",
+                        "rpcName": "UpdateMember",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _UpdateSpace(
         _BaseSpacesServiceRestTransport._BaseUpdateSpace, SpacesServiceRestStub
     ):
@@ -1785,23 +2174,16 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
             http_options = (
                 _BaseSpacesServiceRestTransport._BaseUpdateSpace._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_space(request, metadata)
-            transcoded_request = _BaseSpacesServiceRestTransport._BaseUpdateSpace._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseSpacesServiceRestTransport._BaseUpdateSpace._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSpacesServiceRestTransport._BaseUpdateSpace._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSpacesServiceRestTransport._BaseUpdateSpace,
+                    "_BaseUpdateSpace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1882,6 +2264,16 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
             return resp
 
     @property
+    def batch_update_members(
+        self,
+    ) -> Callable[
+        [service.BatchUpdateMembersRequest], service.BatchUpdateMembersResponse
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchUpdateMembers(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def connect_active_conference(
         self,
     ) -> Callable[
@@ -1939,6 +2331,12 @@ class SpacesServiceRestTransport(_BaseSpacesServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListMembers(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_member(self) -> Callable[[service.UpdateMemberRequest], resource.Member]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateMember(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def update_space(self) -> Callable[[service.UpdateSpaceRequest], resource.Space]:

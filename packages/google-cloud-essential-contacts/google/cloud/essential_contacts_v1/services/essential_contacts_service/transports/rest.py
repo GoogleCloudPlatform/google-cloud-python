@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.essential_contacts_v1._compat import transcode_request
 from google.cloud.essential_contacts_v1.types import service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -529,17 +530,18 @@ class EssentialContactsServiceRestTransport(_BaseEssentialContactsServiceRestTra
             """
 
             http_options = _BaseEssentialContactsServiceRestTransport._BaseComputeContacts._get_http_options()
-
             request, metadata = self._interceptor.pre_compute_contacts(
                 request, metadata
             )
-            transcoded_request = _BaseEssentialContactsServiceRestTransport._BaseComputeContacts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEssentialContactsServiceRestTransport._BaseComputeContacts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEssentialContactsServiceRestTransport._BaseComputeContacts,
+                    "_BaseComputeContacts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -680,19 +682,16 @@ class EssentialContactsServiceRestTransport(_BaseEssentialContactsServiceRestTra
             """
 
             http_options = _BaseEssentialContactsServiceRestTransport._BaseCreateContact._get_http_options()
-
             request, metadata = self._interceptor.pre_create_contact(request, metadata)
-            transcoded_request = _BaseEssentialContactsServiceRestTransport._BaseCreateContact._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEssentialContactsServiceRestTransport._BaseCreateContact._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEssentialContactsServiceRestTransport._BaseCreateContact._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEssentialContactsServiceRestTransport._BaseCreateContact,
+                    "_BaseCreateContact__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -827,15 +826,16 @@ class EssentialContactsServiceRestTransport(_BaseEssentialContactsServiceRestTra
             """
 
             http_options = _BaseEssentialContactsServiceRestTransport._BaseDeleteContact._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_contact(request, metadata)
-            transcoded_request = _BaseEssentialContactsServiceRestTransport._BaseDeleteContact._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEssentialContactsServiceRestTransport._BaseDeleteContact._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEssentialContactsServiceRestTransport._BaseDeleteContact,
+                    "_BaseDeleteContact__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -941,15 +941,16 @@ class EssentialContactsServiceRestTransport(_BaseEssentialContactsServiceRestTra
             """
 
             http_options = _BaseEssentialContactsServiceRestTransport._BaseGetContact._get_http_options()
-
             request, metadata = self._interceptor.pre_get_contact(request, metadata)
-            transcoded_request = _BaseEssentialContactsServiceRestTransport._BaseGetContact._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEssentialContactsServiceRestTransport._BaseGetContact._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEssentialContactsServiceRestTransport._BaseGetContact,
+                    "_BaseGetContact__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1087,15 +1088,16 @@ class EssentialContactsServiceRestTransport(_BaseEssentialContactsServiceRestTra
             """
 
             http_options = _BaseEssentialContactsServiceRestTransport._BaseListContacts._get_http_options()
-
             request, metadata = self._interceptor.pre_list_contacts(request, metadata)
-            transcoded_request = _BaseEssentialContactsServiceRestTransport._BaseListContacts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEssentialContactsServiceRestTransport._BaseListContacts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEssentialContactsServiceRestTransport._BaseListContacts,
+                    "_BaseListContacts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1230,21 +1232,18 @@ class EssentialContactsServiceRestTransport(_BaseEssentialContactsServiceRestTra
             """
 
             http_options = _BaseEssentialContactsServiceRestTransport._BaseSendTestMessage._get_http_options()
-
             request, metadata = self._interceptor.pre_send_test_message(
                 request, metadata
             )
-            transcoded_request = _BaseEssentialContactsServiceRestTransport._BaseSendTestMessage._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEssentialContactsServiceRestTransport._BaseSendTestMessage._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEssentialContactsServiceRestTransport._BaseSendTestMessage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEssentialContactsServiceRestTransport._BaseSendTestMessage,
+                    "_BaseSendTestMessage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1352,19 +1351,16 @@ class EssentialContactsServiceRestTransport(_BaseEssentialContactsServiceRestTra
             """
 
             http_options = _BaseEssentialContactsServiceRestTransport._BaseUpdateContact._get_http_options()
-
             request, metadata = self._interceptor.pre_update_contact(request, metadata)
-            transcoded_request = _BaseEssentialContactsServiceRestTransport._BaseUpdateContact._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEssentialContactsServiceRestTransport._BaseUpdateContact._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEssentialContactsServiceRestTransport._BaseUpdateContact._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEssentialContactsServiceRestTransport._BaseUpdateContact,
+                    "_BaseUpdateContact__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

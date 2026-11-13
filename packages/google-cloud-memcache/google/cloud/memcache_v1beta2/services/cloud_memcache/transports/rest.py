@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.memcache_v1beta2._compat import transcode_request
 from google.cloud.memcache_v1beta2.types import cloud_memcache
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -961,21 +962,18 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             http_options = (
                 _BaseCloudMemcacheRestTransport._BaseApplyParameters._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_apply_parameters(
                 request, metadata
             )
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseApplyParameters._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudMemcacheRestTransport._BaseApplyParameters._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseApplyParameters._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseApplyParameters,
+                    "_BaseApplyParameters__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1113,21 +1111,18 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             """
 
             http_options = _BaseCloudMemcacheRestTransport._BaseApplySoftwareUpdate._get_http_options()
-
             request, metadata = self._interceptor.pre_apply_software_update(
                 request, metadata
             )
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseApplySoftwareUpdate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudMemcacheRestTransport._BaseApplySoftwareUpdate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseApplySoftwareUpdate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseApplySoftwareUpdate,
+                    "_BaseApplySoftwareUpdate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1267,19 +1262,16 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             http_options = (
                 _BaseCloudMemcacheRestTransport._BaseCreateInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_instance(request, metadata)
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseCreateInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudMemcacheRestTransport._BaseCreateInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseCreateInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseCreateInstance,
+                    "_BaseCreateInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1418,15 +1410,16 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             http_options = (
                 _BaseCloudMemcacheRestTransport._BaseDeleteInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_instance(request, metadata)
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseDeleteInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseDeleteInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseDeleteInstance,
+                    "_BaseDeleteInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1561,17 +1554,16 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             http_options = (
                 _BaseCloudMemcacheRestTransport._BaseGetInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_instance(request, metadata)
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseGetInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudMemcacheRestTransport._BaseGetInstance._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseGetInstance,
+                    "_BaseGetInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1710,15 +1702,16 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             http_options = (
                 _BaseCloudMemcacheRestTransport._BaseListInstances._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_instances(request, metadata)
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseListInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseListInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseListInstances,
+                    "_BaseListInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1860,21 +1853,18 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             """
 
             http_options = _BaseCloudMemcacheRestTransport._BaseRescheduleMaintenance._get_http_options()
-
             request, metadata = self._interceptor.pre_reschedule_maintenance(
                 request, metadata
             )
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseRescheduleMaintenance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudMemcacheRestTransport._BaseRescheduleMaintenance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseRescheduleMaintenance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseRescheduleMaintenance,
+                    "_BaseRescheduleMaintenance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2014,19 +2004,16 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             http_options = (
                 _BaseCloudMemcacheRestTransport._BaseUpdateInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_instance(request, metadata)
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseUpdateInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudMemcacheRestTransport._BaseUpdateInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseUpdateInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseUpdateInstance,
+                    "_BaseUpdateInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2164,21 +2151,18 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             """
 
             http_options = _BaseCloudMemcacheRestTransport._BaseUpdateParameters._get_http_options()
-
             request, metadata = self._interceptor.pre_update_parameters(
                 request, metadata
             )
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseUpdateParameters._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudMemcacheRestTransport._BaseUpdateParameters._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseUpdateParameters._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseUpdateParameters,
+                    "_BaseUpdateParameters__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2394,17 +2378,16 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             http_options = (
                 _BaseCloudMemcacheRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudMemcacheRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2536,15 +2519,16 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             http_options = (
                 _BaseCloudMemcacheRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2674,21 +2658,18 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             http_options = (
                 _BaseCloudMemcacheRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudMemcacheRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2793,17 +2774,18 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             http_options = (
                 _BaseCloudMemcacheRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2910,15 +2892,16 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             http_options = (
                 _BaseCloudMemcacheRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3050,15 +3033,16 @@ class CloudMemcacheRestTransport(_BaseCloudMemcacheRestTransport):
             http_options = (
                 _BaseCloudMemcacheRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseCloudMemcacheRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudMemcacheRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudMemcacheRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

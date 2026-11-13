@@ -225,6 +225,11 @@ class InterconnectsTransport(abc.ABC):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.set_name: gapic_v1.method.wrap_method(
+                self.set_name,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
         }
 
     def close(self):
@@ -310,6 +315,15 @@ class InterconnectsTransport(abc.ABC):
         self,
     ) -> Callable[
         [compute.SetLabelsInterconnectRequest],
+        Union[compute.Operation, Awaitable[compute.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def set_name(
+        self,
+    ) -> Callable[
+        [compute.SetNameInterconnectRequest],
         Union[compute.Operation, Awaitable[compute.Operation]],
     ]:
         raise NotImplementedError()

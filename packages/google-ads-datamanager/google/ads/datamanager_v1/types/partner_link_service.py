@@ -157,6 +157,7 @@ class SearchPartnerLinksRequest(proto.Message):
             feature set, the following fields are also supported:
 
             - ``partner_customer_account.account_id``
+            - ``partner_link_metadata.implicit_accounts.account_id``
 
             Example:
             ``owning_account.account_type = "GOOGLE_ADS" AND partner_account.account_id = 987654321``

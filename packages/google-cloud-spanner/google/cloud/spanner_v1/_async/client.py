@@ -138,7 +138,7 @@ def _get_spanner_log_client_options_env():
     return os.getenv(LOG_CLIENT_OPTIONS_ENV_VAR, "false").lower() == "true"
 
 
-def _initialize_metrics(project, credentials):
+def _initialize_metrics(project, credentials, emulator_host=None):
     """
     Initializes the Spanner built-in metrics.
 
@@ -151,7 +151,11 @@ def _initialize_metrics(project, credentials):
             if not _metrics_monitor_initialized:
                 meter_provider = metrics.NoOpMeterProvider()
                 try:
-                    if not _get_spanner_emulator_host():
+                    if (
+                        not _get_spanner_emulator_host()
+                        and not emulator_host
+                        and not isinstance(credentials, AnonymousCredentials)
+                    ):
                         meter_provider = MeterProvider(
                             metric_readers=[
                                 PeriodicExportingMetricReader(
@@ -302,6 +306,8 @@ class Client(ClientWithProject):
         client_certificate=None,
         client_key=None,
         instance_type=None,
+        username=None,
+        password=None,
     ):
         self._emulator_host = _get_spanner_emulator_host()
         self._use_plain_text = use_plain_text
@@ -353,10 +359,37 @@ class Client(ClientWithProject):
             self._ca_certificate = ca_certificate
             self._client_certificate = client_certificate
             self._client_key = client_key
-            credentials = AnonymousCredentials()
+            self._host = host_endpoint
+            has_username = username is not None
+            has_password = password is not None
+            if has_username != has_password:
+                raise ValueError(
+                    "Both username and password must be specified for Omni authentication"
+                )
+            from google.cloud.spanner_v1.omni.credentials import (
+                SpannerOmniCredentials,
+            )
+
+            if has_username and has_password:
+                credentials = SpannerOmniCredentials(
+                    username=username,
+                    password=password,
+                    target=host_endpoint,
+                    use_plain_text=use_plain_text,
+                    ca_certificate=ca_certificate,
+                    client_certificate=client_certificate,
+                    client_key=client_key,
+                )
+            elif not isinstance(credentials, SpannerOmniCredentials):
+                credentials = AnonymousCredentials()
             disable_builtin_metrics = True
         elif isinstance(credentials, AnonymousCredentials):
             self._emulator_host = self._client_options.api_endpoint
+        else:
+            if username is not None or password is not None:
+                raise ValueError(
+                    "username and password can only be used when instance_type='omni'."
+                )
 
         # NOTE: This API has no use for the _http argument, but sending it
         #       will have no impact since the _http() @property only lazily
@@ -388,7 +421,7 @@ class Client(ClientWithProject):
             and not disable_builtin_metrics
             and HAS_GOOGLE_CLOUD_MONITORING_INSTALLED
         ):
-            _initialize_metrics(project, credentials)
+            _initialize_metrics(project, credentials, self._emulator_host)
         else:
             SpannerMetricsTracerFactory(enabled=False)
 
@@ -509,6 +542,7 @@ class Client(ClientWithProject):
                         self._ca_certificate,
                         self._client_certificate,
                         self._client_key,
+                        credentials=self.credentials,
                     )
 
                 else:
@@ -519,6 +553,7 @@ class Client(ClientWithProject):
                         self._ca_certificate,
                         self._client_certificate,
                         self._client_key,
+                        credentials=self.credentials,
                     )
 
                 self._instance_admin_api = InstanceAdminClient(
@@ -567,6 +602,7 @@ class Client(ClientWithProject):
                         self._ca_certificate,
                         self._client_certificate,
                         self._client_key,
+                        credentials=self.credentials,
                     )
 
                 else:
@@ -577,6 +613,7 @@ class Client(ClientWithProject):
                         self._ca_certificate,
                         self._client_certificate,
                         self._client_key,
+                        credentials=self.credentials,
                     )
 
                 self._database_admin_api = DatabaseAdminClient(

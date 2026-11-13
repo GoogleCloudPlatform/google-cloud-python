@@ -9,4 +9,4 @@ This `Example <example_from_scratch.html>`_ shows how to use django-spanner for 
 django-spanner on healthchecks.io
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This `Example <example_healthchecks.html>`_ shows how to use django-spanner for Cloud Spanner as a backend database for `Django's tutorials <https://docs.djangoproject.com/en/2.2/intro/tutorial01/>`_ 
+This `Example <example_healthchecks.html>`_ shows how to use django-spanner for Cloud Spanner as a backend database for `Django's tutorials <https://docs.djangoproject.com/en/5.2/intro/tutorial01/>`_ 

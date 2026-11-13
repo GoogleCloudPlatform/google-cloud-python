@@ -29,6 +29,8 @@ __protobuf__ = proto.module(
     manifest={
         "ListUserLicensesRequest",
         "ListUserLicensesResponse",
+        "ListLicenseConfigsUsageStatsRequest",
+        "ListLicenseConfigsUsageStatsResponse",
         "BatchUpdateUserLicensesRequest",
         "BatchUpdateUserLicensesMetadata",
         "BatchUpdateUserLicensesResponse",
@@ -42,12 +44,14 @@ class ListUserLicensesRequest(proto.Message):
 
     Attributes:
         parent (str):
-            Required. The parent [UserStore][] resource name, format:
+            Required. The parent
+            [UserStore][google.cloud.discoveryengine.v1.UserStore]
+            resource name, format:
             ``projects/{project}/locations/{location}/userStores/{user_store_id}``.
         page_size (int):
             Optional. Requested page size. Server may return fewer items
-            than requested. If unspecified, defaults to 10. The maximum
-            value is 50; values above 50 will be coerced to 50.
+            than requested. If unspecified, defaults to 100. The maximum
+            value is 1000; values above 1000 will be coerced to 1000.
 
             If this field is negative, an INVALID_ARGUMENT error is
             returned.
@@ -65,6 +69,8 @@ class ListUserLicensesRequest(proto.Message):
             Supported fields:
 
             - ``license_assignment_state``
+            - ``user_principal``
+            -
 
             Examples:
 
@@ -77,6 +83,29 @@ class ListUserLicensesRequest(proto.Message):
             - ``license_assignment_state != NO_LICENSE_ATTEMPTED_LOGIN``
               to filter out users who attempted login but no license
               assigned.
+            - ``user_principal = user1@example.com`` to list user
+              license for ``user1@example.com``.
+        order_by (str):
+            Optional. The order in which the
+            [UserLicense][google.cloud.discoveryengine.v1.UserLicense]s
+            are listed. The value must be a comma-separated list of
+            fields. Default sorting order is ascending. To specify
+            descending order for a field, append a " desc" suffix.
+            Redundant space characters in the syntax are insignificant.
+
+            Supported fields (only ``user_principal`` is supported for
+            now):
+
+            - ``user_principal``
+
+            If not set, the default ordering is by ``user_principal``.
+
+            Examples:
+
+            - ``user_principal`` to order by ``user_principal`` in
+              ascending order.
+            - ``user_principal desc`` to order by ``user_principal`` in
+              descending order.
     """
 
     parent: str = proto.Field(
@@ -94,6 +123,10 @@ class ListUserLicensesRequest(proto.Message):
     filter: str = proto.Field(
         proto.STRING,
         number=4,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=5,
     )
 
 
@@ -126,6 +159,43 @@ class ListUserLicensesResponse(proto.Message):
     )
 
 
+class ListLicenseConfigsUsageStatsRequest(proto.Message):
+    r"""Request message for
+    [UserLicenseService.ListLicenseConfigsUsageStats][google.cloud.discoveryengine.v1.UserLicenseService.ListLicenseConfigsUsageStats]
+    method.
+
+    Attributes:
+        parent (str):
+            Required. The parent branch resource name, such as
+            ``projects/{project}/locations/{location}/userStores/{user_store_id}``.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListLicenseConfigsUsageStatsResponse(proto.Message):
+    r"""Response message for
+    [UserLicenseService.ListLicenseConfigsUsageStats][google.cloud.discoveryengine.v1.UserLicenseService.ListLicenseConfigsUsageStats]
+    method.
+
+    Attributes:
+        license_config_usage_stats (MutableSequence[google.cloud.discoveryengine_v1.types.LicenseConfigUsageStats]):
+            All the customer's
+            [LicenseConfigUsageStats][google.cloud.discoveryengine.v1.LicenseConfigUsageStats].
+    """
+
+    license_config_usage_stats: MutableSequence[
+        user_license.LicenseConfigUsageStats
+    ] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=user_license.LicenseConfigUsageStats,
+    )
+
+
 class BatchUpdateUserLicensesRequest(proto.Message):
     r"""Request message for
     [UserLicenseService.BatchUpdateUserLicenses][google.cloud.discoveryengine.v1.UserLicenseService.BatchUpdateUserLicenses]
@@ -137,11 +207,13 @@ class BatchUpdateUserLicensesRequest(proto.Message):
     Attributes:
         inline_source (google.cloud.discoveryengine_v1.types.BatchUpdateUserLicensesRequest.InlineSource):
             The inline source for the input content for
-            document embeddings.
+            license assignment.
 
             This field is a member of `oneof`_ ``source``.
         parent (str):
-            Required. The parent [UserStore][] resource name, format:
+            Required. The parent
+            [UserStore][google.cloud.discoveryengine.v1.UserStore]
+            resource name, format:
             ``projects/{project}/locations/{location}/userStores/{user_store_id}``.
         delete_unassigned_user_licenses (bool):
             Optional. If true, if user licenses removed

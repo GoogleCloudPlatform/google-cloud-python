@@ -22,7 +22,7 @@ import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import google.rpc.status_pb2 as status_pb2  # type: ignore
 import proto  # type: ignore
 
-from google.cloud.tasks_v2.types import target
+from google.cloud.tasks_v2.types import queue, target
 
 __protobuf__ = proto.module(
     package="google.cloud.tasks.v2",
@@ -131,6 +131,11 @@ class Task(proto.Message):
               see
               `Timeouts <https://cloud.google.com/tasks/docs/creating-appengine-handlers#timeouts>`__.
 
+            The value must be given as a string that indicates the
+            length of time (in seconds) followed by ``s`` (for
+            "seconds"). For more information on the format, see the
+            documentation for
+            `Duration <https://protobuf.dev/reference/protobuf/google.protobuf/#duration>`__.
             ``dispatch_deadline`` will be truncated to the nearest
             millisecond. The deadline is an approximate deadline.
         dispatch_count (int):
@@ -155,6 +160,13 @@ class Task(proto.Message):
         view (google.cloud.tasks_v2.types.Task.View):
             Output only. The view specifies which subset of the
             [Task][google.cloud.tasks.v2.Task] has been returned.
+        retry_config (google.cloud.tasks_v2.types.RetryConfig):
+            Optional. Specifies the task-level
+            [RetryConfig][google.cloud.tasks.v2.RetryConfig].
+
+            If present, this overrides the
+            [Queue.retry_config][google.cloud.tasks.v2.Queue.retry_config]
+            for this task.
     """
 
     class View(proto.Enum):
@@ -245,6 +257,11 @@ class Task(proto.Message):
         proto.ENUM,
         number=11,
         enum=View,
+    )
+    retry_config: queue.RetryConfig = proto.Field(
+        proto.MESSAGE,
+        number=12,
+        message=queue.RetryConfig,
     )
 
 

@@ -35,6 +35,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.alloydb_v1._compat import transcode_request
 from google.cloud.alloydb_v1.types import resources, service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -2410,21 +2411,18 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             """
 
             http_options = _BaseAlloyDBAdminRestTransport._BaseBatchCreateInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_instances(
                 request, metadata
             )
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseBatchCreateInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseBatchCreateInstances._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseBatchCreateInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseBatchCreateInstances,
+                    "_BaseBatchCreateInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2563,23 +2561,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseCreateBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_backup(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseCreateBackup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseAlloyDBAdminRestTransport._BaseCreateBackup._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseCreateBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseCreateBackup,
+                    "_BaseCreateBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2718,19 +2709,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseCreateCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_cluster(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseCreateCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseCreateCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseCreateCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseCreateCluster,
+                    "_BaseCreateCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2869,19 +2857,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseCreateInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_instance(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseCreateInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseCreateInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseCreateInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseCreateInstance,
+                    "_BaseCreateInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3018,21 +3003,18 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             """
 
             http_options = _BaseAlloyDBAdminRestTransport._BaseCreateSecondaryCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_create_secondary_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseCreateSecondaryCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseCreateSecondaryCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseCreateSecondaryCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseCreateSecondaryCluster,
+                    "_BaseCreateSecondaryCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3171,21 +3153,18 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             """
 
             http_options = _BaseAlloyDBAdminRestTransport._BaseCreateSecondaryInstance._get_http_options()
-
             request, metadata = self._interceptor.pre_create_secondary_instance(
                 request, metadata
             )
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseCreateSecondaryInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseCreateSecondaryInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseCreateSecondaryInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseCreateSecondaryInstance,
+                    "_BaseCreateSecondaryInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3321,25 +3300,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseCreateUser._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_user(request, metadata)
-            transcoded_request = (
-                _BaseAlloyDBAdminRestTransport._BaseCreateUser._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseAlloyDBAdminRestTransport._BaseCreateUser._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseCreateUser._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseCreateUser,
+                    "_BaseCreateUser__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3479,17 +3449,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseDeleteBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_backup(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseDeleteBackup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseDeleteBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseDeleteBackup,
+                    "_BaseDeleteBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3626,15 +3595,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseDeleteCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_cluster(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseDeleteCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseDeleteCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseDeleteCluster,
+                    "_BaseDeleteCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3771,15 +3741,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseDeleteInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_instance(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseDeleteInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseDeleteInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseDeleteInstance,
+                    "_BaseDeleteInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3909,19 +3880,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseDeleteUser._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_user(request, metadata)
-            transcoded_request = (
-                _BaseAlloyDBAdminRestTransport._BaseDeleteUser._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseDeleteUser._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseDeleteUser,
+                    "_BaseDeleteUser__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4024,25 +3992,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseExecuteSql._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_execute_sql(request, metadata)
-            transcoded_request = (
-                _BaseAlloyDBAdminRestTransport._BaseExecuteSql._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseAlloyDBAdminRestTransport._BaseExecuteSql._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseExecuteSql._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseExecuteSql,
+                    "_BaseExecuteSql__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4183,19 +4142,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseExportCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_export_cluster(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseExportCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseExportCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseExportCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseExportCluster,
+                    "_BaseExportCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4335,21 +4291,18 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseFailoverInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_failover_instance(
                 request, metadata
             )
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseFailoverInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseFailoverInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseFailoverInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseFailoverInstance,
+                    "_BaseFailoverInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4489,21 +4442,18 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             """
 
             http_options = _BaseAlloyDBAdminRestTransport._BaseGenerateClientCertificate._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_client_certificate(
                 request, metadata
             )
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseGenerateClientCertificate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseGenerateClientCertificate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseGenerateClientCertificate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseGenerateClientCertificate,
+                    "_BaseGenerateClientCertificate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4644,19 +4594,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseGetBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_backup(request, metadata)
-            transcoded_request = (
-                _BaseAlloyDBAdminRestTransport._BaseGetBackup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseGetBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseGetBackup,
+                    "_BaseGetBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4798,19 +4745,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseGetCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_cluster(request, metadata)
-            transcoded_request = (
-                _BaseAlloyDBAdminRestTransport._BaseGetCluster._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseGetCluster._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseGetCluster,
+                    "_BaseGetCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4947,17 +4891,18 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             """
 
             http_options = _BaseAlloyDBAdminRestTransport._BaseGetConnectionInfo._get_http_options()
-
             request, metadata = self._interceptor.pre_get_connection_info(
                 request, metadata
             )
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseGetConnectionInfo._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseGetConnectionInfo._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseGetConnectionInfo,
+                    "_BaseGetConnectionInfo__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5097,19 +5042,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseGetInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_instance(request, metadata)
-            transcoded_request = (
-                _BaseAlloyDBAdminRestTransport._BaseGetInstance._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseGetInstance._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseGetInstance,
+                    "_BaseGetInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5243,19 +5185,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseGetUser._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_user(request, metadata)
-            transcoded_request = (
-                _BaseAlloyDBAdminRestTransport._BaseGetUser._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseGetUser._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseGetUser,
+                    "_BaseGetUser__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5395,19 +5334,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseImportCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_import_cluster(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseImportCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseImportCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseImportCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseImportCluster,
+                    "_BaseImportCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5547,25 +5483,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseInjectFault._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_inject_fault(request, metadata)
-            transcoded_request = (
-                _BaseAlloyDBAdminRestTransport._BaseInjectFault._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseAlloyDBAdminRestTransport._BaseInjectFault._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseInjectFault._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseInjectFault,
+                    "_BaseInjectFault__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5703,19 +5630,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseListBackups._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_backups(request, metadata)
-            transcoded_request = (
-                _BaseAlloyDBAdminRestTransport._BaseListBackups._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseListBackups._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseListBackups,
+                    "_BaseListBackups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5854,17 +5778,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseListClusters._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_clusters(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseListClusters._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseListClusters._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseListClusters,
+                    "_BaseListClusters__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6000,15 +5923,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseListDatabases._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_databases(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseListDatabases._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseListDatabases._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseListDatabases,
+                    "_BaseListDatabases__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6147,15 +6071,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseListInstances._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_instances(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseListInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseListInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseListInstances,
+                    "_BaseListInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6294,17 +6219,18 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             """
 
             http_options = _BaseAlloyDBAdminRestTransport._BaseListSupportedDatabaseFlags._get_http_options()
-
             request, metadata = self._interceptor.pre_list_supported_database_flags(
                 request, metadata
             )
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseListSupportedDatabaseFlags._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseListSupportedDatabaseFlags._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseListSupportedDatabaseFlags,
+                    "_BaseListSupportedDatabaseFlags__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6446,19 +6372,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseListUsers._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_users(request, metadata)
-            transcoded_request = (
-                _BaseAlloyDBAdminRestTransport._BaseListUsers._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseListUsers._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseListUsers,
+                    "_BaseListUsers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6598,19 +6521,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BasePromoteCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_promote_cluster(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BasePromoteCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BasePromoteCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BasePromoteCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BasePromoteCluster,
+                    "_BasePromoteCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6749,21 +6669,18 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseRestartInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_restart_instance(
                 request, metadata
             )
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseRestartInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseRestartInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseRestartInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseRestartInstance,
+                    "_BaseRestartInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6903,19 +6820,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseRestoreCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_restore_cluster(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseRestoreCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseRestoreCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseRestoreCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseRestoreCluster,
+                    "_BaseRestoreCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7053,21 +6967,18 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             """
 
             http_options = _BaseAlloyDBAdminRestTransport._BaseSwitchoverCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_switchover_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseSwitchoverCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseSwitchoverCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseSwitchoverCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseSwitchoverCluster,
+                    "_BaseSwitchoverCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7206,23 +7117,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseUpdateBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_backup(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseUpdateBackup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseAlloyDBAdminRestTransport._BaseUpdateBackup._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseUpdateBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseUpdateBackup,
+                    "_BaseUpdateBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7361,19 +7265,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseUpdateCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_cluster(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseUpdateCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseUpdateCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseUpdateCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseUpdateCluster,
+                    "_BaseUpdateCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7512,19 +7413,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseUpdateInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_instance(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseUpdateInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseUpdateInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseUpdateInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseUpdateInstance,
+                    "_BaseUpdateInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7660,25 +7558,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseUpdateUser._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_user(request, metadata)
-            transcoded_request = (
-                _BaseAlloyDBAdminRestTransport._BaseUpdateUser._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseAlloyDBAdminRestTransport._BaseUpdateUser._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseUpdateUser._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseUpdateUser,
+                    "_BaseUpdateUser__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7819,19 +7708,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseUpgradeCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_upgrade_cluster(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseUpgradeCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseUpgradeCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseUpgradeCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseUpgradeCluster,
+                    "_BaseUpgradeCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8267,19 +8153,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseAlloyDBAdminRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8411,15 +8294,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8549,21 +8433,18 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAlloyDBAdminRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8668,17 +8549,18 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8785,17 +8667,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAlloyDBAdminRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8927,15 +8808,16 @@ class AlloyDBAdminRestTransport(_BaseAlloyDBAdminRestTransport):
             http_options = (
                 _BaseAlloyDBAdminRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseAlloyDBAdminRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAlloyDBAdminRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAlloyDBAdminRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

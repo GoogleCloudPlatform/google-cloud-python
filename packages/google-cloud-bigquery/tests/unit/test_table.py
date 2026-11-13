@@ -16,6 +16,7 @@ import copy
 import datetime
 import logging
 import re
+import sys
 import time
 import types
 import unittest
@@ -376,9 +377,7 @@ class TestTableReference(unittest.TestCase):
     def test___repr__(self):
         dataset = DatasetReference("project1", "dataset1")
         table1 = self._make_one(dataset, "table1")
-        expected = (
-            "TableReference(DatasetReference('project1', 'dataset1'), " "'table1')"
-        )
+        expected = "TableReference(DatasetReference('project1', 'dataset1'), 'table1')"
         self.assertEqual(repr(table1), expected)
 
     def test___str__(self):
@@ -1831,9 +1830,7 @@ class TestTable(unittest.TestCase, _SchemaBase):
         dataset = DatasetReference("project1", "dataset1")
         table1 = self._make_one(TableReference(dataset, "table1"))
         expected = (
-            "Table(TableReference("
-            "DatasetReference('project1', 'dataset1'), "
-            "'table1'))"
+            "Table(TableReference(DatasetReference('project1', 'dataset1'), 'table1'))"
         )
         self.assertEqual(repr(table1), expected)
 
@@ -2511,15 +2508,20 @@ class Test_EmptyRowIterator(unittest.TestCase):
         else:
             assert not hasattr(df, "crs")
 
-    def test_to_arrow_emits_pending_deprecation_warning(self):
+    def test_to_arrow_does_not_emit_deprecation_warning(self):
         pytest.importorskip("pyarrow")
         row_iterator = self._make_one()
 
-        with pytest.warns(
-            PendingDeprecationWarning,
-            match="Retrieving PyArrow Tables via google-cloud-bigquery is deprecated",
-        ):
+        with warnings.catch_warnings(record=True) as record:
+            warnings.simplefilter("always")
             row_iterator.to_arrow()
+
+        deprecation_warnings = [
+            w
+            for w in record
+            if issubclass(w.category, (PendingDeprecationWarning, DeprecationWarning))
+        ]
+        self.assertEqual(len(deprecation_warnings), 0)
 
     def test_to_dataframe_emits_pending_deprecation_warning(self):
         pytest.importorskip("pandas")
@@ -2893,7 +2895,8 @@ class TestRowIterator(unittest.TestCase):
 
     def test__should_use_bqstorage_returns_false_if_page_token_set(self):
         iterator = self._make_one(
-            page_token="abc", first_page_response=None  # not cached
+            page_token="abc",
+            first_page_response=None,  # not cached
         )
         result = iterator._should_use_bqstorage(
             bqstorage_client=None, create_bqstorage_client=True
@@ -2902,7 +2905,8 @@ class TestRowIterator(unittest.TestCase):
 
     def test__should_use_bqstorage_returns_false_if_max_results_set(self):
         iterator = self._make_one(
-            max_results=10, first_page_response=None  # not cached
+            max_results=10,
+            first_page_response=None,  # not cached
         )
         result = iterator._should_use_bqstorage(
             bqstorage_client=None, create_bqstorage_client=True
@@ -3303,8 +3307,8 @@ class TestRowIterator(unittest.TestCase):
         self.assertEqual(sports, ["volleyball", "basketball"])
 
         # Expect warning from both the arrow conversion, and the json deserialization.
-        sport_warnings = [w for w in warned if "sport" in str(w.message)]
-        self.assertEqual(len(sport_warnings), 2)
+        self.assertEqual(len(warned), 2)
+        self.assertTrue(all("sport" in str(warning) for warning in warned))
 
     def test_to_arrow_w_empty_table(self):
         pytest.importorskip("numpy")
@@ -3547,6 +3551,117 @@ class TestRowIterator(unittest.TestCase):
         row_iterator.to_arrow(create_bqstorage_client=True)
         mock_client._ensure_bqstorage_client.assert_called_once()
         bqstorage_client._transport.close.assert_called_once()
+
+    def test_to_arrow_create_read_session_user_agent(self):
+        pytest.importorskip("numpy")
+        pytest.importorskip("pyarrow")
+        pytest.importorskip("google.cloud.bigquery_storage")
+        import google.auth.credentials
+        from google.cloud import bigquery_storage
+        from google.cloud.bigquery import client as client_module
+        from google.cloud.bigquery import schema, version
+        from google.cloud.bigquery import table as mut
+        from google.cloud.bigquery_storage_v1.services.big_query_read.transports import (
+            grpc as big_query_read_grpc_transport,
+        )
+
+        mock_channel = mock.MagicMock()
+        mock_unary = mock.MagicMock()
+        mock_channel.unary_unary.return_value = mock_unary
+        mock_session = bigquery_storage.types.ReadSession(
+            name="projects/proj/locations/us/sessions/s1",
+            streams=[],
+        )
+        mock_unary.with_call.return_value = (mock_session, mock.MagicMock())
+
+        mock_pandas_gbq = mock.Mock()
+        mock_pandas_gbq.__version__ = "0.13.0"
+
+        with (
+            mock.patch.object(
+                big_query_read_grpc_transport.BigQueryReadGrpcTransport,
+                "create_channel",
+                return_value=mock_channel,
+            ),
+            mock.patch.dict(sys.modules, {"pandas_gbq": mock_pandas_gbq}),
+        ):
+            client = client_module.Client(
+                project="proj",
+                credentials=mock.Mock(spec=google.auth.credentials.Credentials),
+            )
+            row_iterator = mut.RowIterator(
+                client,
+                None,  # api_request: ignored
+                None,  # path: ignored
+                [schema.SchemaField("colA", "STRING")],
+                table=mut.TableReference.from_string("proj.dset.tbl"),
+                total_rows=0,
+            )
+            row_iterator.to_arrow(create_bqstorage_client=True)
+
+        mock_unary.with_call.assert_called_once()
+        _, kwargs = mock_unary.with_call.call_args
+        metadata_dict = dict(kwargs["metadata"])
+        self.assertIn("x-goog-api-client", metadata_dict)
+        user_agent = metadata_dict["x-goog-api-client"]
+        self.assertIn(
+            f"legacy-gcb/{version.__version__} pandas-gbq/0.13.0",
+            user_agent,
+        )
+
+    def test_to_arrow_create_read_session_user_agent_pandas_gbq_not_installed(self):
+        pytest.importorskip("numpy")
+        pytest.importorskip("pyarrow")
+        pytest.importorskip("google.cloud.bigquery_storage")
+        import google.auth.credentials
+        from google.cloud import bigquery_storage
+        from google.cloud.bigquery import client as client_module
+        from google.cloud.bigquery import schema, version
+        from google.cloud.bigquery import table as mut
+        from google.cloud.bigquery_storage_v1.services.big_query_read.transports import (
+            grpc as big_query_read_grpc_transport,
+        )
+
+        mock_channel = mock.MagicMock()
+        mock_unary = mock.MagicMock()
+        mock_channel.unary_unary.return_value = mock_unary
+        mock_session = bigquery_storage.types.ReadSession(
+            name="projects/proj/locations/us/sessions/s1",
+            streams=[],
+        )
+        mock_unary.with_call.return_value = (mock_session, mock.MagicMock())
+
+        with (
+            mock.patch.object(
+                big_query_read_grpc_transport.BigQueryReadGrpcTransport,
+                "create_channel",
+                return_value=mock_channel,
+            ),
+            mock.patch.dict(sys.modules, {"pandas_gbq": None}),
+        ):
+            client = client_module.Client(
+                project="proj",
+                credentials=mock.Mock(spec=google.auth.credentials.Credentials),
+            )
+            row_iterator = mut.RowIterator(
+                client,
+                None,  # api_request: ignored
+                None,  # path: ignored
+                [schema.SchemaField("colA", "STRING")],
+                table=mut.TableReference.from_string("proj.dset.tbl"),
+                total_rows=0,
+            )
+            row_iterator.to_arrow(create_bqstorage_client=True)
+
+        mock_unary.with_call.assert_called_once()
+        _, kwargs = mock_unary.with_call.call_args
+        metadata_dict = dict(kwargs["metadata"])
+        self.assertIn("x-goog-api-client", metadata_dict)
+        user_agent = metadata_dict["x-goog-api-client"]
+        self.assertIn(
+            f"legacy-gcb/{version.__version__} pandas-gbq/0.0.0",
+            user_agent,
+        )
 
     def test_to_arrow_ensure_bqstorage_client_wo_bqstorage(self):
         pytest.importorskip("numpy")
@@ -4903,6 +5018,117 @@ class TestRowIterator(unittest.TestCase):
         mock_client._ensure_bqstorage_client.assert_called_once()
         bqstorage_client._transport.close.assert_called_once()
 
+    def test_to_dataframe_create_read_session_user_agent(self):
+        pytest.importorskip("numpy")
+        pytest.importorskip("pandas")
+        pytest.importorskip("google.cloud.bigquery_storage")
+        import google.auth.credentials
+        from google.cloud import bigquery_storage
+        from google.cloud.bigquery import client as client_module
+        from google.cloud.bigquery import schema, version
+        from google.cloud.bigquery import table as mut
+        from google.cloud.bigquery_storage_v1.services.big_query_read.transports import (
+            grpc as big_query_read_grpc_transport,
+        )
+
+        mock_channel = mock.MagicMock()
+        mock_unary = mock.MagicMock()
+        mock_channel.unary_unary.return_value = mock_unary
+        mock_session = bigquery_storage.types.ReadSession(
+            name="projects/proj/locations/us/sessions/s1",
+            streams=[],
+        )
+        mock_unary.with_call.return_value = (mock_session, mock.MagicMock())
+
+        mock_pandas_gbq = mock.Mock()
+        mock_pandas_gbq.__version__ = "0.13.0"
+
+        with (
+            mock.patch.object(
+                big_query_read_grpc_transport.BigQueryReadGrpcTransport,
+                "create_channel",
+                return_value=mock_channel,
+            ),
+            mock.patch.dict(sys.modules, {"pandas_gbq": mock_pandas_gbq}),
+        ):
+            client = client_module.Client(
+                project="proj",
+                credentials=mock.Mock(spec=google.auth.credentials.Credentials),
+            )
+            row_iterator = mut.RowIterator(
+                client,
+                None,  # api_request: ignored
+                None,  # path: ignored
+                [schema.SchemaField("colA", "STRING")],
+                table=mut.TableReference.from_string("proj.dset.tbl"),
+                total_rows=0,
+            )
+            row_iterator.to_dataframe(create_bqstorage_client=True)
+
+        mock_unary.with_call.assert_called_once()
+        _, kwargs = mock_unary.with_call.call_args
+        metadata_dict = dict(kwargs["metadata"])
+        self.assertIn("x-goog-api-client", metadata_dict)
+        user_agent = metadata_dict["x-goog-api-client"]
+        self.assertIn(
+            f"legacy-gcb/{version.__version__} pandas-gbq/0.13.0",
+            user_agent,
+        )
+
+    def test_to_dataframe_create_read_session_user_agent_pandas_gbq_not_installed(self):
+        pytest.importorskip("numpy")
+        pytest.importorskip("pandas")
+        pytest.importorskip("google.cloud.bigquery_storage")
+        import google.auth.credentials
+        from google.cloud import bigquery_storage
+        from google.cloud.bigquery import client as client_module
+        from google.cloud.bigquery import schema, version
+        from google.cloud.bigquery import table as mut
+        from google.cloud.bigquery_storage_v1.services.big_query_read.transports import (
+            grpc as big_query_read_grpc_transport,
+        )
+
+        mock_channel = mock.MagicMock()
+        mock_unary = mock.MagicMock()
+        mock_channel.unary_unary.return_value = mock_unary
+        mock_session = bigquery_storage.types.ReadSession(
+            name="projects/proj/locations/us/sessions/s1",
+            streams=[],
+        )
+        mock_unary.with_call.return_value = (mock_session, mock.MagicMock())
+
+        with (
+            mock.patch.object(
+                big_query_read_grpc_transport.BigQueryReadGrpcTransport,
+                "create_channel",
+                return_value=mock_channel,
+            ),
+            mock.patch.dict(sys.modules, {"pandas_gbq": None}),
+        ):
+            client = client_module.Client(
+                project="proj",
+                credentials=mock.Mock(spec=google.auth.credentials.Credentials),
+            )
+            row_iterator = mut.RowIterator(
+                client,
+                None,  # api_request: ignored
+                None,  # path: ignored
+                [schema.SchemaField("colA", "STRING")],
+                table=mut.TableReference.from_string("proj.dset.tbl"),
+                total_rows=0,
+            )
+            row_iterator.to_dataframe(create_bqstorage_client=True)
+
+        mock_unary.with_call.assert_called_once()
+        _, kwargs = mock_unary.with_call.call_args
+        metadata_dict = dict(kwargs["metadata"])
+        self.assertIn("x-goog-api-client", metadata_dict)
+        user_agent = metadata_dict["x-goog-api-client"]
+        self.assertIn(
+            f"legacy-gcb/{version.__version__} pandas-gbq/0.0.0",
+            user_agent,
+        )
+
     def test_to_dataframe_w_bqstorage_no_streams(self):
         pytest.importorskip("numpy")
         pytest.importorskip("pandas")
@@ -5622,8 +5848,7 @@ class TestRowIterator(unittest.TestCase):
         with self.assertRaisesRegex(
             TypeError,
             re.escape(
-                "There must be at least one GEOGRAPHY column"
-                " to create a GeoDataFrame"
+                "There must be at least one GEOGRAPHY column to create a GeoDataFrame"
             ),
         ):
             row_iterator.to_geodataframe(create_bqstorage_client=False)
@@ -5741,15 +5966,20 @@ class TestRowIterator(unittest.TestCase):
 
         self.assertEqual([v.__class__.__name__ for v in df.g], ["Point"])
 
-    def test_to_arrow_emits_pending_deprecation_warning(self):
+    def test_to_arrow_does_not_emit_deprecation_warning(self):
         pytest.importorskip("pyarrow")
         row_iterator = self._make_one_from_data((("name", "STRING"),), (("foo",),))
 
-        with pytest.warns(
-            PendingDeprecationWarning,
-            match="Retrieving PyArrow Tables via google-cloud-bigquery is deprecated",
-        ):
+        with warnings.catch_warnings(record=True) as record:
+            warnings.simplefilter("always")
             row_iterator.to_arrow(create_bqstorage_client=False)
+
+        deprecation_warnings = [
+            w
+            for w in record
+            if issubclass(w.category, (PendingDeprecationWarning, DeprecationWarning))
+        ]
+        self.assertEqual(len(deprecation_warnings), 0)
 
     def test_to_dataframe_emits_pending_deprecation_warning(self):
         pytest.importorskip("pandas")
@@ -5758,13 +5988,8 @@ class TestRowIterator(unittest.TestCase):
         with pytest.warns(
             PendingDeprecationWarning,
             match="Retrieving DataFrames via google-cloud-bigquery is deprecated",
-        ) as record:
+        ):
             row_iterator.to_dataframe(create_bqstorage_client=False)
-
-        arrow_warnings = [
-            w for w in record if "Retrieving PyArrow Tables" in str(w.message)
-        ]
-        self.assertEqual(len(arrow_warnings), 0)
 
     def test_to_geodataframe_does_not_emit_deprecation_warning(self):
         pytest.importorskip("pandas")

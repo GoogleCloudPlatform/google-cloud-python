@@ -14,9 +14,9 @@ Python Client for Google Meet
    :target: https://pypi.org/project/google-apps-meet/
 .. |versions| image:: https://img.shields.io/pypi/pyversions/google-apps-meet.svg
    :target: https://pypi.org/project/google-apps-meet/
-.. _Google Meet: https://developers.google.com/meet/api/guides/overview
+.. _Google Meet: https://developers.google.com/workspace/meet/api/guides/overview
 .. _Client Library Documentation: https://googleapis.dev/python/google-apps-meet/latest
-.. _Product Documentation:  https://developers.google.com/meet/api/guides/overview
+.. _Product Documentation:  https://developers.google.com/workspace/meet/api/guides/overview
 
 Quick Start
 -----------
@@ -30,7 +30,7 @@ In order to use this library, you first need to go through the following steps:
 
 .. _Select or create a Cloud Platform project.: https://console.cloud.google.com/project
 .. _Enable billing for your project.: https://cloud.google.com/billing/docs/how-to/modify-project#enable_billing_for_a_project
-.. _Enable the Google Meet.:  https://developers.google.com/meet/api/guides/overview
+.. _Enable the Google Meet.:  https://developers.google.com/workspace/meet/api/guides/overview
 .. _Set up Authentication.: https://googleapis.dev/python/google-api-core/latest/auth.html
 
 Installation
@@ -105,7 +105,7 @@ Next Steps
 -  View this `README`_ to see the full list of Cloud
    APIs that we cover.
 
-.. _Google Meet Product documentation:  https://developers.google.com/meet/api/guides/overview
+.. _Google Meet Product documentation:  https://developers.google.com/workspace/meet/api/guides/overview
 .. _README: https://github.com/googleapis/google-cloud-python/blob/main/README.rst
 
 Logging

@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     rich_media_ads_company_messages,
     rich_media_ads_company_service,
@@ -406,17 +407,18 @@ class RichMediaAdsCompanyServiceRestTransport(
             """
 
             http_options = _BaseRichMediaAdsCompanyServiceRestTransport._BaseGetRichMediaAdsCompany._get_http_options()
-
             request, metadata = self._interceptor.pre_get_rich_media_ads_company(
                 request, metadata
             )
-            transcoded_request = _BaseRichMediaAdsCompanyServiceRestTransport._BaseGetRichMediaAdsCompany._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRichMediaAdsCompanyServiceRestTransport._BaseGetRichMediaAdsCompany._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRichMediaAdsCompanyServiceRestTransport._BaseGetRichMediaAdsCompany,
+                    "_BaseGetRichMediaAdsCompany__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -560,17 +562,18 @@ class RichMediaAdsCompanyServiceRestTransport(
             """
 
             http_options = _BaseRichMediaAdsCompanyServiceRestTransport._BaseListRichMediaAdsCompanies._get_http_options()
-
             request, metadata = self._interceptor.pre_list_rich_media_ads_companies(
                 request, metadata
             )
-            transcoded_request = _BaseRichMediaAdsCompanyServiceRestTransport._BaseListRichMediaAdsCompanies._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRichMediaAdsCompanyServiceRestTransport._BaseListRichMediaAdsCompanies._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRichMediaAdsCompanyServiceRestTransport._BaseListRichMediaAdsCompanies,
+                    "_BaseListRichMediaAdsCompanies__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -739,17 +742,18 @@ class RichMediaAdsCompanyServiceRestTransport(
             """
 
             http_options = _BaseRichMediaAdsCompanyServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseRichMediaAdsCompanyServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRichMediaAdsCompanyServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRichMediaAdsCompanyServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -857,15 +861,16 @@ class RichMediaAdsCompanyServiceRestTransport(
             """
 
             http_options = _BaseRichMediaAdsCompanyServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseRichMediaAdsCompanyServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRichMediaAdsCompanyServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRichMediaAdsCompanyServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

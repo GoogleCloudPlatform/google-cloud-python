@@ -147,9 +147,9 @@ class ComputeRoutesRequest(proto.Message):
             the overall cost of the route by re-ordering the specified
             intermediate waypoints. The request fails if any of the
             intermediate waypoints is a ``via`` waypoint. Use
-            ``ComputeRoutesResponse.Routes.optimized_intermediate_waypoint_index``
+            ``ComputeRoutesResponse.routes.optimized_intermediate_waypoint_index``
             to find the new ordering. If
-            ``ComputeRoutesResponseroutes.optimized_intermediate_waypoint_index``
+            ``ComputeRoutesResponse.routes.optimized_intermediate_waypoint_index``
             is not requested in the ``X-Goog-FieldMask`` header, the
             request fails. If ``optimize_waypoint_order`` is set to
             false,
@@ -229,6 +229,7 @@ class ComputeRoutesRequest(proto.Message):
 
     class ExtraComputation(proto.Enum):
         r"""Extra computations to perform while completing the request.
+        Additional values may be added in the future.
 
         Values:
             EXTRA_COMPUTATION_UNSPECIFIED (0):
@@ -241,24 +242,36 @@ class ComputeRoutesRequest(proto.Message):
             TRAFFIC_ON_POLYLINE (3):
                 Traffic aware polylines for the route(s).
             HTML_FORMATTED_NAVIGATION_INSTRUCTIONS (4):
-                ```NavigationInstructions`` <google.maps.routing.v2.NavigationInstructions.instructions>`__
+                [``NavigationInstruction``][google.maps.routing.v2.NavigationInstruction]
                 presented as a formatted HTML text string. This content is
                 meant to be read as-is. This content is for display only. Do
                 not programmatically parse it.
             FLYOVER_INFO_ON_POLYLINE (7):
                 Flyover information for the route(s). The
                 ``routes.polyline_details.flyover_info`` fieldmask must be
-                specified to return this information. This data will only
-                currently be populated for certain metros in India. This
-                feature is experimental, and the SKU/charge is subject to
-                change.
+                specified to return this information. This data will
+                currently only be populated for certain metros in India.
+                This feature is experimental, and the SKU/charge is subject
+                to change.
             NARROW_ROAD_INFO_ON_POLYLINE (8):
                 Narrow road information for the route(s). The
                 ``routes.polyline_details.narrow_road_info`` fieldmask must
-                be specified to return this information. This data will only
-                currently be populated for certain metros in India. This
-                feature is experimental, and the SKU/charge is subject to
-                change.
+                be specified to return this information. This data will
+                currently only be populated for certain metros in India.
+                This feature is experimental, and the SKU/charge is subject
+                to change.
+            TUNNEL_INFO_ON_POLYLINE (9):
+                Tunnel information for the route(s). The
+                ``routes.polyline_details.tunnel_info`` fieldmask must be
+                specified to return this information.
+            BRIDGE_INFO_ON_POLYLINE (10):
+                Bridge information for the route(s). The
+                ``routes.polyline_details.bridge_info`` fieldmask must be
+                specified to return this information.
+            SKYWAY_INFO_ON_POLYLINE (11):
+                Skyway information for the route(s). The
+                ``routes.polyline_details.skyway_info`` fieldmask must be
+                specified to return this information.
         """
 
         EXTRA_COMPUTATION_UNSPECIFIED = 0
@@ -268,6 +281,9 @@ class ComputeRoutesRequest(proto.Message):
         HTML_FORMATTED_NAVIGATION_INSTRUCTIONS = 4
         FLYOVER_INFO_ON_POLYLINE = 7
         NARROW_ROAD_INFO_ON_POLYLINE = 8
+        TUNNEL_INFO_ON_POLYLINE = 9
+        BRIDGE_INFO_ON_POLYLINE = 10
+        SKYWAY_INFO_ON_POLYLINE = 11
 
     origin: gmr_waypoint.Waypoint = proto.Field(
         proto.MESSAGE,

@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.ces_v1beta._compat import transcode_request
 from google.cloud.ces_v1beta.types import session_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -73,11 +74,35 @@ class SessionServiceRestInterceptor:
 
     .. code-block:: python
         class MyCustomSessionServiceInterceptor(SessionServiceRestInterceptor):
+            def pre_cancel_assistant_turn(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_cancel_assistant_turn(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_generate_onboarding_suggestions(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_generate_onboarding_suggestions(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_run_session(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
 
             def post_run_session(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_stream_chat_ai_assistant(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_stream_chat_ai_assistant(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -94,6 +119,110 @@ class SessionServiceRestInterceptor:
 
 
     """
+
+    def pre_cancel_assistant_turn(
+        self,
+        request: session_service.CancelAssistantTurnRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        session_service.CancelAssistantTurnRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for cancel_assistant_turn
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the SessionService server.
+        """
+        return request, metadata
+
+    def post_cancel_assistant_turn(
+        self, response: session_service.CancelAssistantTurnResponse
+    ) -> session_service.CancelAssistantTurnResponse:
+        """Post-rpc interceptor for cancel_assistant_turn
+
+        DEPRECATED. Please use the `post_cancel_assistant_turn_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the SessionService server but before
+        it is returned to user code. This `post_cancel_assistant_turn` interceptor runs
+        before the `post_cancel_assistant_turn_with_metadata` interceptor.
+        """
+        return response
+
+    def post_cancel_assistant_turn_with_metadata(
+        self,
+        response: session_service.CancelAssistantTurnResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        session_service.CancelAssistantTurnResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for cancel_assistant_turn
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the SessionService server but before it is returned to user code.
+
+        We recommend only using this `post_cancel_assistant_turn_with_metadata`
+        interceptor in new development instead of the `post_cancel_assistant_turn` interceptor.
+        When both interceptors are used, this `post_cancel_assistant_turn_with_metadata` interceptor runs after the
+        `post_cancel_assistant_turn` interceptor. The (possibly modified) response returned by
+        `post_cancel_assistant_turn` will be passed to
+        `post_cancel_assistant_turn_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_generate_onboarding_suggestions(
+        self,
+        request: session_service.GenerateOnboardingSuggestionsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        session_service.GenerateOnboardingSuggestionsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for generate_onboarding_suggestions
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the SessionService server.
+        """
+        return request, metadata
+
+    def post_generate_onboarding_suggestions(
+        self, response: session_service.GenerateOnboardingSuggestionsResponse
+    ) -> session_service.GenerateOnboardingSuggestionsResponse:
+        """Post-rpc interceptor for generate_onboarding_suggestions
+
+        DEPRECATED. Please use the `post_generate_onboarding_suggestions_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the SessionService server but before
+        it is returned to user code. This `post_generate_onboarding_suggestions` interceptor runs
+        before the `post_generate_onboarding_suggestions_with_metadata` interceptor.
+        """
+        return response
+
+    def post_generate_onboarding_suggestions_with_metadata(
+        self,
+        response: session_service.GenerateOnboardingSuggestionsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        session_service.GenerateOnboardingSuggestionsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for generate_onboarding_suggestions
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the SessionService server but before it is returned to user code.
+
+        We recommend only using this `post_generate_onboarding_suggestions_with_metadata`
+        interceptor in new development instead of the `post_generate_onboarding_suggestions` interceptor.
+        When both interceptors are used, this `post_generate_onboarding_suggestions_with_metadata` interceptor runs after the
+        `post_generate_onboarding_suggestions` interceptor. The (possibly modified) response returned by
+        `post_generate_onboarding_suggestions` will be passed to
+        `post_generate_onboarding_suggestions_with_metadata`.
+        """
+        return response, metadata
 
     def pre_run_session(
         self,
@@ -142,6 +271,57 @@ class SessionServiceRestInterceptor:
         `post_run_session` interceptor. The (possibly modified) response returned by
         `post_run_session` will be passed to
         `post_run_session_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_stream_chat_ai_assistant(
+        self,
+        request: session_service.StreamChatAiAssistantRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        session_service.StreamChatAiAssistantRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for stream_chat_ai_assistant
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the SessionService server.
+        """
+        return request, metadata
+
+    def post_stream_chat_ai_assistant(
+        self, response: rest_streaming.ResponseIterator
+    ) -> rest_streaming.ResponseIterator:
+        """Post-rpc interceptor for stream_chat_ai_assistant
+
+        DEPRECATED. Please use the `post_stream_chat_ai_assistant_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the SessionService server but before
+        it is returned to user code. This `post_stream_chat_ai_assistant` interceptor runs
+        before the `post_stream_chat_ai_assistant_with_metadata` interceptor.
+        """
+        return response
+
+    def post_stream_chat_ai_assistant_with_metadata(
+        self,
+        response: rest_streaming.ResponseIterator,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        rest_streaming.ResponseIterator, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for stream_chat_ai_assistant
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the SessionService server but before it is returned to user code.
+
+        We recommend only using this `post_stream_chat_ai_assistant_with_metadata`
+        interceptor in new development instead of the `post_stream_chat_ai_assistant` interceptor.
+        When both interceptors are used, this `post_stream_chat_ai_assistant_with_metadata` interceptor runs after the
+        `post_stream_chat_ai_assistant` interceptor. The (possibly modified) response returned by
+        `post_stream_chat_ai_assistant` will be passed to
+        `post_stream_chat_ai_assistant_with_metadata`.
         """
         return response, metadata
 
@@ -454,6 +634,315 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
                 "Method BidiRunSession is not available over REST transport"
             )
 
+    class _CancelAssistantTurn(
+        _BaseSessionServiceRestTransport._BaseCancelAssistantTurn,
+        SessionServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("SessionServiceRestTransport.CancelAssistantTurn")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: session_service.CancelAssistantTurnRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> session_service.CancelAssistantTurnResponse:
+            r"""Call the cancel assistant turn method over HTTP.
+
+            Args:
+                request (~.session_service.CancelAssistantTurnRequest):
+                    The request object. Request to cancel an assistant
+                session's in-flight turn.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.session_service.CancelAssistantTurnResponse:
+                    Response for CancelAssistantTurn.
+            """
+
+            http_options = _BaseSessionServiceRestTransport._BaseCancelAssistantTurn._get_http_options()
+            request, metadata = self._interceptor.pre_cancel_assistant_turn(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseCancelAssistantTurn,
+                    "_BaseCancelAssistantTurn__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.ces_v1beta.SessionServiceClient.CancelAssistantTurn",
+                    extra={
+                        "serviceName": "google.cloud.ces.v1beta.SessionService",
+                        "rpcName": "CancelAssistantTurn",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = SessionServiceRestTransport._CancelAssistantTurn._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = session_service.CancelAssistantTurnResponse()
+            pb_resp = session_service.CancelAssistantTurnResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_cancel_assistant_turn(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_cancel_assistant_turn_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        session_service.CancelAssistantTurnResponse.to_json(response)
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.ces_v1beta.SessionServiceClient.cancel_assistant_turn",
+                    extra={
+                        "serviceName": "google.cloud.ces.v1beta.SessionService",
+                        "rpcName": "CancelAssistantTurn",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _GenerateOnboardingSuggestions(
+        _BaseSessionServiceRestTransport._BaseGenerateOnboardingSuggestions,
+        SessionServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("SessionServiceRestTransport.GenerateOnboardingSuggestions")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: session_service.GenerateOnboardingSuggestionsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> session_service.GenerateOnboardingSuggestionsResponse:
+            r"""Call the generate onboarding
+            suggestions method over HTTP.
+
+                Args:
+                    request (~.session_service.GenerateOnboardingSuggestionsRequest):
+                        The request object. Request message for
+                    [SessionService.GenerateOnboardingSuggestions][google.cloud.ces.v1beta.SessionService.GenerateOnboardingSuggestions].
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.session_service.GenerateOnboardingSuggestionsResponse:
+                        Response message for
+                    [SessionService.GenerateOnboardingSuggestions][google.cloud.ces.v1beta.SessionService.GenerateOnboardingSuggestions].
+
+            """
+
+            http_options = _BaseSessionServiceRestTransport._BaseGenerateOnboardingSuggestions._get_http_options()
+            request, metadata = self._interceptor.pre_generate_onboarding_suggestions(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseGenerateOnboardingSuggestions,
+                    "_BaseGenerateOnboardingSuggestions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.ces_v1beta.SessionServiceClient.GenerateOnboardingSuggestions",
+                    extra={
+                        "serviceName": "google.cloud.ces.v1beta.SessionService",
+                        "rpcName": "GenerateOnboardingSuggestions",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = SessionServiceRestTransport._GenerateOnboardingSuggestions._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = session_service.GenerateOnboardingSuggestionsResponse()
+            pb_resp = session_service.GenerateOnboardingSuggestionsResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_generate_onboarding_suggestions(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_generate_onboarding_suggestions_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        session_service.GenerateOnboardingSuggestionsResponse.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.ces_v1beta.SessionServiceClient.generate_onboarding_suggestions",
+                    extra={
+                        "serviceName": "google.cloud.ces.v1beta.SessionService",
+                        "rpcName": "GenerateOnboardingSuggestions",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _RunSession(
         _BaseSessionServiceRestTransport._BaseRunSession, SessionServiceRestStub
     ):
@@ -515,23 +1004,16 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             http_options = (
                 _BaseSessionServiceRestTransport._BaseRunSession._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_run_session(request, metadata)
-            transcoded_request = _BaseSessionServiceRestTransport._BaseRunSession._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseSessionServiceRestTransport._BaseRunSession._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseSessionServiceRestTransport._BaseRunSession._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseRunSession,
+                    "_BaseRunSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -613,6 +1095,152 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
                 )
             return resp
 
+    class _StreamChatAiAssistant(
+        _BaseSessionServiceRestTransport._BaseStreamChatAiAssistant,
+        SessionServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("SessionServiceRestTransport.StreamChatAiAssistant")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+                stream=True,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: session_service.StreamChatAiAssistantRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> rest_streaming.ResponseIterator:
+            r"""Call the stream chat ai assistant method over HTTP.
+
+            Args:
+                request (~.session_service.StreamChatAiAssistantRequest):
+                    The request object. Request message for
+                [SessionService.StreamChatAiAssistant][google.cloud.ces.v1beta.SessionService.StreamChatAiAssistant].
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.session_service.StreamChatAiAssistantResponse:
+                    Response message for
+                [SessionService.StreamChatAiAssistant][google.cloud.ces.v1beta.SessionService.StreamChatAiAssistant].
+
+            """
+
+            http_options = _BaseSessionServiceRestTransport._BaseStreamChatAiAssistant._get_http_options()
+            request, metadata = self._interceptor.pre_stream_chat_ai_assistant(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseStreamChatAiAssistant,
+                    "_BaseStreamChatAiAssistant__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.ces_v1beta.SessionServiceClient.StreamChatAiAssistant",
+                    extra={
+                        "serviceName": "google.cloud.ces.v1beta.SessionService",
+                        "rpcName": "StreamChatAiAssistant",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = SessionServiceRestTransport._StreamChatAiAssistant._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = rest_streaming.ResponseIterator(
+                response, session_service.StreamChatAiAssistantResponse
+            )
+
+            resp = self._interceptor.post_stream_chat_ai_assistant(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_stream_chat_ai_assistant_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                http_response = {
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.ces_v1beta.SessionServiceClient.stream_chat_ai_assistant",
+                    extra={
+                        "serviceName": "google.cloud.ces.v1beta.SessionService",
+                        "rpcName": "StreamChatAiAssistant",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _StreamRunSession(
         _BaseSessionServiceRestTransport._BaseStreamRunSession, SessionServiceRestStub
     ):
@@ -673,21 +1301,18 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             """
 
             http_options = _BaseSessionServiceRestTransport._BaseStreamRunSession._get_http_options()
-
             request, metadata = self._interceptor.pre_stream_run_session(
                 request, metadata
             )
-            transcoded_request = _BaseSessionServiceRestTransport._BaseStreamRunSession._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSessionServiceRestTransport._BaseStreamRunSession._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseStreamRunSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseStreamRunSession,
+                    "_BaseStreamRunSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -773,6 +1398,30 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
         return self._BidiRunSession(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def cancel_assistant_turn(
+        self,
+    ) -> Callable[
+        [session_service.CancelAssistantTurnRequest],
+        session_service.CancelAssistantTurnResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CancelAssistantTurn(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def generate_onboarding_suggestions(
+        self,
+    ) -> Callable[
+        [session_service.GenerateOnboardingSuggestionsRequest],
+        session_service.GenerateOnboardingSuggestionsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GenerateOnboardingSuggestions(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def run_session(
         self,
     ) -> Callable[
@@ -781,6 +1430,17 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._RunSession(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def stream_chat_ai_assistant(
+        self,
+    ) -> Callable[
+        [session_service.StreamChatAiAssistantRequest],
+        session_service.StreamChatAiAssistantResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._StreamChatAiAssistant(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def stream_run_session(
@@ -852,15 +1512,16 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             http_options = (
                 _BaseSessionServiceRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseSessionServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -992,15 +1653,16 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             http_options = (
                 _BaseSessionServiceRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseSessionServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1128,21 +1790,18 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             """
 
             http_options = _BaseSessionServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSessionServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSessionServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1245,17 +1904,18 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             """
 
             http_options = _BaseSessionServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSessionServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1362,15 +2022,16 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             http_options = (
                 _BaseSessionServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseSessionServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1502,15 +2163,16 @@ class SessionServiceRestTransport(_BaseSessionServiceRestTransport):
             http_options = (
                 _BaseSessionServiceRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseSessionServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSessionServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSessionServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

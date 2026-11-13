@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.maps.addressvalidation_v1._compat import transcode_request
 from google.maps.addressvalidation_v1.types import address_validation_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -354,21 +355,18 @@ class AddressValidationRestTransport(_BaseAddressValidationRestTransport):
             """
 
             http_options = _BaseAddressValidationRestTransport._BaseProvideValidationFeedback._get_http_options()
-
             request, metadata = self._interceptor.pre_provide_validation_feedback(
                 request, metadata
             )
-            transcoded_request = _BaseAddressValidationRestTransport._BaseProvideValidationFeedback._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAddressValidationRestTransport._BaseProvideValidationFeedback._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAddressValidationRestTransport._BaseProvideValidationFeedback._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAddressValidationRestTransport._BaseProvideValidationFeedback,
+                    "_BaseProvideValidationFeedback__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -514,21 +512,18 @@ class AddressValidationRestTransport(_BaseAddressValidationRestTransport):
             """
 
             http_options = _BaseAddressValidationRestTransport._BaseValidateAddress._get_http_options()
-
             request, metadata = self._interceptor.pre_validate_address(
                 request, metadata
             )
-            transcoded_request = _BaseAddressValidationRestTransport._BaseValidateAddress._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAddressValidationRestTransport._BaseValidateAddress._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAddressValidationRestTransport._BaseValidateAddress._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAddressValidationRestTransport._BaseValidateAddress,
+                    "_BaseValidateAddress__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

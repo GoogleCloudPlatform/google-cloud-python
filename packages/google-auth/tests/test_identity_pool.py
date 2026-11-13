@@ -17,18 +17,21 @@ import datetime
 import http.client as http_client
 import json
 import os
-from unittest import mock
 import urllib
+from unittest import mock
 
+import pytest  # type: ignore
 from cryptography import x509
 from cryptography.hazmat.primitives import serialization
-import pytest  # type: ignore
 
-from google.auth import _helpers, external_account
-from google.auth import exceptions
-from google.auth import identity_pool
-from google.auth import metrics
-from google.auth import transport
+from google.auth import (
+    _helpers,
+    exceptions,
+    external_account,
+    identity_pool,
+    metrics,
+    transport,
+)
 from google.auth.credentials import DEFAULT_UNIVERSE_DOMAIN
 
 CLIENT_ID = "username"
@@ -1002,7 +1005,7 @@ class TestCredentials(object):
 
     @mock.patch(
         "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
-        return_value=(CERT_FILE, KEY_FILE),
+        return_value=(CERT_FILE, KEY_FILE, None),
     )
     def test_retrieve_subject_token_certificate_default(
         self, mock_get_workload_cert_and_key_paths
@@ -1017,7 +1020,7 @@ class TestCredentials(object):
 
     @mock.patch(
         "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
-        return_value=(CERT_FILE, KEY_FILE),
+        return_value=(CERT_FILE, KEY_FILE, None),
     )
     def test_retrieve_subject_token_certificate_non_default_path(
         self, mock_get_workload_cert_and_key_paths
@@ -1032,7 +1035,7 @@ class TestCredentials(object):
 
     @mock.patch(
         "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
-        return_value=(CERT_FILE, KEY_FILE),
+        return_value=(CERT_FILE, KEY_FILE, None),
     )
     def test_retrieve_subject_token_certificate_trust_chain_with_leaf(
         self, mock_get_workload_cert_and_key_paths
@@ -1046,7 +1049,7 @@ class TestCredentials(object):
 
     @mock.patch(
         "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
-        return_value=(CERT_FILE, KEY_FILE),
+        return_value=(CERT_FILE, KEY_FILE, None),
     )
     def test_retrieve_subject_token_certificate_trust_chain_without_leaf(
         self, mock_get_workload_cert_and_key_paths
@@ -1060,7 +1063,7 @@ class TestCredentials(object):
 
     @mock.patch(
         "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
-        return_value=(CERT_FILE, KEY_FILE),
+        return_value=(CERT_FILE, KEY_FILE, None),
     )
     def test_retrieve_subject_token_certificate_trust_chain_invalid_order(
         self, mock_get_workload_cert_and_key_paths
@@ -1078,7 +1081,7 @@ class TestCredentials(object):
 
     @mock.patch(
         "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
-        return_value=(CERT_FILE, KEY_FILE),
+        return_value=(CERT_FILE, KEY_FILE, None),
     )
     def test_retrieve_subject_token_certificate_trust_chain_file_does_not_exist(
         self, mock_get_workload_cert_and_key_paths
@@ -1099,7 +1102,7 @@ class TestCredentials(object):
 
     @mock.patch(
         "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
-        return_value=(CERT_FILE, KEY_FILE),
+        return_value=(CERT_FILE, KEY_FILE, None),
     )
     def test_retrieve_subject_token_certificate_invalid_trust_chain_file(
         self, mock_get_workload_cert_and_key_paths
@@ -1761,7 +1764,7 @@ class TestCredentials(object):
 
     @mock.patch(
         "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
-        return_value=("cert", "key"),
+        return_value=("cert", "key", None),
     )
     def test_get_mtls_certs(self, mock_get_workload_cert_and_key_paths):
         credentials = self.make_credentials(
@@ -1786,7 +1789,7 @@ class TestCredentials(object):
 
     @mock.patch(
         "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
-        return_value=(None, None),
+        return_value=(None, None, None),
     )
     def test_get_cert_bytes_none_raises_error(
         self, mock_get_workload_cert_and_key_paths
@@ -1816,7 +1819,7 @@ class TestCredentials(object):
             credentials.refresh(None)
 
         assert excinfo.match(
-            "Failed to retrieve certificate bytes for external account credentials"
+            "Failed to retrieve or parse certificate for external account credentials"
         )
 
     @mock.patch.object(
@@ -1832,8 +1835,29 @@ class TestCredentials(object):
         with pytest.raises(exceptions.RefreshError) as excinfo:
             credentials.refresh(None)
 
-        msg = "Failed to retrieve certificate bytes for external"
+        msg = "Failed to retrieve or parse certificate for external"
         assert excinfo.match(msg + " account credentials")
+
+    @mock.patch(
+        "google.auth._agent_identity_utils.parse_certificate",
+        side_effect=ValueError("malformed certificate chain"),
+    )
+    @mock.patch.object(
+        identity_pool.Credentials, "_get_cert_bytes", return_value=b"bad_cert"
+    )
+    def test_refresh_parse_certificate_value_error_raises_refresh_error(
+        self, mock_get_cert_bytes, mock_parse_certificate
+    ):
+        credentials = self.make_credentials(
+            credential_source=self.CREDENTIAL_SOURCE_CERTIFICATE.copy()
+        )
+
+        with pytest.raises(exceptions.RefreshError) as excinfo:
+            credentials.refresh(None)
+
+        assert excinfo.match(
+            "Failed to retrieve or parse certificate for external account credentials"
+        )
 
     @mock.patch("google.auth._agent_identity_utils.parse_certificate")
     @mock.patch(

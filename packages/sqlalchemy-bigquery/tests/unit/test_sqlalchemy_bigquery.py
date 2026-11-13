@@ -7,11 +7,11 @@
 from unittest import mock
 
 import google.api_core.exceptions
+import pytest
+import sqlalchemy
 from google.cloud import bigquery
 from google.cloud.bigquery.dataset import DatasetListItem
 from google.cloud.bigquery.table import TableListItem
-import pytest
-import sqlalchemy
 
 from .conftest import setup_table
 

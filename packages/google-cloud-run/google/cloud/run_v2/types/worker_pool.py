@@ -56,10 +56,12 @@ class CreateWorkerPoolRequest(proto.Message):
         worker_pool (google.cloud.run_v2.types.WorkerPool):
             Required. The WorkerPool instance to create.
         worker_pool_id (str):
-            Required. The unique identifier for the WorkerPool. It must
+            Optional. The unique identifier for the WorkerPool. It must
             begin with letter, and cannot end with hyphen; must contain
             fewer than 50 characters. The name of the worker pool
-            becomes ``{parent}/workerPools/{worker_pool_id}``.
+            becomes ``{parent}/workerPools/{worker_pool_id}``. If not
+            provided, the server will generate a unique
+            ``worker_pool_id``.
         validate_only (bool):
             Optional. Indicates that the request should
             be validated and default values populated,

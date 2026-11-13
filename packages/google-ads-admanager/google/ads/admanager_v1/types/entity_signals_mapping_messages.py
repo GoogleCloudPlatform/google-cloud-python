@@ -39,20 +39,41 @@ class EntitySignalsMapping(proto.Message):
 
     Attributes:
         audience_segment_id (int):
-            ID of an AudienceSegment that this mapping
-            belongs to.
+            Deprecated: ID of an AudienceSegment that
+            this mapping belongs to.
 
             This field is a member of `oneof`_ ``entity``.
         content_bundle_id (int):
-            ID of a ContentBundle that this mapping
-            belongs to.
+            Deprecated: ID of a ContentBundle that this
+            mapping belongs to.
 
             This field is a member of `oneof`_ ``entity``.
         custom_targeting_value_id (int):
-            ID of a CustomValue that this mapping belongs
-            to.
+            Deprecated: ID of a CustomTargetingValue that
+            this mapping belongs to.
 
             This field is a member of `oneof`_ ``entity``.
+        audience_segment (str):
+            The resource name of an
+            [AudienceSegment][google.ads.admanager.v1.AudienceSegment]
+            that this mapping belongs to. Format:
+            ``networks/{network_code}/audienceSegments/{audience_segment_id}``
+
+            This field is a member of `oneof`_ ``entity_name``.
+        content_bundle (str):
+            The resource name of a
+            [ContentBundle][google.ads.admanager.v1.ContentBundle] that
+            this mapping belongs to. Format:
+            ``networks/{network_code}/contentBundles/{content_bundle_id}``
+
+            This field is a member of `oneof`_ ``entity_name``.
+        custom_targeting_value (str):
+            The resource name of a
+            [CustomTargetingValue][google.ads.admanager.v1.CustomTargetingValue]
+            that this mapping belongs to. Format:
+            ``networks/{network_code}/customTargetingValues/{custom_targeting_value_id}``
+
+            This field is a member of `oneof`_ ``entity_name``.
         name (str):
             Identifier. The resource name of the
             ``EntitySignalsMapping``. Format:
@@ -62,8 +83,14 @@ class EntitySignalsMapping(proto.Message):
 
             This field is a member of `oneof`_ ``_entity_signals_mapping_id``.
         taxonomy_category_ids (MutableSequence[int]):
-            Optional. The IDs of the categories that are
-            associated with the referencing entity.
+            Optional. Deprecated: The IDs of the
+            categories that are associated with the
+            referencing entity.
+        taxonomy_categories (MutableSequence[str]):
+            Optional. The resource names of the
+            [TaxonomyCategory][google.ads.admanager.v1.TaxonomyCategory]
+            that are associated with the referencing entity. Format:
+            ``networks/{network_code}/taxonomyCategories/{taxonomyCategoryId}``
     """
 
     audience_segment_id: int = proto.Field(
@@ -81,6 +108,21 @@ class EntitySignalsMapping(proto.Message):
         number=5,
         oneof="entity",
     )
+    audience_segment: str = proto.Field(
+        proto.STRING,
+        number=10,
+        oneof="entity_name",
+    )
+    content_bundle: str = proto.Field(
+        proto.STRING,
+        number=11,
+        oneof="entity_name",
+    )
+    custom_targeting_value: str = proto.Field(
+        proto.STRING,
+        number=12,
+        oneof="entity_name",
+    )
     name: str = proto.Field(
         proto.STRING,
         number=1,
@@ -93,6 +135,10 @@ class EntitySignalsMapping(proto.Message):
     taxonomy_category_ids: MutableSequence[int] = proto.RepeatedField(
         proto.INT64,
         number=6,
+    )
+    taxonomy_categories: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=13,
     )
 
 

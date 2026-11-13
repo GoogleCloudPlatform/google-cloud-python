@@ -125,11 +125,14 @@ class DeveloperKnowledgeGrpcAsyncIOTransport(DeveloperKnowledgeTransport):
 
     A typical use case is to first use
     [DeveloperKnowledge.SearchDocumentChunks][google.developers.knowledge.v1.DeveloperKnowledge.SearchDocumentChunks]
-    to find relevant page URIs based on a query, and then use
+    to find relevant document chunks based on a query, and then use
     [DeveloperKnowledge.GetDocument][google.developers.knowledge.v1.DeveloperKnowledge.GetDocument]
     or
     [DeveloperKnowledge.BatchGetDocuments][google.developers.knowledge.v1.DeveloperKnowledge.BatchGetDocuments]
-    to fetch the full content of the top results.
+    with document resource names (such as
+    [DocumentChunk.parent][google.developers.knowledge.v1.DocumentChunk.parent]
+    or ``documents/{uri_without_scheme}``) to fetch the full content of
+    the top results.
 
     All document content is provided in Markdown format.
 
@@ -482,7 +485,16 @@ class DeveloperKnowledgeGrpcAsyncIOTransport(DeveloperKnowledgeTransport):
         self._wrapped_methods = {
             self.search_document_chunks: self._wrap_method(
                 self.search_document_chunks,
-                default_timeout=None,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
                 client_info=client_info,
             ),
             self.get_document: self._wrap_method(

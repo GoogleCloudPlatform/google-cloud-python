@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ai.generativelanguage_v1beta2._compat import transcode_request
 from google.ai.generativelanguage_v1beta2.types import model, model_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -338,19 +339,16 @@ class ModelServiceRestTransport(_BaseModelServiceRestTransport):
             http_options = (
                 _BaseModelServiceRestTransport._BaseGetModel._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_model(request, metadata)
-            transcoded_request = (
-                _BaseModelServiceRestTransport._BaseGetModel._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseModelServiceRestTransport._BaseGetModel._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelServiceRestTransport._BaseGetModel,
+                    "_BaseGetModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -488,19 +486,16 @@ class ModelServiceRestTransport(_BaseModelServiceRestTransport):
             http_options = (
                 _BaseModelServiceRestTransport._BaseListModels._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_models(request, metadata)
-            transcoded_request = (
-                _BaseModelServiceRestTransport._BaseListModels._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseModelServiceRestTransport._BaseListModels._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelServiceRestTransport._BaseListModels,
+                    "_BaseListModels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

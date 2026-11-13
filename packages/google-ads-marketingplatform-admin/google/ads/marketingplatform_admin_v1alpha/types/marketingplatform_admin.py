@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.type.date_pb2 as date_pb2  # type: ignore
 import google.type.money_pb2 as money_pb2  # type: ignore
 import proto  # type: ignore
@@ -39,6 +40,23 @@ __protobuf__ = proto.module(
         "SetPropertyServiceLevelResponse",
         "ReportPropertyUsageRequest",
         "ReportPropertyUsageResponse",
+        "GetUserGroupRequest",
+        "ListUserGroupsRequest",
+        "ListUserGroupsResponse",
+        "CreateUserGroupRequest",
+        "UpdateUserGroupRequest",
+        "DeleteUserGroupRequest",
+        "GetUserGroupMemberRequest",
+        "ListUserGroupMembersRequest",
+        "ListUserGroupMembersResponse",
+        "CreateUserGroupMemberRequest",
+        "UpdateUserGroupMemberRequest",
+        "DeleteUserGroupMemberRequest",
+        "GetAdminAccessBindingRequest",
+        "ListAdminAccessBindingsRequest",
+        "ListAdminAccessBindingsResponse",
+        "CreateAdminAccessBindingRequest",
+        "UpdateAdminAccessBindingRequest",
     },
 )
 
@@ -477,6 +495,432 @@ class ReportPropertyUsageResponse(proto.Message):
         proto.MESSAGE,
         number=2,
         message=BillInfo,
+    )
+
+
+class GetUserGroupRequest(proto.Message):
+    r"""Request message for GetUserGroup RPC.
+
+    Attributes:
+        name (str):
+            Required. The name of the UserGroup to retrieve. Format:
+            organizations/{org_id}/userGroups/{user_group_id}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListUserGroupsRequest(proto.Message):
+    r"""Request message for ListUserGroups RPC.
+
+    Attributes:
+        parent (str):
+            Required. The parent org where this UserGroup will be
+            listed. Format: organizations/{org_id}
+        page_size (int):
+            Optional. The maximum number of user groups
+            to return in one call. The service may return
+            fewer than this value.
+
+            If unspecified, at most 50 user groups will be
+            returned. The maximum value is 1000; values
+            above 1000 will be coerced to 1000.
+        page_token (str):
+            Optional. A page token, received from a previous
+            ListUserGroups call. Provide this to retrieve the subsequent
+            page.
+
+            When paginating, all other parameters provided to
+            ``ListUserGroups`` must match the call that provided the
+            page token.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListUserGroupsResponse(proto.Message):
+    r"""Response message for ListUserGroups RPC.
+
+    Attributes:
+        user_groups (MutableSequence[google.ads.marketingplatform_admin_v1alpha.types.UserGroup]):
+            User groups in the organization.
+        next_page_token (str):
+            A token, which can be sent as ``page_token`` to retrieve the
+            next page. If this field is omitted, there are no subsequent
+            pages.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    user_groups: MutableSequence[resources.UserGroup] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=resources.UserGroup,
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class CreateUserGroupRequest(proto.Message):
+    r"""Request message for CreateUserGroup RPC.
+
+    Attributes:
+        parent (str):
+            Required. The parent resource where this UserGroup will be
+            created. Format: organizations/{org_id}
+        user_group (google.ads.marketingplatform_admin_v1alpha.types.UserGroup):
+            Required. The user group to create.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    user_group: resources.UserGroup = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=resources.UserGroup,
+    )
+
+
+class UpdateUserGroupRequest(proto.Message):
+    r"""Request message for UpdateUserGroup RPC.
+
+    Attributes:
+        user_group (google.ads.marketingplatform_admin_v1alpha.types.UserGroup):
+            Required. The user group to update.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Required. The list of fields to update. Field names must be
+            in snake case (for example, "field_to_update"). Omitted
+            fields will not be updated. To replace the entire entity,
+            use one path with the string "\*" to match all fields.
+    """
+
+    user_group: resources.UserGroup = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=resources.UserGroup,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
+class DeleteUserGroupRequest(proto.Message):
+    r"""Request message for DeleteUserGroup RPC.
+
+    Attributes:
+        name (str):
+            Required. The name of the user group to delete. Format:
+            organizations/{org_id}/userGroups/{user_group_id}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class GetUserGroupMemberRequest(proto.Message):
+    r"""Request message for GetUserGroupMember RPC.
+
+    Attributes:
+        name (str):
+            Required. The name of the user group member to retrieve.
+            Format:
+            organizations/{org_id}/userGroups/{user_group_id}/members/{member_id}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListUserGroupMembersRequest(proto.Message):
+    r"""Request message for ListUserGroupMembers RPC.
+
+    Attributes:
+        parent (str):
+            Required. The parent user group where this UserGroupMember
+            will be listed. Format:
+            organizations/{org_id}/userGroups/{user_group_id}
+        page_size (int):
+            Optional. The maximum number of user group
+            members to return in one call. The service may
+            return fewer than this value.
+
+            If unspecified, at most 50 user group members
+            will be returned. The maximum value is 1000;
+            values above 1000 will be coerced to 1000.
+        page_token (str):
+            Optional. A page token, received from a previous
+            ListUserGroupMembers call. Provide this to retrieve the
+            subsequent page.
+
+            When paginating, all other parameters provided to
+            ``ListUserGroupMembers`` must match the call that provided
+            the page token.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListUserGroupMembersResponse(proto.Message):
+    r"""Response message for ListUserGroupMembers RPC.
+
+    Attributes:
+        user_group_members (MutableSequence[google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember]):
+            User group members in the user group.
+        next_page_token (str):
+            A token, which can be sent as ``page_token`` to retrieve the
+            next page. If this field is omitted, there are no subsequent
+            pages.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    user_group_members: MutableSequence[resources.UserGroupMember] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=1,
+            message=resources.UserGroupMember,
+        )
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class CreateUserGroupMemberRequest(proto.Message):
+    r"""Request message for CreateUserGroupMember RPC.
+
+    Attributes:
+        parent (str):
+            Required. The parent resource where this UserGroupMember
+            will be created. Format:
+            organizations/{org_id}/userGroups/{user_group_id}
+        user_group_member (google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember):
+            Required. The user group member to create.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    user_group_member: resources.UserGroupMember = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=resources.UserGroupMember,
+    )
+
+
+class UpdateUserGroupMemberRequest(proto.Message):
+    r"""Request message for UpdateUserGroupMember RPC.
+
+    Attributes:
+        user_group_member (google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember):
+            Required. The user group member to update.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Required. The list of fields to update. Field names must be
+            in snake case (for example, "field_to_update"). Omitted
+            fields will not be updated. To replace the entire entity,
+            use one path with the string "\*" to match all fields.
+    """
+
+    user_group_member: resources.UserGroupMember = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=resources.UserGroupMember,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
+class DeleteUserGroupMemberRequest(proto.Message):
+    r"""Request message for DeleteUserGroupMember RPC.
+
+    Attributes:
+        name (str):
+            Required. The name of the user group member to delete.
+            Format:
+            organizations/{org_id}/userGroups/{user_group_id}/members/{member_id}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class GetAdminAccessBindingRequest(proto.Message):
+    r"""Response message for GetAdminAccessBinding RPC.
+
+    Attributes:
+        name (str):
+            Required. The name of the AdminAccessBinding to retrieve.
+            Format:
+            organizations/{org_id}/adminAccessBindings/{admin_access_binding_id}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListAdminAccessBindingsRequest(proto.Message):
+    r"""Request message for ListAdminAccessBindings RPC.
+
+    Attributes:
+        parent (str):
+            Required. The parent organization, which owns this
+            collection of Admin Access Bindings. Format:
+            organizations/{org_id}
+        page_size (int):
+            Optional. The maximum number of Admin Access
+            Bindings to return in one call. The service may
+            return fewer than this value.
+
+            If unspecified, at most 50 Admin Access Bindings
+            will be returned. The maximum value is 1000;
+            values above 1000 will be coerced to 1000.
+        page_token (str):
+            Optional. A page token, received from a previous
+            ListAdminAccessBindings call. Provide this to retrieve the
+            subsequent page.
+
+            When paginating, all other parameters provided to
+            ``ListAdminAccessBindings`` must match the call that
+            provided the page token.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListAdminAccessBindingsResponse(proto.Message):
+    r"""Response message for ListAdminAccessBindings RPC.
+
+    Attributes:
+        admin_access_bindings (MutableSequence[google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding]):
+            Admin Access Bindings in the organization.
+        next_page_token (str):
+            A token, which can be sent as ``page_token`` to retrieve the
+            next page. If this field is omitted, there are no subsequent
+            pages.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    admin_access_bindings: MutableSequence[resources.AdminAccessBinding] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=1,
+            message=resources.AdminAccessBinding,
+        )
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class CreateAdminAccessBindingRequest(proto.Message):
+    r"""Request message for CreateAdminAccessBinding RPC.
+
+    Attributes:
+        parent (str):
+            Required. The parent organization, which owns this Admin
+            Access Binding. Format: organizations/{org_id}
+        admin_access_binding (google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding):
+            Required. The Admin Access Binding to create.
+
+            Only 'user_email' input is allowed.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    admin_access_binding: resources.AdminAccessBinding = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=resources.AdminAccessBinding,
+    )
+
+
+class UpdateAdminAccessBindingRequest(proto.Message):
+    r"""Request message for UpdateAdminAccessBinding RPC.
+
+    Attributes:
+        admin_access_binding (google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding):
+            Required. The AdminAccessBinding to update.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Required. The list of fields to update. Field names must be
+            in snake case (for example, "field_to_update"). Omitted
+            fields will not be updated. To replace the entire entity,
+            use one path with the string "\*" to match all fields.
+    """
+
+    admin_access_binding: resources.AdminAccessBinding = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=resources.AdminAccessBinding,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
     )
 
 

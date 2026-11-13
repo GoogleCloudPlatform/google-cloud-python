@@ -32,6 +32,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.spanner_admin_instance_v1._compat import transcode_request
 from google.cloud.spanner_admin_instance_v1.types import spanner_instance_admin
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1590,19 +1591,16 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             http_options = (
                 _BaseInstanceAdminRestTransport._BaseCreateInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_instance(request, metadata)
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseCreateInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInstanceAdminRestTransport._BaseCreateInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseCreateInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseCreateInstance,
+                    "_BaseCreateInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1740,21 +1738,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseCreateInstanceConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_instance_config(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseCreateInstanceConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInstanceAdminRestTransport._BaseCreateInstanceConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseCreateInstanceConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseCreateInstanceConfig,
+                    "_BaseCreateInstanceConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1893,21 +1888,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseCreateInstancePartition._get_http_options()
-
             request, metadata = self._interceptor.pre_create_instance_partition(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseCreateInstancePartition._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInstanceAdminRestTransport._BaseCreateInstancePartition._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseCreateInstancePartition._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseCreateInstancePartition,
+                    "_BaseCreateInstancePartition__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2041,15 +2033,16 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             http_options = (
                 _BaseInstanceAdminRestTransport._BaseDeleteInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_instance(request, metadata)
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseDeleteInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseDeleteInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseDeleteInstance,
+                    "_BaseDeleteInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2146,17 +2139,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseDeleteInstanceConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_instance_config(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseDeleteInstanceConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseDeleteInstanceConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseDeleteInstanceConfig,
+                    "_BaseDeleteInstanceConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2254,17 +2248,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseDeleteInstancePartition._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_instance_partition(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseDeleteInstancePartition._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseDeleteInstancePartition._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseDeleteInstancePartition,
+                    "_BaseDeleteInstancePartition__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2444,19 +2439,16 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             http_options = (
                 _BaseInstanceAdminRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInstanceAdminRestTransport._BaseGetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2597,17 +2589,16 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             http_options = (
                 _BaseInstanceAdminRestTransport._BaseGetInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_instance(request, metadata)
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseGetInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseInstanceAdminRestTransport._BaseGetInstance._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseGetInstance,
+                    "_BaseGetInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2746,17 +2737,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseGetInstanceConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_instance_config(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseGetInstanceConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseGetInstanceConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseGetInstanceConfig,
+                    "_BaseGetInstanceConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2896,17 +2888,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseGetInstancePartition._get_http_options()
-
             request, metadata = self._interceptor.pre_get_instance_partition(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseGetInstancePartition._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseGetInstancePartition._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseGetInstancePartition,
+                    "_BaseGetInstancePartition__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3047,17 +3040,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseListInstanceConfigOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_instance_config_operations(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseListInstanceConfigOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseListInstanceConfigOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseListInstanceConfigOperations,
+                    "_BaseListInstanceConfigOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3202,17 +3196,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseListInstanceConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_instance_configs(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseListInstanceConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseListInstanceConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseListInstanceConfigs,
+                    "_BaseListInstanceConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3355,19 +3350,20 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseListInstancePartitionOperations._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_instance_partition_operations(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseListInstancePartitionOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseListInstancePartitionOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseListInstancePartitionOperations,
+                    "_BaseListInstancePartitionOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3511,17 +3507,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseListInstancePartitions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_instance_partitions(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseListInstancePartitions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseListInstancePartitions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseListInstancePartitions,
+                    "_BaseListInstancePartitions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3664,15 +3661,16 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             http_options = (
                 _BaseInstanceAdminRestTransport._BaseListInstances._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_instances(request, metadata)
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseListInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseListInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseListInstances,
+                    "_BaseListInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3815,19 +3813,16 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             http_options = (
                 _BaseInstanceAdminRestTransport._BaseMoveInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_move_instance(request, metadata)
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseMoveInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInstanceAdminRestTransport._BaseMoveInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseMoveInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseMoveInstance,
+                    "_BaseMoveInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4038,19 +4033,16 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             http_options = (
                 _BaseInstanceAdminRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInstanceAdminRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4186,21 +4178,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInstanceAdminRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4342,19 +4331,16 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             http_options = (
                 _BaseInstanceAdminRestTransport._BaseUpdateInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_instance(request, metadata)
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseUpdateInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInstanceAdminRestTransport._BaseUpdateInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseUpdateInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseUpdateInstance,
+                    "_BaseUpdateInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4492,21 +4478,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseUpdateInstanceConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_instance_config(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseUpdateInstanceConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInstanceAdminRestTransport._BaseUpdateInstanceConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseUpdateInstanceConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseUpdateInstanceConfig,
+                    "_BaseUpdateInstanceConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4645,21 +4628,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             """
 
             http_options = _BaseInstanceAdminRestTransport._BaseUpdateInstancePartition._get_http_options()
-
             request, metadata = self._interceptor.pre_update_instance_partition(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseUpdateInstancePartition._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseInstanceAdminRestTransport._BaseUpdateInstancePartition._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseUpdateInstancePartition._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseUpdateInstancePartition,
+                    "_BaseUpdateInstancePartition__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5022,17 +5002,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             http_options = (
                 _BaseInstanceAdminRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5136,17 +5117,18 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             http_options = (
                 _BaseInstanceAdminRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5253,15 +5235,16 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             http_options = (
                 _BaseInstanceAdminRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5393,15 +5376,16 @@ class InstanceAdminRestTransport(_BaseInstanceAdminRestTransport):
             http_options = (
                 _BaseInstanceAdminRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseInstanceAdminRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseInstanceAdminRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseInstanceAdminRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

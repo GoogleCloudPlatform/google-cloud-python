@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.accessapproval_v1._compat import transcode_request
 from google.cloud.accessapproval_v1.types import accessapproval
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -751,21 +752,18 @@ class AccessApprovalRestTransport(_BaseAccessApprovalRestTransport):
             """
 
             http_options = _BaseAccessApprovalRestTransport._BaseApproveApprovalRequest._get_http_options()
-
             request, metadata = self._interceptor.pre_approve_approval_request(
                 request, metadata
             )
-            transcoded_request = _BaseAccessApprovalRestTransport._BaseApproveApprovalRequest._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAccessApprovalRestTransport._BaseApproveApprovalRequest._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessApprovalRestTransport._BaseApproveApprovalRequest._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessApprovalRestTransport._BaseApproveApprovalRequest,
+                    "_BaseApproveApprovalRequest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -901,17 +899,18 @@ class AccessApprovalRestTransport(_BaseAccessApprovalRestTransport):
             """
 
             http_options = _BaseAccessApprovalRestTransport._BaseDeleteAccessApprovalSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_access_approval_settings(
                 request, metadata
             )
-            transcoded_request = _BaseAccessApprovalRestTransport._BaseDeleteAccessApprovalSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessApprovalRestTransport._BaseDeleteAccessApprovalSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessApprovalRestTransport._BaseDeleteAccessApprovalSettings,
+                    "_BaseDeleteAccessApprovalSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1018,21 +1017,18 @@ class AccessApprovalRestTransport(_BaseAccessApprovalRestTransport):
             """
 
             http_options = _BaseAccessApprovalRestTransport._BaseDismissApprovalRequest._get_http_options()
-
             request, metadata = self._interceptor.pre_dismiss_approval_request(
                 request, metadata
             )
-            transcoded_request = _BaseAccessApprovalRestTransport._BaseDismissApprovalRequest._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAccessApprovalRestTransport._BaseDismissApprovalRequest._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessApprovalRestTransport._BaseDismissApprovalRequest._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessApprovalRestTransport._BaseDismissApprovalRequest,
+                    "_BaseDismissApprovalRequest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1175,19 +1171,20 @@ class AccessApprovalRestTransport(_BaseAccessApprovalRestTransport):
             """
 
             http_options = _BaseAccessApprovalRestTransport._BaseGetAccessApprovalServiceAccount._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_get_access_approval_service_account(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseAccessApprovalRestTransport._BaseGetAccessApprovalServiceAccount._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessApprovalRestTransport._BaseGetAccessApprovalServiceAccount._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessApprovalRestTransport._BaseGetAccessApprovalServiceAccount,
+                    "_BaseGetAccessApprovalServiceAccount__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1331,17 +1328,18 @@ class AccessApprovalRestTransport(_BaseAccessApprovalRestTransport):
             """
 
             http_options = _BaseAccessApprovalRestTransport._BaseGetAccessApprovalSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_get_access_approval_settings(
                 request, metadata
             )
-            transcoded_request = _BaseAccessApprovalRestTransport._BaseGetAccessApprovalSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessApprovalRestTransport._BaseGetAccessApprovalSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessApprovalRestTransport._BaseGetAccessApprovalSettings,
+                    "_BaseGetAccessApprovalSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1481,17 +1479,18 @@ class AccessApprovalRestTransport(_BaseAccessApprovalRestTransport):
             """
 
             http_options = _BaseAccessApprovalRestTransport._BaseGetApprovalRequest._get_http_options()
-
             request, metadata = self._interceptor.pre_get_approval_request(
                 request, metadata
             )
-            transcoded_request = _BaseAccessApprovalRestTransport._BaseGetApprovalRequest._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessApprovalRestTransport._BaseGetApprovalRequest._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessApprovalRestTransport._BaseGetApprovalRequest,
+                    "_BaseGetApprovalRequest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1631,21 +1630,18 @@ class AccessApprovalRestTransport(_BaseAccessApprovalRestTransport):
             """
 
             http_options = _BaseAccessApprovalRestTransport._BaseInvalidateApprovalRequest._get_http_options()
-
             request, metadata = self._interceptor.pre_invalidate_approval_request(
                 request, metadata
             )
-            transcoded_request = _BaseAccessApprovalRestTransport._BaseInvalidateApprovalRequest._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAccessApprovalRestTransport._BaseInvalidateApprovalRequest._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessApprovalRestTransport._BaseInvalidateApprovalRequest._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessApprovalRestTransport._BaseInvalidateApprovalRequest,
+                    "_BaseInvalidateApprovalRequest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1785,17 +1781,18 @@ class AccessApprovalRestTransport(_BaseAccessApprovalRestTransport):
             """
 
             http_options = _BaseAccessApprovalRestTransport._BaseListApprovalRequests._get_http_options()
-
             request, metadata = self._interceptor.pre_list_approval_requests(
                 request, metadata
             )
-            transcoded_request = _BaseAccessApprovalRestTransport._BaseListApprovalRequests._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessApprovalRestTransport._BaseListApprovalRequests._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessApprovalRestTransport._BaseListApprovalRequests,
+                    "_BaseListApprovalRequests__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1938,21 +1935,18 @@ class AccessApprovalRestTransport(_BaseAccessApprovalRestTransport):
             """
 
             http_options = _BaseAccessApprovalRestTransport._BaseUpdateAccessApprovalSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_update_access_approval_settings(
                 request, metadata
             )
-            transcoded_request = _BaseAccessApprovalRestTransport._BaseUpdateAccessApprovalSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAccessApprovalRestTransport._BaseUpdateAccessApprovalSettings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessApprovalRestTransport._BaseUpdateAccessApprovalSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessApprovalRestTransport._BaseUpdateAccessApprovalSettings,
+                    "_BaseUpdateAccessApprovalSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -119,7 +119,7 @@ def _get_spanner_log_client_options_env():
     return os.getenv(LOG_CLIENT_OPTIONS_ENV_VAR, "false").lower() == "true"
 
 
-def _initialize_metrics(project, credentials):
+def _initialize_metrics(project, credentials, emulator_host=None):
     """Initializes the Spanner built-in metrics.
 
     This function sets up the OpenTelemetry MeterProvider and the SpannerMetricsTracerFactory.
@@ -130,7 +130,11 @@ def _initialize_metrics(project, credentials):
             if not _metrics_monitor_initialized:
                 meter_provider = metrics.NoOpMeterProvider()
                 try:
-                    if not _get_spanner_emulator_host():
+                    if (
+                        not _get_spanner_emulator_host()
+                        and (not emulator_host)
+                        and (not isinstance(credentials, AnonymousCredentials))
+                    ):
                         meter_provider = MeterProvider(
                             metric_readers=[
                                 PeriodicExportingMetricReader(
@@ -267,6 +271,8 @@ class Client(ClientWithProject):
         client_certificate=None,
         client_key=None,
         instance_type=None,
+        username=None,
+        password=None,
     ):
         self._emulator_host = _get_spanner_emulator_host()
         self._use_plain_text = use_plain_text
@@ -279,7 +285,6 @@ class Client(ClientWithProject):
             )
         else:
             self._client_options = client_options
-
         host_endpoint = None
         if experimental_host is not None:
             warnings.warn(
@@ -289,13 +294,11 @@ class Client(ClientWithProject):
             )
             instance_type = "omni"
             host_endpoint = experimental_host
-
         if instance_type is not None:
             instance_type = instance_type.lower()
             if instance_type not in ("cloud", "omni"):
                 raise ValueError("instance_type must be one of 'cloud' or 'omni'")
         self._instance_type = instance_type
-
         if self._emulator_host:
             credentials = AnonymousCredentials()
         elif self._instance_type == "omni":
@@ -305,21 +308,43 @@ class Client(ClientWithProject):
                         host_endpoint = self._client_options.api_endpoint
                     elif isinstance(self._client_options, dict):
                         host_endpoint = self._client_options.get("api_endpoint")
-
             if not host_endpoint:
                 raise ValueError(
                     "Host must be set for connecting to Spanner Omni instances"
                 )
-
             project = "default"
             self._use_plain_text = use_plain_text
             self._ca_certificate = ca_certificate
             self._client_certificate = client_certificate
             self._client_key = client_key
-            credentials = AnonymousCredentials()
+            self._host = host_endpoint
+            has_username = username is not None
+            has_password = password is not None
+            if has_username != has_password:
+                raise ValueError(
+                    "Both username and password must be specified for Omni authentication"
+                )
+            from google.cloud.spanner_v1.omni.credentials import SpannerOmniCredentials
+
+            if has_username and has_password:
+                credentials = SpannerOmniCredentials(
+                    username=username,
+                    password=password,
+                    target=host_endpoint,
+                    use_plain_text=use_plain_text,
+                    ca_certificate=ca_certificate,
+                    client_certificate=client_certificate,
+                    client_key=client_key,
+                )
+            elif not isinstance(credentials, SpannerOmniCredentials):
+                credentials = AnonymousCredentials()
             disable_builtin_metrics = True
         elif isinstance(credentials, AnonymousCredentials):
             self._emulator_host = self._client_options.api_endpoint
+        elif username is not None or password is not None:
+            raise ValueError(
+                "username and password can only be used when instance_type='omni'."
+            )
         super(Client, self).__init__(
             project=project,
             credentials=credentials,
@@ -342,7 +367,7 @@ class Client(ClientWithProject):
             and (not disable_builtin_metrics)
             and HAS_GOOGLE_CLOUD_MONITORING_INSTALLED
         ):
-            _initialize_metrics(project, credentials)
+            _initialize_metrics(project, credentials, self._emulator_host)
         else:
             SpannerMetricsTracerFactory(enabled=False)
         self._route_to_leader_enabled = route_to_leader_enabled
@@ -443,6 +468,7 @@ class Client(ClientWithProject):
                     self._ca_certificate,
                     self._client_certificate,
                     self._client_key,
+                    credentials=self.credentials,
                 )
                 self._instance_admin_api = InstanceAdminClient(
                     client_info=self._client_info,
@@ -481,6 +507,7 @@ class Client(ClientWithProject):
                     self._ca_certificate,
                     self._client_certificate,
                     self._client_key,
+                    credentials=self.credentials,
                 )
                 self._database_admin_api = DatabaseAdminClient(
                     client_info=self._client_info,
@@ -518,8 +545,7 @@ class Client(ClientWithProject):
         :rtype:
             :class:`~google.cloud.spanner_v1.DefaultTransactionOptions`
             or :class:`dict`
-        :returns: The default transaction options that are used by this client for all transactions.
-        """
+        :returns: The default transaction options that are used by this client for all transactions."""
         return self._default_transaction_options
 
     @property

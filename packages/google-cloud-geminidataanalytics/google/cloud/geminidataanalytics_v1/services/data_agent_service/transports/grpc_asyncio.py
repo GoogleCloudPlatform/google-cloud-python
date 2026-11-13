@@ -668,6 +668,71 @@ class DataAgentServiceGrpcAsyncIOTransport(DataAgentServiceTransport):
             )
         return self._stubs["set_iam_policy"]
 
+    @property
+    def set_agent_ops_observability(
+        self,
+    ) -> Callable[
+        [data_agent_service.SetAgentOpsObservabilityRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the set agent ops observability method over gRPC.
+
+        Enables/Disables required GCP services and configures
+        AgentOps observability settings.
+
+        Returns:
+            Callable[[~.SetAgentOpsObservabilityRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "set_agent_ops_observability" not in self._stubs:
+            self._stubs["set_agent_ops_observability"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.geminidataanalytics.v1.DataAgentService/SetAgentOpsObservability",
+                    request_serializer=data_agent_service.SetAgentOpsObservabilityRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["set_agent_ops_observability"]
+
+    @property
+    def retrieve_agent_ops_observability(
+        self,
+    ) -> Callable[
+        [data_agent_service.RetrieveAgentOpsObservabilityRequest],
+        Awaitable[data_agent_service.RetrieveAgentOpsObservabilityResponse],
+    ]:
+        r"""Return a callable for the retrieve agent ops
+        observability method over gRPC.
+
+        Gets AgentOps observability settings and status of
+        required services.
+
+        Returns:
+            Callable[[~.RetrieveAgentOpsObservabilityRequest],
+                    Awaitable[~.RetrieveAgentOpsObservabilityResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "retrieve_agent_ops_observability" not in self._stubs:
+            self._stubs["retrieve_agent_ops_observability"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.geminidataanalytics.v1.DataAgentService/RetrieveAgentOpsObservability",
+                    request_serializer=data_agent_service.RetrieveAgentOpsObservabilityRequest.serialize,
+                    response_deserializer=data_agent_service.RetrieveAgentOpsObservabilityResponse.deserialize,
+                )
+            )
+        return self._stubs["retrieve_agent_ops_observability"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -723,6 +788,16 @@ class DataAgentServiceGrpcAsyncIOTransport(DataAgentServiceTransport):
             ),
             self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.set_agent_ops_observability: self._wrap_method(
+                self.set_agent_ops_observability,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.retrieve_agent_ops_observability: self._wrap_method(
+                self.retrieve_agent_ops_observability,
                 default_timeout=None,
                 client_info=client_info,
             ),

@@ -4,6 +4,27 @@
 
 [1]: https://pypi.org/project/google-cloud-iam/#history
 
+## [2.27.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-iam-v2.26.0...google-cloud-iam-v2.27.0) (2026-11-05)
+
+
+### Features
+
+* update API sources and regenerate ([#18986](https://github.com/googleapis/google-cloud-python/issues/18986)) ([8c0f333](https://github.com/googleapis/google-cloud-python/commit/8c0f3331260667eb64c70db80a7ab5c52b8ccf36))
+
+## [2.26.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-iam-v2.25.0...google-cloud-iam-v2.26.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [2.25.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-iam-v2.24.1...google-cloud-iam-v2.25.0) (2026-08-21)
+
+
+### Features
+
+* update googleapis and regenerate ([#18087](https://github.com/googleapis/google-cloud-python/issues/18087)) ([db1622a](https://github.com/googleapis/google-cloud-python/commit/db1622a9cfac112b40c93842737d7a5deeb3e8bd))
+
 ## [2.24.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-iam-v2.24.0...google-cloud-iam-v2.24.1) (2026-08-06)
 
 

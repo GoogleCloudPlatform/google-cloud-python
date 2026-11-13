@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import proto  # type: ignore
 
 from google.ads.admanager_v1.types import network_messages
@@ -24,11 +25,39 @@ from google.ads.admanager_v1.types import network_messages
 __protobuf__ = proto.module(
     package="google.ads.admanager.v1",
     manifest={
+        "UpdateNetworkRequest",
         "GetNetworkRequest",
         "ListNetworksRequest",
         "ListNetworksResponse",
+        "ProvisionTestNetworkRequest",
+        "GetDefaultThirdPartyDataDeclarationRequest",
     },
 )
+
+
+class UpdateNetworkRequest(proto.Message):
+    r"""Request for the ``UpdateNetwork`` method.
+
+    Attributes:
+        network (google.ads.admanager_v1.types.Network):
+            Required. The ``Network`` to update.
+
+            The ``Network``'s ``name`` is used to identify the
+            ``Network`` to update.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. The list of fields to update.
+    """
+
+    network: network_messages.Network = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=network_messages.Network,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
 
 
 class GetNetworkRequest(proto.Message):
@@ -122,6 +151,26 @@ class ListNetworksResponse(proto.Message):
     total_size: int = proto.Field(
         proto.INT32,
         number=3,
+    )
+
+
+class ProvisionTestNetworkRequest(proto.Message):
+    r"""Request for the ``ProvisionTestNetwork`` method."""
+
+
+class GetDefaultThirdPartyDataDeclarationRequest(proto.Message):
+    r"""Request for the ``GetDefaultThirdPartyDataDeclaration`` method.
+
+    Attributes:
+        name (str):
+            Required. Resource name of DefaultThirdPartyDataDeclaration.
+            Format:
+            networks/{network_code}/defaultThirdPartyDataDeclaration
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
     )
 
 

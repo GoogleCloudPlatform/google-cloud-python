@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dataqna_v1alpha._compat import transcode_request
 from google.cloud.dataqna_v1alpha.types import question, question_service, user_feedback
 from google.cloud.dataqna_v1alpha.types import question as gcd_question
 from google.cloud.dataqna_v1alpha.types import user_feedback as gcd_user_feedback
@@ -532,19 +533,16 @@ class QuestionServiceRestTransport(_BaseQuestionServiceRestTransport):
             """
 
             http_options = _BaseQuestionServiceRestTransport._BaseCreateQuestion._get_http_options()
-
             request, metadata = self._interceptor.pre_create_question(request, metadata)
-            transcoded_request = _BaseQuestionServiceRestTransport._BaseCreateQuestion._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseQuestionServiceRestTransport._BaseCreateQuestion._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseQuestionServiceRestTransport._BaseCreateQuestion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseQuestionServiceRestTransport._BaseCreateQuestion,
+                    "_BaseCreateQuestion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -685,21 +683,18 @@ class QuestionServiceRestTransport(_BaseQuestionServiceRestTransport):
             """
 
             http_options = _BaseQuestionServiceRestTransport._BaseExecuteQuestion._get_http_options()
-
             request, metadata = self._interceptor.pre_execute_question(
                 request, metadata
             )
-            transcoded_request = _BaseQuestionServiceRestTransport._BaseExecuteQuestion._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseQuestionServiceRestTransport._BaseExecuteQuestion._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseQuestionServiceRestTransport._BaseExecuteQuestion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseQuestionServiceRestTransport._BaseExecuteQuestion,
+                    "_BaseExecuteQuestion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -842,15 +837,16 @@ class QuestionServiceRestTransport(_BaseQuestionServiceRestTransport):
             http_options = (
                 _BaseQuestionServiceRestTransport._BaseGetQuestion._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_question(request, metadata)
-            transcoded_request = _BaseQuestionServiceRestTransport._BaseGetQuestion._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseQuestionServiceRestTransport._BaseGetQuestion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseQuestionServiceRestTransport._BaseGetQuestion,
+                    "_BaseGetQuestion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -984,17 +980,18 @@ class QuestionServiceRestTransport(_BaseQuestionServiceRestTransport):
             """
 
             http_options = _BaseQuestionServiceRestTransport._BaseGetUserFeedback._get_http_options()
-
             request, metadata = self._interceptor.pre_get_user_feedback(
                 request, metadata
             )
-            transcoded_request = _BaseQuestionServiceRestTransport._BaseGetUserFeedback._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseQuestionServiceRestTransport._BaseGetUserFeedback._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseQuestionServiceRestTransport._BaseGetUserFeedback,
+                    "_BaseGetUserFeedback__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1130,21 +1127,18 @@ class QuestionServiceRestTransport(_BaseQuestionServiceRestTransport):
             """
 
             http_options = _BaseQuestionServiceRestTransport._BaseUpdateUserFeedback._get_http_options()
-
             request, metadata = self._interceptor.pre_update_user_feedback(
                 request, metadata
             )
-            transcoded_request = _BaseQuestionServiceRestTransport._BaseUpdateUserFeedback._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseQuestionServiceRestTransport._BaseUpdateUserFeedback._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseQuestionServiceRestTransport._BaseUpdateUserFeedback._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseQuestionServiceRestTransport._BaseUpdateUserFeedback,
+                    "_BaseUpdateUserFeedback__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

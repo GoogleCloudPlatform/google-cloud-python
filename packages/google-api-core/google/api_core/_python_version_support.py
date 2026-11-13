@@ -16,12 +16,10 @@
 
 import datetime
 import enum
-import functools
 import logging
 import sys
 import textwrap
 import warnings
-from importlib import metadata
 from typing import Any, Dict, List, NamedTuple, Optional, Tuple
 
 _LOGGER = logging.getLogger(__name__)
@@ -124,7 +122,7 @@ _FAKE_FUTURE_VERSION = VersionInfo(
     python_start=_FAKE_FUTURE_DATE,
     python_eol=_FAKE_FUTURE_DATE,
 )
-DEPRECATION_WARNING_PERIOD = datetime.timedelta(days=365)
+DEPRECATION_WARNING_PERIOD = datetime.timedelta(days=90)
 EOL_GRACE_PERIOD = datetime.timedelta(weeks=1)
 
 
@@ -133,25 +131,16 @@ def _flatten_message(text: str) -> str:
     return " ".join(textwrap.dedent(text).strip().split())
 
 
-@functools.cache
-def _cached_packages_distributions():
-    return metadata.packages_distributions()
-
-
 def _get_pypi_package_name(module_name):
     """Determine the PyPI package name for a given module name."""
-    try:
-        module_to_distributions = _cached_packages_distributions()
-
-        if module_name in module_to_distributions:  # pragma: NO COVER
-            return module_to_distributions[module_name][0]
-    except Exception as e:  # pragma: NO COVER
-        _LOGGER.info(
-            "An error occurred while determining PyPI package name for %s: %s",
-            module_name,
-            e,
-        )
-
+    # NOTE(b/578467297, b/578099898): This function is intentionally a no-op
+    # that returns None. Calling `importlib.metadata.packages_distributions()`
+    # scans every `.dist-info` directory in `site-packages`, causing severe CPU
+    # and import-latency overhead across short-lived subprocesses (such as
+    # Cloud Composer / Airflow DAG parsing and task startups). Furthermore,
+    # `packages_distributions()` keys by top-level package ("google") rather
+    # than dotted namespace modules ("google.cloud.foo_v1"), so the lookup
+    # always missed for Google Cloud packages anyway.
     return None
 
 

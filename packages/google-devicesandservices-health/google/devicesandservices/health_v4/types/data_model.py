@@ -752,8 +752,9 @@ class Altitude(proto.Message):
         interval (google.devicesandservices.health_v4.types.ObservationTimeInterval):
             Required. Observed interval.
         gain_millimeters (int):
-            Required. Altitude gain in millimeters over
-            the observed interval.
+            Required. Altitude gain in millimeters over the observed
+            interval. Must be in the range
+            ``[-1000000000, 1000000000]``.
 
             This field is a member of `oneof`_ ``_gain_millimeters``.
     """
@@ -810,7 +811,8 @@ class BodyFat(proto.Message):
             Required. The time at which body fat was
             measured.
         percentage (float):
-            Required. Body fat percentage, in range [0, 100].
+            Required. Body fat percentage. Must be in the range
+            ``[0, 100]``.
 
             This field is a member of `oneof`_ ``_percentage``.
     """
@@ -861,8 +863,8 @@ class CoreBodyTemperature(proto.Message):
             Required. The time at which core body
             temperature was measured.
         temperature_celsius (float):
-            Required. The core body temperature in
-            Celsius.
+            Required. The core body temperature in Celsius. Must be in
+            the range ``[0, 100]``.
 
             This field is a member of `oneof`_ ``_temperature_celsius``.
         measurement_location (google.devicesandservices.health_v4.types.CoreBodyTemperature.MeasurementLocation):
@@ -1218,20 +1220,20 @@ class DailyOxygenSaturation(proto.Message):
             Required. Date (in user's timezone) of the
             daily oxygen saturation record.
         average_percentage (float):
-            Required. The average value of the oxygen
-            saturation samples during the sleep.
+            Required. The average value of the oxygen saturation samples
+            during the sleep. Must be in the range ``[0, 100]``.
 
             This field is a member of `oneof`_ ``_average_percentage``.
         lower_bound_percentage (float):
-            Required. The lower bound of the confidence
-            interval of oxygen saturation samples during
-            sleep.
+            Required. The lower bound of the confidence interval of
+            oxygen saturation samples during sleep. Must be in the range
+            ``[0, 100]``.
 
             This field is a member of `oneof`_ ``_lower_bound_percentage``.
         upper_bound_percentage (float):
-            Required. The upper bound of the confidence
-            interval of oxygen saturation samples during
-            sleep.
+            Required. The upper bound of the confidence interval of
+            oxygen saturation samples during sleep. Must be in the range
+            ``[0, 100]``.
 
             This field is a member of `oneof`_ ``_upper_bound_percentage``.
         standard_deviation_percentage (float):
@@ -1406,8 +1408,9 @@ class DailyVO2Max(proto.Message):
             Required. The date for which the Daily VO2
             max was measured.
         vo2_max (float):
-            Required. Daily VO2 max value measured as in
-            ml consumed oxygen / kg of body weight / min.
+            Required. Daily VO2 max value measured as in ml consumed
+            oxygen / kg of body weight / min. Must be in the range
+            ``[0, 100]``.
 
             This field is a member of `oneof`_ ``_vo2_max``.
         estimated (bool):
@@ -1488,8 +1491,8 @@ class Distance(proto.Message):
         interval (google.devicesandservices.health_v4.types.ObservationTimeInterval):
             Required. Observed interval.
         millimeters (int):
-            Required. Distance in millimeters over the
-            observed interval.
+            Required. Distance in millimeters over the observed
+            interval. Must be in the range ``[0, 1000000000]``.
 
             This field is a member of `oneof`_ ``_millimeters``.
     """
@@ -2507,8 +2510,8 @@ class Floors(proto.Message):
         interval (google.devicesandservices.health_v4.types.ObservationTimeInterval):
             Required. Observed interval
         count (int):
-            Required. Number of floors in the recorded
-            interval
+            Required. Number of floors in the recorded interval. Must be
+            in the range ``[0, 1000000]``.
 
             This field is a member of `oneof`_ ``_count``.
     """
@@ -2572,8 +2575,8 @@ class HeartRate(proto.Message):
         sample_time (google.devicesandservices.health_v4.types.ObservationSampleTime):
             Required. Observation time
         beats_per_minute (int):
-            Required. The heart rate value in beats per
-            minute.
+            Required. The heart rate value in beats per minute. Must be
+            in the range ``[1, 300]``.
 
             This field is a member of `oneof`_ ``_beats_per_minute``.
         metadata (google.devicesandservices.health_v4.types.HeartRate.HeartRateMetadata):
@@ -2757,7 +2760,8 @@ class RunVO2Max(proto.Message):
             Required. The time at which the metric was
             measured.
         run_vo2_max (float):
-            Required. Run VO2 max value in ml/kg/min.
+            Required. Run VO2 max value in ml/kg/min. Must be in the
+            range ``[0, 100]``.
 
             This field is a member of `oneof`_ ``_run_vo2_max``.
     """
@@ -2816,7 +2820,8 @@ class Height(proto.Message):
             Required. The time at which the height was
             recorded.
         height_millimeters (int):
-            Required. Height of the user in millimeters.
+            Required. Height of the user in millimeters. Must be in the
+            range ``[0, 3000]``.
 
             This field is a member of `oneof`_ ``_height_millimeters``.
     """
@@ -2847,10 +2852,10 @@ class HeartRateVariability(proto.Message):
             Required. The time of the heart rate
             variability measurement.
         root_mean_square_of_successive_differences_milliseconds (float):
-            Optional. The root mean square of successive
-            differences between normal heartbeats. This is a
-            measure of heart rate variability used by Google
-            Health.
+            Optional. The root mean square of successive differences
+            between normal heartbeats. This is a measure of heart rate
+            variability used by Google Health. Must be in the range
+            ``[1, 200]``.
 
             This field is a member of `oneof`_ ``_root_mean_square_of_successive_differences_milliseconds``.
         standard_deviation_milliseconds (float):
@@ -2858,7 +2863,33 @@ class HeartRateVariability(proto.Message):
             rate variability measurement.
 
             This field is a member of `oneof`_ ``_standard_deviation_milliseconds``.
+        metadata (google.devicesandservices.health_v4.types.HeartRateVariability.HeartRateVariabilityMetadata):
+            Optional. Additional information about the
+            heart rate variability measurement.
     """
+
+    class HeartRateVariabilityMetadata(proto.Message):
+        r"""Metadata for HeartRateVariability.
+
+        Attributes:
+            high_frequency_power (float):
+                Optional. The power in interbeat interval
+                fluctuations within the high frequency band
+                (0.15 Hz - 0.4 Hz).
+            low_frequency_power (float):
+                Optional. The power in interbeat interval
+                fluctuations within the low frequency band (0.04
+                Hz - 0.15 Hz).
+        """
+
+        high_frequency_power: float = proto.Field(
+            proto.DOUBLE,
+            number=2,
+        )
+        low_frequency_power: float = proto.Field(
+            proto.DOUBLE,
+            number=3,
+        )
 
     sample_time: data_coordinates.ObservationSampleTime = proto.Field(
         proto.MESSAGE,
@@ -2875,6 +2906,11 @@ class HeartRateVariability(proto.Message):
         number=3,
         optional=True,
     )
+    metadata: HeartRateVariabilityMetadata = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=HeartRateVariabilityMetadata,
+    )
 
 
 class VolumeQuantity(proto.Message):
@@ -2884,8 +2920,8 @@ class VolumeQuantity(proto.Message):
 
     Attributes:
         milliliters (float):
-            Required. Value representing the volume in
-            milliliters.
+            Required. Value representing the volume in milliliters. Must
+            be in the range ``[0, 100000]``.
 
             This field is a member of `oneof`_ ``_milliliters``.
         user_provided_unit (google.devicesandservices.health_v4.types.VolumeUnit):
@@ -3374,7 +3410,8 @@ class WeightQuantity(proto.Message):
 
     Attributes:
         grams (float):
-            Required. The weight value in grams.
+            Required. The weight value in grams. Must be in the range
+            ``[0, 100000]``.
 
             This field is a member of `oneof`_ ``_grams``.
         user_provided_unit (google.devicesandservices.health_v4.types.WeightUnit):
@@ -3401,7 +3438,8 @@ class EnergyQuantity(proto.Message):
 
     Attributes:
         kcal (float):
-            Required. The energy value in kilocalories.
+            Required. The energy value in kilocalories. Must be in the
+            range ``[0, 100000]``.
 
             This field is a member of `oneof`_ ``_kcal``.
         user_provided_unit (google.devicesandservices.health_v4.types.EnergyUnit):
@@ -3886,8 +3924,8 @@ class OxygenSaturation(proto.Message):
             Required. The time at which oxygen saturation
             was measured.
         percentage (float):
-            Required. The oxygen saturation percentage.
-            Valid values are from 0 to 100.
+            Required. The oxygen saturation percentage. Must be in the
+            range ``[0, 100]``.
 
             This field is a member of `oneof`_ ``_percentage``.
     """
@@ -4499,8 +4537,8 @@ class Steps(proto.Message):
         interval (google.devicesandservices.health_v4.types.ObservationTimeInterval):
             Required. Observed interval.
         count (int):
-            Required. Number of steps in the recorded
-            interval.
+            Required. Number of steps in the recorded interval. Must be
+            in the range ``[0, 1000000]``.
 
             This field is a member of `oneof`_ ``_count``.
     """
@@ -4716,8 +4754,8 @@ class VO2Max(proto.Message):
             Required. The time at which VO2 max was
             measured.
         vo2_max (float):
-            Required. VO2 max value measured as in ml
-            consumed oxygen / kg of body weight / min.
+            Required. VO2 max value measured as in ml consumed oxygen /
+            kg of body weight / min. Must be in the range ``[0, 100]``.
 
             This field is a member of `oneof`_ ``_vo2_max``.
         measurement_method (google.devicesandservices.health_v4.types.VO2Max.MeasurementMethod):
@@ -4808,7 +4846,8 @@ class Weight(proto.Message):
             Required. The time at which the weight was
             measured
         weight_grams (float):
-            Required. Weight of a user in grams.
+            Required. Weight of a user in grams. Must be in the range
+            ``[0, 1000000]``.
 
             This field is a member of `oneof`_ ``_weight_grams``.
         notes (str):
@@ -4861,8 +4900,8 @@ class BloodGlucose(proto.Message):
             Required. The time at which blood glucose was
             measured.
         blood_glucose_milligrams_per_deciliter (float):
-            Required. Blood glucose level concentration
-            in mg/dL.
+            Required. Blood glucose level concentration in mg/dL. Must
+            be in the range ``[0, 900]``.
 
             This field is a member of `oneof`_ ``_blood_glucose_milligrams_per_deciliter``.
         measurement_source (google.devicesandservices.health_v4.types.BloodGlucose.MeasurementSource):
@@ -5082,8 +5121,8 @@ class ActiveEnergyBurned(proto.Message):
         interval (google.devicesandservices.health_v4.types.ObservationTimeInterval):
             Required. Observed interval
         kcal (float):
-            Required. Energy burned during an activity,
-            measured in kilocalories.
+            Required. Energy burned during an activity, measured in
+            kilocalories. Must be in the range ``[0, 1000000]``.
 
             This field is a member of `oneof`_ ``_kcal``.
     """
@@ -5523,6 +5562,30 @@ class Moods(proto.Message):
                 Loving.
             COMPASSIONATE (56):
                 Compassionate.
+            DEPRESSED (57):
+                Depressed.
+            GOOD (58):
+                Good.
+            LOW_ENERGY (59):
+                Low energy.
+            OBSESSIVE_THOUGHTS (60):
+                Obsessive thoughts.
+            PANIC (61):
+                Panic.
+            PLAYFUL (62):
+                Playful.
+            PLEASED (63):
+                Pleased.
+            SENSITIVE (64):
+                Sensitive.
+            SLEEPY (65):
+                Sleepy.
+            SWINGS (66):
+                Mood swings.
+            UNHAPPY (67):
+                Unhappy.
+            VERY_SELF_CRITICAL (68):
+                Very self-critical.
         """
 
         MOOD_UNSPECIFIED = 0
@@ -5582,6 +5645,18 @@ class Moods(proto.Message):
         ACCOMPLISHED = 54
         LOVING = 55
         COMPASSIONATE = 56
+        DEPRESSED = 57
+        GOOD = 58
+        LOW_ENERGY = 59
+        OBSESSIVE_THOUGHTS = 60
+        PANIC = 61
+        PLAYFUL = 62
+        PLEASED = 63
+        SENSITIVE = 64
+        SLEEPY = 65
+        SWINGS = 66
+        UNHAPPY = 67
+        VERY_SELF_CRITICAL = 68
 
     class Valence(proto.Enum):
         r"""The valence.

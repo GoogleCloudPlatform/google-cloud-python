@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.osconfig_v1._compat import transcode_request
 from google.cloud.osconfig_v1.types import patch_deployments, patch_jobs
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -898,21 +899,18 @@ class OsConfigServiceRestTransport(_BaseOsConfigServiceRestTransport):
             """
 
             http_options = _BaseOsConfigServiceRestTransport._BaseCancelPatchJob._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_patch_job(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigServiceRestTransport._BaseCancelPatchJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOsConfigServiceRestTransport._BaseCancelPatchJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigServiceRestTransport._BaseCancelPatchJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigServiceRestTransport._BaseCancelPatchJob,
+                    "_BaseCancelPatchJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1056,21 +1054,18 @@ class OsConfigServiceRestTransport(_BaseOsConfigServiceRestTransport):
             """
 
             http_options = _BaseOsConfigServiceRestTransport._BaseCreatePatchDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_create_patch_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigServiceRestTransport._BaseCreatePatchDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOsConfigServiceRestTransport._BaseCreatePatchDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigServiceRestTransport._BaseCreatePatchDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigServiceRestTransport._BaseCreatePatchDeployment,
+                    "_BaseCreatePatchDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1207,17 +1202,18 @@ class OsConfigServiceRestTransport(_BaseOsConfigServiceRestTransport):
             """
 
             http_options = _BaseOsConfigServiceRestTransport._BaseDeletePatchDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_patch_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigServiceRestTransport._BaseDeletePatchDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigServiceRestTransport._BaseDeletePatchDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigServiceRestTransport._BaseDeletePatchDeployment,
+                    "_BaseDeletePatchDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1332,21 +1328,18 @@ class OsConfigServiceRestTransport(_BaseOsConfigServiceRestTransport):
             """
 
             http_options = _BaseOsConfigServiceRestTransport._BaseExecutePatchJob._get_http_options()
-
             request, metadata = self._interceptor.pre_execute_patch_job(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigServiceRestTransport._BaseExecutePatchJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOsConfigServiceRestTransport._BaseExecutePatchJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigServiceRestTransport._BaseExecutePatchJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigServiceRestTransport._BaseExecutePatchJob,
+                    "_BaseExecutePatchJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1489,17 +1482,18 @@ class OsConfigServiceRestTransport(_BaseOsConfigServiceRestTransport):
             """
 
             http_options = _BaseOsConfigServiceRestTransport._BaseGetPatchDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_get_patch_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigServiceRestTransport._BaseGetPatchDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigServiceRestTransport._BaseGetPatchDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigServiceRestTransport._BaseGetPatchDeployment,
+                    "_BaseGetPatchDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1648,15 +1642,16 @@ class OsConfigServiceRestTransport(_BaseOsConfigServiceRestTransport):
             http_options = (
                 _BaseOsConfigServiceRestTransport._BaseGetPatchJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_patch_job(request, metadata)
-            transcoded_request = _BaseOsConfigServiceRestTransport._BaseGetPatchJob._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigServiceRestTransport._BaseGetPatchJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigServiceRestTransport._BaseGetPatchJob,
+                    "_BaseGetPatchJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1794,17 +1789,18 @@ class OsConfigServiceRestTransport(_BaseOsConfigServiceRestTransport):
             """
 
             http_options = _BaseOsConfigServiceRestTransport._BaseListPatchDeployments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_patch_deployments(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigServiceRestTransport._BaseListPatchDeployments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigServiceRestTransport._BaseListPatchDeployments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigServiceRestTransport._BaseListPatchDeployments,
+                    "_BaseListPatchDeployments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1945,17 +1941,18 @@ class OsConfigServiceRestTransport(_BaseOsConfigServiceRestTransport):
             """
 
             http_options = _BaseOsConfigServiceRestTransport._BaseListPatchJobInstanceDetails._get_http_options()
-
             request, metadata = self._interceptor.pre_list_patch_job_instance_details(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigServiceRestTransport._BaseListPatchJobInstanceDetails._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigServiceRestTransport._BaseListPatchJobInstanceDetails._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigServiceRestTransport._BaseListPatchJobInstanceDetails,
+                    "_BaseListPatchJobInstanceDetails__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2100,15 +2097,16 @@ class OsConfigServiceRestTransport(_BaseOsConfigServiceRestTransport):
             http_options = (
                 _BaseOsConfigServiceRestTransport._BaseListPatchJobs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_patch_jobs(request, metadata)
-            transcoded_request = _BaseOsConfigServiceRestTransport._BaseListPatchJobs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigServiceRestTransport._BaseListPatchJobs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigServiceRestTransport._BaseListPatchJobs,
+                    "_BaseListPatchJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2253,21 +2251,18 @@ class OsConfigServiceRestTransport(_BaseOsConfigServiceRestTransport):
             """
 
             http_options = _BaseOsConfigServiceRestTransport._BasePausePatchDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_pause_patch_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigServiceRestTransport._BasePausePatchDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOsConfigServiceRestTransport._BasePausePatchDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigServiceRestTransport._BasePausePatchDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigServiceRestTransport._BasePausePatchDeployment,
+                    "_BasePausePatchDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2413,21 +2408,18 @@ class OsConfigServiceRestTransport(_BaseOsConfigServiceRestTransport):
             """
 
             http_options = _BaseOsConfigServiceRestTransport._BaseResumePatchDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_resume_patch_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigServiceRestTransport._BaseResumePatchDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOsConfigServiceRestTransport._BaseResumePatchDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigServiceRestTransport._BaseResumePatchDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigServiceRestTransport._BaseResumePatchDeployment,
+                    "_BaseResumePatchDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2575,21 +2567,18 @@ class OsConfigServiceRestTransport(_BaseOsConfigServiceRestTransport):
             """
 
             http_options = _BaseOsConfigServiceRestTransport._BaseUpdatePatchDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_update_patch_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseOsConfigServiceRestTransport._BaseUpdatePatchDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOsConfigServiceRestTransport._BaseUpdatePatchDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOsConfigServiceRestTransport._BaseUpdatePatchDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOsConfigServiceRestTransport._BaseUpdatePatchDeployment,
+                    "_BaseUpdatePatchDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

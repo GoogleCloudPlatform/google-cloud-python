@@ -115,7 +115,7 @@ class ListEntitySignalsMappingsRequest(proto.Message):
 
 
 class CreateEntitySignalsMappingRequest(proto.Message):
-    r"""Request object for 'CreateEntitySignalsMapping' method.
+    r"""Request object for ``CreateEntitySignalsMapping`` method.
 
     Attributes:
         parent (str):
@@ -141,7 +141,7 @@ class CreateEntitySignalsMappingRequest(proto.Message):
 
 
 class UpdateEntitySignalsMappingRequest(proto.Message):
-    r"""Request object for 'UpdateEntitySignalsMapping' method.
+    r"""Request object for ``UpdateEntitySignalsMapping`` method.
 
     Attributes:
         entity_signals_mapping (google.ads.admanager_v1.types.EntitySignalsMapping):

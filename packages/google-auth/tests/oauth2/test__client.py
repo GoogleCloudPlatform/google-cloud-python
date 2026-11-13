@@ -16,19 +16,13 @@ import datetime
 import http.client as http_client
 import json
 import os
-from unittest import mock
 import urllib
+from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import _helpers
-from google.auth import crypt
-from google.auth import exceptions
-from google.auth import iam
-from google.auth import jwt
-from google.auth import transport
+from google.auth import _helpers, crypt, exceptions, iam, jwt, transport
 from google.oauth2 import _client
-
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 

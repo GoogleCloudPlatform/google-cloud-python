@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dialogflowcx_v3._compat import transcode_request
 from google.cloud.dialogflowcx_v3.types import test_case
 from google.cloud.dialogflowcx_v3.types import test_case as gcdc_test_case
 
@@ -1044,21 +1045,18 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             """
 
             http_options = _BaseTestCasesRestTransport._BaseBatchDeleteTestCases._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_delete_test_cases(
                 request, metadata
             )
-            transcoded_request = _BaseTestCasesRestTransport._BaseBatchDeleteTestCases._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTestCasesRestTransport._BaseBatchDeleteTestCases._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTestCasesRestTransport._BaseBatchDeleteTestCases._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseBatchDeleteTestCases,
+                    "_BaseBatchDeleteTestCases__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1166,21 +1164,18 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseBatchRunTestCases._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_batch_run_test_cases(
                 request, metadata
             )
-            transcoded_request = _BaseTestCasesRestTransport._BaseBatchRunTestCases._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTestCasesRestTransport._BaseBatchRunTestCases._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTestCasesRestTransport._BaseBatchRunTestCases._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseBatchRunTestCases,
+                    "_BaseBatchRunTestCases__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1318,17 +1313,18 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseCalculateCoverage._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_calculate_coverage(
                 request, metadata
             )
-            transcoded_request = _BaseTestCasesRestTransport._BaseCalculateCoverage._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTestCasesRestTransport._BaseCalculateCoverage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseCalculateCoverage,
+                    "_BaseCalculateCoverage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1468,27 +1464,18 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseCreateTestCase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_test_case(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTestCasesRestTransport._BaseCreateTestCase._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseTestCasesRestTransport._BaseCreateTestCase._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTestCasesRestTransport._BaseCreateTestCase._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseCreateTestCase,
+                    "_BaseCreateTestCase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1630,25 +1617,18 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseExportTestCases._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_export_test_cases(
                 request, metadata
             )
-            transcoded_request = _BaseTestCasesRestTransport._BaseExportTestCases._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseTestCasesRestTransport._BaseExportTestCases._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTestCasesRestTransport._BaseExportTestCases._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseExportTestCases,
+                    "_BaseExportTestCases__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1782,19 +1762,16 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseGetTestCase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_test_case(request, metadata)
-            transcoded_request = (
-                _BaseTestCasesRestTransport._BaseGetTestCase._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTestCasesRestTransport._BaseGetTestCase._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseGetTestCase,
+                    "_BaseGetTestCase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1933,17 +1910,18 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseGetTestCaseResult._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_test_case_result(
                 request, metadata
             )
-            transcoded_request = _BaseTestCasesRestTransport._BaseGetTestCaseResult._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTestCasesRestTransport._BaseGetTestCaseResult._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseGetTestCaseResult,
+                    "_BaseGetTestCaseResult__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2084,25 +2062,18 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseImportTestCases._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_import_test_cases(
                 request, metadata
             )
-            transcoded_request = _BaseTestCasesRestTransport._BaseImportTestCases._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseTestCasesRestTransport._BaseImportTestCases._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTestCasesRestTransport._BaseImportTestCases._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseImportTestCases,
+                    "_BaseImportTestCases__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2240,17 +2211,18 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseListTestCaseResults._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_test_case_results(
                 request, metadata
             )
-            transcoded_request = _BaseTestCasesRestTransport._BaseListTestCaseResults._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTestCasesRestTransport._BaseListTestCaseResults._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseListTestCaseResults,
+                    "_BaseListTestCaseResults__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2391,19 +2363,16 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseListTestCases._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_test_cases(request, metadata)
-            transcoded_request = (
-                _BaseTestCasesRestTransport._BaseListTestCases._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTestCasesRestTransport._BaseListTestCases._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseListTestCases,
+                    "_BaseListTestCases__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2542,23 +2511,16 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseRunTestCase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_run_test_case(request, metadata)
-            transcoded_request = (
-                _BaseTestCasesRestTransport._BaseRunTestCase._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseTestCasesRestTransport._BaseRunTestCase._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTestCasesRestTransport._BaseRunTestCase._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseRunTestCase,
+                    "_BaseRunTestCase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2695,27 +2657,18 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseUpdateTestCase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_test_case(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTestCasesRestTransport._BaseUpdateTestCase._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseTestCasesRestTransport._BaseUpdateTestCase._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTestCasesRestTransport._BaseUpdateTestCase._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseUpdateTestCase,
+                    "_BaseUpdateTestCase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2953,19 +2906,16 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseTestCasesRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTestCasesRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3097,19 +3047,16 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseTestCasesRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTestCasesRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3238,19 +3185,18 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseTestCasesRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTestCasesRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3357,19 +3303,16 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseTestCasesRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTestCasesRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3501,19 +3444,16 @@ class TestCasesRestTransport(_BaseTestCasesRestTransport):
             http_options = (
                 _BaseTestCasesRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseTestCasesRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTestCasesRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTestCasesRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

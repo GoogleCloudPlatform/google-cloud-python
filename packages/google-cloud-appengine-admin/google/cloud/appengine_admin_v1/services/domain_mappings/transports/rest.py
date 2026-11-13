@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.appengine_admin_v1._compat import transcode_request
 from google.cloud.appengine_admin_v1.types import appengine, domain_mapping
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -556,21 +557,18 @@ class DomainMappingsRestTransport(_BaseDomainMappingsRestTransport):
             """
 
             http_options = _BaseDomainMappingsRestTransport._BaseCreateDomainMapping._get_http_options()
-
             request, metadata = self._interceptor.pre_create_domain_mapping(
                 request, metadata
             )
-            transcoded_request = _BaseDomainMappingsRestTransport._BaseCreateDomainMapping._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDomainMappingsRestTransport._BaseCreateDomainMapping._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDomainMappingsRestTransport._BaseCreateDomainMapping._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDomainMappingsRestTransport._BaseCreateDomainMapping,
+                    "_BaseCreateDomainMapping__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -708,17 +706,18 @@ class DomainMappingsRestTransport(_BaseDomainMappingsRestTransport):
             """
 
             http_options = _BaseDomainMappingsRestTransport._BaseDeleteDomainMapping._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_domain_mapping(
                 request, metadata
             )
-            transcoded_request = _BaseDomainMappingsRestTransport._BaseDeleteDomainMapping._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDomainMappingsRestTransport._BaseDeleteDomainMapping._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDomainMappingsRestTransport._BaseDeleteDomainMapping,
+                    "_BaseDeleteDomainMapping__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -852,17 +851,18 @@ class DomainMappingsRestTransport(_BaseDomainMappingsRestTransport):
             """
 
             http_options = _BaseDomainMappingsRestTransport._BaseGetDomainMapping._get_http_options()
-
             request, metadata = self._interceptor.pre_get_domain_mapping(
                 request, metadata
             )
-            transcoded_request = _BaseDomainMappingsRestTransport._BaseGetDomainMapping._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDomainMappingsRestTransport._BaseGetDomainMapping._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDomainMappingsRestTransport._BaseGetDomainMapping,
+                    "_BaseGetDomainMapping__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -999,17 +999,18 @@ class DomainMappingsRestTransport(_BaseDomainMappingsRestTransport):
             """
 
             http_options = _BaseDomainMappingsRestTransport._BaseListDomainMappings._get_http_options()
-
             request, metadata = self._interceptor.pre_list_domain_mappings(
                 request, metadata
             )
-            transcoded_request = _BaseDomainMappingsRestTransport._BaseListDomainMappings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDomainMappingsRestTransport._BaseListDomainMappings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDomainMappingsRestTransport._BaseListDomainMappings,
+                    "_BaseListDomainMappings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1151,21 +1152,18 @@ class DomainMappingsRestTransport(_BaseDomainMappingsRestTransport):
             """
 
             http_options = _BaseDomainMappingsRestTransport._BaseUpdateDomainMapping._get_http_options()
-
             request, metadata = self._interceptor.pre_update_domain_mapping(
                 request, metadata
             )
-            transcoded_request = _BaseDomainMappingsRestTransport._BaseUpdateDomainMapping._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDomainMappingsRestTransport._BaseUpdateDomainMapping._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDomainMappingsRestTransport._BaseUpdateDomainMapping._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDomainMappingsRestTransport._BaseUpdateDomainMapping,
+                    "_BaseUpdateDomainMapping__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

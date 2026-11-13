@@ -25,9 +25,7 @@ from unittest import mock
 import pytest
 import sqlalchemy
 from google.api_core.datetime_helpers import DatetimeWithNanoseconds
-from google.cloud import spanner_dbapi
 from google.cloud.spanner_v1 import Client, RequestOptions
-from google.cloud.sqlalchemy_spanner import version as sqlalchemy_spanner_version
 from sqlalchemy import (
     FLOAT,
     Boolean,
@@ -206,6 +204,8 @@ from sqlalchemy.testing.suite.test_update_delete import (
 )
 from sqlalchemy.types import Integer, Numeric, Text
 
+from google.cloud import spanner_dbapi
+from google.cloud.sqlalchemy_spanner import version as sqlalchemy_spanner_version
 from tests._helpers import get_db_url, get_project
 
 config.test_schema = ""
@@ -1576,7 +1576,7 @@ class NumericTest(_NumericTest):
         return run
 
     @emits_warning(r".*does \*not\* support Decimal objects natively")
-    def test_render_literal_numeric(self, literal_round_trip):
+    def test_render_literal_numeric(self, literal_round_trip_spanner):
         """
         SPANNER OVERRIDE:
 
@@ -1585,14 +1585,14 @@ class NumericTest(_NumericTest):
         following insertions will fail with `Row [] already exists".
         Overriding the test to avoid the same failure.
         """
-        literal_round_trip(
+        literal_round_trip_spanner(
             Numeric(precision=8, scale=4),
             [decimal.Decimal("15.7563")],
             [decimal.Decimal("15.7563")],
         )
 
     @emits_warning(r".*does \*not\* support Decimal objects natively")
-    def test_render_literal_numeric_asfloat(self, literal_round_trip):
+    def test_render_literal_numeric_asfloat(self, literal_round_trip_spanner):
         """
         SPANNER OVERRIDE:
 
@@ -1601,13 +1601,13 @@ class NumericTest(_NumericTest):
         following insertions will fail with `Row [] already exists".
         Overriding the test to avoid the same failure.
         """
-        literal_round_trip(
+        literal_round_trip_spanner(
             Numeric(precision=8, scale=4, asdecimal=False),
             [decimal.Decimal("15.7563")],
             [15.7563],
         )
 
-    def test_render_literal_float(self, literal_round_trip):
+    def test_render_literal_float(self, literal_round_trip_spanner):
         """
         SPANNER OVERRIDE:
 
@@ -1616,7 +1616,7 @@ class NumericTest(_NumericTest):
         following insertions will fail with `Row [] already exists".
         Overriding the test to avoid the same failure.
         """
-        literal_round_trip(
+        literal_round_trip_spanner(
             Float(4),
             [decimal.Decimal("15.7563")],
             [15.7563],

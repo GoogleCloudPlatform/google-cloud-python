@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.struct_pb2 as struct_pb2  # type: ignore
 import google.type.date_pb2 as date_pb2  # type: ignore
 import google.type.latlng_pb2 as latlng_pb2  # type: ignore
 import google.type.money_pb2 as money_pb2  # type: ignore
@@ -25,6 +26,7 @@ import proto  # type: ignore
 __protobuf__ = proto.module(
     package="google.maps.solar.v1",
     manifest={
+        "AdditionalInsights",
         "DataLayerView",
         "ImageryQuality",
         "SolarPanelOrientation",
@@ -49,6 +51,28 @@ __protobuf__ = proto.module(
         "GetGeoTiffRequest",
     },
 )
+
+
+class AdditionalInsights(proto.Enum):
+    r"""Additional building information such as roof geometry and
+    solar panel arrays that can be returned in BuildingInsights.
+
+    New values may be added to this enum in the future.
+
+    Values:
+        ADDITIONAL_INSIGHTS_UNSPECIFIED (0):
+            The default value. The default
+            BuildingInsights will be returned.
+        DETECTED_ARRAYS (2):
+            Determines whether the response will include the detected
+            arrays.
+
+            If specified, the ``detected_arrays`` field will be
+            populated in the response.
+    """
+
+    ADDITIONAL_INSIGHTS_UNSPECIFIED = 0
+    DETECTED_ARRAYS = 2
 
 
 class DataLayerView(proto.Enum):
@@ -182,8 +206,17 @@ class FindClosestBuildingInsightsRequest(proto.Message):
             ``MEDIUM`` quality imagery is returned if
             ``required_quality`` is set to ``MEDIUM``.
         experiments (MutableSequence[google.maps.solar_v1.types.Experiment]):
-            Optional. Specifies the pre-GA features to
-            enable.
+            Optional. Specifies the pre-GA experiments to enable.
+            Requests using this field are classified as a pre-GA
+            offering under the `Google Maps Platform Service Specific
+            Terms <https://cloud.google.com/maps-platform/terms/maps-service-terms>`__.
+            See `launch stage
+            descriptions <https://cloud.google.com/maps-platform/terms/launch-stages>`__
+            for more details.
+        additional_insights (MutableSequence[google.maps.solar_v1.types.AdditionalInsights]):
+            Optional. A list of
+            [additional_insights][google.maps.solar.v1.FindClosestBuildingInsightsRequest.additional_insights]
+            to be included in the response.
     """
 
     location: latlng_pb2.LatLng = proto.Field(
@@ -204,6 +237,11 @@ class FindClosestBuildingInsightsRequest(proto.Message):
         proto.ENUM,
         number=5,
         enum="Experiment",
+    )
+    additional_insights: MutableSequence["AdditionalInsights"] = proto.RepeatedField(
+        proto.ENUM,
+        number=6,
+        enum="AdditionalInsights",
     )
 
 
@@ -267,7 +305,94 @@ class BuildingInsights(proto.Message):
         imagery_quality (google.maps.solar_v1.types.ImageryQuality):
             The quality of the imagery used to compute
             the data for this building.
+        detected_arrays (google.maps.solar_v1.types.BuildingInsights.DetectedArrays):
+            Solar arrays detected on the building. This field is only
+            populated if DETECTED_ARRAYS is included in the request's
+            [FindClosestBuildingInsightsRequest.additional_insights][google.maps.solar.v1.FindClosestBuildingInsightsRequest.additional_insights].
     """
+
+    class DetectedArrays(proto.Message):
+        r"""Information about solar arrays detected on the building.
+
+        Attributes:
+            detection_status (google.maps.solar_v1.types.BuildingInsights.DetectedArrays.DetectionStatus):
+                Indicates the detection status of solar
+                arrays for this building.
+            arrays (MutableSequence[google.maps.solar_v1.types.BuildingInsights.DetectedArrays.SolarArray]):
+                A list of solar arrays detected on the
+                building.
+            latest_capture_date (google.type.date_pb2.Date):
+                The date indicating when the latest solar
+                array data was captured.
+        """
+
+        class DetectionStatus(proto.Enum):
+            r"""Indicates the detection status of solar arrays for this
+            building.
+
+            Values:
+                DETECTION_STATUS_UNSPECIFIED (0):
+                    Unspecified status.
+                DETECTION_STATUS_DATA_UNAVAILABLE (1):
+                    Detected solar array data is unavailable for
+                    this building.
+                DETECTION_STATUS_ARRAYS_DETECTED (2):
+                    At least one solar array has been detected
+                    for this building.
+                DETECTION_STATUS_NO_ARRAYS_DETECTED (3):
+                    No solar arrays detected for this building.
+            """
+
+            DETECTION_STATUS_UNSPECIFIED = 0
+            DETECTION_STATUS_DATA_UNAVAILABLE = 1
+            DETECTION_STATUS_ARRAYS_DETECTED = 2
+            DETECTION_STATUS_NO_ARRAYS_DETECTED = 3
+
+        class SolarArray(proto.Message):
+            r"""Details of a single detected solar array.
+
+            Attributes:
+                polygon_geojson (google.protobuf.struct_pb2.Struct):
+                    A GeoJSON representation of the building area where solar
+                    panels were detected.
+
+                    The GeoJSON data must be in RFC 7946 format and represent a
+                    Polygon for a single contiguous area.
+
+                    The Polygon will be represented by several loops when it
+                    contains holes.
+
+                    Example:
+
+                    { "type": "Polygon", "coordinates": [ [ [-1, -1], [-1, 0],
+                    [0, 0], [-1, -1] ] ] }
+            """
+
+            polygon_geojson: struct_pb2.Struct = proto.Field(
+                proto.MESSAGE,
+                number=3,
+                message=struct_pb2.Struct,
+            )
+
+        detection_status: "BuildingInsights.DetectedArrays.DetectionStatus" = (
+            proto.Field(
+                proto.ENUM,
+                number=1,
+                enum="BuildingInsights.DetectedArrays.DetectionStatus",
+            )
+        )
+        arrays: MutableSequence["BuildingInsights.DetectedArrays.SolarArray"] = (
+            proto.RepeatedField(
+                proto.MESSAGE,
+                number=2,
+                message="BuildingInsights.DetectedArrays.SolarArray",
+            )
+        )
+        latest_capture_date: date_pb2.Date = proto.Field(
+            proto.MESSAGE,
+            number=3,
+            message=date_pb2.Date,
+        )
 
     name: str = proto.Field(
         proto.STRING,
@@ -318,6 +443,11 @@ class BuildingInsights(proto.Message):
         proto.ENUM,
         number=10,
         enum="ImageryQuality",
+    )
+    detected_arrays: DetectedArrays = proto.Field(
+        proto.MESSAGE,
+        number=12,
+        message=DetectedArrays,
     )
 
 
@@ -385,11 +515,10 @@ class SolarPotential(proto.Message):
             Size and sunlight quantiles for each roof
             segment.
         solar_panels (MutableSequence[google.maps.solar_v1.types.SolarPanel]):
-            Each [SolarPanel] [google.maps.solar.v1.SolarPanel]
-            describes a single solar panel. They are listed in the order
-            that the panel layout algorithm placed this. This is
-            usually, though not always, in decreasing order of annual
-            energy production.
+            Each [SolarPanel][google.maps.solar.v1.SolarPanel] describes
+            a single solar panel. They are listed in the order that the
+            panel layout algorithm placed this. This is usually, though
+            not always, in decreasing order of annual energy production.
         solar_panel_configs (MutableSequence[google.maps.solar_v1.types.SolarPanelConfig]):
             Each [SolarPanelConfig]
             [google.maps.solar.v1.SolarPanelConfig] describes a
@@ -1166,8 +1295,13 @@ class GetDataLayersRequest(proto.Message):
             ``MEDIUM`` quality imagery is returned if
             ``required_quality`` is set to ``MEDIUM``.
         experiments (MutableSequence[google.maps.solar_v1.types.Experiment]):
-            Optional. Specifies the pre-GA experiments to
-            enable.
+            Optional. Specifies the pre-GA experiments to enable.
+            Requests using this field are classified as a pre-GA
+            offering under the `Google Maps Platform Service Specific
+            Terms <https://cloud.google.com/maps-platform/terms/maps-service-terms>`__.
+            See `launch stage
+            descriptions <https://cloud.google.com/maps-platform/terms/launch-stages>`__
+            for more details.
     """
 
     location: latlng_pb2.LatLng = proto.Field(

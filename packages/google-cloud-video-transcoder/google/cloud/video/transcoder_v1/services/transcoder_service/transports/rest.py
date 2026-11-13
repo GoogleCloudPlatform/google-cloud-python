@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.video.transcoder_v1._compat import transcode_request
 from google.cloud.video.transcoder_v1.types import resources, services
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -592,19 +593,16 @@ class TranscoderServiceRestTransport(_BaseTranscoderServiceRestTransport):
             http_options = (
                 _BaseTranscoderServiceRestTransport._BaseCreateJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_job(request, metadata)
-            transcoded_request = _BaseTranscoderServiceRestTransport._BaseCreateJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTranscoderServiceRestTransport._BaseCreateJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTranscoderServiceRestTransport._BaseCreateJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTranscoderServiceRestTransport._BaseCreateJob,
+                    "_BaseCreateJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -742,21 +740,18 @@ class TranscoderServiceRestTransport(_BaseTranscoderServiceRestTransport):
             """
 
             http_options = _BaseTranscoderServiceRestTransport._BaseCreateJobTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_create_job_template(
                 request, metadata
             )
-            transcoded_request = _BaseTranscoderServiceRestTransport._BaseCreateJobTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTranscoderServiceRestTransport._BaseCreateJobTemplate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTranscoderServiceRestTransport._BaseCreateJobTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTranscoderServiceRestTransport._BaseCreateJobTemplate,
+                    "_BaseCreateJobTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -889,15 +884,16 @@ class TranscoderServiceRestTransport(_BaseTranscoderServiceRestTransport):
             http_options = (
                 _BaseTranscoderServiceRestTransport._BaseDeleteJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_job(request, metadata)
-            transcoded_request = _BaseTranscoderServiceRestTransport._BaseDeleteJob._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTranscoderServiceRestTransport._BaseDeleteJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTranscoderServiceRestTransport._BaseDeleteJob,
+                    "_BaseDeleteJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -995,17 +991,18 @@ class TranscoderServiceRestTransport(_BaseTranscoderServiceRestTransport):
             """
 
             http_options = _BaseTranscoderServiceRestTransport._BaseDeleteJobTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_job_template(
                 request, metadata
             )
-            transcoded_request = _BaseTranscoderServiceRestTransport._BaseDeleteJobTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTranscoderServiceRestTransport._BaseDeleteJobTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTranscoderServiceRestTransport._BaseDeleteJobTemplate,
+                    "_BaseDeleteJobTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1107,19 +1104,16 @@ class TranscoderServiceRestTransport(_BaseTranscoderServiceRestTransport):
             http_options = (
                 _BaseTranscoderServiceRestTransport._BaseGetJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_job(request, metadata)
-            transcoded_request = (
-                _BaseTranscoderServiceRestTransport._BaseGetJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTranscoderServiceRestTransport._BaseGetJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTranscoderServiceRestTransport._BaseGetJob,
+                    "_BaseGetJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1255,17 +1249,18 @@ class TranscoderServiceRestTransport(_BaseTranscoderServiceRestTransport):
             """
 
             http_options = _BaseTranscoderServiceRestTransport._BaseGetJobTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_get_job_template(
                 request, metadata
             )
-            transcoded_request = _BaseTranscoderServiceRestTransport._BaseGetJobTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTranscoderServiceRestTransport._BaseGetJobTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTranscoderServiceRestTransport._BaseGetJobTemplate,
+                    "_BaseGetJobTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1403,15 +1398,16 @@ class TranscoderServiceRestTransport(_BaseTranscoderServiceRestTransport):
             http_options = (
                 _BaseTranscoderServiceRestTransport._BaseListJobs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_jobs(request, metadata)
-            transcoded_request = _BaseTranscoderServiceRestTransport._BaseListJobs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTranscoderServiceRestTransport._BaseListJobs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTranscoderServiceRestTransport._BaseListJobs,
+                    "_BaseListJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1549,17 +1545,18 @@ class TranscoderServiceRestTransport(_BaseTranscoderServiceRestTransport):
             """
 
             http_options = _BaseTranscoderServiceRestTransport._BaseListJobTemplates._get_http_options()
-
             request, metadata = self._interceptor.pre_list_job_templates(
                 request, metadata
             )
-            transcoded_request = _BaseTranscoderServiceRestTransport._BaseListJobTemplates._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTranscoderServiceRestTransport._BaseListJobTemplates._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTranscoderServiceRestTransport._BaseListJobTemplates,
+                    "_BaseListJobTemplates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

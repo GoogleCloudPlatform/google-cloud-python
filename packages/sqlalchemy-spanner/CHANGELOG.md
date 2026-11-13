@@ -4,6 +4,50 @@
 
 [1]: https://pypi.org/project/sqlalchemy-spanner/#history
 
+## [1.21.0](https://github.com/googleapis/google-cloud-python/compare/sqlalchemy-spanner-v1.20.1...sqlalchemy-spanner-v1.21.0) (2026-11-12)
+
+
+### Features
+
+* declare support for Python 3.15 ([#18737](https://github.com/googleapis/google-cloud-python/issues/18737)) ([65c8767](https://github.com/googleapis/google-cloud-python/commit/65c87678e7a63aa4c8115c9273581aa5db82fbe9))
+* **sqlalchemy-spanner:** wire timeout execution option through to DBAPI Cursor.timeout ([#18485](https://github.com/googleapis/google-cloud-python/issues/18485)) ([1de2e3f](https://github.com/googleapis/google-cloud-python/commit/1de2e3f0831fa0b24b2a458956b3d96739bd191c))
+
+
+### Bug Fixes
+
+* repair broken and stale repository URLs in package metadata ([#18498](https://github.com/googleapis/google-cloud-python/issues/18498)) ([54dbd12](https://github.com/googleapis/google-cloud-python/commit/54dbd12056abcfc007b5b76006751c3b11bea99f)), refs [#18497](https://github.com/googleapis/google-cloud-python/issues/18497)
+* **spanner-sqlalchemy:** add WHERE 1=1 to unqualified DELETE and UPDATE ([#19024](https://github.com/googleapis/google-cloud-python/issues/19024)) ([5a2b34e](https://github.com/googleapis/google-cloud-python/commit/5a2b34ecf0d7799784c03a6fb094795d170dccdb))
+* **sqlalchemy-spanner:** isolate literal round trip test tables with unique naming and teardown ([#18623](https://github.com/googleapis/google-cloud-python/issues/18623)) ([75cdf3b](https://github.com/googleapis/google-cloud-python/commit/75cdf3bcef819b9b68055e6e0abc2f7dd486df09))
+* **sqlalchemy-spanner:** prevent SQL injection via JSON key indexing ([#18982](https://github.com/googleapis/google-cloud-python/issues/18982)) ([c0dba72](https://github.com/googleapis/google-cloud-python/commit/c0dba727744713f51da581e01c97c6bccd61abaa))
+* **sqlalchemy-spanner:** resolve compliance and migration failures with Alembic 1.20 and SQLAlchemy 2.1 ([#18570](https://github.com/googleapis/google-cloud-python/issues/18570)) ([873ef99](https://github.com/googleapis/google-cloud-python/commit/873ef9980dee9cd518733dec164f4ae42d25afbe))
+
+## [1.20.1](https://github.com/googleapis/google-cloud-python/compare/sqlalchemy-spanner-v1.20.0...sqlalchemy-spanner-v1.20.1) (2026-09-03)
+
+
+### Bug Fixes
+
+* **sqlalchemy-spanner:** robust session-isolated test databases and clean lifecycle management ([#18179](https://github.com/googleapis/google-cloud-python/issues/18179)) ([3e0bda4](https://github.com/googleapis/google-cloud-python/commit/3e0bda467955f634013e1b3849b298d436fce952))
+
+
+### Documentation
+
+* **sqlalchemy-spanner:** centralize CONTRIBUTING.rst pointers ([#18142](https://github.com/googleapis/google-cloud-python/issues/18142)) ([f55ae02](https://github.com/googleapis/google-cloud-python/commit/f55ae02b9f04aaa247702215962e71ea6b04e998))
+
+## [1.20.0](https://github.com/googleapis/google-cloud-python/compare/sqlalchemy-spanner-v1.19.0...sqlalchemy-spanner-v1.20.0) (2026-08-21)
+
+
+### Features
+
+* **sqlalchemy-spanner:** export MAX_SIZE constant ([#17922](https://github.com/googleapis/google-cloud-python/issues/17922)) ([e15c21d](https://github.com/googleapis/google-cloud-python/commit/e15c21dbe759743b16293d0a084813193ec16dbf))
+* **sqlalchemy-spanner:** native UUID data type support in dialect ([#17913](https://github.com/googleapis/google-cloud-python/issues/17913)) ([6431932](https://github.com/googleapis/google-cloud-python/commit/64319325a5c1b0bc4f6de4a26a9e9ab90d0c3de0))
+
+
+### Bug Fixes
+
+* bump sqlparse from 0.5.5 to 0.6.0 in /packages/sqlalchemy-spanner ([#18136](https://github.com/googleapis/google-cloud-python/issues/18136)) ([3ba7d02](https://github.com/googleapis/google-cloud-python/commit/3ba7d02b5fde9e7ede737a217ed4764228428766))
+* **sqlalchemy-spanner:** fix get_multi_indexes crash on SEARCH indexes ([#17907](https://github.com/googleapis/google-cloud-python/issues/17907)) ([5b2da81](https://github.com/googleapis/google-cloud-python/commit/5b2da81e2e63b154e6441a5abe6ad78688340f5a))
+* **sqlalchemy-spanner:** register TOKENLIST in _type_map for reflection ([#17911](https://github.com/googleapis/google-cloud-python/issues/17911)) ([788208b](https://github.com/googleapis/google-cloud-python/commit/788208bab493ae7e507e94841c1a3a27f49b6b18))
+
 ## [1.19.0](https://github.com/googleapis/google-cloud-python/compare/sqlalchemy-spanner-v1.18.0...sqlalchemy-spanner-v1.19.0) (2026-06-02)
 
 

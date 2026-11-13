@@ -518,6 +518,42 @@ class TestSystemAsync(SystemTestRunner):
         predicate=retry.if_exception_type(ClientError), initial=1, maximum=5
     )
     @CrossSync.pytest
+    async def test_mutations_batcher_completed_callback(
+        self, client, target, temp_rows
+    ):
+        """
+        test batcher with batch completed callback. It should be called when the batcher flushes.
+        """
+        import mock
+        from google.rpc import code_pb2, status_pb2
+
+        from google.cloud.bigtable.data.mutations import RowMutationEntry
+
+        callback = mock.Mock()
+
+        new_value = uuid.uuid4().hex.encode()
+        row_key, mutation = await temp_rows.create_row_and_mutation(
+            target, new_value=new_value
+        )
+        bulk_mutation = RowMutationEntry(row_key, [mutation])
+        flush_interval = 0.1
+        async with target.mutations_batcher(flush_interval=flush_interval) as batcher:
+            batcher._user_batch_completed_callback = callback
+            await batcher.append(bulk_mutation)
+            await CrossSync.yield_to_event_loop()
+            assert len(batcher._staged_entries) == 1
+            await CrossSync.sleep(flush_interval + 0.1)
+            assert len(batcher._staged_entries) == 0
+            callback.assert_called_once_with([status_pb2.Status(code=code_pb2.OK)])
+            # ensure cell is updated
+            assert (await temp_rows.retrieve_cell_value(target, row_key)) == new_value
+
+    @pytest.mark.usefixtures("client")
+    @pytest.mark.usefixtures("target")
+    @CrossSync.Retry(
+        predicate=retry.if_exception_type(ClientError), initial=1, maximum=5
+    )
+    @CrossSync.pytest
     async def test_mutations_batcher_count_flush(self, client, target, temp_rows):
         """
         batch should flush after flush_limit_mutation_count mutations

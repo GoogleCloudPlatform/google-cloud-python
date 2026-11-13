@@ -104,7 +104,7 @@ class Widget(proto.Message):
 
             This field is a member of `oneof`_ ``content``.
         incident_list (google.cloud.monitoring_dashboard_v1.types.IncidentList):
-            A widget that shows list of incidents.
+            A widget that shows list of alerts.
 
             This field is a member of `oneof`_ ``content``.
         pie_chart (google.cloud.monitoring_dashboard_v1.types.PieChart):

@@ -334,7 +334,7 @@ class Transaction(Batch):
                 self._id = None
                 return None
             else:
-                self.begin()
+                self.begin(retry=retry, timeout=timeout)
 
         kwargs = _make_retry_timeout_kwargs(retry, timeout)
 

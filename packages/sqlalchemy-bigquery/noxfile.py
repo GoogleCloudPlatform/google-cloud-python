@@ -170,6 +170,11 @@ nox.options.sessions = [
 nox.options.stop_on_first_error = True
 nox.options.error_on_missing_interpreters = True
 
+# NOTE: venv_backend="virtualenv" is used to bypass an upstream packaging issue
+# in sqlalchemy (duplicate normalized extra name 'mssql-pymssql' under strict uv
+# PEP 621 parsing in sqlalchemy==2.1.0rc2, pulled via global UV_PRERELEASE=allow).
+VENV_BACKEND = "virtualenv"
+
 
 @nox.session(python=DEFAULT_PYTHON_VERSION)
 @_calculate_duration
@@ -179,10 +184,24 @@ def lint(session):
     Returns a failure if the linters find linting errors or sufficiently
     serious code quality issues.
     """
-    session.install(FLAKE8_VERSION, BLACK_VERSION)
+    session.install(FLAKE8_VERSION, RUFF_VERSION)
+    # 1. Check imports
     session.run(
-        "black",
+        "ruff",
+        "check",
+        "--select",
+        "I",
+        f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
+        "--line-length=88",
+        *LINT_PATHS,
+    )
+    # 2. Check formatting
+    session.run(
+        "ruff",
+        "format",
         "--check",
+        f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
+        "--line-length=88",
         *LINT_PATHS,
     )
 
@@ -275,7 +294,7 @@ def install_unittest_dependencies(session, *constraints):
         session.install("-e", ".", *constraints)
 
 
-@nox.session(python=ALL_PYTHON)
+@nox.session(python=ALL_PYTHON, venv_backend=VENV_BACKEND)
 @nox.parametrize(
     "protobuf_implementation",
     ["python", "upb"],
@@ -283,9 +302,6 @@ def install_unittest_dependencies(session, *constraints):
 @_calculate_duration
 def unit(session, protobuf_implementation, install_extras=True):
     # Install all test dependencies, then install this package in-place.
-
-    if session.python == "3.15":
-        session.skip("Skipping 3.15 until wheels are available for pyarrow.")
 
     constraints_path = str(
         CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
@@ -393,6 +409,7 @@ def _run_system_test_logic(session, test_type):
             "mock",
             "pytest",
             "pytest-rerunfailures",
+            "pytest-xdist",
             "google-cloud-testutils",
             "-c",
             constraints_path,
@@ -411,12 +428,17 @@ def _run_system_test_logic(session, test_type):
 
     # Execution logic
     if test_type == "compliance":
+        xdist_args = ["-n=4", "--dist=loadscope"]
+        if any(arg.startswith(("-n", "--numprocesses")) for arg in session.posargs):
+            xdist_args = []
+
         session.run(
             "py.test",
             "-vv",
+            *xdist_args,
             f"--junitxml=compliance_{session.python}_sponge_log.xml",
-            "--reruns=3",
-            "--reruns-delay=60",
+            "--reruns=2",
+            "--reruns-delay=30",
             "--only-rerun=Exceeded rate limits",
             "--only-rerun=Already Exists",
             "--only-rerun=Not found",
@@ -436,7 +458,7 @@ def _run_system_test_logic(session, test_type):
         )
 
 
-@nox.session(python="3.12")
+@nox.session(python="3.12", venv_backend=VENV_BACKEND)
 @nox.parametrize("test_type", ["system", "system_noextras", "compliance"])
 @_calculate_duration
 def system(session, test_type):
@@ -444,21 +466,21 @@ def system(session, test_type):
     _run_system_test_logic(session, test_type)
 
 
-@nox.session(python=SYSTEM_TEST_PYTHON_VERSIONS)
+@nox.session(python=SYSTEM_TEST_PYTHON_VERSIONS, venv_backend=VENV_BACKEND)
 @_calculate_duration
 def system_noextras(session):
     """Run the system test suite without extras."""
     _run_system_test_logic(session, "system_noextras")
 
 
-@nox.session(python=SYSTEM_TEST_PYTHON_VERSIONS[-1])
+@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
 @_calculate_duration
 def compliance(session):
     """Run the SQLAlchemy dialect-compliance system tests"""
     _run_system_test_logic(session, "compliance")
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION)
+@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
 @_calculate_duration
 def cover(session):
     """Run the final coverage report.
@@ -472,7 +494,7 @@ def cover(session):
     session.run("coverage", "erase")
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.10", venv_backend=VENV_BACKEND)
 @_calculate_duration
 def docs(session):
     """Build the docs for this library."""
@@ -510,7 +532,7 @@ def docs(session):
     )
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.10", venv_backend=VENV_BACKEND)
 @_calculate_duration
 def docfx(session):
     """Build the docfx yaml files for this library."""
@@ -559,7 +581,7 @@ def docfx(session):
     )
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION)
+@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
 @nox.parametrize(
     "protobuf_implementation",
     ["python", "upb"],
@@ -683,7 +705,7 @@ def mypy(session):
     session.skip("mypy tests are not yet supported")
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION)
+@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
 @nox.parametrize(
     "protobuf_implementation",
     ["python", "upb"],
@@ -706,16 +728,27 @@ def core_deps_from_source(session, protobuf_implementation):
     session.install("-e", install_target, "-c", constraints_path)
 
     core_dependencies_from_source = [
-        "googleapis-common-protos @ git+https://github.com/googleapis/google-cloud-python#egg=googleapis-common-protos&subdirectory=packages/googleapis-common-protos",
-        "google-api-core @ git+https://github.com/googleapis/google-cloud-python#egg=google-api-core&subdirectory=packages/google-api-core",
-        "google-auth @ git+https://github.com/googleapis/google-cloud-python#egg=google-auth&subdirectory=packages/google-auth",
-        "grpc-google-iam-v1 @ git+https://github.com/googleapis/google-cloud-python#egg=grpc-google-iam-v1&subdirectory=packages/grpc-google-iam-v1",
-        "proto-plus @ git+https://github.com/googleapis/google-cloud-python#egg=proto-plus&subdirectory=packages/proto-plus",
+        "googleapis-common-protos",
+        "google-api-core",
+        "google-auth",
+        "grpc-google-iam-v1",
+        "proto-plus",
     ]
 
-    for dep in core_dependencies_from_source:
-        session.install(dep, "--no-deps", "--ignore-installed")
-        print(f"Installed {dep}")
+    deps_dir = next(
+        p / "packages" for p in CURRENT_DIRECTORY.parents if (p / "packages").is_dir()
+    )
+
+    local_paths = [
+        str(deps_dir / dep)
+        for dep in core_dependencies_from_source
+        if (deps_dir / dep).exists()
+    ]
+    if local_paths:
+        session.install(*local_paths, "--no-deps", "--ignore-installed")
+        print(
+            f"Installed {', '.join(core_dependencies_from_source)} locally from {deps_dir}"
+        )
 
     tests_path = os.path.join("tests", "unit")
     session.run(

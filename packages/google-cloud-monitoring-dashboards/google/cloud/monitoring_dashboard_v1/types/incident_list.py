@@ -29,20 +29,20 @@ __protobuf__ = proto.module(
 
 
 class IncidentList(proto.Message):
-    r"""A widget that displays a list of incidents
+    r"""A widget that displays a list of alerts
 
     Attributes:
         monitored_resources (MutableSequence[google.api.monitored_resource_pb2.MonitoredResource]):
             Optional. The monitored resource for which
-            incidents are listed. The resource doesn't need
-            to be fully specified. That is, you can specify
-            the resource type but not the values of the
-            resource labels. The resource type and labels
-            are used for filtering.
+            alerts are listed. The resource doesn't need to
+            be fully specified. That is, you can specify the
+            resource type but not the values of the resource
+            labels. The resource type and labels are used
+            for filtering.
         policy_names (MutableSequence[str]):
-            Optional. A list of alert policy names to filter the
-            incident list by. Don't include the project ID prefix in the
-            policy name. For example, use ``alertPolicies/utilization``.
+            Optional. A list of alert policy names to filter the alert
+            list by. Don't include the project ID prefix in the policy
+            name. For example, use ``alertPolicies/utilization``.
     """
 
     monitored_resources: MutableSequence[monitored_resource_pb2.MonitoredResource] = (

@@ -18,8 +18,7 @@
 import abc
 import inspect
 
-from google.auth import _regional_access_boundary_utils
-from google.auth import credentials
+from google.auth import _regional_access_boundary_utils, credentials
 
 
 class Credentials(credentials.Credentials, metaclass=abc.ABCMeta):

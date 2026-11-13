@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.contact_center_insights_v1._compat import transcode_request
 from google.cloud.contact_center_insights_v1.types import (
     contact_center_insights,
     resources,
@@ -4225,21 +4226,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseBulkAnalyzeConversations._get_http_options()
-
             request, metadata = self._interceptor.pre_bulk_analyze_conversations(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseBulkAnalyzeConversations._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseBulkAnalyzeConversations._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseBulkAnalyzeConversations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseBulkAnalyzeConversations,
+                    "_BaseBulkAnalyzeConversations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4378,21 +4376,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseBulkDeleteConversations._get_http_options()
-
             request, metadata = self._interceptor.pre_bulk_delete_conversations(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseBulkDeleteConversations._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseBulkDeleteConversations._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseBulkDeleteConversations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseBulkDeleteConversations,
+                    "_BaseBulkDeleteConversations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4532,21 +4527,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseBulkDownloadFeedbackLabels._get_http_options()
-
             request, metadata = self._interceptor.pre_bulk_download_feedback_labels(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseBulkDownloadFeedbackLabels._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseBulkDownloadFeedbackLabels._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseBulkDownloadFeedbackLabels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseBulkDownloadFeedbackLabels,
+                    "_BaseBulkDownloadFeedbackLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4688,21 +4680,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseBulkUploadFeedbackLabels._get_http_options()
-
             request, metadata = self._interceptor.pre_bulk_upload_feedback_labels(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseBulkUploadFeedbackLabels._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseBulkUploadFeedbackLabels._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseBulkUploadFeedbackLabels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseBulkUploadFeedbackLabels,
+                    "_BaseBulkUploadFeedbackLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4840,17 +4829,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCalculateIssueModelStats._get_http_options()
-
             request, metadata = self._interceptor.pre_calculate_issue_model_stats(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCalculateIssueModelStats._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCalculateIssueModelStats._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCalculateIssueModelStats,
+                    "_BaseCalculateIssueModelStats__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4990,15 +4980,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCalculateStats._get_http_options()
-
             request, metadata = self._interceptor.pre_calculate_stats(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCalculateStats._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCalculateStats._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCalculateStats,
+                    "_BaseCalculateStats__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5139,19 +5130,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCreateAnalysis._get_http_options()
-
             request, metadata = self._interceptor.pre_create_analysis(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCreateAnalysis._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseCreateAnalysis._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCreateAnalysis._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCreateAnalysis,
+                    "_BaseCreateAnalysis__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5297,21 +5285,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCreateAnalysisRule._get_http_options()
-
             request, metadata = self._interceptor.pre_create_analysis_rule(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCreateAnalysisRule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseCreateAnalysisRule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCreateAnalysisRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCreateAnalysisRule,
+                    "_BaseCreateAnalysisRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5450,21 +5435,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCreateConversation._get_http_options()
-
             request, metadata = self._interceptor.pre_create_conversation(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCreateConversation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseCreateConversation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCreateConversation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCreateConversation,
+                    "_BaseCreateConversation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5606,21 +5588,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCreateFeedbackLabel._get_http_options()
-
             request, metadata = self._interceptor.pre_create_feedback_label(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCreateFeedbackLabel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseCreateFeedbackLabel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCreateFeedbackLabel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCreateFeedbackLabel,
+                    "_BaseCreateFeedbackLabel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5762,21 +5741,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCreateIssueModel._get_http_options()
-
             request, metadata = self._interceptor.pre_create_issue_model(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCreateIssueModel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseCreateIssueModel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCreateIssueModel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCreateIssueModel,
+                    "_BaseCreateIssueModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5913,21 +5889,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCreatePhraseMatcher._get_http_options()
-
             request, metadata = self._interceptor.pre_create_phrase_matcher(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCreatePhraseMatcher._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseCreatePhraseMatcher._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCreatePhraseMatcher._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCreatePhraseMatcher,
+                    "_BaseCreatePhraseMatcher__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6069,21 +6042,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCreateQaQuestion._get_http_options()
-
             request, metadata = self._interceptor.pre_create_qa_question(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCreateQaQuestion._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseCreateQaQuestion._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCreateQaQuestion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCreateQaQuestion,
+                    "_BaseCreateQaQuestion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6226,21 +6196,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCreateQaScorecard._get_http_options()
-
             request, metadata = self._interceptor.pre_create_qa_scorecard(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCreateQaScorecard._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseCreateQaScorecard._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCreateQaScorecard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCreateQaScorecard,
+                    "_BaseCreateQaScorecard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6391,21 +6358,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCreateQaScorecardRevision._get_http_options()
-
             request, metadata = self._interceptor.pre_create_qa_scorecard_revision(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCreateQaScorecardRevision._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseCreateQaScorecardRevision._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCreateQaScorecardRevision._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCreateQaScorecardRevision,
+                    "_BaseCreateQaScorecardRevision__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6542,19 +6506,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCreateView._get_http_options()
-
             request, metadata = self._interceptor.pre_create_view(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCreateView._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseCreateView._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCreateView._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCreateView,
+                    "_BaseCreateView__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6686,15 +6647,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeleteAnalysis._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_analysis(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeleteAnalysis._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeleteAnalysis._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeleteAnalysis,
+                    "_BaseDeleteAnalysis__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6792,17 +6754,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeleteAnalysisRule._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_analysis_rule(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeleteAnalysisRule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeleteAnalysisRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeleteAnalysisRule,
+                    "_BaseDeleteAnalysisRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6901,17 +6864,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeleteConversation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_conversation(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeleteConversation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeleteConversation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeleteConversation,
+                    "_BaseDeleteConversation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7011,17 +6975,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeleteFeedbackLabel._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_feedback_label(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeleteFeedbackLabel._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeleteFeedbackLabel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeleteFeedbackLabel,
+                    "_BaseDeleteFeedbackLabel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7120,15 +7085,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeleteIssue._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_issue(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeleteIssue._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeleteIssue._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeleteIssue,
+                    "_BaseDeleteIssue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7232,17 +7198,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeleteIssueModel._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_issue_model(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeleteIssueModel._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeleteIssueModel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeleteIssueModel,
+                    "_BaseDeleteIssueModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7374,17 +7341,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeletePhraseMatcher._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_phrase_matcher(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeletePhraseMatcher._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeletePhraseMatcher._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeletePhraseMatcher,
+                    "_BaseDeletePhraseMatcher__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7484,17 +7452,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeleteQaQuestion._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_qa_question(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeleteQaQuestion._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeleteQaQuestion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeleteQaQuestion,
+                    "_BaseDeleteQaQuestion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7594,17 +7563,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeleteQaScorecard._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_qa_scorecard(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeleteQaScorecard._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeleteQaScorecard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeleteQaScorecard,
+                    "_BaseDeleteQaScorecard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7705,17 +7675,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeleteQaScorecardRevision._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_qa_scorecard_revision(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeleteQaScorecardRevision._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeleteQaScorecardRevision._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeleteQaScorecardRevision,
+                    "_BaseDeleteQaScorecardRevision__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7812,15 +7783,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeleteView._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_view(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeleteView._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeleteView._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeleteView,
+                    "_BaseDeleteView__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7925,21 +7897,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeployIssueModel._get_http_options()
-
             request, metadata = self._interceptor.pre_deploy_issue_model(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeployIssueModel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseDeployIssueModel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeployIssueModel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeployIssueModel,
+                    "_BaseDeployIssueModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8088,21 +8057,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseDeployQaScorecardRevision._get_http_options()
-
             request, metadata = self._interceptor.pre_deploy_qa_scorecard_revision(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseDeployQaScorecardRevision._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseDeployQaScorecardRevision._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseDeployQaScorecardRevision._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseDeployQaScorecardRevision,
+                    "_BaseDeployQaScorecardRevision__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8242,21 +8208,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseExportInsightsData._get_http_options()
-
             request, metadata = self._interceptor.pre_export_insights_data(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseExportInsightsData._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseExportInsightsData._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseExportInsightsData._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseExportInsightsData,
+                    "_BaseExportInsightsData__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8396,21 +8359,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseExportIssueModel._get_http_options()
-
             request, metadata = self._interceptor.pre_export_issue_model(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseExportIssueModel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseExportIssueModel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseExportIssueModel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseExportIssueModel,
+                    "_BaseExportIssueModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8546,15 +8506,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetAnalysis._get_http_options()
-
             request, metadata = self._interceptor.pre_get_analysis(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetAnalysis._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetAnalysis._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetAnalysis,
+                    "_BaseGetAnalysis__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8700,17 +8661,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetAnalysisRule._get_http_options()
-
             request, metadata = self._interceptor.pre_get_analysis_rule(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetAnalysisRule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetAnalysisRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetAnalysisRule,
+                    "_BaseGetAnalysisRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8847,17 +8809,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetConversation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_conversation(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetConversation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetConversation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetConversation,
+                    "_BaseGetConversation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8998,17 +8961,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetEncryptionSpec._get_http_options()
-
             request, metadata = self._interceptor.pre_get_encryption_spec(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetEncryptionSpec._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetEncryptionSpec._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetEncryptionSpec,
+                    "_BaseGetEncryptionSpec__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9148,17 +9112,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetFeedbackLabel._get_http_options()
-
             request, metadata = self._interceptor.pre_get_feedback_label(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetFeedbackLabel._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetFeedbackLabel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetFeedbackLabel,
+                    "_BaseGetFeedbackLabel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9295,15 +9260,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetIssue._get_http_options()
-
             request, metadata = self._interceptor.pre_get_issue(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetIssue._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetIssue._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetIssue,
+                    "_BaseGetIssue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9438,15 +9404,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetIssueModel._get_http_options()
-
             request, metadata = self._interceptor.pre_get_issue_model(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetIssueModel._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetIssueModel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetIssueModel,
+                    "_BaseGetIssueModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9582,17 +9549,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetPhraseMatcher._get_http_options()
-
             request, metadata = self._interceptor.pre_get_phrase_matcher(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetPhraseMatcher._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetPhraseMatcher._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetPhraseMatcher,
+                    "_BaseGetPhraseMatcher__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9731,15 +9699,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetQaQuestion._get_http_options()
-
             request, metadata = self._interceptor.pre_get_qa_question(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetQaQuestion._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetQaQuestion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetQaQuestion,
+                    "_BaseGetQaQuestion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9878,17 +9847,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetQaScorecard._get_http_options()
-
             request, metadata = self._interceptor.pre_get_qa_scorecard(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetQaScorecard._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetQaScorecard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetQaScorecard,
+                    "_BaseGetQaScorecard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10034,17 +10004,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetQaScorecardRevision._get_http_options()
-
             request, metadata = self._interceptor.pre_get_qa_scorecard_revision(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetQaScorecardRevision._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetQaScorecardRevision._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetQaScorecardRevision,
+                    "_BaseGetQaScorecardRevision__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10186,15 +10157,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_get_settings(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetSettings,
+                    "_BaseGetSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10331,15 +10303,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             http_options = (
                 _BaseContactCenterInsightsRestTransport._BaseGetView._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_view(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetView._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetView._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetView,
+                    "_BaseGetView__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10478,21 +10451,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseImportIssueModel._get_http_options()
-
             request, metadata = self._interceptor.pre_import_issue_model(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseImportIssueModel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseImportIssueModel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseImportIssueModel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseImportIssueModel,
+                    "_BaseImportIssueModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10632,21 +10602,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseIngestConversations._get_http_options()
-
             request, metadata = self._interceptor.pre_ingest_conversations(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseIngestConversations._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseIngestConversations._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseIngestConversations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseIngestConversations,
+                    "_BaseIngestConversations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10788,21 +10755,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseInitializeEncryptionSpec._get_http_options()
-
             request, metadata = self._interceptor.pre_initialize_encryption_spec(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseInitializeEncryptionSpec._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseInitializeEncryptionSpec._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseInitializeEncryptionSpec._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseInitializeEncryptionSpec,
+                    "_BaseInitializeEncryptionSpec__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10939,17 +10903,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListAllFeedbackLabels._get_http_options()
-
             request, metadata = self._interceptor.pre_list_all_feedback_labels(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListAllFeedbackLabels._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListAllFeedbackLabels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListAllFeedbackLabels,
+                    "_BaseListAllFeedbackLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11090,15 +11055,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListAnalyses._get_http_options()
-
             request, metadata = self._interceptor.pre_list_analyses(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListAnalyses._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListAnalyses._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListAnalyses,
+                    "_BaseListAnalyses__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11235,17 +11201,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListAnalysisRules._get_http_options()
-
             request, metadata = self._interceptor.pre_list_analysis_rules(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListAnalysisRules._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListAnalysisRules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListAnalysisRules,
+                    "_BaseListAnalysisRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11388,17 +11355,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListConversations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_conversations(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListConversations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListConversations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListConversations,
+                    "_BaseListConversations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11542,17 +11510,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListFeedbackLabels._get_http_options()
-
             request, metadata = self._interceptor.pre_list_feedback_labels(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListFeedbackLabels._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListFeedbackLabels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListFeedbackLabels,
+                    "_BaseListFeedbackLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11693,17 +11662,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListIssueModels._get_http_options()
-
             request, metadata = self._interceptor.pre_list_issue_models(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListIssueModels._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListIssueModels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListIssueModels,
+                    "_BaseListIssueModels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11844,15 +11814,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListIssues._get_http_options()
-
             request, metadata = self._interceptor.pre_list_issues(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListIssues._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListIssues._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListIssues,
+                    "_BaseListIssues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11991,17 +11962,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListPhraseMatchers._get_http_options()
-
             request, metadata = self._interceptor.pre_list_phrase_matchers(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListPhraseMatchers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListPhraseMatchers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListPhraseMatchers,
+                    "_BaseListPhraseMatchers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12144,17 +12116,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListQaQuestions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_qa_questions(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListQaQuestions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListQaQuestions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListQaQuestions,
+                    "_BaseListQaQuestions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12298,17 +12271,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListQaScorecardRevisions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_qa_scorecard_revisions(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListQaScorecardRevisions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListQaScorecardRevisions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListQaScorecardRevisions,
+                    "_BaseListQaScorecardRevisions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12447,17 +12421,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListQaScorecards._get_http_options()
-
             request, metadata = self._interceptor.pre_list_qa_scorecards(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListQaScorecards._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListQaScorecards._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListQaScorecards,
+                    "_BaseListQaScorecards__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12598,15 +12573,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListViews._get_http_options()
-
             request, metadata = self._interceptor.pre_list_views(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListViews._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListViews._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListViews,
+                    "_BaseListViews__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12747,19 +12723,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseQueryMetrics._get_http_options()
-
             request, metadata = self._interceptor.pre_query_metrics(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseQueryMetrics._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseQueryMetrics._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseQueryMetrics._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseQueryMetrics,
+                    "_BaseQueryMetrics__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12899,21 +12872,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseTuneQaScorecardRevision._get_http_options()
-
             request, metadata = self._interceptor.pre_tune_qa_scorecard_revision(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseTuneQaScorecardRevision._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseTuneQaScorecardRevision._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseTuneQaScorecardRevision._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseTuneQaScorecardRevision,
+                    "_BaseTuneQaScorecardRevision__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13052,21 +13022,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUndeployIssueModel._get_http_options()
-
             request, metadata = self._interceptor.pre_undeploy_issue_model(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUndeployIssueModel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUndeployIssueModel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUndeployIssueModel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUndeployIssueModel,
+                    "_BaseUndeployIssueModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13217,21 +13184,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUndeployQaScorecardRevision._get_http_options()
-
             request, metadata = self._interceptor.pre_undeploy_qa_scorecard_revision(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUndeployQaScorecardRevision._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUndeployQaScorecardRevision._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUndeployQaScorecardRevision._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUndeployQaScorecardRevision,
+                    "_BaseUndeployQaScorecardRevision__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13381,21 +13345,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUpdateAnalysisRule._get_http_options()
-
             request, metadata = self._interceptor.pre_update_analysis_rule(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUpdateAnalysisRule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUpdateAnalysisRule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUpdateAnalysisRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUpdateAnalysisRule,
+                    "_BaseUpdateAnalysisRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13534,21 +13495,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUpdateConversation._get_http_options()
-
             request, metadata = self._interceptor.pre_update_conversation(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUpdateConversation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUpdateConversation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUpdateConversation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUpdateConversation,
+                    "_BaseUpdateConversation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13690,21 +13648,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUpdateFeedbackLabel._get_http_options()
-
             request, metadata = self._interceptor.pre_update_feedback_label(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUpdateFeedbackLabel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUpdateFeedbackLabel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUpdateFeedbackLabel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUpdateFeedbackLabel,
+                    "_BaseUpdateFeedbackLabel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13843,19 +13798,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUpdateIssue._get_http_options()
-
             request, metadata = self._interceptor.pre_update_issue(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUpdateIssue._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUpdateIssue._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUpdateIssue._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUpdateIssue,
+                    "_BaseUpdateIssue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13992,21 +13944,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUpdateIssueModel._get_http_options()
-
             request, metadata = self._interceptor.pre_update_issue_model(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUpdateIssueModel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUpdateIssueModel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUpdateIssueModel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUpdateIssueModel,
+                    "_BaseUpdateIssueModel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14146,21 +14095,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUpdatePhraseMatcher._get_http_options()
-
             request, metadata = self._interceptor.pre_update_phrase_matcher(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUpdatePhraseMatcher._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUpdatePhraseMatcher._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUpdatePhraseMatcher._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUpdatePhraseMatcher,
+                    "_BaseUpdatePhraseMatcher__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14302,21 +14248,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUpdateQaQuestion._get_http_options()
-
             request, metadata = self._interceptor.pre_update_qa_question(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUpdateQaQuestion._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUpdateQaQuestion._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUpdateQaQuestion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUpdateQaQuestion,
+                    "_BaseUpdateQaQuestion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14459,21 +14402,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUpdateQaScorecard._get_http_options()
-
             request, metadata = self._interceptor.pre_update_qa_scorecard(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUpdateQaScorecard._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUpdateQaScorecard._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUpdateQaScorecard._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUpdateQaScorecard,
+                    "_BaseUpdateQaScorecard__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14619,19 +14559,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUpdateSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_update_settings(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUpdateSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUpdateSettings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUpdateSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUpdateSettings,
+                    "_BaseUpdateSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14768,19 +14705,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUpdateView._get_http_options()
-
             request, metadata = self._interceptor.pre_update_view(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUpdateView._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUpdateView._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUpdateView._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUpdateView,
+                    "_BaseUpdateView__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14920,21 +14854,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseUploadConversation._get_http_options()
-
             request, metadata = self._interceptor.pre_upload_conversation(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseUploadConversation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseContactCenterInsightsRestTransport._BaseUploadConversation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseUploadConversation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseUploadConversation,
+                    "_BaseUploadConversation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -15826,17 +15757,18 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -15944,15 +15876,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -16083,15 +16016,16 @@ class ContactCenterInsightsRestTransport(_BaseContactCenterInsightsRestTransport
             """
 
             http_options = _BaseContactCenterInsightsRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseContactCenterInsightsRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseContactCenterInsightsRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseContactCenterInsightsRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

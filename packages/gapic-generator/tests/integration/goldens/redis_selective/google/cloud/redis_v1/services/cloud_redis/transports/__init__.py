@@ -24,9 +24,9 @@ from .rest import CloudRedisRestInterceptor
 ASYNC_REST_CLASSES: Tuple[str, ...]
 try:
     from .rest_asyncio import AsyncCloudRedisRestTransport
-    from .rest_asyncio import AsyncCloudRedisRestInterceptor
-    ASYNC_REST_CLASSES = ('AsyncCloudRedisRestTransport', 'AsyncCloudRedisRestInterceptor')
-    HAS_REST_ASYNC = True
+    from .rest_asyncio import AsyncCloudRedisRestInterceptor  # pragma: NO COVER
+    ASYNC_REST_CLASSES = ('AsyncCloudRedisRestTransport', 'AsyncCloudRedisRestInterceptor')  # pragma: NO COVER
+    HAS_REST_ASYNC = True  # pragma: NO COVER
 except ImportError:  # pragma: NO COVER
     ASYNC_REST_CLASSES = ()
     HAS_REST_ASYNC = False

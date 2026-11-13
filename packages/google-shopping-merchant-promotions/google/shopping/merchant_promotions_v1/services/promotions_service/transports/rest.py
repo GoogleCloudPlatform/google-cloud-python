@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_promotions_v1._compat import transcode_request
 from google.shopping.merchant_promotions_v1.types import promotions
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -408,15 +409,16 @@ class PromotionsServiceRestTransport(_BasePromotionsServiceRestTransport):
             """
 
             http_options = _BasePromotionsServiceRestTransport._BaseGetPromotion._get_http_options()
-
             request, metadata = self._interceptor.pre_get_promotion(request, metadata)
-            transcoded_request = _BasePromotionsServiceRestTransport._BaseGetPromotion._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePromotionsServiceRestTransport._BaseGetPromotion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePromotionsServiceRestTransport._BaseGetPromotion,
+                    "_BaseGetPromotion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -566,21 +568,18 @@ class PromotionsServiceRestTransport(_BasePromotionsServiceRestTransport):
             """
 
             http_options = _BasePromotionsServiceRestTransport._BaseInsertPromotion._get_http_options()
-
             request, metadata = self._interceptor.pre_insert_promotion(
                 request, metadata
             )
-            transcoded_request = _BasePromotionsServiceRestTransport._BaseInsertPromotion._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePromotionsServiceRestTransport._BaseInsertPromotion._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePromotionsServiceRestTransport._BaseInsertPromotion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePromotionsServiceRestTransport._BaseInsertPromotion,
+                    "_BaseInsertPromotion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -716,15 +715,16 @@ class PromotionsServiceRestTransport(_BasePromotionsServiceRestTransport):
             """
 
             http_options = _BasePromotionsServiceRestTransport._BaseListPromotions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_promotions(request, metadata)
-            transcoded_request = _BasePromotionsServiceRestTransport._BaseListPromotions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePromotionsServiceRestTransport._BaseListPromotions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePromotionsServiceRestTransport._BaseListPromotions,
+                    "_BaseListPromotions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

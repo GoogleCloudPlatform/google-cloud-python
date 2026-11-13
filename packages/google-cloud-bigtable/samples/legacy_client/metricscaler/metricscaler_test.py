@@ -18,15 +18,17 @@ import os
 import uuid
 
 import pytest
-from metricscaler import get_cpu_load, get_storage_utilization, main, scale_bigtable
 from mock import Mock, patch
 from test_utils.retry import RetryInstanceState, RetryResult
 
 from google.cloud import bigtable
 from google.cloud.bigtable import enums
 
+from . import metricscaler
+from .metricscaler import get_cpu_load, get_storage_utilization, main, scale_bigtable
+
 PROJECT = os.environ["GOOGLE_CLOUD_PROJECT"]
-BIGTABLE_ZONE = os.environ["BIGTABLE_ZONE"]
+BIGTABLE_ZONE = os.environ.get("BIGTABLE_ZONE", "us-central1-b")
 SIZE_CHANGE_STEP = 3
 INSTANCE_ID_FORMAT = "metric-scale-test-{}"
 BIGTABLE_INSTANCE = INSTANCE_ID_FORMAT.format(str(uuid.uuid4())[:10])
@@ -36,14 +38,14 @@ BIGTABLE_DEV_INSTANCE = INSTANCE_ID_FORMAT.format(str(uuid.uuid4())[:10])
 # System tests to verify API calls succeed
 
 
-@patch("metricscaler.query")
+@patch.object(metricscaler, "query")
 def test_get_cpu_load(monitoring_v3_query):
     iter_mock = monitoring_v3_query.Query().select_resources().iter
     iter_mock.return_value = iter([Mock(points=[Mock(value=Mock(double_value=1.0))])])
     assert float(get_cpu_load(BIGTABLE_INSTANCE, BIGTABLE_INSTANCE)) > 0.0
 
 
-@patch("metricscaler.query")
+@patch.object(metricscaler, "query")
 def test_get_storage_utilization(monitoring_v3_query):
     iter_mock = monitoring_v3_query.Query().select_resources().iter
     iter_mock.return_value = iter([Mock(points=[Mock(value=Mock(double_value=1.0))])])
@@ -169,9 +171,9 @@ def test_handle_dev_instance(capsys, dev_instance):
 
 
 @patch("time.sleep")
-@patch("metricscaler.get_storage_utilization")
-@patch("metricscaler.get_cpu_load")
-@patch("metricscaler.scale_bigtable")
+@patch.object(metricscaler, "get_storage_utilization")
+@patch.object(metricscaler, "get_cpu_load")
+@patch.object(metricscaler, "scale_bigtable")
 def test_main(scale_bigtable, get_cpu_load, get_storage_utilization, sleep):
     SHORT_SLEEP = 5
     LONG_SLEEP = 10

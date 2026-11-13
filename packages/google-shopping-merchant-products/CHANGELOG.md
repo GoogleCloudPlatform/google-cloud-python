@@ -4,6 +4,25 @@
 
 [1]: https://pypi.org/project/google-shopping-merchant-products/#history
 
+## [2.0.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-products-v1.9.0...google-shopping-merchant-products-v2.0.0) (2026-11-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* **merchantapi:** remove discontinued Merchant API v1beta ([#19027](https://github.com/googleapis/google-cloud-python/issues/19027))
+
+### Features
+
+* **merchantapi:** remove discontinued Merchant API v1beta ([#19027](https://github.com/googleapis/google-cloud-python/issues/19027)) ([d750513](https://github.com/googleapis/google-cloud-python/commit/d750513ea8fe8e55a7cdc5b8616f182fa19243bf))
+
+## [1.9.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-products-v1.8.0...google-shopping-merchant-products-v1.9.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+* update API sources and regenerate ([#18513](https://github.com/googleapis/google-cloud-python/issues/18513)) ([7d7adca](https://github.com/googleapis/google-cloud-python/commit/7d7adcaee688603077ea53abec678130045c20ed))
+
 ## [1.8.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-products-v1.7.0...google-shopping-merchant-products-v1.8.0) (2026-07-16)
 
 

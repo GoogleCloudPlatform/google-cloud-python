@@ -4,6 +4,42 @@
 
 [1]: https://pypi.org/project/googleapis-common-protos/#history
 
+## [1.76.0](https://github.com/googleapis/google-cloud-python/compare/googleapis-common-protos-v1.75.5...googleapis-common-protos-v1.76.0) (2026-10-22)
+
+
+### Features
+
+* declare support for Python 3.15 ([#18737](https://github.com/googleapis/google-cloud-python/issues/18737)) ([65c8767](https://github.com/googleapis/google-cloud-python/commit/65c87678e7a63aa4c8115c9273581aa5db82fbe9))
+* update API sources and regenerate ([#18797](https://github.com/googleapis/google-cloud-python/issues/18797)) ([be4d954](https://github.com/googleapis/google-cloud-python/commit/be4d954baf9a27cad04637183047b156afa4784a))
+
+## [1.75.5](https://github.com/googleapis/google-cloud-python/compare/googleapis-common-protos-v1.75.4...googleapis-common-protos-v1.75.5) (2026-09-29)
+
+
+### Bug Fixes
+
+* resolve error where google/longrunning/operations.proto is missing ([#18477](https://github.com/googleapis/google-cloud-python/issues/18477)) ([e1d306a](https://github.com/googleapis/google-cloud-python/commit/e1d306a5e0213f99e2c9d740a25622f006e3bb46)), refs [#18478](https://github.com/googleapis/google-cloud-python/issues/18478)
+
+## [1.75.4](https://github.com/googleapis/google-cloud-python/compare/googleapis-common-protos-v1.75.3...googleapis-common-protos-v1.75.4) (2026-09-24)
+
+
+### Bug Fixes
+
+* regenerate gencode with protobuf 6.33.5 ([#18461](https://github.com/googleapis/google-cloud-python/issues/18461)) ([9cb21d0](https://github.com/googleapis/google-cloud-python/commit/9cb21d0053a21366b564a7cf3858a3baa03c6659))
+
+## [1.75.3](https://github.com/googleapis/google-cloud-python/compare/googleapis-common-protos-v1.75.2...googleapis-common-protos-v1.75.3) (2026-09-03)
+
+
+### Bug Fixes
+
+* **googleapis-common-protos:** remove deprecated license classifier ([#18242](https://github.com/googleapis/google-cloud-python/issues/18242)) ([6f0216a](https://github.com/googleapis/google-cloud-python/commit/6f0216a2dc492236c80822de4439c8ab2c6bd9be)), refs [#18235](https://github.com/googleapis/google-cloud-python/issues/18235)
+
+## [1.75.2](https://github.com/googleapis/google-cloud-python/compare/googleapis-common-protos-v1.75.1...googleapis-common-protos-v1.75.2) (2026-08-21)
+
+
+### Documentation
+
+* **django-spanner, common-protos:** centralize CONTRIBUTING.rst pointers ([#18041](https://github.com/googleapis/google-cloud-python/issues/18041)) ([2b056ab](https://github.com/googleapis/google-cloud-python/commit/2b056ab2788411bb555c6697a94d76c83ca2a863))
+
 ## [1.75.1](https://github.com/googleapis/google-cloud-python/compare/googleapis-common-protos-v1.75.0...googleapis-common-protos-v1.75.1) (2026-08-06)
 
 

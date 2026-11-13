@@ -4,6 +4,20 @@
 
 [1]: https://pypi.org/project/google-maps-areainsights/#history
 
+## [0.5.2](https://github.com/googleapis/google-cloud-python/compare/google-maps-areainsights-v0.5.1...google-maps-areainsights-v0.5.2) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [0.5.1](https://github.com/googleapis/google-cloud-python/compare/google-maps-areainsights-v0.5.0...google-maps-areainsights-v0.5.1) (2026-09-03)
+
+
+### Features
+
+* update googleapis and regenerate ([#18229](https://github.com/googleapis/google-cloud-python/issues/18229)) ([d4f8a57](https://github.com/googleapis/google-cloud-python/commit/d4f8a57abadd282ad95472e77daa59d8fb98cbcf))
+
 ## [0.5.0](https://github.com/googleapis/google-cloud-python/compare/google-maps-areainsights-v0.4.0...google-maps-areainsights-v0.5.0) (2026-06-02)
 
 

@@ -53,12 +53,12 @@ class PrivateAuctionDeal(proto.Message):
             This field is a member of `oneof`_ ``_private_auction_deal_id``.
         private_auction_id (int):
             Immutable. The ID of the
-            `PrivateAuction <google.ads.admanager.v1.PrivateAuction>`__.
+            [PrivateAuction][google.ads.admanager.v1.PrivateAuction].
 
             This field is a member of `oneof`_ ``_private_auction_id``.
         private_auction_display_name (str):
             Output only. The display name of the
-            `PrivateAuction <google.ads.admanager.v1.PrivateAuction>`__.
+            [PrivateAuction][google.ads.admanager.v1.PrivateAuction].
 
             This field is a member of `oneof`_ ``_private_auction_display_name``.
         buyer_account_id (int):
@@ -74,6 +74,14 @@ class PrivateAuctionDeal(proto.Message):
             Optional. The targeting of the ``PrivateAuctionDeal``.
 
             This field is a member of `oneof`_ ``_targeting``.
+        start_time (google.protobuf.timestamp_pb2.Timestamp):
+            Optional. Non-empty default. The start time of the
+            ``PrivateAuctionDeal``. If unset, the ``startTime`` will
+            default as follows: On create: To the deal's
+            ``create_time``. On update: To the deal's existing
+            ``start_time``, which can be null.
+
+            This field is a member of `oneof`_ ``_start_time``.
         end_time (google.protobuf.timestamp_pb2.Timestamp):
             Optional. The end time of the ``PrivateAuctionDeal``.
 
@@ -99,6 +107,11 @@ class PrivateAuctionDeal(proto.Message):
             enabled.
 
             This field is a member of `oneof`_ ``_block_override_enabled``.
+        publisher_floor_exempt (bool):
+            Optional. Whether the deal is exempt from
+            publisher floor price.
+
+            This field is a member of `oneof`_ ``_publisher_floor_exempt``.
         buyer_permission_type (google.ads.admanager_v1.types.DealBuyerPermissionTypeEnum.DealBuyerPermissionType):
             Optional. The buyer permission model defining
             how the deal would transact among all buyers
@@ -115,6 +128,10 @@ class PrivateAuctionDeal(proto.Message):
             non-guaranteed deals.
 
             This field is a member of `oneof`_ ``_deal_priority``.
+        archived (bool):
+            Output only. Whether the deal is archived.
+
+            This field is a member of `oneof`_ ``_archived``.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The instant at which the ``PrivateAuctionDeal``
             was created.
@@ -177,6 +194,12 @@ class PrivateAuctionDeal(proto.Message):
         optional=True,
         message=gaa_targeting.Targeting,
     )
+    start_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=26,
+        optional=True,
+        message=timestamp_pb2.Timestamp,
+    )
     end_time: timestamp_pb2.Timestamp = proto.Field(
         proto.MESSAGE,
         number=8,
@@ -210,6 +233,11 @@ class PrivateAuctionDeal(proto.Message):
         number=12,
         optional=True,
     )
+    publisher_floor_exempt: bool = proto.Field(
+        proto.BOOL,
+        number=24,
+        optional=True,
+    )
     buyer_permission_type: deal_buyer_permission_type_enum.DealBuyerPermissionTypeEnum.DealBuyerPermissionType = proto.Field(
         proto.ENUM,
         number=13,
@@ -227,6 +255,11 @@ class PrivateAuctionDeal(proto.Message):
         number=22,
         optional=True,
         message=non_guaranteed_deal_priority.NonGuaranteedDealPriority,
+    )
+    archived: bool = proto.Field(
+        proto.BOOL,
+        number=23,
+        optional=True,
     )
     create_time: timestamp_pb2.Timestamp = proto.Field(
         proto.MESSAGE,

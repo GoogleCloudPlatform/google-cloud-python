@@ -17,14 +17,18 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
+
+from google.cloud.auditmanager_v1.types import parameters
 
 __protobuf__ = proto.module(
     package="google.cloud.auditmanager.v1",
     manifest={
         "OperationState",
         "ComplianceState",
+        "ScheduleState",
         "EnrollResourceRequest",
         "GenerateAuditScopeReportRequest",
         "GenerateAuditReportRequest",
@@ -47,6 +51,13 @@ __protobuf__ = proto.module(
         "DestinationDetails",
         "ReportSummary",
         "ControlDetails",
+        "CreateAuditScheduleRequest",
+        "UpdateAuditScheduleRequest",
+        "GetAuditScheduleRequest",
+        "ListAuditSchedulesRequest",
+        "ListAuditSchedulesResponse",
+        "AuditSchedule",
+        "ScheduleConfig",
     },
 )
 
@@ -115,6 +126,39 @@ class ComplianceState(proto.Enum):
     AUDIT_NOT_SUPPORTED = 5
 
 
+class ScheduleState(proto.Enum):
+    r"""State of an audit schedule.
+
+    Values:
+        SCHEDULE_STATE_UNSPECIFIED (0):
+            Default value. This value is unused.
+        SCHEDULE_STATE_ACTIVE (1):
+            Schedule is active and will trigger runs.
+        SCHEDULE_STATE_PAUSED (2):
+            Schedule is paused and will not trigger runs.
+        SCHEDULE_STATE_COMPLETED (3):
+            Schedule end time has passed.
+        SCHEDULE_STATE_FAILED_SETUP (4):
+            Schedule setup failed during creation or
+            update.
+        SCHEDULE_STATE_ERROR (5):
+            Schedule is in an error state due to
+            persistent failure to trigger an audit. Manual
+            intervention is required.
+        SCHEDULE_STATE_DELETED (6):
+            Schedule has been marked for deletion by the
+            user.
+    """
+
+    SCHEDULE_STATE_UNSPECIFIED = 0
+    SCHEDULE_STATE_ACTIVE = 1
+    SCHEDULE_STATE_PAUSED = 2
+    SCHEDULE_STATE_COMPLETED = 3
+    SCHEDULE_STATE_FAILED_SETUP = 4
+    SCHEDULE_STATE_ERROR = 5
+    SCHEDULE_STATE_DELETED = 6
+
+
 class EnrollResourceRequest(proto.Message):
     r"""Request message for
     [EnrollResource][google.cloud.auditmanager.v1.AuditManager.EnrollResource].
@@ -139,6 +183,23 @@ class EnrollResourceRequest(proto.Message):
             service agent at the organization or folder
             level, all the buckets that are associated with
             the service agent are available.
+        validate_only (bool):
+            Optional. If ``true``, only validates the request and does
+            not enroll the resource. This executes standard request
+            validation (such as schema, IAM, and destination checks) and
+            skips the apply phase.
+
+            Use this field for the following purposes:
+
+            - **Infrastructure as Code (IaC)**: Allow tools like
+              Terraform to run dry-run mutations (e.g.,
+              ``terraform plan``) without creating real resources or
+              incurring costs.
+            - **User Interface Validation**: Enable real-time form and
+              permission validation in custom UIs before submitting
+              requests.
+            - **CI/CD & Automation**: Test your scripts, permissions,
+              and parameters safely without consuming resource quotas.
     """
 
     class EligibleDestination(proto.Message):
@@ -173,6 +234,10 @@ class EnrollResourceRequest(proto.Message):
         number=2,
         message=EligibleDestination,
     )
+    validate_only: bool = proto.Field(
+        proto.BOOL,
+        number=4,
+    )
 
 
 class GenerateAuditScopeReportRequest(proto.Message):
@@ -197,6 +262,27 @@ class GenerateAuditScopeReportRequest(proto.Message):
         compliance_framework (str):
             Required. Framework (set of controls) that the audit scope
             report is generated against. For example, ``NIST_800_53``.
+        validate_only (bool):
+            Optional. If ``true``, only validates the request and does
+            not generate the audit scope report. This executes standard
+            request validation (such as schema, framework existence,
+            scope, and IAM checks) and skips the apply phase.
+
+            Use this field for the following purposes:
+
+            - **Infrastructure as Code (IaC)**: Allow tools like
+              Terraform to run dry-run mutations (e.g.,
+              ``terraform plan``) without creating real resources or
+              incurring costs.
+            - **User Interface Validation**: Enable real-time form and
+              permission validation in custom UIs before submitting
+              requests.
+            - **CI/CD & Automation**: Test your scripts, permissions,
+              and parameters safely without consuming resource quotas.
+        parameter_overrides (MutableMapping[str, google.cloud.auditmanager_v1.types.ParameterOverrides]):
+            Optional. Maps dynamic parameter overrides by Cloud Control
+            resource name at execution time. For example,
+            ``{"organizations/123/locations/global/cloudControls/control-1": {parameters: [...]}}``
     """
 
     class AuditScopeReportFormat(proto.Enum):
@@ -228,6 +314,18 @@ class GenerateAuditScopeReportRequest(proto.Message):
     compliance_framework: str = proto.Field(
         proto.STRING,
         number=5,
+    )
+    validate_only: bool = proto.Field(
+        proto.BOOL,
+        number=6,
+    )
+    parameter_overrides: MutableMapping[str, parameters.ParameterOverrides] = (
+        proto.MapField(
+            proto.STRING,
+            proto.MESSAGE,
+            number=7,
+            message=parameters.ParameterOverrides,
+        )
     )
 
 
@@ -263,6 +361,10 @@ class GenerateAuditReportRequest(proto.Message):
         compliance_framework (str):
             Required. The framework that's used for the audit report.
             For example, ``NIST_800_53``.
+        parameter_overrides (MutableMapping[str, google.cloud.auditmanager_v1.types.ParameterOverrides]):
+            Optional. Maps dynamic parameter overrides by Cloud Control
+            resource name at execution time. For example,
+            ``{"organizations/123/locations/global/cloudControls/control-1": {parameters: [...]}}``
         validate_only (bool):
             Optional. If ``true``, only validates the request and does
             not generate the audit report. This executes standard
@@ -318,6 +420,14 @@ class GenerateAuditReportRequest(proto.Message):
     compliance_framework: str = proto.Field(
         proto.STRING,
         number=5,
+    )
+    parameter_overrides: MutableMapping[str, parameters.ParameterOverrides] = (
+        proto.MapField(
+            proto.STRING,
+            proto.MESSAGE,
+            number=7,
+            message=parameters.ParameterOverrides,
+        )
     )
     validate_only: bool = proto.Field(
         proto.BOOL,
@@ -871,6 +981,10 @@ class AuditReport(proto.Message):
             Output only. Project number, folder ID, or
             organization ID that the audit report was
             generated for.
+        cloud_control_parameter_states (MutableMapping[str, google.cloud.auditmanager_v1.types.CloudControlParameterStates]):
+            Output only. Parameter values provided by the
+            user and values for tunable parameters, stored
+            in the DB, keyed by control name.
     """
 
     class ReportGenerationState(proto.Enum):
@@ -949,6 +1063,14 @@ class AuditReport(proto.Message):
     scope_id: str = proto.Field(
         proto.STRING,
         number=11,
+    )
+    cloud_control_parameter_states: MutableMapping[
+        str, parameters.CloudControlParameterStates
+    ] = proto.MapField(
+        proto.STRING,
+        proto.MESSAGE,
+        number=16,
+        message=parameters.CloudControlParameterStates,
     )
 
 
@@ -1213,6 +1335,403 @@ class ControlDetails(proto.Message):
         proto.MESSAGE,
         number=3,
         message="ReportSummary",
+    )
+
+
+class CreateAuditScheduleRequest(proto.Message):
+    r"""Request message for
+    [CreateAuditSchedule][google.cloud.auditmanager.v1.AuditManager.CreateAuditSchedule].
+
+    Attributes:
+        parent (str):
+            Required. Project or folder that this audit schedule is for,
+            in one of the following formats:
+
+            - ``projects/{project}/locations/{location}``
+            - ``folders/{folder}/locations/{location}``
+        audit_schedule (google.cloud.auditmanager_v1.types.AuditSchedule):
+            Required. Audit schedule to create.
+        audit_schedule_id (str):
+            Required. ID to use for the audit schedule,
+            which becomes the final component of the audit
+            schedule's resource name.
+        validate_only (bool):
+            Optional. If ``true``, only validates the request and does
+            not create the audit schedule. This executes standard
+            request validation (such as schema, framework existence,
+            scope, and IAM checks) and skips the apply phase.
+
+            Use this field for the following purposes:
+
+            - **Infrastructure as Code (IaC)**: Allow tools like
+              Terraform to run dry-run mutations (e.g.,
+              ``terraform plan``) without creating real resources or
+              incurring costs.
+            - **User Interface Validation**: Enable real-time form and
+              permission validation in custom UIs before submitting
+              requests.
+            - **CI/CD & Automation**: Test your scripts, permissions,
+              and parameters safely without consuming resource quotas.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    audit_schedule: "AuditSchedule" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="AuditSchedule",
+    )
+    audit_schedule_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    validate_only: bool = proto.Field(
+        proto.BOOL,
+        number=4,
+    )
+
+
+class UpdateAuditScheduleRequest(proto.Message):
+    r"""Request message for
+    [UpdateAuditSchedule][google.cloud.auditmanager.v1.AuditManager.UpdateAuditSchedule].
+
+    Attributes:
+        audit_schedule (google.cloud.auditmanager_v1.types.AuditSchedule):
+            Required. Audit schedule to update.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. List of fields to update.
+        validate_only (bool):
+            Optional. If ``true``, only validates the request and does
+            not update the audit schedule. This executes standard
+            request validation (such as schema, framework existence,
+            scope, and IAM checks) and skips the apply phase.
+
+            Use this field for the following purposes:
+
+            - **Infrastructure as Code (IaC)**: Allow tools like
+              Terraform to run dry-run mutations (e.g.,
+              ``terraform plan``) without creating real resources or
+              incurring costs.
+            - **User Interface Validation**: Enable real-time form and
+              permission validation in custom UIs before submitting
+              requests.
+            - **CI/CD & Automation**: Test your scripts, permissions,
+              and parameters safely without consuming resource quotas.
+    """
+
+    audit_schedule: "AuditSchedule" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="AuditSchedule",
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+    validate_only: bool = proto.Field(
+        proto.BOOL,
+        number=3,
+    )
+
+
+class GetAuditScheduleRequest(proto.Message):
+    r"""Request message for
+    [GetAuditSchedule][google.cloud.auditmanager.v1.AuditManager.GetAuditSchedule].
+
+    Attributes:
+        name (str):
+            Required. Name of the audit schedule to retrieve, in one of
+            the following formats:
+
+            - ``projects/{project}/locations/{location}/auditSchedules/{audit_schedule}``
+            - ``folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}``
+            - ``organizations/{organization}/locations/{location}/auditSchedules/{audit_schedule}``
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListAuditSchedulesRequest(proto.Message):
+    r"""Request message for
+    [ListAuditSchedules][google.cloud.auditmanager.v1.AuditManager.ListAuditSchedules].
+
+    Attributes:
+        parent (str):
+            Required. Parent for the audit schedule, in one of the
+            following formats:
+
+            - ``projects/{project}/locations/{location}``
+            - ``folders/{folder}/locations/{location}``
+            - ``organizations/{organization}/locations/{location}``
+        page_size (int):
+            Optional. Maximum number of items to return
+            in a single page. The service might return fewer
+            items than this value. If unspecified, the
+            service picks an appropriate default. The
+            maximum value is 100; values above 100 are
+            reduced to 100.
+        page_token (str):
+            Optional. A page token, received from a
+            previous call, to retrieve the next page of
+            results.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListAuditSchedulesResponse(proto.Message):
+    r"""Response message for
+    [ListAuditSchedules][google.cloud.auditmanager.v1.AuditManager.ListAuditSchedules].
+
+    Attributes:
+        audit_schedules (MutableSequence[google.cloud.auditmanager_v1.types.AuditSchedule]):
+            List of audit schedules.
+        next_page_token (str):
+            A token that you can send as the ``page_token`` in a
+            subsequent request to retrieve the next page of results. If
+            this field is empty, there are no subsequent pages.
+        unreachable (MutableSequence[str]):
+            Locations that can't be reached.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    audit_schedules: MutableSequence["AuditSchedule"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="AuditSchedule",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    unreachable: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+
+
+class AuditSchedule(proto.Message):
+    r"""An audit schedule, in one of the following formats:
+
+    - ``projects/{project}/locations/{location}/auditSchedules/{audit_schedule}``
+    - ``folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}``
+
+    Attributes:
+        name (str):
+            Identifier. Unique identifier for the audit schedule.
+            Format:
+            projects/{project}/locations/{location}/auditSchedules/{audit_schedule}
+            folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}
+            organizations/{organization}/locations/{location}/auditSchedules/{audit_schedule}
+        display_name (str):
+            Optional. Display name for the audit
+            schedule.
+        gcs_uri (str):
+            Required. Cloud Storage bucket where Audit Manager can
+            upload the audit report and evidence. The format is
+            ``gs://{bucket_name}``.
+        compliance_framework (str):
+            Required. Framework (set of controls) that the audit scope
+            report is generated against. For example, ``NIST_800_53``.
+        report_format (google.cloud.auditmanager_v1.types.AuditSchedule.AuditReportFormat):
+            Required. Format for the audit report.
+        schedule_config (google.cloud.auditmanager_v1.types.ScheduleConfig):
+            Required. Configuration that defines when and
+            how often audit runs are automatically triggered
+            for this schedule.
+        state (google.cloud.auditmanager_v1.types.ScheduleState):
+            Optional. State of the audit schedule. While most states are
+            managed by the system, you can use
+            [UpdateAuditSchedule][google.cloud.auditmanager.v1.AuditManager.UpdateAuditSchedule]
+            to start, pause, or delete the schedule.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Timestamp when the schedule was
+            created.
+        update_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Timestamp when the schedule was
+            last updated.
+        next_run_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Calculated timestamp for the
+            next scheduled run.
+        last_trigger_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Timestamp when the audit run was
+            last triggered.
+        error_message (str):
+            Output only. Describes the error if the
+            schedule is in an error state.
+        parameter_overrides (MutableMapping[str, google.cloud.auditmanager_v1.types.ParameterOverrides]):
+            Optional. Maps dynamic parameter overrides by Cloud Control
+            resource name at execution time. For example,
+            ``{"organizations/123/locations/global/cloudControls/control-1": {parameters: [...]}}``
+    """
+
+    class AuditReportFormat(proto.Enum):
+        r"""Format for the audit report.
+
+        Values:
+            AUDIT_REPORT_FORMAT_UNSPECIFIED (0):
+                Default value. This value is unused.
+            AUDIT_REPORT_FORMAT_ODF (1):
+                Open Document Format (ODF).
+        """
+
+        AUDIT_REPORT_FORMAT_UNSPECIFIED = 0
+        AUDIT_REPORT_FORMAT_ODF = 1
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    display_name: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    gcs_uri: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    compliance_framework: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    report_format: AuditReportFormat = proto.Field(
+        proto.ENUM,
+        number=5,
+        enum=AuditReportFormat,
+    )
+    schedule_config: "ScheduleConfig" = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        message="ScheduleConfig",
+    )
+    state: "ScheduleState" = proto.Field(
+        proto.ENUM,
+        number=7,
+        enum="ScheduleState",
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message=timestamp_pb2.Timestamp,
+    )
+    update_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=9,
+        message=timestamp_pb2.Timestamp,
+    )
+    next_run_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=10,
+        message=timestamp_pb2.Timestamp,
+    )
+    last_trigger_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=11,
+        message=timestamp_pb2.Timestamp,
+    )
+    error_message: str = proto.Field(
+        proto.STRING,
+        number=13,
+    )
+    parameter_overrides: MutableMapping[str, parameters.ParameterOverrides] = (
+        proto.MapField(
+            proto.STRING,
+            proto.MESSAGE,
+            number=14,
+            message=parameters.ParameterOverrides,
+        )
+    )
+
+
+class ScheduleConfig(proto.Message):
+    r"""Timing and frequency parameters for recurring audit runs.
+
+    Attributes:
+        start_time (google.protobuf.timestamp_pb2.Timestamp):
+            Required. Date and time when the first audit
+            run is triggered. Subsequent runs are based on
+            this time and the chosen frequency.
+        end_time (google.protobuf.timestamp_pb2.Timestamp):
+            Optional. Date that the schedule stops.
+            If not specified, the schedule runs
+            indefinitely.
+        frequency (google.cloud.auditmanager_v1.types.ScheduleConfig.Frequency):
+            Required. Frequency of audit runs.
+        time_zone (str):
+            Optional. Time zone for the audit schedule in IANA format
+            (for example, ``America/New_York``). The time zone is used
+            to interpret the ``start_time`` and the ``end_time``, and to
+            calculate subsequent run dates. If not specified, the time
+            zone default is UTC.
+    """
+
+    class Frequency(proto.Enum):
+        r"""Frequency of audit runs.
+
+        Values:
+            FREQUENCY_UNSPECIFIED (0):
+                Default value. This value is unused.
+            DAILY (1):
+                The audit runs every day.
+            WEEKLY (2):
+                The audit runs weekly on the same day of the week as
+                ``start_time``.
+            MONTHLY (3):
+                The audit runs monthly on the same day of the month as
+                ``start_time``.
+            QUARTERLY (4):
+                The audit runs quarterly (every 3 months) on the same day of
+                the month as ``start_time``.
+            ANNUALLY (5):
+                The audit runs annually on the same month and day as
+                ``start_time``.
+        """
+
+        FREQUENCY_UNSPECIFIED = 0
+        DAILY = 1
+        WEEKLY = 2
+        MONTHLY = 3
+        QUARTERLY = 4
+        ANNUALLY = 5
+
+    start_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=timestamp_pb2.Timestamp,
+    )
+    end_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=timestamp_pb2.Timestamp,
+    )
+    frequency: Frequency = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=Frequency,
+    )
+    time_zone: str = proto.Field(
+        proto.STRING,
+        number=4,
     )
 
 

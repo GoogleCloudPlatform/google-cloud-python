@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dialogflowcx_v3beta1._compat import transcode_request
 from google.cloud.dialogflowcx_v3beta1.types import example
 from google.cloud.dialogflowcx_v3beta1.types import example as gcdc_example
 
@@ -598,23 +599,16 @@ class ExamplesRestTransport(_BaseExamplesRestTransport):
             http_options = (
                 _BaseExamplesRestTransport._BaseCreateExample._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_example(request, metadata)
-            transcoded_request = (
-                _BaseExamplesRestTransport._BaseCreateExample._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseExamplesRestTransport._BaseCreateExample._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExamplesRestTransport._BaseCreateExample._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExamplesRestTransport._BaseCreateExample,
+                    "_BaseCreateExample__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -748,19 +742,16 @@ class ExamplesRestTransport(_BaseExamplesRestTransport):
             http_options = (
                 _BaseExamplesRestTransport._BaseDeleteExample._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_example(request, metadata)
-            transcoded_request = (
-                _BaseExamplesRestTransport._BaseDeleteExample._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExamplesRestTransport._BaseDeleteExample._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExamplesRestTransport._BaseDeleteExample,
+                    "_BaseDeleteExample__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -867,19 +858,16 @@ class ExamplesRestTransport(_BaseExamplesRestTransport):
             http_options = (
                 _BaseExamplesRestTransport._BaseGetExample._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_example(request, metadata)
-            transcoded_request = (
-                _BaseExamplesRestTransport._BaseGetExample._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExamplesRestTransport._BaseGetExample._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExamplesRestTransport._BaseGetExample,
+                    "_BaseGetExample__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1016,19 +1004,16 @@ class ExamplesRestTransport(_BaseExamplesRestTransport):
             http_options = (
                 _BaseExamplesRestTransport._BaseListExamples._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_examples(request, metadata)
-            transcoded_request = (
-                _BaseExamplesRestTransport._BaseListExamples._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExamplesRestTransport._BaseListExamples._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExamplesRestTransport._BaseListExamples,
+                    "_BaseListExamples__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1172,23 +1157,16 @@ class ExamplesRestTransport(_BaseExamplesRestTransport):
             http_options = (
                 _BaseExamplesRestTransport._BaseUpdateExample._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_example(request, metadata)
-            transcoded_request = (
-                _BaseExamplesRestTransport._BaseUpdateExample._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseExamplesRestTransport._BaseUpdateExample._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExamplesRestTransport._BaseUpdateExample._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExamplesRestTransport._BaseUpdateExample,
+                    "_BaseUpdateExample__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1364,19 +1342,16 @@ class ExamplesRestTransport(_BaseExamplesRestTransport):
             http_options = (
                 _BaseExamplesRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseExamplesRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExamplesRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExamplesRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1508,19 +1483,16 @@ class ExamplesRestTransport(_BaseExamplesRestTransport):
             http_options = (
                 _BaseExamplesRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseExamplesRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExamplesRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExamplesRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1649,21 +1621,18 @@ class ExamplesRestTransport(_BaseExamplesRestTransport):
             http_options = (
                 _BaseExamplesRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseExamplesRestTransport._BaseCancelOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExamplesRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExamplesRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1768,19 +1737,16 @@ class ExamplesRestTransport(_BaseExamplesRestTransport):
             http_options = (
                 _BaseExamplesRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseExamplesRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExamplesRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExamplesRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1912,19 +1878,16 @@ class ExamplesRestTransport(_BaseExamplesRestTransport):
             http_options = (
                 _BaseExamplesRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseExamplesRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExamplesRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExamplesRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

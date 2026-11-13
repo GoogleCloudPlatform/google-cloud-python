@@ -41,6 +41,7 @@ except ImportError:  # pragma: NO COVER
 import google.api_core.operation_async as operation_async  # type: ignore
 import google.auth
 import google.type.date_pb2 as date_pb2  # type: ignore
+import google.type.latlng_pb2 as latlng_pb2  # type: ignore
 from google.api_core import (
     client_options,
     future,
@@ -65,6 +66,7 @@ from google.cloud.discoveryengine_v1.services.completion_service import (
     transports,
 )
 from google.cloud.discoveryengine_v1.types import (
+    common,
     completion,
     completion_service,
     import_config,
@@ -77,6 +79,18 @@ CRED_INFO_JSON = {
     "principal": "service-account@example.com",
 }
 CRED_INFO_STRING = json.dumps(CRED_INFO_JSON)
+
+
+@pytest.fixture(autouse=True)
+def disable_mtls_env():
+    with mock.patch.dict(
+        os.environ,
+        {
+            "GOOGLE_API_USE_CLIENT_CERTIFICATE": "false",
+            "CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE": "false",
+        },
+    ):
+        yield
 
 
 async def mock_async_gen(data, chunk_size=1):
@@ -134,215 +148,6 @@ def set_event_loop():
             asyncio.set_event_loop(None)
 
 
-def test__get_default_mtls_endpoint():
-    api_endpoint = "example.googleapis.com"
-    api_mtls_endpoint = "example.mtls.googleapis.com"
-    sandbox_endpoint = "example.sandbox.googleapis.com"
-    sandbox_mtls_endpoint = "example.mtls.sandbox.googleapis.com"
-    non_googleapi = "api.example.com"
-    custom_endpoint = ".custom"
-
-    assert CompletionServiceClient._get_default_mtls_endpoint(None) is None
-    assert (
-        CompletionServiceClient._get_default_mtls_endpoint(api_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        CompletionServiceClient._get_default_mtls_endpoint(api_mtls_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        CompletionServiceClient._get_default_mtls_endpoint(sandbox_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        CompletionServiceClient._get_default_mtls_endpoint(sandbox_mtls_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        CompletionServiceClient._get_default_mtls_endpoint(non_googleapi)
-        == non_googleapi
-    )
-    assert (
-        CompletionServiceClient._get_default_mtls_endpoint(custom_endpoint)
-        == custom_endpoint
-    )
-
-
-def test__read_environment_variables():
-    assert CompletionServiceClient._read_environment_variables() == (
-        False,
-        "auto",
-        None,
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-        assert CompletionServiceClient._read_environment_variables() == (
-            True,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}):
-        assert CompletionServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}
-    ):
-        if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-            with pytest.raises(ValueError) as excinfo:
-                CompletionServiceClient._read_environment_variables()
-            assert (
-                str(excinfo.value)
-                == "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be either `true` or `false`"
-            )
-        else:
-            assert CompletionServiceClient._read_environment_variables() == (
-                False,
-                "auto",
-                None,
-            )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "never"}):
-        assert CompletionServiceClient._read_environment_variables() == (
-            False,
-            "never",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "always"}):
-        assert CompletionServiceClient._read_environment_variables() == (
-            False,
-            "always",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "auto"}):
-        assert CompletionServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "Unsupported"}):
-        with pytest.raises(MutualTLSChannelError) as excinfo:
-            CompletionServiceClient._read_environment_variables()
-    assert (
-        str(excinfo.value)
-        == "Environment variable `GOOGLE_API_USE_MTLS_ENDPOINT` must be `never`, `auto` or `always`"
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_CLOUD_UNIVERSE_DOMAIN": "foo.com"}):
-        assert CompletionServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            "foo.com",
-        )
-
-
-def test_use_client_cert_effective():
-    # Test case 1: Test when `should_use_client_cert` returns True.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=True
-        ):
-            assert CompletionServiceClient._use_client_cert_effective() is True
-
-    # Test case 2: Test when `should_use_client_cert` returns False.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should NOT be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=False
-        ):
-            assert CompletionServiceClient._use_client_cert_effective() is False
-
-    # Test case 3: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "true".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-            assert CompletionServiceClient._use_client_cert_effective() is True
-
-    # Test case 4: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}
-        ):
-            assert CompletionServiceClient._use_client_cert_effective() is False
-
-    # Test case 5: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "True".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "True"}):
-            assert CompletionServiceClient._use_client_cert_effective() is True
-
-    # Test case 6: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "False".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "False"}
-        ):
-            assert CompletionServiceClient._use_client_cert_effective() is False
-
-    # Test case 7: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "TRUE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "TRUE"}):
-            assert CompletionServiceClient._use_client_cert_effective() is True
-
-    # Test case 8: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "FALSE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "FALSE"}
-        ):
-            assert CompletionServiceClient._use_client_cert_effective() is False
-
-    # Test case 9: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not set.
-    # In this case, the method should return False, which is the default value.
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, clear=True):
-            assert CompletionServiceClient._use_client_cert_effective() is False
-
-    # Test case 10: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should raise a ValueError as the environment variable must be either
-    # "true" or "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            with pytest.raises(ValueError):
-                CompletionServiceClient._use_client_cert_effective()
-
-    # Test case 11: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should return False as the environment variable is set to an invalid value.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            assert CompletionServiceClient._use_client_cert_effective() is False
-
-    # Test case 12: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is unset. Also,
-    # the GOOGLE_API_CONFIG environment variable is unset.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": ""}):
-            with mock.patch.dict(os.environ, {"GOOGLE_API_CERTIFICATE_CONFIG": ""}):
-                assert CompletionServiceClient._use_client_cert_effective() is False
-
-
 def test__get_client_cert_source():
     mock_provided_cert_source = mock.Mock()
     mock_default_cert_source = mock.Mock()
@@ -376,99 +181,6 @@ def test__get_client_cert_source():
                 )
                 is mock_provided_cert_source
             )
-
-
-@mock.patch.object(
-    CompletionServiceClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(CompletionServiceClient),
-)
-@mock.patch.object(
-    CompletionServiceAsyncClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(CompletionServiceAsyncClient),
-)
-def test__get_api_endpoint():
-    api_override = "foo.com"
-    mock_client_cert_source = mock.Mock()
-    default_universe = CompletionServiceClient._DEFAULT_UNIVERSE
-    default_endpoint = CompletionServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=default_universe
-    )
-    mock_universe = "bar.com"
-    mock_endpoint = CompletionServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=mock_universe
-    )
-
-    assert (
-        CompletionServiceClient._get_api_endpoint(
-            api_override, mock_client_cert_source, default_universe, "always"
-        )
-        == api_override
-    )
-    assert (
-        CompletionServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "auto"
-        )
-        == CompletionServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        CompletionServiceClient._get_api_endpoint(None, None, default_universe, "auto")
-        == default_endpoint
-    )
-    assert (
-        CompletionServiceClient._get_api_endpoint(
-            None, None, default_universe, "always"
-        )
-        == CompletionServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        CompletionServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "always"
-        )
-        == CompletionServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        CompletionServiceClient._get_api_endpoint(None, None, mock_universe, "never")
-        == mock_endpoint
-    )
-    assert (
-        CompletionServiceClient._get_api_endpoint(None, None, default_universe, "never")
-        == default_endpoint
-    )
-
-    with pytest.raises(MutualTLSChannelError) as excinfo:
-        CompletionServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, mock_universe, "auto"
-        )
-    assert (
-        str(excinfo.value)
-        == "mTLS is not supported in any universe other than googleapis.com."
-    )
-
-
-def test__get_universe_domain():
-    client_universe_domain = "foo.com"
-    universe_domain_env = "bar.com"
-
-    assert (
-        CompletionServiceClient._get_universe_domain(
-            client_universe_domain, universe_domain_env
-        )
-        == client_universe_domain
-    )
-    assert (
-        CompletionServiceClient._get_universe_domain(None, universe_domain_env)
-        == universe_domain_env
-    )
-    assert (
-        CompletionServiceClient._get_universe_domain(None, None)
-        == CompletionServiceClient._DEFAULT_UNIVERSE
-    )
-
-    with pytest.raises(ValueError) as excinfo:
-        CompletionServiceClient._get_universe_domain("", None)
-    assert str(excinfo.value) == "Universe Domain cannot be an empty string."
 
 
 @pytest.mark.parametrize(
@@ -996,6 +708,7 @@ def test_completion_service_client_get_mtls_endpoint_and_cert_source(client_clas
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", None)
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", None)
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1050,6 +763,7 @@ def test_completion_service_client_get_mtls_endpoint_and_cert_source(client_clas
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", "")
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", "")
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1375,7 +1089,13 @@ def test_completion_service_client_create_channel_credentials_file(
             credentials=file_creds,
             credentials_file=None,
             quota_project_id=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud_search.query",
+                "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             scopes=None,
             default_host="discoveryengine.googleapis.com",
             ssl_credentials=None,
@@ -1631,6 +1351,271 @@ async def test_complete_query_field_headers_async():
     assert (
         "x-goog-request-params",
         "data_store=data_store_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        completion_service.AdvancedCompleteQueryRequest(),
+        {},
+    ],
+)
+def test_advanced_complete_query(request_type, transport: str = "grpc"):
+    client = CompletionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.advanced_complete_query), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = completion_service.AdvancedCompleteQueryResponse(
+            tail_match_triggered=True,
+        )
+        response = client.advanced_complete_query(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = completion_service.AdvancedCompleteQueryRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, completion_service.AdvancedCompleteQueryResponse)
+    assert response.tail_match_triggered is True
+
+
+def test_advanced_complete_query_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = CompletionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = completion_service.AdvancedCompleteQueryRequest(
+        completion_config="completion_config_value",
+        query="query_value",
+        query_model="query_model_value",
+        user_pseudo_id="user_pseudo_id_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.advanced_complete_query), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.advanced_complete_query(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = completion_service.AdvancedCompleteQueryRequest(
+            completion_config="completion_config_value",
+            query="query_value",
+            query_model="query_model_value",
+            user_pseudo_id="user_pseudo_id_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_advanced_complete_query_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = CompletionServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.advanced_complete_query
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.advanced_complete_query
+        ] = mock_rpc
+        request = {}
+        client.advanced_complete_query(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.advanced_complete_query(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_advanced_complete_query_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = CompletionServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.advanced_complete_query
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.advanced_complete_query
+        ] = mock_rpc
+
+        request = {}
+        await client.advanced_complete_query(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.advanced_complete_query(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        completion_service.AdvancedCompleteQueryRequest(),
+        {},
+    ],
+)
+async def test_advanced_complete_query_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = CompletionServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.advanced_complete_query), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            completion_service.AdvancedCompleteQueryResponse(
+                tail_match_triggered=True,
+            )
+        )
+        response = await client.advanced_complete_query(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = completion_service.AdvancedCompleteQueryRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, completion_service.AdvancedCompleteQueryResponse)
+    assert response.tail_match_triggered is True
+
+
+def test_advanced_complete_query_field_headers():
+    client = CompletionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = completion_service.AdvancedCompleteQueryRequest()
+
+    request.completion_config = "completion_config_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.advanced_complete_query), "__call__"
+    ) as call:
+        call.return_value = completion_service.AdvancedCompleteQueryResponse()
+        client.advanced_complete_query(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "completion_config=completion_config_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_advanced_complete_query_field_headers_async():
+    client = CompletionServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = completion_service.AdvancedCompleteQueryRequest()
+
+    request.completion_config = "completion_config_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.advanced_complete_query), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            completion_service.AdvancedCompleteQueryResponse()
+        )
+        await client.advanced_complete_query(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "completion_config=completion_config_value",
     ) in kw["metadata"]
 
 
@@ -2739,9 +2724,14 @@ def test_complete_query_rest_required_fields(
     # verify fields with default values are dropped
     assert "query" not in jsonified_request
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).complete_query._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCompleteQuery,
+        "_BaseCompleteQuery__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -2751,19 +2741,15 @@ def test_complete_query_rest_required_fields(
     jsonified_request["dataStore"] = "data_store_value"
     jsonified_request["query"] = "query_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).complete_query._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "include_tail_suggestions",
+            "includeTailSuggestions",
             "query",
-            "query_model",
-            "user_pseudo_id",
+            "queryModel",
+            "userPseudoId",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "dataStore" in jsonified_request
@@ -2819,28 +2805,127 @@ def test_complete_query_rest_required_fields(
             assert sorted(expected_params) == sorted(actual_params)
 
 
-def test_complete_query_rest_unset_required_fields():
-    transport = transports.CompletionServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
+def test_advanced_complete_query_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = CompletionServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.advanced_complete_query
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.advanced_complete_query
+        ] = mock_rpc
+
+        request = {}
+        client.advanced_complete_query(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.advanced_complete_query(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_advanced_complete_query_rest_required_fields(
+    request_type=completion_service.AdvancedCompleteQueryRequest,
+):
+    transport_class = transports.CompletionServiceRestTransport
+
+    request_init = {}
+    request_init["completion_config"] = ""
+    request_init["query"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
     )
 
-    unset_fields = transport.complete_query._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "includeTailSuggestions",
-                "query",
-                "queryModel",
-                "userPseudoId",
-            )
-        )
-        & set(
-            (
-                "dataStore",
-                "query",
-            )
-        )
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseAdvancedCompleteQuery,
+        "_BaseAdvancedCompleteQuery__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
     )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["completionConfig"] = "completion_config_value"
+    jsonified_request["query"] = "query_value"
+
+    # verify required fields with non-default values are left alone
+    assert "completionConfig" in jsonified_request
+    assert jsonified_request["completionConfig"] == "completion_config_value"
+    assert "query" in jsonified_request
+    assert jsonified_request["query"] == "query_value"
+
+    client = CompletionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = completion_service.AdvancedCompleteQueryResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = completion_service.AdvancedCompleteQueryResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.advanced_complete_query(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
 
 
 def test_import_suggestion_deny_list_entries_rest_use_cached_wrapped_rpc():
@@ -2903,19 +2988,19 @@ def test_import_suggestion_deny_list_entries_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).import_suggestion_deny_list_entries._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseImportSuggestionDenyListEntries,
+        "_BaseImportSuggestionDenyListEntries__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).import_suggestion_deny_list_entries._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -2959,17 +3044,6 @@ def test_import_suggestion_deny_list_entries_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_import_suggestion_deny_list_entries_rest_unset_required_fields():
-    transport = transports.CompletionServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = (
-        transport.import_suggestion_deny_list_entries._get_unset_required_fields({})
-    )
-    assert set(unset_fields) == (set(()) & set(("parent",)))
 
 
 def test_purge_suggestion_deny_list_entries_rest_use_cached_wrapped_rpc():
@@ -3032,19 +3106,19 @@ def test_purge_suggestion_deny_list_entries_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).purge_suggestion_deny_list_entries._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePurgeSuggestionDenyListEntries,
+        "_BasePurgeSuggestionDenyListEntries__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).purge_suggestion_deny_list_entries._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -3088,17 +3162,6 @@ def test_purge_suggestion_deny_list_entries_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_purge_suggestion_deny_list_entries_rest_unset_required_fields():
-    transport = transports.CompletionServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = (
-        transport.purge_suggestion_deny_list_entries._get_unset_required_fields({})
-    )
-    assert set(unset_fields) == (set(()) & set(("parent",)))
 
 
 def test_import_completion_suggestions_rest_use_cached_wrapped_rpc():
@@ -3161,19 +3224,19 @@ def test_import_completion_suggestions_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).import_completion_suggestions._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseImportCompletionSuggestions,
+        "_BaseImportCompletionSuggestions__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).import_completion_suggestions._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -3217,17 +3280,6 @@ def test_import_completion_suggestions_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_import_completion_suggestions_rest_unset_required_fields():
-    transport = transports.CompletionServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.import_completion_suggestions._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (set(()) & set(("parent",)))
 
 
 def test_purge_completion_suggestions_rest_use_cached_wrapped_rpc():
@@ -3290,19 +3342,19 @@ def test_purge_completion_suggestions_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).purge_completion_suggestions._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BasePurgeCompletionSuggestions,
+        "_BasePurgeCompletionSuggestions__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).purge_completion_suggestions._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -3346,15 +3398,6 @@ def test_purge_completion_suggestions_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_purge_completion_suggestions_rest_unset_required_fields():
-    transport = transports.CompletionServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.purge_completion_suggestions._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("parent",)))
 
 
 def test_credentials_transport_error():
@@ -3485,6 +3528,28 @@ def test_complete_query_empty_call_grpc():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_advanced_complete_query_empty_call_grpc():
+    client = CompletionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.advanced_complete_query), "__call__"
+    ) as call:
+        call.return_value = completion_service.AdvancedCompleteQueryResponse()
+        client.advanced_complete_query(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = completion_service.AdvancedCompleteQueryRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_import_suggestion_deny_list_entries_empty_call_grpc():
     client = CompletionServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -3608,6 +3673,34 @@ async def test_complete_query_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = completion_service.CompleteQueryRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_advanced_complete_query_empty_call_grpc_asyncio():
+    client = CompletionServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.advanced_complete_query), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            completion_service.AdvancedCompleteQueryResponse(
+                tail_match_triggered=True,
+            )
+        )
+        await client.advanced_complete_query(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = completion_service.AdvancedCompleteQueryRequest()
         assert args[0] == request_msg
 
 
@@ -3850,6 +3943,146 @@ def test_complete_query_rest_interceptors(null_interceptor):
         )
 
         client.complete_query(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_advanced_complete_query_rest_bad_request(
+    request_type=completion_service.AdvancedCompleteQueryRequest,
+):
+    client = CompletionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "completion_config": "projects/sample1/locations/sample2/dataStores/sample3/completionConfig"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.advanced_complete_query(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        completion_service.AdvancedCompleteQueryRequest,
+        dict,
+    ],
+)
+def test_advanced_complete_query_rest_call_success(request_type):
+    client = CompletionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "completion_config": "projects/sample1/locations/sample2/dataStores/sample3/completionConfig"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = completion_service.AdvancedCompleteQueryResponse(
+            tail_match_triggered=True,
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = completion_service.AdvancedCompleteQueryResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.advanced_complete_query(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, completion_service.AdvancedCompleteQueryResponse)
+    assert response.tail_match_triggered is True
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_advanced_complete_query_rest_interceptors(null_interceptor):
+    transport = transports.CompletionServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.CompletionServiceRestInterceptor(),
+    )
+    client = CompletionServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.CompletionServiceRestInterceptor, "post_advanced_complete_query"
+        ) as post,
+        mock.patch.object(
+            transports.CompletionServiceRestInterceptor,
+            "post_advanced_complete_query_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.CompletionServiceRestInterceptor, "pre_advanced_complete_query"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = completion_service.AdvancedCompleteQueryRequest.pb(
+            completion_service.AdvancedCompleteQueryRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = completion_service.AdvancedCompleteQueryResponse.to_json(
+            completion_service.AdvancedCompleteQueryResponse()
+        )
+        req.return_value.content = return_value
+
+        request = completion_service.AdvancedCompleteQueryRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = completion_service.AdvancedCompleteQueryResponse()
+        post_with_metadata.return_value = (
+            completion_service.AdvancedCompleteQueryResponse(),
+            metadata,
+        )
+
+        client.advanced_complete_query(
             request,
             metadata=[
                 ("key", "val"),
@@ -4605,6 +4838,27 @@ def test_complete_query_empty_call_rest():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_advanced_complete_query_empty_call_rest():
+    client = CompletionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.advanced_complete_query), "__call__"
+    ) as call:
+        client.advanced_complete_query(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = completion_service.AdvancedCompleteQueryRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_import_suggestion_deny_list_entries_empty_call_rest():
     client = CompletionServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -4738,6 +4992,7 @@ def test_completion_service_base_transport():
     # raise NotImplementedError.
     methods = (
         "complete_query",
+        "advanced_complete_query",
         "import_suggestion_deny_list_entries",
         "purge_suggestion_deny_list_entries",
         "import_completion_suggestions",
@@ -4786,7 +5041,13 @@ def test_completion_service_base_transport_with_credentials_file():
         load_creds.assert_called_once_with(
             "credentials.json",
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud_search.query",
+                "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id="octopus",
         )
 
@@ -4812,7 +5073,13 @@ def test_completion_service_auth_adc():
         CompletionServiceClient()
         adc.assert_called_once_with(
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud_search.query",
+                "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id=None,
         )
 
@@ -4832,7 +5099,13 @@ def test_completion_service_transport_auth_adc(transport_class):
         transport_class(quota_project_id="octopus", scopes=["1", "2"])
         adc.assert_called_once_with(
             scopes=["1", "2"],
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud_search.query",
+                "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id="octopus",
         )
 
@@ -4885,7 +5158,13 @@ def test_completion_service_transport_create_channel(transport_class, grpc_helpe
             credentials=creds,
             credentials_file=None,
             quota_project_id="octopus",
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud_search.query",
+                "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             scopes=["1", "2"],
             default_host="discoveryengine.googleapis.com",
             ssl_credentials=None,
@@ -5017,6 +5296,9 @@ def test_completion_service_client_transport_session_collision(transport_name):
     )
     session1 = client1.transport.complete_query._session
     session2 = client2.transport.complete_query._session
+    assert session1 != session2
+    session1 = client1.transport.advanced_complete_query._session
+    session2 = client2.transport.advanced_complete_query._session
     assert session1 != session2
     session1 = client1.transport.import_suggestion_deny_list_entries._session
     session2 = client2.transport.import_suggestion_deny_list_entries._session
@@ -5193,10 +5475,38 @@ def test_completion_service_grpc_lro_async_client():
     assert transport.operations_client is transport.operations_client
 
 
-def test_data_store_path():
+def test_completion_config_path():
     project = "squid"
     location = "clam"
     data_store = "whelk"
+    expected = "projects/{project}/locations/{location}/dataStores/{data_store}/completionConfig".format(
+        project=project,
+        location=location,
+        data_store=data_store,
+    )
+    actual = CompletionServiceClient.completion_config_path(
+        project, location, data_store
+    )
+    assert expected == actual
+
+
+def test_parse_completion_config_path():
+    expected = {
+        "project": "octopus",
+        "location": "oyster",
+        "data_store": "nudibranch",
+    }
+    path = CompletionServiceClient.completion_config_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = CompletionServiceClient.parse_completion_config_path(path)
+    assert expected == actual
+
+
+def test_data_store_path():
+    project = "cuttlefish"
+    location = "mussel"
+    data_store = "winkle"
     expected = "projects/{project}/locations/{location}/dataStores/{data_store}".format(
         project=project,
         location=location,
@@ -5208,9 +5518,9 @@ def test_data_store_path():
 
 def test_parse_data_store_path():
     expected = {
-        "project": "octopus",
-        "location": "oyster",
-        "data_store": "nudibranch",
+        "project": "nautilus",
+        "location": "scallop",
+        "data_store": "abalone",
     }
     path = CompletionServiceClient.data_store_path(**expected)
 
@@ -5219,8 +5529,42 @@ def test_parse_data_store_path():
     assert expected == actual
 
 
+def test_document_path():
+    project = "squid"
+    location = "clam"
+    data_store = "whelk"
+    branch = "octopus"
+    document = "oyster"
+    expected = "projects/{project}/locations/{location}/dataStores/{data_store}/branches/{branch}/documents/{document}".format(
+        project=project,
+        location=location,
+        data_store=data_store,
+        branch=branch,
+        document=document,
+    )
+    actual = CompletionServiceClient.document_path(
+        project, location, data_store, branch, document
+    )
+    assert expected == actual
+
+
+def test_parse_document_path():
+    expected = {
+        "project": "nudibranch",
+        "location": "cuttlefish",
+        "data_store": "mussel",
+        "branch": "winkle",
+        "document": "nautilus",
+    }
+    path = CompletionServiceClient.document_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = CompletionServiceClient.parse_document_path(path)
+    assert expected == actual
+
+
 def test_common_billing_account_path():
-    billing_account = "cuttlefish"
+    billing_account = "scallop"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -5230,7 +5574,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "mussel",
+        "billing_account": "abalone",
     }
     path = CompletionServiceClient.common_billing_account_path(**expected)
 
@@ -5240,7 +5584,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "winkle"
+    folder = "squid"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -5250,7 +5594,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "nautilus",
+        "folder": "clam",
     }
     path = CompletionServiceClient.common_folder_path(**expected)
 
@@ -5260,7 +5604,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "scallop"
+    organization = "whelk"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -5270,7 +5614,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "abalone",
+        "organization": "octopus",
     }
     path = CompletionServiceClient.common_organization_path(**expected)
 
@@ -5280,7 +5624,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "squid"
+    project = "oyster"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -5290,7 +5634,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "clam",
+        "project": "nudibranch",
     }
     path = CompletionServiceClient.common_project_path(**expected)
 
@@ -5300,8 +5644,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "whelk"
-    location = "octopus"
+    project = "cuttlefish"
+    location = "mussel"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -5312,8 +5656,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "oyster",
-        "location": "nudibranch",
+        "project": "winkle",
+        "location": "nautilus",
     }
     path = CompletionServiceClient.common_location_path(**expected)
 

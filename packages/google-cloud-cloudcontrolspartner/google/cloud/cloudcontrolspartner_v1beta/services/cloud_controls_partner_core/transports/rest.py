@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.cloudcontrolspartner_v1beta._compat import transcode_request
 from google.cloud.cloudcontrolspartner_v1beta.types import (
     access_approval_requests,
     customer_workloads,
@@ -815,19 +816,16 @@ class CloudControlsPartnerCoreRestTransport(_BaseCloudControlsPartnerCoreRestTra
             """
 
             http_options = _BaseCloudControlsPartnerCoreRestTransport._BaseCreateCustomer._get_http_options()
-
             request, metadata = self._interceptor.pre_create_customer(request, metadata)
-            transcoded_request = _BaseCloudControlsPartnerCoreRestTransport._BaseCreateCustomer._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudControlsPartnerCoreRestTransport._BaseCreateCustomer._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudControlsPartnerCoreRestTransport._BaseCreateCustomer._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudControlsPartnerCoreRestTransport._BaseCreateCustomer,
+                    "_BaseCreateCustomer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -961,15 +959,16 @@ class CloudControlsPartnerCoreRestTransport(_BaseCloudControlsPartnerCoreRestTra
             """
 
             http_options = _BaseCloudControlsPartnerCoreRestTransport._BaseDeleteCustomer._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_customer(request, metadata)
-            transcoded_request = _BaseCloudControlsPartnerCoreRestTransport._BaseDeleteCustomer._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudControlsPartnerCoreRestTransport._BaseDeleteCustomer._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudControlsPartnerCoreRestTransport._BaseDeleteCustomer,
+                    "_BaseDeleteCustomer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1074,15 +1073,16 @@ class CloudControlsPartnerCoreRestTransport(_BaseCloudControlsPartnerCoreRestTra
             """
 
             http_options = _BaseCloudControlsPartnerCoreRestTransport._BaseGetCustomer._get_http_options()
-
             request, metadata = self._interceptor.pre_get_customer(request, metadata)
-            transcoded_request = _BaseCloudControlsPartnerCoreRestTransport._BaseGetCustomer._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudControlsPartnerCoreRestTransport._BaseGetCustomer._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudControlsPartnerCoreRestTransport._BaseGetCustomer,
+                    "_BaseGetCustomer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1220,17 +1220,18 @@ class CloudControlsPartnerCoreRestTransport(_BaseCloudControlsPartnerCoreRestTra
             """
 
             http_options = _BaseCloudControlsPartnerCoreRestTransport._BaseGetEkmConnections._get_http_options()
-
             request, metadata = self._interceptor.pre_get_ekm_connections(
                 request, metadata
             )
-            transcoded_request = _BaseCloudControlsPartnerCoreRestTransport._BaseGetEkmConnections._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudControlsPartnerCoreRestTransport._BaseGetEkmConnections._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudControlsPartnerCoreRestTransport._BaseGetEkmConnections,
+                    "_BaseGetEkmConnections__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1367,15 +1368,16 @@ class CloudControlsPartnerCoreRestTransport(_BaseCloudControlsPartnerCoreRestTra
             """
 
             http_options = _BaseCloudControlsPartnerCoreRestTransport._BaseGetPartner._get_http_options()
-
             request, metadata = self._interceptor.pre_get_partner(request, metadata)
-            transcoded_request = _BaseCloudControlsPartnerCoreRestTransport._BaseGetPartner._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudControlsPartnerCoreRestTransport._BaseGetPartner._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudControlsPartnerCoreRestTransport._BaseGetPartner,
+                    "_BaseGetPartner__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1513,17 +1515,18 @@ class CloudControlsPartnerCoreRestTransport(_BaseCloudControlsPartnerCoreRestTra
             """
 
             http_options = _BaseCloudControlsPartnerCoreRestTransport._BaseGetPartnerPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_get_partner_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseCloudControlsPartnerCoreRestTransport._BaseGetPartnerPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudControlsPartnerCoreRestTransport._BaseGetPartnerPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudControlsPartnerCoreRestTransport._BaseGetPartnerPermissions,
+                    "_BaseGetPartnerPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1664,15 +1667,16 @@ class CloudControlsPartnerCoreRestTransport(_BaseCloudControlsPartnerCoreRestTra
             """
 
             http_options = _BaseCloudControlsPartnerCoreRestTransport._BaseGetWorkload._get_http_options()
-
             request, metadata = self._interceptor.pre_get_workload(request, metadata)
-            transcoded_request = _BaseCloudControlsPartnerCoreRestTransport._BaseGetWorkload._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudControlsPartnerCoreRestTransport._BaseGetWorkload._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudControlsPartnerCoreRestTransport._BaseGetWorkload,
+                    "_BaseGetWorkload__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1813,17 +1817,18 @@ class CloudControlsPartnerCoreRestTransport(_BaseCloudControlsPartnerCoreRestTra
             """
 
             http_options = _BaseCloudControlsPartnerCoreRestTransport._BaseListAccessApprovalRequests._get_http_options()
-
             request, metadata = self._interceptor.pre_list_access_approval_requests(
                 request, metadata
             )
-            transcoded_request = _BaseCloudControlsPartnerCoreRestTransport._BaseListAccessApprovalRequests._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudControlsPartnerCoreRestTransport._BaseListAccessApprovalRequests._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudControlsPartnerCoreRestTransport._BaseListAccessApprovalRequests,
+                    "_BaseListAccessApprovalRequests__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1966,15 +1971,16 @@ class CloudControlsPartnerCoreRestTransport(_BaseCloudControlsPartnerCoreRestTra
             """
 
             http_options = _BaseCloudControlsPartnerCoreRestTransport._BaseListCustomers._get_http_options()
-
             request, metadata = self._interceptor.pre_list_customers(request, metadata)
-            transcoded_request = _BaseCloudControlsPartnerCoreRestTransport._BaseListCustomers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudControlsPartnerCoreRestTransport._BaseListCustomers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudControlsPartnerCoreRestTransport._BaseListCustomers,
+                    "_BaseListCustomers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2113,15 +2119,16 @@ class CloudControlsPartnerCoreRestTransport(_BaseCloudControlsPartnerCoreRestTra
             """
 
             http_options = _BaseCloudControlsPartnerCoreRestTransport._BaseListWorkloads._get_http_options()
-
             request, metadata = self._interceptor.pre_list_workloads(request, metadata)
-            transcoded_request = _BaseCloudControlsPartnerCoreRestTransport._BaseListWorkloads._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudControlsPartnerCoreRestTransport._BaseListWorkloads._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudControlsPartnerCoreRestTransport._BaseListWorkloads,
+                    "_BaseListWorkloads__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2263,19 +2270,16 @@ class CloudControlsPartnerCoreRestTransport(_BaseCloudControlsPartnerCoreRestTra
             """
 
             http_options = _BaseCloudControlsPartnerCoreRestTransport._BaseUpdateCustomer._get_http_options()
-
             request, metadata = self._interceptor.pre_update_customer(request, metadata)
-            transcoded_request = _BaseCloudControlsPartnerCoreRestTransport._BaseUpdateCustomer._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudControlsPartnerCoreRestTransport._BaseUpdateCustomer._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudControlsPartnerCoreRestTransport._BaseUpdateCustomer._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudControlsPartnerCoreRestTransport._BaseUpdateCustomer,
+                    "_BaseUpdateCustomer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

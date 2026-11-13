@@ -10,6 +10,7 @@ Services for Google Cloud Chronicle v1 API
     data_table_service
     entity_service
     featured_content_native_dashboard_service
+    feeds_service
     findings_refinement_service
     instance_service
     native_dashboard_service

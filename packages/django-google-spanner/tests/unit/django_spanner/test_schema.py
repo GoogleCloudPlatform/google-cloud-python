@@ -154,6 +154,20 @@ class TestUtils(SpannerSimpleTestClass):
                 "ALTER TABLE tests_author ADD COLUMN age INT64", []
             )
 
+    def test_add_field_with_default(self):
+        """Tests adding fields with default values executes UPDATE with WHERE 1=1."""
+        with DatabaseSchemaEditor(self.connection) as schema_editor:
+            schema_editor.execute = mock.MagicMock()
+            new_field = IntegerField(default=42, null=True)
+            new_field.set_attributes_from_name("age")
+            new_field.model = Author
+            schema_editor.add_field(Author, new_field)
+
+            schema_editor.execute.assert_any_call(
+                "UPDATE tests_author SET age=%s WHERE 1=1",
+                (42,),
+            )
+
     def test_remove_field(self):
         """
         Tests remove fields from models
@@ -464,3 +478,42 @@ class TestUtils(SpannerSimpleTestClass):
         field = AutoField(name="field_name")
         assert gen_rand_int64 != field.default
         del connections.settings["default"]["RANDOM_ID_GENERATION_ENABLED"]
+
+    def test_index_include_sql(self):
+        """Tests _index_include_sql with normal fields."""
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        sql = schema_editor._index_include_sql(Author, ["name", "last_name"])
+        self.assertEqual(sql, " STORING (name, last_name)")
+
+    def test_index_include_sql_with_field_objects(self):
+        """Tests _index_include_sql with Field instances possessing a .column attribute."""
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        field_mock = mock.MagicMock(column="custom_col")
+        sql = schema_editor._index_include_sql(Author, [field_mock])
+        self.assertEqual(sql, " STORING (custom_col)")
+
+    def test_index_include_sql_includes_all_fields(self):
+        """Tests _index_include_sql formats all included columns directly."""
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        sql = schema_editor._index_include_sql(Author, ["id", "name"])
+        self.assertEqual(sql, " STORING (id, name)")
+
+    def test_index_include_sql_empty(self):
+        """Tests _index_include_sql returns empty string when include is empty."""
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        self.assertEqual(schema_editor._index_include_sql(Author, []), "")
+        self.assertEqual(schema_editor._index_include_sql(Author, None), "")
+
+    def test_skip_default_generated_and_db_default(self):
+        """Tests skip_default for generated and db_default fields."""
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        generated_field = mock.MagicMock(generated=True)
+        self.assertFalse(schema_editor.skip_default(generated_field))
+
+        db_default_field = mock.MagicMock(
+            generated=False, db_default="CURRENT_TIMESTAMP()"
+        )
+        self.assertFalse(schema_editor.skip_default(db_default_field))
+
+        normal_field = mock.MagicMock(generated=False, db_default=None)
+        self.assertTrue(schema_editor.skip_default(normal_field))

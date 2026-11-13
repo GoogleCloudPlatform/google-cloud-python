@@ -118,7 +118,7 @@ def test_typed_parameters(faux_conn, type_, val, btype, vrep):
     table = setup_table(faux_conn, "t", sqlalchemy.Column(col_name, type_))
 
     assert faux_conn.test_data["execute"].pop()[0].strip() == (
-        f"CREATE TABLE `t` (\n" f"\t`{col_name}` {btype}\n" f")"
+        f"CREATE TABLE `t` (\n\t`{col_name}` {btype}\n)"
     )
 
     faux_conn.execute(table.insert().values(**{col_name: val}))

@@ -35,7 +35,7 @@ EXTRAS_REQUIRE = {
 
 setuptools.setup(
     name='google-resumable-media',
-    version = "2.10.1",
+    version = "2.11.0",
     description='Utilities for Google Media Downloads and Resumable Uploads',
     author='Google Cloud Platform',
     author_email='googleapis-publisher@google.com',
@@ -63,6 +63,7 @@ setuptools.setup(
         'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3.13',
         'Programming Language :: Python :: 3.14',
+        'Programming Language :: Python :: 3.15',
         'Topic :: Internet',
     ],
 )

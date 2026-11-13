@@ -47,7 +47,7 @@ class ListAppGatewaysRequest(proto.Message):
             service. Regardless of the page_size value, the response may
             include a partial list and a caller should only rely on
             response's
-            [next_page_token][BeyondCorp.ListAppGatewaysResponse.next_page_token]
+            [next_page_token][google.cloud.beyondcorp.appgateways.v1.ListAppGatewaysResponse.next_page_token]
             to determine if there are more instances left to be queried.
         page_token (str):
             Optional. The next_page_token value returned from a previous
@@ -159,11 +159,11 @@ class CreateAppGatewayRequest(proto.Message):
             for at least 60 minutes since the first request.
 
             For example, consider a situation where you make
-            an initial request and t he request times out.
-            If you make the request again with the same
-            request ID, the server can check if original
-            operation with the same request ID was received,
-            and if so, will ignore the second request. This
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
             prevents clients from accidentally creating
             duplicate commitments.
 
@@ -215,11 +215,11 @@ class DeleteAppGatewayRequest(proto.Message):
             for at least 60 minutes after the first request.
 
             For example, consider a situation where you make
-            an initial request and t he request times out.
-            If you make the request again with the same
-            request ID, the server can check if original
-            operation with the same request ID was received,
-            and if so, will ignore the second request. This
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
             prevents clients from accidentally creating
             duplicate commitments.
 
@@ -252,6 +252,9 @@ class AppGateway(proto.Message):
     necessary GCP components needed for creating a BeyondCorp
     protected AppGateway. Multiple connectors can be authorised for
     a single AppGateway.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
     Attributes:
         name (str):
@@ -288,6 +291,14 @@ class AppGateway(proto.Message):
         host_type (google.cloud.beyondcorp_appgateways_v1.types.AppGateway.HostType):
             Required. The type of hosting used by the
             AppGateway.
+        satisfies_pzs (bool):
+            Output only. Reserved for future use.
+
+            This field is a member of `oneof`_ ``_satisfies_pzs``.
+        satisfies_pzi (bool):
+            Output only. Reserved for future use.
+
+            This field is a member of `oneof`_ ``_satisfies_pzi``.
     """
 
     class Type(proto.Enum):
@@ -419,6 +430,16 @@ class AppGateway(proto.Message):
         number=11,
         enum=HostType,
     )
+    satisfies_pzs: bool = proto.Field(
+        proto.BOOL,
+        number=12,
+        optional=True,
+    )
+    satisfies_pzi: bool = proto.Field(
+        proto.BOOL,
+        number=13,
+        optional=True,
+    )
 
 
 class AppGatewayOperationMetadata(proto.Message):
@@ -443,9 +464,11 @@ class AppGatewayOperationMetadata(proto.Message):
         requested_cancellation (bool):
             Output only. Identifies whether the user has requested
             cancellation of the operation. Operations that have
-            successfully been cancelled have [Operation.error][] value
-            with a [google.rpc.Status.code][google.rpc.Status.code] of
-            1, corresponding to ``Code.CANCELLED``.
+            successfully been cancelled have
+            [google.longrunning.Operation.error][google.longrunning.Operation.error]
+            value with a
+            [google.rpc.Status.code][google.rpc.Status.code] of ``1``,
+            corresponding to ``Code.CANCELLED``.
         api_version (str):
             Output only. API version used to start the
             operation.

@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from grafeas.grafeas_v1._compat import transcode_request
 from grafeas.grafeas_v1.types import grafeas
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -929,27 +930,18 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             http_options = (
                 _BaseGrafeasRestTransport._BaseBatchCreateNotes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_batch_create_notes(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseGrafeasRestTransport._BaseBatchCreateNotes._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseGrafeasRestTransport._BaseBatchCreateNotes._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGrafeasRestTransport._BaseBatchCreateNotes._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseBatchCreateNotes,
+                    "_BaseBatchCreateNotes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1090,21 +1082,18 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             """
 
             http_options = _BaseGrafeasRestTransport._BaseBatchCreateOccurrences._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_occurrences(
                 request, metadata
             )
-            transcoded_request = _BaseGrafeasRestTransport._BaseBatchCreateOccurrences._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGrafeasRestTransport._BaseBatchCreateOccurrences._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGrafeasRestTransport._BaseBatchCreateOccurrences._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseBatchCreateOccurrences,
+                    "_BaseBatchCreateOccurrences__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1242,23 +1231,16 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             """
 
             http_options = _BaseGrafeasRestTransport._BaseCreateNote._get_http_options()
-
             request, metadata = self._interceptor.pre_create_note(request, metadata)
-            transcoded_request = (
-                _BaseGrafeasRestTransport._BaseCreateNote._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseGrafeasRestTransport._BaseCreateNote._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGrafeasRestTransport._BaseCreateNote._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseCreateNote,
+                    "_BaseCreateNote__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1398,27 +1380,18 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             http_options = (
                 _BaseGrafeasRestTransport._BaseCreateOccurrence._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_occurrence(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseGrafeasRestTransport._BaseCreateOccurrence._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseGrafeasRestTransport._BaseCreateOccurrence._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGrafeasRestTransport._BaseCreateOccurrence._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseCreateOccurrence,
+                    "_BaseCreateOccurrence__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1547,19 +1520,16 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             """
 
             http_options = _BaseGrafeasRestTransport._BaseDeleteNote._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_note(request, metadata)
-            transcoded_request = (
-                _BaseGrafeasRestTransport._BaseDeleteNote._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGrafeasRestTransport._BaseDeleteNote._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseDeleteNote,
+                    "_BaseDeleteNote__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1657,21 +1627,18 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             http_options = (
                 _BaseGrafeasRestTransport._BaseDeleteOccurrence._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_occurrence(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseGrafeasRestTransport._BaseDeleteOccurrence._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGrafeasRestTransport._BaseDeleteOccurrence._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseDeleteOccurrence,
+                    "_BaseDeleteOccurrence__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1771,19 +1738,16 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             """
 
             http_options = _BaseGrafeasRestTransport._BaseGetNote._get_http_options()
-
             request, metadata = self._interceptor.pre_get_note(request, metadata)
-            transcoded_request = (
-                _BaseGrafeasRestTransport._BaseGetNote._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGrafeasRestTransport._BaseGetNote._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseGetNote,
+                    "_BaseGetNote__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1919,19 +1883,16 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             http_options = (
                 _BaseGrafeasRestTransport._BaseGetOccurrence._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_occurrence(request, metadata)
-            transcoded_request = (
-                _BaseGrafeasRestTransport._BaseGetOccurrence._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGrafeasRestTransport._BaseGetOccurrence._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseGetOccurrence,
+                    "_BaseGetOccurrence__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2070,19 +2031,18 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             http_options = (
                 _BaseGrafeasRestTransport._BaseGetOccurrenceNote._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_occurrence_note(
                 request, metadata
             )
-            transcoded_request = _BaseGrafeasRestTransport._BaseGetOccurrenceNote._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGrafeasRestTransport._BaseGetOccurrenceNote._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseGetOccurrenceNote,
+                    "_BaseGetOccurrenceNote__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2221,17 +2181,18 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             http_options = (
                 _BaseGrafeasRestTransport._BaseListNoteOccurrences._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_note_occurrences(
                 request, metadata
             )
-            transcoded_request = _BaseGrafeasRestTransport._BaseListNoteOccurrences._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGrafeasRestTransport._BaseListNoteOccurrences._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseListNoteOccurrences,
+                    "_BaseListNoteOccurrences__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2365,19 +2326,16 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             """
 
             http_options = _BaseGrafeasRestTransport._BaseListNotes._get_http_options()
-
             request, metadata = self._interceptor.pre_list_notes(request, metadata)
-            transcoded_request = (
-                _BaseGrafeasRestTransport._BaseListNotes._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGrafeasRestTransport._BaseListNotes._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseListNotes,
+                    "_BaseListNotes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2513,21 +2471,18 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             http_options = (
                 _BaseGrafeasRestTransport._BaseListOccurrences._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_occurrences(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseGrafeasRestTransport._BaseListOccurrences._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGrafeasRestTransport._BaseListOccurrences._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseListOccurrences,
+                    "_BaseListOccurrences__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2662,23 +2617,16 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             """
 
             http_options = _BaseGrafeasRestTransport._BaseUpdateNote._get_http_options()
-
             request, metadata = self._interceptor.pre_update_note(request, metadata)
-            transcoded_request = (
-                _BaseGrafeasRestTransport._BaseUpdateNote._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseGrafeasRestTransport._BaseUpdateNote._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGrafeasRestTransport._BaseUpdateNote._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseUpdateNote,
+                    "_BaseUpdateNote__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2818,27 +2766,18 @@ class GrafeasRestTransport(_BaseGrafeasRestTransport):
             http_options = (
                 _BaseGrafeasRestTransport._BaseUpdateOccurrence._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_occurrence(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseGrafeasRestTransport._BaseUpdateOccurrence._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseGrafeasRestTransport._BaseUpdateOccurrence._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseGrafeasRestTransport._BaseUpdateOccurrence._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGrafeasRestTransport._BaseUpdateOccurrence,
+                    "_BaseUpdateOccurrence__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

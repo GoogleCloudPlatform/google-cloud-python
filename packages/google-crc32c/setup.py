@@ -23,8 +23,12 @@ import setuptools.command.build_ext
 _EXTRA_DLL = "extra-dll"
 _DLL_FILENAME = "crc32c.dll"
 
-# Explicit environment variable disables pure-Python fallback
-CRC32C_PURE_PYTHON_EXPLICIT = "CRC32C_PURE_PYTHON" in os.environ
+# Explicit environment variable or Kokoro CI disables pure-Python fallback
+CRC32C_PURE_PYTHON_EXPLICIT = (
+    "CRC32C_PURE_PYTHON" in os.environ
+    or "KOKORO_BUILD_ID" in os.environ
+    or "KOKORO_JOB_NAME" in os.environ
+)
 _FALSE_OPTIONS = ("0", "false", "no", "False", "No", None)
 CRC32C_PURE_PYTHON = os.getenv("CRC32C_PURE_PYTHON") not in _FALSE_OPTIONS
 

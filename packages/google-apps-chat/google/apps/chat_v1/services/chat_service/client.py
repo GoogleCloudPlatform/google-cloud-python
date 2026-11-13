@@ -46,6 +46,13 @@ from google.auth.transport.grpc import SslCredentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
 from google.apps.chat_v1 import gapic_version as package_version
+from google.apps.chat_v1._compat import (
+    get_api_endpoint,
+    get_default_mtls_endpoint,
+    get_universe_domain,
+    read_environment_variables,
+    should_use_client_cert,
+)
 
 try:
     OptionalRetry = Union[retries.Retry, gapic_v1.method._MethodDefault, None]
@@ -71,6 +78,7 @@ from google.apps.chat_v1.types import (
     availability,
     contextual_addon,
     deletion_metadata,
+    elements,
     event_payload,
     group,
     history_state,
@@ -78,6 +86,7 @@ from google.apps.chat_v1.types import (
     matched_url,
     membership,
     message,
+    message_pin,
     reaction,
     section,
     slash_command,
@@ -92,6 +101,7 @@ from google.apps.chat_v1.types import (
 from google.apps.chat_v1.types import availability as gc_availability
 from google.apps.chat_v1.types import membership as gc_membership
 from google.apps.chat_v1.types import message as gc_message
+from google.apps.chat_v1.types import message_pin as gc_message_pin
 from google.apps.chat_v1.types import reaction as gc_reaction
 from google.apps.chat_v1.types import section as gc_section
 from google.apps.chat_v1.types import space as gc_space
@@ -146,76 +156,12 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
     integrations on Google Chat Platform.
     """
 
-    @staticmethod
-    def _get_default_mtls_endpoint(api_endpoint) -> Optional[str]:
-        """Converts api endpoint to mTLS endpoint.
-
-        Convert "*.sandbox.googleapis.com" and "*.googleapis.com" to
-        "*.mtls.sandbox.googleapis.com" and "*.mtls.googleapis.com" respectively.
-        Args:
-            api_endpoint (Optional[str]): the api endpoint to convert.
-        Returns:
-            Optional[str]: converted mTLS api endpoint.
-        """
-        if not api_endpoint:
-            return api_endpoint
-
-        mtls_endpoint_re = re.compile(
-            r"(?P<name>[^.]+)(?P<mtls>\.mtls)?(?P<sandbox>\.sandbox)?(?P<googledomain>\.googleapis\.com)?"
-        )
-
-        m = mtls_endpoint_re.match(api_endpoint)
-        if m is None:
-            # Could not parse api_endpoint; return as-is.
-            return api_endpoint
-
-        name, mtls, sandbox, googledomain = m.groups()
-        if mtls or not googledomain:
-            return api_endpoint
-
-        if sandbox:
-            return api_endpoint.replace(
-                "sandbox.googleapis.com", "mtls.sandbox.googleapis.com"
-            )
-
-        return api_endpoint.replace(".googleapis.com", ".mtls.googleapis.com")
-
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "chat.googleapis.com"
-    DEFAULT_MTLS_ENDPOINT = _get_default_mtls_endpoint.__func__(  # type: ignore
-        DEFAULT_ENDPOINT
-    )
+    DEFAULT_MTLS_ENDPOINT = get_default_mtls_endpoint(DEFAULT_ENDPOINT)
 
     _DEFAULT_ENDPOINT_TEMPLATE = "chat.{UNIVERSE_DOMAIN}"
     _DEFAULT_UNIVERSE = "googleapis.com"
-
-    @staticmethod
-    def _use_client_cert_effective():
-        """Returns whether client certificate should be used for mTLS if the
-        google-auth version supports should_use_client_cert automatic mTLS enablement.
-
-        Alternatively, read from the GOOGLE_API_USE_CLIENT_CERTIFICATE env var.
-
-        Returns:
-            bool: whether client certificate should be used for mTLS
-        Raises:
-            ValueError: (If using a version of google-auth without should_use_client_cert and
-            GOOGLE_API_USE_CLIENT_CERTIFICATE is set to an unexpected value.)
-        """
-        # check if google-auth version supports should_use_client_cert for automatic mTLS enablement
-        if hasattr(mtls, "should_use_client_cert"):  # pragma: NO COVER
-            return mtls.should_use_client_cert()
-        else:  # pragma: NO COVER
-            # if unsupported, fallback to reading from env var
-            use_client_cert_str = os.getenv(
-                "GOOGLE_API_USE_CLIENT_CERTIFICATE", "false"
-            ).lower()
-            if use_client_cert_str not in ("true", "false"):
-                raise ValueError(
-                    "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be"
-                    " either `true` or `false`"
-                )
-            return use_client_cert_str == "true"
 
     @classmethod
     def from_service_account_info(cls, info: dict, *args, **kwargs):
@@ -348,6 +294,23 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
     def parse_message_path(path: str) -> Dict[str, str]:
         """Parses a message path into its component segments."""
         m = re.match(r"^spaces/(?P<space>.+?)/messages/(?P<message>.+?)$", path)
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def message_pin_path(
+        space: str,
+        message_pin: str,
+    ) -> str:
+        """Returns a fully-qualified message_pin string."""
+        return "spaces/{space}/messagePins/{message_pin}".format(
+            space=space,
+            message_pin=message_pin,
+        )
+
+    @staticmethod
+    def parse_message_pin_path(path: str) -> Dict[str, str]:
+        """Parses a message_pin path into its component segments."""
+        m = re.match(r"^spaces/(?P<space>.+?)/messagePins/(?P<message_pin>.+?)$", path)
         return m.groupdict() if m else {}
 
     @staticmethod
@@ -675,7 +638,7 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
         )
         if client_options is None:
             client_options = client_options_lib.ClientOptions()
-        use_client_cert = ChatServiceClient._use_client_cert_effective()
+        use_client_cert = should_use_client_cert()
         use_mtls_endpoint = os.getenv("GOOGLE_API_USE_MTLS_ENDPOINT", "auto")
         if use_mtls_endpoint not in ("auto", "never", "always"):
             raise MutualTLSChannelError(
@@ -696,34 +659,11 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
         elif use_mtls_endpoint == "always" or (
             use_mtls_endpoint == "auto" and client_cert_source
         ):
-            api_endpoint = cls.DEFAULT_MTLS_ENDPOINT
+            api_endpoint = cls.DEFAULT_MTLS_ENDPOINT  # type: ignore
         else:
             api_endpoint = cls.DEFAULT_ENDPOINT
 
         return api_endpoint, client_cert_source
-
-    @staticmethod
-    def _read_environment_variables():
-        """Returns the environment variables used by the client.
-
-        Returns:
-            Tuple[bool, str, str]: returns the GOOGLE_API_USE_CLIENT_CERTIFICATE,
-            GOOGLE_API_USE_MTLS_ENDPOINT, and GOOGLE_CLOUD_UNIVERSE_DOMAIN environment variables.
-
-        Raises:
-            ValueError: If GOOGLE_API_USE_CLIENT_CERTIFICATE is not
-                any of ["true", "false"].
-            google.auth.exceptions.MutualTLSChannelError: If GOOGLE_API_USE_MTLS_ENDPOINT
-                is not any of ["auto", "never", "always"].
-        """
-        use_client_cert = ChatServiceClient._use_client_cert_effective()
-        use_mtls_endpoint = os.getenv("GOOGLE_API_USE_MTLS_ENDPOINT", "auto").lower()
-        universe_domain_env = os.getenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN")
-        if use_mtls_endpoint not in ("auto", "never", "always"):
-            raise MutualTLSChannelError(
-                "Environment variable `GOOGLE_API_USE_MTLS_ENDPOINT` must be `never`, `auto` or `always`"
-            )
-        return use_client_cert, use_mtls_endpoint, universe_domain_env
 
     @staticmethod
     def _get_client_cert_source(provided_cert_source, use_cert_flag):
@@ -743,65 +683,6 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
             elif mtls.has_default_client_cert_source():
                 client_cert_source = mtls.default_client_cert_source()
         return client_cert_source
-
-    @staticmethod
-    def _get_api_endpoint(
-        api_override, client_cert_source, universe_domain, use_mtls_endpoint
-    ) -> str:
-        """Return the API endpoint used by the client.
-
-        Args:
-            api_override (str): The API endpoint override. If specified, this is always
-                the return value of this function and the other arguments are not used.
-            client_cert_source (bytes): The client certificate source used by the client.
-            universe_domain (str): The universe domain used by the client.
-            use_mtls_endpoint (str): How to use the mTLS endpoint, which depends also on the other parameters.
-                Possible values are "always", "auto", or "never".
-
-        Returns:
-            str: The API endpoint to be used by the client.
-        """
-        if api_override is not None:
-            api_endpoint = api_override
-        elif use_mtls_endpoint == "always" or (
-            use_mtls_endpoint == "auto" and client_cert_source
-        ):
-            _default_universe = ChatServiceClient._DEFAULT_UNIVERSE
-            if universe_domain != _default_universe:
-                raise MutualTLSChannelError(
-                    f"mTLS is not supported in any universe other than {_default_universe}."
-                )
-            api_endpoint = ChatServiceClient.DEFAULT_MTLS_ENDPOINT
-        else:
-            api_endpoint = ChatServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-                UNIVERSE_DOMAIN=universe_domain
-            )
-        return api_endpoint
-
-    @staticmethod
-    def _get_universe_domain(
-        client_universe_domain: Optional[str], universe_domain_env: Optional[str]
-    ) -> str:
-        """Return the universe domain used by the client.
-
-        Args:
-            client_universe_domain (Optional[str]): The universe domain configured via the client options.
-            universe_domain_env (Optional[str]): The universe domain configured via the "GOOGLE_CLOUD_UNIVERSE_DOMAIN" environment variable.
-
-        Returns:
-            str: The universe domain to be used by the client.
-
-        Raises:
-            ValueError: If the universe domain is an empty string.
-        """
-        universe_domain = ChatServiceClient._DEFAULT_UNIVERSE
-        if client_universe_domain is not None:
-            universe_domain = client_universe_domain
-        elif universe_domain_env is not None:
-            universe_domain = universe_domain_env
-        if len(universe_domain.strip()) == 0:
-            raise ValueError("Universe Domain cannot be an empty string.")
-        return universe_domain
 
     def _validate_universe_domain(self):
         """Validates client's and credentials' universe domains are consistent.
@@ -932,13 +813,15 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
         universe_domain_opt = getattr(self._client_options, "universe_domain", None)
 
         self._use_client_cert, self._use_mtls_endpoint, self._universe_domain_env = (
-            ChatServiceClient._read_environment_variables()
+            read_environment_variables()
         )
         self._client_cert_source = ChatServiceClient._get_client_cert_source(
             self._client_options.client_cert_source, self._use_client_cert
         )
-        self._universe_domain = ChatServiceClient._get_universe_domain(
-            universe_domain_opt, self._universe_domain_env
+        self._universe_domain = get_universe_domain(
+            universe_domain_opt,
+            self._universe_domain_env,
+            default_universe=ChatServiceClient._DEFAULT_UNIVERSE,
         )
         self._api_endpoint: str = ""  # updated below, depending on `transport`
 
@@ -973,11 +856,14 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
             self._transport = cast(ChatServiceTransport, transport)
             self._api_endpoint = self._transport.host
 
-        self._api_endpoint = self._api_endpoint or ChatServiceClient._get_api_endpoint(
-            self._client_options.api_endpoint,
-            self._client_cert_source,
-            self._universe_domain,
-            self._use_mtls_endpoint,
+        self._api_endpoint = self._api_endpoint or get_api_endpoint(
+            api_override=self._client_options.api_endpoint,
+            universe_domain=self._universe_domain,
+            default_universe=ChatServiceClient._DEFAULT_UNIVERSE,
+            default_mtls_endpoint=ChatServiceClient.DEFAULT_MTLS_ENDPOINT,
+            default_endpoint_template=ChatServiceClient._DEFAULT_ENDPOINT_TEMPLATE,
+            use_mtls=self._use_mtls_endpoint == "always"
+            or (self._use_mtls_endpoint == "auto" and self._client_cert_source),
         )
 
         if not transport_provided:
@@ -2235,6 +2121,11 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
                   ``space.display_name:Project`` searches for messages
                   in the top five spaces that contain the word "Project"
                   in their display names.
+                - ``space.space_type``: The type of the space. Only
+                  supports ``=``. For example,
+                  ``space.space_type="DIRECT_MESSAGE"`` returns only
+                  messages from direct messages. The possible values are
+                  ``DIRECT_MESSAGE``, ``GROUP_CHAT``, and ``SPACE``.
                 - ``attachment``: Supports the operator ``:*`` (has any)
                   to check for the presence of attachments. If
                   ``attachment:*`` is specified, only messages that have
@@ -2259,9 +2150,9 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
                 - ``is_unread()``: Filters out messages that have been
                   read by the calling user.
 
-                Using the ``space.display_name`` filter requires that
-                the calling credentials include one of the following
-                `authorization
+                Using the ``space.display_name`` or the
+                ``space.space_type`` filters requires that the calling
+                credentials include one of the following `authorization
                 scopes <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
 
                 - ``https://www.googleapis.com/auth/chat.spaces.readonly``
@@ -2306,6 +2197,9 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
                   ``space.display_name:Project OR space.display_name:Tasks``
                   returns messages that are in spaces with display names
                   containing either ``Project`` or ``Tasks`` or both.
+                - ``space.space_type`` supports only the ``OR``
+                  operator, for example:
+                  ``space.space_type = "DIRECT_MESSAGE" OR space.space_type = "GROUP_CHAT"``.
                 - ``annotations.user_mentions.user.name`` supports the
                   operators ``AND`` and ``OR``, but not a mix of both.
                   For example:
@@ -3508,6 +3402,7 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
 
                 - ``access_settings.access_permission_settings.discoverSpaceSetting``
                 - ``access_settings.access_permission_settings.joinSpaceSetting``
+                - ``access_settings.access_permission_settings.viewSpaceMembershipSetting``
 
                 ``permission_settings``: Supports changing the
                 `permission
@@ -3524,6 +3419,7 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
                 - ``permission_settings.manageApps``
                 - ``permission_settings.manageWebhooks``
                 - ``permission_settings.replyMessages``
+                - ``permission_settings.viewSpaceMembership``
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -4930,6 +4826,375 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
         rpc = self._transport._wrapped_methods[self._transport.delete_reaction]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+    def list_message_pins(
+        self,
+        request: Optional[Union[message_pin.ListMessagePinsRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListMessagePinsPager:
+        r"""Lists message pins in a space. Users can pin important messages
+        in spaces for easy access. For more information, see `Pin or
+        unpin a conversation in Google
+        Chat <https://support.google.com/chat/answer/15622437>`__.
+
+        Requires `user
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__
+        with one of the following `authorization
+        scopes <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.spaces.pins.readonly``
+        - ``https://www.googleapis.com/auth/chat.spaces.pins``
+        - ``https://www.googleapis.com/auth/chat.spaces.readonly``
+        - ``https://www.googleapis.com/auth/chat.spaces``
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.apps import chat_v1
+
+            def sample_list_message_pins():
+                # Create a client
+                client = chat_v1.ChatServiceClient()
+
+                # Initialize request argument(s)
+                request = chat_v1.ListMessagePinsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_message_pins(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.apps.chat_v1.types.ListMessagePinsRequest, dict]):
+                The request object. Request message for listing message
+                pins.
+            parent (str):
+                Required. The parent space which owns the collection of
+                pinned items Format: ``spaces/{space}``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.apps.chat_v1.services.chat_service.pagers.ListMessagePinsPager:
+                Response message for listing message
+                pins.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, message_pin.ListMessagePinsRequest):
+            request = message_pin.ListMessagePinsRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.list_message_pins]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListMessagePinsPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def create_message_pin(
+        self,
+        request: Optional[Union[gc_message_pin.CreateMessagePinRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        message_pin: Optional[gc_message_pin.MessagePin] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> gc_message_pin.MessagePin:
+        r"""Creates a message pin.
+
+        Requires `user
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__
+        with one of the following `authorization
+        scopes <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.spaces.pins``
+        - ``https://www.googleapis.com/auth/chat.spaces``
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.apps import chat_v1
+
+            def sample_create_message_pin():
+                # Create a client
+                client = chat_v1.ChatServiceClient()
+
+                # Initialize request argument(s)
+                message_pin = chat_v1.MessagePin()
+                message_pin.message = "message_value"
+
+                request = chat_v1.CreateMessagePinRequest(
+                    parent="parent_value",
+                    message_pin=message_pin,
+                )
+
+                # Make the request
+                response = client.create_message_pin(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.apps.chat_v1.types.CreateMessagePinRequest, dict]):
+                The request object. Request message for creating a
+                message pin.
+            parent (str):
+                Required. The parent space in which
+                to create the message pin. Format:
+                spaces/{space}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            message_pin (google.apps.chat_v1.types.MessagePin):
+                Required. The MessagePin to create.
+                This corresponds to the ``message_pin`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.apps.chat_v1.types.MessagePin:
+                A pin on a Chat message. For more information see [Pin a
+                   message](https://support.google.com/chat?p=chat-board-hc).
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, message_pin]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, gc_message_pin.CreateMessagePinRequest):
+            request = gc_message_pin.CreateMessagePinRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+            if message_pin is not None:
+                request.message_pin = message_pin
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.create_message_pin]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def delete_message_pin(
+        self,
+        request: Optional[Union[message_pin.DeleteMessagePinRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> None:
+        r"""Deletes a message pin.
+
+        Requires `user
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__
+        with one of the following `authorization
+        scopes <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.spaces.pins``
+        - ``https://www.googleapis.com/auth/chat.spaces``
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.apps import chat_v1
+
+            def sample_delete_message_pin():
+                # Create a client
+                client = chat_v1.ChatServiceClient()
+
+                # Initialize request argument(s)
+                request = chat_v1.DeleteMessagePinRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                client.delete_message_pin(request=request)
+
+        Args:
+            request (Union[google.apps.chat_v1.types.DeleteMessagePinRequest, dict]):
+                The request object. Request message for deleting a
+                message pin.
+            name (str):
+                Required. The resource name of the message pin to
+                remove. Format: spaces/{space}/messagePins/{message_pin}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, message_pin.DeleteMessagePinRequest):
+            request = message_pin.DeleteMessagePinRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.delete_message_pin]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -8004,6 +8269,105 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
         rpc = self._transport._wrapped_methods[self._transport.move_section_item]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def replace_message_cards(
+        self,
+        request: Optional[Union[message.ReplaceMessageCardsRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> message.ReplaceMessageCardsResponse:
+        r"""Replaces the cards included in a message.
+
+        A Chat app can only replace cards on a human-created message if
+        the message already contains cards, and the cards were created
+        by the app.
+
+        If the app replaces the cards with an empty list, the cards are
+        removed. After removing the cards, the app cannot add cards back
+        to the message.
+
+        Requires `app
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-app>`__
+        with the `authorization
+        scope <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.bot``
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.apps import chat_v1
+
+            def sample_replace_message_cards():
+                # Create a client
+                client = chat_v1.ChatServiceClient()
+
+                # Initialize request argument(s)
+                request = chat_v1.ReplaceMessageCardsRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.replace_message_cards(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.apps.chat_v1.types.ReplaceMessageCardsRequest, dict]):
+                The request object. Request message for
+                ReplaceMessageCards API method.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.apps.chat_v1.types.ReplaceMessageCardsResponse:
+                Response message for
+                ReplaceMessageCards API.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, message.ReplaceMessageCardsRequest):
+            request = message.ReplaceMessageCardsRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.replace_message_cards]
 
         # Certain fields should be provided within the metadata header;
         # add these here.

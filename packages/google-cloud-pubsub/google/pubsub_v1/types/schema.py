@@ -40,6 +40,7 @@ __protobuf__ = proto.module(
         "ValidateSchemaResponse",
         "ValidateMessageRequest",
         "ValidateMessageResponse",
+        "CompiledProtoSchema",
     },
 )
 
@@ -86,6 +87,8 @@ class Encoding(proto.Enum):
 class Schema(proto.Message):
     r"""A schema resource.
 
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         name (str):
             Required. Name of the schema. Format is
@@ -96,6 +99,12 @@ class Schema(proto.Message):
             The definition of the schema. This should contain a string
             representing the full definition of the schema that is a
             valid schema definition of the type specified in ``type``.
+        compiled_proto_schema (google.pubsub_v1.types.CompiledProtoSchema):
+            Optional. Configuration for a schema provided as a
+            pre-compiled Protocol Buffer FileDescriptorSet. The ``type``
+            field above must be set to PROTOCOL_BUFFER.
+
+            This field is a member of `oneof`_ ``configuration``.
         revision_id (str):
             Output only. Immutable. The revision ID of
             the schema.
@@ -132,6 +141,12 @@ class Schema(proto.Message):
     definition: str = proto.Field(
         proto.STRING,
         number=3,
+    )
+    compiled_proto_schema: "CompiledProtoSchema" = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        oneof="configuration",
+        message="CompiledProtoSchema",
     )
     revision_id: str = proto.Field(
         proto.STRING,
@@ -507,6 +522,28 @@ class ValidateMessageRequest(proto.Message):
 
 class ValidateMessageResponse(proto.Message):
     r"""Response for the ``ValidateMessage`` method. Empty for now."""
+
+
+class CompiledProtoSchema(proto.Message):
+    r"""Configuration specific to compiled Protocol Buffer schemas.
+
+    Attributes:
+        root_message (str):
+            Required. The name of the root message type
+            in the schema.
+        compiled_bytes (bytes):
+            Required. The compiled FileDescriptorSet
+            binary.
+    """
+
+    root_message: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    compiled_bytes: bytes = proto.Field(
+        proto.BYTES,
+        number=2,
+    )
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

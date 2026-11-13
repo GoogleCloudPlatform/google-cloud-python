@@ -15,6 +15,9 @@
 
 setlocal ENABLEDELAYEDEXPANSION
 
+cd /d "%~dp0..\.." || goto :error
+
+set CRC32C_PURE_PYTHON=0
 set CMAKE_GENERATOR="Visual Studio 17 2022"
 set CONFIGURATION=RelWithDebInfo
 set CRC32C_INSTALL_PREFIX=%cd%\build\%CONFIGURATION%
@@ -23,26 +26,43 @@ set CRC32C_INSTALL_PREFIX=%cd%\build\%CONFIGURATION%
 @rem Unfortunately pyenv for Windows has an out-of-date versions list. Choco's
 @rem installer seems to have some problems with installing multiple versions at
 @rem once, so as a workaround, we will install and then uninstall every version.
-FOR %%P IN (3.9, 3.10, 3.11, 3.12, 3.13.1, 3.14.0) DO (
-
-    echo "Installing Python version %%P"
-    choco install python --version=%%P -y --no-progress
-
-    echo "Listing available Python versions'
-    py -0
-
+for /f "tokens=2 delims=:" %%A in ('findstr /b "versions:" "%~dp0..\python_versions.yaml"') do set SUPPORTED_PYTHON_VERSIONS=%%A
+@rem Set PY_PYTHON3 to the first (lowest supported) version in python_versions.yaml so py -3 uses a stable version.
+for /f "tokens=1 delims= " %%V in ("%SUPPORTED_PYTHON_VERSIONS%") do for /f "tokens=1,2 delims=." %%I in ("%%V") do set PY_PYTHON3=%%I.%%J
+FOR %%P IN (%SUPPORTED_PYTHON_VERSIONS%) DO (
     set python_version=%%P
-    set python_version_trimmed=!python_version:~0,4!
+    for /f "tokens=1,2 delims=." %%I in ("%%P") do set python_version_trimmed=%%I.%%J
 
-    py -!python_version_trimmed!-64 -m pip install --upgrade pip
+    for /L %%R in (1,1,5) do (
+        py -!python_version_trimmed!-64 --version >nul 2>&1 || (
+            echo "Installing Python version %%P (attempt %%R/5)"
+            @rem Format pre-release version for Chocolatey (e.g. 3.15.0a1 -> 3.15.0-a1)
+            set CHOCO_VER=%%P
+            set CHOCO_VER=!CHOCO_VER:0a=0-a!
+            set CHOCO_VER=!CHOCO_VER:0b=0-b!
+            set CHOCO_VER=!CHOCO_VER:0rc=0-rc!
+            choco install python --version=!CHOCO_VER! --pre -y --no-progress || (
+                echo "choco install %%P failed; retrying in 15s..."
+                py -3 -c "import time; time.sleep(15)"
+            )
+        )
+    )
+    py -!python_version_trimmed!-64 --version >nul 2>&1 || goto :error
+
+    echo "Listing available Python versions"
+    py -0
+    @rem pyreadline is removed here because pip>=26.3 and pytest will opportunistically
+    @rem use it if available, but the pre-installed version is too old to work.
+    py -!python_version_trimmed!-64 -m pip uninstall -y pyreadline || goto :error
+    py -!python_version_trimmed!-64 -m pip install --upgrade pip || goto :error
 
     echo "Installing cmake for Python %%P"
-    py -!python_version_trimmed!-64 -m pip install cmake
+    py -!python_version_trimmed!-64 -m pip install cmake || goto :error
 
     @rem Add directory as safe to avoid "detected dubious ownership" fatal issue
     git config --global --add safe.directory *
-    git submodule update --init --recursive
-    pushd google_crc32c
+    git submodule update --init --recursive || goto :error
+    pushd google_crc32c || goto :error
     @rem reset hard to cleanup any changes done by a previous build.
     git reset --hard
     git clean -fxd
@@ -55,25 +75,49 @@ FOR %%P IN (3.9, 3.10, 3.11, 3.12, 3.13.1, 3.14.0) DO (
 
     echo "Running cmake with Generator:  %CMAKE_GENERATOR%, Platform: x64, Install Prefix: %CRC32C_INSTALL_PREFIX%"
 
-    py -!python_version_trimmed!-64 -m cmake -G "Visual Studio 17 2022" -A x64 -DCMAKE_POLICY_VERSION_MINIMUM=3.12 -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0 -DCMAKE_INSTALL_PREFIX:PATH="%CRC32C_INSTALL_PREFIX%" ..
+    py -!python_version_trimmed!-64 -m cmake -G "Visual Studio 17 2022" -A x64 -DCMAKE_POLICY_VERSION_MINIMUM=3.12 -DCRC32C_BUILD_BENCHMARKS=no -DCRC32C_BUILD_TESTS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=yes -DCRC32C_USE_GLOG=0 -DCMAKE_INSTALL_PREFIX:PATH="%CRC32C_INSTALL_PREFIX%" .. || goto :error
 
-    py -!python_version_trimmed!-64 -m cmake --build . --config "%CONFIGURATION%" --target install
+    py -!python_version_trimmed!-64 -m cmake --build . --config "%CONFIGURATION%" --target install || goto :error
 
     dir %CRC32C_INSTALL_PREFIX% /b /s
     popd
 
     dir  %CRC32C_INSTALL_PREFIX%\bin
     echo "Copying Binary to root: %CRC32C_INSTALL_PREFIX%\bin\crc32c.dll"
-    copy %CRC32C_INSTALL_PREFIX%\bin\crc32c.dll .
+    copy %CRC32C_INSTALL_PREFIX%\bin\crc32c.dll . || goto :error
 
-    py -!python_version_trimmed!-64 -m pip install --upgrade pip setuptools wheel
+    py -!python_version_trimmed!-64 -m pip install --upgrade pip setuptools wheel || goto :error
     echo "Building C extension"
-    py -!python_version_trimmed!-64 setup.py build_ext -v --include-dirs=%CRC32C_INSTALL_PREFIX%\include --library-dirs=%CRC32C_INSTALL_PREFIX%\lib
+    py -!python_version_trimmed!-64 setup.py build_ext -v --include-dirs=%CRC32C_INSTALL_PREFIX%\include --library-dirs=%CRC32C_INSTALL_PREFIX%\lib || goto :error
     echo "Building Wheel"
-    py -!python_version_trimmed!-64 -m pip wheel . --wheel-dir wheels/
+    py -!python_version_trimmed!-64 -m pip wheel . --wheel-dir wheels/ || goto :error
 
     echo "Built wheel, now running tests."
     call %~dp0/test.bat !python_version_trimmed! || goto :error
 
     echo "Finished with Python version %P"
 )
+
+echo "Built wheels in wheels/ directory:"
+dir wheels\*.whl || goto :error
+
+for %%P in (%SUPPORTED_PYTHON_VERSIONS%) do (
+    for /f "tokens=1,2 delims=." %%I in ("%%P") do set py_tag=cp%%I%%J
+    dir wheels\*!py_tag!*.whl >nul || (
+        echo "ERROR: Missing Windows wheel for !py_tag!!"
+        goto :error
+    )
+)
+
+echo "Validating built wheels with twine check"
+py -3 -m pip install --upgrade twine wheel setuptools pkginfo || goto :error
+
+echo "Build the source distribution (sdist) and validate with twine check"
+py -3 setup.py sdist || goto :error
+py -3 -m twine check dist/* wheels/* || goto :error
+echo "Windows wheels and sdist are ready for Kokoro / OSS Exit Gate aggregation."
+
+goto :EOF
+
+:error
+exit /b 1

@@ -24,12 +24,18 @@ from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
+from google.iam.v1 import (
+    iam_policy_pb2,  # type: ignore
+    policy_pb2,  # type: ignore
+)
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
 from google.cloud.lustre_v1 import gapic_version as package_version
-from google.cloud.lustre_v1.types import instance, transfer
+from google.cloud.lustre_v1.types import directory_policy, instance, mirror, transfer
+from google.cloud.lustre_v1.types import directory_policy as gcl_directory_policy
 from google.cloud.lustre_v1.types import instance as gcl_instance
+from google.cloud.lustre_v1.types import mirror as gcl_mirror
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
     gapic_version=package_version.__version__
@@ -168,6 +174,11 @@ class LustreTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.reschedule_maintenance: gapic_v1.method.wrap_method(
+                self.reschedule_maintenance,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.import_data: gapic_v1.method.wrap_method(
                 self.import_data,
                 default_timeout=None,
@@ -178,6 +189,51 @@ class LustreTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.create_mirror: gapic_v1.method.wrap_method(
+                self.create_mirror,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_mirror: gapic_v1.method.wrap_method(
+                self.update_mirror,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_mirror: gapic_v1.method.wrap_method(
+                self.delete_mirror,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_mirror: gapic_v1.method.wrap_method(
+                self.get_mirror,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_mirrors: gapic_v1.method.wrap_method(
+                self.list_mirrors,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_directory_policy: gapic_v1.method.wrap_method(
+                self.create_directory_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_directory_policy: gapic_v1.method.wrap_method(
+                self.delete_directory_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_directory_policy: gapic_v1.method.wrap_method(
+                self.get_directory_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_directory_policies: gapic_v1.method.wrap_method(
+                self.list_directory_policies,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.get_location: gapic_v1.method.wrap_method(
                 self.get_location,
                 default_timeout=None,
@@ -185,6 +241,21 @@ class LustreTransport(abc.ABC):
             ),
             self.list_locations: gapic_v1.method.wrap_method(
                 self.list_locations,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_iam_policy: gapic_v1.method.wrap_method(
+                self.get_iam_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.set_iam_policy: gapic_v1.method.wrap_method(
+                self.set_iam_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.test_iam_permissions: gapic_v1.method.wrap_method(
+                self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -272,6 +343,15 @@ class LustreTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def reschedule_maintenance(
+        self,
+    ) -> Callable[
+        [instance.RescheduleMaintenanceRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def import_data(
         self,
     ) -> Callable[
@@ -286,6 +366,92 @@ class LustreTransport(abc.ABC):
     ) -> Callable[
         [transfer.ExportDataRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_mirror(
+        self,
+    ) -> Callable[
+        [gcl_mirror.CreateMirrorRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_mirror(
+        self,
+    ) -> Callable[
+        [gcl_mirror.UpdateMirrorRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_mirror(
+        self,
+    ) -> Callable[
+        [mirror.DeleteMirrorRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_mirror(
+        self,
+    ) -> Callable[
+        [mirror.GetMirrorRequest], Union[mirror.Mirror, Awaitable[mirror.Mirror]]
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_mirrors(
+        self,
+    ) -> Callable[
+        [mirror.ListMirrorsRequest],
+        Union[mirror.ListMirrorsResponse, Awaitable[mirror.ListMirrorsResponse]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_directory_policy(
+        self,
+    ) -> Callable[
+        [gcl_directory_policy.CreateDirectoryPolicyRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_directory_policy(
+        self,
+    ) -> Callable[
+        [directory_policy.DeleteDirectoryPolicyRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_directory_policy(
+        self,
+    ) -> Callable[
+        [directory_policy.GetDirectoryPolicyRequest],
+        Union[
+            directory_policy.DirectoryPolicy,
+            Awaitable[directory_policy.DirectoryPolicy],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_directory_policies(
+        self,
+    ) -> Callable[
+        [directory_policy.ListDirectoryPoliciesRequest],
+        Union[
+            directory_policy.ListDirectoryPoliciesResponse,
+            Awaitable[directory_policy.ListDirectoryPoliciesResponse],
+        ],
     ]:
         raise NotImplementedError()
 
@@ -325,6 +491,36 @@ class LustreTransport(abc.ABC):
     ) -> Callable[
         [operations_pb2.DeleteOperationRequest],
         None,
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def set_iam_policy(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.SetIamPolicyRequest],
+        Union[policy_pb2.Policy, Awaitable[policy_pb2.Policy]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_iam_policy(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.GetIamPolicyRequest],
+        Union[policy_pb2.Policy, Awaitable[policy_pb2.Policy]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def test_iam_permissions(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.TestIamPermissionsRequest],
+        Union[
+            iam_policy_pb2.TestIamPermissionsResponse,
+            Awaitable[iam_policy_pb2.TestIamPermissionsResponse],
+        ],
     ]:
         raise NotImplementedError()
 

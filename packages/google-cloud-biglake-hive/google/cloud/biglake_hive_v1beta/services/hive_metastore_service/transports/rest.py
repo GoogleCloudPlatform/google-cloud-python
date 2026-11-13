@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.biglake_hive_v1beta._compat import transcode_request
 from google.cloud.biglake_hive_v1beta.types import hive_metastore
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1238,21 +1239,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseBatchCreatePartitions._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_partitions(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseBatchCreatePartitions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHiveMetastoreServiceRestTransport._BaseBatchCreatePartitions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseBatchCreatePartitions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseBatchCreatePartitions,
+                    "_BaseBatchCreatePartitions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1393,21 +1391,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseBatchDeletePartitions._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_delete_partitions(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseBatchDeletePartitions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHiveMetastoreServiceRestTransport._BaseBatchDeletePartitions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseBatchDeletePartitions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseBatchDeletePartitions,
+                    "_BaseBatchDeletePartitions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1515,21 +1510,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseBatchUpdatePartitions._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_partitions(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseBatchUpdatePartitions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHiveMetastoreServiceRestTransport._BaseBatchUpdatePartitions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseBatchUpdatePartitions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseBatchUpdatePartitions,
+                    "_BaseBatchUpdatePartitions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1680,21 +1672,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveCatalog._get_http_options()
-
             request, metadata = self._interceptor.pre_create_hive_catalog(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveCatalog._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveCatalog._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveCatalog._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveCatalog,
+                    "_BaseCreateHiveCatalog__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1838,21 +1827,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveDatabase._get_http_options()
-
             request, metadata = self._interceptor.pre_create_hive_database(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveDatabase._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveDatabase._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveDatabase._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveDatabase,
+                    "_BaseCreateHiveDatabase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1998,21 +1984,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveTable._get_http_options()
-
             request, metadata = self._interceptor.pre_create_hive_table(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveTable._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveTable._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveTable._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseCreateHiveTable,
+                    "_BaseCreateHiveTable__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2145,17 +2128,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseDeleteHiveCatalog._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_hive_catalog(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseDeleteHiveCatalog._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseDeleteHiveCatalog._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseDeleteHiveCatalog,
+                    "_BaseDeleteHiveCatalog__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2255,17 +2239,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseDeleteHiveDatabase._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_hive_database(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseDeleteHiveDatabase._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseDeleteHiveDatabase._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseDeleteHiveDatabase,
+                    "_BaseDeleteHiveDatabase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2365,17 +2350,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseDeleteHiveTable._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_hive_table(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseDeleteHiveTable._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseDeleteHiveTable._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseDeleteHiveTable,
+                    "_BaseDeleteHiveTable__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2480,21 +2466,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseFailoverHiveCatalog._get_http_options()
-
             request, metadata = self._interceptor.pre_failover_hive_catalog(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseFailoverHiveCatalog._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHiveMetastoreServiceRestTransport._BaseFailoverHiveCatalog._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseFailoverHiveCatalog._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseFailoverHiveCatalog,
+                    "_BaseFailoverHiveCatalog__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2644,17 +2627,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseGetHiveCatalog._get_http_options()
-
             request, metadata = self._interceptor.pre_get_hive_catalog(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseGetHiveCatalog._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseGetHiveCatalog._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseGetHiveCatalog,
+                    "_BaseGetHiveCatalog__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2794,17 +2778,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseGetHiveDatabase._get_http_options()
-
             request, metadata = self._interceptor.pre_get_hive_database(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseGetHiveDatabase._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseGetHiveDatabase._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseGetHiveDatabase,
+                    "_BaseGetHiveDatabase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2946,15 +2931,16 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseGetHiveTable._get_http_options()
-
             request, metadata = self._interceptor.pre_get_hive_table(request, metadata)
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseGetHiveTable._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseGetHiveTable._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseGetHiveTable,
+                    "_BaseGetHiveTable__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3092,17 +3078,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseListHiveCatalogs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_hive_catalogs(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseListHiveCatalogs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseListHiveCatalogs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseListHiveCatalogs,
+                    "_BaseListHiveCatalogs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3244,17 +3231,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseListHiveDatabases._get_http_options()
-
             request, metadata = self._interceptor.pre_list_hive_databases(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseListHiveDatabases._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseListHiveDatabases._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseListHiveDatabases,
+                    "_BaseListHiveDatabases__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3396,17 +3384,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseListHiveTables._get_http_options()
-
             request, metadata = self._interceptor.pre_list_hive_tables(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseListHiveTables._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseListHiveTables._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseListHiveTables,
+                    "_BaseListHiveTables__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3544,15 +3533,16 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseListPartitions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_partitions(request, metadata)
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseListPartitions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseListPartitions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseListPartitions,
+                    "_BaseListPartitions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3692,21 +3682,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveCatalog._get_http_options()
-
             request, metadata = self._interceptor.pre_update_hive_catalog(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveCatalog._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveCatalog._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveCatalog._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveCatalog,
+                    "_BaseUpdateHiveCatalog__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3850,21 +3837,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveDatabase._get_http_options()
-
             request, metadata = self._interceptor.pre_update_hive_database(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveDatabase._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveDatabase._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveDatabase._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveDatabase,
+                    "_BaseUpdateHiveDatabase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4010,21 +3994,18 @@ class HiveMetastoreServiceRestTransport(_BaseHiveMetastoreServiceRestTransport):
             """
 
             http_options = _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveTable._get_http_options()
-
             request, metadata = self._interceptor.pre_update_hive_table(
                 request, metadata
             )
-            transcoded_request = _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveTable._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveTable._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveTable._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseHiveMetastoreServiceRestTransport._BaseUpdateHiveTable,
+                    "_BaseUpdateHiveTable__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

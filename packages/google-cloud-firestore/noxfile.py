@@ -23,6 +23,11 @@ from typing import Dict, List
 import nox
 
 RUFF_VERSION = "ruff==0.14.14"
+# Temporarily pin pytest<9.2 because pytest 9.2.0 applies filterwarnings=error
+# before pytest_configure hooks run, turning pytest-asyncio's unset
+# asyncio_default_fixture_loop_scope warning into an error. Remove once
+# pytest 9.2+ warning and fixture scope deprecations are resolved.
+PYTEST_VERSION = "pytest<9.2"
 
 LINT_PATHS = ["docs", "google", "tests", "noxfile.py", "setup.py"]
 
@@ -66,7 +71,7 @@ PACKAGE_NAME = "google-cloud-firestore"
 UNIT_TEST_STANDARD_DEPENDENCIES = [
     "mock",
     "asyncmock",
-    "pytest",
+    PYTEST_VERSION,
     "pytest-cov",
     "pytest-asyncio==0.21.2",
 ]
@@ -83,7 +88,7 @@ UNIT_TEST_EXTRAS_BY_PYTHON: Dict[str, List[str]] = {}
 SYSTEM_TEST_PYTHON_VERSIONS: List[str] = ALL_PYTHON
 SYSTEM_TEST_STANDARD_DEPENDENCIES = [
     "mock",
-    "pytest",
+    PYTEST_VERSION,
 ]
 SYSTEM_TEST_EXTERNAL_DEPENDENCIES: List[str] = [
     "pytest-asyncio==0.21.2",
@@ -222,6 +227,17 @@ def lint(session):
     serious code quality issues.
     """
     session.install("flake8", RUFF_VERSION)
+
+    # 1. Check imports
+    session.run(
+        "ruff",
+        "check",
+        "--select",
+        "I",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+        "--line-length=88",
+        *LINT_PATHS,
+    )
 
     # 2. Check formatting
     session.run(
@@ -541,7 +557,11 @@ def prerelease_deps(session, protobuf_implementation):
     session.install("-e", ".")
 
     # Install dependencies for the unit test environment
-    unit_deps_all = UNIT_TEST_STANDARD_DEPENDENCIES + UNIT_TEST_EXTERNAL_DEPENDENCIES
+    unit_deps_all = (
+        UNIT_TEST_STANDARD_DEPENDENCIES
+        + UNIT_TEST_DEPENDENCIES
+        + UNIT_TEST_EXTERNAL_DEPENDENCIES
+    )
     session.install(*unit_deps_all)
 
     # Because we test minimum dependency versions on the minimum Python
@@ -578,9 +598,10 @@ def prerelease_deps(session, protobuf_implementation):
         "proto-plus",
     ]
 
-    deps_dir = CURRENT_DIRECTORY.parent
-    while deps_dir.name != "packages" and deps_dir.parent != deps_dir:
-        deps_dir = deps_dir.parent
+    # Locate the monorepo 'packages' directory containing core dependencies
+    deps_dir = next(
+        p / "packages" for p in CURRENT_DIRECTORY.parents if (p / "packages").is_dir()
+    )
 
     # Extract the base package name, safely ignoring version bounds and spaces
     # (e.g., "grpcio>=1.75.1" becomes "grpcio")
@@ -638,7 +659,7 @@ def prerelease_deps(session, protobuf_implementation):
     )
 
 
-@nox.session(python=PREVIEW_PYTHON_VERSION)
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 @nox.parametrize(
     "protobuf_implementation",
     ["python", "upb"],
@@ -652,7 +673,11 @@ def core_deps_from_source(session, protobuf_implementation):
     session.install("-e", ".")
 
     # Install dependencies for the unit test environment
-    unit_deps_all = UNIT_TEST_STANDARD_DEPENDENCIES + UNIT_TEST_EXTERNAL_DEPENDENCIES
+    unit_deps_all = (
+        UNIT_TEST_STANDARD_DEPENDENCIES
+        + UNIT_TEST_DEPENDENCIES
+        + UNIT_TEST_EXTERNAL_DEPENDENCIES
+    )
     session.install(*unit_deps_all)
 
     # Because we test minimum dependency versions on the minimum Python
@@ -690,9 +715,10 @@ def core_deps_from_source(session, protobuf_implementation):
         "proto-plus",
     ]
 
-    deps_dir = CURRENT_DIRECTORY.parent
-    while deps_dir.name != "packages" and deps_dir.parent != deps_dir:
-        deps_dir = deps_dir.parent
+    # Locate the monorepo 'packages' directory containing core dependencies
+    deps_dir = next(
+        p / "packages" for p in CURRENT_DIRECTORY.parents if (p / "packages").is_dir()
+    )
 
     # Batch the pip installation to avoid sequential overhead
     dep_paths = [str(deps_dir / dep) for dep in core_dependencies_from_source]

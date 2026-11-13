@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.iap_v1._compat import transcode_request
 from google.cloud.iap_v1.types import service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -648,19 +649,16 @@ class IdentityAwareProxyOAuthServiceRestTransport(
             """
 
             http_options = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseCreateBrand._get_http_options()
-
             request, metadata = self._interceptor.pre_create_brand(request, metadata)
-            transcoded_request = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseCreateBrand._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseCreateBrand._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseCreateBrand._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseCreateBrand,
+                    "_BaseCreateBrand__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -805,23 +803,20 @@ class IdentityAwareProxyOAuthServiceRestTransport(
             """
 
             http_options = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseCreateIdentityAwareProxyClient._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_create_identity_aware_proxy_client(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseCreateIdentityAwareProxyClient._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseCreateIdentityAwareProxyClient._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseCreateIdentityAwareProxyClient._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseCreateIdentityAwareProxyClient,
+                    "_BaseCreateIdentityAwareProxyClient__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -961,19 +956,20 @@ class IdentityAwareProxyOAuthServiceRestTransport(
             """
 
             http_options = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseDeleteIdentityAwareProxyClient._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_delete_identity_aware_proxy_client(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseDeleteIdentityAwareProxyClient._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseDeleteIdentityAwareProxyClient._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseDeleteIdentityAwareProxyClient,
+                    "_BaseDeleteIdentityAwareProxyClient__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1077,15 +1073,16 @@ class IdentityAwareProxyOAuthServiceRestTransport(
             """
 
             http_options = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseGetBrand._get_http_options()
-
             request, metadata = self._interceptor.pre_get_brand(request, metadata)
-            transcoded_request = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseGetBrand._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseGetBrand._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseGetBrand,
+                    "_BaseGetBrand__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1228,17 +1225,18 @@ class IdentityAwareProxyOAuthServiceRestTransport(
             """
 
             http_options = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseGetIdentityAwareProxyClient._get_http_options()
-
             request, metadata = self._interceptor.pre_get_identity_aware_proxy_client(
                 request, metadata
             )
-            transcoded_request = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseGetIdentityAwareProxyClient._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseGetIdentityAwareProxyClient._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseGetIdentityAwareProxyClient,
+                    "_BaseGetIdentityAwareProxyClient__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1377,15 +1375,16 @@ class IdentityAwareProxyOAuthServiceRestTransport(
             """
 
             http_options = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseListBrands._get_http_options()
-
             request, metadata = self._interceptor.pre_list_brands(request, metadata)
-            transcoded_request = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseListBrands._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseListBrands._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseListBrands,
+                    "_BaseListBrands__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1528,17 +1527,18 @@ class IdentityAwareProxyOAuthServiceRestTransport(
             """
 
             http_options = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseListIdentityAwareProxyClients._get_http_options()
-
             request, metadata = self._interceptor.pre_list_identity_aware_proxy_clients(
                 request, metadata
             )
-            transcoded_request = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseListIdentityAwareProxyClients._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseListIdentityAwareProxyClients._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseListIdentityAwareProxyClients,
+                    "_BaseListIdentityAwareProxyClients__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1684,23 +1684,20 @@ class IdentityAwareProxyOAuthServiceRestTransport(
             """
 
             http_options = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseResetIdentityAwareProxyClientSecret._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_reset_identity_aware_proxy_client_secret(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseResetIdentityAwareProxyClientSecret._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseResetIdentityAwareProxyClientSecret._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseResetIdentityAwareProxyClientSecret._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityAwareProxyOAuthServiceRestTransport._BaseResetIdentityAwareProxyClientSecret,
+                    "_BaseResetIdentityAwareProxyClientSecret__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

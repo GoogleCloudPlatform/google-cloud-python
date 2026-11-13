@@ -197,9 +197,8 @@ class Deployment(proto.Message):
             Output only. Location of Terraform error logs in Google
             Cloud Storage. Format: ``gs://{bucket}/{object}``.
         artifacts_gcs_bucket (str):
-            Optional. User-defined location of Cloud Build logs and
-            artifacts in Google Cloud Storage. Format:
-            ``gs://{bucket}/{folder}``
+            User-defined location of Cloud Build logs and artifacts in
+            Google Cloud Storage. Format: ``gs://{bucket}/{folder}``
 
             A default bucket will be bootstrapped if the field is not
             set or empty. Default bucket format:
@@ -233,8 +232,8 @@ class Deployment(proto.Message):
 
             This field is a member of `oneof`_ ``_import_existing_resources``.
         worker_pool (str):
-            Optional. The user-specified Cloud Build worker pool
-            resource in which the Cloud Build job will execute. Format:
+            The user-specified Cloud Build worker pool resource in which
+            the Cloud Build job will execute. Format:
             ``projects/{project}/locations/{location}/workerPools/{workerPoolId}``.
             If this field is unspecified, the default Cloud Build worker
             pool will be used.
@@ -244,8 +243,8 @@ class Deployment(proto.Message):
             Output only. Current lock state of the
             deployment.
         tf_version_constraint (str):
-            Optional. The user-specified Terraform
-            version constraint. Example: "=1.3.10".
+            The user-specified Terraform version
+            constraint. Example: "=1.3.10".
 
             This field is a member of `oneof`_ ``_tf_version_constraint``.
         tf_version (str):
@@ -1691,18 +1690,18 @@ class GitSource(proto.Message):
 
     Attributes:
         repo (str):
-            Optional. Repository URL.
+            Repository URL.
             Example:
             'https://github.com/kubernetes/examples.git'
 
             This field is a member of `oneof`_ ``_repo``.
         directory (str):
-            Optional. Subdirectory inside the repository.
+            Subdirectory inside the repository.
             Example: 'staging/my-package'
 
             This field is a member of `oneof`_ ``_directory``.
         ref (str):
-            Optional. Git reference (e.g. branch or tag).
+            Git reference (e.g. branch or tag).
 
             This field is a member of `oneof`_ ``_ref``.
     """
@@ -1741,6 +1740,9 @@ class DeploymentOperationMetadata(proto.Message):
         logs (str):
             Output only. Location of Deployment operations logs in
             ``gs://{bucket}/{object}`` format.
+        apply_results_available (bool):
+            Output only. Indicating if early apply
+            results are available.
     """
 
     class DeploymentStep(proto.Enum):
@@ -1812,6 +1814,10 @@ class DeploymentOperationMetadata(proto.Message):
     logs: str = proto.Field(
         proto.STRING,
         number=4,
+    )
+    apply_results_available: bool = proto.Field(
+        proto.BOOL,
+        number=5,
     )
 
 
@@ -2307,12 +2313,11 @@ class Preview(proto.Message):
         state (google.cloud.config_v1.types.Preview.State):
             Output only. Current state of the preview.
         deployment (str):
-            Optional. Optional deployment reference. If
-            specified, the preview will be performed using
-            the provided deployment's current state and use
-            any relevant fields from the deployment unless
-            explicitly specified in the preview create
-            request.
+            Optional. Deployment reference. If specified,
+            the preview will be performed using the provided
+            deployment's current state and use any relevant
+            fields from the deployment unless explicitly
+            specified in the preview create request.
         preview_mode (google.cloud.config_v1.types.Preview.PreviewMode):
             Optional. Current mode of preview.
         service_account (str):
@@ -2320,11 +2325,11 @@ class Preview(proto.Message):
             be used when previewing resources. Format:
             ``projects/{projectID}/serviceAccounts/{serviceAccount}``
         artifacts_gcs_bucket (str):
-            Optional. User-defined location of Cloud Build logs,
-            artifacts, and in Google Cloud Storage. Format:
-            ``gs://{bucket}/{folder}`` A default bucket will be
-            bootstrapped if the field is not set or empty Default Bucket
-            Format: ``gs://<project number>-<region>-blueprint-config``
+            User-defined location of Cloud Build logs, artifacts, and in
+            Google Cloud Storage. Format: ``gs://{bucket}/{folder}`` A
+            default bucket will be bootstrapped if the field is not set
+            or empty Default Bucket Format:
+            ``gs://<project number>-<region>-blueprint-config``
             Constraints:
 
             - The bucket needs to be in the same project as the
@@ -2336,8 +2341,8 @@ class Preview(proto.Message):
 
             This field is a member of `oneof`_ ``_artifacts_gcs_bucket``.
         worker_pool (str):
-            Optional. The user-specified Worker Pool resource in which
-            the Cloud Build job will execute. Format
+            The user-specified Worker Pool resource in which the Cloud
+            Build job will execute. Format
             projects/{project}/locations/{location}/workerPools/{workerPoolId}
             If this field is unspecified, the default Cloud Build worker
             pool will be used. If omitted and deployment resource ref
@@ -2372,8 +2377,8 @@ class Preview(proto.Message):
             set on the preview. It is in the format of
             "Major.Minor.Patch", for example, "1.3.10".
         tf_version_constraint (str):
-            Optional. The user-specified Terraform
-            version constraint. Example: "=1.3.10".
+            The user-specified Terraform version
+            constraint. Example: "=1.3.10".
 
             This field is a member of `oneof`_ ``_tf_version_constraint``.
         annotations (MutableMapping[str, str]):

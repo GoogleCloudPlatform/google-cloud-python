@@ -18,7 +18,6 @@
 """Model a set of read-only queries to a database as a snapshot."""
 
 import functools
-import threading
 from typing import List, Optional, Union
 
 from google.api_core import gapic_v1
@@ -32,9 +31,10 @@ from google.protobuf.struct_pb2 import Struct
 
 from google.cloud.aio._cross_sync import CrossSync
 from google.cloud.spanner_v1._helpers import (
-    AtomicCounter,
     _augment_error_with_request_id,
     _check_rst_stream_error,
+    _drain_stream,
+    _make_execute_sql_request,
     _make_value_pb,
     _merge_client_context,
     _merge_query_options,
@@ -47,6 +47,9 @@ from google.cloud.spanner_v1._helpers import (
 )
 from google.cloud.spanner_v1._opentelemetry_tracing import add_span_event, trace_call
 from google.cloud.spanner_v1.metrics.metrics_capture import MetricsCapture
+from google.cloud.spanner_v1.metrics.spanner_metrics_tracer_factory import (
+    SpannerMetricsTracerFactory,
+)
 from google.cloud.spanner_v1.streamed import StreamedResultSet
 from google.cloud.spanner_v1.types import MultiplexedSessionPrecommitToken
 from google.cloud.spanner_v1.types.mutation import Mutation
@@ -70,6 +73,7 @@ _STREAM_RESUMPTION_INTERNAL_ERROR_MESSAGES = (
     "RST_STREAM",
     "Received unexpected EOS on DATA frame from server",
 )
+_TRANSACTION_BEGIN_TIMEOUT_SECONDS = 30.0
 
 
 def _restart_on_unavailable(
@@ -98,8 +102,7 @@ def _restart_on_unavailable(
 
     :type transaction_selector: :class:`transaction_pb2.TransactionSelector`
     :param transaction_selector: Transaction selector object to be used in request if transaction is not passed,
-    if both transaction_selector and transaction are passed, then transaction is given priority.
-    """
+    if both transaction_selector and transaction are passed, then transaction is given priority."""
     resume_token: bytes = b""
     item_buffer: List[PartialResultSet] = []
     if transaction is not None:
@@ -113,81 +116,140 @@ def _restart_on_unavailable(
     attempt = 1
     nth_request = getattr(request_id_manager, "_next_nth_request", 0)
     current_request_id = None
-    while True:
-        try:
-            if iterator is None:
-                with (
-                    trace_call(
+    stream_finished = False
+    metrics_tracer = None
+    factory = SpannerMetricsTracerFactory()
+    if factory.enabled:
+        metrics_tracer = factory.create_metrics_tracer(resource_info)
+        if metrics_tracer:
+            metrics_tracer.record_operation_start()
+    try:
+        while True:
+            try:
+                if iterator is None:
+                    with trace_call(
                         trace_name,
                         session,
                         attributes,
                         observability_options=observability_options,
                         metadata=metadata,
-                    ) as span,
-                    MetricsCapture(resource_info),
-                ):
-                    (
-                        call_metadata,
-                        current_request_id,
-                    ) = request_id_manager.metadata_and_request_id(
-                        nth_request, attempt, metadata, span
-                    )
-                    iterator = CrossSync._Sync_Impl.run_if_async(
-                        method, request=request, metadata=call_metadata
-                    )
-            item: PartialResultSet
-            for item in iterator:
-                item_buffer.append(item)
+                    ) as span:
+                        call_metadata, current_request_id = (
+                            request_id_manager.metadata_and_request_id(
+                                nth_request, attempt, metadata, span
+                            )
+                        )
+                        token = None
+                        if metrics_tracer is not None:
+                            token = SpannerMetricsTracerFactory.set_current_tracer(
+                                metrics_tracer
+                            )
+                        try:
+                            iterator = CrossSync._Sync_Impl.run_if_async(
+                                method, request=request, metadata=call_metadata
+                            )
+                        finally:
+                            if token is not None:
+                                try:
+                                    SpannerMetricsTracerFactory.reset_current_tracer(
+                                        token
+                                    )
+                                except ValueError:
+                                    pass
+                item: PartialResultSet
+                for item in iterator:
+                    item_buffer.append(item)
+                    if transaction is not None:
+                        transaction._update_for_result_set_pb(item)
+                    if (
+                        item._pb is not None
+                        and item._pb.HasField("precommit_token")
+                        and (transaction is not None)
+                    ):
+                        transaction._update_for_precommit_token_pb(item.precommit_token)
+                    try:
+                        item_is_last = item.last
+                    except AttributeError:
+                        item_is_last = False
+                    if item_is_last:
+                        stream_finished = True
+                        _drain_stream(iterator)
+                        iterator = None
+                        break
+                    if item.resume_token:
+                        resume_token = item.resume_token
+                        break
+                else:
+                    stream_finished = True
+            except ServiceUnavailable:
+                del item_buffer[:]
+                request.resume_token = resume_token
                 if transaction is not None:
-                    transaction._update_for_result_set_pb(item)
-                if (
-                    item._pb is not None
-                    and item._pb.HasField("precommit_token")
-                    and (transaction is not None)
-                ):
-                    transaction._update_for_precommit_token_pb(item.precommit_token)
-                if item.resume_token:
-                    resume_token = item.resume_token
-                    break
-        except ServiceUnavailable:
-            del item_buffer[:]
-            request.resume_token = resume_token
-            if transaction is not None:
-                transaction_selector = transaction._build_transaction_selector_pb()
-            request.transaction = transaction_selector
-            attempt += 1
-            iterator = None
-            continue
-        except InternalServerError as exc:
-            resumable_error = any(
-                (
-                    resumable_message in exc.message
-                    for resumable_message in _STREAM_RESUMPTION_INTERNAL_ERROR_MESSAGES
+                    transaction_selector = transaction._build_transaction_selector_pb()
+                request.transaction = transaction_selector
+                attempt += 1
+                iterator = None
+                continue
+            except InternalServerError as exc:
+                resumable_error = any(
+                    (
+                        resumable_message in exc.message
+                        for resumable_message in _STREAM_RESUMPTION_INTERNAL_ERROR_MESSAGES
+                    )
                 )
-            )
-            if not resumable_error:
+                if not resumable_error:
+                    raise _augment_error_with_request_id(exc, current_request_id)
+                del item_buffer[:]
+                request.resume_token = resume_token
+                if transaction is not None:
+                    transaction_selector = transaction._build_transaction_selector_pb()
+                attempt += 1
+                request.transaction = transaction_selector
+                iterator = None
+                continue
+            except Exception as exc:
                 raise _augment_error_with_request_id(exc, current_request_id)
+            if len(item_buffer) == 0:
+                iterator = None
+                break
+            if stream_finished and metrics_tracer is not None:
+                try:
+                    metrics_tracer.record_operation_completion()
+                except Exception:
+                    pass
+                finally:
+                    metrics_tracer = None
+            for item in item_buffer:
+                yield item
             del item_buffer[:]
-            request.resume_token = resume_token
-            if transaction is not None:
-                transaction_selector = transaction._build_transaction_selector_pb()
-            attempt += 1
-            request.transaction = transaction_selector
-            iterator = None
-            continue
-        except Exception as exc:
-            raise _augment_error_with_request_id(exc, current_request_id)
-        if len(item_buffer) == 0:
-            break
-        for item in item_buffer:
-            yield item
-        del item_buffer[:]
+            if stream_finished:
+                iterator = None
+                break
+    finally:
+        try:
+            if metrics_tracer is not None:
+                try:
+                    metrics_tracer.record_operation_completion()
+                except Exception:
+                    pass
+        finally:
+            if iterator is not None and hasattr(iterator, "cancel"):
+                try:
+                    iterator.cancel()
+                except Exception:
+                    pass
 
 
 class _SnapshotBase(_SessionWrapper):
     """Base class for Snapshot.
 
     Allows reuse of API request methods with different transaction selector.
+
+    .. note::
+        Single-use snapshots (``multi_use=False``) are designed for a single read
+        or query operation and are thread-confined; they are not safe for concurrent
+        invocation across multiple threads. Multi-use snapshots and transactions
+        synchronize concurrent operations using internal locks.
 
     :type session: :class:`~google.cloud.spanner_v1.session.Session`
     :param session: the session used to perform transaction operations.
@@ -196,35 +258,60 @@ class _SnapshotBase(_SessionWrapper):
     _read_only: bool = True
     _multi_use: bool = False
 
-    def __init__(self, session, client_context=None):
+    def __init__(self, session, client_context=None, multi_use: Optional[bool] = None):
         super().__init__(session)
         self._client_context = _validate_client_context(client_context)
         self._execute_sql_request_count: int = 0
         self._read_request_count: int = 0
         self._begin_request_sent: bool = False
-
-        # Identifier for the transaction.
+        if multi_use is not None:
+            self._multi_use = multi_use
         self._transaction_id: Optional[bytes] = None
         self._precommit_token: Optional[MultiplexedSessionPrecommitToken] = None
-        self._lock: CrossSync._Sync_Impl.Lock = CrossSync._Sync_Impl.Lock()
+        if self._multi_use:
+            self._lock: Optional[CrossSync._Sync_Impl.Lock] = (
+                CrossSync._Sync_Impl.Lock()
+            )
+            self._transaction_begin_event: Optional[CrossSync._Sync_Impl.Event] = (
+                CrossSync._Sync_Impl.Event()
+            )
+        else:
+            self._lock = None
+            self._transaction_begin_event = None
 
-        # Operation within a transaction can be performed using multiple
-        # threads, so we need to use a lock when updating the transaction.
-        self._lock: threading.Lock = threading.Lock()
+    def _wait_for_transaction_begin(self) -> None:
+        """Claims the inline-begin for this request, or waits for it to complete.
 
-        # Event to coordinate concurrent requests beginning the transaction.
-        # This is used to prevent the "Transaction has not begun" race condition.
-        self._transaction_begin_event = threading.Event()
+        The first request against the transaction is the one that begins it
+        inline. Requests that are issued concurrently, before the transaction
+        id is available, must wait for that first request to complete instead
+        of assuming that the transaction has not begun.
 
-    @property
-    def _resource_info(self):
-        """Resource information for metrics labels."""
-        database = self._session._database
-        return {
-            "project": database._instance._client.project,
-            "instance": database._instance.instance_id,
-            "database": database.database_id,
-        }
+        For single-use snapshots, this method checks and enforces sequential
+        reuse prevention without synchronization, as single-use snapshots are
+        thread-confined.
+
+        :raises ValueError: if the transaction has already been used to execute
+            a request, but is not a multi-use transaction, or if the concurrent
+            request that began the transaction did not complete in time."""
+        if not self._multi_use:
+            if self._begin_request_sent or self._read_request_count > 0:
+                raise ValueError("Cannot re-use single-use snapshot.")
+            self._begin_request_sent = True
+            return
+        with self._lock:
+            if self._begin_request_sent or self._read_request_count > 0:
+                wait_needed = self._transaction_id is None
+            else:
+                wait_needed = False
+                self._begin_request_sent = True
+        if not wait_needed:
+            return
+        CrossSync._Sync_Impl.event_wait(
+            self._transaction_begin_event, timeout=_TRANSACTION_BEGIN_TIMEOUT_SECONDS
+        )
+        if not self._transaction_begin_event.is_set():
+            raise ValueError("Timed out waiting for transaction to begin.")
 
     def begin(self) -> bytes:
         """Begins a transaction on the database.
@@ -330,31 +417,8 @@ class _SnapshotBase(_SessionWrapper):
         :returns: a result set instance which can be used to consume rows.
 
         :raises ValueError: if the Transaction already used to execute a
-            read request, but is not a multi-use transaction or has not begun.
-        """
-
-        with self._lock:
-            # Check if this request is beginning the transaction.
-            # If a request is already in progress, other requests must wait
-            # until the transaction ID is available.
-            if self._begin_request_sent or self._read_request_count > 0:
-                if not self._multi_use:
-                    raise ValueError("Cannot re-use single-use snapshot.")
-                if self._transaction_id is None:
-                    wait_needed = True
-                else:
-                    wait_needed = False
-            else:
-                wait_needed = False
-                self._begin_request_sent = True
-
-        if wait_needed:
-            # Wait for the transaction to begin (set by another concurrent request).
-            # This prevents the race condition where concurrent requests think
-            # the transaction hasn't begun.
-            if not self._transaction_begin_event.wait(timeout=30.0):
-                raise ValueError("Timed out waiting for transaction to begin.")
-
+            read request, but is not a multi-use transaction or has not begun."""
+        self._wait_for_transaction_begin()
         session = self._session
         database = session._database
         api = database.spanner_api
@@ -367,19 +431,19 @@ class _SnapshotBase(_SessionWrapper):
             database._instance._client._client_context, self._client_context
         )
         request_options = _merge_request_options(request_options, client_context)
-        if request_options is None:
-            request_options = RequestOptions()
-        elif type(request_options) is dict:
-            request_options = RequestOptions(request_options)
-        if self._read_only:
-            request_options.transaction_tag = None
-            if (
-                directed_read_options is None
-                and database._directed_read_options is not None
-            ):
-                directed_read_options = database._directed_read_options
-        elif self.transaction_tag is not None:
-            request_options.transaction_tag = self.transaction_tag
+        if request_options is not None:
+            if self._read_only:
+                request_options.transaction_tag = None
+            elif self.transaction_tag is not None:
+                request_options.transaction_tag = self.transaction_tag
+        elif not self._read_only and self.transaction_tag is not None:
+            request_options = RequestOptions(transaction_tag=self.transaction_tag)
+        if (
+            self._read_only
+            and directed_read_options is None
+            and (database._directed_read_options is not None)
+        ):
+            directed_read_options = database._directed_read_options
         read_request = ReadRequest(
             session=session.name,
             table=table,
@@ -526,31 +590,8 @@ class _SnapshotBase(_SessionWrapper):
             specific column in the given row.
 
         :raises ValueError: if the Transaction already used to execute a
-            read request, but is not a multi-use transaction or has not begun.
-        """
-
-        with self._lock:
-            # Check if this request is beginning the transaction.
-            # If a request is already in progress, other requests must wait
-            # until the transaction ID is available.
-            if self._begin_request_sent or self._read_request_count > 0:
-                if not self._multi_use:
-                    raise ValueError("Cannot re-use single-use snapshot.")
-                if self._transaction_id is None:
-                    wait_needed = True
-                else:
-                    wait_needed = False
-            else:
-                wait_needed = False
-                self._begin_request_sent = True
-
-        if wait_needed:
-            # Wait for the transaction to begin (set by another concurrent request).
-            # This prevents the race condition where concurrent requests think
-            # the transaction hasn't begun.
-            if not self._transaction_begin_event.wait(timeout=30.0):
-                raise ValueError("Timed out waiting for transaction to begin.")
-
+            read request, but is not a multi-use transaction or has not begun."""
+        self._wait_for_transaction_begin()
         if params is not None:
             params_pb = Struct(
                 fields={key: _make_value_pb(value) for key, value in params.items()}
@@ -571,26 +612,26 @@ class _SnapshotBase(_SessionWrapper):
             database._instance._client._client_context, self._client_context
         )
         request_options = _merge_request_options(request_options, client_context)
-        if request_options is None:
-            request_options = RequestOptions()
-        elif type(request_options) is dict:
-            request_options = RequestOptions(request_options)
-        if self._read_only:
-            request_options.transaction_tag = None
-            if (
-                directed_read_options is None
-                and database._directed_read_options is not None
-            ):
-                directed_read_options = database._directed_read_options
-        elif self.transaction_tag is not None:
-            request_options.transaction_tag = self.transaction_tag
-        execute_sql_request = ExecuteSqlRequest(
-            session=session.name,
+        if request_options is not None:
+            if self._read_only:
+                request_options.transaction_tag = None
+            elif self.transaction_tag is not None:
+                request_options.transaction_tag = self.transaction_tag
+        elif not self._read_only and self.transaction_tag is not None:
+            request_options = RequestOptions(transaction_tag=self.transaction_tag)
+        if (
+            self._read_only
+            and directed_read_options is None
+            and (database._directed_read_options is not None)
+        ):
+            directed_read_options = database._directed_read_options
+        execute_sql_request = _make_execute_sql_request(
+            session_name=session.name,
             sql=sql,
             params=params_pb,
             param_types=param_types,
             query_mode=query_mode,
-            partition_token=partition,
+            partition=partition,
             seqno=self._execute_sql_request_count,
             query_options=query_options,
             request_options=request_options,
@@ -624,7 +665,7 @@ class _SnapshotBase(_SessionWrapper):
         trace_method_name = "execute_sql" if is_execute_sql_request else "read"
         trace_name = f"CloudSpanner.{type(self).__name__}.{trace_method_name}"
         is_inline_begin = False
-        if self._transaction_id is None:
+        if self._multi_use and self._transaction_id is None:
             is_inline_begin = True
             self._lock.acquire()
         try:
@@ -708,20 +749,20 @@ class _SnapshotBase(_SessionWrapper):
             MetricsCapture(self._resource_info),
         ):
             nth_request = getattr(database, "_next_nth_request", 0)
-            attempt = AtomicCounter()
+            attempt = 0
 
             def attempt_tracking_method():
+                nonlocal attempt
+                attempt += 1
                 all_metadata = database.metadata_with_request_id(
-                    nth_request, attempt.increment(), metadata, span
+                    nth_request, attempt, metadata, span
                 )
-                partition_read_method = functools.partial(
-                    api.partition_read,
+                return api.partition_read(
                     request=partition_read_request,
                     metadata=all_metadata,
                     retry=retry,
                     timeout=timeout,
                 )
-                return partition_read_method()
 
             response = _retry(
                 attempt_tracking_method,
@@ -783,20 +824,20 @@ class _SnapshotBase(_SessionWrapper):
             MetricsCapture(self._resource_info),
         ):
             nth_request = getattr(database, "_next_nth_request", 0)
-            attempt = AtomicCounter()
+            attempt = 0
 
             def attempt_tracking_method():
+                nonlocal attempt
+                attempt += 1
                 all_metadata = database.metadata_with_request_id(
-                    nth_request, attempt.increment(), metadata, span
+                    nth_request, attempt, metadata, span
                 )
-                partition_query_method = functools.partial(
-                    api.partition_query,
+                return api.partition_query(
                     request=partition_query_request,
                     metadata=all_metadata,
                     retry=retry,
                     timeout=timeout,
                 )
-                return partition_query_method()
 
             response = _retry(
                 attempt_tracking_method,
@@ -848,22 +889,21 @@ class _SnapshotBase(_SessionWrapper):
             MetricsCapture(self._resource_info),
         ):
             nth_request = getattr(database, "_next_nth_request", 0)
-            attempt = AtomicCounter()
+            attempt = 0
 
             def wrapped_method():
+                nonlocal attempt
+                attempt += 1
                 begin_transaction_request = BeginTransactionRequest(
                     **begin_request_kwargs
                 )
                 call_metadata, error_augmenter = database.with_error_augmentation(
-                    nth_request, attempt.increment(), metadata, span
-                )
-                begin_transaction_method = functools.partial(
-                    api.begin_transaction,
-                    request=begin_transaction_request,
-                    metadata=call_metadata,
+                    nth_request, attempt, metadata, span
                 )
                 with error_augmenter:
-                    return begin_transaction_method()
+                    return api.begin_transaction(
+                        request=begin_transaction_request, metadata=call_metadata
+                    )
 
             def before_next_retry(nth_retry, delay_in_seconds):
                 add_span_event(
@@ -910,9 +950,8 @@ class _SnapshotBase(_SessionWrapper):
         """Updates the snapshot for the given transaction."""
         if self._transaction_id is None and transaction_pb.id:
             self._transaction_id = transaction_pb.id
-            # Notify waiting threads that the transaction has begun.
-            self._transaction_begin_event.set()
-
+            if self._transaction_begin_event is not None:
+                self._transaction_begin_event.set()
         if transaction_pb._pb.HasField("precommit_token"):
             self._update_for_precommit_token_pb_unsafe(transaction_pb.precommit_token)
 
@@ -920,7 +959,10 @@ class _SnapshotBase(_SessionWrapper):
         self, precommit_token_pb: MultiplexedSessionPrecommitToken
     ) -> None:
         """Updates the snapshot for the given multiplexed session precommit token."""
-        with self._lock:
+        if self._lock is not None:
+            with self._lock:
+                self._update_for_precommit_token_pb_unsafe(precommit_token_pb)
+        else:
             self._update_for_precommit_token_pb_unsafe(precommit_token_pb)
 
     def _update_for_precommit_token_pb_unsafe(
@@ -948,7 +990,9 @@ class Snapshot(_SnapshotBase):
         transaction_id=None,
         client_context=None,
     ):
-        super(Snapshot, self).__init__(session, client_context=client_context)
+        super(Snapshot, self).__init__(
+            session, client_context=client_context, multi_use=multi_use
+        )
         opts = [read_timestamp, min_read_timestamp, max_staleness, exact_staleness]
         flagged = [opt for opt in opts if opt is not None]
         if len(flagged) > 1:
@@ -964,7 +1008,6 @@ class Snapshot(_SnapshotBase):
         self._min_read_timestamp = min_read_timestamp
         self._max_staleness = max_staleness
         self._exact_staleness = exact_staleness
-        self._multi_use = multi_use
         self._transaction_id = transaction_id
 
     def _build_transaction_options_pb(self) -> TransactionOptions:

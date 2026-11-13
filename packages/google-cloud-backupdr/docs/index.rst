@@ -2,6 +2,9 @@
 
 .. include:: multiprocessing.rst
 
+This package includes clients for multiple versions of Backup and DR Service.
+By default, you will get version ``backupdr_v1``.
+
 
 API Reference
 -------------
@@ -10,6 +13,14 @@ API Reference
 
     backupdr_v1/services_
     backupdr_v1/types_
+
+API Reference
+-------------
+.. toctree::
+    :maxdepth: 2
+
+    backupdr_v1beta/services_
+    backupdr_v1beta/types_
 
 
 Changelog

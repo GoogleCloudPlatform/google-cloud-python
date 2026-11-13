@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.discoveryengine_v1beta._compat import transcode_request
 from google.cloud.discoveryengine_v1beta.types import control, control_service
 from google.cloud.discoveryengine_v1beta.types import control as gcd_control
 
@@ -552,19 +553,16 @@ class ControlServiceRestTransport(_BaseControlServiceRestTransport):
             http_options = (
                 _BaseControlServiceRestTransport._BaseCreateControl._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_control(request, metadata)
-            transcoded_request = _BaseControlServiceRestTransport._BaseCreateControl._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseControlServiceRestTransport._BaseCreateControl._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseControlServiceRestTransport._BaseCreateControl._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseControlServiceRestTransport._BaseCreateControl,
+                    "_BaseCreateControl__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -697,15 +695,16 @@ class ControlServiceRestTransport(_BaseControlServiceRestTransport):
             http_options = (
                 _BaseControlServiceRestTransport._BaseDeleteControl._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_control(request, metadata)
-            transcoded_request = _BaseControlServiceRestTransport._BaseDeleteControl._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseControlServiceRestTransport._BaseDeleteControl._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseControlServiceRestTransport._BaseDeleteControl,
+                    "_BaseDeleteControl__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -812,17 +811,16 @@ class ControlServiceRestTransport(_BaseControlServiceRestTransport):
             http_options = (
                 _BaseControlServiceRestTransport._BaseGetControl._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_control(request, metadata)
-            transcoded_request = _BaseControlServiceRestTransport._BaseGetControl._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseControlServiceRestTransport._BaseGetControl._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseControlServiceRestTransport._BaseGetControl,
+                    "_BaseGetControl__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -958,15 +956,16 @@ class ControlServiceRestTransport(_BaseControlServiceRestTransport):
             http_options = (
                 _BaseControlServiceRestTransport._BaseListControls._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_controls(request, metadata)
-            transcoded_request = _BaseControlServiceRestTransport._BaseListControls._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseControlServiceRestTransport._BaseListControls._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseControlServiceRestTransport._BaseListControls,
+                    "_BaseListControls__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1110,19 +1109,16 @@ class ControlServiceRestTransport(_BaseControlServiceRestTransport):
             http_options = (
                 _BaseControlServiceRestTransport._BaseUpdateControl._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_control(request, metadata)
-            transcoded_request = _BaseControlServiceRestTransport._BaseUpdateControl._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseControlServiceRestTransport._BaseUpdateControl._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseControlServiceRestTransport._BaseUpdateControl._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseControlServiceRestTransport._BaseUpdateControl,
+                    "_BaseUpdateControl__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1300,21 +1296,18 @@ class ControlServiceRestTransport(_BaseControlServiceRestTransport):
             """
 
             http_options = _BaseControlServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseControlServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseControlServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseControlServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseControlServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1422,15 +1415,16 @@ class ControlServiceRestTransport(_BaseControlServiceRestTransport):
             http_options = (
                 _BaseControlServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseControlServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseControlServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseControlServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1562,15 +1556,16 @@ class ControlServiceRestTransport(_BaseControlServiceRestTransport):
             http_options = (
                 _BaseControlServiceRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseControlServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseControlServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseControlServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

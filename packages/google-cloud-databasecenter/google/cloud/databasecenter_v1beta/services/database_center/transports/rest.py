@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.databasecenter_v1beta._compat import transcode_request
 from google.cloud.databasecenter_v1beta.types import service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -570,15 +571,16 @@ class DatabaseCenterRestTransport(_BaseDatabaseCenterRestTransport):
             http_options = (
                 _BaseDatabaseCenterRestTransport._BaseAggregateFleet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_aggregate_fleet(request, metadata)
-            transcoded_request = _BaseDatabaseCenterRestTransport._BaseAggregateFleet._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseCenterRestTransport._BaseAggregateFleet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseCenterRestTransport._BaseAggregateFleet,
+                    "_BaseAggregateFleet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -719,21 +721,18 @@ class DatabaseCenterRestTransport(_BaseDatabaseCenterRestTransport):
             """
 
             http_options = _BaseDatabaseCenterRestTransport._BaseAggregateIssueStats._get_http_options()
-
             request, metadata = self._interceptor.pre_aggregate_issue_stats(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseCenterRestTransport._BaseAggregateIssueStats._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseCenterRestTransport._BaseAggregateIssueStats._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseCenterRestTransport._BaseAggregateIssueStats._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseCenterRestTransport._BaseAggregateIssueStats,
+                    "_BaseAggregateIssueStats__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -877,21 +876,18 @@ class DatabaseCenterRestTransport(_BaseDatabaseCenterRestTransport):
             """
 
             http_options = _BaseDatabaseCenterRestTransport._BaseAggregateQueryStats._get_http_options()
-
             request, metadata = self._interceptor.pre_aggregate_query_stats(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseCenterRestTransport._BaseAggregateQueryStats._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseCenterRestTransport._BaseAggregateQueryStats._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseCenterRestTransport._BaseAggregateQueryStats._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseCenterRestTransport._BaseAggregateQueryStats,
+                    "_BaseAggregateQueryStats__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1036,21 +1032,18 @@ class DatabaseCenterRestTransport(_BaseDatabaseCenterRestTransport):
             """
 
             http_options = _BaseDatabaseCenterRestTransport._BaseQueryDatabaseResourceGroups._get_http_options()
-
             request, metadata = self._interceptor.pre_query_database_resource_groups(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseCenterRestTransport._BaseQueryDatabaseResourceGroups._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseCenterRestTransport._BaseQueryDatabaseResourceGroups._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseCenterRestTransport._BaseQueryDatabaseResourceGroups._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseCenterRestTransport._BaseQueryDatabaseResourceGroups,
+                    "_BaseQueryDatabaseResourceGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1197,19 +1190,16 @@ class DatabaseCenterRestTransport(_BaseDatabaseCenterRestTransport):
             http_options = (
                 _BaseDatabaseCenterRestTransport._BaseQueryIssues._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_query_issues(request, metadata)
-            transcoded_request = _BaseDatabaseCenterRestTransport._BaseQueryIssues._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseCenterRestTransport._BaseQueryIssues._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseCenterRestTransport._BaseQueryIssues._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseCenterRestTransport._BaseQueryIssues,
+                    "_BaseQueryIssues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1349,15 +1339,16 @@ class DatabaseCenterRestTransport(_BaseDatabaseCenterRestTransport):
             http_options = (
                 _BaseDatabaseCenterRestTransport._BaseQueryProducts._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_query_products(request, metadata)
-            transcoded_request = _BaseDatabaseCenterRestTransport._BaseQueryProducts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseCenterRestTransport._BaseQueryProducts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseCenterRestTransport._BaseQueryProducts,
+                    "_BaseQueryProducts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

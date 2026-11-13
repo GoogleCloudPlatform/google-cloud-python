@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.vision_v1._compat import transcode_request
 from google.cloud.vision_v1.types import image_annotator
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -544,21 +545,18 @@ class ImageAnnotatorRestTransport(_BaseImageAnnotatorRestTransport):
             """
 
             http_options = _BaseImageAnnotatorRestTransport._BaseAsyncBatchAnnotateFiles._get_http_options()
-
             request, metadata = self._interceptor.pre_async_batch_annotate_files(
                 request, metadata
             )
-            transcoded_request = _BaseImageAnnotatorRestTransport._BaseAsyncBatchAnnotateFiles._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseImageAnnotatorRestTransport._BaseAsyncBatchAnnotateFiles._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseImageAnnotatorRestTransport._BaseAsyncBatchAnnotateFiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseImageAnnotatorRestTransport._BaseAsyncBatchAnnotateFiles,
+                    "_BaseAsyncBatchAnnotateFiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -700,21 +698,18 @@ class ImageAnnotatorRestTransport(_BaseImageAnnotatorRestTransport):
             """
 
             http_options = _BaseImageAnnotatorRestTransport._BaseAsyncBatchAnnotateImages._get_http_options()
-
             request, metadata = self._interceptor.pre_async_batch_annotate_images(
                 request, metadata
             )
-            transcoded_request = _BaseImageAnnotatorRestTransport._BaseAsyncBatchAnnotateImages._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseImageAnnotatorRestTransport._BaseAsyncBatchAnnotateImages._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseImageAnnotatorRestTransport._BaseAsyncBatchAnnotateImages._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseImageAnnotatorRestTransport._BaseAsyncBatchAnnotateImages,
+                    "_BaseAsyncBatchAnnotateImages__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -851,21 +846,18 @@ class ImageAnnotatorRestTransport(_BaseImageAnnotatorRestTransport):
             """
 
             http_options = _BaseImageAnnotatorRestTransport._BaseBatchAnnotateFiles._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_annotate_files(
                 request, metadata
             )
-            transcoded_request = _BaseImageAnnotatorRestTransport._BaseBatchAnnotateFiles._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseImageAnnotatorRestTransport._BaseBatchAnnotateFiles._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseImageAnnotatorRestTransport._BaseBatchAnnotateFiles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseImageAnnotatorRestTransport._BaseBatchAnnotateFiles,
+                    "_BaseBatchAnnotateFiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1007,21 +999,18 @@ class ImageAnnotatorRestTransport(_BaseImageAnnotatorRestTransport):
             """
 
             http_options = _BaseImageAnnotatorRestTransport._BaseBatchAnnotateImages._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_annotate_images(
                 request, metadata
             )
-            transcoded_request = _BaseImageAnnotatorRestTransport._BaseBatchAnnotateImages._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseImageAnnotatorRestTransport._BaseBatchAnnotateImages._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseImageAnnotatorRestTransport._BaseBatchAnnotateImages._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseImageAnnotatorRestTransport._BaseBatchAnnotateImages,
+                    "_BaseBatchAnnotateImages__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1209,15 +1198,16 @@ class ImageAnnotatorRestTransport(_BaseImageAnnotatorRestTransport):
             http_options = (
                 _BaseImageAnnotatorRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseImageAnnotatorRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseImageAnnotatorRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseImageAnnotatorRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -1,5 +1,5 @@
 {
-    "api_description": "Enables consumers to procure products served by Cloud Marketplace platform",
+    "api_description": "Enables consumers to procure products served by Cloud Marketplace platform.",
     "api_id": "cloudcommerceconsumerprocurement.googleapis.com",
     "api_shortname": "cloudcommerceconsumerprocurement",
     "client_documentation": "https://cloud.google.com/python/docs/reference/procurement/latest",

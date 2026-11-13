@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.resourcemanager_v3._compat import transcode_request
 from google.cloud.resourcemanager_v3.types import tag_values
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -798,27 +799,18 @@ class TagValuesRestTransport(_BaseTagValuesRestTransport):
             http_options = (
                 _BaseTagValuesRestTransport._BaseCreateTagValue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_tag_value(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTagValuesRestTransport._BaseCreateTagValue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseTagValuesRestTransport._BaseCreateTagValue._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTagValuesRestTransport._BaseCreateTagValue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTagValuesRestTransport._BaseCreateTagValue,
+                    "_BaseCreateTagValue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -957,21 +949,18 @@ class TagValuesRestTransport(_BaseTagValuesRestTransport):
             http_options = (
                 _BaseTagValuesRestTransport._BaseDeleteTagValue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_tag_value(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTagValuesRestTransport._BaseDeleteTagValue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTagValuesRestTransport._BaseDeleteTagValue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTagValuesRestTransport._BaseDeleteTagValue,
+                    "_BaseDeleteTagValue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1181,23 +1170,16 @@ class TagValuesRestTransport(_BaseTagValuesRestTransport):
             http_options = (
                 _BaseTagValuesRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseTagValuesRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseTagValuesRestTransport._BaseGetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTagValuesRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTagValuesRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1337,17 +1319,18 @@ class TagValuesRestTransport(_BaseTagValuesRestTransport):
             """
 
             http_options = _BaseTagValuesRestTransport._BaseGetNamespacedTagValue._get_http_options()
-
             request, metadata = self._interceptor.pre_get_namespaced_tag_value(
                 request, metadata
             )
-            transcoded_request = _BaseTagValuesRestTransport._BaseGetNamespacedTagValue._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTagValuesRestTransport._BaseGetNamespacedTagValue._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTagValuesRestTransport._BaseGetNamespacedTagValue,
+                    "_BaseGetNamespacedTagValue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1486,19 +1469,16 @@ class TagValuesRestTransport(_BaseTagValuesRestTransport):
             http_options = (
                 _BaseTagValuesRestTransport._BaseGetTagValue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_tag_value(request, metadata)
-            transcoded_request = (
-                _BaseTagValuesRestTransport._BaseGetTagValue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTagValuesRestTransport._BaseGetTagValue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTagValuesRestTransport._BaseGetTagValue,
+                    "_BaseGetTagValue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1637,19 +1617,16 @@ class TagValuesRestTransport(_BaseTagValuesRestTransport):
             http_options = (
                 _BaseTagValuesRestTransport._BaseListTagValues._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_tag_values(request, metadata)
-            transcoded_request = (
-                _BaseTagValuesRestTransport._BaseListTagValues._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTagValuesRestTransport._BaseListTagValues._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTagValuesRestTransport._BaseListTagValues,
+                    "_BaseListTagValues__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1863,23 +1840,16 @@ class TagValuesRestTransport(_BaseTagValuesRestTransport):
             http_options = (
                 _BaseTagValuesRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseTagValuesRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseTagValuesRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTagValuesRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTagValuesRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2017,21 +1987,18 @@ class TagValuesRestTransport(_BaseTagValuesRestTransport):
             http_options = (
                 _BaseTagValuesRestTransport._BaseTestIamPermissions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseTagValuesRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTagValuesRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTagValuesRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTagValuesRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2173,27 +2140,18 @@ class TagValuesRestTransport(_BaseTagValuesRestTransport):
             http_options = (
                 _BaseTagValuesRestTransport._BaseUpdateTagValue._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_tag_value(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseTagValuesRestTransport._BaseUpdateTagValue._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseTagValuesRestTransport._BaseUpdateTagValue._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTagValuesRestTransport._BaseUpdateTagValue._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTagValuesRestTransport._BaseUpdateTagValue,
+                    "_BaseUpdateTagValue__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2406,19 +2364,16 @@ class TagValuesRestTransport(_BaseTagValuesRestTransport):
             http_options = (
                 _BaseTagValuesRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseTagValuesRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTagValuesRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTagValuesRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

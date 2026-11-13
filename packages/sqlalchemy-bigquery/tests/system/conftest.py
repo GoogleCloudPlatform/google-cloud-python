@@ -20,12 +20,12 @@
 import pathlib
 from typing import List
 
-from google.api_core import exceptions
-from google.cloud import bigquery
 import pytest
 import sqlalchemy
 import test_utils.prefixer
 import test_utils.retry
+from google.api_core import exceptions
+from google.cloud import bigquery
 
 from sqlalchemy_bigquery import BigQueryDialect
 

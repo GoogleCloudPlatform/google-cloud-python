@@ -14,6 +14,7 @@
 #
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+exclude: '^packages/gapic-generator/tests/integration/goldens/'
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
@@ -27,3 +28,6 @@ repos:
     # Run the linter.
     - id: ruff-check
       args: [ --select, I, --fix, --target-version=py310, --line-length=88 ]
+    # Run the formatter.
+    - id: ruff-format
+      args: [ --target-version=py310, --line-length=88 ]

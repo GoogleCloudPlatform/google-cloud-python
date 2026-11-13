@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import team_messages, team_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -720,21 +721,18 @@ class TeamServiceRestTransport(_BaseTeamServiceRestTransport):
             """
 
             http_options = _BaseTeamServiceRestTransport._BaseBatchActivateTeams._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_activate_teams(
                 request, metadata
             )
-            transcoded_request = _BaseTeamServiceRestTransport._BaseBatchActivateTeams._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTeamServiceRestTransport._BaseBatchActivateTeams._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTeamServiceRestTransport._BaseBatchActivateTeams._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTeamServiceRestTransport._BaseBatchActivateTeams,
+                    "_BaseBatchActivateTeams__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -874,21 +872,18 @@ class TeamServiceRestTransport(_BaseTeamServiceRestTransport):
             http_options = (
                 _BaseTeamServiceRestTransport._BaseBatchCreateTeams._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_batch_create_teams(
                 request, metadata
             )
-            transcoded_request = _BaseTeamServiceRestTransport._BaseBatchCreateTeams._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTeamServiceRestTransport._BaseBatchCreateTeams._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTeamServiceRestTransport._BaseBatchCreateTeams._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTeamServiceRestTransport._BaseBatchCreateTeams,
+                    "_BaseBatchCreateTeams__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1026,21 +1021,18 @@ class TeamServiceRestTransport(_BaseTeamServiceRestTransport):
             """
 
             http_options = _BaseTeamServiceRestTransport._BaseBatchDeactivateTeams._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_deactivate_teams(
                 request, metadata
             )
-            transcoded_request = _BaseTeamServiceRestTransport._BaseBatchDeactivateTeams._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTeamServiceRestTransport._BaseBatchDeactivateTeams._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTeamServiceRestTransport._BaseBatchDeactivateTeams._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTeamServiceRestTransport._BaseBatchDeactivateTeams,
+                    "_BaseBatchDeactivateTeams__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1180,21 +1172,18 @@ class TeamServiceRestTransport(_BaseTeamServiceRestTransport):
             http_options = (
                 _BaseTeamServiceRestTransport._BaseBatchUpdateTeams._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_batch_update_teams(
                 request, metadata
             )
-            transcoded_request = _BaseTeamServiceRestTransport._BaseBatchUpdateTeams._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTeamServiceRestTransport._BaseBatchUpdateTeams._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTeamServiceRestTransport._BaseBatchUpdateTeams._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTeamServiceRestTransport._BaseBatchUpdateTeams,
+                    "_BaseBatchUpdateTeams__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1336,23 +1325,16 @@ class TeamServiceRestTransport(_BaseTeamServiceRestTransport):
             http_options = (
                 _BaseTeamServiceRestTransport._BaseCreateTeam._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_team(request, metadata)
-            transcoded_request = (
-                _BaseTeamServiceRestTransport._BaseCreateTeam._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseTeamServiceRestTransport._BaseCreateTeam._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTeamServiceRestTransport._BaseCreateTeam._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTeamServiceRestTransport._BaseCreateTeam,
+                    "_BaseCreateTeam__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1489,19 +1471,16 @@ class TeamServiceRestTransport(_BaseTeamServiceRestTransport):
             http_options = (
                 _BaseTeamServiceRestTransport._BaseGetTeam._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_team(request, metadata)
-            transcoded_request = (
-                _BaseTeamServiceRestTransport._BaseGetTeam._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTeamServiceRestTransport._BaseGetTeam._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTeamServiceRestTransport._BaseGetTeam,
+                    "_BaseGetTeam__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1637,19 +1616,16 @@ class TeamServiceRestTransport(_BaseTeamServiceRestTransport):
             http_options = (
                 _BaseTeamServiceRestTransport._BaseListTeams._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_teams(request, metadata)
-            transcoded_request = (
-                _BaseTeamServiceRestTransport._BaseListTeams._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTeamServiceRestTransport._BaseListTeams._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTeamServiceRestTransport._BaseListTeams,
+                    "_BaseListTeams__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1788,23 +1764,16 @@ class TeamServiceRestTransport(_BaseTeamServiceRestTransport):
             http_options = (
                 _BaseTeamServiceRestTransport._BaseUpdateTeam._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_team(request, metadata)
-            transcoded_request = (
-                _BaseTeamServiceRestTransport._BaseUpdateTeam._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseTeamServiceRestTransport._BaseUpdateTeam._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTeamServiceRestTransport._BaseUpdateTeam._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTeamServiceRestTransport._BaseUpdateTeam,
+                    "_BaseUpdateTeam__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2013,17 +1982,18 @@ class TeamServiceRestTransport(_BaseTeamServiceRestTransport):
             http_options = (
                 _BaseTeamServiceRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseTeamServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTeamServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTeamServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2130,19 +2100,16 @@ class TeamServiceRestTransport(_BaseTeamServiceRestTransport):
             http_options = (
                 _BaseTeamServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseTeamServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTeamServiceRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTeamServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

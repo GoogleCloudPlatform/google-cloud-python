@@ -18,16 +18,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "googleapis-common-protos"
-version = "1.75.1"
+version = "1.76.0"
 authors = [{ name = "Google LLC", email = "googleapis-packages@google.com" }]
-license = { text = "Apache 2.0" }
+license = "Apache-2.0"
 requires-python = ">= 3.10"
 readme = "README.rst"
 description = "Common protobufs used in Google APIs"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: Apache Software License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.10",
@@ -35,6 +34,7 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Operating System :: OS Independent",
   "Topic :: Internet",
 ]

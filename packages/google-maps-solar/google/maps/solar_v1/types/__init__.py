@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 from .solar_service import (
+    AdditionalInsights,
     BuildingInsights,
     CashPurchaseSavings,
     DataLayers,
@@ -57,6 +58,7 @@ __all__ = (
     "SolarPanel",
     "SolarPanelConfig",
     "SolarPotential",
+    "AdditionalInsights",
     "DataLayerView",
     "Experiment",
     "ImageryQuality",

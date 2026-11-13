@@ -38,6 +38,7 @@ from google.cloud.devicestreaming_v1.types.adb_service import (
 from google.cloud.devicestreaming_v1.types.service import (
     AndroidDevice,
     CancelDeviceSessionRequest,
+    ClientInfo,
     CreateDeviceSessionRequest,
     DeviceSession,
     GetDeviceSessionRequest,
@@ -60,6 +61,7 @@ __all__ = (
     "StreamStatus",
     "AndroidDevice",
     "CancelDeviceSessionRequest",
+    "ClientInfo",
     "CreateDeviceSessionRequest",
     "DeviceSession",
     "GetDeviceSessionRequest",

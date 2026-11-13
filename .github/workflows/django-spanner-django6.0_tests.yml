@@ -1,0 +1,91 @@
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    paths:
+      - 'packages/django-google-spanner/**'
+      - '.github/workflows/django-spanner-django6.0_tests.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/django-google-spanner/**'
+      - '.github/workflows/django-spanner-django6.0_tests.yml'
+
+defaults:
+  run:
+    working-directory: packages/django-google-spanner
+
+name: django-spanner-django6.0-tests
+jobs:
+  check_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      run_django_spanner: ${{ steps.filter.outputs.django_spanner }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: filter
+        with:
+          filters: |
+            django_spanner:
+              - 'packages/django-google-spanner/**'
+              - '.github/workflows/django-spanner-django6.0_tests.yml'
+
+  system-tests:
+    needs: check_changes
+    if: ${{ needs.check_changes.outputs.run_django_spanner == 'true' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        chunk: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        include:
+          - chunk: 0
+            apps: admin_changelist admin_ordering distinct_on_fields expressions_window fixtures_model_package datetimes custom_methods generic_inline_admin field_defaults datatypes empty m2o_recursive many_to_one_null migrate_signals model_forms.test_uuid view_tests update select_related_onetoone sessions_tests
+          - chunk: 1
+            apps: db_functions save_delete_hooks get_object_or_404 model_indexes custom_pk indexes transaction_hooks constraints schema custom_columns i18n from_db_value sites_tests mutually_referential model_package defer_regress update_only_fields backends redirects_tests expressions get_or_create foreign_object generic_relations_regress many_to_many select_related generic_relations queryset_pickle model_inheritance
+          - chunk: 2
+            apps: model_options known_related_objects m2m_signals delete_regress fixtures generic_views model_inheritance_regress nested_foreign_keys lookup delete model_formsets
+          - chunk: 3
+            apps: signals or_lookups m2m_through_regress filtered_relation servers m2m_through fixtures_regress timezones model_forms.tests
+          - chunk: 4
+            apps: introspection multiple_database null_fk_ordering ordering m2m_intermediary null_fk max_lengths dates force_insert_update test_client m2m_multiple test_client_regress sitemaps_tests admin_inlines transactions null_queries test_runner m2m_and_m2o prefetch_related m2m_regress file_uploads sites_framework auth_tests forms_tests inline_formsets order_with_respect_to contenttypes_tests defer
+          - chunk: 5
+            apps: file_storage m2m_recursive reverse_lookup managers_regress basic annotations unmanaged_models string_lookup aggregation_regress reserved_names select_for_update many_to_one cache select_related_regress flatpages_tests model_formsets_regress
+          - chunk: 6
+            apps: model_fields queries.test_bulk_update queries.test_explain
+          - chunk: 7
+            apps: queries.test_iterator queries.test_q queries.test_query queries.test_qs_combinators
+          - chunk: 8
+            apps: inspectdb custom_managers migrations validation get_earliest_or_latest proxy_model_inheritance one_to_one raw_query bulk_create
+          - chunk: 9
+            apps: queries.tests
+
+    services:
+      emulator:
+        image: gcr.io/cloud-spanner-emulator/emulator:latest # zizmor: ignore[unpinned-images]
+        ports:
+          - 9010:9010
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.15"
+      - name: Run Django tests
+        run: sh django_test_suite_6.0.sh
+        env:
+          SPANNER_EMULATOR_HOST: localhost:9010
+          GOOGLE_CLOUD_PROJECT: emulator-test-project
+          GOOGLE_CLOUD_TESTS_CREATE_SPANNER_INSTANCE: true
+          RUNNING_SPANNER_BACKEND_TESTS: 1
+          SPANNER_TEST_INSTANCE: google-cloud-django-backend-tests
+          DJANGO_TEST_APPS: ${{ matrix.apps }}

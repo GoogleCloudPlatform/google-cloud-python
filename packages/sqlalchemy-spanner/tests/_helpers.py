@@ -7,6 +7,7 @@
 
 import configparser
 import os
+import pathlib
 
 import mock
 from sqlalchemy.testing import fixtures
@@ -43,9 +44,16 @@ DB_URL = (
 
 
 def get_db_url():
+    """Retrieve the database URL from the active session config file.
+
+    Respects the SQLALCHEMY_SPANNER_CONFIG environment variable set by Nox
+    to ensure each parallel test session connects to its own isolated database.
+    """
     config = configparser.ConfigParser()
-    if os.path.exists("test.cfg"):
-        config.read("test.cfg")
+    config_filename = os.getenv("SQLALCHEMY_SPANNER_CONFIG", "test.cfg")
+    config_path = pathlib.Path(config_filename)
+    if config_path.exists():
+        config.read(config_path)
     else:
         config.read("setup.cfg")
     return config.get("db", "default", fallback=DB_URL)

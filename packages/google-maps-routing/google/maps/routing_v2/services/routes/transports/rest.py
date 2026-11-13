@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.maps.routing_v2._compat import transcode_request
 from google.maps.routing_v2.types import routes_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -351,25 +352,18 @@ class RoutesRestTransport(_BaseRoutesRestTransport):
             http_options = (
                 _BaseRoutesRestTransport._BaseComputeRouteMatrix._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_compute_route_matrix(
                 request, metadata
             )
-            transcoded_request = _BaseRoutesRestTransport._BaseComputeRouteMatrix._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseRoutesRestTransport._BaseComputeRouteMatrix._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseRoutesRestTransport._BaseComputeRouteMatrix._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRoutesRestTransport._BaseComputeRouteMatrix,
+                    "_BaseComputeRouteMatrix__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -499,23 +493,16 @@ class RoutesRestTransport(_BaseRoutesRestTransport):
             http_options = (
                 _BaseRoutesRestTransport._BaseComputeRoutes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_compute_routes(request, metadata)
-            transcoded_request = (
-                _BaseRoutesRestTransport._BaseComputeRoutes._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseRoutesRestTransport._BaseComputeRoutes._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseRoutesRestTransport._BaseComputeRoutes._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRoutesRestTransport._BaseComputeRoutes,
+                    "_BaseComputeRoutes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -22,9 +22,9 @@ import logging
 import ssl
 from typing import Optional
 
-from google.auth import exceptions
-from google.auth.transport._mtls_helper import secure_cert_key_paths
 import google.auth.transport.mtls
+from google.auth import _agent_identity_utils, exceptions
+from google.auth.transport._mtls_helper import secure_cert_key_paths
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -177,3 +177,44 @@ async def get_client_cert_and_key(client_cert_callback=None):
 
     has_cert, cert, key, _ = await get_client_ssl_credentials()
     return has_cert, cert, key
+
+
+async def check_parameters_for_unauthorized_response(
+    cached_cert, client_cert_callback=None
+):
+    """Async helper to retrieve certs and compute fingerprints for mTLS rotation.
+
+    Args:
+        cached_cert (bytes): The cached client certificate.
+        client_cert_callback (Optional[Callable[[], (bytes, bytes)]]): An
+            optional callback which returns client certificate bytes and private
+            key bytes both in PEM format.
+
+    Returns:
+        Tuple[Optional[bytes], Optional[bytes], Optional[str], Optional[str]]:
+            call_cert_bytes, call_key_bytes, cached_fingerprint, current_cert_fingerprint.
+        Returns (None, None, None, None) if mTLS is disabled or no client certificate is present.
+    """
+    is_mtls, call_cert_bytes, call_key_bytes = await get_client_cert_and_key(
+        client_cert_callback
+    )
+    if not is_mtls or not call_cert_bytes:
+        return None, None, None, None
+
+    def _fetch_fingerprints():
+        cert_obj = _agent_identity_utils.parse_certificate(call_cert_bytes)
+        current_fingerprint = _agent_identity_utils.calculate_certificate_fingerprint(
+            cert_obj
+        )
+        if cached_cert:
+            cached_fingerprint = _agent_identity_utils.get_cached_cert_fingerprint(
+                cached_cert
+            )
+        else:
+            cached_fingerprint = None
+        return cached_fingerprint, current_fingerprint
+
+    cached_fingerprint, current_cert_fingerprint = await _run_in_executor(
+        _fetch_fingerprints
+    )
+    return call_cert_bytes, call_key_bytes, cached_fingerprint, current_cert_fingerprint

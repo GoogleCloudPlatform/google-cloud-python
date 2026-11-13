@@ -45,7 +45,7 @@ def main():
         "protobuf >= 6.33.5, < 8.0.0",
         "pymemcache >= 2.1.0, < 5.0.0",
         "pytz >= 2022.1",
-        "redis >= 3.0.0, < 8.0.0",
+        "redis >= 3.0.0, < 9.0.0",
     ]
 
     setuptools.setup(
@@ -60,7 +60,7 @@ def main():
         url="https://github.com/googleapis/google-cloud-python/tree/main/packages/google-cloud-ndb",
         project_urls={
             "Documentation": "https://googleapis.dev/python/python-ndb/latest",
-            "Issue Tracker": "https://github.com/googleapis/google-cloud-python/tree/main/packages/google-cloud-ndb/issues",
+            "Issue Tracker": "https://github.com/googleapis/google-cloud-python/issues",
         },
         classifiers=[
             "Development Status :: 5 - Production/Stable",
@@ -73,6 +73,7 @@ def main():
             "Programming Language :: Python :: 3.12",
             "Programming Language :: Python :: 3.13",
             "Programming Language :: Python :: 3.14",
+            "Programming Language :: Python :: 3.15",
             "Operating System :: OS Independent",
             "Topic :: Internet",
         ],

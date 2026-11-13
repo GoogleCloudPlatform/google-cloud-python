@@ -17,19 +17,18 @@ Pandas Data Types for SQL systems (BigQuery, Spanner)
 
 import datetime
 import re
-from typing import Optional, Union
 import warnings
+from typing import Optional, Union
 
 import numpy
 import pandas
 import pandas.api.extensions
-from pandas.errors import OutOfBoundsDatetime
 import pyarrow
 import pyarrow.compute
+from pandas.errors import OutOfBoundsDatetime
 
 from db_dtypes import core
 from db_dtypes.json import JSONArray, JSONArrowType, JSONDtype  # noqa: F401
-
 
 date_dtype_name = "dbdate"
 time_dtype_name = "dbtime"
@@ -60,7 +59,7 @@ class TimeDtype(core.BaseDatetimeDtype):
 
     @staticmethod
     def __from_arrow__(
-        array: Union[pyarrow.Array, pyarrow.ChunkedArray]
+        array: Union[pyarrow.Array, pyarrow.ChunkedArray],
     ) -> "TimeArray":
         """Convert to dbtime data from an Arrow array.
 
@@ -219,7 +218,7 @@ class DateDtype(core.BaseDatetimeDtype):
 
     @staticmethod
     def __from_arrow__(
-        array: Union[pyarrow.Array, pyarrow.ChunkedArray]
+        array: Union[pyarrow.Array, pyarrow.ChunkedArray],
     ) -> "DateArray":
         """Convert to dbdate data from an Arrow array.
 

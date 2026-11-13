@@ -32,6 +32,7 @@ from concurrent.futures import ThreadPoolExecutor
 import pytest
 
 import tests.perf.microbenchmarks.writes.config as config
+from google.cloud.storage._helpers import _parse_bool_env
 from google.cloud.storage.asyncio.async_appendable_object_writer import (
     AsyncAppendableObjectWriter,
 )
@@ -45,6 +46,7 @@ from tests.perf.microbenchmarks.conftest import publish_resource_metrics
 
 # Get write parameters
 all_params = config.get_write_params()
+RCU_SYSTEM_TESTS = _parse_bool_env("RUN_RCU_SYSTEM_TESTS", default=False)
 
 
 async def create_client():
@@ -67,7 +69,10 @@ async def upload_chunks_using_grpc_async(client, filename, other_params):
     start_time = time.monotonic_ns()
 
     writer = AsyncAppendableObjectWriter(
-        client=client, bucket_name=other_params.bucket_name, object_name=filename
+        client=client,
+        bucket_name=other_params.bucket_name,
+        object_name=filename,
+        storage_class="RAPID" if RCU_SYSTEM_TESTS else None,
     )
     await writer.open()
 
@@ -80,7 +85,7 @@ async def upload_chunks_using_grpc_async(client, filename, other_params):
         data = os.urandom(bytes_to_upload)
         await writer.append(data)
         uploaded_bytes += bytes_to_upload
-    await writer.close()
+    await writer.close(finalize_on_close=True)
 
     # print('writer flush count', writer._flush_count)
 
@@ -147,13 +152,13 @@ def test_uploads_single_proc_single_coro(
 ):
     """
     Benchmarks uploads using a single process and a single coroutine.
-    It passes the workload to either `upload_chunks_using_grpc` (for zonal buckets)
+    It passes the workload to either `upload_chunks_using_grpc` (for rapid buckets)
     or `upload_using_json` (for regional buckets) for benchmarking using `benchmark.pedantic`.
     """
     params, files_names = workload_params
 
-    if params.bucket_type == "zonal":
-        logging.info("bucket type zonal")
+    if params.bucket_type == "rapid":
+        logging.info("bucket type rapid")
         target_func = upload_chunks_using_grpc
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
@@ -263,14 +268,14 @@ def test_uploads_single_proc_multi_coro(
     """
     Benchmarks uploads using a single process and multiple coroutines.
 
-    For zonal buckets, it uses `upload_files_using_grpc_multi_coro` to upload
+    For rapid buckets, it uses `upload_files_using_grpc_multi_coro` to upload
     multiple files concurrently with asyncio. For regional buckets, it uses
     `upload_files_using_json_multi_threaded` with a ThreadPoolExecutor.
     """
     params, files_names = workload_params
 
-    if params.bucket_type == "zonal":
-        logging.info("bucket type zonal")
+    if params.bucket_type == "rapid":
+        logging.info("bucket type rapid")
         target_func = upload_files_using_grpc_multi_coro
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
@@ -332,7 +337,7 @@ def _worker_init(bucket_type):
             0, {i for i in range(1, os.cpu_count()) if i not in cpu_affinity}
         )
     global worker_loop, worker_client, worker_json_client
-    if bucket_type == "zonal":
+    if bucket_type == "rapid":
         worker_loop = asyncio.new_event_loop()
         asyncio.set_event_loop(worker_loop)
         worker_client = worker_loop.run_until_complete(create_client())
@@ -351,12 +356,12 @@ def _upload_files_worker(files_to_upload, other_params, bucket_type):
     Args:
         files_to_upload (list): List of filenames for this worker to upload.
         other_params: An object containing benchmark parameters.
-        bucket_type (str): The type of bucket ('zonal' or 'regional').
+        bucket_type (str): The type of bucket ('rapid' or 'regional').
 
     Returns:
         float: The maximum latency from the uploads performed by this worker.
     """
-    if bucket_type == "zonal":
+    if bucket_type == "rapid":
         return upload_files_using_grpc_multi_coro(
             worker_loop, worker_client, files_to_upload, other_params
         )

@@ -126,7 +126,7 @@ def test_403_permission_cache_fallback(storage_client, buckets_to_delete):
         cached = storage_client._bucket_metadata_cache.get(bucket_name)
         assert cached is not None
         dest_id, loc = cached
-        assert dest_id == f"projects/_/buckets/{bucket_name}"
+        assert dest_id == f"//storage.googleapis.com/projects/_/buckets/{bucket_name}"
         assert loc == "global"
     finally:
         storage_client.get_bucket = original_get_bucket

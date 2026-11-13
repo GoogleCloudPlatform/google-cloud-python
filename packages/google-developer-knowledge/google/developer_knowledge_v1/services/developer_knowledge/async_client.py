@@ -73,11 +73,14 @@ class DeveloperKnowledgeAsyncClient:
 
     A typical use case is to first use
     [DeveloperKnowledge.SearchDocumentChunks][google.developers.knowledge.v1.DeveloperKnowledge.SearchDocumentChunks]
-    to find relevant page URIs based on a query, and then use
+    to find relevant document chunks based on a query, and then use
     [DeveloperKnowledge.GetDocument][google.developers.knowledge.v1.DeveloperKnowledge.GetDocument]
     or
     [DeveloperKnowledge.BatchGetDocuments][google.developers.knowledge.v1.DeveloperKnowledge.BatchGetDocuments]
-    to fetch the full content of the top results.
+    with document resource names (such as
+    [DocumentChunk.parent][google.developers.knowledge.v1.DocumentChunk.parent]
+    or ``documents/{uri_without_scheme}``) to fetch the full content of
+    the top results.
 
     All document content is provided in Markdown format.
     """
@@ -474,6 +477,10 @@ class DeveloperKnowledgeAsyncClient:
                 Example:
                 ``documents/docs.cloud.google.com/storage/docs/creating-buckets``
 
+                The name must not exceed 500 characters; values longer
+                than 500 characters will result in an
+                ``INVALID_ARGUMENT`` error.
+
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
@@ -487,9 +494,10 @@ class DeveloperKnowledgeAsyncClient:
 
         Returns:
             google.developer_knowledge_v1.types.Document:
-                A Document represents a piece of
-                content from the Developer Knowledge
-                corpus.
+                A Document represents a page of
+                documentation in the Developer Knowledge
+                corpus, like the page at
+                https://docs.cloud.google.com/storage/docs/creating-buckets.
 
         """
         # Create or coerce a protobuf request object.

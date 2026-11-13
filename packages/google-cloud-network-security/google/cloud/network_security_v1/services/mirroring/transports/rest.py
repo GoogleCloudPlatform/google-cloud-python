@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.network_security_v1._compat import transcode_request
 from google.cloud.network_security_v1.types import mirroring
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1686,21 +1687,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseCreateMirroringDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_create_mirroring_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseCreateMirroringDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMirroringRestTransport._BaseCreateMirroringDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseCreateMirroringDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseCreateMirroringDeployment,
+                    "_BaseCreateMirroringDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1840,21 +1838,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseCreateMirroringDeploymentGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_create_mirroring_deployment_group(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseCreateMirroringDeploymentGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMirroringRestTransport._BaseCreateMirroringDeploymentGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseCreateMirroringDeploymentGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseCreateMirroringDeploymentGroup,
+                    "_BaseCreateMirroringDeploymentGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1997,21 +1992,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseCreateMirroringEndpointGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_create_mirroring_endpoint_group(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseCreateMirroringEndpointGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMirroringRestTransport._BaseCreateMirroringEndpointGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseCreateMirroringEndpointGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseCreateMirroringEndpointGroup,
+                    "_BaseCreateMirroringEndpointGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2157,23 +2149,20 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseCreateMirroringEndpointGroupAssociation._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_create_mirroring_endpoint_group_association(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseCreateMirroringEndpointGroupAssociation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMirroringRestTransport._BaseCreateMirroringEndpointGroupAssociation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseCreateMirroringEndpointGroupAssociation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseCreateMirroringEndpointGroupAssociation,
+                    "_BaseCreateMirroringEndpointGroupAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2315,17 +2304,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseDeleteMirroringDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_mirroring_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseDeleteMirroringDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseDeleteMirroringDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseDeleteMirroringDeployment,
+                    "_BaseDeleteMirroringDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2463,17 +2453,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseDeleteMirroringDeploymentGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_mirroring_deployment_group(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseDeleteMirroringDeploymentGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseDeleteMirroringDeploymentGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseDeleteMirroringDeploymentGroup,
+                    "_BaseDeleteMirroringDeploymentGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2614,17 +2605,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseDeleteMirroringEndpointGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_mirroring_endpoint_group(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseDeleteMirroringEndpointGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseDeleteMirroringEndpointGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseDeleteMirroringEndpointGroup,
+                    "_BaseDeleteMirroringEndpointGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2768,19 +2760,20 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseDeleteMirroringEndpointGroupAssociation._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_delete_mirroring_endpoint_group_association(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseDeleteMirroringEndpointGroupAssociation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseDeleteMirroringEndpointGroupAssociation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseDeleteMirroringEndpointGroupAssociation,
+                    "_BaseDeleteMirroringEndpointGroupAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2925,17 +2918,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseGetMirroringDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_get_mirroring_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseGetMirroringDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseGetMirroringDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseGetMirroringDeployment,
+                    "_BaseGetMirroringDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3076,17 +3070,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseGetMirroringDeploymentGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_get_mirroring_deployment_group(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseGetMirroringDeploymentGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseGetMirroringDeploymentGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseGetMirroringDeploymentGroup,
+                    "_BaseGetMirroringDeploymentGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3240,17 +3235,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseGetMirroringEndpointGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_get_mirroring_endpoint_group(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseGetMirroringEndpointGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseGetMirroringEndpointGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseGetMirroringEndpointGroup,
+                    "_BaseGetMirroringEndpointGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3401,19 +3397,20 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseGetMirroringEndpointGroupAssociation._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_get_mirroring_endpoint_group_association(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseGetMirroringEndpointGroupAssociation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseGetMirroringEndpointGroupAssociation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseGetMirroringEndpointGroupAssociation,
+                    "_BaseGetMirroringEndpointGroupAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3556,17 +3553,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseListMirroringDeploymentGroups._get_http_options()
-
             request, metadata = self._interceptor.pre_list_mirroring_deployment_groups(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseListMirroringDeploymentGroups._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseListMirroringDeploymentGroups._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseListMirroringDeploymentGroups,
+                    "_BaseListMirroringDeploymentGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3712,17 +3710,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseListMirroringDeployments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_mirroring_deployments(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseListMirroringDeployments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseListMirroringDeployments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseListMirroringDeployments,
+                    "_BaseListMirroringDeployments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3863,19 +3862,20 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseListMirroringEndpointGroupAssociations._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_mirroring_endpoint_group_associations(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseListMirroringEndpointGroupAssociations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseListMirroringEndpointGroupAssociations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseListMirroringEndpointGroupAssociations,
+                    "_BaseListMirroringEndpointGroupAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4019,17 +4019,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseListMirroringEndpointGroups._get_http_options()
-
             request, metadata = self._interceptor.pre_list_mirroring_endpoint_groups(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseListMirroringEndpointGroups._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseListMirroringEndpointGroups._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseListMirroringEndpointGroups,
+                    "_BaseListMirroringEndpointGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4175,21 +4176,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseUpdateMirroringDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_update_mirroring_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseUpdateMirroringDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMirroringRestTransport._BaseUpdateMirroringDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseUpdateMirroringDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseUpdateMirroringDeployment,
+                    "_BaseUpdateMirroringDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4329,21 +4327,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseUpdateMirroringDeploymentGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_update_mirroring_deployment_group(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseUpdateMirroringDeploymentGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMirroringRestTransport._BaseUpdateMirroringDeploymentGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseUpdateMirroringDeploymentGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseUpdateMirroringDeploymentGroup,
+                    "_BaseUpdateMirroringDeploymentGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4486,21 +4481,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseUpdateMirroringEndpointGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_update_mirroring_endpoint_group(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseUpdateMirroringEndpointGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMirroringRestTransport._BaseUpdateMirroringEndpointGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseUpdateMirroringEndpointGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseUpdateMirroringEndpointGroup,
+                    "_BaseUpdateMirroringEndpointGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4646,23 +4638,20 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             """
 
             http_options = _BaseMirroringRestTransport._BaseUpdateMirroringEndpointGroupAssociation._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_update_mirroring_endpoint_group_association(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseUpdateMirroringEndpointGroupAssociation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMirroringRestTransport._BaseUpdateMirroringEndpointGroupAssociation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseUpdateMirroringEndpointGroupAssociation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseUpdateMirroringEndpointGroupAssociation,
+                    "_BaseUpdateMirroringEndpointGroupAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5051,19 +5040,16 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             http_options = (
                 _BaseMirroringRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseMirroringRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseMirroringRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5195,19 +5181,16 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             http_options = (
                 _BaseMirroringRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseMirroringRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseMirroringRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5339,19 +5322,16 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             http_options = (
                 _BaseMirroringRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseMirroringRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseMirroringRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5484,23 +5464,16 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             http_options = (
                 _BaseMirroringRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseMirroringRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseMirroringRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseMirroringRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5634,21 +5607,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             http_options = (
                 _BaseMirroringRestTransport._BaseTestIamPermissions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMirroringRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMirroringRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5779,25 +5749,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             http_options = (
                 _BaseMirroringRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseMirroringRestTransport._BaseCancelOperation._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseMirroringRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5902,19 +5865,18 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             http_options = (
                 _BaseMirroringRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseMirroringRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseMirroringRestTransport._BaseDeleteOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6021,19 +5983,16 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             http_options = (
                 _BaseMirroringRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseMirroringRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseMirroringRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6165,19 +6124,16 @@ class MirroringRestTransport(_BaseMirroringRestTransport):
             http_options = (
                 _BaseMirroringRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseMirroringRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseMirroringRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMirroringRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -4,6 +4,25 @@
 
 [1]: https://pypi.org/project/google-cloud-network-services/#history
 
+## [0.10.4](https://github.com/googleapis/google-cloud-python/compare/google-cloud-network-services-v0.10.3...google-cloud-network-services-v0.10.4) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [0.10.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-network-services-v0.10.2...google-cloud-network-services-v0.10.3) (2026-09-17)
+
+
+### Features
+
+* **google/cloud/networkservices/v1beta1:** add google-cloud-network-services ([#18398](https://github.com/googleapis/google-cloud-python/issues/18398)) ([8df34ce](https://github.com/googleapis/google-cloud-python/commit/8df34cee63a12075c5a7334a39e6852439655151))
+
+
+### Bug Fixes
+
+* empty commit to bump v1beta version ([#18411](https://github.com/googleapis/google-cloud-python/issues/18411)) ([3b3cc6f](https://github.com/googleapis/google-cloud-python/commit/3b3cc6f3deda911aeff9163f662ff56c19d04aed))
+
 ## [0.10.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-network-services-v0.10.1...google-cloud-network-services-v0.10.2) (2026-08-06)
 
 

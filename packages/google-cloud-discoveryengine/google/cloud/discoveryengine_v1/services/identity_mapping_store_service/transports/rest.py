@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.discoveryengine_v1._compat import transcode_request
 from google.cloud.discoveryengine_v1.types import (
     identity_mapping_store,
     identity_mapping_store_service,
@@ -733,6 +734,10 @@ class IdentityMappingStoreServiceRestTransport(
                     },
                     {
                         "method": "get",
+                        "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/assistants/*/agents/*/operations/*}",
+                    },
+                    {
+                        "method": "get",
                         "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/operations/*}",
                     },
                     {
@@ -911,21 +916,18 @@ class IdentityMappingStoreServiceRestTransport(
             """
 
             http_options = _BaseIdentityMappingStoreServiceRestTransport._BaseCreateIdentityMappingStore._get_http_options()
-
             request, metadata = self._interceptor.pre_create_identity_mapping_store(
                 request, metadata
             )
-            transcoded_request = _BaseIdentityMappingStoreServiceRestTransport._BaseCreateIdentityMappingStore._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIdentityMappingStoreServiceRestTransport._BaseCreateIdentityMappingStore._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityMappingStoreServiceRestTransport._BaseCreateIdentityMappingStore._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityMappingStoreServiceRestTransport._BaseCreateIdentityMappingStore,
+                    "_BaseCreateIdentityMappingStore__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1074,17 +1076,18 @@ class IdentityMappingStoreServiceRestTransport(
             """
 
             http_options = _BaseIdentityMappingStoreServiceRestTransport._BaseDeleteIdentityMappingStore._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_identity_mapping_store(
                 request, metadata
             )
-            transcoded_request = _BaseIdentityMappingStoreServiceRestTransport._BaseDeleteIdentityMappingStore._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityMappingStoreServiceRestTransport._BaseDeleteIdentityMappingStore._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityMappingStoreServiceRestTransport._BaseDeleteIdentityMappingStore,
+                    "_BaseDeleteIdentityMappingStore__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1225,17 +1228,18 @@ class IdentityMappingStoreServiceRestTransport(
             """
 
             http_options = _BaseIdentityMappingStoreServiceRestTransport._BaseGetIdentityMappingStore._get_http_options()
-
             request, metadata = self._interceptor.pre_get_identity_mapping_store(
                 request, metadata
             )
-            transcoded_request = _BaseIdentityMappingStoreServiceRestTransport._BaseGetIdentityMappingStore._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityMappingStoreServiceRestTransport._BaseGetIdentityMappingStore._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityMappingStoreServiceRestTransport._BaseGetIdentityMappingStore,
+                    "_BaseGetIdentityMappingStore__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1379,21 +1383,18 @@ class IdentityMappingStoreServiceRestTransport(
             """
 
             http_options = _BaseIdentityMappingStoreServiceRestTransport._BaseImportIdentityMappings._get_http_options()
-
             request, metadata = self._interceptor.pre_import_identity_mappings(
                 request, metadata
             )
-            transcoded_request = _BaseIdentityMappingStoreServiceRestTransport._BaseImportIdentityMappings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIdentityMappingStoreServiceRestTransport._BaseImportIdentityMappings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityMappingStoreServiceRestTransport._BaseImportIdentityMappings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityMappingStoreServiceRestTransport._BaseImportIdentityMappings,
+                    "_BaseImportIdentityMappings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1530,17 +1531,18 @@ class IdentityMappingStoreServiceRestTransport(
             """
 
             http_options = _BaseIdentityMappingStoreServiceRestTransport._BaseListIdentityMappings._get_http_options()
-
             request, metadata = self._interceptor.pre_list_identity_mappings(
                 request, metadata
             )
-            transcoded_request = _BaseIdentityMappingStoreServiceRestTransport._BaseListIdentityMappings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityMappingStoreServiceRestTransport._BaseListIdentityMappings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityMappingStoreServiceRestTransport._BaseListIdentityMappings,
+                    "_BaseListIdentityMappings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1685,17 +1687,18 @@ class IdentityMappingStoreServiceRestTransport(
             """
 
             http_options = _BaseIdentityMappingStoreServiceRestTransport._BaseListIdentityMappingStores._get_http_options()
-
             request, metadata = self._interceptor.pre_list_identity_mapping_stores(
                 request, metadata
             )
-            transcoded_request = _BaseIdentityMappingStoreServiceRestTransport._BaseListIdentityMappingStores._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityMappingStoreServiceRestTransport._BaseListIdentityMappingStores._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityMappingStoreServiceRestTransport._BaseListIdentityMappingStores,
+                    "_BaseListIdentityMappingStores__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1843,21 +1846,18 @@ class IdentityMappingStoreServiceRestTransport(
             """
 
             http_options = _BaseIdentityMappingStoreServiceRestTransport._BasePurgeIdentityMappings._get_http_options()
-
             request, metadata = self._interceptor.pre_purge_identity_mappings(
                 request, metadata
             )
-            transcoded_request = _BaseIdentityMappingStoreServiceRestTransport._BasePurgeIdentityMappings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIdentityMappingStoreServiceRestTransport._BasePurgeIdentityMappings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityMappingStoreServiceRestTransport._BasePurgeIdentityMappings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityMappingStoreServiceRestTransport._BasePurgeIdentityMappings,
+                    "_BasePurgeIdentityMappings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2079,21 +2079,18 @@ class IdentityMappingStoreServiceRestTransport(
             """
 
             http_options = _BaseIdentityMappingStoreServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseIdentityMappingStoreServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIdentityMappingStoreServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityMappingStoreServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityMappingStoreServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2202,15 +2199,16 @@ class IdentityMappingStoreServiceRestTransport(
             """
 
             http_options = _BaseIdentityMappingStoreServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseIdentityMappingStoreServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityMappingStoreServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityMappingStoreServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2343,15 +2341,16 @@ class IdentityMappingStoreServiceRestTransport(
             """
 
             http_options = _BaseIdentityMappingStoreServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseIdentityMappingStoreServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIdentityMappingStoreServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIdentityMappingStoreServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

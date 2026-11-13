@@ -19,10 +19,9 @@ import aiohttp  # type: ignore
 import mock
 import pytest  # type: ignore
 
-
-from google.resumable_media import common
 from google._async_resumable_media import _helpers
 from google._async_resumable_media.requests import download as download_mod
+from google.resumable_media import common
 from tests.unit.requests import test_download as sync_test
 
 EXPECTED_TIMEOUT = aiohttp.ClientTimeout(

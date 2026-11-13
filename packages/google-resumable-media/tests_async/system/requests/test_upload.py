@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import asyncio
 import base64
 import hashlib
 import http.client
@@ -19,16 +20,13 @@ import io
 import os
 import urllib.parse
 
-import asyncio
 import mock
 import pytest  # type: ignore
 
-from google.resumable_media import common
-from google import _async_resumable_media
 import google._async_resumable_media.requests as resumable_requests
-from google.resumable_media import _helpers
+from google import _async_resumable_media
+from google.resumable_media import _helpers, common
 from tests.system import utils
-
 
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
 DATA_DIR = os.path.join(CURR_DIR, "..", "..", "data")

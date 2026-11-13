@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.commerce_consumer_procurement_v1._compat import transcode_request
 from google.cloud.commerce_consumer_procurement_v1.types import (
     license_management_service,
 )
@@ -557,19 +558,16 @@ class LicenseManagementServiceRestTransport(_BaseLicenseManagementServiceRestTra
             """
 
             http_options = _BaseLicenseManagementServiceRestTransport._BaseAssign._get_http_options()
-
             request, metadata = self._interceptor.pre_assign(request, metadata)
-            transcoded_request = _BaseLicenseManagementServiceRestTransport._BaseAssign._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLicenseManagementServiceRestTransport._BaseAssign._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagementServiceRestTransport._BaseAssign._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagementServiceRestTransport._BaseAssign,
+                    "_BaseAssign__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -710,17 +708,18 @@ class LicenseManagementServiceRestTransport(_BaseLicenseManagementServiceRestTra
             """
 
             http_options = _BaseLicenseManagementServiceRestTransport._BaseEnumerateLicensedUsers._get_http_options()
-
             request, metadata = self._interceptor.pre_enumerate_licensed_users(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagementServiceRestTransport._BaseEnumerateLicensedUsers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagementServiceRestTransport._BaseEnumerateLicensedUsers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagementServiceRestTransport._BaseEnumerateLicensedUsers,
+                    "_BaseEnumerateLicensedUsers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -860,17 +859,18 @@ class LicenseManagementServiceRestTransport(_BaseLicenseManagementServiceRestTra
             """
 
             http_options = _BaseLicenseManagementServiceRestTransport._BaseGetLicensePool._get_http_options()
-
             request, metadata = self._interceptor.pre_get_license_pool(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagementServiceRestTransport._BaseGetLicensePool._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagementServiceRestTransport._BaseGetLicensePool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagementServiceRestTransport._BaseGetLicensePool,
+                    "_BaseGetLicensePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1013,19 +1013,16 @@ class LicenseManagementServiceRestTransport(_BaseLicenseManagementServiceRestTra
             """
 
             http_options = _BaseLicenseManagementServiceRestTransport._BaseUnassign._get_http_options()
-
             request, metadata = self._interceptor.pre_unassign(request, metadata)
-            transcoded_request = _BaseLicenseManagementServiceRestTransport._BaseUnassign._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLicenseManagementServiceRestTransport._BaseUnassign._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagementServiceRestTransport._BaseUnassign._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagementServiceRestTransport._BaseUnassign,
+                    "_BaseUnassign__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1167,21 +1164,18 @@ class LicenseManagementServiceRestTransport(_BaseLicenseManagementServiceRestTra
             """
 
             http_options = _BaseLicenseManagementServiceRestTransport._BaseUpdateLicensePool._get_http_options()
-
             request, metadata = self._interceptor.pre_update_license_pool(
                 request, metadata
             )
-            transcoded_request = _BaseLicenseManagementServiceRestTransport._BaseUpdateLicensePool._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLicenseManagementServiceRestTransport._BaseUpdateLicensePool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagementServiceRestTransport._BaseUpdateLicensePool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagementServiceRestTransport._BaseUpdateLicensePool,
+                    "_BaseUpdateLicensePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1381,15 +1375,16 @@ class LicenseManagementServiceRestTransport(_BaseLicenseManagementServiceRestTra
             """
 
             http_options = _BaseLicenseManagementServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseLicenseManagementServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLicenseManagementServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLicenseManagementServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

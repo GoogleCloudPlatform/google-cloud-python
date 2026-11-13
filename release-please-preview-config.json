@@ -1,0 +1,24 @@
+{
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": true,
+  "packages": {
+    "preview-packages/google-cloud-compute": {
+      "draft-pull-request": true,
+      "extra-files": [
+        "google/cloud/compute/gapic_version.py",
+        "google/cloud/compute_v1/gapic_version.py",
+        {
+          "jsonpath": "$.clientLibrary.version",
+          "path": "samples/generated_samples/snippet_metadata_google.cloud.compute.v1.json",
+          "type": "json"
+        }
+      ],
+      "package-name": "google-cloud-compute",
+      "prerelease": true,
+      "prerelease-type": "preview",
+      "versioning": "prerelease"
+    }
+  },
+  "release-type": "python-librarian",
+  "separate-pull-requests": true
+}

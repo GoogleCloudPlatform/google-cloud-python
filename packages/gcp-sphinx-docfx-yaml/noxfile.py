@@ -138,6 +138,17 @@ def lint(session):
     """
     session.install("flake8", RUFF_VERSION)
 
+    # 1. Check imports
+    session.run(
+        "ruff",
+        "check",
+        "--select",
+        "I",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+        "--line-length=88",
+        ".",
+    )
+
     # 2. Check formatting
     session.run(
         "ruff",
@@ -160,7 +171,9 @@ def lint_setup_py(session):
     session.run("flake8", "setup.py")
 
 
-@nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
+# Use virtualenv backend to prevent modern uv build isolation from failing on
+# legacy sdist dependencies (unify/untokenize)
+@nox.session(python=UNIT_TEST_PYTHON_VERSIONS, venv_backend="virtualenv")
 def unit(session):
     """Run unit tests."""
     # Re-enable 3.11, 3.12, and 3.13 after environment verification.

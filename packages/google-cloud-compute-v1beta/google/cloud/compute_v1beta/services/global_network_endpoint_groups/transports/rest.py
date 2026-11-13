@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.compute_v1beta._compat import transcode_request
 from google.cloud.compute_v1beta.types import compute
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -666,21 +667,18 @@ class GlobalNetworkEndpointGroupsRestTransport(
             """
 
             http_options = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseAttachNetworkEndpoints._get_http_options()
-
             request, metadata = self._interceptor.pre_attach_network_endpoints(
                 request, metadata
             )
-            transcoded_request = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseAttachNetworkEndpoints._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseAttachNetworkEndpoints._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseAttachNetworkEndpoints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGlobalNetworkEndpointGroupsRestTransport._BaseAttachNetworkEndpoints,
+                    "_BaseAttachNetworkEndpoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -846,15 +844,16 @@ class GlobalNetworkEndpointGroupsRestTransport(
             """
 
             http_options = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseDelete._get_http_options()
-
             request, metadata = self._interceptor.pre_delete(request, metadata)
-            transcoded_request = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseDelete._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseDelete._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGlobalNetworkEndpointGroupsRestTransport._BaseDelete,
+                    "_BaseDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1022,21 +1021,18 @@ class GlobalNetworkEndpointGroupsRestTransport(
             """
 
             http_options = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseDetachNetworkEndpoints._get_http_options()
-
             request, metadata = self._interceptor.pre_detach_network_endpoints(
                 request, metadata
             )
-            transcoded_request = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseDetachNetworkEndpoints._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseDetachNetworkEndpoints._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseDetachNetworkEndpoints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGlobalNetworkEndpointGroupsRestTransport._BaseDetachNetworkEndpoints,
+                    "_BaseDetachNetworkEndpoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1201,15 +1197,16 @@ class GlobalNetworkEndpointGroupsRestTransport(
             """
 
             http_options = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseGet._get_http_options()
-
             request, metadata = self._interceptor.pre_get(request, metadata)
-            transcoded_request = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseGet._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseGet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGlobalNetworkEndpointGroupsRestTransport._BaseGet,
+                    "_BaseGet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1373,19 +1370,16 @@ class GlobalNetworkEndpointGroupsRestTransport(
             """
 
             http_options = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseInsert._get_http_options()
-
             request, metadata = self._interceptor.pre_insert(request, metadata)
-            transcoded_request = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseInsert._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseInsert._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseInsert._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGlobalNetworkEndpointGroupsRestTransport._BaseInsert,
+                    "_BaseInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1523,15 +1517,16 @@ class GlobalNetworkEndpointGroupsRestTransport(
             """
 
             http_options = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseList._get_http_options()
-
             request, metadata = self._interceptor.pre_list(request, metadata)
-            transcoded_request = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseList._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGlobalNetworkEndpointGroupsRestTransport._BaseList,
+                    "_BaseList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1668,17 +1663,18 @@ class GlobalNetworkEndpointGroupsRestTransport(
             """
 
             http_options = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseListNetworkEndpoints._get_http_options()
-
             request, metadata = self._interceptor.pre_list_network_endpoints(
                 request, metadata
             )
-            transcoded_request = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseListNetworkEndpoints._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGlobalNetworkEndpointGroupsRestTransport._BaseListNetworkEndpoints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGlobalNetworkEndpointGroupsRestTransport._BaseListNetworkEndpoints,
+                    "_BaseListNetworkEndpoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

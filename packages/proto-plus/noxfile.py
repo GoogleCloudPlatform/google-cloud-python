@@ -23,6 +23,11 @@ import nox
 BLACK_VERSION = "black[jupyter]==23.7.0"
 ISORT_VERSION = "isort==5.11.0"
 RUFF_VERSION = "ruff==0.14.14"
+# Temporarily pin pytest<9.2 because pytest 9.2.0 applies filterwarnings=error
+# before pytest_configure hooks run, turning pytest-asyncio's unset
+# asyncio_default_fixture_loop_scope warning (inherited via shared CI venvs)
+# into an error. Remove once pytest 9.2+ deprecations are resolved.
+PYTEST_VERSION = "pytest<9.2"
 
 LINT_PATHS = ["docs", "proto", "tests", "noxfile.py", "setup.py"]
 
@@ -64,7 +69,7 @@ def unit(session, implementation):
     )
 
     session.env["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = implementation
-    session.install("coverage", "pytest", "pytest-cov", "pytz")
+    session.install("coverage", PYTEST_VERSION, "pytest-cov", "pytz")
     session.install("-e", ".[testing]", "-c", constraints_path)
 
     # TODO(https://github.com/googleapis/proto-plus-python/issues/403): re-enable `-W=error`
@@ -100,7 +105,7 @@ def prerelease_deps(session, implementation):
     session.env["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = implementation
 
     # Install test environment dependencies
-    session.install("coverage", "pytest", "pytest-cov", "pytz")
+    session.install("coverage", PYTEST_VERSION, "pytest-cov", "pytz")
 
     # Install the package without dependencies
     session.install("-e", ".", "--no-deps")
@@ -157,7 +162,7 @@ def core_deps_from_source(session, implementation):
     session.env["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = implementation
 
     # Install test environment dependencies
-    session.install("coverage", "pytest", "pytest-cov", "pytz")
+    session.install("coverage", PYTEST_VERSION, "pytest-cov", "pytz")
 
     # Install the package without dependencies
     session.install("-e", ".", "--no-deps")
@@ -167,14 +172,24 @@ def core_deps_from_source(session, implementation):
     # Note: If a dependency is added to the `core_dependencies_from_source` list,
     # the `prerel_deps` list in the `prerelease_deps` nox session should also be updated.
     core_dependencies_from_source = [
-        "google-api-core @ git+https://github.com/googleapis/google-cloud-python#egg=google-api-core&subdirectory=packages/google-api-core",
-        # dependency of google-api-core
-        "googleapis-common-protos @ git+https://github.com/googleapis/google-cloud-python#egg=googleapis-common-protos&subdirectory=packages/googleapis-common-protos",
+        "google-api-core",
+        "googleapis-common-protos",
     ]
 
-    for dep in core_dependencies_from_source:
-        session.install(dep, "--no-deps", "--ignore-installed")
-        print(f"Installed {dep}")
+    deps_dir = next(
+        p / "packages" for p in CURRENT_DIRECTORY.parents if (p / "packages").is_dir()
+    )
+
+    local_paths = [
+        str(deps_dir / dep)
+        for dep in core_dependencies_from_source
+        if (deps_dir / dep).exists()
+    ]
+    if local_paths:
+        session.install(*local_paths, "--no-deps", "--ignore-installed")
+        print(
+            f"Installed {', '.join(core_dependencies_from_source)} locally from {deps_dir}"
+        )
 
     # TODO(https://github.com/googleapis/google-cloud-python/issues/15115): Install protobuf from source at HEAD
     session.install("--pre", "--upgrade", "protobuf")
@@ -327,10 +342,24 @@ def lint(session):
     Returns a failure if the linters find linting errors or sufficiently
     serious code quality issues.
     """
-    session.install("flake8", BLACK_VERSION)
+    session.install("flake8", RUFF_VERSION)
+    # 1. Check imports
     session.run(
-        "black",
+        "ruff",
+        "check",
+        "--select",
+        "I",
+        f"--target-version=py{PYTHON_VERSIONS[0].replace('.', '')}",
+        "--line-length=88",
+        *LINT_PATHS,
+    )
+    # 2. Check formatting
+    session.run(
+        "ruff",
+        "format",
         "--check",
+        f"--target-version=py{PYTHON_VERSIONS[0].replace('.', '')}",
+        "--line-length=88",
         *LINT_PATHS,
     )
 

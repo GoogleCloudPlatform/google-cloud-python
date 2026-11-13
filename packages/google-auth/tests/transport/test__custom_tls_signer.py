@@ -24,7 +24,6 @@ from requests.packages.urllib3.util.ssl_ import create_urllib3_context  # type: 
 from google.auth import exceptions
 from google.auth.transport import _custom_tls_signer
 
-
 FAKE_ENTERPRISE_CERT_FILE_PATH = "/path/to/enterprise/cert/file"
 ENTERPRISE_CERT_FILE = os.path.join(
     os.path.dirname(__file__), "../data/enterprise_cert_valid.json"
@@ -299,8 +298,9 @@ def test_cast_ssl_ctx_to_void_p_stdlib_unsupported_runtime_trace_refs():
     fake_impl = mock.Mock()
     fake_impl.name = "cpython"
 
-    with mock.patch("sys.implementation", fake_impl), mock.patch(
-        "sys.getobjects", create=True
+    with (
+        mock.patch("sys.implementation", fake_impl),
+        mock.patch("sys.getobjects", create=True),
     ):
         with pytest.raises(
             exceptions.MutualTLSChannelError,
@@ -320,8 +320,9 @@ def test_cast_ssl_ctx_to_void_p_stdlib_unsupported_runtime_debug_flag():
     context = ssl.SSLContext()
     fake_impl = mock.Mock()
     fake_impl.name = "cpython"
-    with mock.patch("sys.implementation", fake_impl), mock.patch(
-        "sysconfig.get_config_var", return_value=1
+    with (
+        mock.patch("sys.implementation", fake_impl),
+        mock.patch("sysconfig.get_config_var", return_value=1),
     ):
         with pytest.raises(
             exceptions.MutualTLSChannelError,
@@ -340,8 +341,9 @@ def test_cast_ssl_ctx_to_void_p_stdlib_unsupported_runtime_free_threaded():
 
     fake_impl = mock.Mock()
     fake_impl.name = "cpython"
-    with mock.patch("sys.implementation", fake_impl), mock.patch(
-        "sysconfig.get_config_var", side_effect=mock_get_config_var
+    with (
+        mock.patch("sys.implementation", fake_impl),
+        mock.patch("sysconfig.get_config_var", side_effect=mock_get_config_var),
     ):
         with pytest.raises(
             exceptions.MutualTLSChannelError,

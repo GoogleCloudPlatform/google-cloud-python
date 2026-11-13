@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from concurrent import futures
 import contextlib
 import copy
 import json
@@ -21,22 +20,23 @@ import pathlib
 import re
 import sys
 import tempfile
-from unittest import mock
 import warnings
+from concurrent import futures
+from unittest import mock
 
-import IPython
-from IPython.testing import globalipapp
-import IPython.utils.io as io
-from google.api_core import exceptions
 import google.auth.credentials
+import google.cloud.bigquery._http
+import google.cloud.bigquery.exceptions
+import IPython
+import IPython.utils.io as io
+import pandas
+import pytest
+from google.api_core import exceptions
 from google.cloud import bigquery
 from google.cloud.bigquery import exceptions as bq_exceptions
 from google.cloud.bigquery import job, table
-import google.cloud.bigquery._http
-import google.cloud.bigquery.exceptions
 from google.cloud.bigquery.retry import DEFAULT_TIMEOUT
-import pandas
-import pytest
+from IPython.testing import globalipapp
 
 import bigquery_magics
 import bigquery_magics.bigquery as magics
@@ -366,8 +366,9 @@ def test__make_bqstorage_client_true_obsolete_dependency():
             "google-cloud-bigquery-storage is outdated"
         ),
     )
-    with patcher, pytest.raises(
-        google.cloud.bigquery.exceptions.LegacyBigQueryStorageError
+    with (
+        patcher,
+        pytest.raises(google.cloud.bigquery.exceptions.LegacyBigQueryStorageError),
     ):
         magics._make_bqstorage_client(test_client, {})
 
@@ -509,9 +510,11 @@ def test_bigquery_graph_spanner_graph_notebook_missing(monkeypatch):
     )
     query_job_mock.to_dataframe.return_value = result
 
-    with run_query_patch as run_query_mock, (
-        bqstorage_client_patch
-    ), display_patch as display_mock:
+    with (
+        run_query_patch as run_query_mock,
+        bqstorage_client_patch,
+        display_patch as display_mock,
+    ):
         run_query_mock.return_value = query_job_mock
         return_value = ip.run_cell_magic("bigquery", "--graph", sql)
 
@@ -564,9 +567,11 @@ def test_bigquery_graph_int_result(monkeypatch):
     )
     query_job_mock.to_dataframe.return_value = result
 
-    with run_query_patch as run_query_mock, (
-        bqstorage_client_patch
-    ), display_patch as display_mock:
+    with (
+        run_query_patch as run_query_mock,
+        bqstorage_client_patch,
+        display_patch as display_mock,
+    ):
         run_query_mock.return_value = query_job_mock
         return_value = ip.run_cell_magic("bigquery", "--graph", sql)
 
@@ -619,9 +624,11 @@ def test_bigquery_graph_str_result(monkeypatch):
     )
     query_job_mock.to_dataframe.return_value = result
 
-    with run_query_patch as run_query_mock, (
-        bqstorage_client_patch
-    ), display_patch as display_mock:
+    with (
+        run_query_patch as run_query_mock,
+        bqstorage_client_patch,
+        display_patch as display_mock,
+    ):
         run_query_mock.return_value = query_job_mock
         return_value = ip.run_cell_magic("bigquery", "--graph", sql)
 
@@ -692,9 +699,11 @@ def test_bigquery_graph_json_json_result(monkeypatch):
     query_job_mock.configuration.destination.dataset_id = DATASET_ID
     query_job_mock.configuration.destination.table_id = TABLE_ID
 
-    with run_query_patch as run_query_mock, (
-        bqstorage_client_patch
-    ), display_patch as display_mock:
+    with (
+        run_query_patch as run_query_mock,
+        bqstorage_client_patch,
+        display_patch as display_mock,
+    ):
         run_query_mock.return_value = query_job_mock
         try:
             return_value = ip.run_cell_magic("bigquery", "--graph", sql)
@@ -761,9 +770,11 @@ def test_bigquery_graph_json_result(monkeypatch):
     query_job_mock.configuration.destination.dataset_id = DATASET_ID
     query_job_mock.configuration.destination.table_id = TABLE_ID
 
-    with run_query_patch as run_query_mock, (
-        bqstorage_client_patch
-    ), display_patch as display_mock:
+    with (
+        run_query_patch as run_query_mock,
+        bqstorage_client_patch,
+        display_patch as display_mock,
+    ):
         run_query_mock.return_value = query_job_mock
 
         return_value = ip.run_cell_magic("bigquery", "--graph", sql)
@@ -871,9 +882,11 @@ def test_bigquery_graph_size_exceeds_max(monkeypatch):
     query_job_mock.configuration.destination.dataset_id = DATASET_ID
     query_job_mock.configuration.destination.table_id = TABLE_ID
 
-    with run_query_patch as run_query_mock, (
-        bqstorage_client_patch
-    ), display_patch as display_mock:
+    with (
+        run_query_patch as run_query_mock,
+        bqstorage_client_patch,
+        display_patch as display_mock,
+    ):
         run_query_mock.return_value = query_job_mock
 
         ip.run_cell_magic("bigquery", "--graph", sql)
@@ -932,9 +945,11 @@ def test_bigquery_graph_size_exceeds_query_result_max(monkeypatch):
     query_job_mock.configuration.destination.dataset_id = DATASET_ID
     query_job_mock.configuration.destination.table_id = TABLE_ID
 
-    with run_query_patch as run_query_mock, (
-        bqstorage_client_patch
-    ), display_patch as display_mock:
+    with (
+        run_query_patch as run_query_mock,
+        bqstorage_client_patch,
+        display_patch as display_mock,
+    ):
         run_query_mock.return_value = query_job_mock
 
         ip.run_cell_magic("bigquery", "--graph", sql)
@@ -994,9 +1009,11 @@ def test_bigquery_graph_with_args_serialization(monkeypatch):
     query_job_mock.configuration.destination.dataset_id = DATASET_ID
     query_job_mock.configuration.destination.table_id = TABLE_ID
 
-    with run_query_patch as run_query_mock, (
-        bqstorage_client_patch
-    ), display_patch as display_mock:
+    with (
+        run_query_patch as run_query_mock,
+        bqstorage_client_patch,
+        display_patch as display_mock,
+    ):
         run_query_mock.return_value = query_job_mock
 
         endpoint = "https://example.com"
@@ -1076,9 +1093,11 @@ def test_bigquery_graph_colab(monkeypatch):
     query_job_mock.configuration.destination.dataset_id = DATASET_ID
     query_job_mock.configuration.destination.table_id = "test_destination_table"
 
-    with run_query_patch as run_query_mock, (
-        bqstorage_client_patch
-    ), display_patch as display_mock:
+    with (
+        run_query_patch as run_query_mock,
+        bqstorage_client_patch,
+        display_patch as display_mock,
+    ):
         run_query_mock.return_value = query_job_mock
         try:
             return_value = ip.run_cell_magic("bigquery", "--graph", sql)
@@ -1205,9 +1224,11 @@ def test_bigquery_graph_missing_spanner_deps(monkeypatch):
     )
     query_job_mock.to_dataframe.return_value = result
 
-    with run_query_patch as run_query_mock, (
-        bqstorage_client_patch
-    ), display_patch as display_mock:
+    with (
+        run_query_patch as run_query_mock,
+        bqstorage_client_patch,
+        display_patch as display_mock,
+    ):
         run_query_mock.return_value = query_job_mock
         with pytest.raises(ImportError):
             try:
@@ -1485,9 +1506,13 @@ def test_bigquery_magic_default_connection_user_agent_vscode_extension(
 
         home_dir_patch = mock.patch("pathlib.Path.home", return_value=user_home)
 
-        with conn_patch as conn, (
-            run_query_patch
-        ), default_patch, env_patch, home_dir_patch:
+        with (
+            conn_patch as conn,
+            run_query_patch,
+            default_patch,
+            env_patch,
+            home_dir_patch,
+        ):
             ip.run_cell_magic("bigquery", "", "SELECT 17 as num")
 
     expected_user_agents = [
@@ -1564,9 +1589,13 @@ def test_bigquery_magic_default_connection_user_agent_jupyter_plugin():
         "importlib.import_module", side_effect=custom_import_module_side_effect
     )
 
-    with conn_patch as conn, (
-        run_query_patch
-    ), default_patch, env_patch, extension_import_patch:
+    with (
+        conn_patch as conn,
+        run_query_patch,
+        default_patch,
+        env_patch,
+        extension_import_patch,
+    ):
         ip.run_cell_magic("bigquery", "", "SELECT 17 as num")
 
     client_info_arg = conn.call_args[1].get("client_info")
@@ -1695,9 +1724,11 @@ def test_bigquery_magic_with_bqstorage_from_argument(monkeypatch):
         google.cloud.bigquery.job.QueryJob, instance=True
     )
     query_job_mock.to_dataframe.return_value = result
-    with run_query_patch as run_query_mock, (
-        bqstorage_client_patch
-    ), warnings.catch_warnings(record=True) as warned:
+    with (
+        run_query_patch as run_query_mock,
+        bqstorage_client_patch,
+        warnings.catch_warnings(record=True) as warned,
+    ):
         run_query_mock.return_value = query_job_mock
 
         return_value = ip.run_cell_magic("bigquery", "--use_bqstorage_api", sql)
@@ -1901,11 +1932,12 @@ def test_bigquery_magic_w_max_results_query_job_results_fails():
     )
     query_job_mock.result.side_effect = [[], OSError]
 
-    with pytest.raises(
-        OSError
-    ), client_query_patch as client_query_mock, (
-        default_patch
-    ), close_transports_patch as close_transports:
+    with (
+        pytest.raises(OSError),
+        client_query_patch as client_query_mock,
+        default_patch,
+        close_transports_patch as close_transports,
+    ):
         client_query_mock.return_value = query_job_mock
         ip.run_cell_magic("bigquery", "--max_results=5", sql)
 
@@ -2911,9 +2943,10 @@ def test_bigquery_magic_nonexisting_query_variable():
     ip.user_ns.pop("custom_query", None)  # Make sure the variable does NOT exist.
     cell_body = "$custom_query"  # Referring to a non-existing variable name.
 
-    with pytest.raises(
-        NameError, match=r".*custom_query does not exist.*"
-    ), run_query_patch as run_query_mock:
+    with (
+        pytest.raises(NameError, match=r".*custom_query does not exist.*"),
+        run_query_patch as run_query_mock,
+    ):
         ip.run_cell_magic("bigquery", "", cell_body)
 
     run_query_mock.assert_not_called()
@@ -2928,9 +2961,10 @@ def test_bigquery_magic_empty_query_variable_name():
     run_query_patch = mock.patch("bigquery_magics.bigquery._run_query", autospec=True)
     cell_body = "$"  # Not referring to any variable (name omitted).
 
-    with pytest.raises(
-        NameError, match=r"(?i).*missing query variable name.*"
-    ), run_query_patch as run_query_mock:
+    with (
+        pytest.raises(NameError, match=r"(?i).*missing query variable name.*"),
+        run_query_patch as run_query_mock,
+    ):
         ip.run_cell_magic("bigquery", "", cell_body)
 
     run_query_mock.assert_not_called()
@@ -2949,9 +2983,10 @@ def test_bigquery_magic_query_variable_non_string(ipython_ns_cleanup):
     ip.user_ns["custom_query"] = object()
     cell_body = "$custom_query"  # Referring to a non-string variable.
 
-    with pytest.raises(
-        TypeError, match=r".*must be a string or a bytes-like.*"
-    ), run_query_patch as run_query_mock:
+    with (
+        pytest.raises(TypeError, match=r".*must be a string or a bytes-like.*"),
+        run_query_patch as run_query_mock,
+    ):
         ip.run_cell_magic("bigquery", "", cell_body)
 
     run_query_mock.assert_not_called()
@@ -3076,9 +3111,11 @@ def test_bigquery_magic_create_dataset_fails():
         autospec=True,
     )
 
-    with pytest.raises(
-        OSError
-    ), create_dataset_if_necessary_patch, close_transports_patch as close_transports:
+    with (
+        pytest.raises(OSError),
+        create_dataset_if_necessary_patch,
+        close_transports_patch as close_transports,
+    ):
         ip.run_cell_magic(
             "bigquery",
             "--destination_table dataset_id.table_id",

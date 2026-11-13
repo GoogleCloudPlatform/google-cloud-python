@@ -42,6 +42,7 @@ class DummyMethod:
     client_output: bool = False
     client_output_async: bool = False
     is_internal: bool = False
+    is_resumable_upload: bool = False
 
     @property
     def client_method_name(self):

@@ -68,7 +68,7 @@ def faux_conn():
 
                 conn.ex = ex
 
-                ex("create table comments" " (key string primary key, comment string)")
+                ex("create table comments (key string primary key, comment string)")
 
                 # Modernize faux_conn for SQLAlchemy 2.0+ by allowing it to execute
                 # Compiled objects (common in this test suite)

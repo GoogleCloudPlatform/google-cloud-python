@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.apihub_v1._compat import transcode_request
 from google.cloud.apihub_v1.types import common_fields, discovery_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -618,17 +619,18 @@ class ApiHubDiscoveryRestTransport(_BaseApiHubDiscoveryRestTransport):
             """
 
             http_options = _BaseApiHubDiscoveryRestTransport._BaseGetDiscoveredApiObservation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_discovered_api_observation(
                 request, metadata
             )
-            transcoded_request = _BaseApiHubDiscoveryRestTransport._BaseGetDiscoveredApiObservation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubDiscoveryRestTransport._BaseGetDiscoveredApiObservation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubDiscoveryRestTransport._BaseGetDiscoveredApiObservation,
+                    "_BaseGetDiscoveredApiObservation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -774,17 +776,18 @@ class ApiHubDiscoveryRestTransport(_BaseApiHubDiscoveryRestTransport):
             """
 
             http_options = _BaseApiHubDiscoveryRestTransport._BaseGetDiscoveredApiOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_discovered_api_operation(
                 request, metadata
             )
-            transcoded_request = _BaseApiHubDiscoveryRestTransport._BaseGetDiscoveredApiOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubDiscoveryRestTransport._BaseGetDiscoveredApiOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubDiscoveryRestTransport._BaseGetDiscoveredApiOperation,
+                    "_BaseGetDiscoveredApiOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -927,17 +930,18 @@ class ApiHubDiscoveryRestTransport(_BaseApiHubDiscoveryRestTransport):
             """
 
             http_options = _BaseApiHubDiscoveryRestTransport._BaseListDiscoveredApiObservations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_discovered_api_observations(
                 request, metadata
             )
-            transcoded_request = _BaseApiHubDiscoveryRestTransport._BaseListDiscoveredApiObservations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubDiscoveryRestTransport._BaseListDiscoveredApiObservations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubDiscoveryRestTransport._BaseListDiscoveredApiObservations,
+                    "_BaseListDiscoveredApiObservations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1082,17 +1086,18 @@ class ApiHubDiscoveryRestTransport(_BaseApiHubDiscoveryRestTransport):
             """
 
             http_options = _BaseApiHubDiscoveryRestTransport._BaseListDiscoveredApiOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_discovered_api_operations(
                 request, metadata
             )
-            transcoded_request = _BaseApiHubDiscoveryRestTransport._BaseListDiscoveredApiOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubDiscoveryRestTransport._BaseListDiscoveredApiOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubDiscoveryRestTransport._BaseListDiscoveredApiOperations,
+                    "_BaseListDiscoveredApiOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1291,15 +1296,16 @@ class ApiHubDiscoveryRestTransport(_BaseApiHubDiscoveryRestTransport):
             http_options = (
                 _BaseApiHubDiscoveryRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseApiHubDiscoveryRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubDiscoveryRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubDiscoveryRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1431,15 +1437,16 @@ class ApiHubDiscoveryRestTransport(_BaseApiHubDiscoveryRestTransport):
             http_options = (
                 _BaseApiHubDiscoveryRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseApiHubDiscoveryRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubDiscoveryRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubDiscoveryRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1567,21 +1574,18 @@ class ApiHubDiscoveryRestTransport(_BaseApiHubDiscoveryRestTransport):
             """
 
             http_options = _BaseApiHubDiscoveryRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseApiHubDiscoveryRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApiHubDiscoveryRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubDiscoveryRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubDiscoveryRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1684,17 +1688,18 @@ class ApiHubDiscoveryRestTransport(_BaseApiHubDiscoveryRestTransport):
             """
 
             http_options = _BaseApiHubDiscoveryRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseApiHubDiscoveryRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubDiscoveryRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubDiscoveryRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1801,15 +1806,16 @@ class ApiHubDiscoveryRestTransport(_BaseApiHubDiscoveryRestTransport):
             http_options = (
                 _BaseApiHubDiscoveryRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseApiHubDiscoveryRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubDiscoveryRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubDiscoveryRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1939,15 +1945,16 @@ class ApiHubDiscoveryRestTransport(_BaseApiHubDiscoveryRestTransport):
             """
 
             http_options = _BaseApiHubDiscoveryRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseApiHubDiscoveryRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiHubDiscoveryRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiHubDiscoveryRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

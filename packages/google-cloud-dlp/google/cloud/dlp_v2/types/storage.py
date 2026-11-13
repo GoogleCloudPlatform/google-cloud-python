@@ -68,7 +68,7 @@ class Likelihood(proto.Enum):
 
     For more information about each likelihood level and how likelihood
     works, see `Match
-    likelihood <https://cloud.google.com/sensitive-data-protection/docs/likelihood>`__.
+    likelihood <https://docs.cloud.google.com/sensitive-data-protection/docs/likelihood>`__.
 
     Values:
         LIKELIHOOD_UNSPECIFIED (0):
@@ -186,7 +186,7 @@ class InfoType(proto.Message):
             Name of the information type. Either a name of your choosing
             when creating a CustomInfoType, or one of the names listed
             at
-            https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+            https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference
             when specifying a built-in type. When sending Cloud DLP
             results to Data Catalog, infoType names should conform to
             the pattern ``[A-Za-z0-9$_-]{1,64}``.
@@ -335,6 +335,10 @@ class CustomInfoType(proto.Message):
             Key-value pair to detect in the metadata.
 
             This field is a member of `oneof`_ ``type``.
+        file_label_info_type (google.cloud.dlp_v2.types.CustomInfoType.FileLabelInfoType):
+            File label to detect.
+
+            This field is a member of `oneof`_ ``type``.
         detection_rules (MutableSequence[google.cloud.dlp_v2.types.CustomInfoType.DetectionRule]):
             Set of detection rules to apply to all findings of this
             CustomInfoType. Rules are applied in the order that they are
@@ -390,7 +394,7 @@ class CustomInfoType(proto.Message):
         Dictionary words containing a large number of characters that are
         not letters or digits may result in unexpected findings because such
         characters are treated as whitespace. The
-        `limits <https://cloud.google.com/sensitive-data-protection/limits>`__
+        `limits <https://docs.cloud.google.com/sensitive-data-protection/limits>`__
         page contains details about the size limits of dictionaries. For
         dictionaries that do not fit within these constraints, consider
         using ``LargeCustomDictionaryConfig`` in the ``StoredInfoType`` API.
@@ -472,7 +476,7 @@ class CustomInfoType(proto.Message):
     class SurrogateType(proto.Message):
         r"""Message for detecting output from deidentification transformations
         such as
-        ```CryptoReplaceFfxFpeConfig`` <https://cloud.google.com/sensitive-data-protection/docs/reference/rest/v2/organizations.deidentifyTemplates#cryptoreplaceffxfpeconfig>`__.
+        ```CryptoReplaceFfxFpeConfig`` <https://docs.cloud.google.com/sensitive-data-protection/docs/reference/rest/v2/organizations.deidentifyTemplates#cryptoreplaceffxfpeconfig>`__.
         These types of transformations are those that perform
         pseudonymization, thereby producing a "surrogate" as output. This
         should be used in conjunction with a field on the transformation
@@ -504,6 +508,101 @@ class CustomInfoType(proto.Message):
             number=2,
         )
 
+    class FileLabelInfoType(proto.Message):
+        r"""Configuration for a custom infoType that detects file labels.
+
+        This message has `oneof`_ fields (mutually exclusive fields).
+        For each oneof, at most one member field can be set at the same time.
+        Setting any member of the oneof automatically clears all other
+        members.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            sensitivity_label (google.cloud.dlp_v2.types.CustomInfoType.FileLabelInfoType.SensitivityLabel):
+                Sensitivity labels published by Microsoft.
+
+                This field is a member of `oneof`_ ``type``.
+            google_drive_label (google.cloud.dlp_v2.types.CustomInfoType.FileLabelInfoType.GoogleDriveLabel):
+                Google Drive labels published by Google.
+
+                This field is a member of `oneof`_ ``type``.
+        """
+
+        class SensitivityLabel(proto.Message):
+            r"""Sensitivity labels published by Microsoft.
+
+            Attributes:
+                guid (str):
+                    The GUID of the sensitivity label.
+            """
+
+            guid: str = proto.Field(
+                proto.STRING,
+                number=1,
+            )
+
+        class GoogleDriveLabel(proto.Message):
+            r"""Google Drive labels published by Google.
+
+            Attributes:
+                label_id (str):
+                    The `label
+                    ID <https://developers.google.com/workspace/drive/labels/guides/overview>`__
+                    of the Google Drive label.
+                label_fields_to_match (MutableSequence[google.cloud.dlp_v2.types.CustomInfoType.FileLabelInfoType.GoogleDriveLabel.LabelField]):
+                    The field values of the Google Drive label to
+                    match.
+            """
+
+            class LabelField(proto.Message):
+                r"""The field values of the Google Drive label to match.
+
+                Attributes:
+                    id (str):
+                        The identifier of the Label Field.
+                    value (str):
+                        The value of the Label Field to match.
+                """
+
+                id: str = proto.Field(
+                    proto.STRING,
+                    number=1,
+                )
+                value: str = proto.Field(
+                    proto.STRING,
+                    number=2,
+                )
+
+            label_id: str = proto.Field(
+                proto.STRING,
+                number=1,
+            )
+            label_fields_to_match: MutableSequence[
+                "CustomInfoType.FileLabelInfoType.GoogleDriveLabel.LabelField"
+            ] = proto.RepeatedField(
+                proto.MESSAGE,
+                number=2,
+                message="CustomInfoType.FileLabelInfoType.GoogleDriveLabel.LabelField",
+            )
+
+        sensitivity_label: "CustomInfoType.FileLabelInfoType.SensitivityLabel" = (
+            proto.Field(
+                proto.MESSAGE,
+                number=1,
+                oneof="type",
+                message="CustomInfoType.FileLabelInfoType.SensitivityLabel",
+            )
+        )
+        google_drive_label: "CustomInfoType.FileLabelInfoType.GoogleDriveLabel" = (
+            proto.Field(
+                proto.MESSAGE,
+                number=2,
+                oneof="type",
+                message="CustomInfoType.FileLabelInfoType.GoogleDriveLabel",
+            )
+        )
+
     class DetectionRule(proto.Message):
         r"""Deprecated; use ``InspectionRuleSet`` instead. Rule for modifying a
         ``CustomInfoType`` to alter behavior under certain circumstances,
@@ -531,7 +630,7 @@ class CustomInfoType(proto.Message):
                     entire column of findngs, set this to 1. For more
                     information, see [Hotword example: Set the match likelihood
                     of a table column]
-                    (https://cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes-likelihood#match-column-values).
+                    (https://docs.cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes-likelihood#match-column-values).
                 window_after (int):
                     Number of characters after the finding to
                     consider.
@@ -611,7 +710,7 @@ class CustomInfoType(proto.Message):
                     For tabular data, if you want to modify the likelihood of an
                     entire column of findngs, see [Hotword example: Set the
                     match likelihood of a table column]
-                    (https://cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes-likelihood#match-column-values).
+                    (https://docs.cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes-likelihood#match-column-values).
                 likelihood_adjustment (google.cloud.dlp_v2.types.CustomInfoType.DetectionRule.LikelihoodAdjustment):
                     Likelihood adjustment to apply to all
                     matching findings.
@@ -679,6 +778,12 @@ class CustomInfoType(proto.Message):
         number=10,
         oneof="type",
         message=MetadataKeyValueExpression,
+    )
+    file_label_info_type: FileLabelInfoType = proto.Field(
+        proto.MESSAGE,
+        number=12,
+        oneof="type",
+        message=FileLabelInfoType,
     )
     detection_rules: MutableSequence[DetectionRule] = proto.RepeatedField(
         proto.MESSAGE,
@@ -870,7 +975,7 @@ class CloudStorageOptions(proto.Message):
             field can't be set if de-identification is requested. For
             certain file types, setting this field has no effect. For
             more information, see `Limits on bytes scanned per
-            file <https://cloud.google.com/sensitive-data-protection/docs/supported-file-types#max-byte-size-per-file>`__.
+            file <https://docs.cloud.google.com/sensitive-data-protection/docs/supported-file-types#max-byte-size-per-file>`__.
         bytes_limit_per_file_percent (int):
             Max percentage of bytes to scan from a file. The rest are
             omitted. The number of bytes scanned is rounded down. Must
@@ -880,7 +985,7 @@ class CloudStorageOptions(proto.Message):
             can't be set if de-identification is requested. For certain
             file types, setting this field has no effect. For more
             information, see `Limits on bytes scanned per
-            file <https://cloud.google.com/sensitive-data-protection/docs/supported-file-types#max-byte-size-per-file>`__.
+            file <https://docs.cloud.google.com/sensitive-data-protection/docs/supported-file-types#max-byte-size-per-file>`__.
         file_types (MutableSequence[google.cloud.dlp_v2.types.FileType]):
             List of file type groups to include in the scan. If empty,
             all files are scanned and available data format processors
@@ -1039,7 +1144,7 @@ class BigQueryOptions(proto.Message):
             TimespanConfig.
 
             Caution: A `known
-            issue <https://cloud.google.com/sensitive-data-protection/docs/known-issues#bq-sampling>`__
+            issue <https://docs.cloud.google.com/sensitive-data-protection/docs/known-issues#bq-sampling>`__
             is causing the ``rowsLimitPercent`` field to behave
             unexpectedly. We recommend using ``rowsLimit`` instead.
         sample_method (google.cloud.dlp_v2.types.BigQueryOptions.SampleMethod):
@@ -1178,7 +1283,7 @@ class StorageConfig(proto.Message):
                 ``INTEGER``, ``DATE``, ``TIMESTAMP``, and ``DATETIME``.
 
                 If your BigQuery table is `partitioned at ingestion
-                time <https://cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time>`__,
+                time <https://docs.cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time>`__,
                 you can use any of the following pseudo-columns as your
                 timestamp field. When used with Cloud DLP, these
                 pseudo-column names are case sensitive.
@@ -1196,7 +1301,7 @@ class StorageConfig(proto.Message):
                 provided timestamp property are: ``TIMESTAMP``.
 
                 See the `known
-                issue <https://cloud.google.com/sensitive-data-protection/docs/known-issues#bq-timespan>`__
+                issue <https://docs.cloud.google.com/sensitive-data-protection/docs/known-issues#bq-timespan>`__
                 related to this operation.
             enable_auto_population_of_timespan_config (bool):
                 When the job is started by a JobTrigger we will
@@ -1215,7 +1320,7 @@ class StorageConfig(proto.Message):
                 result in skipped rows.
 
                 See the `known
-                issue <https://cloud.google.com/sensitive-data-protection/docs/known-issues#recently-streamed-data>`__
+                issue <https://docs.cloud.google.com/sensitive-data-protection/docs/known-issues#recently-streamed-data>`__
                 related to this operation.
         """
 

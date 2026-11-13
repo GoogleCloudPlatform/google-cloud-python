@@ -4,6 +4,7 @@
 # license that can be found in the LICENSE file or at
 # https://developers.google.com/open-source/licenses/bsd
 
+import json
 import os
 import re
 from base64 import b64decode
@@ -12,14 +13,64 @@ from uuid import UUID
 
 from django.conf import settings
 from django.db.backends.base.operations import BaseDatabaseOperations
+from django.db.models.fields.json import JSONField
 from django.db.utils import DatabaseError
 from django.utils import timezone
 from django.utils.duration import duration_microseconds
 from google.cloud.spanner_dbapi.parse_utils import (
+    SPANNER_RESERVED_KEYWORDS,
+    TYPES_MAP,
     DateStr,
     TimestampStr,
-    escape_name,
 )
+from google.cloud.spanner_v1 import JsonObject, param_types
+
+_QUOTED_IDENTIFIER_RE = re.compile(
+    r"\A`(?:\\\\|\\[abfnrtv]|\\x[0-9a-fA-F]{2}|[^`\\\x00-\x1f\x7f])+`\Z"
+)
+_REGULAR_IDENTIFIER_RE = re.compile(r"\A[A-Za-z_][A-Za-z0-9_]*\Z")
+_IDENTIFIER_ESCAPE_TABLE = str.maketrans(
+    {
+        **{chr(code): f"\\x{code:02x}" for code in (*range(0x20), 0x7F)},
+        "\\": r"\\",
+        # Escape backticks as \x60 rather than \` so both Spanner DDL and
+        # spanner_dbapi's sqlparse comment-stripping treat the identifier as intact.
+        "`": r"\x60",
+        "\a": r"\a",
+        "\b": r"\b",
+        "\f": r"\f",
+        "\n": r"\n",
+        "\r": r"\r",
+        "\t": r"\t",
+        "\v": r"\v",
+    }
+)
+
+
+class _JsonString(JsonObject):
+    """Wrap a pre-serialized JSON string for spanner_dbapi without re-parsing."""
+
+    def __init__(self, raw_json):
+        self._is_null = False
+        self._is_array = False
+        self._is_scalar_value = False
+        self._raw_json = raw_json
+
+    def serialize(self):
+        return self._raw_json
+
+    def __repr__(self):
+        return f"_JsonString({self._raw_json!r})"
+
+    def __eq__(self, other):
+        if isinstance(other, _JsonString):
+            return self._raw_json == other._raw_json
+        if isinstance(other, JsonObject):
+            return self._raw_json == other.serialize()
+        return False
+
+
+TYPES_MAP[_JsonString] = param_types.JSON
 
 
 class DatabaseOperations(BaseDatabaseOperations):
@@ -43,6 +94,17 @@ class DatabaseOperations(BaseDatabaseOperations):
     cast_char_field_without_max_length = "STRING"
     compiler_module = "django_spanner.compiler"
 
+    def returning_columns(self, fields):
+        if not fields:
+            return "", ()
+        columns = [
+            self.quote_name(getattr(field, "column", str(field))) for field in fields
+        ]
+        return "THEN RETURN %s" % ", ".join(columns), ()
+
+    # In Django <= 5.2, this method was named return_insert_columns
+    return_insert_columns = returning_columns
+
     # Django's lookup names that require a different name in Spanner's
     # EXTRACT() function.
     # https://cloud.google.com/spanner/docs/functions-and-operators#extract
@@ -63,30 +125,49 @@ class DatabaseOperations(BaseDatabaseOperations):
         """
         return 128
 
-    def quote_name(self, name):
+    def quote_name(self, name: str) -> str:
         """
-        Return a quoted version of the given table or column name. Also,
-        applies backticks to the name that either contain '-' or ' ', or is a
-        Cloud Spanner's reserved keyword.
+        Return a quoted version of the given table, index, or column name.
 
-        Spanner says "column name not valid" if spaces or hyphens are present
-        (although according to the documantation, any character should be
-        allowed in quoted identifiers). Replace problematic characters when
-        running the Django tests to prevent crashes. (Don't modify names in
-        normal operation to prevent the possibility of colliding with another
-        column.)
+        Valid unreserved regular ASCII identifiers are returned unquoted, and
+        single identifiers already validly quoted using safe GoogleSQL escapes
+        are returned unchanged. All other identifiers (including reserved
+        keywords and names containing dots, spaces, hyphens, embedded
+        backticks, backslashes, or ASCII control characters) are escaped and
+        wrapped in backticks as a single identifier.
 
-        See: https://github.com/googleapis/python-spanner-django/issues/204
+        Spanner does not allow spaces or hyphens in table or index names, even
+        when quoted. Only when running Django's own backend test suite
+        (``RUNNING_SPANNER_BACKEND_TESTS=1``) are spaces and hyphens replaced
+        with underscores so Django test models that use such names can run.
 
         :type name: str
-        :param name: The Quota name.
+        :param name: The table, index, or column name to quote.
 
         :rtype: :class:`str`
-        :returns: Name escaped if it has to be escaped.
+        :returns: Quoted identifier, or the identifier unchanged if it is
+                  already quoted or a valid unreserved regular identifier.
+        :raises TypeError: If ``name`` is not a string.
         """
+        if not isinstance(name, str):
+            raise TypeError(f"Identifier must be a string, got {type(name).__name__}")
+        if not name:
+            return name
         if os.environ.get("RUNNING_SPANNER_BACKEND_TESTS") == "1":
             name = name.replace(" ", "_").replace("-", "_")
-        return escape_name(name)
+        if _QUOTED_IDENTIFIER_RE.match(name):
+            return name
+        # TODO(https://github.com/googleapis/google-cloud-python/issues/19072):
+        # Unconditionally quote all identifiers in a follow-up PR (after fixing
+        # schema.py check-constraint/trace quoting and updating SQL tests) so
+        # reserved keyword tracking is no longer required.
+        if (
+            _REGULAR_IDENTIFIER_RE.match(name)
+            and name.upper() not in SPANNER_RESERVED_KEYWORDS
+        ):
+            return name
+        escaped = name.translate(_IDENTIFIER_ESCAPE_TABLE)
+        return f"`{escaped}`"
 
     def bulk_batch_size(self, fields, objs):
         """
@@ -280,6 +361,13 @@ class DatabaseOperations(BaseDatabaseOperations):
             "0001-01-01T" + value.isoformat(timespec="microseconds") + "Z"
         )
 
+    def adapt_json_value(self, value, encoder):
+        """Wrap Django's serialized JSON string for Spanner JSON parameter binding."""
+        raw_json = super().adapt_json_value(value, encoder)
+        if raw_json is None:
+            return None
+        return _JsonString(raw_json)
+
     def get_db_converters(self, expression):
         """Get a list of functions needed to convert field data.
 
@@ -299,6 +387,8 @@ class DatabaseOperations(BaseDatabaseOperations):
             converters.append(self.convert_binaryfield_value)
         elif internal_type == "UUIDField":
             converters.append(self.convert_uuidfield_value)
+        elif internal_type == "JSONField":
+            converters.append(self.convert_jsonfield_value)
         return converters
 
     def convert_binaryfield_value(self, value, expression, connection):
@@ -393,6 +483,35 @@ class DatabaseOperations(BaseDatabaseOperations):
         """
         if value is not None:
             value = UUID(value)
+        return value
+
+    def convert_jsonfield_value(self, value, expression, connection):
+        """Convert Spanner JsonObject received from DB to a Python value for Django."""
+        if value is None:
+            return None
+        output_field = getattr(expression, "output_field", None)
+        has_custom_from_db_value = (
+            isinstance(output_field, JSONField)
+            and type(output_field).from_db_value is not JSONField.from_db_value
+        )
+        decoder = getattr(output_field, "decoder", None)
+        if isinstance(value, JsonObject):
+            if value._is_null:
+                return None
+            if has_custom_from_db_value:
+                return value.serialize()
+            if decoder is not None:
+                return json.loads(value.serialize(), cls=decoder)
+            if value._is_array:
+                return value._array_value
+            if value._is_scalar_value:
+                return value._simple_value
+            return dict(value)
+        if isinstance(value, str) and not has_custom_from_db_value:
+            try:
+                return json.loads(value, cls=decoder)
+            except json.JSONDecodeError:
+                return value
         return value
 
     def date_extract_sql(self, lookup_type, field_name, params=None):

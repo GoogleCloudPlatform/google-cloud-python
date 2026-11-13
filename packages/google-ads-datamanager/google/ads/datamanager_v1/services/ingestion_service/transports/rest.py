@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.datamanager_v1._compat import transcode_request
 from google.ads.datamanager_v1.types import ingestion_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -95,6 +96,14 @@ class IngestionServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_ingest_users(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_ingest_users(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_remove_all_audience_members(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -108,6 +117,14 @@ class IngestionServiceRestInterceptor:
                 return request, metadata
 
             def post_remove_audience_members(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_remove_users(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_remove_users(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -278,6 +295,56 @@ class IngestionServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_ingest_users(
+        self,
+        request: ingestion_service.IngestUsersRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        ingestion_service.IngestUsersRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for ingest_users
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the IngestionService server.
+        """
+        return request, metadata
+
+    def post_ingest_users(
+        self, response: ingestion_service.IngestUsersResponse
+    ) -> ingestion_service.IngestUsersResponse:
+        """Post-rpc interceptor for ingest_users
+
+        DEPRECATED. Please use the `post_ingest_users_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the IngestionService server but before
+        it is returned to user code. This `post_ingest_users` interceptor runs
+        before the `post_ingest_users_with_metadata` interceptor.
+        """
+        return response
+
+    def post_ingest_users_with_metadata(
+        self,
+        response: ingestion_service.IngestUsersResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        ingestion_service.IngestUsersResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for ingest_users
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the IngestionService server but before it is returned to user code.
+
+        We recommend only using this `post_ingest_users_with_metadata`
+        interceptor in new development instead of the `post_ingest_users` interceptor.
+        When both interceptors are used, this `post_ingest_users_with_metadata` interceptor runs after the
+        `post_ingest_users` interceptor. The (possibly modified) response returned by
+        `post_ingest_users` will be passed to
+        `post_ingest_users_with_metadata`.
+        """
+        return response, metadata
+
     def pre_remove_all_audience_members(
         self,
         request: ingestion_service.RemoveAllAudienceMembersRequest,
@@ -379,6 +446,56 @@ class IngestionServiceRestInterceptor:
         `post_remove_audience_members` interceptor. The (possibly modified) response returned by
         `post_remove_audience_members` will be passed to
         `post_remove_audience_members_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_remove_users(
+        self,
+        request: ingestion_service.RemoveUsersRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        ingestion_service.RemoveUsersRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for remove_users
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the IngestionService server.
+        """
+        return request, metadata
+
+    def post_remove_users(
+        self, response: ingestion_service.RemoveUsersResponse
+    ) -> ingestion_service.RemoveUsersResponse:
+        """Post-rpc interceptor for remove_users
+
+        DEPRECATED. Please use the `post_remove_users_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the IngestionService server but before
+        it is returned to user code. This `post_remove_users` interceptor runs
+        before the `post_remove_users_with_metadata` interceptor.
+        """
+        return response
+
+    def post_remove_users_with_metadata(
+        self,
+        response: ingestion_service.RemoveUsersResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        ingestion_service.RemoveUsersResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for remove_users
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the IngestionService server but before it is returned to user code.
+
+        We recommend only using this `post_remove_users_with_metadata`
+        interceptor in new development instead of the `post_remove_users` interceptor.
+        When both interceptors are used, this `post_remove_users_with_metadata` interceptor runs after the
+        `post_remove_users` interceptor. The (possibly modified) response returned by
+        `post_remove_users` will be passed to
+        `post_remove_users_with_metadata`.
         """
         return response, metadata
 
@@ -586,21 +703,18 @@ class IngestionServiceRestTransport(_BaseIngestionServiceRestTransport):
             """
 
             http_options = _BaseIngestionServiceRestTransport._BaseIngestAdEvents._get_http_options()
-
             request, metadata = self._interceptor.pre_ingest_ad_events(
                 request, metadata
             )
-            transcoded_request = _BaseIngestionServiceRestTransport._BaseIngestAdEvents._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIngestionServiceRestTransport._BaseIngestAdEvents._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIngestionServiceRestTransport._BaseIngestAdEvents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIngestionServiceRestTransport._BaseIngestAdEvents,
+                    "_BaseIngestAdEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -743,21 +857,18 @@ class IngestionServiceRestTransport(_BaseIngestionServiceRestTransport):
             """
 
             http_options = _BaseIngestionServiceRestTransport._BaseIngestAudienceMembers._get_http_options()
-
             request, metadata = self._interceptor.pre_ingest_audience_members(
                 request, metadata
             )
-            transcoded_request = _BaseIngestionServiceRestTransport._BaseIngestAudienceMembers._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIngestionServiceRestTransport._BaseIngestAudienceMembers._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIngestionServiceRestTransport._BaseIngestAudienceMembers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIngestionServiceRestTransport._BaseIngestAudienceMembers,
+                    "_BaseIngestAudienceMembers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -905,19 +1016,16 @@ class IngestionServiceRestTransport(_BaseIngestionServiceRestTransport):
             http_options = (
                 _BaseIngestionServiceRestTransport._BaseIngestEvents._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_ingest_events(request, metadata)
-            transcoded_request = _BaseIngestionServiceRestTransport._BaseIngestEvents._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIngestionServiceRestTransport._BaseIngestEvents._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIngestionServiceRestTransport._BaseIngestEvents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIngestionServiceRestTransport._BaseIngestEvents,
+                    "_BaseIngestEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -999,6 +1107,156 @@ class IngestionServiceRestTransport(_BaseIngestionServiceRestTransport):
                 )
             return resp
 
+    class _IngestUsers(
+        _BaseIngestionServiceRestTransport._BaseIngestUsers, IngestionServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("IngestionServiceRestTransport.IngestUsers")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: ingestion_service.IngestUsersRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> ingestion_service.IngestUsersResponse:
+            r"""Call the ingest users method over HTTP.
+
+            Args:
+                request (~.ingestion_service.IngestUsersRequest):
+                    The request object. Request to upload users to the
+                provided destinations.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.ingestion_service.IngestUsersResponse:
+                    Response from the IngestUsersRequest.
+            """
+
+            http_options = (
+                _BaseIngestionServiceRestTransport._BaseIngestUsers._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_ingest_users(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIngestionServiceRestTransport._BaseIngestUsers,
+                    "_BaseIngestUsers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.datamanager_v1.IngestionServiceClient.IngestUsers",
+                    extra={
+                        "serviceName": "google.ads.datamanager.v1.IngestionService",
+                        "rpcName": "IngestUsers",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = IngestionServiceRestTransport._IngestUsers._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = ingestion_service.IngestUsersResponse()
+            pb_resp = ingestion_service.IngestUsersResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_ingest_users(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_ingest_users_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = ingestion_service.IngestUsersResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.datamanager_v1.IngestionServiceClient.ingest_users",
+                    extra={
+                        "serviceName": "google.ads.datamanager.v1.IngestionService",
+                        "rpcName": "IngestUsers",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _RemoveAllAudienceMembers(
         _BaseIngestionServiceRestTransport._BaseRemoveAllAudienceMembers,
         IngestionServiceRestStub,
@@ -1061,21 +1319,18 @@ class IngestionServiceRestTransport(_BaseIngestionServiceRestTransport):
             """
 
             http_options = _BaseIngestionServiceRestTransport._BaseRemoveAllAudienceMembers._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_all_audience_members(
                 request, metadata
             )
-            transcoded_request = _BaseIngestionServiceRestTransport._BaseRemoveAllAudienceMembers._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIngestionServiceRestTransport._BaseRemoveAllAudienceMembers._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIngestionServiceRestTransport._BaseRemoveAllAudienceMembers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIngestionServiceRestTransport._BaseRemoveAllAudienceMembers,
+                    "_BaseRemoveAllAudienceMembers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1222,21 +1477,18 @@ class IngestionServiceRestTransport(_BaseIngestionServiceRestTransport):
             """
 
             http_options = _BaseIngestionServiceRestTransport._BaseRemoveAudienceMembers._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_audience_members(
                 request, metadata
             )
-            transcoded_request = _BaseIngestionServiceRestTransport._BaseRemoveAudienceMembers._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseIngestionServiceRestTransport._BaseRemoveAudienceMembers._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIngestionServiceRestTransport._BaseRemoveAudienceMembers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIngestionServiceRestTransport._BaseRemoveAudienceMembers,
+                    "_BaseRemoveAudienceMembers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1322,6 +1574,156 @@ class IngestionServiceRestTransport(_BaseIngestionServiceRestTransport):
                 )
             return resp
 
+    class _RemoveUsers(
+        _BaseIngestionServiceRestTransport._BaseRemoveUsers, IngestionServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("IngestionServiceRestTransport.RemoveUsers")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: ingestion_service.RemoveUsersRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> ingestion_service.RemoveUsersResponse:
+            r"""Call the remove users method over HTTP.
+
+            Args:
+                request (~.ingestion_service.RemoveUsersRequest):
+                    The request object. Request to remove users from the
+                provided destinations.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.ingestion_service.RemoveUsersResponse:
+                    Response from the RemoveUsersRequest.
+            """
+
+            http_options = (
+                _BaseIngestionServiceRestTransport._BaseRemoveUsers._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_remove_users(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIngestionServiceRestTransport._BaseRemoveUsers,
+                    "_BaseRemoveUsers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.datamanager_v1.IngestionServiceClient.RemoveUsers",
+                    extra={
+                        "serviceName": "google.ads.datamanager.v1.IngestionService",
+                        "rpcName": "RemoveUsers",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = IngestionServiceRestTransport._RemoveUsers._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = ingestion_service.RemoveUsersResponse()
+            pb_resp = ingestion_service.RemoveUsersResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_remove_users(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_remove_users_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = ingestion_service.RemoveUsersResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.datamanager_v1.IngestionServiceClient.remove_users",
+                    extra={
+                        "serviceName": "google.ads.datamanager.v1.IngestionService",
+                        "rpcName": "RemoveUsers",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _RetrieveRequestStatus(
         _BaseIngestionServiceRestTransport._BaseRetrieveRequestStatus,
         IngestionServiceRestStub,
@@ -1382,17 +1784,18 @@ class IngestionServiceRestTransport(_BaseIngestionServiceRestTransport):
             """
 
             http_options = _BaseIngestionServiceRestTransport._BaseRetrieveRequestStatus._get_http_options()
-
             request, metadata = self._interceptor.pre_retrieve_request_status(
                 request, metadata
             )
-            transcoded_request = _BaseIngestionServiceRestTransport._BaseRetrieveRequestStatus._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseIngestionServiceRestTransport._BaseRetrieveRequestStatus._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIngestionServiceRestTransport._BaseRetrieveRequestStatus,
+                    "_BaseRetrieveRequestStatus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1510,6 +1913,16 @@ class IngestionServiceRestTransport(_BaseIngestionServiceRestTransport):
         return self._IngestEvents(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def ingest_users(
+        self,
+    ) -> Callable[
+        [ingestion_service.IngestUsersRequest], ingestion_service.IngestUsersResponse
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._IngestUsers(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def remove_all_audience_members(
         self,
     ) -> Callable[
@@ -1532,6 +1945,16 @@ class IngestionServiceRestTransport(_BaseIngestionServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._RemoveAudienceMembers(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def remove_users(
+        self,
+    ) -> Callable[
+        [ingestion_service.RemoveUsersRequest], ingestion_service.RemoveUsersResponse
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._RemoveUsers(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def retrieve_request_status(

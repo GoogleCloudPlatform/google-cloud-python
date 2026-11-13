@@ -19,8 +19,7 @@ from unittest import mock
 import pytest  # type: ignore
 
 from google.auth import _jwt_async as jwt_async
-from google.auth import crypt
-from google.auth import exceptions
+from google.auth import crypt, exceptions
 from tests import test_jwt
 
 

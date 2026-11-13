@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.netapp_v1._compat import transcode_request
 from google.cloud.netapp_v1.types import (
     active_directory,
     backup,
@@ -400,6 +401,14 @@ class NetAppRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_get_split_status(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_split_status(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_get_storage_pool(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -421,6 +430,14 @@ class NetAppRestInterceptor:
                 return request, metadata
 
             def post_list_active_directories(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_backup_configs(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_backup_configs(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -512,6 +529,14 @@ class NetAppRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_restore_volume(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_restore_volume(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_resume_replication(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -533,6 +558,14 @@ class NetAppRestInterceptor:
                 return request, metadata
 
             def post_revert_volume(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_start_split(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_start_split(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -573,6 +606,14 @@ class NetAppRestInterceptor:
                 return request, metadata
 
             def post_update_backup(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_backup_config(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_backup_config(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -2465,6 +2506,50 @@ class NetAppRestInterceptor:
         """
         return response, metadata
 
+    def pre_get_split_status(
+        self,
+        request: volume.GetSplitStatusRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[volume.GetSplitStatusRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for get_split_status
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetApp server.
+        """
+        return request, metadata
+
+    def post_get_split_status(self, response: volume.SplitStatus) -> volume.SplitStatus:
+        """Post-rpc interceptor for get_split_status
+
+        DEPRECATED. Please use the `post_get_split_status_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetApp server but before
+        it is returned to user code. This `post_get_split_status` interceptor runs
+        before the `post_get_split_status_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_split_status_with_metadata(
+        self,
+        response: volume.SplitStatus,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[volume.SplitStatus, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for get_split_status
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetApp server but before it is returned to user code.
+
+        We recommend only using this `post_get_split_status_with_metadata`
+        interceptor in new development instead of the `post_get_split_status` interceptor.
+        When both interceptors are used, this `post_get_split_status_with_metadata` interceptor runs after the
+        `post_get_split_status` interceptor. The (possibly modified) response returned by
+        `post_get_split_status` will be passed to
+        `post_get_split_status_with_metadata`.
+        """
+        return response, metadata
+
     def pre_get_storage_pool(
         self,
         request: storage_pool.GetStoragePoolRequest,
@@ -2604,6 +2689,56 @@ class NetAppRestInterceptor:
         `post_list_active_directories` interceptor. The (possibly modified) response returned by
         `post_list_active_directories` will be passed to
         `post_list_active_directories_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_backup_configs(
+        self,
+        request: volume.ListBackupConfigsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        volume.ListBackupConfigsRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for list_backup_configs
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetApp server.
+        """
+        return request, metadata
+
+    def post_list_backup_configs(
+        self, response: volume.ListBackupConfigsResponse
+    ) -> volume.ListBackupConfigsResponse:
+        """Post-rpc interceptor for list_backup_configs
+
+        DEPRECATED. Please use the `post_list_backup_configs_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetApp server but before
+        it is returned to user code. This `post_list_backup_configs` interceptor runs
+        before the `post_list_backup_configs_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_backup_configs_with_metadata(
+        self,
+        response: volume.ListBackupConfigsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        volume.ListBackupConfigsResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for list_backup_configs
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetApp server but before it is returned to user code.
+
+        We recommend only using this `post_list_backup_configs_with_metadata`
+        interceptor in new development instead of the `post_list_backup_configs` interceptor.
+        When both interceptors are used, this `post_list_backup_configs_with_metadata` interceptor runs after the
+        `post_list_backup_configs` interceptor. The (possibly modified) response returned by
+        `post_list_backup_configs` will be passed to
+        `post_list_backup_configs_with_metadata`.
         """
         return response, metadata
 
@@ -3140,6 +3275,52 @@ class NetAppRestInterceptor:
         """
         return response, metadata
 
+    def pre_restore_volume(
+        self,
+        request: volume.RestoreVolumeRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[volume.RestoreVolumeRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for restore_volume
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetApp server.
+        """
+        return request, metadata
+
+    def post_restore_volume(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for restore_volume
+
+        DEPRECATED. Please use the `post_restore_volume_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetApp server but before
+        it is returned to user code. This `post_restore_volume` interceptor runs
+        before the `post_restore_volume_with_metadata` interceptor.
+        """
+        return response
+
+    def post_restore_volume_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for restore_volume
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetApp server but before it is returned to user code.
+
+        We recommend only using this `post_restore_volume_with_metadata`
+        interceptor in new development instead of the `post_restore_volume` interceptor.
+        When both interceptors are used, this `post_restore_volume_with_metadata` interceptor runs after the
+        `post_restore_volume` interceptor. The (possibly modified) response returned by
+        `post_restore_volume` will be passed to
+        `post_restore_volume_with_metadata`.
+        """
+        return response, metadata
+
     def pre_resume_replication(
         self,
         request: replication.ResumeReplicationRequest,
@@ -3280,6 +3461,52 @@ class NetAppRestInterceptor:
         `post_revert_volume` interceptor. The (possibly modified) response returned by
         `post_revert_volume` will be passed to
         `post_revert_volume_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_start_split(
+        self,
+        request: volume.StartSplitRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[volume.StartSplitRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for start_split
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetApp server.
+        """
+        return request, metadata
+
+    def post_start_split(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for start_split
+
+        DEPRECATED. Please use the `post_start_split_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetApp server but before
+        it is returned to user code. This `post_start_split` interceptor runs
+        before the `post_start_split_with_metadata` interceptor.
+        """
+        return response
+
+    def post_start_split_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for start_split
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetApp server but before it is returned to user code.
+
+        We recommend only using this `post_start_split_with_metadata`
+        interceptor in new development instead of the `post_start_split` interceptor.
+        When both interceptors are used, this `post_start_split_with_metadata` interceptor runs after the
+        `post_start_split` interceptor. The (possibly modified) response returned by
+        `post_start_split` will be passed to
+        `post_start_split_with_metadata`.
         """
         return response, metadata
 
@@ -3520,6 +3747,54 @@ class NetAppRestInterceptor:
         `post_update_backup` interceptor. The (possibly modified) response returned by
         `post_update_backup` will be passed to
         `post_update_backup_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_backup_config(
+        self,
+        request: volume.UpdateBackupConfigRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        volume.UpdateBackupConfigRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for update_backup_config
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetApp server.
+        """
+        return request, metadata
+
+    def post_update_backup_config(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_backup_config
+
+        DEPRECATED. Please use the `post_update_backup_config_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetApp server but before
+        it is returned to user code. This `post_update_backup_config` interceptor runs
+        before the `post_update_backup_config_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_backup_config_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_backup_config
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetApp server but before it is returned to user code.
+
+        We recommend only using this `post_update_backup_config_with_metadata`
+        interceptor in new development instead of the `post_update_backup_config` interceptor.
+        When both interceptors are used, this `post_update_backup_config_with_metadata` interceptor runs after the
+        `post_update_backup_config` interceptor. The (possibly modified) response returned by
+        `post_update_backup_config` will be passed to
+        `post_update_backup_config_with_metadata`.
         """
         return response, metadata
 
@@ -4406,21 +4681,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseCreateActiveDirectory._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_active_directory(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseCreateActiveDirectory._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNetAppRestTransport._BaseCreateActiveDirectory._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetAppRestTransport._BaseCreateActiveDirectory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseCreateActiveDirectory,
+                    "_BaseCreateActiveDirectory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4557,23 +4829,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseCreateBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_backup(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseCreateBackup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseCreateBackup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseCreateBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseCreateBackup,
+                    "_BaseCreateBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4713,25 +4978,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseCreateBackupPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_backup_policy(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseCreateBackupPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseCreateBackupPolicy._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseCreateBackupPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseCreateBackupPolicy,
+                    "_BaseCreateBackupPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4871,27 +5129,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseCreateBackupVault._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_backup_vault(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseCreateBackupVault._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseCreateBackupVault._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseCreateBackupVault._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseCreateBackupVault,
+                    "_BaseCreateBackupVault__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5031,25 +5280,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseCreateHostGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_host_group(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseCreateHostGroup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseCreateHostGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseCreateHostGroup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseCreateHostGroup,
+                    "_BaseCreateHostGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5189,25 +5431,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseCreateKmsConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_kms_config(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseCreateKmsConfig._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseCreateKmsConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseCreateKmsConfig._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseCreateKmsConfig,
+                    "_BaseCreateKmsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5347,25 +5582,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseCreateQuotaRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_quota_rule(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseCreateQuotaRule._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseCreateQuotaRule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseCreateQuotaRule._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseCreateQuotaRule,
+                    "_BaseCreateQuotaRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5505,27 +5733,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseCreateReplication._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_replication(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseCreateReplication._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseCreateReplication._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseCreateReplication._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseCreateReplication,
+                    "_BaseCreateReplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5663,23 +5882,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseCreateSnapshot._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_snapshot(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseCreateSnapshot._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseCreateSnapshot._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseCreateSnapshot._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseCreateSnapshot,
+                    "_BaseCreateSnapshot__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5819,27 +6031,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseCreateStoragePool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_storage_pool(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseCreateStoragePool._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseCreateStoragePool._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseCreateStoragePool._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseCreateStoragePool,
+                    "_BaseCreateStoragePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5976,23 +6179,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseCreateVolume._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_volume(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseCreateVolume._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseCreateVolume._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseCreateVolume._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseCreateVolume,
+                    "_BaseCreateVolume__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6131,17 +6327,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseDeleteActiveDirectory._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_active_directory(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseDeleteActiveDirectory._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetAppRestTransport._BaseDeleteActiveDirectory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseDeleteActiveDirectory,
+                    "_BaseDeleteActiveDirectory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6276,19 +6473,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseDeleteBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_backup(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseDeleteBackup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseDeleteBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseDeleteBackup,
+                    "_BaseDeleteBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6426,19 +6620,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseDeleteBackupPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_backup_policy(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseDeleteBackupPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseDeleteBackupPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseDeleteBackupPolicy,
+                    "_BaseDeleteBackupPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6576,21 +6769,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseDeleteBackupVault._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_backup_vault(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseDeleteBackupVault._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseDeleteBackupVault._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseDeleteBackupVault,
+                    "_BaseDeleteBackupVault__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6728,21 +6918,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseDeleteHostGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_host_group(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseDeleteHostGroup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseDeleteHostGroup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseDeleteHostGroup,
+                    "_BaseDeleteHostGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6880,21 +7067,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseDeleteKmsConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_kms_config(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseDeleteKmsConfig._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseDeleteKmsConfig._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseDeleteKmsConfig,
+                    "_BaseDeleteKmsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7032,21 +7216,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseDeleteQuotaRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_quota_rule(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseDeleteQuotaRule._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseDeleteQuotaRule._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseDeleteQuotaRule,
+                    "_BaseDeleteQuotaRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7184,21 +7365,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseDeleteReplication._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_replication(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseDeleteReplication._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseDeleteReplication._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseDeleteReplication,
+                    "_BaseDeleteReplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7334,19 +7512,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseDeleteSnapshot._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_snapshot(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseDeleteSnapshot._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseDeleteSnapshot._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseDeleteSnapshot,
+                    "_BaseDeleteSnapshot__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7484,21 +7659,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseDeleteStoragePool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_storage_pool(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseDeleteStoragePool._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseDeleteStoragePool._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseDeleteStoragePool,
+                    "_BaseDeleteStoragePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7633,19 +7805,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseDeleteVolume._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_volume(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseDeleteVolume._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseDeleteVolume._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseDeleteVolume,
+                    "_BaseDeleteVolume__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7782,23 +7951,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseEncryptVolumes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_encrypt_volumes(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseEncryptVolumes._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseEncryptVolumes._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseEncryptVolumes._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseEncryptVolumes,
+                    "_BaseEncryptVolumes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7939,27 +8101,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseEstablishPeering._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_establish_peering(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseEstablishPeering._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseEstablishPeering._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseEstablishPeering._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseEstablishPeering,
+                    "_BaseEstablishPeering__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8101,21 +8254,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseEstablishVolumePeering._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_establish_volume_peering(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseEstablishVolumePeering._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNetAppRestTransport._BaseEstablishVolumePeering._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetAppRestTransport._BaseEstablishVolumePeering._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseEstablishVolumePeering,
+                    "_BaseEstablishVolumePeering__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8250,19 +8400,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseExecuteOntapDelete._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_execute_ontap_delete(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseExecuteOntapDelete._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseExecuteOntapDelete._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseExecuteOntapDelete,
+                    "_BaseExecuteOntapDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8400,21 +8549,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseExecuteOntapGet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_execute_ontap_get(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseExecuteOntapGet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseExecuteOntapGet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseExecuteOntapGet,
+                    "_BaseExecuteOntapGet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8551,27 +8697,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseExecuteOntapPatch._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_execute_ontap_patch(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseExecuteOntapPatch._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseExecuteOntapPatch._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseExecuteOntapPatch._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseExecuteOntapPatch,
+                    "_BaseExecuteOntapPatch__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8709,27 +8846,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseExecuteOntapPost._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_execute_ontap_post(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseExecuteOntapPost._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseExecuteOntapPost._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseExecuteOntapPost._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseExecuteOntapPost,
+                    "_BaseExecuteOntapPost__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8870,19 +8998,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseGetActiveDirectory._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_active_directory(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseGetActiveDirectory._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetActiveDirectory._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetActiveDirectory,
+                    "_BaseGetActiveDirectory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9017,19 +9144,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             """
 
             http_options = _BaseNetAppRestTransport._BaseGetBackup._get_http_options()
-
             request, metadata = self._interceptor.pre_get_backup(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseGetBackup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetBackup,
+                    "_BaseGetBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9166,21 +9290,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseGetBackupPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_backup_policy(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseGetBackupPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetBackupPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetBackupPolicy,
+                    "_BaseGetBackupPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9315,21 +9436,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseGetBackupVault._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_backup_vault(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseGetBackupVault._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetBackupVault._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetBackupVault,
+                    "_BaseGetBackupVault__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9467,19 +9585,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseGetHostGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_host_group(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseGetHostGroup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetHostGroup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetHostGroup,
+                    "_BaseGetHostGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9616,19 +9731,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseGetKmsConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_kms_config(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseGetKmsConfig._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetKmsConfig._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetKmsConfig,
+                    "_BaseGetKmsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9767,19 +9879,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseGetQuotaRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_quota_rule(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseGetQuotaRule._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetQuotaRule._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetQuotaRule,
+                    "_BaseGetQuotaRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9918,19 +10027,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseGetReplication._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_replication(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseGetReplication._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetReplication._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetReplication,
+                    "_BaseGetReplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10065,19 +10171,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             """
 
             http_options = _BaseNetAppRestTransport._BaseGetSnapshot._get_http_options()
-
             request, metadata = self._interceptor.pre_get_snapshot(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseGetSnapshot._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetSnapshot._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetSnapshot,
+                    "_BaseGetSnapshot__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10156,6 +10259,151 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
                 )
             return resp
 
+    class _GetSplitStatus(_BaseNetAppRestTransport._BaseGetSplitStatus, NetAppRestStub):
+        def __hash__(self):
+            return hash("NetAppRestTransport.GetSplitStatus")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: volume.GetSplitStatusRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> volume.SplitStatus:
+            r"""Call the get split status method over HTTP.
+
+            Args:
+                request (~.volume.GetSplitStatusRequest):
+                    The request object. Request message for GetSplitStatus.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.volume.SplitStatus:
+                    Message for SplitStatus.
+            """
+
+            http_options = (
+                _BaseNetAppRestTransport._BaseGetSplitStatus._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_get_split_status(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetSplitStatus,
+                    "_BaseGetSplitStatus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.netapp_v1.NetAppClient.GetSplitStatus",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "GetSplitStatus",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetAppRestTransport._GetSplitStatus._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = volume.SplitStatus()
+            pb_resp = volume.SplitStatus.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_split_status(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_split_status_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = volume.SplitStatus.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.netapp_v1.NetAppClient.get_split_status",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "GetSplitStatus",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _GetStoragePool(_BaseNetAppRestTransport._BaseGetStoragePool, NetAppRestStub):
         def __hash__(self):
             return hash("NetAppRestTransport.GetStoragePool")
@@ -10218,21 +10466,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseGetStoragePool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_storage_pool(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseGetStoragePool._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetStoragePool._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetStoragePool,
+                    "_BaseGetStoragePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10366,19 +10611,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             """
 
             http_options = _BaseNetAppRestTransport._BaseGetVolume._get_http_options()
-
             request, metadata = self._interceptor.pre_get_volume(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseGetVolume._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetVolume._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetVolume,
+                    "_BaseGetVolume__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10518,17 +10760,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseListActiveDirectories._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_active_directories(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseListActiveDirectories._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetAppRestTransport._BaseListActiveDirectories._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListActiveDirectories,
+                    "_BaseListActiveDirectories__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10609,6 +10852,158 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
                 )
             return resp
 
+    class _ListBackupConfigs(
+        _BaseNetAppRestTransport._BaseListBackupConfigs, NetAppRestStub
+    ):
+        def __hash__(self):
+            return hash("NetAppRestTransport.ListBackupConfigs")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: volume.ListBackupConfigsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> volume.ListBackupConfigsResponse:
+            r"""Call the list backup configs method over HTTP.
+
+            Args:
+                request (~.volume.ListBackupConfigsRequest):
+                    The request object. Message for requesting list of
+                BackupConfigs in a StoragePool.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.volume.ListBackupConfigsResponse:
+                    Message for response to listing
+                BackupConfigs in an ONTAP StoragePool.
+
+            """
+
+            http_options = (
+                _BaseNetAppRestTransport._BaseListBackupConfigs._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_list_backup_configs(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListBackupConfigs,
+                    "_BaseListBackupConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.netapp_v1.NetAppClient.ListBackupConfigs",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "ListBackupConfigs",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetAppRestTransport._ListBackupConfigs._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = volume.ListBackupConfigsResponse()
+            pb_resp = volume.ListBackupConfigsResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_backup_configs(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_backup_configs_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = volume.ListBackupConfigsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.netapp_v1.NetAppClient.list_backup_configs",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "ListBackupConfigs",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _ListBackupPolicies(
         _BaseNetAppRestTransport._BaseListBackupPolicies, NetAppRestStub
     ):
@@ -10669,19 +11064,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseListBackupPolicies._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_backup_policies(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseListBackupPolicies._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseListBackupPolicies._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListBackupPolicies,
+                    "_BaseListBackupPolicies__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10817,19 +11211,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             """
 
             http_options = _BaseNetAppRestTransport._BaseListBackups._get_http_options()
-
             request, metadata = self._interceptor.pre_list_backups(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseListBackups._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseListBackups._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListBackups,
+                    "_BaseListBackups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10968,21 +11359,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseListBackupVaults._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_backup_vaults(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseListBackupVaults._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseListBackupVaults._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListBackupVaults,
+                    "_BaseListBackupVaults__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11121,21 +11509,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseListHostGroups._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_host_groups(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseListHostGroups._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseListHostGroups._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListHostGroups,
+                    "_BaseListHostGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11274,21 +11659,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseListKmsConfigs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_kms_configs(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseListKmsConfigs._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseListKmsConfigs._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListKmsConfigs,
+                    "_BaseListKmsConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11425,21 +11807,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseListQuotaRules._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_quota_rules(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseListQuotaRules._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseListQuotaRules._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListQuotaRules,
+                    "_BaseListQuotaRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11579,21 +11958,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseListReplications._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_replications(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseListReplications._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseListReplications._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListReplications,
+                    "_BaseListReplications__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11731,19 +12107,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseListSnapshots._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_snapshots(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseListSnapshots._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseListSnapshots._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListSnapshots,
+                    "_BaseListSnapshots__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11882,21 +12255,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseListStoragePools._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_storage_pools(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseListStoragePools._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseListStoragePools._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListStoragePools,
+                    "_BaseListStoragePools__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12033,19 +12403,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             """
 
             http_options = _BaseNetAppRestTransport._BaseListVolumes._get_http_options()
-
             request, metadata = self._interceptor.pre_list_volumes(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseListVolumes._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseListVolumes._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListVolumes,
+                    "_BaseListVolumes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12186,25 +12553,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseRestoreBackupFiles._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_restore_backup_files(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseRestoreBackupFiles._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseRestoreBackupFiles._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseRestoreBackupFiles._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseRestoreBackupFiles,
+                    "_BaseRestoreBackupFiles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12282,6 +12642,152 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
                 )
             return resp
 
+    class _RestoreVolume(_BaseNetAppRestTransport._BaseRestoreVolume, NetAppRestStub):
+        def __hash__(self):
+            return hash("NetAppRestTransport.RestoreVolume")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: volume.RestoreVolumeRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the restore volume method over HTTP.
+
+            Args:
+                request (~.volume.RestoreVolumeRequest):
+                    The request object. Request message for ``RestoreVolume`` API.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = (
+                _BaseNetAppRestTransport._BaseRestoreVolume._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_restore_volume(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseRestoreVolume,
+                    "_BaseRestoreVolume__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.netapp_v1.NetAppClient.RestoreVolume",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "RestoreVolume",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetAppRestTransport._RestoreVolume._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_restore_volume(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_restore_volume_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.netapp_v1.NetAppClient.restore_volume",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "RestoreVolume",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _ResumeReplication(
         _BaseNetAppRestTransport._BaseResumeReplication, NetAppRestStub
     ):
@@ -12344,27 +12850,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseResumeReplication._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_resume_replication(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseResumeReplication._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseResumeReplication._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseResumeReplication._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseResumeReplication,
+                    "_BaseResumeReplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12505,21 +13002,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             """
 
             http_options = _BaseNetAppRestTransport._BaseReverseReplicationDirection._get_http_options()
-
             request, metadata = self._interceptor.pre_reverse_replication_direction(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseReverseReplicationDirection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNetAppRestTransport._BaseReverseReplicationDirection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetAppRestTransport._BaseReverseReplicationDirection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseReverseReplicationDirection,
+                    "_BaseReverseReplicationDirection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12659,23 +13153,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseRevertVolume._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_revert_volume(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseRevertVolume._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseRevertVolume._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseRevertVolume._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseRevertVolume,
+                    "_BaseRevertVolume__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12753,6 +13240,151 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
                 )
             return resp
 
+    class _StartSplit(_BaseNetAppRestTransport._BaseStartSplit, NetAppRestStub):
+        def __hash__(self):
+            return hash("NetAppRestTransport.StartSplit")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: volume.StartSplitRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the start split method over HTTP.
+
+            Args:
+                request (~.volume.StartSplitRequest):
+                    The request object. Request message for splitting a
+                volume.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = _BaseNetAppRestTransport._BaseStartSplit._get_http_options()
+            request, metadata = self._interceptor.pre_start_split(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseStartSplit,
+                    "_BaseStartSplit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.netapp_v1.NetAppClient.StartSplit",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "StartSplit",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetAppRestTransport._StartSplit._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_start_split(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_start_split_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.netapp_v1.NetAppClient.start_split",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "StartSplit",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _StopReplication(
         _BaseNetAppRestTransport._BaseStopReplication, NetAppRestStub
     ):
@@ -12815,25 +13447,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseStopReplication._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_stop_replication(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseStopReplication._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseStopReplication._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseStopReplication._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseStopReplication,
+                    "_BaseStopReplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12973,21 +13598,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             """
 
             http_options = _BaseNetAppRestTransport._BaseSwitchActiveReplicaZone._get_http_options()
-
             request, metadata = self._interceptor.pre_switch_active_replica_zone(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseSwitchActiveReplicaZone._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNetAppRestTransport._BaseSwitchActiveReplicaZone._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetAppRestTransport._BaseSwitchActiveReplicaZone._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseSwitchActiveReplicaZone,
+                    "_BaseSwitchActiveReplicaZone__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13127,25 +13749,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseSyncReplication._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_sync_replication(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseSyncReplication._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseSyncReplication._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseSyncReplication._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseSyncReplication,
+                    "_BaseSyncReplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13285,21 +13900,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseUpdateActiveDirectory._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_active_directory(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseUpdateActiveDirectory._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNetAppRestTransport._BaseUpdateActiveDirectory._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetAppRestTransport._BaseUpdateActiveDirectory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateActiveDirectory,
+                    "_BaseUpdateActiveDirectory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13437,23 +14049,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseUpdateBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_backup(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseUpdateBackup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseUpdateBackup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseUpdateBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateBackup,
+                    "_BaseUpdateBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13531,6 +14136,157 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
                 )
             return resp
 
+    class _UpdateBackupConfig(
+        _BaseNetAppRestTransport._BaseUpdateBackupConfig, NetAppRestStub
+    ):
+        def __hash__(self):
+            return hash("NetAppRestTransport.UpdateBackupConfig")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: volume.UpdateBackupConfigRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update backup config method over HTTP.
+
+            Args:
+                request (~.volume.UpdateBackupConfigRequest):
+                    The request object. Request message for
+                UpdateBackupConfig
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = (
+                _BaseNetAppRestTransport._BaseUpdateBackupConfig._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_update_backup_config(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateBackupConfig,
+                    "_BaseUpdateBackupConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.netapp_v1.NetAppClient.UpdateBackupConfig",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "UpdateBackupConfig",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetAppRestTransport._UpdateBackupConfig._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_backup_config(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_backup_config_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.netapp_v1.NetAppClient.update_backup_config",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "UpdateBackupConfig",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _UpdateBackupPolicy(
         _BaseNetAppRestTransport._BaseUpdateBackupPolicy, NetAppRestStub
     ):
@@ -13593,25 +14349,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseUpdateBackupPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_backup_policy(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseUpdateBackupPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseUpdateBackupPolicy._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseUpdateBackupPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateBackupPolicy,
+                    "_BaseUpdateBackupPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13752,27 +14501,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseUpdateBackupVault._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_backup_vault(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseUpdateBackupVault._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseUpdateBackupVault._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseUpdateBackupVault._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateBackupVault,
+                    "_BaseUpdateBackupVault__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13912,25 +14652,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseUpdateHostGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_host_group(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseUpdateHostGroup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseUpdateHostGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseUpdateHostGroup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateHostGroup,
+                    "_BaseUpdateHostGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14070,25 +14803,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseUpdateKmsConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_kms_config(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseUpdateKmsConfig._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseUpdateKmsConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseUpdateKmsConfig._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateKmsConfig,
+                    "_BaseUpdateKmsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14228,25 +14954,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseUpdateQuotaRule._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_quota_rule(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseUpdateQuotaRule._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseUpdateQuotaRule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseUpdateQuotaRule._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateQuotaRule,
+                    "_BaseUpdateQuotaRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14387,27 +15106,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseUpdateReplication._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_replication(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseUpdateReplication._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseUpdateReplication._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseUpdateReplication._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateReplication,
+                    "_BaseUpdateReplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14546,23 +15256,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseUpdateSnapshot._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_snapshot(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseUpdateSnapshot._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseUpdateSnapshot._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseUpdateSnapshot._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateSnapshot,
+                    "_BaseUpdateSnapshot__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14702,27 +15405,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseUpdateStoragePool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_storage_pool(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseUpdateStoragePool._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseNetAppRestTransport._BaseUpdateStoragePool._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseUpdateStoragePool._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateStoragePool,
+                    "_BaseUpdateStoragePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14859,23 +15553,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseUpdateVolume._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_volume(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseUpdateVolume._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseUpdateVolume._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseUpdateVolume._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateVolume,
+                    "_BaseUpdateVolume__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -15015,21 +15702,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             """
 
             http_options = _BaseNetAppRestTransport._BaseValidateDirectoryService._get_http_options()
-
             request, metadata = self._interceptor.pre_validate_directory_service(
                 request, metadata
             )
-            transcoded_request = _BaseNetAppRestTransport._BaseValidateDirectoryService._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNetAppRestTransport._BaseValidateDirectoryService._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNetAppRestTransport._BaseValidateDirectoryService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseValidateDirectoryService,
+                    "_BaseValidateDirectoryService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -15169,25 +15853,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseVerifyKmsConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_verify_kms_config(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseVerifyKmsConfig._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseVerifyKmsConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseVerifyKmsConfig._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseVerifyKmsConfig,
+                    "_BaseVerifyKmsConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -15582,6 +16259,14 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
         return self._GetSnapshot(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def get_split_status(
+        self,
+    ) -> Callable[[volume.GetSplitStatusRequest], volume.SplitStatus]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetSplitStatus(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def get_storage_pool(
         self,
     ) -> Callable[[storage_pool.GetStoragePoolRequest], storage_pool.StoragePool]:
@@ -15605,6 +16290,14 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListActiveDirectories(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def list_backup_configs(
+        self,
+    ) -> Callable[[volume.ListBackupConfigsRequest], volume.ListBackupConfigsResponse]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListBackupConfigs(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def list_backup_policies(
@@ -15708,6 +16401,14 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
         return self._RestoreBackupFiles(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def restore_volume(
+        self,
+    ) -> Callable[[volume.RestoreVolumeRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._RestoreVolume(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def resume_replication(
         self,
     ) -> Callable[[replication.ResumeReplicationRequest], operations_pb2.Operation]:
@@ -15734,6 +16435,14 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._RevertVolume(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def start_split(
+        self,
+    ) -> Callable[[volume.StartSplitRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._StartSplit(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def stop_replication(
@@ -15780,6 +16489,14 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._UpdateBackup(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_backup_config(
+        self,
+    ) -> Callable[[volume.UpdateBackupConfigRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateBackupConfig(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def update_backup_policy(
@@ -15935,19 +16652,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             """
 
             http_options = _BaseNetAppRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -16077,19 +16791,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -16219,25 +16930,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseCancelOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseNetAppRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -16342,21 +17046,18 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseDeleteOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseDeleteOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -16461,19 +17162,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -16603,19 +17301,16 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
             http_options = (
                 _BaseNetAppRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseNetAppRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseNetAppRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

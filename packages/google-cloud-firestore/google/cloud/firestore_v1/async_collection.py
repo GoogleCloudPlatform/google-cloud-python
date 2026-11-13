@@ -207,7 +207,7 @@ class AsyncCollectionReference(BaseCollectionReference[async_query.AsyncQuery]):
         *,
         explain_options: Optional[ExplainOptions] = None,
         read_time: Optional[datetime.datetime] = None,
-    ) -> QueryResultsList[DocumentSnapshot]:
+    ) -> QueryResultsList[DocumentSnapshot[AsyncDocumentReference]]:
         """Read the documents in this collection.
 
         This sends a ``RunQuery`` RPC and returns a list of documents
@@ -254,7 +254,7 @@ class AsyncCollectionReference(BaseCollectionReference[async_query.AsyncQuery]):
         *,
         explain_options: Optional[ExplainOptions] = None,
         read_time: Optional[datetime.datetime] = None,
-    ) -> AsyncStreamGenerator[DocumentSnapshot]:
+    ) -> AsyncStreamGenerator[DocumentSnapshot[AsyncDocumentReference]]:
         """Read the documents in this collection.
 
         This sends a ``RunQuery`` RPC and then returns a generator which

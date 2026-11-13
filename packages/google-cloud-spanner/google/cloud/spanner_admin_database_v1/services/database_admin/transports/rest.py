@@ -32,6 +32,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.spanner_admin_database_v1._compat import transcode_request
 from google.cloud.spanner_admin_database_v1.types import (
     backup,
     backup_schedule,
@@ -1826,21 +1827,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseAddSplitPoints._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_add_split_points(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseAddSplitPoints._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseAdminRestTransport._BaseAddSplitPoints._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseAddSplitPoints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseAddSplitPoints,
+                    "_BaseAddSplitPoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1984,25 +1982,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseCopyBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_copy_backup(request, metadata)
-            transcoded_request = (
-                _BaseDatabaseAdminRestTransport._BaseCopyBackup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseDatabaseAdminRestTransport._BaseCopyBackup._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatabaseAdminRestTransport._BaseCopyBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseCopyBackup,
+                    "_BaseCopyBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2142,19 +2131,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseCreateBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_backup(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseCreateBackup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseAdminRestTransport._BaseCreateBackup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseCreateBackup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseCreateBackup,
+                    "_BaseCreateBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2292,21 +2278,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             """
 
             http_options = _BaseDatabaseAdminRestTransport._BaseCreateBackupSchedule._get_http_options()
-
             request, metadata = self._interceptor.pre_create_backup_schedule(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseCreateBackupSchedule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseAdminRestTransport._BaseCreateBackupSchedule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseCreateBackupSchedule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseCreateBackupSchedule,
+                    "_BaseCreateBackupSchedule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2450,19 +2433,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseCreateDatabase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_database(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseCreateDatabase._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseAdminRestTransport._BaseCreateDatabase._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseCreateDatabase._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseCreateDatabase,
+                    "_BaseCreateDatabase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2594,15 +2574,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseDeleteBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_backup(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseDeleteBackup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseDeleteBackup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseDeleteBackup,
+                    "_BaseDeleteBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2699,17 +2680,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             """
 
             http_options = _BaseDatabaseAdminRestTransport._BaseDeleteBackupSchedule._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_backup_schedule(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseDeleteBackupSchedule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseDeleteBackupSchedule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseDeleteBackupSchedule,
+                    "_BaseDeleteBackupSchedule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2808,15 +2790,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseDropDatabase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_drop_database(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseDropDatabase._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseDropDatabase._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseDropDatabase,
+                    "_BaseDropDatabase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2919,19 +2902,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseGetBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_backup(request, metadata)
-            transcoded_request = (
-                _BaseDatabaseAdminRestTransport._BaseGetBackup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatabaseAdminRestTransport._BaseGetBackup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseGetBackup,
+                    "_BaseGetBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3069,17 +3049,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             """
 
             http_options = _BaseDatabaseAdminRestTransport._BaseGetBackupSchedule._get_http_options()
-
             request, metadata = self._interceptor.pre_get_backup_schedule(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseGetBackupSchedule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseGetBackupSchedule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseGetBackupSchedule,
+                    "_BaseGetBackupSchedule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3216,17 +3197,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseGetDatabase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_database(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseGetDatabase._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatabaseAdminRestTransport._BaseGetDatabase._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseGetDatabase,
+                    "_BaseGetDatabase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3365,17 +3345,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseGetDatabaseDdl._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_database_ddl(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseGetDatabaseDdl._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseGetDatabaseDdl._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseGetDatabaseDdl,
+                    "_BaseGetDatabaseDdl__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3589,19 +3570,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseAdminRestTransport._BaseGetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3758,17 +3736,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             """
 
             http_options = _BaseDatabaseAdminRestTransport._BaseListBackupOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_backup_operations(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseListBackupOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseListBackupOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseListBackupOperations,
+                    "_BaseListBackupOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3909,17 +3888,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseListBackups._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_backups(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseListBackups._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDatabaseAdminRestTransport._BaseListBackups._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseListBackups,
+                    "_BaseListBackups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4056,17 +4034,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             """
 
             http_options = _BaseDatabaseAdminRestTransport._BaseListBackupSchedules._get_http_options()
-
             request, metadata = self._interceptor.pre_list_backup_schedules(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseListBackupSchedules._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseListBackupSchedules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseListBackupSchedules,
+                    "_BaseListBackupSchedules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4206,17 +4185,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             """
 
             http_options = _BaseDatabaseAdminRestTransport._BaseListDatabaseOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_database_operations(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseListDatabaseOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseListDatabaseOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseListDatabaseOperations,
+                    "_BaseListDatabaseOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4357,17 +4337,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             """
 
             http_options = _BaseDatabaseAdminRestTransport._BaseListDatabaseRoles._get_http_options()
-
             request, metadata = self._interceptor.pre_list_database_roles(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseListDatabaseRoles._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseListDatabaseRoles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseListDatabaseRoles,
+                    "_BaseListDatabaseRoles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4510,15 +4491,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseListDatabases._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_databases(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseListDatabases._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseListDatabases._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseListDatabases,
+                    "_BaseListDatabases__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4661,21 +4643,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseRestoreDatabase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_restore_database(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseRestoreDatabase._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseAdminRestTransport._BaseRestoreDatabase._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseRestoreDatabase._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseRestoreDatabase,
+                    "_BaseRestoreDatabase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4886,19 +4865,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseAdminRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5034,21 +5010,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             """
 
             http_options = _BaseDatabaseAdminRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseAdminRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5187,19 +5160,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseUpdateBackup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_backup(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseUpdateBackup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseAdminRestTransport._BaseUpdateBackup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseUpdateBackup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseUpdateBackup,
+                    "_BaseUpdateBackup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5339,21 +5309,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             """
 
             http_options = _BaseDatabaseAdminRestTransport._BaseUpdateBackupSchedule._get_http_options()
-
             request, metadata = self._interceptor.pre_update_backup_schedule(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseUpdateBackupSchedule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseAdminRestTransport._BaseUpdateBackupSchedule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseUpdateBackupSchedule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseUpdateBackupSchedule,
+                    "_BaseUpdateBackupSchedule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5497,19 +5464,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseUpdateDatabase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_database(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseUpdateDatabase._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseAdminRestTransport._BaseUpdateDatabase._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseUpdateDatabase._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseUpdateDatabase,
+                    "_BaseUpdateDatabase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5664,21 +5628,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             """
 
             http_options = _BaseDatabaseAdminRestTransport._BaseUpdateDatabaseDdl._get_http_options()
-
             request, metadata = self._interceptor.pre_update_database_ddl(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseUpdateDatabaseDdl._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDatabaseAdminRestTransport._BaseUpdateDatabaseDdl._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseUpdateDatabaseDdl._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseUpdateDatabaseDdl,
+                    "_BaseUpdateDatabaseDdl__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6073,17 +6034,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6187,17 +6149,18 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6304,15 +6267,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6444,15 +6408,16 @@ class DatabaseAdminRestTransport(_BaseDatabaseAdminRestTransport):
             http_options = (
                 _BaseDatabaseAdminRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseDatabaseAdminRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDatabaseAdminRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDatabaseAdminRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

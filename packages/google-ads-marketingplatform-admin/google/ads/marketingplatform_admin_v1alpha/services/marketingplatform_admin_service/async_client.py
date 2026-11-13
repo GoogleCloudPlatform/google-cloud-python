@@ -44,6 +44,8 @@ try:
 except AttributeError:  # pragma: NO COVER
     OptionalRetry = Union[retries.AsyncRetry, object, None]  # type: ignore
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
+
 from google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service import (
     pagers,
 )
@@ -86,6 +88,12 @@ class MarketingplatformAdminServiceAsyncClient:
     parse_account_path = staticmethod(
         MarketingplatformAdminServiceClient.parse_account_path
     )
+    admin_access_binding_path = staticmethod(
+        MarketingplatformAdminServiceClient.admin_access_binding_path
+    )
+    parse_admin_access_binding_path = staticmethod(
+        MarketingplatformAdminServiceClient.parse_admin_access_binding_path
+    )
     analytics_account_link_path = staticmethod(
         MarketingplatformAdminServiceClient.analytics_account_link_path
     )
@@ -101,6 +109,16 @@ class MarketingplatformAdminServiceAsyncClient:
     property_path = staticmethod(MarketingplatformAdminServiceClient.property_path)
     parse_property_path = staticmethod(
         MarketingplatformAdminServiceClient.parse_property_path
+    )
+    user_group_path = staticmethod(MarketingplatformAdminServiceClient.user_group_path)
+    parse_user_group_path = staticmethod(
+        MarketingplatformAdminServiceClient.parse_user_group_path
+    )
+    user_group_member_path = staticmethod(
+        MarketingplatformAdminServiceClient.user_group_member_path
+    )
+    parse_user_group_member_path = staticmethod(
+        MarketingplatformAdminServiceClient.parse_user_group_member_path
     )
     common_billing_account_path = staticmethod(
         MarketingplatformAdminServiceClient.common_billing_account_path
@@ -347,7 +365,7 @@ class MarketingplatformAdminServiceAsyncClient:
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> resources.Organization:
-        r"""Lookup for a single organization.
+        r"""Looks up a single organization.
 
         .. code-block:: python
 
@@ -1154,7 +1172,7 @@ class MarketingplatformAdminServiceAsyncClient:
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> marketingplatform_admin.ReportPropertyUsageResponse:
-        r"""Get the usage and billing data for properties within
+        r"""Gets the usage and billing data for properties within
         the organization for the specified month.
 
         Per direct client org, user needs to be
@@ -1255,6 +1273,1721 @@ class MarketingplatformAdminServiceAsyncClient:
         metadata = tuple(metadata) + (
             gapic_v1.routing_header.to_grpc_metadata(
                 (("organization", request.organization),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_user_group(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.GetUserGroupRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> resources.UserGroup:
+        r"""Looks up a single user group.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_get_user_group():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = marketingplatform_admin_v1alpha.GetUserGroupRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_user_group(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.GetUserGroupRequest, dict]]):
+                The request object. Request message for GetUserGroup RPC.
+            name (:class:`str`):
+                Required. The name of the UserGroup to retrieve. Format:
+                organizations/{org_id}/userGroups/{user_group_id}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.marketingplatform_admin_v1alpha.types.UserGroup:
+                A resource message representing a
+                user group in a GMP organization.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, marketingplatform_admin.GetUserGroupRequest):
+            request = marketingplatform_admin.GetUserGroupRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_user_group
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_user_groups(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.ListUserGroupsRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListUserGroupsAsyncPager:
+        r"""Returns a list of user groups in the specified GMP
+        organization.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_list_user_groups():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = marketingplatform_admin_v1alpha.ListUserGroupsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_user_groups(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.ListUserGroupsRequest, dict]]):
+                The request object. Request message for ListUserGroups
+                RPC.
+            parent (:class:`str`):
+                Required. The parent org where this UserGroup will be
+                listed. Format: organizations/{org_id}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListUserGroupsAsyncPager:
+                Response message for ListUserGroups
+                RPC.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, marketingplatform_admin.ListUserGroupsRequest):
+            request = marketingplatform_admin.ListUserGroupsRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_user_groups
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListUserGroupsAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def create_user_group(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.CreateUserGroupRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        user_group: Optional[resources.UserGroup] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> resources.UserGroup:
+        r"""Creates a user group in the specified GMP
+        organization.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_create_user_group():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = marketingplatform_admin_v1alpha.CreateUserGroupRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                response = await client.create_user_group(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.CreateUserGroupRequest, dict]]):
+                The request object. Request message for CreateUserGroup
+                RPC.
+            parent (:class:`str`):
+                Required. The parent resource where this UserGroup will
+                be created. Format: organizations/{org_id}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            user_group (:class:`google.ads.marketingplatform_admin_v1alpha.types.UserGroup`):
+                Required. The user group to create.
+                This corresponds to the ``user_group`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.marketingplatform_admin_v1alpha.types.UserGroup:
+                A resource message representing a
+                user group in a GMP organization.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, user_group]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, marketingplatform_admin.CreateUserGroupRequest):
+            request = marketingplatform_admin.CreateUserGroupRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+        if user_group is not None:
+            request.user_group = user_group
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.create_user_group
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_user_group(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.UpdateUserGroupRequest, dict]
+        ] = None,
+        *,
+        user_group: Optional[resources.UserGroup] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> resources.UserGroup:
+        r"""Updates a user group in the specified GMP
+        organization.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_update_user_group():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = marketingplatform_admin_v1alpha.UpdateUserGroupRequest(
+                )
+
+                # Make the request
+                response = await client.update_user_group(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.UpdateUserGroupRequest, dict]]):
+                The request object. Request message for UpdateUserGroup
+                RPC.
+            user_group (:class:`google.ads.marketingplatform_admin_v1alpha.types.UserGroup`):
+                Required. The user group to update.
+                This corresponds to the ``user_group`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Required. The list of fields to update. Field names must
+                be in snake case (for example, "field_to_update").
+                Omitted fields will not be updated. To replace the
+                entire entity, use one path with the string "\*" to
+                match all fields.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.marketingplatform_admin_v1alpha.types.UserGroup:
+                A resource message representing a
+                user group in a GMP organization.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [user_group, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, marketingplatform_admin.UpdateUserGroupRequest):
+            request = marketingplatform_admin.UpdateUserGroupRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if user_group is not None:
+            request.user_group = user_group
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_user_group
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("user_group.name", request.user_group.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def delete_user_group(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.DeleteUserGroupRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> None:
+        r"""Deletes a user group in the specified GMP
+        organization.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_delete_user_group():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = marketingplatform_admin_v1alpha.DeleteUserGroupRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                await client.delete_user_group(request=request)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.DeleteUserGroupRequest, dict]]):
+                The request object. Request message for DeleteUserGroup
+                RPC.
+            name (:class:`str`):
+                Required. The name of the user group to delete. Format:
+                organizations/{org_id}/userGroups/{user_group_id}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, marketingplatform_admin.DeleteUserGroupRequest):
+            request = marketingplatform_admin.DeleteUserGroupRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.delete_user_group
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+    async def get_user_group_member(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.GetUserGroupMemberRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> resources.UserGroupMember:
+        r"""Looks up a single user group member.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_get_user_group_member():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = marketingplatform_admin_v1alpha.GetUserGroupMemberRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_user_group_member(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.GetUserGroupMemberRequest, dict]]):
+                The request object. Request message for
+                GetUserGroupMember RPC.
+            name (:class:`str`):
+                Required. The name of the user group member to retrieve.
+                Format:
+                organizations/{org_id}/userGroups/{user_group_id}/members/{member_id}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember:
+                A resource message representing a
+                member of a user group.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, marketingplatform_admin.GetUserGroupMemberRequest):
+            request = marketingplatform_admin.GetUserGroupMemberRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_user_group_member
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_user_group_members(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.ListUserGroupMembersRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListUserGroupMembersAsyncPager:
+        r"""Returns a list of members in the specified user
+        group.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_list_user_group_members():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = marketingplatform_admin_v1alpha.ListUserGroupMembersRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_user_group_members(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.ListUserGroupMembersRequest, dict]]):
+                The request object. Request message for
+                ListUserGroupMembers RPC.
+            parent (:class:`str`):
+                Required. The parent user group where this
+                UserGroupMember will be listed. Format:
+                organizations/{org_id}/userGroups/{user_group_id}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListUserGroupMembersAsyncPager:
+                Response message for
+                ListUserGroupMembers RPC.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, marketingplatform_admin.ListUserGroupMembersRequest):
+            request = marketingplatform_admin.ListUserGroupMembersRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_user_group_members
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListUserGroupMembersAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def create_user_group_member(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.CreateUserGroupMemberRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        user_group_member: Optional[resources.UserGroupMember] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> resources.UserGroupMember:
+        r"""Adds a member to the specified GMP user group.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_create_user_group_member():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                user_group_member = marketingplatform_admin_v1alpha.UserGroupMember()
+                user_group_member.user_email = "user_email_value"
+
+                request = marketingplatform_admin_v1alpha.CreateUserGroupMemberRequest(
+                    parent="parent_value",
+                    user_group_member=user_group_member,
+                )
+
+                # Make the request
+                response = await client.create_user_group_member(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.CreateUserGroupMemberRequest, dict]]):
+                The request object. Request message for
+                CreateUserGroupMember RPC.
+            parent (:class:`str`):
+                Required. The parent resource where this UserGroupMember
+                will be created. Format:
+                organizations/{org_id}/userGroups/{user_group_id}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            user_group_member (:class:`google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember`):
+                Required. The user group member to
+                create.
+
+                This corresponds to the ``user_group_member`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember:
+                A resource message representing a
+                member of a user group.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, user_group_member]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, marketingplatform_admin.CreateUserGroupMemberRequest
+        ):
+            request = marketingplatform_admin.CreateUserGroupMemberRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+        if user_group_member is not None:
+            request.user_group_member = user_group_member
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.create_user_group_member
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_user_group_member(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.UpdateUserGroupMemberRequest, dict]
+        ] = None,
+        *,
+        user_group_member: Optional[resources.UserGroupMember] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> resources.UserGroupMember:
+        r"""Updates a member in the specified GMP user group.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_update_user_group_member():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                user_group_member = marketingplatform_admin_v1alpha.UserGroupMember()
+                user_group_member.user_email = "user_email_value"
+
+                request = marketingplatform_admin_v1alpha.UpdateUserGroupMemberRequest(
+                    user_group_member=user_group_member,
+                )
+
+                # Make the request
+                response = await client.update_user_group_member(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.UpdateUserGroupMemberRequest, dict]]):
+                The request object. Request message for
+                UpdateUserGroupMember RPC.
+            user_group_member (:class:`google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember`):
+                Required. The user group member to
+                update.
+
+                This corresponds to the ``user_group_member`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Required. The list of fields to update. Field names must
+                be in snake case (for example, "field_to_update").
+                Omitted fields will not be updated. To replace the
+                entire entity, use one path with the string "\*" to
+                match all fields.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.marketingplatform_admin_v1alpha.types.UserGroupMember:
+                A resource message representing a
+                member of a user group.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [user_group_member, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, marketingplatform_admin.UpdateUserGroupMemberRequest
+        ):
+            request = marketingplatform_admin.UpdateUserGroupMemberRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if user_group_member is not None:
+            request.user_group_member = user_group_member
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_user_group_member
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("user_group_member.name", request.user_group_member.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def delete_user_group_member(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.DeleteUserGroupMemberRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> None:
+        r"""Deletes a member in the specified GMP user group.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_delete_user_group_member():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = marketingplatform_admin_v1alpha.DeleteUserGroupMemberRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                await client.delete_user_group_member(request=request)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.DeleteUserGroupMemberRequest, dict]]):
+                The request object. Request message for
+                DeleteUserGroupMember RPC.
+            name (:class:`str`):
+                Required. The name of the user group member to delete.
+                Format:
+                organizations/{org_id}/userGroups/{user_group_id}/members/{member_id}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, marketingplatform_admin.DeleteUserGroupMemberRequest
+        ):
+            request = marketingplatform_admin.DeleteUserGroupMemberRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.delete_user_group_member
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+    async def get_admin_access_binding(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.GetAdminAccessBindingRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> resources.AdminAccessBinding:
+        r"""Looks up a single admin access binding.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_get_admin_access_binding():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = marketingplatform_admin_v1alpha.GetAdminAccessBindingRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_admin_access_binding(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.GetAdminAccessBindingRequest, dict]]):
+                The request object. Response message for
+                GetAdminAccessBinding RPC.
+            name (:class:`str`):
+                Required. The name of the AdminAccessBinding to
+                retrieve. Format:
+                organizations/{org_id}/adminAccessBindings/{admin_access_binding_id}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding:
+                A resource message representing a
+                binding to a set of roles.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, marketingplatform_admin.GetAdminAccessBindingRequest
+        ):
+            request = marketingplatform_admin.GetAdminAccessBindingRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_admin_access_binding
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_admin_access_bindings(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.ListAdminAccessBindingsRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListAdminAccessBindingsAsyncPager:
+        r"""Returns a list of admin access bindings in the
+        specified GMP organization.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_list_admin_access_bindings():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = marketingplatform_admin_v1alpha.ListAdminAccessBindingsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_admin_access_bindings(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.ListAdminAccessBindingsRequest, dict]]):
+                The request object. Request message for
+                ListAdminAccessBindings RPC.
+            parent (:class:`str`):
+                Required. The parent organization, which owns this
+                collection of Admin Access Bindings. Format:
+                organizations/{org_id}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.marketingplatform_admin_v1alpha.services.marketingplatform_admin_service.pagers.ListAdminAccessBindingsAsyncPager:
+                Response message for
+                ListAdminAccessBindings RPC.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, marketingplatform_admin.ListAdminAccessBindingsRequest
+        ):
+            request = marketingplatform_admin.ListAdminAccessBindingsRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_admin_access_bindings
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListAdminAccessBindingsAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def create_admin_access_binding(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.CreateAdminAccessBindingRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        admin_access_binding: Optional[resources.AdminAccessBinding] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> resources.AdminAccessBinding:
+        r"""Creates an admin access binding in the specified GMP
+        organization.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_create_admin_access_binding():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                admin_access_binding = marketingplatform_admin_v1alpha.AdminAccessBinding()
+                admin_access_binding.user_email = "user_email_value"
+
+                request = marketingplatform_admin_v1alpha.CreateAdminAccessBindingRequest(
+                    parent="parent_value",
+                    admin_access_binding=admin_access_binding,
+                )
+
+                # Make the request
+                response = await client.create_admin_access_binding(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.CreateAdminAccessBindingRequest, dict]]):
+                The request object. Request message for
+                CreateAdminAccessBinding RPC.
+            parent (:class:`str`):
+                Required. The parent organization, which owns this Admin
+                Access Binding. Format: organizations/{org_id}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            admin_access_binding (:class:`google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding`):
+                Required. The Admin Access Binding to create.
+
+                Only 'user_email' input is allowed.
+
+                This corresponds to the ``admin_access_binding`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding:
+                A resource message representing a
+                binding to a set of roles.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, admin_access_binding]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, marketingplatform_admin.CreateAdminAccessBindingRequest
+        ):
+            request = marketingplatform_admin.CreateAdminAccessBindingRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+        if admin_access_binding is not None:
+            request.admin_access_binding = admin_access_binding
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.create_admin_access_binding
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_admin_access_binding(
+        self,
+        request: Optional[
+            Union[marketingplatform_admin.UpdateAdminAccessBindingRequest, dict]
+        ] = None,
+        *,
+        admin_access_binding: Optional[resources.AdminAccessBinding] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> resources.AdminAccessBinding:
+        r"""Updates an admin access binding in the specified GMP
+        organization.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import marketingplatform_admin_v1alpha
+
+            async def sample_update_admin_access_binding():
+                # Create a client
+                client = marketingplatform_admin_v1alpha.MarketingplatformAdminServiceAsyncClient()
+
+                # Initialize request argument(s)
+                admin_access_binding = marketingplatform_admin_v1alpha.AdminAccessBinding()
+                admin_access_binding.user_email = "user_email_value"
+
+                request = marketingplatform_admin_v1alpha.UpdateAdminAccessBindingRequest(
+                    admin_access_binding=admin_access_binding,
+                )
+
+                # Make the request
+                response = await client.update_admin_access_binding(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.ads.marketingplatform_admin_v1alpha.types.UpdateAdminAccessBindingRequest, dict]]):
+                The request object. Request message for
+                UpdateAdminAccessBinding RPC.
+            admin_access_binding (:class:`google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding`):
+                Required. The AdminAccessBinding to
+                update.
+
+                This corresponds to the ``admin_access_binding`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Required. The list of fields to update. Field names must
+                be in snake case (for example, "field_to_update").
+                Omitted fields will not be updated. To replace the
+                entire entity, use one path with the string "\*" to
+                match all fields.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.marketingplatform_admin_v1alpha.types.AdminAccessBinding:
+                A resource message representing a
+                binding to a set of roles.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [admin_access_binding, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, marketingplatform_admin.UpdateAdminAccessBindingRequest
+        ):
+            request = marketingplatform_admin.UpdateAdminAccessBindingRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if admin_access_binding is not None:
+            request.admin_access_binding = admin_access_binding
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_admin_access_binding
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("admin_access_binding.name", request.admin_access_binding.name),)
             ),
         )
 

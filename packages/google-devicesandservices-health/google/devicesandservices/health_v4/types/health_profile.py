@@ -84,6 +84,8 @@ class Profile(proto.Message):
             string of 1-63 characters consisting of lowercase and
             uppercase letters, numbers, and hyphens. The literal ``me``
             can also be used to refer to the authenticated user.
+
+            This field is read-only.
         age (int):
             Optional. The age in years based on the
             user's birth date.
@@ -98,56 +100,48 @@ class Profile(proto.Message):
             Optional. The user's user configured walking stride length,
             in millimeters.
 
-            The user must consent to one of the following access scopes
-            to access this field:
+            The user must consent to the following access scope to
+            access this field:
 
             -
 
             ``https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly``
-
-            - ``https://www.googleapis.com/auth/googlehealth.activity_and_fitness``
 
             This field is a member of `oneof`_ ``_user_configured_walking_stride_length_mm``.
         user_configured_running_stride_length_mm (int):
             Optional. The user's user configured running stride length,
             in millimeters.
 
-            The user must consent to one of the following access scopes
-            to access this field:
+            The user must consent to the following access scope to
+            access this field:
 
             -
 
             ``https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly``
-
-            - ``https://www.googleapis.com/auth/googlehealth.activity_and_fitness``
 
             This field is a member of `oneof`_ ``_user_configured_running_stride_length_mm``.
         auto_walking_stride_length_mm (int):
             Output only. The automatically calculated walking stride
             length, in millimeters.
 
-            The user must consent to one of the following access scopes
-            to access this field:
+            The user must consent to the following access scope to
+            access this field:
 
             -
 
             ``https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly``
-
-            - ``https://www.googleapis.com/auth/googlehealth.activity_and_fitness``
 
             This field is a member of `oneof`_ ``_auto_walking_stride_length_mm``.
         auto_running_stride_length_mm (int):
             Output only. The automatically calculated running stride
             length, in millimeters.
 
-            The user must consent to one of the following access scopes
-            to access this field:
+            The user must consent to the following access scope to
+            access this field:
 
             -
 
             ``https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly``
-
-            - ``https://www.googleapis.com/auth/googlehealth.activity_and_fitness``
 
             This field is a member of `oneof`_ ``_auto_running_stride_length_mm``.
     """
@@ -460,6 +454,8 @@ class Settings(proto.Message):
             string of 1-63 characters consisting of lowercase and
             uppercase letters, numbers, and hyphens. The literal ``me``
             can also be used to refer to the authenticated user.
+
+            This field is read-only.
         auto_stride_enabled (bool):
             Optional. True if the user's stride length is
             determined automatically.

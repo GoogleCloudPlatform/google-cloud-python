@@ -184,7 +184,7 @@ class SpacesServiceTransport(abc.ABC):
             ),
             self.create_member: gapic_v1.method.wrap_method(
                 self.create_member,
-                default_timeout=60.0,
+                default_timeout=80.0,
                 client_info=client_info,
             ),
             self.get_member: gapic_v1.method.wrap_method(
@@ -199,6 +199,16 @@ class SpacesServiceTransport(abc.ABC):
             ),
             self.delete_member: gapic_v1.method.wrap_method(
                 self.delete_member,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.update_member: gapic_v1.method.wrap_method(
+                self.update_member,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.batch_update_members: gapic_v1.method.wrap_method(
+                self.batch_update_members,
                 default_timeout=60.0,
                 client_info=client_info,
             ),
@@ -290,6 +300,27 @@ class SpacesServiceTransport(abc.ABC):
     ) -> Callable[
         [service.DeleteMemberRequest],
         Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_member(
+        self,
+    ) -> Callable[
+        [service.UpdateMemberRequest],
+        Union[resource.Member, Awaitable[resource.Member]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_update_members(
+        self,
+    ) -> Callable[
+        [service.BatchUpdateMembersRequest],
+        Union[
+            service.BatchUpdateMembersResponse,
+            Awaitable[service.BatchUpdateMembersResponse],
+        ],
     ]:
         raise NotImplementedError()
 

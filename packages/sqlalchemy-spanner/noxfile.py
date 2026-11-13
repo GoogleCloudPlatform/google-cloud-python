@@ -21,6 +21,7 @@ import os
 import pathlib
 import re
 import shutil
+import uuid
 
 import nox
 
@@ -119,6 +120,7 @@ MIGRATION_TEST_DEPENDENCIES = [
 
 SQLALCHEMY_14_DEPENDENCIES = [
     "sqlalchemy>=1.4,<2.0",
+    "alembic<1.20.0",
 ]
 
 SQLALCHEMY_20_DEPENDENCIES = [
@@ -130,7 +132,7 @@ ALL_PYTHON = list(UNIT_TEST_PYTHON_VERSIONS)
 SYSTEM_TEST_PYTHON_VERSIONS = ["3.12"]
 SYSTEM_COMPLIANCE_MIGRATION_TEST_PYTHON_VERSIONS = ["3.12", "3.14"]
 DEFAULT_PYTHON_VERSION = "3.14"
-DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20 = "3.14"
+DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20 = "3.15"
 
 
 nox.options.sessions = [
@@ -138,12 +140,11 @@ nox.options.sessions = [
     "compliance_test_14",
     "compliance_test_20",
     "migration_test",
-    "_migration_test",
     "mockserver",
 ]
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20)
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def lint(session):
     """Run linters.
 
@@ -151,6 +152,17 @@ def lint(session):
     serious code quality issues.
     """
     session.install("flake8", RUFF_VERSION)
+
+    # 1. Check imports
+    session.run(
+        "ruff",
+        "check",
+        "--select",
+        "I",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+        "--line-length=88",
+        *LINT_PATHS,
+    )
 
     # 2. Check formatting
     session.run(
@@ -169,16 +181,17 @@ def lint(session):
     )
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20)
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def lint_setup_py(session):
     """Verify that setup.py is valid (including RST check)."""
     session.install("docutils", "pygments", "setuptools")
     session.run("python", "setup.py", "check", "--restructuredtext", "--strict")
 
 
-@nox.session(python=UNIT_TEST_PYTHON_VERSIONS[0])
+@nox.session(python=SYSTEM_COMPLIANCE_MIGRATION_TEST_PYTHON_VERSIONS[0])
 def compliance_test_14(session):
     """Run SQLAlchemy dialect compliance test suite."""
+    config_file = f"test_compliance_14_{session.python}_{uuid.uuid4().hex[:6]}.cfg"
 
     # Check the value of `RUN_COMPLIANCE_TESTS` env var. It defaults to true.
     if os.environ.get("RUN_COMPLIANCE_TESTS", "true") == "false":
@@ -191,34 +204,51 @@ def compliance_test_14(session):
             "Credentials or emulator host must be set via environment variable"
         )
 
-    session.install(*SYSTEM_TEST_STANDARD_DEPENDENCIES)
-    session.install(".[tracing]")
-    session.run(
-        "pip",
-        "install",
-        *SQLALCHEMY_14_DEPENDENCIES,
-        "--force-reinstall",
-    )
-    session.run("python", "create_test_database.py")
-    session.run(
-        "py.test",
-        "--cov=google.cloud.sqlalchemy_spanner",
-        "--cov=tests",
-        "--cov-append",
-        "--cov-config=.coveragerc",
-        "--cov-report=",
-        "--cov-fail-under=0",
-        "--asyncio-mode=auto",
-        "tests/test_suite_14.py",
-        *session.posargs,
-        # Silence SQLAlchemy 2.0 transition warnings for this 1.4 compatibility session.
-        env={"SQLALCHEMY_SILENCE_UBER_WARNING": "1"},
-    )
+    try:
+        session.install(*SYSTEM_TEST_STANDARD_DEPENDENCIES)
+        session.install(".[tracing]", *SQLALCHEMY_14_DEPENDENCIES)
+        session.run(
+            "python",
+            "create_test_database.py",
+            config_file,
+        )
+        config = configparser.ConfigParser()
+        config.read(config_file)
+        db_url = config.get("db", "default")
+        session.run(
+            "py.test",
+            f"--dburi={db_url}",
+            "--cov=google.cloud.sqlalchemy_spanner",
+            "--cov=tests",
+            "--cov-append",
+            "--cov-config=.coveragerc",
+            "--cov-report=",
+            "--cov-fail-under=0",
+            "--asyncio-mode=auto",
+            "tests/test_suite_14.py",
+            *session.posargs,
+            # Explicitly pass SQLALCHEMY_SPANNER_CONFIG in the subprocess environment
+            # to ensure test workers read the session-specific config file rather than
+            # falling back to a shared default test.cfg.
+            env={
+                "SQLALCHEMY_SILENCE_UBER_WARNING": "1",
+                "SQLALCHEMY_SPANNER_CONFIG": config_file,
+            },
+        )
+    finally:
+        if pathlib.Path(config_file).exists():
+            session.run(
+                "python",
+                "drop_test_database.py",
+                config_file,
+                success_codes=[0, 1],
+            )
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20)
 def compliance_test_20(session):
     """Run SQLAlchemy dialect compliance test suite."""
+    config_file = f"test_compliance_20_{session.python}_{uuid.uuid4().hex[:6]}.cfg"
 
     # Check the value of `RUN_COMPLIANCE_TESTS` env var. It defaults to true.
     if os.environ.get("RUN_COMPLIANCE_TESTS", "true") == "false":
@@ -232,24 +262,42 @@ def compliance_test_20(session):
             "Credentials or emulator host must be set via environment variable"
         )
 
-    session.install(*SYSTEM_TEST_STANDARD_DEPENDENCIES)
-    session.install("-e", ".", "--force-reinstall")
-    session.run("python", "create_test_database.py")
+    try:
+        session.install(*SYSTEM_TEST_STANDARD_DEPENDENCIES)
+        session.install("-e", ".", "--force-reinstall")
+        session.run(
+            "python",
+            "create_test_database.py",
+            config_file,
+        )
+        config = configparser.ConfigParser()
+        config.read(config_file)
+        db_url = config.get("db", "default")
 
-    session.install(*SQLALCHEMY_20_DEPENDENCIES)
+        session.install(*SQLALCHEMY_20_DEPENDENCIES)
 
-    session.run(
-        "py.test",
-        "--cov=google.cloud.sqlalchemy_spanner",
-        "--cov=tests",
-        "--cov-append",
-        "--cov-config=.coveragerc",
-        "--cov-report=",
-        "--cov-fail-under=0",
-        "--asyncio-mode=auto",
-        "tests/test_suite_20.py",
-        *session.posargs,
-    )
+        session.run(
+            "py.test",
+            f"--dburi={db_url}",
+            "--cov=google.cloud.sqlalchemy_spanner",
+            "--cov=tests",
+            "--cov-append",
+            "--cov-config=.coveragerc",
+            "--cov-report=",
+            "--cov-fail-under=0",
+            "--asyncio-mode=auto",
+            "tests/test_suite_20.py",
+            *session.posargs,
+            env={"SQLALCHEMY_SPANNER_CONFIG": config_file},
+        )
+    finally:
+        if pathlib.Path(config_file).exists():
+            session.run(
+                "python",
+                "drop_test_database.py",
+                config_file,
+                success_codes=[0, 1],
+            )
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20)
@@ -281,69 +329,95 @@ def mockserver(session):
     )
 
 
-@nox.session(python=SYSTEM_COMPLIANCE_MIGRATION_TEST_PYTHON_VERSIONS[0])
-def migration_test(session):
-    """Test migrations with SQLAlchemy v1.4 and Alembic"""
-    session.run(
-        "pip",
-        "install",
-        *SQLALCHEMY_14_DEPENDENCIES,
-        "--force-reinstall",
-    )
-    _migration_test(session)
+@nox.session
+@nox.parametrize(
+    ("python", "extra_dependencies"),
+    [
+        (
+            SYSTEM_COMPLIANCE_MIGRATION_TEST_PYTHON_VERSIONS[0],
+            SQLALCHEMY_14_DEPENDENCIES,
+        ),
+        (
+            DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20,
+            SQLALCHEMY_20_DEPENDENCIES,
+        ),
+    ],
+    ids=["14", "20"],
+)
+def migration_test(session, extra_dependencies):
+    """Test migrations with SQLAlchemy and Alembic."""
+    _run_migration_test(session, extra_dependencies=extra_dependencies)
 
 
-@nox.session(python=SYSTEM_COMPLIANCE_MIGRATION_TEST_PYTHON_VERSIONS[-1])
-def _migration_test(session):
+def _run_migration_test(session, extra_dependencies=()):
     """Migrate with SQLAlchemy and Alembic and check the result."""
     import glob
     import os
     import shutil
 
-    session.install(*MIGRATION_TEST_DEPENDENCIES)
-    session.install(".")
+    config_file = f"test_migration_{session.python}_{uuid.uuid4().hex[:6]}.cfg"
 
-    session.run("python", "create_test_database.py")
+    session.install(*MIGRATION_TEST_DEPENDENCIES, *extra_dependencies, ".")
 
-    config = configparser.ConfigParser()
-    if os.path.exists("test.cfg"):
-        config.read("test.cfg")
-    else:
-        config.read("setup.cfg")
-    db_url = config.get("db", "default")
+    try:
+        session.run(
+            "python",
+            "create_test_database.py",
+            config_file,
+        )
 
-    session.run("alembic", "init", "test_migration")
+        config = configparser.ConfigParser()
+        config_path = pathlib.Path(config_file)
+        if config_path.exists():
+            config.read(config_path)
+        else:
+            config.read("setup.cfg")
+        db_url = config.get("db", "default")
 
-    # setting testing configurations
-    os.remove("alembic.ini")
-    with open("alembic.ini", "w") as f:
-        f.write(ALEMBIC_CONF.format(db_url))
+        session.run("alembic", "init", "test_migration")
 
-    session.run("alembic", "revision", "-m", "migration_for_test")
-    files = glob.glob("test_migration/versions/*.py")
+        # setting testing configurations
+        alembic_ini = pathlib.Path("alembic.ini")
+        if alembic_ini.exists():
+            alembic_ini.unlink()
+        alembic_ini.write_text(ALEMBIC_CONF.format(db_url))
 
-    # updating the upgrade-script code
-    with open(files[0], "rb") as f:
-        script_code = f.read().decode()
+        session.run("alembic", "revision", "-m", "migration_for_test")
+        files = glob.glob("test_migration/versions/*.py")
 
-    script_code = script_code.replace(
-        """def upgrade() -> None:\n    pass""", UPGRADE_CODE
-    )
-    with open(files[0], "wb") as f:
-        f.write(script_code.encode())
+        # updating the upgrade-script code
+        with open(files[0], "rb") as f:
+            script_code = f.read().decode()
 
-    os.remove("test_migration/env.py")
-    shutil.copyfile("test_migration_env.py", "test_migration/env.py")
+        script_code = script_code.replace(
+            """def upgrade() -> None:\n    pass""", UPGRADE_CODE
+        )
+        with open(files[0], "wb") as f:
+            f.write(script_code.encode())
 
-    # running the test migration
-    session.run("alembic", "upgrade", "head")
+        env_py = pathlib.Path("test_migration/env.py")
+        if env_py.exists():
+            env_py.unlink()
+        shutil.copyfile("test_migration_env.py", env_py)
 
-    # clearing the migration data
-    os.remove("alembic.ini")
-    shutil.rmtree("test_migration")
-    session.run("python", "migration_test_cleanup.py", db_url)
-    if os.path.exists("test.cfg"):
-        os.remove("test.cfg")
+        # running the test migration
+        session.run("alembic", "upgrade", "head")
+
+    finally:
+        # clearing the migration data
+        if alembic_ini.exists():
+            alembic_ini.unlink()
+        test_migration_dir = pathlib.Path("test_migration")
+        if test_migration_dir.exists():
+            shutil.rmtree(test_migration_dir)
+
+        if config_path.exists():
+            session.run(
+                "python",
+                "drop_test_database.py",
+                config_file,
+                success_codes=[0, 1],
+            )
 
 
 @nox.session(python=ALL_PYTHON)
@@ -355,7 +429,9 @@ def unit(session, test_type):
         test_type == "mockserver"
         and session.python != DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20
     ):
-        session.skip("mockserver tests only run on python 3.14")
+        session.skip(
+            f"mockserver tests only run on python {DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20}"
+        )
 
     if test_type == "mockserver":
         mockserver(session)
@@ -388,21 +464,6 @@ def unit(session, test_type):
 )
 def system(session, test_type):
     """Run SQLAlchemy dialect system test suite."""
-
-    if not os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "") and not os.environ.get(
-        "SPANNER_EMULATOR_HOST", ""
-    ):
-        session.skip(
-            "Credentials or emulator host must be set via environment variable"
-        )
-
-    if os.environ.get("RUN_COMPLIANCE_TESTS", "true") == "false" and not os.environ.get(
-        "SPANNER_EMULATOR_HOST", ""
-    ):
-        session.skip("RUN_COMPLIANCE_TESTS is set to false, skipping")
-
-    if test_type == "system" and session.python not in SYSTEM_TEST_PYTHON_VERSIONS:
-        session.skip("Standard system tests configured to run exclusively on 3.12")
     if (
         test_type in ["compliance_14", "migration_14"]
         and session.python != SYSTEM_COMPLIANCE_MIGRATION_TEST_PYTHON_VERSIONS[0]
@@ -418,27 +479,76 @@ def system(session, test_type):
             f"SQLAlchemy 2.0-based tests configured to run exclusively on {DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20}"
         )
 
+    if test_type == "compliance_14":
+        return compliance_test_14(session)
+    elif test_type == "compliance_20":
+        return compliance_test_20(session)
+    elif test_type == "migration_14":
+        return _run_migration_test(
+            session, extra_dependencies=SQLALCHEMY_14_DEPENDENCIES
+        )
+    elif test_type == "migration_20":
+        return _run_migration_test(
+            session, extra_dependencies=SQLALCHEMY_20_DEPENDENCIES
+        )
+
+    config_file = f"test_{test_type}_{session.python}_{uuid.uuid4().hex[:6]}.cfg"
+
+    if not os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "") and not os.environ.get(
+        "SPANNER_EMULATOR_HOST", ""
+    ):
+        session.skip(
+            "Credentials or emulator host must be set via environment variable"
+        )
+
+    if os.environ.get("RUN_SYSTEM_TESTS", "true") == "false" and not os.environ.get(
+        "SPANNER_EMULATOR_HOST", ""
+    ):
+        session.skip("RUN_SYSTEM_TESTS is set to false, skipping")
+
+    if test_type == "system" and session.python not in SYSTEM_TEST_PYTHON_VERSIONS:
+        session.skip("Standard system tests configured to run exclusively on 3.12")
+
     try:
         if test_type == "system":
             session.install(*SYSTEM_TEST_STANDARD_DEPENDENCIES)
             session.install(".[tracing]")
             session.install(*SYSTEM_TEST_EXTERNAL_DEPENDENCIES)
-            session.run("python", "create_test_database.py")
+            session.run(
+                "python",
+                "create_test_database.py",
+                config_file,
+            )
+            config = configparser.ConfigParser()
+            config.read(config_file)
+            db_url = config.get("db", "default")
             session.install(*SQLALCHEMY_20_DEPENDENCIES)
             session.run(
-                "py.test", "--quiet", os.path.join("tests", "system"), *session.posargs
+                "py.test",
+                f"--dburi={db_url}",
+                "--quiet",
+                os.path.join("tests", "system"),
+                *session.posargs,
+                env={"SQLALCHEMY_SPANNER_CONFIG": config_file},
             )
-        elif test_type == "compliance_14":
-            compliance_test_14(session)
-        elif test_type == "compliance_20":
-            compliance_test_20(session)
-        elif test_type == "migration_14":
-            migration_test(session)
-        elif test_type == "migration_20":
-            _migration_test(session)
     finally:
-        if os.path.exists("test.cfg"):
-            session.run("python", "drop_test_database.py", success_codes=[0, 1])
+        if pathlib.Path(config_file).exists():
+            session.run(
+                "python",
+                "drop_test_database.py",
+                config_file,
+                success_codes=[0, 1],
+            )
+
+
+@nox.session(python=SYSTEM_COMPLIANCE_MIGRATION_TEST_PYTHON_VERSIONS)
+@nox.parametrize(
+    "test_type",
+    ["compliance_14", "compliance_20"],
+)
+def compliance(session, test_type):
+    """Run SQLAlchemy dialect compliance test suite."""
+    system(session, test_type=test_type)
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION)
@@ -464,16 +574,27 @@ def core_deps_from_source(session, protobuf_implementation):
     session.install(".")
 
     core_dependencies_from_source = [
-        "googleapis-common-protos @ git+https://github.com/googleapis/google-cloud-python#egg=googleapis-common-protos&subdirectory=packages/googleapis-common-protos",
-        "google-api-core @ git+https://github.com/googleapis/google-cloud-python#egg=google-api-core&subdirectory=packages/google-api-core",
-        "google-auth @ git+https://github.com/googleapis/google-cloud-python#egg=google-auth&subdirectory=packages/google-auth",
-        "grpc-google-iam-v1 @ git+https://github.com/googleapis/google-cloud-python#egg=grpc-google-iam-v1&subdirectory=packages/grpc-google-iam-v1",
-        "proto-plus @ git+https://github.com/googleapis/google-cloud-python#egg=proto-plus&subdirectory=packages/proto-plus",
+        "googleapis-common-protos",
+        "google-api-core",
+        "google-auth",
+        "grpc-google-iam-v1",
+        "proto-plus",
     ]
 
-    for dep in core_dependencies_from_source:
-        session.install(dep, "--no-deps", "--ignore-installed")
-        print(f"Installed {dep}")
+    deps_dir = next(
+        p / "packages" for p in CURRENT_DIRECTORY.parents if (p / "packages").is_dir()
+    )
+
+    local_paths = [
+        str(deps_dir / dep)
+        for dep in core_dependencies_from_source
+        if (deps_dir / dep).exists()
+    ]
+    if local_paths:
+        session.install(*local_paths, "--no-deps", "--ignore-installed")
+        print(
+            f"Installed {', '.join(core_dependencies_from_source)} locally from {deps_dir}"
+        )
 
     tests_path = os.path.join("tests", "unit")
     session.run(
@@ -513,9 +634,9 @@ def prerelease_deps(session, protobuf_implementation):
         "google-cloud-spanner",
     ]
 
-    deps_dir = CURRENT_DIRECTORY.parent
-    while deps_dir.name != "packages" and deps_dir.parent != deps_dir:
-        deps_dir = deps_dir.parent
+    deps_dir = next(
+        p / "packages" for p in CURRENT_DIRECTORY.parents if (p / "packages").is_dir()
+    )
 
     parsed_deps = {
         dep: re.match(r"^([a-zA-Z0-9_-]+)", dep).group(1) for dep in prerel_deps
@@ -570,7 +691,7 @@ def prerelease_deps(session, protobuf_implementation):
 def cover(session):
     """Run the final coverage report."""
     session.install("coverage", "pytest-cov")
-    if not os.path.exists(".coverage"):
+    if not pathlib.Path(".coverage").exists():
         session.skip("No coverage data found to report.")
     session.run("coverage", "report", "--show-missing", "--fail-under=0")
     session.run("coverage", "erase")

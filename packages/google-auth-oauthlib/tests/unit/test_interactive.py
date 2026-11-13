@@ -55,6 +55,33 @@ def test_find_open_port_returns_none(monkeypatch):
     socket_instance.listen.assert_has_calls(mock.call(1) for _ in range(100))
 
 
+def test_is_port_open_ipv6_checks(monkeypatch):
+    import errno
+
+    from google_auth_oauthlib import interactive as module_under_test
+
+    sock4 = mock.create_autospec(socket.socket, instance=True)
+    sock6 = mock.MagicMock()
+
+    def make_sock(family, type_):
+        if family == socket.AF_INET6:
+            return sock6
+        return sock4
+
+    monkeypatch.setattr(socket, "socket", make_sock)
+
+    sock6.__enter__.return_value.connect_ex.return_value = 0
+    assert not module_under_test.is_port_open(8085)
+
+    def mock_socket_fn(family, type_):
+        if family == socket.AF_INET6:
+            raise OSError(errno.EAFNOSUPPORT, "IPv6 disabled")
+        return sock4
+
+    monkeypatch.setattr(socket, "socket", mock_socket_fn)
+    assert module_under_test.is_port_open(8085)
+
+
 def test_get_user_credentials():
     from google_auth_oauthlib import flow
     from google_auth_oauthlib import interactive as module_under_test
@@ -86,9 +113,12 @@ def test_get_user_credentials_raises_connectionerror(monkeypatch):
     monkeypatch.setattr(module_under_test, "find_open_port", mock_find_open_port)
     mock_flow = mock.create_autospec(flow.InstalledAppFlow, instance=True)
 
-    with mock.patch(
-        "google_auth_oauthlib.flow.InstalledAppFlow", autospec=True
-    ) as mock_flow, pytest.raises(ConnectionError):
+    with (
+        mock.patch(
+            "google_auth_oauthlib.flow.InstalledAppFlow", autospec=True
+        ) as mock_flow,
+        pytest.raises(ConnectionError),
+    ):
         mock_flow.from_client_config.return_value = mock_flow
         module_under_test.get_user_credentials(
             ["scopes"], "some-client-id", "shh-secret"

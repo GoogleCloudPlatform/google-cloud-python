@@ -32,6 +32,7 @@ from google.apps.chat_v1.types import (
 )
 from google.apps.chat_v1.types import attachment as gc_attachment
 from google.apps.chat_v1.types import deletion_metadata as gc_deletion_metadata
+from google.apps.chat_v1.types import elements as gc_elements
 from google.apps.chat_v1.types import markup_syntax as gc_markup_syntax
 from google.apps.chat_v1.types import matched_url as gc_matched_url
 from google.apps.chat_v1.types import slash_command as gc_slash_command
@@ -58,6 +59,8 @@ __protobuf__ = proto.module(
         "DialogAction",
         "Dialog",
         "CardWithId",
+        "ReplaceMessageCardsRequest",
+        "ReplaceMessageCardsResponse",
         "SearchMessagesRequest",
         "SearchMessagesResponse",
         "SearchMessageResult",
@@ -90,9 +93,12 @@ class Message(proto.Message):
             Output only. The user who created the message. If your Chat
             app `authenticates as a
             user <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__,
-            the output populates the
+            the output only populates the
             `user <https://developers.google.com/workspace/chat/api/reference/rest/v1/User>`__
-            ``name`` and ``type``.
+            ``name`` and ``type`` fields for both internal and external
+            users, unless they are members of the space or have a prior
+            affinity, like a direct message (DM) conversation, with the
+            calling user.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
             Optional. Immutable. For spaces created in
             Chat, the time at which the message was created.
@@ -280,6 +286,25 @@ class Message(proto.Message):
             Creating a message with accessory widgets requires [app
             authentication]
             (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
+        elements (google.apps.chat_v1.types.Elements):
+            Optional. Additional message components, including inline
+            ``citations`` (where each citation is associated with a
+            specific portion of the message text) and ``cited_sources``
+            (which are general references used to generate the response
+            and are not directly linked to specific segments of the
+            text).
+
+            On input, provide ``elements`` when creating or updating a
+            message. On output, both ``citations`` and ``cited_sources``
+            are populated when reading a message that contains them.
+            Callers can read structured citation metadata from
+            ``elements``, while ``formatted_text`` also includes inline
+            citation tags or source links depending on
+            ``markup_syntax``.
+
+            These differ from ``annotations``, which are output-only and
+            offer supplementary information tied to message fragments or
+            the entire message text.
         markup_syntax (google.apps.chat_v1.types.MarkupSyntax):
             Optional. Specifies how the server interprets the message
             ``text`` field content.
@@ -415,6 +440,11 @@ class Message(proto.Message):
         proto.MESSAGE,
         number=44,
         message="AccessoryWidget",
+    )
+    elements: gc_elements.Elements = proto.Field(
+        proto.MESSAGE,
+        number=45,
+        message=gc_elements.Elements,
     )
     markup_syntax: gc_markup_syntax.MarkupSyntax = proto.Field(
         proto.ENUM,
@@ -921,10 +951,26 @@ class CreateMessageRequest(proto.Message):
             usage, see `Start or reply to a message
             thread <https://developers.google.com/workspace/chat/create-messages#create-message-thread>`__.
         request_id (str):
-            Optional. A unique request ID for this
-            message. Specifying an existing request ID
-            returns the message created with that ID instead
-            of creating a new message.
+            Optional. A unique ID for this request. A random UUID is
+            recommended. Specifying a request ID makes the request
+            idempotent, which ensures that multiple identical requests
+            with the same request ID result in only a single message
+            being created. Subsequent requests with the same request ID
+            return the existing message and do not update the message,
+            even if the requested details differ from the current state.
+
+            To use this field effectively:
+
+            - Ensure that subsequent requests are identical and use the
+              same authentication credentials as the original request.
+            - If a message was already created with the provided request
+              ID, the request returns that message. Note that the
+              returned message might not be fully populated; the API
+              echoes the message in your request with the
+              system-assigned resource names populated. To retrieve the
+              latest metadata for the message, call ``GetMessage``.
+            - Reusing an existing request ID with a different
+              authenticated user results in an error.
         message_reply_option (google.apps.chat_v1.types.CreateMessageRequest.MessageReplyOption):
             Optional. Specifies whether a message starts a thread or
             replies to one. Only supported in named spaces.
@@ -1299,6 +1345,8 @@ class CardWithId(proto.Message):
             message.
         card (google.apps.card_v1.types.Card):
             A card. Maximum size is 32 KB.
+        owner_user (google.apps.chat_v1.types.User):
+            Output only. The app that owns the card.
     """
 
     card_id: str = proto.Field(
@@ -1310,6 +1358,42 @@ class CardWithId(proto.Message):
         number=2,
         message=gac_card.Card,
     )
+    owner_user: user.User = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=user.User,
+    )
+
+
+class ReplaceMessageCardsRequest(proto.Message):
+    r"""Request message for ReplaceMessageCards API method.
+
+    Attributes:
+        name (str):
+            Required. The resource name of the message.
+
+            Format: ``spaces/{space}/messages/{message}``
+        cards_v2 (MutableSequence[google.apps.chat_v1.types.CardWithId]):
+            Optional. An array of
+            `cards <https://developers.google.com/workspace/chat/api/reference/rest/v1/cards>`__
+            to be included in the message. These cards will replace the
+            existing cards of the message. If empty, the original cards
+            included in the message will be cleared.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    cards_v2: MutableSequence["CardWithId"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="CardWithId",
+    )
+
+
+class ReplaceMessageCardsResponse(proto.Message):
+    r"""Response message for ReplaceMessageCards API."""
 
 
 class SearchMessagesRequest(proto.Message):
@@ -1354,6 +1438,11 @@ class SearchMessagesRequest(proto.Message):
               matches. For example, ``space.display_name:Project``
               searches for messages in the top five spaces that contain
               the word "Project" in their display names.
+            - ``space.space_type``: The type of the space. Only supports
+              ``=``. For example, ``space.space_type="DIRECT_MESSAGE"``
+              returns only messages from direct messages. The possible
+              values are ``DIRECT_MESSAGE``, ``GROUP_CHAT``, and
+              ``SPACE``.
             - ``attachment``: Supports the operator ``:*`` (has any) to
               check for the presence of attachments. If ``attachment:*``
               is specified, only messages that have at least one
@@ -1378,9 +1467,9 @@ class SearchMessagesRequest(proto.Message):
             - ``is_unread()``: Filters out messages that have been read
               by the calling user.
 
-            Using the ``space.display_name`` filter requires that the
-            calling credentials include one of the following
-            `authorization
+            Using the ``space.display_name`` or the ``space.space_type``
+            filters requires that the calling credentials include one of
+            the following `authorization
             scopes <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
 
             - ``https://www.googleapis.com/auth/chat.spaces.readonly``
@@ -1422,6 +1511,9 @@ class SearchMessagesRequest(proto.Message):
               ``space.display_name:Project OR space.display_name:Tasks``
               returns messages that are in spaces with display names
               containing either ``Project`` or ``Tasks`` or both.
+            - ``space.space_type`` supports only the ``OR`` operator,
+              for example:
+              ``space.space_type = "DIRECT_MESSAGE" OR space.space_type = "GROUP_CHAT"``.
             - ``annotations.user_mentions.user.name`` supports the
               operators ``AND`` and ``OR``, but not a mix of both. For
               example:

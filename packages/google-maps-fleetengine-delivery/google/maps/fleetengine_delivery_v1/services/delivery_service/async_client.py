@@ -457,7 +457,7 @@ class DeliveryServiceAsyncClient:
             self._client._transport.create_delivery_vehicle
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.parent)
@@ -584,7 +584,7 @@ class DeliveryServiceAsyncClient:
             self._client._transport.get_delivery_vehicle
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)
@@ -699,7 +699,7 @@ class DeliveryServiceAsyncClient:
             self._client._transport.delete_delivery_vehicle
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)
@@ -846,7 +846,7 @@ class DeliveryServiceAsyncClient:
             self._client._transport.update_delivery_vehicle
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.delivery_vehicle.name)
@@ -942,7 +942,7 @@ class DeliveryServiceAsyncClient:
             self._client._transport.batch_create_tasks
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.parent)
@@ -1129,7 +1129,7 @@ class DeliveryServiceAsyncClient:
             self._client._transport.create_task
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.parent)
@@ -1259,7 +1259,7 @@ class DeliveryServiceAsyncClient:
         # and friendly error handling.
         rpc = self._client._transport._wrapped_methods[self._client._transport.get_task]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)
@@ -1371,7 +1371,7 @@ class DeliveryServiceAsyncClient:
             self._client._transport.delete_task
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)
@@ -1533,7 +1533,7 @@ class DeliveryServiceAsyncClient:
             self._client._transport.update_task
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.task.name)
@@ -1655,7 +1655,7 @@ class DeliveryServiceAsyncClient:
             self._client._transport.list_tasks
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.parent)
@@ -1789,7 +1789,7 @@ class DeliveryServiceAsyncClient:
             self._client._transport.get_task_tracking_info
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)
@@ -1911,7 +1911,7 @@ class DeliveryServiceAsyncClient:
             self._client._transport.list_delivery_vehicles
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.parent)

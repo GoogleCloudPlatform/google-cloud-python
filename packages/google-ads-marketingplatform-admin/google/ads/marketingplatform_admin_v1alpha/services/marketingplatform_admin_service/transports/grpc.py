@@ -340,7 +340,7 @@ class MarketingplatformAdminServiceGrpcTransport(
     ]:
         r"""Return a callable for the get organization method over gRPC.
 
-        Lookup for a single organization.
+        Looks up a single organization.
 
         Returns:
             Callable[[~.GetOrganizationRequest],
@@ -570,7 +570,7 @@ class MarketingplatformAdminServiceGrpcTransport(
     ]:
         r"""Return a callable for the report property usage method over gRPC.
 
-        Get the usage and billing data for properties within
+        Gets the usage and billing data for properties within
         the organization for the specified month.
 
         Per direct client org, user needs to be
@@ -600,6 +600,416 @@ class MarketingplatformAdminServiceGrpcTransport(
                 response_deserializer=marketingplatform_admin.ReportPropertyUsageResponse.deserialize,
             )
         return self._stubs["report_property_usage"]
+
+    @property
+    def get_user_group(
+        self,
+    ) -> Callable[[marketingplatform_admin.GetUserGroupRequest], resources.UserGroup]:
+        r"""Return a callable for the get user group method over gRPC.
+
+        Looks up a single user group.
+
+        Returns:
+            Callable[[~.GetUserGroupRequest],
+                    ~.UserGroup]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_user_group" not in self._stubs:
+            self._stubs["get_user_group"] = self._logged_channel.unary_unary(
+                "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/GetUserGroup",
+                request_serializer=marketingplatform_admin.GetUserGroupRequest.serialize,
+                response_deserializer=resources.UserGroup.deserialize,
+            )
+        return self._stubs["get_user_group"]
+
+    @property
+    def list_user_groups(
+        self,
+    ) -> Callable[
+        [marketingplatform_admin.ListUserGroupsRequest],
+        marketingplatform_admin.ListUserGroupsResponse,
+    ]:
+        r"""Return a callable for the list user groups method over gRPC.
+
+        Returns a list of user groups in the specified GMP
+        organization.
+
+        Returns:
+            Callable[[~.ListUserGroupsRequest],
+                    ~.ListUserGroupsResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_user_groups" not in self._stubs:
+            self._stubs["list_user_groups"] = self._logged_channel.unary_unary(
+                "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/ListUserGroups",
+                request_serializer=marketingplatform_admin.ListUserGroupsRequest.serialize,
+                response_deserializer=marketingplatform_admin.ListUserGroupsResponse.deserialize,
+            )
+        return self._stubs["list_user_groups"]
+
+    @property
+    def create_user_group(
+        self,
+    ) -> Callable[
+        [marketingplatform_admin.CreateUserGroupRequest], resources.UserGroup
+    ]:
+        r"""Return a callable for the create user group method over gRPC.
+
+        Creates a user group in the specified GMP
+        organization.
+
+        Returns:
+            Callable[[~.CreateUserGroupRequest],
+                    ~.UserGroup]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_user_group" not in self._stubs:
+            self._stubs["create_user_group"] = self._logged_channel.unary_unary(
+                "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/CreateUserGroup",
+                request_serializer=marketingplatform_admin.CreateUserGroupRequest.serialize,
+                response_deserializer=resources.UserGroup.deserialize,
+            )
+        return self._stubs["create_user_group"]
+
+    @property
+    def update_user_group(
+        self,
+    ) -> Callable[
+        [marketingplatform_admin.UpdateUserGroupRequest], resources.UserGroup
+    ]:
+        r"""Return a callable for the update user group method over gRPC.
+
+        Updates a user group in the specified GMP
+        organization.
+
+        Returns:
+            Callable[[~.UpdateUserGroupRequest],
+                    ~.UserGroup]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_user_group" not in self._stubs:
+            self._stubs["update_user_group"] = self._logged_channel.unary_unary(
+                "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/UpdateUserGroup",
+                request_serializer=marketingplatform_admin.UpdateUserGroupRequest.serialize,
+                response_deserializer=resources.UserGroup.deserialize,
+            )
+        return self._stubs["update_user_group"]
+
+    @property
+    def delete_user_group(
+        self,
+    ) -> Callable[[marketingplatform_admin.DeleteUserGroupRequest], empty_pb2.Empty]:
+        r"""Return a callable for the delete user group method over gRPC.
+
+        Deletes a user group in the specified GMP
+        organization.
+
+        Returns:
+            Callable[[~.DeleteUserGroupRequest],
+                    ~.Empty]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_user_group" not in self._stubs:
+            self._stubs["delete_user_group"] = self._logged_channel.unary_unary(
+                "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/DeleteUserGroup",
+                request_serializer=marketingplatform_admin.DeleteUserGroupRequest.serialize,
+                response_deserializer=empty_pb2.Empty.FromString,
+            )
+        return self._stubs["delete_user_group"]
+
+    @property
+    def get_user_group_member(
+        self,
+    ) -> Callable[
+        [marketingplatform_admin.GetUserGroupMemberRequest], resources.UserGroupMember
+    ]:
+        r"""Return a callable for the get user group member method over gRPC.
+
+        Looks up a single user group member.
+
+        Returns:
+            Callable[[~.GetUserGroupMemberRequest],
+                    ~.UserGroupMember]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_user_group_member" not in self._stubs:
+            self._stubs["get_user_group_member"] = self._logged_channel.unary_unary(
+                "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/GetUserGroupMember",
+                request_serializer=marketingplatform_admin.GetUserGroupMemberRequest.serialize,
+                response_deserializer=resources.UserGroupMember.deserialize,
+            )
+        return self._stubs["get_user_group_member"]
+
+    @property
+    def list_user_group_members(
+        self,
+    ) -> Callable[
+        [marketingplatform_admin.ListUserGroupMembersRequest],
+        marketingplatform_admin.ListUserGroupMembersResponse,
+    ]:
+        r"""Return a callable for the list user group members method over gRPC.
+
+        Returns a list of members in the specified user
+        group.
+
+        Returns:
+            Callable[[~.ListUserGroupMembersRequest],
+                    ~.ListUserGroupMembersResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_user_group_members" not in self._stubs:
+            self._stubs["list_user_group_members"] = self._logged_channel.unary_unary(
+                "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/ListUserGroupMembers",
+                request_serializer=marketingplatform_admin.ListUserGroupMembersRequest.serialize,
+                response_deserializer=marketingplatform_admin.ListUserGroupMembersResponse.deserialize,
+            )
+        return self._stubs["list_user_group_members"]
+
+    @property
+    def create_user_group_member(
+        self,
+    ) -> Callable[
+        [marketingplatform_admin.CreateUserGroupMemberRequest],
+        resources.UserGroupMember,
+    ]:
+        r"""Return a callable for the create user group member method over gRPC.
+
+        Adds a member to the specified GMP user group.
+
+        Returns:
+            Callable[[~.CreateUserGroupMemberRequest],
+                    ~.UserGroupMember]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_user_group_member" not in self._stubs:
+            self._stubs["create_user_group_member"] = self._logged_channel.unary_unary(
+                "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/CreateUserGroupMember",
+                request_serializer=marketingplatform_admin.CreateUserGroupMemberRequest.serialize,
+                response_deserializer=resources.UserGroupMember.deserialize,
+            )
+        return self._stubs["create_user_group_member"]
+
+    @property
+    def update_user_group_member(
+        self,
+    ) -> Callable[
+        [marketingplatform_admin.UpdateUserGroupMemberRequest],
+        resources.UserGroupMember,
+    ]:
+        r"""Return a callable for the update user group member method over gRPC.
+
+        Updates a member in the specified GMP user group.
+
+        Returns:
+            Callable[[~.UpdateUserGroupMemberRequest],
+                    ~.UserGroupMember]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_user_group_member" not in self._stubs:
+            self._stubs["update_user_group_member"] = self._logged_channel.unary_unary(
+                "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/UpdateUserGroupMember",
+                request_serializer=marketingplatform_admin.UpdateUserGroupMemberRequest.serialize,
+                response_deserializer=resources.UserGroupMember.deserialize,
+            )
+        return self._stubs["update_user_group_member"]
+
+    @property
+    def delete_user_group_member(
+        self,
+    ) -> Callable[
+        [marketingplatform_admin.DeleteUserGroupMemberRequest], empty_pb2.Empty
+    ]:
+        r"""Return a callable for the delete user group member method over gRPC.
+
+        Deletes a member in the specified GMP user group.
+
+        Returns:
+            Callable[[~.DeleteUserGroupMemberRequest],
+                    ~.Empty]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_user_group_member" not in self._stubs:
+            self._stubs["delete_user_group_member"] = self._logged_channel.unary_unary(
+                "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/DeleteUserGroupMember",
+                request_serializer=marketingplatform_admin.DeleteUserGroupMemberRequest.serialize,
+                response_deserializer=empty_pb2.Empty.FromString,
+            )
+        return self._stubs["delete_user_group_member"]
+
+    @property
+    def get_admin_access_binding(
+        self,
+    ) -> Callable[
+        [marketingplatform_admin.GetAdminAccessBindingRequest],
+        resources.AdminAccessBinding,
+    ]:
+        r"""Return a callable for the get admin access binding method over gRPC.
+
+        Looks up a single admin access binding.
+
+        Returns:
+            Callable[[~.GetAdminAccessBindingRequest],
+                    ~.AdminAccessBinding]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_admin_access_binding" not in self._stubs:
+            self._stubs["get_admin_access_binding"] = self._logged_channel.unary_unary(
+                "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/GetAdminAccessBinding",
+                request_serializer=marketingplatform_admin.GetAdminAccessBindingRequest.serialize,
+                response_deserializer=resources.AdminAccessBinding.deserialize,
+            )
+        return self._stubs["get_admin_access_binding"]
+
+    @property
+    def list_admin_access_bindings(
+        self,
+    ) -> Callable[
+        [marketingplatform_admin.ListAdminAccessBindingsRequest],
+        marketingplatform_admin.ListAdminAccessBindingsResponse,
+    ]:
+        r"""Return a callable for the list admin access bindings method over gRPC.
+
+        Returns a list of admin access bindings in the
+        specified GMP organization.
+
+        Returns:
+            Callable[[~.ListAdminAccessBindingsRequest],
+                    ~.ListAdminAccessBindingsResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_admin_access_bindings" not in self._stubs:
+            self._stubs["list_admin_access_bindings"] = (
+                self._logged_channel.unary_unary(
+                    "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/ListAdminAccessBindings",
+                    request_serializer=marketingplatform_admin.ListAdminAccessBindingsRequest.serialize,
+                    response_deserializer=marketingplatform_admin.ListAdminAccessBindingsResponse.deserialize,
+                )
+            )
+        return self._stubs["list_admin_access_bindings"]
+
+    @property
+    def create_admin_access_binding(
+        self,
+    ) -> Callable[
+        [marketingplatform_admin.CreateAdminAccessBindingRequest],
+        resources.AdminAccessBinding,
+    ]:
+        r"""Return a callable for the create admin access binding method over gRPC.
+
+        Creates an admin access binding in the specified GMP
+        organization.
+
+        Returns:
+            Callable[[~.CreateAdminAccessBindingRequest],
+                    ~.AdminAccessBinding]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_admin_access_binding" not in self._stubs:
+            self._stubs["create_admin_access_binding"] = (
+                self._logged_channel.unary_unary(
+                    "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/CreateAdminAccessBinding",
+                    request_serializer=marketingplatform_admin.CreateAdminAccessBindingRequest.serialize,
+                    response_deserializer=resources.AdminAccessBinding.deserialize,
+                )
+            )
+        return self._stubs["create_admin_access_binding"]
+
+    @property
+    def update_admin_access_binding(
+        self,
+    ) -> Callable[
+        [marketingplatform_admin.UpdateAdminAccessBindingRequest],
+        resources.AdminAccessBinding,
+    ]:
+        r"""Return a callable for the update admin access binding method over gRPC.
+
+        Updates an admin access binding in the specified GMP
+        organization.
+
+        Returns:
+            Callable[[~.UpdateAdminAccessBindingRequest],
+                    ~.AdminAccessBinding]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_admin_access_binding" not in self._stubs:
+            self._stubs["update_admin_access_binding"] = (
+                self._logged_channel.unary_unary(
+                    "/google.marketingplatform.admin.v1alpha.MarketingplatformAdminService/UpdateAdminAccessBinding",
+                    request_serializer=marketingplatform_admin.UpdateAdminAccessBindingRequest.serialize,
+                    response_deserializer=resources.AdminAccessBinding.deserialize,
+                )
+            )
+        return self._stubs["update_admin_access_binding"]
 
     def close(self):
         self._logged_channel.close()

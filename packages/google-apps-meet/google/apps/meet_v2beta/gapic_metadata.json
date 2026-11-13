@@ -30,6 +30,11 @@
                 "get_recording"
               ]
             },
+            "GetSmartNote": {
+              "methods": [
+                "get_smart_note"
+              ]
+            },
             "GetTranscript": {
               "methods": [
                 "get_transcript"
@@ -58,6 +63,11 @@
             "ListRecordings": {
               "methods": [
                 "list_recordings"
+              ]
+            },
+            "ListSmartNotes": {
+              "methods": [
+                "list_smart_notes"
               ]
             },
             "ListTranscriptEntries": {
@@ -95,6 +105,11 @@
                 "get_recording"
               ]
             },
+            "GetSmartNote": {
+              "methods": [
+                "get_smart_note"
+              ]
+            },
             "GetTranscript": {
               "methods": [
                 "get_transcript"
@@ -123,6 +138,11 @@
             "ListRecordings": {
               "methods": [
                 "list_recordings"
+              ]
+            },
+            "ListSmartNotes": {
+              "methods": [
+                "list_smart_notes"
               ]
             },
             "ListTranscriptEntries": {
@@ -160,6 +180,11 @@
                 "get_recording"
               ]
             },
+            "GetSmartNote": {
+              "methods": [
+                "get_smart_note"
+              ]
+            },
             "GetTranscript": {
               "methods": [
                 "get_transcript"
@@ -190,6 +215,11 @@
                 "list_recordings"
               ]
             },
+            "ListSmartNotes": {
+              "methods": [
+                "list_smart_notes"
+              ]
+            },
             "ListTranscriptEntries": {
               "methods": [
                 "list_transcript_entries"
@@ -209,6 +239,11 @@
         "grpc": {
           "libraryClient": "SpacesServiceClient",
           "rpcs": {
+            "BatchUpdateMembers": {
+              "methods": [
+                "batch_update_members"
+              ]
+            },
             "ConnectActiveConference": {
               "methods": [
                 "connect_active_conference"
@@ -247,6 +282,11 @@
             "ListMembers": {
               "methods": [
                 "list_members"
+              ]
+            },
+            "UpdateMember": {
+              "methods": [
+                "update_member"
               ]
             },
             "UpdateSpace": {
@@ -259,6 +299,11 @@
         "grpc-async": {
           "libraryClient": "SpacesServiceAsyncClient",
           "rpcs": {
+            "BatchUpdateMembers": {
+              "methods": [
+                "batch_update_members"
+              ]
+            },
             "ConnectActiveConference": {
               "methods": [
                 "connect_active_conference"
@@ -297,6 +342,11 @@
             "ListMembers": {
               "methods": [
                 "list_members"
+              ]
+            },
+            "UpdateMember": {
+              "methods": [
+                "update_member"
               ]
             },
             "UpdateSpace": {
@@ -309,6 +359,11 @@
         "rest": {
           "libraryClient": "SpacesServiceClient",
           "rpcs": {
+            "BatchUpdateMembers": {
+              "methods": [
+                "batch_update_members"
+              ]
+            },
             "ConnectActiveConference": {
               "methods": [
                 "connect_active_conference"
@@ -347,6 +402,11 @@
             "ListMembers": {
               "methods": [
                 "list_members"
+              ]
+            },
+            "UpdateMember": {
+              "methods": [
+                "update_member"
               ]
             },
             "UpdateSpace": {

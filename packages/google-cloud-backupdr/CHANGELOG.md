@@ -4,6 +4,27 @@
 
 [1]: https://pypi.org/project/google-cloud-backupdr/#history
 
+## [0.10.4](https://github.com/googleapis/google-cloud-python/compare/google-cloud-backupdr-v0.10.3...google-cloud-backupdr-v0.10.4) (2026-11-05)
+
+
+### Features
+
+* update API sources and regenerate ([#18986](https://github.com/googleapis/google-cloud-python/issues/18986)) ([8c0f333](https://github.com/googleapis/google-cloud-python/commit/8c0f3331260667eb64c70db80a7ab5c52b8ccf36))
+
+## [0.10.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-backupdr-v0.10.2...google-cloud-backupdr-v0.10.3) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [0.10.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-backupdr-v0.10.1...google-cloud-backupdr-v0.10.2) (2026-09-17)
+
+
+### Features
+
+* **google/cloud/backupdr/v1beta:** add google-cloud-backupdr ([#18399](https://github.com/googleapis/google-cloud-python/issues/18399)) ([91b7ae7](https://github.com/googleapis/google-cloud-python/commit/91b7ae7ef0aaa626b58b0d00e1c7d4a247c7c126))
+
 ## [0.10.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-backupdr-v0.10.0...google-cloud-backupdr-v0.10.1) (2026-08-06)
 
 

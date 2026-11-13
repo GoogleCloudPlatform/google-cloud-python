@@ -19,8 +19,8 @@ from __future__ import absolute_import
 import http.client
 import logging
 
-from google.auth import exceptions, transport
 import httplib2
+from google.auth import exceptions, transport
 
 _LOGGER = logging.getLogger(__name__)
 # Properties present in file-like streams / buffers.
@@ -192,7 +192,7 @@ class AuthorizedHttp(object):
         headers=None,
         redirections=httplib2.DEFAULT_MAX_REDIRECTS,
         connection_type=None,
-        **kwargs
+        **kwargs,
     ):
         """Implementation of httplib2's Http.request."""
 
@@ -218,7 +218,7 @@ class AuthorizedHttp(object):
             headers=request_headers,
             redirections=redirections,
             connection_type=connection_type,
-            **kwargs
+            **kwargs,
         )
 
         # If the response indicated that the credentials needed to be
@@ -252,7 +252,7 @@ class AuthorizedHttp(object):
                 redirections=redirections,
                 connection_type=connection_type,
                 _credential_refresh_attempt=_credential_refresh_attempt + 1,
-                **kwargs
+                **kwargs,
             )
 
         return response, content

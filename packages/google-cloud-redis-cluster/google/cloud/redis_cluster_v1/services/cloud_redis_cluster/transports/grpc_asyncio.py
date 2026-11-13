@@ -410,6 +410,44 @@ class CloudRedisClusterGrpcAsyncIOTransport(CloudRedisClusterTransport):
         return self._stubs["list_clusters"]
 
     @property
+    def list_acl_policies(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.ListAclPoliciesRequest],
+        Awaitable[cloud_redis_cluster.ListAclPoliciesResponse],
+    ]:
+        r"""Return a callable for the list acl policies method over gRPC.
+
+        Lists all ACL policies owned by a project in either the
+        specified location (region) or all locations.
+
+        The location should have the following format:
+
+        - ``projects/{project_id}/locations/{location_id}``
+
+        If ``location_id`` is specified as ``-`` (wildcard), then all
+        regions available to the project are queried, and the results
+        are aggregated.
+
+        Returns:
+            Callable[[~.ListAclPoliciesRequest],
+                    Awaitable[~.ListAclPoliciesResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_acl_policies" not in self._stubs:
+            self._stubs["list_acl_policies"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/ListAclPolicies",
+                request_serializer=cloud_redis_cluster.ListAclPoliciesRequest.serialize,
+                response_deserializer=cloud_redis_cluster.ListAclPoliciesResponse.deserialize,
+            )
+        return self._stubs["list_acl_policies"]
+
+    @property
     def get_cluster(
         self,
     ) -> Callable[
@@ -436,6 +474,36 @@ class CloudRedisClusterGrpcAsyncIOTransport(CloudRedisClusterTransport):
                 response_deserializer=cloud_redis_cluster.Cluster.deserialize,
             )
         return self._stubs["get_cluster"]
+
+    @property
+    def get_acl_policy(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.GetAclPolicyRequest],
+        Awaitable[cloud_redis_cluster.AclPolicy],
+    ]:
+        r"""Return a callable for the get acl policy method over gRPC.
+
+        Gets the details of a specific Redis Cluster ACL
+        policy.
+
+        Returns:
+            Callable[[~.GetAclPolicyRequest],
+                    Awaitable[~.AclPolicy]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_acl_policy" not in self._stubs:
+            self._stubs["get_acl_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/GetAclPolicy",
+                request_serializer=cloud_redis_cluster.GetAclPolicyRequest.serialize,
+                response_deserializer=cloud_redis_cluster.AclPolicy.deserialize,
+            )
+        return self._stubs["get_acl_policy"]
 
     @property
     def update_cluster(
@@ -471,6 +539,46 @@ class CloudRedisClusterGrpcAsyncIOTransport(CloudRedisClusterTransport):
         return self._stubs["update_cluster"]
 
     @property
+    def update_acl_policy(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.UpdateAclPolicyRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the update acl policy method over gRPC.
+
+        Updates the ACL policy.
+
+        The operation applies the updated ACL policy to all of
+        the linked clusters. If Memorystore can apply the policy
+        to all clusters, then the operation returns a SUCCESS
+        status. If Memorystore can't apply the policy to all
+        clusters, then to ensure eventual consistency,
+        Memorystore uses reconciliation to apply the policy to
+        the failed clusters.
+
+        Completed longrunning.Operation will contain the new ACL
+        policy object in the response field.
+
+        Returns:
+            Callable[[~.UpdateAclPolicyRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_acl_policy" not in self._stubs:
+            self._stubs["update_acl_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/UpdateAclPolicy",
+                request_serializer=cloud_redis_cluster.UpdateAclPolicyRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["update_acl_policy"]
+
+    @property
     def delete_cluster(
         self,
     ) -> Callable[
@@ -498,6 +606,96 @@ class CloudRedisClusterGrpcAsyncIOTransport(CloudRedisClusterTransport):
                 response_deserializer=operations_pb2.Operation.FromString,
             )
         return self._stubs["delete_cluster"]
+
+    @property
+    def delete_acl_policy(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.DeleteAclPolicyRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the delete acl policy method over gRPC.
+
+        Deletes a specific ACL policy. This action will
+        delete the ACL policy and all the rules associated with
+        it. An ACL policy cannot be deleted if it is attached to
+        a cluster.
+
+        Returns:
+            Callable[[~.DeleteAclPolicyRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_acl_policy" not in self._stubs:
+            self._stubs["delete_acl_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/DeleteAclPolicy",
+                request_serializer=cloud_redis_cluster.DeleteAclPolicyRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["delete_acl_policy"]
+
+    @property
+    def get_acl_policy_revision(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.GetAclPolicyRevisionRequest],
+        Awaitable[cloud_redis_cluster.AclPolicyRevision],
+    ]:
+        r"""Return a callable for the get acl policy revision method over gRPC.
+
+        Gets details of a specific ACL policy revision.
+
+        Returns:
+            Callable[[~.GetAclPolicyRevisionRequest],
+                    Awaitable[~.AclPolicyRevision]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_acl_policy_revision" not in self._stubs:
+            self._stubs["get_acl_policy_revision"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/GetAclPolicyRevision",
+                request_serializer=cloud_redis_cluster.GetAclPolicyRevisionRequest.serialize,
+                response_deserializer=cloud_redis_cluster.AclPolicyRevision.deserialize,
+            )
+        return self._stubs["get_acl_policy_revision"]
+
+    @property
+    def list_acl_policy_revisions(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.ListAclPolicyRevisionsRequest],
+        Awaitable[cloud_redis_cluster.ListAclPolicyRevisionsResponse],
+    ]:
+        r"""Return a callable for the list acl policy revisions method over gRPC.
+
+        Lists all ACL policy revisions in a given ACL policy.
+
+        Returns:
+            Callable[[~.ListAclPolicyRevisionsRequest],
+                    Awaitable[~.ListAclPolicyRevisionsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_acl_policy_revisions" not in self._stubs:
+            self._stubs["list_acl_policy_revisions"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/ListAclPolicyRevisions",
+                request_serializer=cloud_redis_cluster.ListAclPolicyRevisionsRequest.serialize,
+                response_deserializer=cloud_redis_cluster.ListAclPolicyRevisionsResponse.deserialize,
+            )
+        return self._stubs["list_acl_policy_revisions"]
 
     @property
     def create_cluster(
@@ -535,6 +733,37 @@ class CloudRedisClusterGrpcAsyncIOTransport(CloudRedisClusterTransport):
                 response_deserializer=operations_pb2.Operation.FromString,
             )
         return self._stubs["create_cluster"]
+
+    @property
+    def create_acl_policy(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.CreateAclPolicyRequest],
+        Awaitable[cloud_redis_cluster.AclPolicy],
+    ]:
+        r"""Return a callable for the create acl policy method over gRPC.
+
+        Creates an ACL policy.
+        The creation is executed synchronously and the policy is
+        available for use immediately after the RPC returns.
+
+        Returns:
+            Callable[[~.CreateAclPolicyRequest],
+                    Awaitable[~.AclPolicy]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_acl_policy" not in self._stubs:
+            self._stubs["create_acl_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/CreateAclPolicy",
+                request_serializer=cloud_redis_cluster.CreateAclPolicyRequest.serialize,
+                response_deserializer=cloud_redis_cluster.AclPolicy.deserialize,
+            )
+        return self._stubs["create_acl_policy"]
 
     @property
     def get_cluster_certificate_authority(
@@ -852,6 +1081,245 @@ class CloudRedisClusterGrpcAsyncIOTransport(CloudRedisClusterTransport):
             )
         return self._stubs["backup_cluster"]
 
+    @property
+    def list_token_auth_users(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.ListTokenAuthUsersRequest],
+        Awaitable[cloud_redis_cluster.ListTokenAuthUsersResponse],
+    ]:
+        r"""Return a callable for the list token auth users method over gRPC.
+
+        Lists all the token auth users for a token based auth
+        enabled cluster.
+
+        Returns:
+            Callable[[~.ListTokenAuthUsersRequest],
+                    Awaitable[~.ListTokenAuthUsersResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_token_auth_users" not in self._stubs:
+            self._stubs["list_token_auth_users"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/ListTokenAuthUsers",
+                request_serializer=cloud_redis_cluster.ListTokenAuthUsersRequest.serialize,
+                response_deserializer=cloud_redis_cluster.ListTokenAuthUsersResponse.deserialize,
+            )
+        return self._stubs["list_token_auth_users"]
+
+    @property
+    def get_token_auth_user(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.GetTokenAuthUserRequest],
+        Awaitable[cloud_redis_cluster.TokenAuthUser],
+    ]:
+        r"""Return a callable for the get token auth user method over gRPC.
+
+        Gets a specific token auth user for a basic auth
+        enabled cluster.
+
+        Returns:
+            Callable[[~.GetTokenAuthUserRequest],
+                    Awaitable[~.TokenAuthUser]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_token_auth_user" not in self._stubs:
+            self._stubs["get_token_auth_user"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/GetTokenAuthUser",
+                request_serializer=cloud_redis_cluster.GetTokenAuthUserRequest.serialize,
+                response_deserializer=cloud_redis_cluster.TokenAuthUser.deserialize,
+            )
+        return self._stubs["get_token_auth_user"]
+
+    @property
+    def list_auth_tokens(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.ListAuthTokensRequest],
+        Awaitable[cloud_redis_cluster.ListAuthTokensResponse],
+    ]:
+        r"""Return a callable for the list auth tokens method over gRPC.
+
+        Lists all the auth tokens for a specific token auth
+        user.
+
+        Returns:
+            Callable[[~.ListAuthTokensRequest],
+                    Awaitable[~.ListAuthTokensResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_auth_tokens" not in self._stubs:
+            self._stubs["list_auth_tokens"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/ListAuthTokens",
+                request_serializer=cloud_redis_cluster.ListAuthTokensRequest.serialize,
+                response_deserializer=cloud_redis_cluster.ListAuthTokensResponse.deserialize,
+            )
+        return self._stubs["list_auth_tokens"]
+
+    @property
+    def get_auth_token(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.GetAuthTokenRequest],
+        Awaitable[cloud_redis_cluster.AuthToken],
+    ]:
+        r"""Return a callable for the get auth token method over gRPC.
+
+        Gets a specific auth token for a specific token auth
+        user.
+
+        Returns:
+            Callable[[~.GetAuthTokenRequest],
+                    Awaitable[~.AuthToken]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_auth_token" not in self._stubs:
+            self._stubs["get_auth_token"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/GetAuthToken",
+                request_serializer=cloud_redis_cluster.GetAuthTokenRequest.serialize,
+                response_deserializer=cloud_redis_cluster.AuthToken.deserialize,
+            )
+        return self._stubs["get_auth_token"]
+
+    @property
+    def add_token_auth_user(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.AddTokenAuthUserRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the add token auth user method over gRPC.
+
+        Adds a token auth user for a token based auth enabled
+        cluster.
+
+        Returns:
+            Callable[[~.AddTokenAuthUserRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "add_token_auth_user" not in self._stubs:
+            self._stubs["add_token_auth_user"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/AddTokenAuthUser",
+                request_serializer=cloud_redis_cluster.AddTokenAuthUserRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["add_token_auth_user"]
+
+    @property
+    def delete_token_auth_user(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.DeleteTokenAuthUserRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the delete token auth user method over gRPC.
+
+        Deletes a token auth user for a token based auth
+        enabled cluster.
+
+        Returns:
+            Callable[[~.DeleteTokenAuthUserRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_token_auth_user" not in self._stubs:
+            self._stubs["delete_token_auth_user"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/DeleteTokenAuthUser",
+                request_serializer=cloud_redis_cluster.DeleteTokenAuthUserRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["delete_token_auth_user"]
+
+    @property
+    def add_auth_token(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.AddAuthTokenRequest], Awaitable[operations_pb2.Operation]
+    ]:
+        r"""Return a callable for the add auth token method over gRPC.
+
+        Adds a auth token for a user of a token based auth
+        enabled cluster.
+
+        Returns:
+            Callable[[~.AddAuthTokenRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "add_auth_token" not in self._stubs:
+            self._stubs["add_auth_token"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/AddAuthToken",
+                request_serializer=cloud_redis_cluster.AddAuthTokenRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["add_auth_token"]
+
+    @property
+    def delete_auth_token(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.DeleteAuthTokenRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the delete auth token method over gRPC.
+
+        Removes a auth token for a user of a token based auth
+        enabled instance.
+
+        Returns:
+            Callable[[~.DeleteAuthTokenRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_auth_token" not in self._stubs:
+            self._stubs["delete_auth_token"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1.CloudRedisCluster/DeleteAuthToken",
+                request_serializer=cloud_redis_cluster.DeleteAuthTokenRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["delete_auth_token"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -860,8 +1328,18 @@ class CloudRedisClusterGrpcAsyncIOTransport(CloudRedisClusterTransport):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.list_acl_policies: self._wrap_method(
+                self.list_acl_policies,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.get_cluster: self._wrap_method(
                 self.get_cluster,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.get_acl_policy: self._wrap_method(
+                self.get_acl_policy,
                 default_timeout=600.0,
                 client_info=client_info,
             ),
@@ -870,13 +1348,38 @@ class CloudRedisClusterGrpcAsyncIOTransport(CloudRedisClusterTransport):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.update_acl_policy: self._wrap_method(
+                self.update_acl_policy,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.delete_cluster: self._wrap_method(
                 self.delete_cluster,
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.delete_acl_policy: self._wrap_method(
+                self.delete_acl_policy,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.get_acl_policy_revision: self._wrap_method(
+                self.get_acl_policy_revision,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_acl_policy_revisions: self._wrap_method(
+                self.list_acl_policy_revisions,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.create_cluster: self._wrap_method(
                 self.create_cluster,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.create_acl_policy: self._wrap_method(
+                self.create_acl_policy,
                 default_timeout=600.0,
                 client_info=client_info,
             ),
@@ -928,6 +1431,46 @@ class CloudRedisClusterGrpcAsyncIOTransport(CloudRedisClusterTransport):
             self.backup_cluster: self._wrap_method(
                 self.backup_cluster,
                 default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.list_token_auth_users: self._wrap_method(
+                self.list_token_auth_users,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_token_auth_user: self._wrap_method(
+                self.get_token_auth_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_auth_tokens: self._wrap_method(
+                self.list_auth_tokens,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_auth_token: self._wrap_method(
+                self.get_auth_token,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.add_token_auth_user: self._wrap_method(
+                self.add_token_auth_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_token_auth_user: self._wrap_method(
+                self.delete_token_auth_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.add_auth_token: self._wrap_method(
+                self.add_auth_token,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_auth_token: self._wrap_method(
+                self.delete_auth_token,
+                default_timeout=None,
                 client_info=client_info,
             ),
             self.get_location: self._wrap_method(

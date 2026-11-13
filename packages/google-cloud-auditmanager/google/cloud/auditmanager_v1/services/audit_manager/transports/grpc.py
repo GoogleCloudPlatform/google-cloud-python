@@ -345,6 +345,119 @@ class AuditManagerGrpcTransport(AuditManagerTransport):
         return self._operations_client
 
     @property
+    def create_audit_schedule(
+        self,
+    ) -> Callable[
+        [auditmanager.CreateAuditScheduleRequest], auditmanager.AuditSchedule
+    ]:
+        r"""Return a callable for the create audit schedule method over gRPC.
+
+        Creates a new audit schedule in a given project and
+        location.
+
+        Returns:
+            Callable[[~.CreateAuditScheduleRequest],
+                    ~.AuditSchedule]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_audit_schedule" not in self._stubs:
+            self._stubs["create_audit_schedule"] = self._logged_channel.unary_unary(
+                "/google.cloud.auditmanager.v1.AuditManager/CreateAuditSchedule",
+                request_serializer=auditmanager.CreateAuditScheduleRequest.serialize,
+                response_deserializer=auditmanager.AuditSchedule.deserialize,
+            )
+        return self._stubs["create_audit_schedule"]
+
+    @property
+    def update_audit_schedule(
+        self,
+    ) -> Callable[
+        [auditmanager.UpdateAuditScheduleRequest], auditmanager.AuditSchedule
+    ]:
+        r"""Return a callable for the update audit schedule method over gRPC.
+
+        Updates an existing audit schedule.
+
+        Returns:
+            Callable[[~.UpdateAuditScheduleRequest],
+                    ~.AuditSchedule]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_audit_schedule" not in self._stubs:
+            self._stubs["update_audit_schedule"] = self._logged_channel.unary_unary(
+                "/google.cloud.auditmanager.v1.AuditManager/UpdateAuditSchedule",
+                request_serializer=auditmanager.UpdateAuditScheduleRequest.serialize,
+                response_deserializer=auditmanager.AuditSchedule.deserialize,
+            )
+        return self._stubs["update_audit_schedule"]
+
+    @property
+    def get_audit_schedule(
+        self,
+    ) -> Callable[[auditmanager.GetAuditScheduleRequest], auditmanager.AuditSchedule]:
+        r"""Return a callable for the get audit schedule method over gRPC.
+
+        Gets details of a single audit schedule.
+
+        Returns:
+            Callable[[~.GetAuditScheduleRequest],
+                    ~.AuditSchedule]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_audit_schedule" not in self._stubs:
+            self._stubs["get_audit_schedule"] = self._logged_channel.unary_unary(
+                "/google.cloud.auditmanager.v1.AuditManager/GetAuditSchedule",
+                request_serializer=auditmanager.GetAuditScheduleRequest.serialize,
+                response_deserializer=auditmanager.AuditSchedule.deserialize,
+            )
+        return self._stubs["get_audit_schedule"]
+
+    @property
+    def list_audit_schedules(
+        self,
+    ) -> Callable[
+        [auditmanager.ListAuditSchedulesRequest],
+        auditmanager.ListAuditSchedulesResponse,
+    ]:
+        r"""Return a callable for the list audit schedules method over gRPC.
+
+        Lists audit schedules in a given project and
+        location.
+
+        Returns:
+            Callable[[~.ListAuditSchedulesRequest],
+                    ~.ListAuditSchedulesResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_audit_schedules" not in self._stubs:
+            self._stubs["list_audit_schedules"] = self._logged_channel.unary_unary(
+                "/google.cloud.auditmanager.v1.AuditManager/ListAuditSchedules",
+                request_serializer=auditmanager.ListAuditSchedulesRequest.serialize,
+                response_deserializer=auditmanager.ListAuditSchedulesResponse.deserialize,
+            )
+        return self._stubs["list_audit_schedules"]
+
+    @property
     def enroll_resource(
         self,
     ) -> Callable[[auditmanager.EnrollResourceRequest], auditmanager.Enrollment]:

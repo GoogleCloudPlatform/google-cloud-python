@@ -84,6 +84,13 @@ class ListMessagesRequest(proto.Message):
             - create_time (e.g.,
               ``createTime > "2025-01-28T06:51:56-08:00"``)
             - update_time
+        pending_write_wait_skipped (bool):
+            Optional. If true, the wait for in-flight
+            writes on the most recent turn is skipped. By
+            default ListMessages waits for those writes to
+            become durable so a caller reading right after a
+            chat turn does not miss the tail of that turn's
+            messages.
     """
 
     parent: str = proto.Field(
@@ -101,6 +108,10 @@ class ListMessagesRequest(proto.Message):
     filter: str = proto.Field(
         proto.STRING,
         number=5,
+    )
+    pending_write_wait_skipped: bool = proto.Field(
+        proto.BOOL,
+        number=7,
     )
 
 
@@ -223,8 +234,9 @@ class ChatRequest(proto.Message):
 
         Values:
             THINKING_MODE_UNSPECIFIED (0):
-                Unspecified thinking mode, agent will use
-                THINKING mode by default.
+                The default value. For BigQuery and Looker
+                data sources, the agent uses FAST. For all other
+                data sources, the agent uses THINKING.
             FAST (1):
                 Fast mode, answers quickly.
             THINKING (2):
@@ -236,17 +248,16 @@ class ChatRequest(proto.Message):
         THINKING = 2
 
     class Model(proto.Enum):
-        r"""Model selection for the agent.
+        r"""Model selection for the agent for BigQuery users.
 
         Values:
             MODEL_UNSPECIFIED (0):
-                No model specified. The default model will be used.
-                Currently, this is ``gemini-3.0-flash-preview``.
+                No model specified. Either preview or non
+                preview model can be used.
             LATEST_GA_MODEL (1):
-                Use the most up-to-date non-preview model. Currently, this
-                is ``gemini-2.5-flash``. This constrains the request level
-                settings. The default will change to ``gemini-2.5-flash``,
-                and setting ``thinking_mode`` will not be supported.
+                Use the most up-to-date non-preview model.
+                This may constrain certain request level
+                settings.
         """
 
         MODEL_UNSPECIFIED = 0

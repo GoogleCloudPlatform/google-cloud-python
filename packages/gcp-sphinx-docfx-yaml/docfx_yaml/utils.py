@@ -17,11 +17,15 @@ from collections import namedtuple
 from inspect import signature
 
 from docutils import nodes
-from docutils.io import StringOutput
+from docutils.frontend import OptionParser
 from docutils.utils import new_document
+from sphinx import addnodes
 from sphinx.application import Sphinx
 
+from .writer import MarkdownTranslator
 from .writer import MarkdownWriter as Writer
+
+_DEFAULT_SETTINGS = OptionParser(components=(Writer,)).get_default_values()
 
 
 def slugify(value: str) -> str:
@@ -70,14 +74,18 @@ def transform_node(app: Sphinx, node: nodes.Node) -> str:
     Returns:
         str: The transformed node as a string.
     """
-    destination = StringOutput(encoding="utf-8")
-    doc = new_document(b"<partial node>")
+    if node.parent is not None:
+        node = node.deepcopy()
+    doc = new_document(b"<partial node>", _DEFAULT_SETTINGS)
     doc.append(node)
 
-    # Resolve refs
+    # Resolve refs only when the node actually contains pending cross-references
     doc["docname"] = "inmemory"
-    app.env.resolve_references(doctree=doc, fromdocname="inmemory", builder=app.builder)
+    if any(True for _ in node.traverse(addnodes.pending_xref)):
+        app.env.resolve_references(
+            doctree=doc, fromdocname="inmemory", builder=app.builder
+        )
 
-    writer = Writer(app.builder)
-    writer.write(doc, destination)
-    return destination.destination.decode("utf-8")
+    visitor = MarkdownTranslator(doc, app.builder)
+    doc.walkabout(visitor)
+    return visitor.body

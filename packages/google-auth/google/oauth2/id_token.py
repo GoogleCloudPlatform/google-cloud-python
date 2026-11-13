@@ -54,18 +54,16 @@ library like `CacheControl`_ to create a cache-aware
     http://openid.net/specs/openid-connect-core-1_0.html#IDToken
 .. _CacheControl: https://cachecontrol.readthedocs.io
 """
+
 from __future__ import annotations
 
 import http.client as http_client
 import json
 import os
+import warnings
 from typing import Any, Mapping, Union
 
-from google.auth import environment_vars
-from google.auth import exceptions
-from google.auth import jwt
-from google.auth import transport
-
+from google.auth import environment_vars, exceptions, jwt, transport
 
 # The URL that provides public certificates for verifying ID tokens issued
 # by Google's OAuth 2.0 authorization server.
@@ -79,6 +77,7 @@ _GOOGLE_APIS_CERTS_URL = (
 )
 
 _GOOGLE_ISSUERS = ["accounts.google.com", "https://accounts.google.com"]
+_FIREBASE_ISSUER_PREFIX = "https://securetoken.google.com/"
 
 
 def _fetch_certs(request, certs_url):
@@ -221,16 +220,31 @@ def verify_firebase_token(id_token, request, audience=None, clock_skew_in_second
         id_token (Union[str, bytes]): The encoded token.
         request (google.auth.transport.Request): The object used to make
             HTTP requests.
-        audience (str): The audience that this token is intended for. This is
-            typically your Firebase application ID. If None then the audience
-            is not verified.
+        audience (Optional[Union[str, Iterable[str]]]): The audience that this
+            token is intended for. This is your Firebase project ID. If
+            ``None`` or empty, the audience will be left unverified, and a
+            ``UserWarning`` is issued. Passing a non-empty ``audience`` will be
+            required in a future release.
         clock_skew_in_seconds (int): The clock skew used for `iat` and `exp`
             validation.
 
     Returns:
         Mapping[str, Any]: The decoded token.
+
+    Raises:
+        exceptions.InvalidValue: If the issuer, audience, or subject is invalid.
+        ValueError: If token verification fails.
     """
-    return verify_token(
+    if not audience:
+        warnings.warn(
+            "Calling verify_firebase_token without an 'audience' leaves the "
+            "token's audience claim unverified. Pass your Firebase project ID "
+            "as 'audience', which will be required in a future release.",
+            UserWarning,
+            stacklevel=2,
+        )
+
+    idinfo = verify_token(
         id_token,
         request,
         audience=audience,
@@ -238,8 +252,24 @@ def verify_firebase_token(id_token, request, audience=None, clock_skew_in_second
         clock_skew_in_seconds=clock_skew_in_seconds,
     )
 
+    token_aud = idinfo.get("aud")
+    if not isinstance(token_aud, str) or not token_aud:
+        raise exceptions.InvalidValue("Token does not contain a valid 'aud' claim.")
 
-def fetch_id_token_credentials(audience, request=None):
+    expected_issuer = "{}{}".format(_FIREBASE_ISSUER_PREFIX, token_aud)
+    if idinfo.get("iss") != expected_issuer:
+        raise exceptions.InvalidValue(
+            "Wrong issuer. 'iss' should be '{}'.".format(expected_issuer)
+        )
+
+    token_sub = idinfo.get("sub")
+    if not isinstance(token_sub, str) or not token_sub:
+        raise exceptions.InvalidValue("Token does not contain a valid 'sub' claim.")
+
+    return idinfo
+
+
+def fetch_id_token_credentials(audience, request=None, bind_id_token=None):
     """Create the ID Token credentials from the current environment.
 
     This function acquires ID token from the environment in the following order.
@@ -275,6 +305,19 @@ def fetch_id_token_credentials(audience, request=None):
         audience (str): The audience that this ID token is intended for.
         request (Optional[google.auth.transport.Request]): A callable used to make
             HTTP requests. A request object will be created if not provided.
+        bind_id_token (Optional[bool]): Controls whether to request a
+            certificate-bound ID token from the metadata server identity
+            endpoint. If ``True``, requests a bound token whenever a valid
+            Agent Identity certificate is available and token binding is not
+            disabled via ``GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN``, falling back
+            to an unbound token otherwise (or raising
+            :class:`~google.auth.exceptions.RefreshError` if a configured
+            certificate is not found after retries). If ``False``, always
+            requests an unbound token. If ``None`` (default), token binding is
+            determined automatically by the library. Set ``True`` or ``False``
+            explicitly if your application requires a specific behavior. Has no
+            effect when credentials are loaded from
+            ``GOOGLE_APPLICATION_CREDENTIALS``.
 
     Returns:
         google.auth.credentials.Credentials: The ID token credentials.
@@ -338,7 +381,10 @@ def fetch_id_token_credentials(audience, request=None):
 
         if _metadata.ping(request):
             return compute_engine.IDTokenCredentials(
-                request, audience, use_metadata_identity_endpoint=True
+                request,
+                audience,
+                use_metadata_identity_endpoint=True,
+                bind_id_token=bind_id_token,
             )
     except (ImportError, exceptions.TransportError):
         pass
@@ -348,7 +394,7 @@ def fetch_id_token_credentials(audience, request=None):
     )
 
 
-def fetch_id_token(request, audience):
+def fetch_id_token(request, audience, bind_id_token=None):
     """Fetch the ID Token from the current environment.
 
     This function acquires ID token from the environment in the following order.
@@ -377,6 +423,19 @@ def fetch_id_token(request, audience):
         request (google.auth.transport.Request): A callable used to make
             HTTP requests.
         audience (str): The audience that this ID token is intended for.
+        bind_id_token (Optional[bool]): Controls whether to request a
+            certificate-bound ID token from the metadata server identity
+            endpoint. If ``True``, requests a bound token whenever a valid
+            Agent Identity certificate is available and token binding is not
+            disabled via ``GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN``, falling back
+            to an unbound token otherwise (or raising
+            :class:`~google.auth.exceptions.RefreshError` if a configured
+            certificate is not found after retries). If ``False``, always
+            requests an unbound token. If ``None`` (default), token binding is
+            determined automatically by the library. Set ``True`` or ``False``
+            explicitly if your application requires a specific behavior. Has no
+            effect when credentials are loaded from
+            ``GOOGLE_APPLICATION_CREDENTIALS``.
 
     Returns:
         str: The ID token.
@@ -385,7 +444,12 @@ def fetch_id_token(request, audience):
         ~google.auth.exceptions.DefaultCredentialsError:
             If metadata server doesn't exist and no valid service account
             credentials are found.
+        ~google.auth.exceptions.RefreshError:
+            If an error occurred while fetching the ID token or if a required
+            certificate file is not found after retries.
     """
-    id_token_credentials = fetch_id_token_credentials(audience, request=request)
+    id_token_credentials = fetch_id_token_credentials(
+        audience, request=request, bind_id_token=bind_id_token
+    )
     id_token_credentials.refresh(request)
     return id_token_credentials.token

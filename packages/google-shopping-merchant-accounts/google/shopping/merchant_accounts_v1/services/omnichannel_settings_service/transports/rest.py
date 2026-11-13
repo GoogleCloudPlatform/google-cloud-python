@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_accounts_v1._compat import transcode_request
 from google.shopping.merchant_accounts_v1.types import omnichannelsettings
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -539,21 +540,18 @@ class OmnichannelSettingsServiceRestTransport(
             """
 
             http_options = _BaseOmnichannelSettingsServiceRestTransport._BaseCreateOmnichannelSetting._get_http_options()
-
             request, metadata = self._interceptor.pre_create_omnichannel_setting(
                 request, metadata
             )
-            transcoded_request = _BaseOmnichannelSettingsServiceRestTransport._BaseCreateOmnichannelSetting._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOmnichannelSettingsServiceRestTransport._BaseCreateOmnichannelSetting._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOmnichannelSettingsServiceRestTransport._BaseCreateOmnichannelSetting._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOmnichannelSettingsServiceRestTransport._BaseCreateOmnichannelSetting,
+                    "_BaseCreateOmnichannelSetting__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -694,17 +692,18 @@ class OmnichannelSettingsServiceRestTransport(
             """
 
             http_options = _BaseOmnichannelSettingsServiceRestTransport._BaseGetOmnichannelSetting._get_http_options()
-
             request, metadata = self._interceptor.pre_get_omnichannel_setting(
                 request, metadata
             )
-            transcoded_request = _BaseOmnichannelSettingsServiceRestTransport._BaseGetOmnichannelSetting._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOmnichannelSettingsServiceRestTransport._BaseGetOmnichannelSetting._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOmnichannelSettingsServiceRestTransport._BaseGetOmnichannelSetting,
+                    "_BaseGetOmnichannelSetting__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -846,17 +845,18 @@ class OmnichannelSettingsServiceRestTransport(
             """
 
             http_options = _BaseOmnichannelSettingsServiceRestTransport._BaseListOmnichannelSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_list_omnichannel_settings(
                 request, metadata
             )
-            transcoded_request = _BaseOmnichannelSettingsServiceRestTransport._BaseListOmnichannelSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOmnichannelSettingsServiceRestTransport._BaseListOmnichannelSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOmnichannelSettingsServiceRestTransport._BaseListOmnichannelSettings,
+                    "_BaseListOmnichannelSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1002,21 +1002,18 @@ class OmnichannelSettingsServiceRestTransport(
             """
 
             http_options = _BaseOmnichannelSettingsServiceRestTransport._BaseRequestInventoryVerification._get_http_options()
-
             request, metadata = self._interceptor.pre_request_inventory_verification(
                 request, metadata
             )
-            transcoded_request = _BaseOmnichannelSettingsServiceRestTransport._BaseRequestInventoryVerification._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOmnichannelSettingsServiceRestTransport._BaseRequestInventoryVerification._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOmnichannelSettingsServiceRestTransport._BaseRequestInventoryVerification._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOmnichannelSettingsServiceRestTransport._BaseRequestInventoryVerification,
+                    "_BaseRequestInventoryVerification__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1163,21 +1160,18 @@ class OmnichannelSettingsServiceRestTransport(
             """
 
             http_options = _BaseOmnichannelSettingsServiceRestTransport._BaseUpdateOmnichannelSetting._get_http_options()
-
             request, metadata = self._interceptor.pre_update_omnichannel_setting(
                 request, metadata
             )
-            transcoded_request = _BaseOmnichannelSettingsServiceRestTransport._BaseUpdateOmnichannelSetting._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOmnichannelSettingsServiceRestTransport._BaseUpdateOmnichannelSetting._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOmnichannelSettingsServiceRestTransport._BaseUpdateOmnichannelSetting._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOmnichannelSettingsServiceRestTransport._BaseUpdateOmnichannelSetting,
+                    "_BaseUpdateOmnichannelSetting__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

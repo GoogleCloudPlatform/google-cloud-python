@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.compute_v1beta._compat import transcode_request
 from google.cloud.compute_v1beta.types import compute
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -637,15 +638,16 @@ class RegionHealthCheckServicesRestTransport(
             """
 
             http_options = _BaseRegionHealthCheckServicesRestTransport._BaseAggregatedList._get_http_options()
-
             request, metadata = self._interceptor.pre_aggregated_list(request, metadata)
-            transcoded_request = _BaseRegionHealthCheckServicesRestTransport._BaseAggregatedList._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionHealthCheckServicesRestTransport._BaseAggregatedList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionHealthCheckServicesRestTransport._BaseAggregatedList,
+                    "_BaseAggregatedList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -814,15 +816,16 @@ class RegionHealthCheckServicesRestTransport(
             """
 
             http_options = _BaseRegionHealthCheckServicesRestTransport._BaseDelete._get_http_options()
-
             request, metadata = self._interceptor.pre_delete(request, metadata)
-            transcoded_request = _BaseRegionHealthCheckServicesRestTransport._BaseDelete._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionHealthCheckServicesRestTransport._BaseDelete._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionHealthCheckServicesRestTransport._BaseDelete,
+                    "_BaseDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -963,15 +966,16 @@ class RegionHealthCheckServicesRestTransport(
             http_options = (
                 _BaseRegionHealthCheckServicesRestTransport._BaseGet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get(request, metadata)
-            transcoded_request = _BaseRegionHealthCheckServicesRestTransport._BaseGet._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionHealthCheckServicesRestTransport._BaseGet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionHealthCheckServicesRestTransport._BaseGet,
+                    "_BaseGet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1135,19 +1139,16 @@ class RegionHealthCheckServicesRestTransport(
             """
 
             http_options = _BaseRegionHealthCheckServicesRestTransport._BaseInsert._get_http_options()
-
             request, metadata = self._interceptor.pre_insert(request, metadata)
-            transcoded_request = _BaseRegionHealthCheckServicesRestTransport._BaseInsert._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionHealthCheckServicesRestTransport._BaseInsert._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionHealthCheckServicesRestTransport._BaseInsert._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionHealthCheckServicesRestTransport._BaseInsert,
+                    "_BaseInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1285,15 +1286,16 @@ class RegionHealthCheckServicesRestTransport(
             """
 
             http_options = _BaseRegionHealthCheckServicesRestTransport._BaseList._get_http_options()
-
             request, metadata = self._interceptor.pre_list(request, metadata)
-            transcoded_request = _BaseRegionHealthCheckServicesRestTransport._BaseList._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionHealthCheckServicesRestTransport._BaseList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionHealthCheckServicesRestTransport._BaseList,
+                    "_BaseList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1457,19 +1459,16 @@ class RegionHealthCheckServicesRestTransport(
             """
 
             http_options = _BaseRegionHealthCheckServicesRestTransport._BasePatch._get_http_options()
-
             request, metadata = self._interceptor.pre_patch(request, metadata)
-            transcoded_request = _BaseRegionHealthCheckServicesRestTransport._BasePatch._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionHealthCheckServicesRestTransport._BasePatch._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionHealthCheckServicesRestTransport._BasePatch._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionHealthCheckServicesRestTransport._BasePatch,
+                    "_BasePatch__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1608,21 +1607,18 @@ class RegionHealthCheckServicesRestTransport(
             """
 
             http_options = _BaseRegionHealthCheckServicesRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseRegionHealthCheckServicesRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionHealthCheckServicesRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionHealthCheckServicesRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionHealthCheckServicesRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

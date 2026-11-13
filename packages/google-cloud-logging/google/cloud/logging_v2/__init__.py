@@ -15,6 +15,8 @@
 #
 from __future__ import absolute_import
 
+import google.api_core as api_core
+
 from google.cloud.logging_v2 import gapic_version as package_version
 
 __version__ = package_version.__version__
@@ -59,3 +61,6 @@ __all__ = (
     "TextEntry",
     "types",
 )
+
+api_core.check_python_version("google.cloud.logging_v2")
+api_core.check_dependency_versions("google.cloud.logging_v2")

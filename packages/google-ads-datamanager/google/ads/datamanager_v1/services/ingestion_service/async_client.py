@@ -329,8 +329,7 @@ class IngestionServiceAsyncClient:
                 # Initialize request argument(s)
                 destinations = datamanager_v1.Destination()
                 destinations.operating_account.account_id = "account_id_value"
-                destinations.operating_account.account_type = "FLOODLIGHT_CONFIG"
-                destinations.product_destination_id = "product_destination_id_value"
+                destinations.operating_account.account_type = "GOOGLE_AD_MANAGER"
 
                 audience_members = datamanager_v1.AudienceMember()
                 audience_members.user_data.user_identifiers.email_address = "email_address_value"
@@ -424,8 +423,7 @@ class IngestionServiceAsyncClient:
                 # Initialize request argument(s)
                 destinations = datamanager_v1.Destination()
                 destinations.operating_account.account_id = "account_id_value"
-                destinations.operating_account.account_type = "FLOODLIGHT_CONFIG"
-                destinations.product_destination_id = "product_destination_id_value"
+                destinations.operating_account.account_type = "GOOGLE_AD_MANAGER"
 
                 audience_members = datamanager_v1.AudienceMember()
                 audience_members.user_data.user_identifiers.email_address = "email_address_value"
@@ -517,8 +515,7 @@ class IngestionServiceAsyncClient:
                 # Initialize request argument(s)
                 destinations = datamanager_v1.Destination()
                 destinations.operating_account.account_id = "account_id_value"
-                destinations.operating_account.account_type = "FLOODLIGHT_CONFIG"
-                destinations.product_destination_id = "product_destination_id_value"
+                destinations.operating_account.account_type = "GOOGLE_AD_MANAGER"
 
                 request = datamanager_v1.RemoveAllAudienceMembersRequest(
                     destinations=destinations,
@@ -605,8 +602,7 @@ class IngestionServiceAsyncClient:
                 # Initialize request argument(s)
                 destinations = datamanager_v1.Destination()
                 destinations.operating_account.account_id = "account_id_value"
-                destinations.operating_account.account_type = "FLOODLIGHT_CONFIG"
-                destinations.product_destination_id = "product_destination_id_value"
+                destinations.operating_account.account_type = "GOOGLE_AD_MANAGER"
 
                 request = datamanager_v1.IngestEventsRequest(
                     destinations=destinations,
@@ -663,6 +659,191 @@ class IngestionServiceAsyncClient:
         # Done; return the response.
         return response
 
+    async def ingest_users(
+        self,
+        request: Optional[Union[ingestion_service.IngestUsersRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> ingestion_service.IngestUsersResponse:
+        r"""Uploads a list of users to the provided destinations. Unlike
+        [IngestAudienceMembers][google.ads.datamanager.v1.IngestionService.IngestAudienceMembers]
+        (which adds users to specific advertiser audience lists for
+        targeting), ``IngestUsers`` ingests account level identity
+        linkage data (for example, user identifiers linked to mobile
+        IDs) independent of specific audience segments.
+
+        This feature is only available to accounts on an allowlist.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import datamanager_v1
+
+            async def sample_ingest_users():
+                # Create a client
+                client = datamanager_v1.IngestionServiceAsyncClient()
+
+                # Initialize request argument(s)
+                destinations = datamanager_v1.Destination()
+                destinations.operating_account.account_id = "account_id_value"
+                destinations.operating_account.account_type = "GOOGLE_AD_MANAGER"
+
+                users = datamanager_v1.User()
+                users.user_data.user_identifiers.email_address = "email_address_value"
+                users.mobile_data.mobile_ids = ['mobile_ids_value1', 'mobile_ids_value2']
+
+                request = datamanager_v1.IngestUsersRequest(
+                    destinations=destinations,
+                    users=users,
+                    encoding="BASE64",
+                )
+
+                # Make the request
+                response = await client.ingest_users(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.ads.datamanager_v1.types.IngestUsersRequest, dict]]):
+                The request object. Request to upload users to the
+                provided destinations.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.datamanager_v1.types.IngestUsersResponse:
+                Response from the IngestUsersRequest.
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, ingestion_service.IngestUsersRequest):
+            request = ingestion_service.IngestUsersRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.ingest_users
+        ]
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def remove_users(
+        self,
+        request: Optional[Union[ingestion_service.RemoveUsersRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> ingestion_service.RemoveUsersResponse:
+        r"""Removes a list of users from the provided
+        destinations.
+        This feature is only available to accounts on an
+        allowlist.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import datamanager_v1
+
+            async def sample_remove_users():
+                # Create a client
+                client = datamanager_v1.IngestionServiceAsyncClient()
+
+                # Initialize request argument(s)
+                destinations = datamanager_v1.Destination()
+                destinations.operating_account.account_id = "account_id_value"
+                destinations.operating_account.account_type = "GOOGLE_AD_MANAGER"
+
+                user_data = datamanager_v1.UserData()
+                user_data.user_identifiers.email_address = "email_address_value"
+
+                request = datamanager_v1.RemoveUsersRequest(
+                    destinations=destinations,
+                    user_data=user_data,
+                    encoding="BASE64",
+                )
+
+                # Make the request
+                response = await client.remove_users(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.ads.datamanager_v1.types.RemoveUsersRequest, dict]]):
+                The request object. Request to remove users from the
+                provided destinations.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.datamanager_v1.types.RemoveUsersResponse:
+                Response from the RemoveUsersRequest.
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, ingestion_service.RemoveUsersRequest):
+            request = ingestion_service.RemoveUsersRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.remove_users
+        ]
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
     async def ingest_ad_events(
         self,
         request: Optional[Union[ingestion_service.IngestAdEventsRequest, dict]] = None,
@@ -675,6 +856,16 @@ class IngestionServiceAsyncClient:
         resources to Google Analytics.
 
         This feature is only available to accounts on an allowlist.
+
+        Authorization Headers:
+
+        This method also requires the following header to define how the
+        API authorizes access for the request:
+
+        - ``login-account``: (Required) The resource name of the Data
+          Partner account where the Google Account of the credentials is
+          a user. Format:
+          ``accountTypes/DATA_PARTNER/accounts/{loginAccountId}``
 
         .. code-block:: python
 
@@ -708,15 +899,8 @@ class IngestionServiceAsyncClient:
                 ad_events.medium = "medium_value"
                 ad_events.viewability_info.view_type = "VIEW_TYPE_MRC_RENDERED"
 
-                encryption_info = datamanager_v1.EncryptionInfo()
-                encryption_info.gcp_wrapped_key_info.key_type = "XCHACHA20_POLY1305"
-                encryption_info.gcp_wrapped_key_info.wip_provider = "wip_provider_value"
-                encryption_info.gcp_wrapped_key_info.kek_uri = "kek_uri_value"
-                encryption_info.gcp_wrapped_key_info.encrypted_dek = "encrypted_dek_value"
-
                 request = datamanager_v1.IngestAdEventsRequest(
                     ad_events=ad_events,
-                    encryption_info=encryption_info,
                 )
 
                 # Make the request

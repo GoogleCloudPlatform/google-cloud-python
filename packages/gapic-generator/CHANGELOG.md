@@ -4,6 +4,96 @@
 
 [1]: https://pypi.org/project/gapic-generator/#history
 
+## [1.44.2](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.44.1...gapic-generator-v1.44.2) (2026-11-05)
+
+
+### Bug Fixes
+
+* **gapic-generator:** default client_options.api_endpoint to transport host for OpenTelemetry spans ([#18869](https://github.com/googleapis/google-cloud-python/issues/18869)) ([10cdc90](https://github.com/googleapis/google-cloud-python/commit/10cdc908c0fbd146ebdb7c170ad5df474344529e))
+
+## [1.44.1](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.44.0...gapic-generator-v1.44.1) (2026-10-29)
+
+
+### Bug Fixes
+
+* **google-api-core:** align HTTP T3 and T4 OpenTelemetry span status and attributes ([#18868](https://github.com/googleapis/google-cloud-python/issues/18868)) ([deb2194](https://github.com/googleapis/google-cloud-python/commit/deb2194d3fd615e2054b165a2493cc9ddb36ee9b))
+* **google-api-core:** align OpenTelemetry span names, kinds, and T3 endpoint attributes with spec ([#18866](https://github.com/googleapis/google-cloud-python/issues/18866)) ([2a10196](https://github.com/googleapis/google-cloud-python/commit/2a1019643da54baae33e1737ee1506de178aa857))
+
+## [1.44.0](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.43.1...gapic-generator-v1.44.0) (2026-10-22)
+
+
+### Features
+
+* **observability:** suppress redundant gRPC auto-instrumentation spans ([#18592](https://github.com/googleapis/google-cloud-python/issues/18592)) ([a597007](https://github.com/googleapis/google-cloud-python/commit/a5970072a0218060bc34857797c3008e0f30becf))
+
+## [1.43.1](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.43.0...gapic-generator-v1.43.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* **gapic-generator:** do not emit empty routing metadata on client-streaming RPCs ([#18591](https://github.com/googleapis/google-cloud-python/issues/18591)) ([bbdd643](https://github.com/googleapis/google-cloud-python/commit/bbdd643b91665b749da3fe3d5b39d2450caec2c2))
+* **gapic-generator:** resolve showcase-mypy incompatible redefinition ([7032a89](https://github.com/googleapis/google-cloud-python/commit/7032a895a891172b01844b805ac4fe4bd9ffa424))
+* **gapic-generator:** resolve showcase-mypy incompatible redefinition and add canary CI job ([#18701](https://github.com/googleapis/google-cloud-python/issues/18701)) ([7032a89](https://github.com/googleapis/google-cloud-python/commit/7032a895a891172b01844b805ac4fe4bd9ffa424))
+
+## [1.43.0](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.42.0...gapic-generator-v1.43.0) (2026-10-08)
+
+
+### Features
+
+* **gapic-generator:** generate code samples for resumable upload RPCs ([#18501](https://github.com/googleapis/google-cloud-python/issues/18501)) ([c8926ab](https://github.com/googleapis/google-cloud-python/commit/c8926ab89d240239fee0c82be2373c752d3507c0))
+* generate client, transport, and unit test templates for resumable uploads ([#18495](https://github.com/googleapis/google-cloud-python/issues/18495)) ([3f8d00b](https://github.com/googleapis/google-cloud-python/commit/3f8d00bf5d95337a97268bcbdd7ef1ee155f7516))
+* **observability:** implement universal 4-path OpenTelemetry tracing ([#18433](https://github.com/googleapis/google-cloud-python/issues/18433)) ([7d18b25](https://github.com/googleapis/google-cloud-python/commit/7d18b2575c5170518df0ba0e425d87a41f0eba56))
+
+## [1.42.0](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.41.0...gapic-generator-v1.42.0) (2026-10-01)
+
+
+### Features
+
+* **gapic-generator:** add rpc_name metadata to mixin schema definitions ([#18516](https://github.com/googleapis/google-cloud-python/issues/18516)) ([fc1b469](https://github.com/googleapis/google-cloud-python/commit/fc1b469837256a7a3b59d1b8b0ed1ffe078aab3b))
+
+## [1.41.0](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.40.0...gapic-generator-v1.41.0) (2026-09-29)
+
+
+### Features
+
+* **gapic-generator:** add schema support for resumable uploads ([#18480](https://github.com/googleapis/google-cloud-python/issues/18480)) ([78ff458](https://github.com/googleapis/google-cloud-python/commit/78ff458d055a6104a385dc96990773f02a138f7d))
+
+
+### Bug Fixes
+
+* **gapic-generator:** init mock response in version header test ([#18488](https://github.com/googleapis/google-cloud-python/issues/18488)) ([7871fa9](https://github.com/googleapis/google-cloud-python/commit/7871fa9d142807248e225cb9d24d2ffda88e1b90))
+
+## [1.40.0](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.39.0...gapic-generator-v1.40.0) (2026-09-24)
+
+
+### Features
+
+* add 3.15 support to gapic library classifiers ([#18450](https://github.com/googleapis/google-cloud-python/issues/18450)) ([5fe1ef3](https://github.com/googleapis/google-cloud-python/commit/5fe1ef3b5f11155a7768660a39c3a8e964d9d652))
+
+
+### Bug Fixes
+
+* **bazel:** allow CustomProtoInfo in gapic_compat_proto_library ([#18417](https://github.com/googleapis/google-cloud-python/issues/18417)) ([11bdf92](https://github.com/googleapis/google-cloud-python/commit/11bdf928710031cd3dd279215d1be2bd7d73e18f))
+
+## [1.39.0](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.38.0...gapic-generator-v1.39.0) (2026-08-21)
+
+
+### Features
+
+* **generator:** add fallback compatibility imports for google-api-core helpers ([#17999](https://github.com/googleapis/google-cloud-python/issues/17999)) ([9c13ae2](https://github.com/googleapis/google-cloud-python/commit/9c13ae2476e8ea7a5f3197ed5d094d3b1d5686a9))
+
+
+### Bug Fixes
+
+* **generator:** check for api_version header in metadata list ([#18015](https://github.com/googleapis/google-cloud-python/issues/18015)) ([0e63510](https://github.com/googleapis/google-cloud-python/commit/0e63510c3b03c14bb1f8dd473dbcdfb719a7050d))
+* **generator:** move version checks after __all__ in __init__.py temlate ([#18100](https://github.com/googleapis/google-cloud-python/issues/18100)) ([d0efb4d](https://github.com/googleapis/google-cloud-python/commit/d0efb4dd19aa21c779b20cae02d135fad9ca997e))
+* **generator:** switch core_deps_from_source to DEFAULT_PYTHON_VERSION ([#18050](https://github.com/googleapis/google-cloud-python/issues/18050)) ([895ffa2](https://github.com/googleapis/google-cloud-python/commit/895ffa29ba72f2a6e520c6d0fdf26ac9e36f8269))
+
+
+### Documentation
+
+* **handwritten:** centralize CONTRIBUTING.rst pointers ([#17642](https://github.com/googleapis/google-cloud-python/issues/17642)) ([23b9499](https://github.com/googleapis/google-cloud-python/commit/23b94994bd5251493b81d91657d1f79a5d3c4b97))
+
 ## [1.38.0](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.37.1...gapic-generator-v1.38.0) (2026-08-06)
 
 

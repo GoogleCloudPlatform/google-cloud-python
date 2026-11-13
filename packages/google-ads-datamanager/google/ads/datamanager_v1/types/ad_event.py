@@ -318,6 +318,12 @@ class AdEvent(proto.Message):
         device_info (google.ads.datamanager_v1.types.DeviceInfo):
             Required. Information gathered about the
             device being used when the ad event happened.
+        ip_address (str):
+            Optional. IP address used for measurement. This must be same
+            value as
+            [DeviceInfo.ip_address][google.ads.datamanager.v1.DeviceInfo.ip_address].
+            Keep it blank if you do not want to share IP for
+            measurement.
         mobile_device_id (str):
             Optional. The device ID of the device that
             the ad was served to.
@@ -486,6 +492,10 @@ class AdEvent(proto.Message):
         proto.MESSAGE,
         number=8,
         message=gad_device_info.DeviceInfo,
+    )
+    ip_address: str = proto.Field(
+        proto.STRING,
+        number=34,
     )
     mobile_device_id: str = proto.Field(
         proto.STRING,

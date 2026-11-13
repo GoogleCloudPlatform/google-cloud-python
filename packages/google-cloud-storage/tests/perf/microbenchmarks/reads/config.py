@@ -34,7 +34,7 @@ def _get_params() -> Dict[str, List[ReadParameters]]:
     The resulting parameter sets are encapsulated in `ReadParameters` objects
     and organized by workload name in the returned dictionary.
 
-    Bucket names can be overridden by setting the `DEFAULT_RAPID_ZONAL_BUCKET`
+    Bucket names can be overridden by setting the `DEFAULT_RAPID_BUCKET`
     and `DEFAULT_STANDARD_BUCKET` environment variables.
 
     Returns:
@@ -54,9 +54,9 @@ def _get_params() -> Dict[str, List[ReadParameters]]:
     rounds = common_params["rounds"]
 
     bucket_map = {
-        "zonal": os.environ.get(
-            "DEFAULT_RAPID_ZONAL_BUCKET",
-            config["defaults"]["DEFAULT_RAPID_ZONAL_BUCKET"],
+        "rapid": os.environ.get(
+            "DEFAULT_RAPID_BUCKET",
+            config["defaults"]["DEFAULT_RAPID_BUCKET"],
         ),
         "regional": os.environ.get(
             "DEFAULT_STANDARD_BUCKET", config["defaults"]["DEFAULT_STANDARD_BUCKET"]

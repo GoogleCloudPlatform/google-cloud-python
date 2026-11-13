@@ -15,9 +15,9 @@
 #
 """Document.proto converters."""
 
-from concurrent import futures
 import os
 import time
+from concurrent import futures
 from typing import Dict, List, Optional, Set, Tuple
 
 from google.api_core.client_options import ClientOptions

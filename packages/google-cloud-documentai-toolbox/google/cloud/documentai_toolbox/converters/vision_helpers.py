@@ -18,6 +18,7 @@
 import dataclasses
 from typing import List
 
+import immutabledict
 from google.cloud.documentai import Document
 from google.cloud.vision import (
     AnnotateImageResponse,
@@ -30,7 +31,6 @@ from google.cloud.vision import (
     TextAnnotation,
     Word,
 )
-import immutabledict
 
 from google.cloud import vision
 from google.cloud.documentai_toolbox.constants import ElementWithLayout

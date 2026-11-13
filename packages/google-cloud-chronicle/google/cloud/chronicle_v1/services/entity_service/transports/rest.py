@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.chronicle_v1._compat import transcode_request
 from google.cloud.chronicle_v1.types import entity
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -557,21 +558,18 @@ class EntityServiceRestTransport(_BaseEntityServiceRestTransport):
             http_options = (
                 _BaseEntityServiceRestTransport._BaseCreateWatchlist._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_watchlist(
                 request, metadata
             )
-            transcoded_request = _BaseEntityServiceRestTransport._BaseCreateWatchlist._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEntityServiceRestTransport._BaseCreateWatchlist._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntityServiceRestTransport._BaseCreateWatchlist._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntityServiceRestTransport._BaseCreateWatchlist,
+                    "_BaseCreateWatchlist__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -705,17 +703,18 @@ class EntityServiceRestTransport(_BaseEntityServiceRestTransport):
             http_options = (
                 _BaseEntityServiceRestTransport._BaseDeleteWatchlist._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_watchlist(
                 request, metadata
             )
-            transcoded_request = _BaseEntityServiceRestTransport._BaseDeleteWatchlist._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntityServiceRestTransport._BaseDeleteWatchlist._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntityServiceRestTransport._BaseDeleteWatchlist,
+                    "_BaseDeleteWatchlist__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -821,15 +820,16 @@ class EntityServiceRestTransport(_BaseEntityServiceRestTransport):
             http_options = (
                 _BaseEntityServiceRestTransport._BaseGetWatchlist._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_watchlist(request, metadata)
-            transcoded_request = _BaseEntityServiceRestTransport._BaseGetWatchlist._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntityServiceRestTransport._BaseGetWatchlist._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntityServiceRestTransport._BaseGetWatchlist,
+                    "_BaseGetWatchlist__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -968,15 +968,16 @@ class EntityServiceRestTransport(_BaseEntityServiceRestTransport):
             http_options = (
                 _BaseEntityServiceRestTransport._BaseListWatchlists._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_watchlists(request, metadata)
-            transcoded_request = _BaseEntityServiceRestTransport._BaseListWatchlists._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntityServiceRestTransport._BaseListWatchlists._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntityServiceRestTransport._BaseListWatchlists,
+                    "_BaseListWatchlists__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1117,21 +1118,18 @@ class EntityServiceRestTransport(_BaseEntityServiceRestTransport):
             http_options = (
                 _BaseEntityServiceRestTransport._BaseUpdateWatchlist._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_watchlist(
                 request, metadata
             )
-            transcoded_request = _BaseEntityServiceRestTransport._BaseUpdateWatchlist._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEntityServiceRestTransport._BaseUpdateWatchlist._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntityServiceRestTransport._BaseUpdateWatchlist._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntityServiceRestTransport._BaseUpdateWatchlist,
+                    "_BaseUpdateWatchlist__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1307,21 +1305,18 @@ class EntityServiceRestTransport(_BaseEntityServiceRestTransport):
             http_options = (
                 _BaseEntityServiceRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseEntityServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEntityServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntityServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntityServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1426,17 +1421,18 @@ class EntityServiceRestTransport(_BaseEntityServiceRestTransport):
             http_options = (
                 _BaseEntityServiceRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseEntityServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntityServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntityServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1543,15 +1539,16 @@ class EntityServiceRestTransport(_BaseEntityServiceRestTransport):
             http_options = (
                 _BaseEntityServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseEntityServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntityServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntityServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1683,15 +1680,16 @@ class EntityServiceRestTransport(_BaseEntityServiceRestTransport):
             http_options = (
                 _BaseEntityServiceRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseEntityServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEntityServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEntityServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

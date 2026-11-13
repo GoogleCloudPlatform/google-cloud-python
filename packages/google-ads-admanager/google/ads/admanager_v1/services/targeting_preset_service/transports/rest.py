@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     targeting_preset_messages,
     targeting_preset_service,
@@ -706,21 +707,18 @@ class TargetingPresetServiceRestTransport(_BaseTargetingPresetServiceRestTranspo
             """
 
             http_options = _BaseTargetingPresetServiceRestTransport._BaseBatchCreateTargetingPresets._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_targeting_presets(
                 request, metadata
             )
-            transcoded_request = _BaseTargetingPresetServiceRestTransport._BaseBatchCreateTargetingPresets._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTargetingPresetServiceRestTransport._BaseBatchCreateTargetingPresets._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTargetingPresetServiceRestTransport._BaseBatchCreateTargetingPresets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTargetingPresetServiceRestTransport._BaseBatchCreateTargetingPresets,
+                    "_BaseBatchCreateTargetingPresets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -869,23 +867,20 @@ class TargetingPresetServiceRestTransport(_BaseTargetingPresetServiceRestTranspo
             """
 
             http_options = _BaseTargetingPresetServiceRestTransport._BaseBatchDeactivateTargetingPresets._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_deactivate_targeting_presets(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseTargetingPresetServiceRestTransport._BaseBatchDeactivateTargetingPresets._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTargetingPresetServiceRestTransport._BaseBatchDeactivateTargetingPresets._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTargetingPresetServiceRestTransport._BaseBatchDeactivateTargetingPresets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTargetingPresetServiceRestTransport._BaseBatchDeactivateTargetingPresets,
+                    "_BaseBatchDeactivateTargetingPresets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1036,21 +1031,18 @@ class TargetingPresetServiceRestTransport(_BaseTargetingPresetServiceRestTranspo
             """
 
             http_options = _BaseTargetingPresetServiceRestTransport._BaseBatchUpdateTargetingPresets._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_targeting_presets(
                 request, metadata
             )
-            transcoded_request = _BaseTargetingPresetServiceRestTransport._BaseBatchUpdateTargetingPresets._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTargetingPresetServiceRestTransport._BaseBatchUpdateTargetingPresets._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTargetingPresetServiceRestTransport._BaseBatchUpdateTargetingPresets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTargetingPresetServiceRestTransport._BaseBatchUpdateTargetingPresets,
+                    "_BaseBatchUpdateTargetingPresets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1195,21 +1187,18 @@ class TargetingPresetServiceRestTransport(_BaseTargetingPresetServiceRestTranspo
             """
 
             http_options = _BaseTargetingPresetServiceRestTransport._BaseCreateTargetingPreset._get_http_options()
-
             request, metadata = self._interceptor.pre_create_targeting_preset(
                 request, metadata
             )
-            transcoded_request = _BaseTargetingPresetServiceRestTransport._BaseCreateTargetingPreset._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTargetingPresetServiceRestTransport._BaseCreateTargetingPreset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTargetingPresetServiceRestTransport._BaseCreateTargetingPreset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTargetingPresetServiceRestTransport._BaseCreateTargetingPreset,
+                    "_BaseCreateTargetingPreset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1349,17 +1338,18 @@ class TargetingPresetServiceRestTransport(_BaseTargetingPresetServiceRestTranspo
             """
 
             http_options = _BaseTargetingPresetServiceRestTransport._BaseGetTargetingPreset._get_http_options()
-
             request, metadata = self._interceptor.pre_get_targeting_preset(
                 request, metadata
             )
-            transcoded_request = _BaseTargetingPresetServiceRestTransport._BaseGetTargetingPreset._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTargetingPresetServiceRestTransport._BaseGetTargetingPreset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTargetingPresetServiceRestTransport._BaseGetTargetingPreset,
+                    "_BaseGetTargetingPreset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1500,17 +1490,18 @@ class TargetingPresetServiceRestTransport(_BaseTargetingPresetServiceRestTranspo
             """
 
             http_options = _BaseTargetingPresetServiceRestTransport._BaseListTargetingPresets._get_http_options()
-
             request, metadata = self._interceptor.pre_list_targeting_presets(
                 request, metadata
             )
-            transcoded_request = _BaseTargetingPresetServiceRestTransport._BaseListTargetingPresets._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTargetingPresetServiceRestTransport._BaseListTargetingPresets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTargetingPresetServiceRestTransport._BaseListTargetingPresets,
+                    "_BaseListTargetingPresets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1654,21 +1645,18 @@ class TargetingPresetServiceRestTransport(_BaseTargetingPresetServiceRestTranspo
             """
 
             http_options = _BaseTargetingPresetServiceRestTransport._BaseUpdateTargetingPreset._get_http_options()
-
             request, metadata = self._interceptor.pre_update_targeting_preset(
                 request, metadata
             )
-            transcoded_request = _BaseTargetingPresetServiceRestTransport._BaseUpdateTargetingPreset._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTargetingPresetServiceRestTransport._BaseUpdateTargetingPreset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTargetingPresetServiceRestTransport._BaseUpdateTargetingPreset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTargetingPresetServiceRestTransport._BaseUpdateTargetingPreset,
+                    "_BaseUpdateTargetingPreset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1889,17 +1877,18 @@ class TargetingPresetServiceRestTransport(_BaseTargetingPresetServiceRestTranspo
             """
 
             http_options = _BaseTargetingPresetServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseTargetingPresetServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTargetingPresetServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTargetingPresetServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2007,15 +1996,16 @@ class TargetingPresetServiceRestTransport(_BaseTargetingPresetServiceRestTranspo
             """
 
             http_options = _BaseTargetingPresetServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseTargetingPresetServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTargetingPresetServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTargetingPresetServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -14,14 +14,12 @@
 
 """Support for downloading media from Google APIs."""
 
-import urllib3.response  # type: ignore
 import http
 
-from google.resumable_media import _download
-from google.resumable_media import common
-from google.resumable_media import _helpers
-from google.resumable_media.requests import _request_helpers
+import urllib3.response  # type: ignore
 
+from google.resumable_media import _download, _helpers, common
+from google.resumable_media.requests import _request_helpers
 
 _CHECKSUM_MISMATCH = """\
 Checksum mismatch while downloading:

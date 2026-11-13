@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_datasources_v1._compat import transcode_request
 from google.shopping.merchant_datasources_v1.types import datasources
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -498,21 +499,18 @@ class DataSourcesServiceRestTransport(_BaseDataSourcesServiceRestTransport):
             """
 
             http_options = _BaseDataSourcesServiceRestTransport._BaseCreateDataSource._get_http_options()
-
             request, metadata = self._interceptor.pre_create_data_source(
                 request, metadata
             )
-            transcoded_request = _BaseDataSourcesServiceRestTransport._BaseCreateDataSource._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataSourcesServiceRestTransport._BaseCreateDataSource._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataSourcesServiceRestTransport._BaseCreateDataSource._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataSourcesServiceRestTransport._BaseCreateDataSource,
+                    "_BaseCreateDataSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -645,17 +643,18 @@ class DataSourcesServiceRestTransport(_BaseDataSourcesServiceRestTransport):
             """
 
             http_options = _BaseDataSourcesServiceRestTransport._BaseDeleteDataSource._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_data_source(
                 request, metadata
             )
-            transcoded_request = _BaseDataSourcesServiceRestTransport._BaseDeleteDataSource._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataSourcesServiceRestTransport._BaseDeleteDataSource._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataSourcesServiceRestTransport._BaseDeleteDataSource,
+                    "_BaseDeleteDataSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -754,21 +753,18 @@ class DataSourcesServiceRestTransport(_BaseDataSourcesServiceRestTransport):
             """
 
             http_options = _BaseDataSourcesServiceRestTransport._BaseFetchDataSource._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_data_source(
                 request, metadata
             )
-            transcoded_request = _BaseDataSourcesServiceRestTransport._BaseFetchDataSource._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataSourcesServiceRestTransport._BaseFetchDataSource._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataSourcesServiceRestTransport._BaseFetchDataSource._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataSourcesServiceRestTransport._BaseFetchDataSource,
+                    "_BaseFetchDataSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -874,15 +870,16 @@ class DataSourcesServiceRestTransport(_BaseDataSourcesServiceRestTransport):
             """
 
             http_options = _BaseDataSourcesServiceRestTransport._BaseGetDataSource._get_http_options()
-
             request, metadata = self._interceptor.pre_get_data_source(request, metadata)
-            transcoded_request = _BaseDataSourcesServiceRestTransport._BaseGetDataSource._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataSourcesServiceRestTransport._BaseGetDataSource._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataSourcesServiceRestTransport._BaseGetDataSource,
+                    "_BaseGetDataSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1020,17 +1017,18 @@ class DataSourcesServiceRestTransport(_BaseDataSourcesServiceRestTransport):
             """
 
             http_options = _BaseDataSourcesServiceRestTransport._BaseListDataSources._get_http_options()
-
             request, metadata = self._interceptor.pre_list_data_sources(
                 request, metadata
             )
-            transcoded_request = _BaseDataSourcesServiceRestTransport._BaseListDataSources._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataSourcesServiceRestTransport._BaseListDataSources._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataSourcesServiceRestTransport._BaseListDataSources,
+                    "_BaseListDataSources__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1172,21 +1170,18 @@ class DataSourcesServiceRestTransport(_BaseDataSourcesServiceRestTransport):
             """
 
             http_options = _BaseDataSourcesServiceRestTransport._BaseUpdateDataSource._get_http_options()
-
             request, metadata = self._interceptor.pre_update_data_source(
                 request, metadata
             )
-            transcoded_request = _BaseDataSourcesServiceRestTransport._BaseUpdateDataSource._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDataSourcesServiceRestTransport._BaseUpdateDataSource._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDataSourcesServiceRestTransport._BaseUpdateDataSource._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataSourcesServiceRestTransport._BaseUpdateDataSource,
+                    "_BaseUpdateDataSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

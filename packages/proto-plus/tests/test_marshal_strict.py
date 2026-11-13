@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from proto.marshal.marshal import BaseMarshal
 import pytest
+
+from proto.marshal.marshal import BaseMarshal
 
 
 def test_strict_to_proto():

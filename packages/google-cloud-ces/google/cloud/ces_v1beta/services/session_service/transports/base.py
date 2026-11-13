@@ -174,6 +174,28 @@ class SessionServiceTransport(abc.ABC):
                 default_timeout=3600.0,
                 client_info=client_info,
             ),
+            self.stream_chat_ai_assistant: gapic_v1.method.wrap_method(
+                self.stream_chat_ai_assistant,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(),
+                    deadline=3600.0,
+                ),
+                default_timeout=3600.0,
+                client_info=client_info,
+            ),
+            self.cancel_assistant_turn: gapic_v1.method.wrap_method(
+                self.cancel_assistant_turn,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.generate_onboarding_suggestions: gapic_v1.method.wrap_method(
+                self.generate_onboarding_suggestions,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.get_location: gapic_v1.method.wrap_method(
                 self.get_location,
                 default_timeout=None,
@@ -247,6 +269,42 @@ class SessionServiceTransport(abc.ABC):
         Union[
             session_service.BidiSessionServerMessage,
             Awaitable[session_service.BidiSessionServerMessage],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def stream_chat_ai_assistant(
+        self,
+    ) -> Callable[
+        [session_service.StreamChatAiAssistantRequest],
+        Union[
+            session_service.StreamChatAiAssistantResponse,
+            Awaitable[session_service.StreamChatAiAssistantResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def cancel_assistant_turn(
+        self,
+    ) -> Callable[
+        [session_service.CancelAssistantTurnRequest],
+        Union[
+            session_service.CancelAssistantTurnResponse,
+            Awaitable[session_service.CancelAssistantTurnResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def generate_onboarding_suggestions(
+        self,
+    ) -> Callable[
+        [session_service.GenerateOnboardingSuggestionsRequest],
+        Union[
+            session_service.GenerateOnboardingSuggestionsResponse,
+            Awaitable[session_service.GenerateOnboardingSuggestionsResponse],
         ],
     ]:
         raise NotImplementedError()

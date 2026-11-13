@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.maps.places_v1._compat import transcode_request
 from google.maps.places_v1.types import place, places_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -517,25 +518,18 @@ class PlacesRestTransport(_BasePlacesRestTransport):
             http_options = (
                 _BasePlacesRestTransport._BaseAutocompletePlaces._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_autocomplete_places(
                 request, metadata
             )
-            transcoded_request = _BasePlacesRestTransport._BaseAutocompletePlaces._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BasePlacesRestTransport._BaseAutocompletePlaces._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlacesRestTransport._BaseAutocompletePlaces._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacesRestTransport._BaseAutocompletePlaces,
+                    "_BaseAutocompletePlaces__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -673,19 +667,16 @@ class PlacesRestTransport(_BasePlacesRestTransport):
             http_options = (
                 _BasePlacesRestTransport._BaseGetPhotoMedia._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_photo_media(request, metadata)
-            transcoded_request = (
-                _BasePlacesRestTransport._BaseGetPhotoMedia._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlacesRestTransport._BaseGetPhotoMedia._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacesRestTransport._BaseGetPhotoMedia,
+                    "_BaseGetPhotoMedia__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -820,19 +811,16 @@ class PlacesRestTransport(_BasePlacesRestTransport):
             """
 
             http_options = _BasePlacesRestTransport._BaseGetPlace._get_http_options()
-
             request, metadata = self._interceptor.pre_get_place(request, metadata)
-            transcoded_request = (
-                _BasePlacesRestTransport._BaseGetPlace._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlacesRestTransport._BaseGetPlace._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacesRestTransport._BaseGetPlace,
+                    "_BaseGetPlace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -967,23 +955,16 @@ class PlacesRestTransport(_BasePlacesRestTransport):
             http_options = (
                 _BasePlacesRestTransport._BaseSearchNearby._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_nearby(request, metadata)
-            transcoded_request = (
-                _BasePlacesRestTransport._BaseSearchNearby._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BasePlacesRestTransport._BaseSearchNearby._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlacesRestTransport._BaseSearchNearby._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacesRestTransport._BaseSearchNearby,
+                    "_BaseSearchNearby__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1119,23 +1100,16 @@ class PlacesRestTransport(_BasePlacesRestTransport):
             """
 
             http_options = _BasePlacesRestTransport._BaseSearchText._get_http_options()
-
             request, metadata = self._interceptor.pre_search_text(request, metadata)
-            transcoded_request = (
-                _BasePlacesRestTransport._BaseSearchText._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BasePlacesRestTransport._BaseSearchText._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BasePlacesRestTransport._BaseSearchText._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePlacesRestTransport._BaseSearchText,
+                    "_BaseSearchText__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

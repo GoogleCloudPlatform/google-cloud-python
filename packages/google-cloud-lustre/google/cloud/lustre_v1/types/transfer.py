@@ -81,10 +81,15 @@ class ImportDataRequest(proto.Message):
         request_id (str):
             Optional. UUID to identify requests.
         service_account (str):
-            Optional. User-specified service account used
-            to perform the transfer. If unspecified, the
-            default Managed Lustre service agent will be
-            used.
+            Optional. User-specified service account used to perform the
+            transfer. If unspecified, the default Managed Lustre service
+            agent will be used.
+
+            Use one of the following formats:
+
+            - ``{EMAIL_ADDRESS_OR_UNIQUE_ID}``
+            - ``projects/{PROJECT_ID}/serviceAccounts/{EMAIL_ADDRESS_OR_UNIQUE_ID}``
+            - ``projects/-/serviceAccounts/{EMAIL_ADDRESS_OR_UNIQUE_ID}``
     """
 
     gcs_path: "GcsPath" = proto.Field(
@@ -139,9 +144,15 @@ class ExportDataRequest(proto.Message):
         request_id (str):
             Optional. UUID to identify requests.
         service_account (str):
-            Optional. User-specified service account used
-            to perform the transfer. If unspecified, the
-            Managed Lustre service agent is used.
+            Optional. User-specified service account used to perform the
+            transfer. If unspecified, the Managed Lustre service agent
+            is used.
+
+            Use one of the following formats:
+
+            - ``{EMAIL_ADDRESS_OR_UNIQUE_ID}``
+            - ``projects/{PROJECT_ID}/serviceAccounts/{EMAIL_ADDRESS_OR_UNIQUE_ID}``
+            - ``projects/-/serviceAccounts/{EMAIL_ADDRESS_OR_UNIQUE_ID}``
     """
 
     lustre_path: "LustrePath" = proto.Field(

@@ -21,9 +21,8 @@ from unittest import mock
 import pytest  # type: ignore
 import requests
 
-from google.auth import exceptions
-from google.auth import jwt
 import google.auth.transport.requests
+from google.auth import exceptions, jwt
 from google.oauth2 import gdch_credentials
 from google.oauth2.gdch_credentials import ServiceAccountCredentials
 

@@ -16,8 +16,11 @@ import grpc
 import mock
 import pytest
 from google.api_core import exceptions as core_exceptions
+from google.protobuf import any_pb2
+from google.rpc import code_pb2, error_details_pb2, status_pb2
 
 import google.cloud.bigtable.data._helpers as _helpers
+import google.cloud.bigtable.data.exceptions as bt_exceptions
 from google.cloud.bigtable.data._helpers import TABLE_DEFAULT
 
 
@@ -222,6 +225,200 @@ class TestAlignTimeouts:
             _helpers._align_timeouts(input_times[0], input_times[1])
 
 
+class TestRstStreamAwarePredicate:
+    @pytest.mark.parametrize(
+        "retryable_exceptions,exception,expected_is_retryable",
+        [
+            (
+                [core_exceptions.Aborted, core_exceptions.InternalServerError],
+                core_exceptions.InternalServerError("Sorry"),
+                True,
+            ),
+            (
+                [core_exceptions.Aborted, core_exceptions.InternalServerError],
+                core_exceptions.DataLoss("Sorry"),
+                False,
+            ),
+            (
+                [core_exceptions.ServiceUnavailable, core_exceptions.Aborted],
+                core_exceptions.InternalServerError("Sorry"),
+                False,
+            ),
+            (
+                [core_exceptions.ServiceUnavailable, core_exceptions.Aborted],
+                core_exceptions.InternalServerError(
+                    _helpers._RETRYABLE_INTERNAL_ERROR_MESSAGES[0]
+                ),
+                True,
+            ),
+            (
+                [core_exceptions.InternalServerError, core_exceptions.Aborted],
+                core_exceptions.InternalServerError(
+                    _helpers._RETRYABLE_INTERNAL_ERROR_MESSAGES[0]
+                ),
+                True,
+            ),
+        ],
+    )
+    def test_rst_stream_aware_predicate(
+        self, retryable_exceptions, exception, expected_is_retryable
+    ):
+        predicate = _helpers._rst_stream_aware_predicate(*retryable_exceptions)
+        assert predicate(exception) is expected_is_retryable
+
+
+class TestGetStatusesFromMutationsExceptionGroup:
+    @pytest.mark.parametrize(
+        "failed_idx,cause_exc,expected_status",
+        [
+            (
+                0,
+                core_exceptions.DeadlineExceeded(
+                    "Operation timed out after 40 seconds"
+                ),
+                status_pb2.Status(
+                    code=code_pb2.DEADLINE_EXCEEDED,
+                    message="Operation timed out after 40 seconds",
+                ),
+            ),
+            (
+                0,
+                RuntimeError("Something happened"),
+                status_pb2.Status(code=code_pb2.UNKNOWN, message="Something happened"),
+            ),
+            (
+                0,
+                bt_exceptions.RetryExceptionGroup(
+                    excs=[
+                        core_exceptions.ServiceUnavailable("Service Unavailable"),
+                        core_exceptions.ServiceUnavailable("Service Unavailable"),
+                        core_exceptions.DeadlineExceeded(
+                            "Operation timed out after 40 seconds"
+                        ),
+                    ]
+                ),
+                status_pb2.Status(
+                    code=code_pb2.DEADLINE_EXCEEDED,
+                    message="Operation timed out after 40 seconds",
+                ),
+            ),
+            (
+                0,
+                bt_exceptions.RetryExceptionGroup(
+                    excs=[
+                        core_exceptions.ServiceUnavailable("Service Unavailable"),
+                        core_exceptions.ServiceUnavailable("Service Unavailable"),
+                        RuntimeError("Something happened"),
+                    ]
+                ),
+                status_pb2.Status(code=code_pb2.UNKNOWN, message="Something happened"),
+            ),
+            (
+                0,
+                None,
+                status_pb2.Status(
+                    code=code_pb2.UNKNOWN, message="An unknown error has occurred"
+                ),
+            ),
+            (
+                100,
+                RuntimeError("Something happened"),
+                status_pb2.Status(code=code_pb2.OK),
+            ),
+            (
+                None,
+                RuntimeError("Something happened"),
+                status_pb2.Status(code=code_pb2.OK),
+            ),
+        ],
+    )
+    def test_get_statuses_from_mutations_exception_group(
+        self, failed_idx, cause_exc, expected_status
+    ):
+        mutation_exception_group = bt_exceptions.MutationsExceptionGroup(
+            excs=[
+                bt_exceptions.FailedMutationEntryError(
+                    failed_idx=failed_idx,
+                    failed_mutation_entry=mock.Mock(),
+                    cause=cause_exc,
+                )
+            ],
+            total_entries=1,
+            message="Mutations failed.",
+        )
+
+        statuses = _helpers._get_statuses_from_mutations_exception_group(
+            mutation_exception_group, 1
+        )
+        assert statuses[0] == expected_status
+
+    def test_get_status_packs_unpacked_error_details(self):
+        err_info = error_details_pb2.ErrorInfo(
+            reason="IAM_PERMISSION_DENIED",
+            domain="bigtable.googleapis.com",
+            metadata={"resource": "projects/p/instances/i/tables/t"},
+        )
+        retry_info = error_details_pb2.RetryInfo()
+        already_packed = any_pb2.Any()
+        already_packed.Pack(retry_info)
+
+        proto_plus_wrapper = mock.Mock()
+        proto_plus_wrapper._pb = error_details_pb2.DebugInfo(detail="stack")
+
+        exc = core_exceptions.PermissionDenied(
+            "Permission denied",
+            details=[err_info, already_packed, proto_plus_wrapper, "ignored"],
+        )
+
+        status = _helpers._get_status(exc)
+        assert status.code == code_pb2.PERMISSION_DENIED
+        assert status.message == "Permission denied"
+        assert len(status.details) == 3
+
+        unpacked_err_info = error_details_pb2.ErrorInfo()
+        assert status.details[0].Unpack(unpacked_err_info)
+        assert unpacked_err_info == err_info
+
+        assert status.details[1] == already_packed
+
+        unpacked_debug_info = error_details_pb2.DebugInfo()
+        assert status.details[2].Unpack(unpacked_debug_info)
+        assert unpacked_debug_info == proto_plus_wrapper._pb
+
+    def test_get_status_handles_malformed_details_and_exceptions(self):
+        err_info = error_details_pb2.ErrorInfo(
+            reason="IAM_PERMISSION_DENIED",
+            domain="bigtable.googleapis.com",
+        )
+
+        class BrokenWrapper:
+            @property
+            def _pb(self):
+                raise RuntimeError("broken _pb property")
+
+        exc = core_exceptions.PermissionDenied(
+            None,
+            details=[BrokenWrapper(), err_info],
+        )
+        status = _helpers._get_status(exc)
+        assert status.code == code_pb2.PERMISSION_DENIED
+        assert status.message == ""
+        assert len(status.details) == 1
+
+        unpacked_err_info = error_details_pb2.ErrorInfo()
+        assert status.details[0].Unpack(unpacked_err_info)
+        assert unpacked_err_info == err_info
+
+        # Non-iterable details falls back to UNKNOWN without raising
+        malformed_exc = core_exceptions.PermissionDenied(
+            "Permission denied",
+            details=123,  # type: ignore[arg-type]
+        )
+        fallback_status = _helpers._get_status(malformed_exc)
+        assert fallback_status.code == code_pb2.UNKNOWN
+        assert "Permission denied" in fallback_status.message
+
+
 class TestGetRetryableErrors:
     @pytest.mark.parametrize(
         "input_codes,input_table,expected",
@@ -266,6 +463,24 @@ class TestGetRetryableErrors:
             setattr(fake_table, f"{key}_retryable_errors", input_table[key])
         result = _helpers._get_retryable_errors(input_codes, fake_table)
         assert result == expected
+
+    @pytest.mark.parametrize(
+        "invalid_code",
+        [
+            0,
+            grpc.StatusCode.OK,
+            -1,
+            999,
+            True,
+            False,
+            "INVALID",
+        ],
+    )
+    def test_get_error_type_invalid_status_code(self, invalid_code):
+        with pytest.raises(ValueError, match="Invalid gRPC error status code"):
+            _helpers._get_error_type(invalid_code)
+        with pytest.raises(ValueError, match="Invalid gRPC error status code"):
+            _helpers._get_retryable_errors([invalid_code], mock.Mock())
 
 
 class TestTrackedBackoffGenerator:

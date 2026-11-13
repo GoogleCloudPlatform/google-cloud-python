@@ -23,14 +23,16 @@ import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 from google.api_core import exceptions as core_exceptions
-from google.api_core import gapic_v1
+from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
+from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
 from google.cloud.tasks_v2 import gapic_version as package_version
-from google.cloud.tasks_v2.types import cloudtasks, queue, task
+from google.cloud.tasks_v2.types import cloudtasks, cmek_config, queue, task
+from google.cloud.tasks_v2.types import cmek_config as gct_cmek_config
 from google.cloud.tasks_v2.types import queue as gct_queue
 from google.cloud.tasks_v2.types import task as gct_task
 
@@ -286,6 +288,11 @@ class CloudTasksTransport(abc.ABC):
                 default_timeout=20.0,
                 client_info=client_info,
             ),
+            self.batch_create_tasks: gapic_v1.method.wrap_method(
+                self.batch_create_tasks,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_task: gapic_v1.method.wrap_method(
                 self.delete_task,
                 default_retry=retries.Retry(
@@ -301,8 +308,23 @@ class CloudTasksTransport(abc.ABC):
                 default_timeout=20.0,
                 client_info=client_info,
             ),
+            self.batch_delete_tasks: gapic_v1.method.wrap_method(
+                self.batch_delete_tasks,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.run_task: gapic_v1.method.wrap_method(
                 self.run_task,
+                default_timeout=20.0,
+                client_info=client_info,
+            ),
+            self.update_cmek_config: gapic_v1.method.wrap_method(
+                self.update_cmek_config,
+                default_timeout=20.0,
+                client_info=client_info,
+            ),
+            self.get_cmek_config: gapic_v1.method.wrap_method(
+                self.get_cmek_config,
                 default_timeout=20.0,
                 client_info=client_info,
             ),
@@ -316,6 +338,11 @@ class CloudTasksTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.get_operation: gapic_v1.method.wrap_method(
+                self.get_operation,
+                default_timeout=None,
+                client_info=client_info,
+            ),
         }
 
     def close(self):
@@ -325,6 +352,11 @@ class CloudTasksTransport(abc.ABC):
              Only call this method if the transport is NOT shared
              with other clients - this may cause errors in other clients!
         """
+        raise NotImplementedError()
+
+    @property
+    def operations_client(self):
+        """Return the client designed to process long-running operations."""
         raise NotImplementedError()
 
     @property
@@ -449,6 +481,15 @@ class CloudTasksTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def batch_create_tasks(
+        self,
+    ) -> Callable[
+        [cloudtasks.BatchCreateTasksRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def delete_task(
         self,
     ) -> Callable[
@@ -458,9 +499,45 @@ class CloudTasksTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def batch_delete_tasks(
+        self,
+    ) -> Callable[
+        [cloudtasks.BatchDeleteTasksRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def run_task(
         self,
     ) -> Callable[[cloudtasks.RunTaskRequest], Union[task.Task, Awaitable[task.Task]]]:
+        raise NotImplementedError()
+
+    @property
+    def update_cmek_config(
+        self,
+    ) -> Callable[
+        [cloudtasks.UpdateCmekConfigRequest],
+        Union[gct_cmek_config.CmekConfig, Awaitable[gct_cmek_config.CmekConfig]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_cmek_config(
+        self,
+    ) -> Callable[
+        [cloudtasks.GetCmekConfigRequest],
+        Union[cmek_config.CmekConfig, Awaitable[cmek_config.CmekConfig]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_operation(
+        self,
+    ) -> Callable[
+        [operations_pb2.GetOperationRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
         raise NotImplementedError()
 
     @property

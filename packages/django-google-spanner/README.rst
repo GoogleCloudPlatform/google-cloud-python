@@ -65,12 +65,13 @@ Supported versions
 ~~~~~~~~~~~~~~~~~~
 
 The library supports `Django 5.2
-<https://docs.djangoproject.com/en/5.2/>`_.
+<https://docs.djangoproject.com/en/5.2/>`_ and `Django 6.0
+<https://docs.djangoproject.com/en/6.0/>`_.
 The minimum required Python version is 3.10.
 
 .. code:: shell
 
-    pip3 install django==5.2
+    pip3 install "django>=5.2,<6.1"
 
 
 Installing the package
@@ -88,7 +89,7 @@ To install from source:
 .. code:: shell
 
     git clone git@github.com:googleapis/google-cloud-python.git
-    cd python-spanner-django
+    cd packages/django-google-spanner
     pip3 install -e .
 
 
@@ -264,6 +265,26 @@ See `CONTRIBUTING <https://github.com/googleapis/google-cloud-python/blob/main/C
 Please note that this project is released with a Contributor Code of Conduct.
 By participating in this project you agree to abide by its terms. See the `Code 
 of Conduct <https://github.com/googleapis/google-cloud-python/blob/main/CODE_OF_CONDUCT.md>`_ for more information.
+
+
+DML RETURNING Behavior
+~~~~~~~~~~~~~~~~~~~~~~
+
+Starting with Django 6.0 compatibility, ``can_return_columns_from_insert = True`` is enabled. Django will generate ``THEN RETURN`` clauses for insert statements that create model instances with database-generated defaults or ``GeneratedField`` columns.
+
+If your application relies on the previous behavior (where returned columns were not queried automatically upon insert), you can disable it in your Django ``AppConfig``:
+
+.. code:: python
+
+    from django.apps import AppConfig
+
+    class MyAppConfig(AppConfig):
+        name = "myapp"
+
+        def ready(self):
+            from django_spanner.features import DatabaseFeatures
+
+            DatabaseFeatures.can_return_columns_from_insert = False
 
 
 Limitations

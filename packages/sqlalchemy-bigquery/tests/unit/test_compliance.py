@@ -166,12 +166,12 @@ def test_likish(faux_conn, meth, arg, expected):
         ],
     )
     expr = getattr(table.c.data, meth)(arg)
-    rows = {value for value, in faux_conn.execute(select(table.c.id).where(expr))}
+    rows = {value for (value,) in faux_conn.execute(select(table.c.id).where(expr))}
     eq_(rows, expected)
 
     all = {i for i in range(1, 11)}
     expr = sqlalchemy.not_(expr)
-    rows = {value for value, in faux_conn.execute(select(table.c.id).where(expr))}
+    rows = {value for (value,) in faux_conn.execute(select(table.c.id).where(expr))}
     eq_(rows, all - expected)
 
 

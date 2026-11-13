@@ -392,6 +392,11 @@ class ReservationServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.update_reservation_group: gapic_v1.method.wrap_method(
+                self.update_reservation_group,
+                default_timeout=None,
+                client_info=client_info,
+            ),
         }
 
     def close(self):
@@ -693,6 +698,15 @@ class ReservationServiceTransport(abc.ABC):
             reservation.ListReservationGroupsResponse,
             Awaitable[reservation.ListReservationGroupsResponse],
         ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_reservation_group(
+        self,
+    ) -> Callable[
+        [reservation.UpdateReservationGroupRequest],
+        Union[reservation.ReservationGroup, Awaitable[reservation.ReservationGroup]],
     ]:
         raise NotImplementedError()
 

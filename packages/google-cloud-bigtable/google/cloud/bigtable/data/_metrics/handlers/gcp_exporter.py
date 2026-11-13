@@ -18,11 +18,17 @@ import logging
 import time
 from collections import defaultdict
 
+import google.auth.credentials
 from google.api.distribution_pb2 import Distribution
 from google.api.metric_pb2 import Metric as GMetric
 from google.api.metric_pb2 import MetricDescriptor
 from google.api.monitored_resource_pb2 import MonitoredResource
 from google.api_core import gapic_v1
+from google.api_core.exceptions import (
+    FailedPrecondition,
+    PermissionDenied,
+    Unauthenticated,
+)
 from google.cloud.monitoring_v3 import (
     CreateTimeSeriesRequest,
     MetricServiceClient,
@@ -115,6 +121,53 @@ def _partition_attributes(
     return resource_labels, metric_labels
 
 
+# scope required to call CreateServiceTimeSeries
+_MONITORING_WRITE_SCOPE = "https://www.googleapis.com/auth/monitoring.write"
+# any one of these scopes is sufficient to write metrics to Cloud Monitoring
+_MONITORING_SCOPES = frozenset(
+    {
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/monitoring",
+        _MONITORING_WRITE_SCOPE,
+    }
+)
+
+
+def _get_monitoring_credentials(
+    credentials: google.auth.credentials.Credentials | None,
+) -> google.auth.credentials.Credentials | None:
+    """
+    Return credentials that are able to authenticate against Cloud Monitoring.
+
+    The metrics exporter shares the credentials of the Bigtable client it belongs to.
+    If those credentials are already pinned to a fixed set of scopes that doesn't
+    cover Cloud Monitoring (for example, credentials created by the legacy
+    ``google.cloud.bigtable.Client``, which only requests Bigtable scopes),
+    ``MetricServiceClient`` can't add its own default scopes to them, and every
+    export would be rejected as UNAUTHENTICATED. In that case, a copy of the
+    credentials scoped to ``monitoring.write`` is returned instead. The original
+    credentials object (and the scopes used for Bigtable traffic) are left untouched.
+
+    Credentials that don't support scoping (e.g. end-user credentials), or that still
+    accept default scopes, are returned unchanged.
+
+    Args:
+        credentials: the credentials used by the Bigtable client, or None to use
+            application default credentials
+    Returns:
+        credentials suitable for the Cloud Monitoring client
+    """
+    if credentials is None:
+        return None
+    if (
+        isinstance(credentials, google.auth.credentials.Scoped)
+        and not credentials.requires_scopes
+        and not _MONITORING_SCOPES.intersection(credentials.scopes or ())
+    ):
+        return credentials.with_scopes([_MONITORING_WRITE_SCOPE])
+    return credentials
+
+
 class GoogleCloudMetricsHandler(OpenTelemetryMetricsHandler):
     """
     Maintains an internal set of OpenTelemetry metrics for the Bigtable client library,
@@ -152,6 +205,7 @@ class GoogleCloudMetricsHandler(OpenTelemetryMetricsHandler):
         super().__init__(*args, instruments=otel, **kwargs)
 
     def close(self):
+        self._exporter.shutting_down = True
         self.meter_provider.shutdown()
 
 
@@ -167,8 +221,19 @@ class BigtableMetricsExporter(MetricExporter):
 
     def __init__(self, *client_args, **client_kwargs):
         super().__init__()
+        if client_kwargs.get("credentials") is not None:
+            # the exporter shares the Bigtable client's credentials. Make sure
+            # they are able to authenticate against Cloud Monitoring
+            client_kwargs["credentials"] = _get_monitoring_credentials(
+                client_kwargs["credentials"]
+            )
         self.client = MetricServiceClient(*client_args, **client_kwargs)
         self.prefix = "bigtable.googleapis.com/internal/client"
+        # set after a non-retryable authentication/authorization failure.
+        # Once disabled, exports are skipped instead of failing (and logging)
+        # on every export interval
+        self._disabled = False
+        self.shutting_down = False
 
     def export(
         self, metrics_data: MetricsData, timeout_millis: float = 10_000, **kwargs
@@ -177,6 +242,8 @@ class BigtableMetricsExporter(MetricExporter):
         Write a set of metrics to Cloud Monitoring.
         This method is called by the OpenTelemetry SDK
         """
+        if self._disabled:
+            return MetricExportResult.FAILURE
         deadline = time.monotonic() + (timeout_millis / 1000)
         metric_kind = MetricDescriptor.MetricKind.CUMULATIVE
         series_by_project: dict[str, list[TimeSeries]] = defaultdict(list)
@@ -231,10 +298,32 @@ class BigtableMetricsExporter(MetricExporter):
                 )
                 self._batch_write(project_id, series_list, deadline)
             return MetricExportResult.SUCCESS
-        except Exception as e:
+        except (Unauthenticated, PermissionDenied) as e:
+            # authentication/authorization failures won't resolve on their own.
+            # Stop exporting instead of failing again on every export interval
+            self._disabled = True
             _LOGGER.warning(
-                "Failed to export metrics to Cloud Monitoring: %s", e, exc_info=True
+                "Bigtable client-side metrics could not be exported to Cloud "
+                "Monitoring for project(s) %s: %s. Client-side metrics are now "
+                "disabled for this client; Bigtable data operations are not "
+                "affected. To publish client-side metrics, make sure the Cloud "
+                "Monitoring API is enabled and the client's credentials are "
+                "allowed to write metrics to the project "
+                "(e.g. roles/monitoring.metricWriter).",
+                ", ".join(series_by_project),
+                e,
             )
+            _LOGGER.debug("Client-side metrics export failure details:", exc_info=True)
+            return MetricExportResult.FAILURE
+        except Exception as e:
+            if self.shutting_down and isinstance(e, FailedPrecondition):
+                # the final export on shutdown usually falls inside the sampling
+                # period of the previous one, and is rejected. This is expected
+                _LOGGER.debug("Final metrics export on shutdown rejected: %s", e)
+            else:
+                _LOGGER.warning(
+                    "Failed to export metrics to Cloud Monitoring: %s", e, exc_info=True
+                )
             return MetricExportResult.FAILURE
 
     def _batch_write(

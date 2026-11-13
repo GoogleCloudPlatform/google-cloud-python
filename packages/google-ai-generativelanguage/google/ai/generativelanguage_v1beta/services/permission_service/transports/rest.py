@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ai.generativelanguage_v1beta._compat import transcode_request
 from google.ai.generativelanguage_v1beta.types import permission, permission_service
 from google.ai.generativelanguage_v1beta.types import permission as gag_permission
 
@@ -660,21 +661,18 @@ class PermissionServiceRestTransport(_BasePermissionServiceRestTransport):
             """
 
             http_options = _BasePermissionServiceRestTransport._BaseCreatePermission._get_http_options()
-
             request, metadata = self._interceptor.pre_create_permission(
                 request, metadata
             )
-            transcoded_request = _BasePermissionServiceRestTransport._BaseCreatePermission._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePermissionServiceRestTransport._BaseCreatePermission._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePermissionServiceRestTransport._BaseCreatePermission._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePermissionServiceRestTransport._BaseCreatePermission,
+                    "_BaseCreatePermission__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -806,17 +804,18 @@ class PermissionServiceRestTransport(_BasePermissionServiceRestTransport):
             """
 
             http_options = _BasePermissionServiceRestTransport._BaseDeletePermission._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_permission(
                 request, metadata
             )
-            transcoded_request = _BasePermissionServiceRestTransport._BaseDeletePermission._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePermissionServiceRestTransport._BaseDeletePermission._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePermissionServiceRestTransport._BaseDeletePermission,
+                    "_BaseDeletePermission__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -941,15 +940,16 @@ class PermissionServiceRestTransport(_BasePermissionServiceRestTransport):
             """
 
             http_options = _BasePermissionServiceRestTransport._BaseGetPermission._get_http_options()
-
             request, metadata = self._interceptor.pre_get_permission(request, metadata)
-            transcoded_request = _BasePermissionServiceRestTransport._BaseGetPermission._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePermissionServiceRestTransport._BaseGetPermission._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePermissionServiceRestTransport._BaseGetPermission,
+                    "_BaseGetPermission__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1086,17 +1086,18 @@ class PermissionServiceRestTransport(_BasePermissionServiceRestTransport):
             """
 
             http_options = _BasePermissionServiceRestTransport._BaseListPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_permissions(
                 request, metadata
             )
-            transcoded_request = _BasePermissionServiceRestTransport._BaseListPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePermissionServiceRestTransport._BaseListPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePermissionServiceRestTransport._BaseListPermissions,
+                    "_BaseListPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1235,21 +1236,18 @@ class PermissionServiceRestTransport(_BasePermissionServiceRestTransport):
             """
 
             http_options = _BasePermissionServiceRestTransport._BaseTransferOwnership._get_http_options()
-
             request, metadata = self._interceptor.pre_transfer_ownership(
                 request, metadata
             )
-            transcoded_request = _BasePermissionServiceRestTransport._BaseTransferOwnership._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePermissionServiceRestTransport._BaseTransferOwnership._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePermissionServiceRestTransport._BaseTransferOwnership._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePermissionServiceRestTransport._BaseTransferOwnership,
+                    "_BaseTransferOwnership__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1411,21 +1409,18 @@ class PermissionServiceRestTransport(_BasePermissionServiceRestTransport):
             """
 
             http_options = _BasePermissionServiceRestTransport._BaseUpdatePermission._get_http_options()
-
             request, metadata = self._interceptor.pre_update_permission(
                 request, metadata
             )
-            transcoded_request = _BasePermissionServiceRestTransport._BaseUpdatePermission._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePermissionServiceRestTransport._BaseUpdatePermission._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePermissionServiceRestTransport._BaseUpdatePermission._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePermissionServiceRestTransport._BaseUpdatePermission,
+                    "_BaseUpdatePermission__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1619,17 +1614,18 @@ class PermissionServiceRestTransport(_BasePermissionServiceRestTransport):
             """
 
             http_options = _BasePermissionServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BasePermissionServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePermissionServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePermissionServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1732,17 +1728,18 @@ class PermissionServiceRestTransport(_BasePermissionServiceRestTransport):
             """
 
             http_options = _BasePermissionServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BasePermissionServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePermissionServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePermissionServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1847,15 +1844,16 @@ class PermissionServiceRestTransport(_BasePermissionServiceRestTransport):
             """
 
             http_options = _BasePermissionServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BasePermissionServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePermissionServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePermissionServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1986,15 +1984,16 @@ class PermissionServiceRestTransport(_BasePermissionServiceRestTransport):
             """
 
             http_options = _BasePermissionServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BasePermissionServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePermissionServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePermissionServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -70,6 +70,9 @@ from google.cloud.iam_admin_v1.types.iam import (
     UpdateRoleRequest,
     UploadServiceAccountKeyRequest,
 )
+from google.cloud.iam_admin_v1.types.workforce_pool_platform_logs import (
+    WorkforcePoolAttributeSyncEventLog,
+)
 
 __all__ = (
     "IAMClient",
@@ -122,4 +125,5 @@ __all__ = (
     "ServiceAccountKeyOrigin",
     "ServiceAccountPrivateKeyType",
     "ServiceAccountPublicKeyType",
+    "WorkforcePoolAttributeSyncEventLog",
 )

@@ -1109,7 +1109,29 @@ class VerifyConfidentialGkeRequest(proto.Message):
         options (google.cloud.confidentialcomputing_v1.types.VerifyConfidentialGkeRequest.ConfidentialGkeOptions):
             Optional. A collection of fields that modify
             the token output.
+        platform_type (google.cloud.confidentialcomputing_v1.types.VerifyConfidentialGkeRequest.PlatformType):
+            Optional. Optional platform security architecture hint for
+            the verifier engine. Defaults to ``VIRTUALIZED_CVM``
+            behavior if unspecified.
     """
+
+    class PlatformType(proto.Enum):
+        r"""Platform types supported by Confidential GKE.
+        This enum is not frozen, and new values may be added in the
+        future.
+
+        Values:
+            PLATFORM_TYPE_UNSPECIFIED (0):
+                Unspecified platform type, defaults to ``VIRTUALIZED_CVM``.
+            VIRTUALIZED_CVM (1):
+                Standard virtualized Confidential GKE VM.
+            BARE_METAL_VTPM (2):
+                Bare Metal host using a vTPM.
+        """
+
+        PLATFORM_TYPE_UNSPECIFIED = 0
+        VIRTUALIZED_CVM = 1
+        BARE_METAL_VTPM = 2
 
     class ConfidentialGkeOptions(proto.Message):
         r"""Token options for Confidential GKE attestation.
@@ -1158,6 +1180,11 @@ class VerifyConfidentialGkeRequest(proto.Message):
         proto.MESSAGE,
         number=3,
         message=ConfidentialGkeOptions,
+    )
+    platform_type: PlatformType = proto.Field(
+        proto.ENUM,
+        number=4,
+        enum=PlatformType,
     )
 
 

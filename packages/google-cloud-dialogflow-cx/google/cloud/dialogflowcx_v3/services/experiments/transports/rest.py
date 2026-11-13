@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dialogflowcx_v3._compat import transcode_request
 from google.cloud.dialogflowcx_v3.types import experiment
 from google.cloud.dialogflowcx_v3.types import experiment as gcdc_experiment
 
@@ -716,21 +717,18 @@ class ExperimentsRestTransport(_BaseExperimentsRestTransport):
             http_options = (
                 _BaseExperimentsRestTransport._BaseCreateExperiment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_experiment(
                 request, metadata
             )
-            transcoded_request = _BaseExperimentsRestTransport._BaseCreateExperiment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseExperimentsRestTransport._BaseCreateExperiment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseExperimentsRestTransport._BaseCreateExperiment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExperimentsRestTransport._BaseCreateExperiment,
+                    "_BaseCreateExperiment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -864,17 +862,18 @@ class ExperimentsRestTransport(_BaseExperimentsRestTransport):
             http_options = (
                 _BaseExperimentsRestTransport._BaseDeleteExperiment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_experiment(
                 request, metadata
             )
-            transcoded_request = _BaseExperimentsRestTransport._BaseDeleteExperiment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseExperimentsRestTransport._BaseDeleteExperiment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExperimentsRestTransport._BaseDeleteExperiment,
+                    "_BaseDeleteExperiment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -979,17 +978,16 @@ class ExperimentsRestTransport(_BaseExperimentsRestTransport):
             http_options = (
                 _BaseExperimentsRestTransport._BaseGetExperiment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_experiment(request, metadata)
-            transcoded_request = _BaseExperimentsRestTransport._BaseGetExperiment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExperimentsRestTransport._BaseGetExperiment._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExperimentsRestTransport._BaseGetExperiment,
+                    "_BaseGetExperiment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1128,17 +1126,18 @@ class ExperimentsRestTransport(_BaseExperimentsRestTransport):
             http_options = (
                 _BaseExperimentsRestTransport._BaseListExperiments._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_experiments(
                 request, metadata
             )
-            transcoded_request = _BaseExperimentsRestTransport._BaseListExperiments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseExperimentsRestTransport._BaseListExperiments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExperimentsRestTransport._BaseListExperiments,
+                    "_BaseListExperiments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1280,21 +1279,18 @@ class ExperimentsRestTransport(_BaseExperimentsRestTransport):
             http_options = (
                 _BaseExperimentsRestTransport._BaseStartExperiment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_start_experiment(
                 request, metadata
             )
-            transcoded_request = _BaseExperimentsRestTransport._BaseStartExperiment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseExperimentsRestTransport._BaseStartExperiment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseExperimentsRestTransport._BaseStartExperiment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExperimentsRestTransport._BaseStartExperiment,
+                    "_BaseStartExperiment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1435,19 +1431,16 @@ class ExperimentsRestTransport(_BaseExperimentsRestTransport):
             http_options = (
                 _BaseExperimentsRestTransport._BaseStopExperiment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_stop_experiment(request, metadata)
-            transcoded_request = _BaseExperimentsRestTransport._BaseStopExperiment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseExperimentsRestTransport._BaseStopExperiment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseExperimentsRestTransport._BaseStopExperiment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExperimentsRestTransport._BaseStopExperiment,
+                    "_BaseStopExperiment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1588,21 +1581,18 @@ class ExperimentsRestTransport(_BaseExperimentsRestTransport):
             http_options = (
                 _BaseExperimentsRestTransport._BaseUpdateExperiment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_experiment(
                 request, metadata
             )
-            transcoded_request = _BaseExperimentsRestTransport._BaseUpdateExperiment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseExperimentsRestTransport._BaseUpdateExperiment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseExperimentsRestTransport._BaseUpdateExperiment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExperimentsRestTransport._BaseUpdateExperiment,
+                    "_BaseUpdateExperiment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1804,19 +1794,16 @@ class ExperimentsRestTransport(_BaseExperimentsRestTransport):
             http_options = (
                 _BaseExperimentsRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseExperimentsRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExperimentsRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExperimentsRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1948,17 +1935,16 @@ class ExperimentsRestTransport(_BaseExperimentsRestTransport):
             http_options = (
                 _BaseExperimentsRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseExperimentsRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExperimentsRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExperimentsRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2087,17 +2073,18 @@ class ExperimentsRestTransport(_BaseExperimentsRestTransport):
             http_options = (
                 _BaseExperimentsRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseExperimentsRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseExperimentsRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExperimentsRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2204,19 +2191,16 @@ class ExperimentsRestTransport(_BaseExperimentsRestTransport):
             http_options = (
                 _BaseExperimentsRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseExperimentsRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseExperimentsRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExperimentsRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2348,15 +2332,16 @@ class ExperimentsRestTransport(_BaseExperimentsRestTransport):
             http_options = (
                 _BaseExperimentsRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseExperimentsRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseExperimentsRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseExperimentsRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

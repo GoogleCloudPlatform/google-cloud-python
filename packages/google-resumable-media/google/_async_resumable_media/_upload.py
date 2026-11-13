@@ -32,22 +32,20 @@ from google._async_resumable_media import _helpers
 from google.resumable_media import _helpers as sync_helpers
 from google.resumable_media import _upload as sync_upload
 from google.resumable_media import common
-
-
 from google.resumable_media._upload import (
-    _CONTENT_TYPE_HEADER,
-    _CONTENT_RANGE_TEMPLATE,
-    _RANGE_UNKNOWN_TEMPLATE,
-    _EMPTY_RANGE_TEMPLATE,
     _BOUNDARY_FORMAT,
-    _MULTIPART_SEP,
-    _CRLF,
-    _MULTIPART_BEGIN,
-    _RELATED_HEADER,
     _BYTES_RANGE_RE,
-    _STREAM_ERROR_TEMPLATE,
+    _CONTENT_RANGE_TEMPLATE,
+    _CONTENT_TYPE_HEADER,
+    _CRLF,
+    _EMPTY_RANGE_TEMPLATE,
+    _MULTIPART_BEGIN,
+    _MULTIPART_SEP,
     _POST,
     _PUT,
+    _RANGE_UNKNOWN_TEMPLATE,
+    _RELATED_HEADER,
+    _STREAM_ERROR_TEMPLATE,
     _UPLOAD_CHECKSUM_MISMATCH_MESSAGE,
     _UPLOAD_METADATA_NO_APPROPRIATE_CHECKSUM_MESSAGE,
 )

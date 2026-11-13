@@ -41,6 +41,7 @@ from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
 from google.cloud.datacatalog_lineage_v1 import gapic_version as package_version
+from google.cloud.datacatalog_lineage_v1._compat import setup_request_id
 
 try:
     OptionalRetry = Union[retries.AsyncRetry, gapic_v1.method._MethodDefault, None]
@@ -421,7 +422,7 @@ class LineageAsyncClient:
             gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
         )
 
-        self._client._setup_request_id(request, "request_id", False)
+        setup_request_id(request, "request_id", False)
 
         # Validate the universe domain.
         self._client._validate_universe_domain()
@@ -543,7 +544,7 @@ class LineageAsyncClient:
             gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
         )
 
-        self._client._setup_request_id(request, "request_id", False)
+        setup_request_id(request, "request_id", False)
 
         # Validate the universe domain.
         self._client._validate_universe_domain()
@@ -670,7 +671,7 @@ class LineageAsyncClient:
             ),
         )
 
-        self._client._setup_request_id(request, "request_id", False)
+        setup_request_id(request, "request_id", False)
 
         # Validate the universe domain.
         self._client._validate_universe_domain()
@@ -1168,7 +1169,7 @@ class LineageAsyncClient:
             gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
         )
 
-        self._client._setup_request_id(request, "request_id", False)
+        setup_request_id(request, "request_id", False)
 
         # Validate the universe domain.
         self._client._validate_universe_domain()
@@ -1793,7 +1794,7 @@ class LineageAsyncClient:
             gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
         )
 
-        self._client._setup_request_id(request, "request_id", False)
+        setup_request_id(request, "request_id", False)
 
         # Validate the universe domain.
         self._client._validate_universe_domain()

@@ -25,6 +25,9 @@ def project_id():
     return os.environ["PROJECT_ID"]
 
 
+@pytest.mark.skip(
+    reason="Skipping automl smoke tests due to service deprecation: https://docs.cloud.google.com/vertex-ai/docs/deprecations?e=48754805"
+)
 @pytest.mark.parametrize("transport", ["grpc", "rest"])
 def test_list_models(project_id: str, transport: str):
     client = automl_v1.AutoMlClient(transport=transport)

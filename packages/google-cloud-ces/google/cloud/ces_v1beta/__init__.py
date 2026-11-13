@@ -13,15 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import sys
-
 import google.api_core as api_core
 
 from google.cloud.ces_v1beta import gapic_version as package_version
 
 __version__ = package_version.__version__
-
-from importlib import metadata
 
 # PEP 0810: Explicit Lazy Imports
 # Python 3.15+ natively intercepts and defers these imports.
@@ -31,6 +27,7 @@ from importlib import metadata
 # Older Python versions safely ignore this variable.
 __lazy_modules__ = {
     "google.cloud.ces_v1beta.services.agent_service",
+    "google.cloud.ces_v1beta.services.assistant_service",
     "google.cloud.ces_v1beta.services.evaluation_service",
     "google.cloud.ces_v1beta.services.session_service",
     "google.cloud.ces_v1beta.services.tool_service",
@@ -42,6 +39,7 @@ __lazy_modules__ = {
     "google.cloud.ces_v1beta.types.agent_transfers",
     "google.cloud.ces_v1beta.types.app",
     "google.cloud.ces_v1beta.types.app_version",
+    "google.cloud.ces_v1beta.types.assistant_service",
     "google.cloud.ces_v1beta.types.auth",
     "google.cloud.ces_v1beta.types.bigquery_export",
     "google.cloud.ces_v1beta.types.changelog",
@@ -86,6 +84,10 @@ __lazy_modules__ = {
 
 
 from .services.agent_service import AgentServiceAsyncClient, AgentServiceClient
+from .services.assistant_service import (
+    AssistantServiceAsyncClient,
+    AssistantServiceClient,
+)
 from .services.evaluation_service import (
     EvaluationServiceAsyncClient,
     EvaluationServiceClient,
@@ -94,7 +96,13 @@ from .services.session_service import SessionServiceAsyncClient, SessionServiceC
 from .services.tool_service import ToolServiceAsyncClient, ToolServiceClient
 from .services.widget_service import WidgetServiceAsyncClient, WidgetServiceClient
 from .types.agent import Agent
-from .types.agent_card import AgentCard, AgentInterface, AgentSkill, RemoteAgentTool
+from .types.agent_card import (
+    AgentCard,
+    AgentInterface,
+    AgentSkill,
+    RemoteA2aConfig,
+    RemoteAgentTool,
+)
 from .types.agent_service import (
     BatchDeleteConversationsRequest,
     BatchDeleteConversationsResponse,
@@ -115,6 +123,7 @@ from .types.agent_service import (
     DeleteGuardrailRequest,
     DeleteToolRequest,
     DeleteToolsetRequest,
+    DeployChannelResponse,
     ExportAppRequest,
     ExportAppResponse,
     GenerateAppResourceOperationMetadata,
@@ -159,6 +168,7 @@ from .types.agent_service import (
     RestoreAppVersionResponse,
     UpdateAgentRequest,
     UpdateAppRequest,
+    UpdateAppVersionRequest,
     UpdateDeploymentRequest,
     UpdateExampleRequest,
     UpdateGuardrailRequest,
@@ -181,6 +191,8 @@ from .types.app import (
     ClientCertificateSettings,
     CloudLoggingSettings,
     ConversationLoggingSettings,
+    CustomVoiceSample,
+    DashboardSettings,
     DataStoreSettings,
     ErrorHandlingSettings,
     EvaluationMetricsThresholds,
@@ -195,6 +207,26 @@ from .types.app import (
     VpcScSettings,
 )
 from .types.app_version import AppSnapshot, AppVersion
+from .types.assistant_service import (
+    ActiveTurnInfo,
+    AssistantChunk,
+    AssistantMessage,
+    AssistantOutput,
+    AssistantSession,
+    AssistantSessionArtifact,
+    AssistantSessionState,
+    ChatAiAssistantRequest,
+    ChatAiAssistantResponse,
+    CreateAssistantSessionRequest,
+    DeleteAssistantSessionRequest,
+    GetAssistantSessionRequest,
+    ListAssistantSessionsRequest,
+    ListAssistantSessionsResponse,
+    RunAssistantRequest,
+    RunAssistantResponse,
+    TypedPayload,
+    UserResponseSuggestions,
+)
 from .types.auth import (
     ApiAuthentication,
     ApiKeyConfig,
@@ -214,9 +246,11 @@ from .types.common import (
     ExecutionType,
     ModelSettings,
     ServiceDirectoryConfig,
+    SessionCheckpoint,
     Span,
     TlsConfig,
     TriggerAction,
+    UiEvent,
 )
 from .types.connector_tool import Action, ConnectorTool
 from .types.connector_toolset import ConnectorToolset
@@ -224,6 +258,7 @@ from .types.conversation import Conversation
 from .types.data_store import DataStore
 from .types.data_store_tool import DataStoreTool
 from .types.deployment import (
+    AgentRegistryDeployment,
     Deployment,
     ExperimentConfig,
     InstagramCredentials,
@@ -331,16 +366,26 @@ from .types.schema import Schema
 from .types.search_suggestions import GoogleSearchSuggestions, WebSearchQuery
 from .types.security_settings import EndpointControlPolicy, SecuritySettings
 from .types.session_service import (
+    ArtifactChunk,
+    AssistantConfirmationRequest,
+    AssistantConfirmationResponse,
+    AssistantSuggestion,
     AudioEncoding,
     BidiSessionClientMessage,
     BidiSessionServerMessage,
+    CancelAssistantTurnRequest,
+    CancelAssistantTurnResponse,
     Citations,
     EndSession,
     Event,
+    GenerateOnboardingSuggestionsRequest,
+    GenerateOnboardingSuggestionsResponse,
     GoAway,
     InputAudioConfig,
     InterruptionSignal,
     MockConfig,
+    OperationCompletedEvent,
+    OptionQuestionsChunk,
     OutputAudioConfig,
     RecognitionResult,
     RunSessionRequest,
@@ -348,8 +393,14 @@ from .types.session_service import (
     SessionConfig,
     SessionInput,
     SessionOutput,
+    StreamChatAiAssistantRequest,
+    StreamChatAiAssistantResponse,
     ToolCalls,
     ToolResponses,
+    TurnCompletedEvent,
+    TurnHandoffEvent,
+    TurnMetadata,
+    TurnResumeSnapshot,
 )
 from .types.system_tool import SystemTool
 from .types.tool import Tool
@@ -366,99 +417,19 @@ from .types.toolset_tool import ToolsetTool
 from .types.widget_service import GenerateChatTokenRequest, GenerateChatTokenResponse
 from .types.widget_tool import WidgetTool
 
-if hasattr(api_core, "check_python_version") and hasattr(
-    api_core, "check_dependency_versions"
-):  # pragma: NO COVER
-    api_core.check_python_version("google.cloud.ces_v1beta")  # type: ignore
-    api_core.check_dependency_versions("google.cloud.ces_v1beta")  # type: ignore
-else:  # pragma: NO COVER
-    # An older version of api_core is installed which does not define the
-    # functions above. We do equivalent checks manually.
-    try:
-        import warnings
-
-        _py_version_str = sys.version.split()[0]
-        _package_label = "google.cloud.ces_v1beta"
-        if sys.version_info < (3, 10):
-            warnings.warn(
-                "You are using a non-supported Python version "
-                + f"({_py_version_str}).  Google will not post any further "
-                + f"updates to {_package_label} supporting this Python version. "
-                + "Please upgrade to the latest Python version, or at "
-                + f"least to Python 3.10, and then update {_package_label}.",
-                FutureWarning,
-            )
-
-        def parse_version_to_tuple(version_string: str):
-            """Safely converts a semantic version string to a comparable tuple of integers.
-            Example: "6.33.5" -> (6, 33, 5)
-            Ignores non-numeric parts and handles common version formats.
-            Args:
-                version_string: Version string in the format "x.y.z" or "x.y.z<suffix>"
-            Returns:
-                Tuple of integers for the parsed version string.
-            """
-            parts = []
-            for part in version_string.split("."):
-                try:
-                    parts.append(int(part))
-                except ValueError:
-                    # If it's a non-numeric part (e.g., '1.0.0b1' -> 'b1'), stop here.
-                    # This is a simplification compared to 'packaging.parse_version', but sufficient
-                    # for comparing strictly numeric semantic versions.
-                    break
-            return tuple(parts)
-
-        def _get_version(dependency_name):
-            try:
-                version_string: str = metadata.version(dependency_name)
-                parsed_version = parse_version_to_tuple(version_string)
-                return (parsed_version, version_string)
-            except Exception:
-                # Catch exceptions from metadata.version() (e.g., PackageNotFoundError)
-                # or errors during parse_version_to_tuple
-                return (None, "--")
-
-        _dependency_package = "google.protobuf"
-        _next_supported_version = "6.33.5"
-        _next_supported_version_tuple = (6, 33, 5)
-        _recommendation = " (we recommend 7.x)"
-        (_version_used, _version_used_string) = _get_version(_dependency_package)
-        if _version_used and _version_used < _next_supported_version_tuple:
-            warnings.warn(
-                f"Package {_package_label} depends on "
-                + f"{_dependency_package}, currently installed at version "
-                + f"{_version_used_string}. Future updates to "
-                + f"{_package_label} will require {_dependency_package} at "
-                + f"version {_next_supported_version} or higher{_recommendation}."
-                + " Please ensure "
-                + "that either (a) your Python environment doesn't pin the "
-                + f"version of {_dependency_package}, so that updates to "
-                + f"{_package_label} can require the higher version, or "
-                + "(b) you manually update your Python environment to use at "
-                + f"least version {_next_supported_version} of "
-                + f"{_dependency_package}.",
-                FutureWarning,
-            )
-    except Exception:
-        warnings.warn(
-            "Could not determine the version of Python "
-            + "currently being used. To continue receiving "
-            + "updates for {_package_label}, ensure you are "
-            + "using a supported version of Python; see "
-            + "https://devguide.python.org/versions/"
-        )
-
 __all__ = (
     "AgentServiceAsyncClient",
+    "AssistantServiceAsyncClient",
     "EvaluationServiceAsyncClient",
     "SessionServiceAsyncClient",
     "ToolServiceAsyncClient",
     "WidgetServiceAsyncClient",
     "Action",
+    "ActiveTurnInfo",
     "Agent",
     "AgentCard",
     "AgentInterface",
+    "AgentRegistryDeployment",
     "AgentServiceClient",
     "AgentSkill",
     "AgentTool",
@@ -470,6 +441,17 @@ __all__ = (
     "App",
     "AppSnapshot",
     "AppVersion",
+    "ArtifactChunk",
+    "AssistantChunk",
+    "AssistantConfirmationRequest",
+    "AssistantConfirmationResponse",
+    "AssistantMessage",
+    "AssistantOutput",
+    "AssistantServiceClient",
+    "AssistantSession",
+    "AssistantSessionArtifact",
+    "AssistantSessionState",
+    "AssistantSuggestion",
     "AudioEncoding",
     "AudioProcessingConfig",
     "AudioRecordingConfig",
@@ -482,8 +464,12 @@ __all__ = (
     "BigQueryExportSettings",
     "Blob",
     "Callback",
+    "CancelAssistantTurnRequest",
+    "CancelAssistantTurnResponse",
     "Changelog",
     "ChannelProfile",
+    "ChatAiAssistantRequest",
+    "ChatAiAssistantResponse",
     "Chunk",
     "Citations",
     "ClientCertificateSettings",
@@ -497,6 +483,7 @@ __all__ = (
     "CreateAgentRequest",
     "CreateAppRequest",
     "CreateAppVersionRequest",
+    "CreateAssistantSessionRequest",
     "CreateDeploymentRequest",
     "CreateEvaluationDatasetRequest",
     "CreateEvaluationExpectationRequest",
@@ -506,12 +493,15 @@ __all__ = (
     "CreateScheduledEvaluationRunRequest",
     "CreateToolRequest",
     "CreateToolsetRequest",
+    "CustomVoiceSample",
+    "DashboardSettings",
     "DataStore",
     "DataStoreSettings",
     "DataStoreTool",
     "DeleteAgentRequest",
     "DeleteAppRequest",
     "DeleteAppVersionRequest",
+    "DeleteAssistantSessionRequest",
     "DeleteConversationRequest",
     "DeleteDeploymentRequest",
     "DeleteEvaluationDatasetRequest",
@@ -525,6 +515,7 @@ __all__ = (
     "DeleteScheduledEvaluationRunRequest",
     "DeleteToolRequest",
     "DeleteToolsetRequest",
+    "DeployChannelResponse",
     "Deployment",
     "EndSession",
     "EndUserAuthConfig",
@@ -571,9 +562,12 @@ __all__ = (
     "GenerateChatTokenResponse",
     "GenerateEvaluationOperationMetadata",
     "GenerateEvaluationRequest",
+    "GenerateOnboardingSuggestionsRequest",
+    "GenerateOnboardingSuggestionsResponse",
     "GetAgentRequest",
     "GetAppRequest",
     "GetAppVersionRequest",
+    "GetAssistantSessionRequest",
     "GetChangelogRequest",
     "GetConversationRequest",
     "GetDeploymentRequest",
@@ -610,6 +604,8 @@ __all__ = (
     "ListAppVersionsResponse",
     "ListAppsRequest",
     "ListAppsResponse",
+    "ListAssistantSessionsRequest",
+    "ListAssistantSessionsResponse",
     "ListChangelogsRequest",
     "ListChangelogsResponse",
     "ListConversationsRequest",
@@ -652,8 +648,10 @@ __all__ = (
     "OmnichannelOperationMetadata",
     "OpenApiTool",
     "OpenApiToolset",
+    "OperationCompletedEvent",
     "OperationMetadata",
     "OptimizationConfig",
+    "OptionQuestionsChunk",
     "OutputAudioConfig",
     "PersonaRunConfig",
     "PythonCodeCondition",
@@ -661,6 +659,7 @@ __all__ = (
     "QualityReport",
     "RecognitionResult",
     "RedactionConfig",
+    "RemoteA2aConfig",
     "RemoteAgentTool",
     "RestoreAppVersionRequest",
     "RestoreAppVersionResponse",
@@ -668,6 +667,8 @@ __all__ = (
     "RetrieveToolSchemaResponse",
     "RetrieveToolsRequest",
     "RetrieveToolsResponse",
+    "RunAssistantRequest",
+    "RunAssistantResponse",
     "RunEvaluationOperationMetadata",
     "RunEvaluationRequest",
     "RunEvaluationResponse",
@@ -682,11 +683,14 @@ __all__ = (
     "ServiceAccountAuthConfig",
     "ServiceAgentIdTokenAuthConfig",
     "ServiceDirectoryConfig",
+    "SessionCheckpoint",
     "SessionConfig",
     "SessionInput",
     "SessionOutput",
     "SessionServiceClient",
     "Span",
+    "StreamChatAiAssistantRequest",
+    "StreamChatAiAssistantResponse",
     "SynthesizeSpeechConfig",
     "SystemTool",
     "TestPersonaVoiceRequest",
@@ -704,8 +708,15 @@ __all__ = (
     "ToolsetTool",
     "TransferRule",
     "TriggerAction",
+    "TurnCompletedEvent",
+    "TurnHandoffEvent",
+    "TurnMetadata",
+    "TurnResumeSnapshot",
+    "TypedPayload",
+    "UiEvent",
     "UpdateAgentRequest",
     "UpdateAppRequest",
+    "UpdateAppVersionRequest",
     "UpdateDeploymentRequest",
     "UpdateEvaluationDatasetRequest",
     "UpdateEvaluationExpectationRequest",
@@ -718,9 +729,13 @@ __all__ = (
     "UpdateToolsetRequest",
     "UploadEvaluationAudioRequest",
     "UploadEvaluationAudioResponse",
+    "UserResponseSuggestions",
     "VpcScSettings",
     "WebSearchQuery",
     "WhatsAppCredentials",
     "WidgetServiceClient",
     "WidgetTool",
 )
+
+api_core.check_python_version("google.cloud.ces_v1beta")
+api_core.check_dependency_versions("google.cloud.ces_v1beta")

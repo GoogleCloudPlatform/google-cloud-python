@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.apigateway_v1._compat import transcode_request
 from google.cloud.apigateway_v1.types import apigateway
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1113,19 +1114,16 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             http_options = (
                 _BaseApiGatewayServiceRestTransport._BaseCreateApi._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_api(request, metadata)
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseCreateApi._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApiGatewayServiceRestTransport._BaseCreateApi._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseCreateApi._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseCreateApi,
+                    "_BaseCreateApi__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1264,21 +1262,18 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             """
 
             http_options = _BaseApiGatewayServiceRestTransport._BaseCreateApiConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_api_config(
                 request, metadata
             )
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseCreateApiConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApiGatewayServiceRestTransport._BaseCreateApiConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseCreateApiConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseCreateApiConfig,
+                    "_BaseCreateApiConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1417,19 +1412,16 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             """
 
             http_options = _BaseApiGatewayServiceRestTransport._BaseCreateGateway._get_http_options()
-
             request, metadata = self._interceptor.pre_create_gateway(request, metadata)
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseCreateGateway._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApiGatewayServiceRestTransport._BaseCreateGateway._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseCreateGateway._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseCreateGateway,
+                    "_BaseCreateGateway__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1568,15 +1560,16 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             http_options = (
                 _BaseApiGatewayServiceRestTransport._BaseDeleteApi._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_api(request, metadata)
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseDeleteApi._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseDeleteApi._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseDeleteApi,
+                    "_BaseDeleteApi__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1713,17 +1706,18 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             """
 
             http_options = _BaseApiGatewayServiceRestTransport._BaseDeleteApiConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_api_config(
                 request, metadata
             )
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseDeleteApiConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseDeleteApiConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseDeleteApiConfig,
+                    "_BaseDeleteApiConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1860,15 +1854,16 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             """
 
             http_options = _BaseApiGatewayServiceRestTransport._BaseDeleteGateway._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_gateway(request, metadata)
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseDeleteGateway._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseDeleteGateway._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseDeleteGateway,
+                    "_BaseDeleteGateway__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2005,19 +2000,16 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             http_options = (
                 _BaseApiGatewayServiceRestTransport._BaseGetApi._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_api(request, metadata)
-            transcoded_request = (
-                _BaseApiGatewayServiceRestTransport._BaseGetApi._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseApiGatewayServiceRestTransport._BaseGetApi._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseGetApi,
+                    "_BaseGetApi__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2155,15 +2147,16 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             """
 
             http_options = _BaseApiGatewayServiceRestTransport._BaseGetApiConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_api_config(request, metadata)
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseGetApiConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseGetApiConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseGetApiConfig,
+                    "_BaseGetApiConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2306,15 +2299,16 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             http_options = (
                 _BaseApiGatewayServiceRestTransport._BaseGetGateway._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_gateway(request, metadata)
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseGetGateway._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseGetGateway._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseGetGateway,
+                    "_BaseGetGateway__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2452,17 +2446,18 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             """
 
             http_options = _BaseApiGatewayServiceRestTransport._BaseListApiConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_api_configs(
                 request, metadata
             )
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseListApiConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseListApiConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseListApiConfigs,
+                    "_BaseListApiConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2603,15 +2598,16 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             http_options = (
                 _BaseApiGatewayServiceRestTransport._BaseListApis._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_apis(request, metadata)
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseListApis._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseListApis._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseListApis,
+                    "_BaseListApis__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2748,15 +2744,16 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             """
 
             http_options = _BaseApiGatewayServiceRestTransport._BaseListGateways._get_http_options()
-
             request, metadata = self._interceptor.pre_list_gateways(request, metadata)
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseListGateways._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseListGateways._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseListGateways,
+                    "_BaseListGateways__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2897,19 +2894,16 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             http_options = (
                 _BaseApiGatewayServiceRestTransport._BaseUpdateApi._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_api(request, metadata)
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseUpdateApi._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApiGatewayServiceRestTransport._BaseUpdateApi._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseUpdateApi._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseUpdateApi,
+                    "_BaseUpdateApi__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3048,21 +3042,18 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             """
 
             http_options = _BaseApiGatewayServiceRestTransport._BaseUpdateApiConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_api_config(
                 request, metadata
             )
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseUpdateApiConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApiGatewayServiceRestTransport._BaseUpdateApiConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseUpdateApiConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseUpdateApiConfig,
+                    "_BaseUpdateApiConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3201,19 +3192,16 @@ class ApiGatewayServiceRestTransport(_BaseApiGatewayServiceRestTransport):
             """
 
             http_options = _BaseApiGatewayServiceRestTransport._BaseUpdateGateway._get_http_options()
-
             request, metadata = self._interceptor.pre_update_gateway(request, metadata)
-            transcoded_request = _BaseApiGatewayServiceRestTransport._BaseUpdateGateway._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApiGatewayServiceRestTransport._BaseUpdateGateway._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApiGatewayServiceRestTransport._BaseUpdateGateway._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApiGatewayServiceRestTransport._BaseUpdateGateway,
+                    "_BaseUpdateGateway__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

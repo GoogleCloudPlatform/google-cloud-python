@@ -56,6 +56,7 @@ __protobuf__ = proto.module(
         "CreateRapidCacheMetadata",
         "UpdateAnywhereCacheMetadata",
         "UpdateRapidCacheMetadata",
+        "DisableRapidCacheMetadata",
         "AnywhereCache",
         "CreateAnywhereCacheRequest",
         "UpdateAnywhereCacheRequest",
@@ -68,6 +69,7 @@ __protobuf__ = proto.module(
         "RapidCache",
         "CreateRapidCacheRequest",
         "UpdateRapidCacheRequest",
+        "DisableRapidCacheRequest",
         "GetRapidCacheRequest",
         "ListRapidCachesRequest",
         "ListRapidCachesResponse",
@@ -1547,6 +1549,55 @@ class UpdateRapidCacheMetadata(proto.Message):
     )
 
 
+class DisableRapidCacheMetadata(proto.Message):
+    r"""Message returned in the metadata field of the Operation
+    resource for DeleteRapidCache operation.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        common_metadata (google.cloud.storage_control_v2.types.CommonLongRunningOperationMetadata):
+            Generic metadata for the long running
+            operation.
+        rapid_cache_id (str):
+            Rapid Cache ID.
+
+            This field is a member of `oneof`_ ``_rapid_cache_id``.
+        zone (str):
+            The zone in which the cache instance is
+            running. For example, us-central1-a.
+
+            This field is a member of `oneof`_ ``_zone``.
+        cache_type (str):
+            Optional. The type of cache. Either rapid
+            cache or rapid cache ultra.
+
+            This field is a member of `oneof`_ ``_cache_type``.
+    """
+
+    common_metadata: "CommonLongRunningOperationMetadata" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="CommonLongRunningOperationMetadata",
+    )
+    rapid_cache_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+        optional=True,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3,
+        optional=True,
+    )
+    cache_type: str = proto.Field(
+        proto.STRING,
+        number=4,
+        optional=True,
+    )
+
+
 class AnywhereCache(proto.Message):
     r"""An Anywhere Cache Instance.
 
@@ -2021,6 +2072,30 @@ class UpdateRapidCacheRequest(proto.Message):
     request_id: str = proto.Field(
         proto.STRING,
         number=3,
+    )
+
+
+class DisableRapidCacheRequest(proto.Message):
+    r"""Request message for DisableRapidCache.
+
+    Attributes:
+        name (str):
+            Required. The name field in the request should be:
+            ``projects/{project}/buckets/{bucket}/rapidCaches/{rapid_cache}``
+        request_id (str):
+            Optional. A unique identifier for this request. UUID is the
+            recommended format, but other formats are still accepted.
+            This request is only idempotent if a ``request_id`` is
+            provided.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=2,
     )
 
 

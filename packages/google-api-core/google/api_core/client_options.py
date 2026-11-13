@@ -48,8 +48,12 @@ You can also pass a mapping object.
 
 """
 
+import typing
 import warnings
 from typing import Callable, Mapping, Optional, Sequence, Tuple
+
+if typing.TYPE_CHECKING:
+    import opentelemetry.trace
 
 from google.api_core import general_helpers
 
@@ -98,6 +102,8 @@ class ClientOptions(object):
             `googleapis.com`. If both `api_endpoint` and `universe_domain` are set,
             then `api_endpoint` is used as the service endpoint. If `api_endpoint` is
             not specified, the format will be `{service}.{universe_domain}`.
+        tracer_provider (Optional["opentelemetry.trace.TracerProvider"]): The OpenTelemetry tracer provider to use
+            for tracing in supported libraries.
 
     Raises:
         ValueError: If both ``client_cert_source`` and ``client_encrypted_cert_source``
@@ -117,6 +123,7 @@ class ClientOptions(object):
         api_key: Optional[str] = None,
         api_audience: Optional[str] = None,
         universe_domain: Optional[str] = None,
+        tracer_provider: Optional["opentelemetry.trace.TracerProvider"] = None,
     ):
         if credentials_file is not None:
             warnings.warn(general_helpers._CREDENTIALS_FILE_WARNING, DeprecationWarning)
@@ -136,6 +143,7 @@ class ClientOptions(object):
         self.api_key = api_key
         self.api_audience = api_audience
         self.universe_domain = universe_domain
+        self.tracer_provider = tracer_provider
 
     def __repr__(self) -> str:
         return "ClientOptions: " + repr(self.__dict__)

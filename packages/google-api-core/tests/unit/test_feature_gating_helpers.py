@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import pytest
+
 from google.api_core import _feature_gating_helpers
 from google.api_core._feature_gating_helpers import (
     FeatureGatingError,

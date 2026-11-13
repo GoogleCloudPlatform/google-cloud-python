@@ -4,6 +4,30 @@
 
 [1]: https://pypi.org/project/google-auth-oauthlib/#history
 
+## [1.5.0](https://github.com/googleapis/google-cloud-python/compare/google-auth-oauthlib-v1.4.1...google-auth-oauthlib-v1.5.0) (2026-09-29)
+
+
+### Features
+
+* declare Python3.15 support ([05b0c34](https://github.com/googleapis/google-cloud-python/commit/05b0c342683b2b0e1b8dccd201ec86ec89612edc))
+
+
+### Bug Fixes
+
+* **google-auth-oauthlib:** prevent ipv6 address reuse ([#18463](https://github.com/googleapis/google-cloud-python/issues/18463)) ([30b4f44](https://github.com/googleapis/google-cloud-python/commit/30b4f440c24db348b043382178e53727c49c96de))
+
+## [1.4.1](https://github.com/googleapis/google-cloud-python/compare/google-auth-oauthlib-v1.4.0...google-auth-oauthlib-v1.4.1) (2026-08-21)
+
+
+### Bug Fixes
+
+* **google-auth-oauthlib:** prevent port re-use on windows ([#18166](https://github.com/googleapis/google-cloud-python/issues/18166)) ([e20796a](https://github.com/googleapis/google-cloud-python/commit/e20796a4ad6c8db70c24bec24851834ea76d7537))
+
+
+### Documentation
+
+* **handwritten:** centralize CONTRIBUTING.rst pointers ([#17642](https://github.com/googleapis/google-cloud-python/issues/17642)) ([23b9499](https://github.com/googleapis/google-cloud-python/commit/23b94994bd5251493b81d91657d1f79a5d3c4b97))
+
 ## [1.4.0](https://github.com/googleapis/google-cloud-python/compare/google-auth-oauthlib-v1.3.1...google-auth-oauthlib-v1.4.0) (2026-05-06)
 
 

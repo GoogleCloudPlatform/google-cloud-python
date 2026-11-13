@@ -35,10 +35,7 @@ Those steps are:
 import sys
 
 from google.auth import exceptions
-from google.oauth2 import _client
-from google.oauth2 import _client_async
-from google.oauth2 import challenges
-from google.oauth2 import reauth
+from google.oauth2 import _client, _client_async, challenges, reauth
 
 
 async def _get_challenges(

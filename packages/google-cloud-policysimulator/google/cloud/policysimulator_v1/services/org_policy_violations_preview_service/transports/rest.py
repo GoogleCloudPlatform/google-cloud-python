@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.policysimulator_v1._compat import transcode_request
 from google.cloud.policysimulator_v1.types import orgpolicy as gcp_orgpolicy
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -628,23 +629,20 @@ class OrgPolicyViolationsPreviewServiceRestTransport(
             """
 
             http_options = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseCreateOrgPolicyViolationsPreview._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_create_org_policy_violations_preview(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseCreateOrgPolicyViolationsPreview._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseCreateOrgPolicyViolationsPreview._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseCreateOrgPolicyViolationsPreview._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseCreateOrgPolicyViolationsPreview,
+                    "_BaseCreateOrgPolicyViolationsPreview__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -794,17 +792,18 @@ class OrgPolicyViolationsPreviewServiceRestTransport(
             """
 
             http_options = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseGetOrgPolicyViolationsPreview._get_http_options()
-
             request, metadata = self._interceptor.pre_get_org_policy_violations_preview(
                 request, metadata
             )
-            transcoded_request = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseGetOrgPolicyViolationsPreview._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseGetOrgPolicyViolationsPreview._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseGetOrgPolicyViolationsPreview,
+                    "_BaseGetOrgPolicyViolationsPreview__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -951,17 +950,18 @@ class OrgPolicyViolationsPreviewServiceRestTransport(
             """
 
             http_options = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseListOrgPolicyViolations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_org_policy_violations(
                 request, metadata
             )
-            transcoded_request = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseListOrgPolicyViolations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseListOrgPolicyViolations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseListOrgPolicyViolations,
+                    "_BaseListOrgPolicyViolations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1106,19 +1106,20 @@ class OrgPolicyViolationsPreviewServiceRestTransport(
             """
 
             http_options = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseListOrgPolicyViolationsPreviews._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_org_policy_violations_previews(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseListOrgPolicyViolationsPreviews._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseListOrgPolicyViolationsPreviews._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseListOrgPolicyViolationsPreviews,
+                    "_BaseListOrgPolicyViolationsPreviews__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1314,15 +1315,16 @@ class OrgPolicyViolationsPreviewServiceRestTransport(
             """
 
             http_options = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1453,15 +1455,16 @@ class OrgPolicyViolationsPreviewServiceRestTransport(
             """
 
             http_options = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOrgPolicyViolationsPreviewServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

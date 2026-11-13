@@ -16,16 +16,11 @@
 
 import configparser
 import os
+import pathlib
 import re
-import time
+import sys
 
-from google.api_core import datetime_helpers
-from google.api_core.exceptions import AlreadyExists, ResourceExhausted
 from google.cloud.spanner_v1 import Client
-from google.cloud.spanner_v1.database import Database
-from google.cloud.spanner_v1.instance import Instance
-
-from create_test_config import set_test_config
 
 USE_EMULATOR = os.getenv("SPANNER_EMULATOR_HOST") is not None
 
@@ -43,21 +38,39 @@ else:
     CLIENT = Client(project=PROJECT)
 
 
-def delete_test_database():
+def delete_test_database(config_filename="test.cfg"):
     """Delete the currently configured test database."""
     config = configparser.ConfigParser()
-    if os.path.exists("test.cfg"):
-        config.read("test.cfg")
+    config_path = pathlib.Path(config_filename)
+    if config_path.exists():
+        config.read(config_path)
     else:
         config.read("setup.cfg")
+
     db_url = config.get("db", "default")
 
     instance_id = re.findall(r"instances(.*?)databases", db_url)
     database_id = re.findall(r"databases(.*?)$", db_url)
 
-    instance = CLIENT.instance(instance_id="".join(instance_id).replace("/", ""))
-    database = instance.database("".join(database_id).replace("/", ""))
+    instance_id_str = "".join(instance_id).replace("/", "")
+    database_id_str = "".join(database_id).replace("/", "")
+
+    instance = CLIENT.instance(instance_id=instance_id_str)
+    database = instance.database(database_id_str)
     database.drop()
 
+    # Clean up session-specific config file
+    if config_path.exists() and config_filename != "setup.cfg":
+        try:
+            config_path.unlink()
+        except Exception:
+            pass
 
-delete_test_database()
+
+def main(argv):
+    config_filename = argv[0] if argv else os.getenv("SQLALCHEMY_SPANNER_CONFIG", "test.cfg")
+    delete_test_database(config_filename)
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

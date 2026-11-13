@@ -398,6 +398,11 @@ class AgentServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.update_app_version: gapic_v1.method.wrap_method(
+                self.update_app_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_app_version: gapic_v1.method.wrap_method(
                 self.delete_app_version,
                 default_timeout=None,
@@ -904,6 +909,15 @@ class AgentServiceTransport(abc.ABC):
         self,
     ) -> Callable[
         [agent_service.CreateAppVersionRequest],
+        Union[gcc_app_version.AppVersion, Awaitable[gcc_app_version.AppVersion]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_app_version(
+        self,
+    ) -> Callable[
+        [agent_service.UpdateAppVersionRequest],
         Union[gcc_app_version.AppVersion, Awaitable[gcc_app_version.AppVersion]],
     ]:
         raise NotImplementedError()

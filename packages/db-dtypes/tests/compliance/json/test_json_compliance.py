@@ -152,7 +152,8 @@ class TestJSONArrayInterface(base.BaseInterfaceTests):
         # Until pandas changes the existing tests, this compliance test
         # will continue to fail.
         import numpy as np
-        from pandas.compat.numpy import np_version_gt2
+
+        np_version_gt2 = int(np.__version__.split(".")[0]) >= 2
 
         result_copy1 = np.array(data, copy=True)
         result_copy2 = np.array(data, copy=True)
@@ -184,6 +185,17 @@ class TestJSONArrayParsing(base.BaseParsingTests):
 
 
 class TestJSONArrayMethods(base.BaseMethodsTests):
+    @pytest.mark.xfail(
+        reason="`to_numpy` returns serialized JSON, "
+        + "while `__getitem__` returns JSON objects."
+    )
+    def test_map(self, data_missing, na_action):
+        super().test_map(data_missing, na_action)
+
+    @pytest.mark.xfail(reason="read_json does not preserve custom ExtensionDtype")
+    def test_json_roundtrip(self, data):
+        super().test_json_roundtrip(data)
+
     @pytest.mark.xfail(reason="Unhashable")
     def test_value_counts_with_normalize(self, data):
         super().test_value_counts_with_normalize(data)
@@ -277,6 +289,10 @@ class TestJSONArrayMissing(base.BaseMissingTests):
         """We treat dictionaries as a mapping in fillna, not a scalar."""
         super().test_fillna_frame()
 
+    @pytest.mark.xfail(reason="Setting a dict as a scalar")
+    def test_fillna_scalar(self, data_missing):
+        super().test_fillna_scalar(data_missing)
+
     def test_fillna_no_op_returns_copy(self, data):
         pytest.xfail("Failing with pandas prerelease: copy behavior change")
 
@@ -320,6 +336,10 @@ class TestJSONArrayPrinting(base.BasePrintingTests):
 
 
 class TestJSONArrayReduce(base.BaseReduceTests):
+    @pytest.mark.skip(reason="JSONArray does not support reduce_array")
+    def test_reduce_array(self, request, data, all_reductions, skipna: bool):
+        super().test_reduce_array(request, data, all_reductions, skipna)
+
     @pytest.mark.filterwarnings("ignore::RuntimeWarning")
     @pytest.mark.parametrize("skipna", [True, False])
     def test_reduce_series_numeric(self, data, all_numeric_reductions, skipna):

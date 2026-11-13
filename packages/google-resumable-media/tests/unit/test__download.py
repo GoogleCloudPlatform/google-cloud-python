@@ -14,13 +14,11 @@
 
 import http.client
 import io
-
 from unittest import mock
+
 import pytest  # type: ignore
 
-from google.resumable_media import _download
-from google.resumable_media import common
-
+from google.resumable_media import _download, common
 
 EXAMPLE_URL = (
     "https://www.googleapis.com/download/storage/v1/b/{BUCKET}/o/{OBJECT}?alt=media"

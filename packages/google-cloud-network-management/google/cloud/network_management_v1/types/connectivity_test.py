@@ -252,6 +252,11 @@ class Endpoint(proto.Message):
             Connection <https://docs.cloud.google.com/database-migration/docs/reference/rest/v1/projects.locations.privateConnections>`__
             name format:
             projects/{project}/locations/{location}/privateConnections/{privateConnection}.
+        datastream_private_connection (str):
+            A `Datastream Private
+            Connection <https://docs.cloud.google.com/datastream/docs/reference/rest/v1/projects.locations.privateConnections>`__
+            name format:
+            projects/{project}/locations/{location}/privateConnections/{privateConnection}.
         cloud_function (google.cloud.network_management_v1.types.Endpoint.CloudFunctionEndpoint):
             A `Cloud Function <https://cloud.google.com/functions>`__.
             Applicable only to source endpoint.
@@ -466,6 +471,10 @@ class Endpoint(proto.Message):
     dms_private_connection: str = proto.Field(
         proto.STRING,
         number=22,
+    )
+    datastream_private_connection: str = proto.Field(
+        proto.STRING,
+        number=23,
     )
     cloud_function: CloudFunctionEndpoint = proto.Field(
         proto.MESSAGE,

@@ -700,6 +700,10 @@ class CompletionConfig(proto.Message):
             [GetOperation][google.longrunning.Operations.GetOperation]
             API to retrieve the latest state of the Long Running
             Operation.
+        enable_agent_prompts (bool):
+            Optional. If set to true, the conversational
+            shopping agent prompts will be served. Default
+            value is false.
     """
 
     name: str = proto.Field(
@@ -748,6 +752,10 @@ class CompletionConfig(proto.Message):
     last_allowlist_import_operation: str = proto.Field(
         proto.STRING,
         number=10,
+    )
+    enable_agent_prompts: bool = proto.Field(
+        proto.BOOL,
+        number=16,
     )
 
 

@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.webrisk_v1._compat import transcode_request
 from google.cloud.webrisk_v1.types import webrisk
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -655,17 +656,18 @@ class WebRiskServiceRestTransport(_BaseWebRiskServiceRestTransport):
             """
 
             http_options = _BaseWebRiskServiceRestTransport._BaseComputeThreatListDiff._get_http_options()
-
             request, metadata = self._interceptor.pre_compute_threat_list_diff(
                 request, metadata
             )
-            transcoded_request = _BaseWebRiskServiceRestTransport._BaseComputeThreatListDiff._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWebRiskServiceRestTransport._BaseComputeThreatListDiff._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebRiskServiceRestTransport._BaseComputeThreatListDiff,
+                    "_BaseComputeThreatListDiff__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -805,21 +807,18 @@ class WebRiskServiceRestTransport(_BaseWebRiskServiceRestTransport):
             """
 
             http_options = _BaseWebRiskServiceRestTransport._BaseCreateSubmission._get_http_options()
-
             request, metadata = self._interceptor.pre_create_submission(
                 request, metadata
             )
-            transcoded_request = _BaseWebRiskServiceRestTransport._BaseCreateSubmission._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWebRiskServiceRestTransport._BaseCreateSubmission._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWebRiskServiceRestTransport._BaseCreateSubmission._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebRiskServiceRestTransport._BaseCreateSubmission,
+                    "_BaseCreateSubmission__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -957,15 +956,16 @@ class WebRiskServiceRestTransport(_BaseWebRiskServiceRestTransport):
             http_options = (
                 _BaseWebRiskServiceRestTransport._BaseSearchHashes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_hashes(request, metadata)
-            transcoded_request = _BaseWebRiskServiceRestTransport._BaseSearchHashes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWebRiskServiceRestTransport._BaseSearchHashes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebRiskServiceRestTransport._BaseSearchHashes,
+                    "_BaseSearchHashes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1102,17 +1102,16 @@ class WebRiskServiceRestTransport(_BaseWebRiskServiceRestTransport):
             http_options = (
                 _BaseWebRiskServiceRestTransport._BaseSearchUris._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_uris(request, metadata)
-            transcoded_request = _BaseWebRiskServiceRestTransport._BaseSearchUris._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWebRiskServiceRestTransport._BaseSearchUris._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebRiskServiceRestTransport._BaseSearchUris,
+                    "_BaseSearchUris__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1253,25 +1252,16 @@ class WebRiskServiceRestTransport(_BaseWebRiskServiceRestTransport):
             http_options = (
                 _BaseWebRiskServiceRestTransport._BaseSubmitUri._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_submit_uri(request, metadata)
-            transcoded_request = (
-                _BaseWebRiskServiceRestTransport._BaseSubmitUri._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseWebRiskServiceRestTransport._BaseSubmitUri._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWebRiskServiceRestTransport._BaseSubmitUri._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebRiskServiceRestTransport._BaseSubmitUri,
+                    "_BaseSubmitUri__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1447,21 +1437,18 @@ class WebRiskServiceRestTransport(_BaseWebRiskServiceRestTransport):
             """
 
             http_options = _BaseWebRiskServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseWebRiskServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWebRiskServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWebRiskServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebRiskServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1564,17 +1551,18 @@ class WebRiskServiceRestTransport(_BaseWebRiskServiceRestTransport):
             """
 
             http_options = _BaseWebRiskServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseWebRiskServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWebRiskServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebRiskServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1681,15 +1669,16 @@ class WebRiskServiceRestTransport(_BaseWebRiskServiceRestTransport):
             http_options = (
                 _BaseWebRiskServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseWebRiskServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWebRiskServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebRiskServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1821,15 +1810,16 @@ class WebRiskServiceRestTransport(_BaseWebRiskServiceRestTransport):
             http_options = (
                 _BaseWebRiskServiceRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseWebRiskServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWebRiskServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebRiskServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

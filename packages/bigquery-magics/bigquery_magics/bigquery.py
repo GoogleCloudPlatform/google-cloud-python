@@ -106,33 +106,33 @@
 from __future__ import print_function
 
 import ast
-from concurrent import futures
 import copy
 import json
 import re
 import sys
 import threading
 import time
-from typing import Any, List, Tuple
 import warnings
+from concurrent import futures
+from typing import Any, List, Tuple
 
 import IPython  # type: ignore
-from IPython.core import magic_arguments  # type: ignore
-from IPython.core.getipython import get_ipython
+import pandas
 from google.api_core.exceptions import NotFound
 from google.cloud import bigquery
 from google.cloud.bigquery import exceptions
 from google.cloud.bigquery.dataset import DatasetReference
 from google.cloud.bigquery.dbapi import _helpers
 from google.cloud.bigquery.job import QueryJobConfig
-import pandas
+from IPython.core import magic_arguments  # type: ignore
+from IPython.core.getipython import get_ipython
 
-from bigquery_magics import core
-from bigquery_magics import line_arg_parser as lap
 import bigquery_magics._versions_helpers
 import bigquery_magics.config
 import bigquery_magics.graph_server as graph_server
 import bigquery_magics.pyformat
+from bigquery_magics import core
+from bigquery_magics import line_arg_parser as lap
 
 try:
     from google.cloud import bigquery_storage  # type: ignore
@@ -471,8 +471,9 @@ def _parse_magic_args(line: str) -> Tuple[List[Any], Any]:
 
     except lap.ParseError as exc:
         raise ValueError(
-            "Unrecognized input, are option values correct? "
-            "Error details: {}".format(exc.args[0])
+            "Unrecognized input, are option values correct? Error details: {}".format(
+                exc.args[0]
+            )
         ) from exc
 
     params = []

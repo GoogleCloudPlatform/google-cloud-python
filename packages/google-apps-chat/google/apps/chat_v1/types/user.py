@@ -28,11 +28,12 @@ __protobuf__ = proto.module(
 
 
 class User(proto.Message):
-    r"""A user in Google Chat. When returned as an output from a request, if
-    your Chat app `authenticates as a
+    r"""If your Chat app `authenticates as a
     user <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__,
-    the output for a ``User`` resource only populates the user's
-    ``name`` and ``type``.
+    the output for a ``User`` resource (such as in the Messages and
+    Memberships APIs) only populates the ``name`` and ``type`` fields
+    for both internal and external users, unless they are members of the
+    space or have prior affinity with the calling user.
 
     Attributes:
         name (str):
@@ -64,6 +65,38 @@ class User(proto.Message):
               will be returned from the API.
         display_name (str):
             Output only. The user's display name.
+
+            Populated for both app authentication and user
+            authentication. This field is always populated for requests
+            made with `app
+            authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-app>`__.
+            When calling the Messages and Memberships APIs with `user
+            authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__,
+            this field is populated for both internal and external users
+            for the ``sender`` of a message, users within
+            ``annotations`` (such as user mentions), and within
+            ``Membership`` resources, provided the user is a member of
+            the space or has prior affinity with the calling user.
+        avatar_url (str):
+            Output only. The user's avatar image URL.
+
+            When calling the Messages and Memberships APIs with `user
+            authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__,
+            this field is populated for both internal and external users
+            for the ``sender`` of a message, users within
+            ``annotations`` (such as user mentions), and within
+            ``Membership`` resources, provided the user is a member of
+            the space or has prior affinity with the calling user.
+        email (str):
+            Output only. The user's email address.
+
+            When calling the Messages and Memberships APIs with `user
+            authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-user>`__,
+            this field is populated for both internal and external users
+            for the ``sender`` of a message, users within
+            ``annotations`` (such as user mentions), and within
+            ``Membership`` resources, provided the user is a member of
+            the space or has prior affinity with the calling user.
         domain_id (str):
             Unique identifier of the user's Google
             Workspace domain.
@@ -71,7 +104,9 @@ class User(proto.Message):
             User type.
         is_anonymous (bool):
             Output only. When ``true``, the user is deleted or their
-            profile is not visible.
+            profile is not visible, such as when a user is mentioned in
+            a space without being a member and without prior affinity
+            with the calling user.
     """
 
     class Type(proto.Enum):
@@ -97,6 +132,14 @@ class User(proto.Message):
     display_name: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    avatar_url: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    email: str = proto.Field(
+        proto.STRING,
+        number=4,
     )
     domain_id: str = proto.Field(
         proto.STRING,

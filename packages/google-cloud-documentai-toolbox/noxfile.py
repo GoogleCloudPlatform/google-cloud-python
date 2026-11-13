@@ -31,6 +31,11 @@ FLAKE8_VERSION = "flake8==6.1.0"
 BLACK_VERSION = "black[jupyter]==23.7.0"
 RUFF_VERSION = "ruff==0.14.14"
 ISORT_VERSION = "isort==5.11.0"
+# Temporarily pin pytest<9.2 because pytest 9.2.0 applies filterwarnings=error
+# before pytest_configure hooks run, turning pytest-asyncio's unset
+# asyncio_default_fixture_loop_scope warning into an error. Remove once
+# pytest 9.2+ warning and fixture scope deprecations are resolved.
+PYTEST_VERSION = "pytest<9.2"
 LINT_PATHS = ["docs", "google", "tests", "noxfile.py", "setup.py"]
 
 DEFAULT_PYTHON_VERSION = "3.14"
@@ -47,7 +52,7 @@ UNIT_TEST_PYTHON_VERSIONS: List[str] = [
 UNIT_TEST_STANDARD_DEPENDENCIES = [
     "mock",
     "asyncmock",
-    "pytest",
+    PYTEST_VERSION,
     "pytest-cov",
     "pytest-asyncio",
 ]
@@ -60,7 +65,7 @@ UNIT_TEST_EXTRAS_BY_PYTHON: Dict[str, List[str]] = {}
 SYSTEM_TEST_PYTHON_VERSIONS: List[str] = ["3.12"]
 SYSTEM_TEST_STANDARD_DEPENDENCIES: List[str] = [
     "mock",
-    "pytest",
+    PYTEST_VERSION,
     "google-cloud-testutils",
 ]
 SYSTEM_TEST_EXTERNAL_DEPENDENCIES: List[str] = []
@@ -109,10 +114,24 @@ def lint(session):
     Returns a failure if the linters find linting errors or sufficiently
     serious code quality issues.
     """
-    session.install(FLAKE8_VERSION, BLACK_VERSION)
+    session.install(FLAKE8_VERSION, RUFF_VERSION)
+    # 1. Check imports
     session.run(
-        "black",
+        "ruff",
+        "check",
+        "--select",
+        "I",
+        f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
+        "--line-length=88",
+        *LINT_PATHS,
+    )
+    # 2. Check formatting
+    session.run(
+        "ruff",
+        "format",
         "--check",
+        f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
+        "--line-length=88",
         *LINT_PATHS,
     )
     session.run("flake8", "google", "tests")
@@ -200,11 +219,6 @@ def install_unittest_dependencies(session, *constraints):
 )
 def unit(session, protobuf_implementation):
     # Install all test dependencies, then install this package in-place.
-    if session.python == "3.15":
-        session.skip(
-            "Skipping 3.15 until wheels are available for 1. numba (from dependency pandas[performance]) 2. lxml (from dependency pikepdf) 3. pyarrow."
-        )
-
     constraints_path = str(
         CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
     )
@@ -536,16 +550,27 @@ def core_deps_from_source(session, protobuf_implementation):
     install_unittest_dependencies(session, "-c", constraints_path)
 
     core_dependencies_from_source = [
-        "googleapis-common-protos @ git+https://github.com/googleapis/google-cloud-python#egg=googleapis-common-protos&subdirectory=packages/googleapis-common-protos",
-        "google-api-core @ git+https://github.com/googleapis/google-cloud-python#egg=google-api-core&subdirectory=packages/google-api-core",
-        "google-auth @ git+https://github.com/googleapis/google-cloud-python#egg=google-auth&subdirectory=packages/google-auth",
-        "grpc-google-iam-v1 @ git+https://github.com/googleapis/google-cloud-python#egg=grpc-google-iam-v1&subdirectory=packages/grpc-google-iam-v1",
-        "proto-plus @ git+https://github.com/googleapis/google-cloud-python#egg=proto-plus&subdirectory=packages/proto-plus",
+        "googleapis-common-protos",
+        "google-api-core",
+        "google-auth",
+        "grpc-google-iam-v1",
+        "proto-plus",
     ]
 
-    for dep in core_dependencies_from_source:
-        session.install(dep, "--no-deps", "--ignore-installed")
-        print(f"Installed {dep}")
+    deps_dir = next(
+        p / "packages" for p in CURRENT_DIRECTORY.parents if (p / "packages").is_dir()
+    )
+
+    local_paths = [
+        str(deps_dir / dep)
+        for dep in core_dependencies_from_source
+        if (deps_dir / dep).exists()
+    ]
+    if local_paths:
+        session.install(*local_paths, "--no-deps", "--ignore-installed")
+        print(
+            f"Installed {', '.join(core_dependencies_from_source)} locally from {deps_dir}"
+        )
 
     tests_path = os.path.join("tests", "unit")
     session.run(

@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_productstudio_v1alpha._compat import transcode_request
 from google.shopping.merchant_productstudio_v1alpha.types import image
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -411,21 +412,18 @@ class ImageServiceRestTransport(_BaseImageServiceRestTransport):
             """
 
             http_options = _BaseImageServiceRestTransport._BaseGenerateProductImageBackground._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_product_image_background(
                 request, metadata
             )
-            transcoded_request = _BaseImageServiceRestTransport._BaseGenerateProductImageBackground._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseImageServiceRestTransport._BaseGenerateProductImageBackground._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseImageServiceRestTransport._BaseGenerateProductImageBackground._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseImageServiceRestTransport._BaseGenerateProductImageBackground,
+                    "_BaseGenerateProductImageBackground__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -572,21 +570,18 @@ class ImageServiceRestTransport(_BaseImageServiceRestTransport):
             """
 
             http_options = _BaseImageServiceRestTransport._BaseRemoveProductImageBackground._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_product_image_background(
                 request, metadata
             )
-            transcoded_request = _BaseImageServiceRestTransport._BaseRemoveProductImageBackground._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseImageServiceRestTransport._BaseRemoveProductImageBackground._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseImageServiceRestTransport._BaseRemoveProductImageBackground._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseImageServiceRestTransport._BaseRemoveProductImageBackground,
+                    "_BaseRemoveProductImageBackground__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -731,21 +726,18 @@ class ImageServiceRestTransport(_BaseImageServiceRestTransport):
             """
 
             http_options = _BaseImageServiceRestTransport._BaseUpscaleProductImage._get_http_options()
-
             request, metadata = self._interceptor.pre_upscale_product_image(
                 request, metadata
             )
-            transcoded_request = _BaseImageServiceRestTransport._BaseUpscaleProductImage._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseImageServiceRestTransport._BaseUpscaleProductImage._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseImageServiceRestTransport._BaseUpscaleProductImage._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseImageServiceRestTransport._BaseUpscaleProductImage,
+                    "_BaseUpscaleProductImage__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

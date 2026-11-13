@@ -30,6 +30,7 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.modelarmor_v1._compat import transcode_request
 from google.cloud.modelarmor_v1.types import service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -733,23 +734,16 @@ class ModelArmorRestTransport(_BaseModelArmorRestTransport):
             http_options = (
                 _BaseModelArmorRestTransport._BaseCreateTemplate._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_template(request, metadata)
-            transcoded_request = _BaseModelArmorRestTransport._BaseCreateTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseModelArmorRestTransport._BaseCreateTemplate._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseModelArmorRestTransport._BaseCreateTemplate._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelArmorRestTransport._BaseCreateTemplate,
+                    "_BaseCreateTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -882,17 +876,16 @@ class ModelArmorRestTransport(_BaseModelArmorRestTransport):
             http_options = (
                 _BaseModelArmorRestTransport._BaseDeleteTemplate._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_template(request, metadata)
-            transcoded_request = _BaseModelArmorRestTransport._BaseDeleteTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseModelArmorRestTransport._BaseDeleteTemplate._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelArmorRestTransport._BaseDeleteTemplate,
+                    "_BaseDeleteTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -996,17 +989,18 @@ class ModelArmorRestTransport(_BaseModelArmorRestTransport):
             http_options = (
                 _BaseModelArmorRestTransport._BaseGetFloorSetting._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_floor_setting(
                 request, metadata
             )
-            transcoded_request = _BaseModelArmorRestTransport._BaseGetFloorSetting._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseModelArmorRestTransport._BaseGetFloorSetting._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelArmorRestTransport._BaseGetFloorSetting,
+                    "_BaseGetFloorSetting__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1142,19 +1136,16 @@ class ModelArmorRestTransport(_BaseModelArmorRestTransport):
             http_options = (
                 _BaseModelArmorRestTransport._BaseGetTemplate._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_template(request, metadata)
-            transcoded_request = (
-                _BaseModelArmorRestTransport._BaseGetTemplate._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseModelArmorRestTransport._BaseGetTemplate._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelArmorRestTransport._BaseGetTemplate,
+                    "_BaseGetTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1293,19 +1284,16 @@ class ModelArmorRestTransport(_BaseModelArmorRestTransport):
             http_options = (
                 _BaseModelArmorRestTransport._BaseListTemplates._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_templates(request, metadata)
-            transcoded_request = (
-                _BaseModelArmorRestTransport._BaseListTemplates._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseModelArmorRestTransport._BaseListTemplates._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelArmorRestTransport._BaseListTemplates,
+                    "_BaseListTemplates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1440,21 +1428,18 @@ class ModelArmorRestTransport(_BaseModelArmorRestTransport):
             """
 
             http_options = _BaseModelArmorRestTransport._BaseSanitizeModelResponse._get_http_options()
-
             request, metadata = self._interceptor.pre_sanitize_model_response(
                 request, metadata
             )
-            transcoded_request = _BaseModelArmorRestTransport._BaseSanitizeModelResponse._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseModelArmorRestTransport._BaseSanitizeModelResponse._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseModelArmorRestTransport._BaseSanitizeModelResponse._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelArmorRestTransport._BaseSanitizeModelResponse,
+                    "_BaseSanitizeModelResponse__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1594,21 +1579,18 @@ class ModelArmorRestTransport(_BaseModelArmorRestTransport):
             http_options = (
                 _BaseModelArmorRestTransport._BaseSanitizeUserPrompt._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_sanitize_user_prompt(
                 request, metadata
             )
-            transcoded_request = _BaseModelArmorRestTransport._BaseSanitizeUserPrompt._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseModelArmorRestTransport._BaseSanitizeUserPrompt._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseModelArmorRestTransport._BaseSanitizeUserPrompt._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelArmorRestTransport._BaseSanitizeUserPrompt,
+                    "_BaseSanitizeUserPrompt__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1787,21 +1769,18 @@ class ModelArmorRestTransport(_BaseModelArmorRestTransport):
             http_options = (
                 _BaseModelArmorRestTransport._BaseUpdateFloorSetting._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_floor_setting(
                 request, metadata
             )
-            transcoded_request = _BaseModelArmorRestTransport._BaseUpdateFloorSetting._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseModelArmorRestTransport._BaseUpdateFloorSetting._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseModelArmorRestTransport._BaseUpdateFloorSetting._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelArmorRestTransport._BaseUpdateFloorSetting,
+                    "_BaseUpdateFloorSetting__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1939,23 +1918,16 @@ class ModelArmorRestTransport(_BaseModelArmorRestTransport):
             http_options = (
                 _BaseModelArmorRestTransport._BaseUpdateTemplate._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_template(request, metadata)
-            transcoded_request = _BaseModelArmorRestTransport._BaseUpdateTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseModelArmorRestTransport._BaseUpdateTemplate._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseModelArmorRestTransport._BaseUpdateTemplate._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelArmorRestTransport._BaseUpdateTemplate,
+                    "_BaseUpdateTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2193,19 +2165,16 @@ class ModelArmorRestTransport(_BaseModelArmorRestTransport):
             http_options = (
                 _BaseModelArmorRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseModelArmorRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseModelArmorRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelArmorRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2337,19 +2306,16 @@ class ModelArmorRestTransport(_BaseModelArmorRestTransport):
             http_options = (
                 _BaseModelArmorRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseModelArmorRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseModelArmorRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseModelArmorRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

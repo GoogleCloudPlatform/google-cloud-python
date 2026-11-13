@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.ids_v1._compat import transcode_request
 from google.cloud.ids_v1.types import ids
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -495,23 +496,16 @@ class IDSRestTransport(_BaseIDSRestTransport):
             """
 
             http_options = _BaseIDSRestTransport._BaseCreateEndpoint._get_http_options()
-
             request, metadata = self._interceptor.pre_create_endpoint(request, metadata)
-            transcoded_request = (
-                _BaseIDSRestTransport._BaseCreateEndpoint._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseIDSRestTransport._BaseCreateEndpoint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIDSRestTransport._BaseCreateEndpoint._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIDSRestTransport._BaseCreateEndpoint,
+                    "_BaseCreateEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -645,19 +639,16 @@ class IDSRestTransport(_BaseIDSRestTransport):
             """
 
             http_options = _BaseIDSRestTransport._BaseDeleteEndpoint._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_endpoint(request, metadata)
-            transcoded_request = (
-                _BaseIDSRestTransport._BaseDeleteEndpoint._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIDSRestTransport._BaseDeleteEndpoint._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIDSRestTransport._BaseDeleteEndpoint,
+                    "_BaseDeleteEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -791,19 +782,16 @@ class IDSRestTransport(_BaseIDSRestTransport):
             """
 
             http_options = _BaseIDSRestTransport._BaseGetEndpoint._get_http_options()
-
             request, metadata = self._interceptor.pre_get_endpoint(request, metadata)
-            transcoded_request = (
-                _BaseIDSRestTransport._BaseGetEndpoint._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIDSRestTransport._BaseGetEndpoint._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIDSRestTransport._BaseGetEndpoint,
+                    "_BaseGetEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -935,19 +923,16 @@ class IDSRestTransport(_BaseIDSRestTransport):
             """
 
             http_options = _BaseIDSRestTransport._BaseListEndpoints._get_http_options()
-
             request, metadata = self._interceptor.pre_list_endpoints(request, metadata)
-            transcoded_request = (
-                _BaseIDSRestTransport._BaseListEndpoints._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseIDSRestTransport._BaseListEndpoints._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseIDSRestTransport._BaseListEndpoints,
+                    "_BaseListEndpoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -520,6 +520,71 @@ class ParticipantsGrpcTransport(ParticipantsTransport):
         return self._stubs["streaming_analyze_content"]
 
     @property
+    def bidi_streaming_analyze_content(
+        self,
+    ) -> Callable[
+        [participant.BidiStreamingAnalyzeContentRequest],
+        participant.BidiStreamingAnalyzeContentResponse,
+    ]:
+        r"""Return a callable for the bidi streaming analyze content method over gRPC.
+
+        Bidirectional endless streaming version of
+        [StreamingAnalyzeContent][google.cloud.dialogflow.v2.Participants.StreamingAnalyzeContent].
+
+        Returns:
+            Callable[[~.BidiStreamingAnalyzeContentRequest],
+                    ~.BidiStreamingAnalyzeContentResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "bidi_streaming_analyze_content" not in self._stubs:
+            self._stubs["bidi_streaming_analyze_content"] = (
+                self._logged_channel.stream_stream(
+                    "/google.cloud.dialogflow.v2.Participants/BidiStreamingAnalyzeContent",
+                    request_serializer=participant.BidiStreamingAnalyzeContentRequest.serialize,
+                    response_deserializer=participant.BidiStreamingAnalyzeContentResponse.deserialize,
+                )
+            )
+        return self._stubs["bidi_streaming_analyze_content"]
+
+    @property
+    def streaming_reactive_companion_suggestions(
+        self,
+    ) -> Callable[
+        [participant.StreamingReactiveCompanionSuggestionsRequest],
+        participant.StreamingReactiveCompanionSuggestionsResponse,
+    ]:
+        r"""Return a callable for the streaming reactive companion
+        suggestions method over gRPC.
+
+        External streaming API for direct human-agent-to-bot
+        chats.
+
+        Returns:
+            Callable[[~.StreamingReactiveCompanionSuggestionsRequest],
+                    ~.StreamingReactiveCompanionSuggestionsResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "streaming_reactive_companion_suggestions" not in self._stubs:
+            self._stubs["streaming_reactive_companion_suggestions"] = (
+                self._logged_channel.stream_stream(
+                    "/google.cloud.dialogflow.v2.Participants/StreamingReactiveCompanionSuggestions",
+                    request_serializer=participant.StreamingReactiveCompanionSuggestionsRequest.serialize,
+                    response_deserializer=participant.StreamingReactiveCompanionSuggestionsResponse.deserialize,
+                )
+            )
+        return self._stubs["streaming_reactive_companion_suggestions"]
+
+    @property
     def suggest_articles(
         self,
     ) -> Callable[

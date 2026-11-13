@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.cloudquotas_v1beta._compat import transcode_request
 from google.cloud.cloudquotas_v1beta.types import quota_adjuster_settings
 from google.cloud.cloudquotas_v1beta.types import (
     quota_adjuster_settings as gac_quota_adjuster_settings,
@@ -364,17 +365,18 @@ class QuotaAdjusterSettingsManagerRestTransport(
             """
 
             http_options = _BaseQuotaAdjusterSettingsManagerRestTransport._BaseGetQuotaAdjusterSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_get_quota_adjuster_settings(
                 request, metadata
             )
-            transcoded_request = _BaseQuotaAdjusterSettingsManagerRestTransport._BaseGetQuotaAdjusterSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseQuotaAdjusterSettingsManagerRestTransport._BaseGetQuotaAdjusterSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseQuotaAdjusterSettingsManagerRestTransport._BaseGetQuotaAdjusterSettings,
+                    "_BaseGetQuotaAdjusterSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -519,21 +521,18 @@ class QuotaAdjusterSettingsManagerRestTransport(
             """
 
             http_options = _BaseQuotaAdjusterSettingsManagerRestTransport._BaseUpdateQuotaAdjusterSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_update_quota_adjuster_settings(
                 request, metadata
             )
-            transcoded_request = _BaseQuotaAdjusterSettingsManagerRestTransport._BaseUpdateQuotaAdjusterSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseQuotaAdjusterSettingsManagerRestTransport._BaseUpdateQuotaAdjusterSettings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseQuotaAdjusterSettingsManagerRestTransport._BaseUpdateQuotaAdjusterSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseQuotaAdjusterSettingsManagerRestTransport._BaseUpdateQuotaAdjusterSettings,
+                    "_BaseUpdateQuotaAdjusterSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

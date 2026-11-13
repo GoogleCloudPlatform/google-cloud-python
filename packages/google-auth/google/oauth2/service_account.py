@@ -73,17 +73,18 @@ specific subject using :meth:`~Credentials.with_subject`.
 import copy
 import datetime
 import logging
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
-
-from google.auth import _helpers
-from google.auth import _regional_access_boundary_utils
-from google.auth import _service_account_info
-from google.auth import credentials
-from google.auth import exceptions
-from google.auth import iam
-from google.auth import jwt
-from google.auth import metrics
+from google.auth import (
+    _helpers,
+    _regional_access_boundary_utils,
+    _service_account_info,
+    credentials,
+    exceptions,
+    iam,
+    jwt,
+    metrics,
+)
 from google.oauth2 import _client
 
 if TYPE_CHECKING:  # pragma: NO COVER
@@ -504,7 +505,8 @@ class Credentials(
             )
 
     def _build_regional_access_boundary_lookup_url(
-        self, request: "Optional[google.auth.transport.Request]" = None  # noqa: F821
+        self,
+        request: "Optional[google.auth.transport.Request]" = None,  # noqa: F821
     ):
         """Builds and returns the URL for the Regional Access Boundary lookup API.
 

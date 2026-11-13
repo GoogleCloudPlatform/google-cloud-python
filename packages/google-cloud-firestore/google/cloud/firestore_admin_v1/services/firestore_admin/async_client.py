@@ -4218,7 +4218,7 @@ class FirestoreAdminAsyncClient:
             self._client._transport.clone_database
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^projects/(?P<project_id>[^/]+)(?:/.*)?$")
         regex_match = routing_param_regex.match(request.pitr_snapshot.database)

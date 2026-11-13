@@ -16,12 +16,11 @@ from __future__ import absolute_import
 
 import hashlib
 import http.client
-
 from unittest import mock
+
 import pytest  # type: ignore
 
-from google.resumable_media import _helpers
-from google.resumable_media import common
+from google.resumable_media import _helpers, common
 
 
 def test_do_nothing():

@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.texttospeech_v1._compat import transcode_request
 from google.cloud.texttospeech_v1.types import cloud_tts
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -398,19 +399,16 @@ class TextToSpeechRestTransport(_BaseTextToSpeechRestTransport):
             http_options = (
                 _BaseTextToSpeechRestTransport._BaseListVoices._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_voices(request, metadata)
-            transcoded_request = (
-                _BaseTextToSpeechRestTransport._BaseListVoices._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTextToSpeechRestTransport._BaseListVoices._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTextToSpeechRestTransport._BaseListVoices,
+                    "_BaseListVoices__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -568,21 +566,18 @@ class TextToSpeechRestTransport(_BaseTextToSpeechRestTransport):
             http_options = (
                 _BaseTextToSpeechRestTransport._BaseSynthesizeSpeech._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_synthesize_speech(
                 request, metadata
             )
-            transcoded_request = _BaseTextToSpeechRestTransport._BaseSynthesizeSpeech._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTextToSpeechRestTransport._BaseSynthesizeSpeech._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTextToSpeechRestTransport._BaseSynthesizeSpeech._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTextToSpeechRestTransport._BaseSynthesizeSpeech,
+                    "_BaseSynthesizeSpeech__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -752,17 +747,16 @@ class TextToSpeechRestTransport(_BaseTextToSpeechRestTransport):
             http_options = (
                 _BaseTextToSpeechRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseTextToSpeechRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseTextToSpeechRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTextToSpeechRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -894,15 +888,16 @@ class TextToSpeechRestTransport(_BaseTextToSpeechRestTransport):
             http_options = (
                 _BaseTextToSpeechRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseTextToSpeechRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTextToSpeechRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTextToSpeechRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

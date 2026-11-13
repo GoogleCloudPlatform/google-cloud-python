@@ -1,6 +1,6 @@
 Materialized View
 ~~~~~~~~~~~~~~~~~
 
-.. autoclass:: google.cloud.bigtable.data._sync_autogen.client.MaterializedView
+.. autoclass:: google.cloud.bigtable.data.MaterializedView
   :members:
   :inherited-members:

@@ -4,6 +4,28 @@
 
 [1]: https://pypi.org/project/google-cloud-retail/#history
 
+## [2.14.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-retail-v2.13.0...google-cloud-retail-v2.14.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+* update API sources and regenerate ([#18513](https://github.com/googleapis/google-cloud-python/issues/18513)) ([7d7adca](https://github.com/googleapis/google-cloud-python/commit/7d7adcaee688603077ea53abec678130045c20ed))
+
+## [2.13.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-retail-v2.12.0...google-cloud-retail-v2.13.0) (2026-09-14)
+
+
+### Features
+
+* update API sources and regenerate ([#18324](https://github.com/googleapis/google-cloud-python/issues/18324)) ([0766fb6](https://github.com/googleapis/google-cloud-python/commit/0766fb69c28973d5d51cffc490f195c60e8eee10))
+
+## [2.12.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-retail-v2.11.0...google-cloud-retail-v2.12.0) (2026-08-21)
+
+
+### Features
+
+* update googleapis and regenerate ([#18087](https://github.com/googleapis/google-cloud-python/issues/18087)) ([db1622a](https://github.com/googleapis/google-cloud-python/commit/db1622a9cfac112b40c93842737d7a5deeb3e8bd))
+
 ## [2.11.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-retail-v2.10.0...google-cloud-retail-v2.11.0) (2026-06-22)
 
 

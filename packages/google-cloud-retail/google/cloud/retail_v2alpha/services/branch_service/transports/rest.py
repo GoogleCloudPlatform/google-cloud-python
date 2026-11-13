@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.retail_v2alpha._compat import transcode_request
 from google.cloud.retail_v2alpha.types import branch, branch_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -400,19 +401,16 @@ class BranchServiceRestTransport(_BaseBranchServiceRestTransport):
             http_options = (
                 _BaseBranchServiceRestTransport._BaseGetBranch._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_branch(request, metadata)
-            transcoded_request = (
-                _BaseBranchServiceRestTransport._BaseGetBranch._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseBranchServiceRestTransport._BaseGetBranch._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBranchServiceRestTransport._BaseGetBranch,
+                    "_BaseGetBranch__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -553,15 +551,16 @@ class BranchServiceRestTransport(_BaseBranchServiceRestTransport):
             http_options = (
                 _BaseBranchServiceRestTransport._BaseListBranches._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_branches(request, metadata)
-            transcoded_request = _BaseBranchServiceRestTransport._BaseListBranches._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBranchServiceRestTransport._BaseListBranches._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBranchServiceRestTransport._BaseListBranches,
+                    "_BaseListBranches__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -718,15 +717,16 @@ class BranchServiceRestTransport(_BaseBranchServiceRestTransport):
             http_options = (
                 _BaseBranchServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseBranchServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBranchServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBranchServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -858,15 +858,16 @@ class BranchServiceRestTransport(_BaseBranchServiceRestTransport):
             http_options = (
                 _BaseBranchServiceRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseBranchServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBranchServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBranchServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

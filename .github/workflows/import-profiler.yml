@@ -26,12 +26,10 @@ jobs:
       MAX_SHARDS: 8
     steps:
     - name: Checkout
-      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-      # Use a fetch-depth of 2 to avoid error `fatal: origin/main...HEAD: no merge base`
-      # See https://github.com/googleapis/google-cloud-python/issues/12013
-      # and https://github.com/actions/checkout#checkout-head.
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
-        fetch-depth: 2
+        fetch-depth: 0
+        filter: blob:none
         persist-credentials: false
     - name: Check for unit_test:all_packages label
       id: check-label
@@ -42,9 +40,9 @@ jobs:
           echo "is_full_run=false" >> $GITHUB_OUTPUT
         fi
     - name: Setup Python
-      uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       with:
-        python-version: "3.10"
+        python-version: "3.15"
     - name: Get package shards
       id: set-matrix
       env:
@@ -54,7 +52,7 @@ jobs:
         MAX_SHARDS: ${{ env.MAX_SHARDS }}
       run: |
         if [ -n "$TARGET_BRANCH" ]; then
-          git fetch origin "$TARGET_BRANCH" --depth=1 || true
+          git fetch --no-tags --quiet origin "$TARGET_BRANCH" || true
         fi
         python3 ci/get_package_shards.py
 
@@ -70,12 +68,12 @@ jobs:
     name: ${{ matrix.package_shard.is_sharded && format('import-profile ({0})', matrix.package_shard.name) || format('import-profile ({0})', matrix.package_shard.description) }}
     steps:
     - name: Checkout
-      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
-        fetch-depth: 0 # Fetch git history to find changed packages / baseline
+        fetch-depth: 2
         persist-credentials: false
     - name: Setup Python
-      uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       with:
         python-version: "3.15"
         allow-prereleases: true
@@ -91,8 +89,6 @@ jobs:
         TARGET_BRANCH: ${{ github.base_ref || github.event.merge_group.base_ref }}
         TEST_TYPE: import_profile
         PY_VERSION: "3.15"
-        # Workaround: Allows libcst to compile on Python 3.15+ while PyO3 catches up
-        PYO3_USE_ABI3_FORWARD_COMPATIBILITY: "1"
         PACKAGE_LIST: ${{ matrix.package_shard.packages }}
       run: |
         ci/run_conditional_tests.sh

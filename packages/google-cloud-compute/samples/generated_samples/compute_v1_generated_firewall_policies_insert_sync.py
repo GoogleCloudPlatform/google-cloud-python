@@ -39,9 +39,7 @@ def sample_insert():
     client = compute_v1.FirewallPoliciesClient()
 
     # Initialize request argument(s)
-    request = compute_v1.InsertFirewallPolicyRequest(
-        parent_id="parent_id_value",
-    )
+    request = compute_v1.InsertFirewallPolicyRequest()
 
     # Make the request
     response = client.insert(request=request)

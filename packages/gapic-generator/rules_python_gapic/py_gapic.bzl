@@ -25,6 +25,11 @@ load("@rules_proto//proto:defs.bzl", StarlarkProtoInfo = "ProtoInfo")
 # into rules_gapic CustomProtoInfo provider required by proto_custom_library.
 def _gapic_compat_proto_library_impl(ctx):
     dep = ctx.attr.dep
+    if CustomProtoInfo in dep:
+        return [
+            dep[DefaultInfo],
+            dep[CustomProtoInfo],
+        ]
     starlark_proto = dep[StarlarkProtoInfo]
     return [
         dep[DefaultInfo],
@@ -41,7 +46,7 @@ def _gapic_compat_proto_library_impl(ctx):
 gapic_compat_proto_library = rule(
     implementation = _gapic_compat_proto_library_impl,
     attrs = {
-        "dep": attr.label(mandatory = True, providers = [StarlarkProtoInfo]),
+        "dep": attr.label(mandatory = True, providers = [[StarlarkProtoInfo], [CustomProtoInfo]]),
     }
 )
 

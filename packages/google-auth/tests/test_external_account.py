@@ -15,17 +15,13 @@
 import datetime
 import http.client as http_client
 import json
-from unittest import mock
 import urllib
+from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import _helpers
-from google.auth import exceptions
-from google.auth import external_account
-from google.auth import transport
-from google.auth.credentials import DEFAULT_UNIVERSE_DOMAIN
-from google.auth.credentials import TokenState
+from google.auth import _helpers, exceptions, external_account, transport
+from google.auth.credentials import DEFAULT_UNIVERSE_DOMAIN, TokenState
 
 IMPERSONATE_ACCESS_TOKEN_REQUEST_METRICS_HEADER_VALUE = "gl-python/<python-version> auth/<library-version> auth-request-type/at cred-type/imp"
 LANG_LIBRARY_METRICS_HEADER_VALUE = "gl-python/<python-version> auth/<library-version>"
@@ -2397,9 +2393,10 @@ class TestCredentials(object):
         )
 
     def test_before_request_multithreaded_lazy_initialization(self):
-        from google.auth import identity_pool
         import threading
         import time
+
+        from google.auth import identity_pool
 
         creds = identity_pool.Credentials(
             audience=self.AUDIENCE,

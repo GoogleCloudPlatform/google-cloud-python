@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dialogflowcx_v3beta1._compat import transcode_request
 from google.cloud.dialogflowcx_v3beta1.types import transition_route_group
 from google.cloud.dialogflowcx_v3beta1.types import (
     transition_route_group as gcdc_transition_route_group,
@@ -623,21 +624,18 @@ class TransitionRouteGroupsRestTransport(_BaseTransitionRouteGroupsRestTransport
             """
 
             http_options = _BaseTransitionRouteGroupsRestTransport._BaseCreateTransitionRouteGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_create_transition_route_group(
                 request, metadata
             )
-            transcoded_request = _BaseTransitionRouteGroupsRestTransport._BaseCreateTransitionRouteGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTransitionRouteGroupsRestTransport._BaseCreateTransitionRouteGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTransitionRouteGroupsRestTransport._BaseCreateTransitionRouteGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTransitionRouteGroupsRestTransport._BaseCreateTransitionRouteGroup,
+                    "_BaseCreateTransitionRouteGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -777,17 +775,18 @@ class TransitionRouteGroupsRestTransport(_BaseTransitionRouteGroupsRestTransport
             """
 
             http_options = _BaseTransitionRouteGroupsRestTransport._BaseDeleteTransitionRouteGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_transition_route_group(
                 request, metadata
             )
-            transcoded_request = _BaseTransitionRouteGroupsRestTransport._BaseDeleteTransitionRouteGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTransitionRouteGroupsRestTransport._BaseDeleteTransitionRouteGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTransitionRouteGroupsRestTransport._BaseDeleteTransitionRouteGroup,
+                    "_BaseDeleteTransitionRouteGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -894,17 +893,18 @@ class TransitionRouteGroupsRestTransport(_BaseTransitionRouteGroupsRestTransport
             """
 
             http_options = _BaseTransitionRouteGroupsRestTransport._BaseGetTransitionRouteGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_get_transition_route_group(
                 request, metadata
             )
-            transcoded_request = _BaseTransitionRouteGroupsRestTransport._BaseGetTransitionRouteGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTransitionRouteGroupsRestTransport._BaseGetTransitionRouteGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTransitionRouteGroupsRestTransport._BaseGetTransitionRouteGroup,
+                    "_BaseGetTransitionRouteGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1045,17 +1045,18 @@ class TransitionRouteGroupsRestTransport(_BaseTransitionRouteGroupsRestTransport
             """
 
             http_options = _BaseTransitionRouteGroupsRestTransport._BaseListTransitionRouteGroups._get_http_options()
-
             request, metadata = self._interceptor.pre_list_transition_route_groups(
                 request, metadata
             )
-            transcoded_request = _BaseTransitionRouteGroupsRestTransport._BaseListTransitionRouteGroups._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTransitionRouteGroupsRestTransport._BaseListTransitionRouteGroups._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTransitionRouteGroupsRestTransport._BaseListTransitionRouteGroups,
+                    "_BaseListTransitionRouteGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1199,21 +1200,18 @@ class TransitionRouteGroupsRestTransport(_BaseTransitionRouteGroupsRestTransport
             """
 
             http_options = _BaseTransitionRouteGroupsRestTransport._BaseUpdateTransitionRouteGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_update_transition_route_group(
                 request, metadata
             )
-            transcoded_request = _BaseTransitionRouteGroupsRestTransport._BaseUpdateTransitionRouteGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseTransitionRouteGroupsRestTransport._BaseUpdateTransitionRouteGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTransitionRouteGroupsRestTransport._BaseUpdateTransitionRouteGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTransitionRouteGroupsRestTransport._BaseUpdateTransitionRouteGroup,
+                    "_BaseUpdateTransitionRouteGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1422,15 +1420,16 @@ class TransitionRouteGroupsRestTransport(_BaseTransitionRouteGroupsRestTransport
             """
 
             http_options = _BaseTransitionRouteGroupsRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseTransitionRouteGroupsRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTransitionRouteGroupsRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTransitionRouteGroupsRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1561,15 +1560,16 @@ class TransitionRouteGroupsRestTransport(_BaseTransitionRouteGroupsRestTransport
             """
 
             http_options = _BaseTransitionRouteGroupsRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseTransitionRouteGroupsRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTransitionRouteGroupsRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTransitionRouteGroupsRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1697,17 +1697,18 @@ class TransitionRouteGroupsRestTransport(_BaseTransitionRouteGroupsRestTransport
             """
 
             http_options = _BaseTransitionRouteGroupsRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseTransitionRouteGroupsRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTransitionRouteGroupsRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTransitionRouteGroupsRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1815,15 +1816,16 @@ class TransitionRouteGroupsRestTransport(_BaseTransitionRouteGroupsRestTransport
             """
 
             http_options = _BaseTransitionRouteGroupsRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseTransitionRouteGroupsRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTransitionRouteGroupsRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTransitionRouteGroupsRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1954,15 +1956,16 @@ class TransitionRouteGroupsRestTransport(_BaseTransitionRouteGroupsRestTransport
             """
 
             http_options = _BaseTransitionRouteGroupsRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseTransitionRouteGroupsRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseTransitionRouteGroupsRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseTransitionRouteGroupsRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

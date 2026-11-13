@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.security.privateca_v1._compat import transcode_request
 from google.cloud.security.privateca_v1.types import resources, service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -2156,21 +2157,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseActivateCertificateAuthority._get_http_options()
-
             request, metadata = self._interceptor.pre_activate_certificate_authority(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseActivateCertificateAuthority._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseActivateCertificateAuthority._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseActivateCertificateAuthority._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseActivateCertificateAuthority,
+                    "_BaseActivateCertificateAuthority__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2311,19 +2309,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCaPool._get_http_options()
-
             request, metadata = self._interceptor.pre_create_ca_pool(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCaPool._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCaPool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCaPool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseCreateCaPool,
+                    "_BaseCreateCaPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2465,21 +2460,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificate._get_http_options()
-
             request, metadata = self._interceptor.pre_create_certificate(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificate,
+                    "_BaseCreateCertificate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2623,21 +2615,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificateAuthority._get_http_options()
-
             request, metadata = self._interceptor.pre_create_certificate_authority(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificateAuthority._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificateAuthority._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificateAuthority._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificateAuthority,
+                    "_BaseCreateCertificateAuthority__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2779,21 +2768,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificateTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_create_certificate_template(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificateTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificateTemplate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificateTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseCreateCertificateTemplate,
+                    "_BaseCreateCertificateTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2931,15 +2917,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseDeleteCaPool._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_ca_pool(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseDeleteCaPool._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseDeleteCaPool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseDeleteCaPool,
+                    "_BaseDeleteCaPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3081,17 +3068,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseDeleteCertificateAuthority._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_certificate_authority(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseDeleteCertificateAuthority._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseDeleteCertificateAuthority._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseDeleteCertificateAuthority,
+                    "_BaseDeleteCertificateAuthority__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3231,17 +3219,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseDeleteCertificateTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_certificate_template(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseDeleteCertificateTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseDeleteCertificateTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseDeleteCertificateTemplate,
+                    "_BaseDeleteCertificateTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3382,21 +3371,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseDisableCertificateAuthority._get_http_options()
-
             request, metadata = self._interceptor.pre_disable_certificate_authority(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseDisableCertificateAuthority._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseDisableCertificateAuthority._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseDisableCertificateAuthority._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseDisableCertificateAuthority,
+                    "_BaseDisableCertificateAuthority__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3540,21 +3526,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseEnableCertificateAuthority._get_http_options()
-
             request, metadata = self._interceptor.pre_enable_certificate_authority(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseEnableCertificateAuthority._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseEnableCertificateAuthority._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseEnableCertificateAuthority._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseEnableCertificateAuthority,
+                    "_BaseEnableCertificateAuthority__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3692,19 +3675,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseFetchCaCerts._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_ca_certs(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseFetchCaCerts._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseFetchCaCerts._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseFetchCaCerts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseFetchCaCerts,
+                    "_BaseFetchCaCerts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3848,17 +3828,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseFetchCertificateAuthorityCsr._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_certificate_authority_csr(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseFetchCertificateAuthorityCsr._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseFetchCertificateAuthorityCsr._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseFetchCertificateAuthorityCsr,
+                    "_BaseFetchCertificateAuthorityCsr__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4007,15 +3988,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseGetCaPool._get_http_options()
-
             request, metadata = self._interceptor.pre_get_ca_pool(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseGetCaPool._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseGetCaPool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseGetCaPool,
+                    "_BaseGetCaPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4157,15 +4139,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificate._get_http_options()
-
             request, metadata = self._interceptor.pre_get_certificate(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificate,
+                    "_BaseGetCertificate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4311,17 +4294,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificateAuthority._get_http_options()
-
             request, metadata = self._interceptor.pre_get_certificate_authority(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificateAuthority._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificateAuthority._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificateAuthority,
+                    "_BaseGetCertificateAuthority__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4465,17 +4449,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificateRevocationList._get_http_options()
-
             request, metadata = self._interceptor.pre_get_certificate_revocation_list(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificateRevocationList._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificateRevocationList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificateRevocationList,
+                    "_BaseGetCertificateRevocationList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4620,17 +4605,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificateTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_get_certificate_template(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificateTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificateTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseGetCertificateTemplate,
+                    "_BaseGetCertificateTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4768,15 +4754,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseListCaPools._get_http_options()
-
             request, metadata = self._interceptor.pre_list_ca_pools(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseListCaPools._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseListCaPools._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseListCaPools,
+                    "_BaseListCaPools__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4919,17 +4906,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseListCertificateAuthorities._get_http_options()
-
             request, metadata = self._interceptor.pre_list_certificate_authorities(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseListCertificateAuthorities._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseListCertificateAuthorities._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseListCertificateAuthorities,
+                    "_BaseListCertificateAuthorities__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5072,17 +5060,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseListCertificateRevocationLists._get_http_options()
-
             request, metadata = self._interceptor.pre_list_certificate_revocation_lists(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseListCertificateRevocationLists._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseListCertificateRevocationLists._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseListCertificateRevocationLists,
+                    "_BaseListCertificateRevocationLists__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5224,17 +5213,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseListCertificates._get_http_options()
-
             request, metadata = self._interceptor.pre_list_certificates(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseListCertificates._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseListCertificates._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseListCertificates,
+                    "_BaseListCertificates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5377,17 +5367,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseListCertificateTemplates._get_http_options()
-
             request, metadata = self._interceptor.pre_list_certificate_templates(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseListCertificateTemplates._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseListCertificateTemplates._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseListCertificateTemplates,
+                    "_BaseListCertificateTemplates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5530,21 +5521,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseRevokeCertificate._get_http_options()
-
             request, metadata = self._interceptor.pre_revoke_certificate(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseRevokeCertificate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseRevokeCertificate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseRevokeCertificate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseRevokeCertificate,
+                    "_BaseRevokeCertificate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5688,21 +5676,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseUndeleteCertificateAuthority._get_http_options()
-
             request, metadata = self._interceptor.pre_undelete_certificate_authority(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseUndeleteCertificateAuthority._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseUndeleteCertificateAuthority._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseUndeleteCertificateAuthority._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseUndeleteCertificateAuthority,
+                    "_BaseUndeleteCertificateAuthority__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5843,19 +5828,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCaPool._get_http_options()
-
             request, metadata = self._interceptor.pre_update_ca_pool(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCaPool._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCaPool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCaPool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCaPool,
+                    "_BaseUpdateCaPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5997,21 +5979,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificate._get_http_options()
-
             request, metadata = self._interceptor.pre_update_certificate(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificate,
+                    "_BaseUpdateCertificate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6155,21 +6134,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateAuthority._get_http_options()
-
             request, metadata = self._interceptor.pre_update_certificate_authority(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateAuthority._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateAuthority._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateAuthority._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateAuthority,
+                    "_BaseUpdateCertificateAuthority__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6311,23 +6287,20 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateRevocationList._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_update_certificate_revocation_list(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateRevocationList._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateRevocationList._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateRevocationList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateRevocationList,
+                    "_BaseUpdateCertificateRevocationList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6471,21 +6444,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_update_certificate_template(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateTemplate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseUpdateCertificateTemplate,
+                    "_BaseUpdateCertificateTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6923,15 +6893,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7064,15 +7035,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7205,15 +7177,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7347,19 +7320,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7494,21 +7464,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7638,21 +7605,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCertificateAuthorityServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7758,17 +7722,18 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7876,15 +7841,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8017,15 +7983,16 @@ class CertificateAuthorityServiceRestTransport(
             """
 
             http_options = _BaseCertificateAuthorityServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseCertificateAuthorityServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCertificateAuthorityServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCertificateAuthorityServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -4,6 +4,14 @@
 
 [1]: https://pypi.org/project/grpc-google-iam-v1/#history
 
+## [0.14.6](https://github.com/googleapis/google-cloud-python/compare/grpc-google-iam-v1-v0.14.5...grpc-google-iam-v1-v0.14.6) (2026-10-22)
+
+
+### Features
+
+* declare support for Python 3.15 ([#18737](https://github.com/googleapis/google-cloud-python/issues/18737)) ([65c8767](https://github.com/googleapis/google-cloud-python/commit/65c87678e7a63aa4c8115c9273581aa5db82fbe9))
+* update API sources and regenerate ([#18797](https://github.com/googleapis/google-cloud-python/issues/18797)) ([be4d954](https://github.com/googleapis/google-cloud-python/commit/be4d954baf9a27cad04637183047b156afa4784a))
+
 ## [0.14.5](https://github.com/googleapis/google-cloud-python/compare/grpc-google-iam-v1-v0.14.4...grpc-google-iam-v1-v0.14.5) (2026-08-06)
 
 

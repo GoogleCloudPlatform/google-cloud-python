@@ -14,7 +14,6 @@
 
 from uuid import UUID
 
-
 from google.cloud.spanner_v1 import TypeCode
 from sqlalchemy import Column, MetaData, Table, select, types
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column

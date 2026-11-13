@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.network_management_v1._compat import transcode_request
 from google.cloud.network_management_v1.types import connectivity_test, reachability
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -881,21 +882,18 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseCreateConnectivityTest._get_http_options()
-
             request, metadata = self._interceptor.pre_create_connectivity_test(
                 request, metadata
             )
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseCreateConnectivityTest._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReachabilityServiceRestTransport._BaseCreateConnectivityTest._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseCreateConnectivityTest._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseCreateConnectivityTest,
+                    "_BaseCreateConnectivityTest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1034,17 +1032,18 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseDeleteConnectivityTest._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_connectivity_test(
                 request, metadata
             )
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseDeleteConnectivityTest._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseDeleteConnectivityTest._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseDeleteConnectivityTest,
+                    "_BaseDeleteConnectivityTest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1181,17 +1180,18 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseGetConnectivityTest._get_http_options()
-
             request, metadata = self._interceptor.pre_get_connectivity_test(
                 request, metadata
             )
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseGetConnectivityTest._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseGetConnectivityTest._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseGetConnectivityTest,
+                    "_BaseGetConnectivityTest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1330,17 +1330,18 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseListConnectivityTests._get_http_options()
-
             request, metadata = self._interceptor.pre_list_connectivity_tests(
                 request, metadata
             )
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseListConnectivityTests._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseListConnectivityTests._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseListConnectivityTests,
+                    "_BaseListConnectivityTests__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1483,21 +1484,18 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseRerunConnectivityTest._get_http_options()
-
             request, metadata = self._interceptor.pre_rerun_connectivity_test(
                 request, metadata
             )
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseRerunConnectivityTest._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReachabilityServiceRestTransport._BaseRerunConnectivityTest._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseRerunConnectivityTest._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseRerunConnectivityTest,
+                    "_BaseRerunConnectivityTest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1637,21 +1635,18 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseUpdateConnectivityTest._get_http_options()
-
             request, metadata = self._interceptor.pre_update_connectivity_test(
                 request, metadata
             )
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseUpdateConnectivityTest._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReachabilityServiceRestTransport._BaseUpdateConnectivityTest._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseUpdateConnectivityTest._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseUpdateConnectivityTest,
+                    "_BaseUpdateConnectivityTest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1857,15 +1852,16 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1996,15 +1992,16 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2135,15 +2132,16 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2275,19 +2273,16 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReachabilityServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2420,21 +2415,18 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReachabilityServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2566,21 +2558,18 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseReachabilityServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2684,17 +2673,18 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2800,15 +2790,16 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2939,15 +2930,16 @@ class ReachabilityServiceRestTransport(_BaseReachabilityServiceRestTransport):
             """
 
             http_options = _BaseReachabilityServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseReachabilityServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseReachabilityServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseReachabilityServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

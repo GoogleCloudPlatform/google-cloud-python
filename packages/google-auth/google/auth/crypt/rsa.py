@@ -19,12 +19,10 @@ This file provides a shared wrapper, that defers to _python_rsa or _cryptography
 for implmentations using different third party libraries
 """
 
-from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
-from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
 
 from google.auth import _helpers
-from google.auth.crypt import _cryptography_rsa
-from google.auth.crypt import base
+from google.auth.crypt import _cryptography_rsa, base
 
 RSA_KEY_MODULE_PREFIX = "rsa.key"
 

@@ -129,6 +129,18 @@ class SearchRequest(proto.Message):
             the specs directly under
             [SearchRequest][google.cloud.discoveryengine.v1.SearchRequest]
             should be used.
+
+            On an engine with multiple data stores, this field is
+            optional. If it's empty, all of the engine's data stores are
+            searched (blended search). Unless it specifies exactly one
+            data store, some request fields, such as ``order_by`` and
+            ``query_expansion_spec``, aren't supported and return an
+            ``INVALID_ARGUMENT`` error.
+        num_results_per_data_store (int):
+            Optional. The maximum number of results to retrieve from
+            each data store. If not specified, it will use the
+            [SearchRequest.DataStoreSpec.num_results][google.cloud.discoveryengine.v1.SearchRequest.DataStoreSpec.num_results]
+            if provided, otherwise there is no limit.
         filter (str):
             The filter syntax consists of an expression language for
             constructing a predicate from one or more fields of the
@@ -348,6 +360,20 @@ class SearchRequest(proto.Message):
               proprietary Google model to determine the keyword-based
               overlap between the query and the document.
             - ``base_rank``: the default rank of the result
+            - ``media_actor_match``: whether the media actor matches the
+              query
+            - ``media_director_match``: whether the media director
+              matches the query
+            - ``media_genre_match``: whether the media genre matches the
+              query
+            - ``media_language_match``: whether the media language
+              matches the query
+            - ``media_title_match``: whether the media title matches the
+              query
+            - ``media_prefix_similarity_rank``: prefix similarity rank
+              for media results
+            - ``media_semantic_similarity_rank``: semantic similarity
+              rank for media results
         ranking_expression_backend (google.cloud.discoveryengine_v1.types.SearchRequest.RankingExpressionBackend):
             Optional. The backend to use for the ranking
             expression evaluation.
@@ -427,12 +453,6 @@ class SearchRequest(proto.Message):
             in the first call.   Here, the answer generation
             happens in the context of the search   results
             from the first search call.
-
-            Multi-turn Search feature is currently at
-            private GA stage. Please use v1alpha or v1beta
-            version instead before we launch this feature to
-            public GA. Or ask for allowlisting through
-            Google Support team.
         session_spec (google.cloud.discoveryengine_v1.types.SearchRequest.SessionSpec):
             Session specification.
 
@@ -461,6 +481,22 @@ class SearchRequest(proto.Message):
         relevance_score_spec (google.cloud.discoveryengine_v1.types.SearchRequest.RelevanceScoreSpec):
             Optional. The specification for returning the
             relevance score.
+        search_addon_spec (google.cloud.discoveryengine_v1.types.SearchRequest.SearchAddonSpec):
+            Optional. SearchAddonSpec is used to disable
+            add-ons for search as per new repricing model.
+            This field is only supported for search
+            requests.
+        custom_ranking_params (google.cloud.discoveryengine_v1.types.SearchRequest.CustomRankingParams):
+            Optional. Optional configuration for the
+            Custom Ranking feature.
+        entity (str):
+            Optional. The entity for customers that may run multiple
+            different entities, domains, sites or regions, for example,
+            "Google US", "Google Ads", "Waymo", "google.com",
+            "youtube.com", etc. If this is set, it should be exactly
+            matched with
+            [UserEvent.entity][google.cloud.discoveryengine.v1.UserEvent.entity]
+            to get search results boosted by entity.
     """
 
     class RankingExpressionBackend(proto.Enum):
@@ -563,6 +599,14 @@ class SearchRequest(proto.Message):
                 used to filter results from workspace data stores. For more
                 information on custom search operators, see
                 `SearchOperators <https://support.google.com/cloudsearch/answer/6172299>`__.
+            num_results (int):
+                Optional. The maximum number of results to retrieve from
+                this data store. If not specified, it will use the
+                [SearchRequest.num_results_per_data_store][google.cloud.discoveryengine.v1.SearchRequest.num_results_per_data_store]
+                if provided, otherwise there is no limit. If both this field
+                and
+                [SearchRequest.num_results_per_data_store][google.cloud.discoveryengine.v1.SearchRequest.num_results_per_data_store]
+                are specified, this field will be used.
         """
 
         data_store: str = proto.Field(
@@ -581,6 +625,10 @@ class SearchRequest(proto.Message):
         custom_search_operators: str = proto.Field(
             proto.STRING,
             number=7,
+        )
+        num_results: int = proto.Field(
+            proto.INT32,
+            number=9,
         )
 
     class FacetSpec(proto.Message):
@@ -1473,9 +1521,6 @@ class SearchRequest(proto.Message):
                 geolocation filters are detected in natural language search
                 queries. Only valid when the FilterExtractionCondition is
                 set to ``ENABLED``.
-
-                If this field is set, it overrides the field names set in
-                [ServingConfig.geo_search_query_detection_field_names][google.cloud.discoveryengine.v1.ServingConfig.geo_search_query_detection_field_names].
             extracted_filter_behavior (google.cloud.discoveryengine_v1.types.SearchRequest.NaturalLanguageQueryUnderstandingSpec.ExtractedFilterBehavior):
                 Optional. Controls behavior of how extracted filters are
                 applied to the search. The default behavior depends on the
@@ -1567,11 +1612,22 @@ class SearchRequest(proto.Message):
     class SearchAsYouTypeSpec(proto.Message):
         r"""Specification for search as you type in search requests.
 
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
         Attributes:
             condition (google.cloud.discoveryengine_v1.types.SearchRequest.SearchAsYouTypeSpec.Condition):
                 The condition under which search as you type should occur.
                 Default to
                 [Condition.DISABLED][google.cloud.discoveryengine.v1.SearchRequest.SearchAsYouTypeSpec.Condition.DISABLED].
+            fields (MutableSequence[google.cloud.discoveryengine_v1.types.SearchRequest.SearchAsYouTypeSpec.Field]):
+                Optional. The list of fields to be used for
+                Search As You Type scoring.
+            score_threshold (float):
+                Optional. Search As You Type score threshold for filtering
+                purpose. We keep the result if ``score`` >=
+                ``score_threshold``.
+
+                This field is a member of `oneof`_ ``_score_threshold``.
         """
 
         class Condition(proto.Enum):
@@ -1598,10 +1654,51 @@ class SearchRequest(proto.Message):
             ENABLED = 2
             AUTO = 3
 
+        class Field(proto.Message):
+            r"""A schema field to be used for Search As You Type scoring on
+            this request. Overrides any data-store-level Search As You Type
+            field configuration for the duration of the request.
+
+
+            .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+            Attributes:
+                key (str):
+                    Required. A field key that has been indexed
+                    for Search As You Type.
+                weight (float):
+                    Optional. Weight for scores from this field.
+                    Defaults to 1.0 if not specified.
+
+                    This field is a member of `oneof`_ ``_weight``.
+            """
+
+            key: str = proto.Field(
+                proto.STRING,
+                number=1,
+            )
+            weight: float = proto.Field(
+                proto.DOUBLE,
+                number=2,
+                optional=True,
+            )
+
         condition: "SearchRequest.SearchAsYouTypeSpec.Condition" = proto.Field(
             proto.ENUM,
             number=1,
             enum="SearchRequest.SearchAsYouTypeSpec.Condition",
+        )
+        fields: MutableSequence["SearchRequest.SearchAsYouTypeSpec.Field"] = (
+            proto.RepeatedField(
+                proto.MESSAGE,
+                number=2,
+                message="SearchRequest.SearchAsYouTypeSpec.Field",
+            )
+        )
+        score_threshold: float = proto.Field(
+            proto.DOUBLE,
+            number=3,
+            optional=True,
         )
 
     class DisplaySpec(proto.Message):
@@ -1698,12 +1795,6 @@ class SearchRequest(proto.Message):
     class SessionSpec(proto.Message):
         r"""Session specification.
 
-        Multi-turn Search feature is currently at private GA stage.
-        Please use v1alpha or v1beta version instead before we launch
-        this feature to public GA. Or ask for allowlisting through
-        Google Support team.
-
-
         .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
         Attributes:
@@ -1752,21 +1843,6 @@ class SearchRequest(proto.Message):
             proto.INT32,
             number=2,
             optional=True,
-        )
-
-    class RelevanceScoreSpec(proto.Message):
-        r"""The specification for returning the document relevance score.
-
-        Attributes:
-            return_relevance_score (bool):
-                Optional. Whether to return the relevance
-                score for search results. The higher the score,
-                the more relevant the document is to the query.
-        """
-
-        return_relevance_score: bool = proto.Field(
-            proto.BOOL,
-            number=1,
         )
 
     class RelevanceFilterSpec(proto.Message):
@@ -1828,6 +1904,72 @@ class SearchRequest(proto.Message):
             message="SearchRequest.RelevanceFilterSpec.RelevanceThresholdSpec",
         )
 
+    class RelevanceScoreSpec(proto.Message):
+        r"""The specification for returning the document relevance score.
+
+        Attributes:
+            return_relevance_score (bool):
+                Optional. Whether to return the relevance
+                score for search results. The higher the score,
+                the more relevant the document is to the query.
+        """
+
+        return_relevance_score: bool = proto.Field(
+            proto.BOOL,
+            number=1,
+        )
+
+    class SearchAddonSpec(proto.Message):
+        r"""SearchAddonSpec is used to disable add-ons for search as per
+        new repricing model. By default if the SearchAddonSpec is not
+        specified, we consider that the customer wants to enable them
+        wherever applicable.
+
+        Attributes:
+            disable_semantic_add_on (bool):
+                Optional. If true, semantic add-on is
+                disabled. Semantic add-on includes embeddings
+                and jetstream.
+            disable_kpi_personalization_add_on (bool):
+                Optional. If true, disables event re-ranking
+                and personalization to optimize KPIs &
+                personalize results.
+            disable_generative_answer_add_on (bool):
+                Optional. If true, generative answer add-on
+                is disabled. Generative answer add-on includes
+                natural language to filters and simple answers.
+        """
+
+        disable_semantic_add_on: bool = proto.Field(
+            proto.BOOL,
+            number=1,
+        )
+        disable_kpi_personalization_add_on: bool = proto.Field(
+            proto.BOOL,
+            number=2,
+        )
+        disable_generative_answer_add_on: bool = proto.Field(
+            proto.BOOL,
+            number=3,
+        )
+
+    class CustomRankingParams(proto.Message):
+        r"""Configuration parameters for the Custom Ranking feature.
+
+        Attributes:
+            expressions_to_precompute (MutableSequence[str]):
+                Optional. A list of ranking expressions (see
+                ``ranking_expression`` for the syntax documentation) to
+                evaluate. The evaluation results will be returned in
+                ``SearchResponse.SearchResult.rank_signals.precomputed_expression_values``
+                field.
+        """
+
+        expressions_to_precompute: MutableSequence[str] = proto.RepeatedField(
+            proto.STRING,
+            number=1,
+        )
+
     serving_config: str = proto.Field(
         proto.STRING,
         number=1,
@@ -1869,6 +2011,10 @@ class SearchRequest(proto.Message):
         proto.MESSAGE,
         number=32,
         message=DataStoreSpec,
+    )
+    num_results_per_data_store: int = proto.Field(
+        proto.INT32,
+        number=65,
     )
     filter: str = proto.Field(
         proto.STRING,
@@ -1990,6 +2136,20 @@ class SearchRequest(proto.Message):
         number=52,
         message=RelevanceScoreSpec,
     )
+    search_addon_spec: SearchAddonSpec = proto.Field(
+        proto.MESSAGE,
+        number=62,
+        message=SearchAddonSpec,
+    )
+    custom_ranking_params: CustomRankingParams = proto.Field(
+        proto.MESSAGE,
+        number=64,
+        message=CustomRankingParams,
+    )
+    entity: str = proto.Field(
+        proto.STRING,
+        number=66,
+    )
 
 
 class SearchResponse(proto.Message):
@@ -2038,6 +2198,9 @@ class SearchResponse(proto.Message):
             returned if
             [SearchRequest.ContentSearchSpec.summary_spec][google.cloud.discoveryengine.v1.SearchRequest.ContentSearchSpec.summary_spec]
             is set.
+        applied_controls (MutableSequence[str]):
+            Optional. Controls applied as part of the
+            Control service.
         query_expansion_info (google.cloud.discoveryengine_v1.types.SearchResponse.QueryExpansionInfo):
             Query expansion information for the returned
             results.
@@ -2098,6 +2261,10 @@ class SearchResponse(proto.Message):
             rank_signals (google.cloud.discoveryengine_v1.types.SearchResponse.SearchResult.RankSignals):
                 Optional. A set of ranking signals associated
                 with the result.
+            retrieval_signals (google.cloud.discoveryengine_v1.types.SearchResponse.SearchResult.RetrievalSignals):
+                Optional. A set of signals used by the
+                relevance filter meant for use to fine-tune the
+                relevance filter thresholds.
         """
 
         class RankSignals(proto.Message):
@@ -2139,6 +2306,10 @@ class SearchResponse(proto.Message):
                     Optional. The default rank of the result.
                 custom_signals (MutableSequence[google.cloud.discoveryengine_v1.types.SearchResponse.SearchResult.RankSignals.CustomSignal]):
                     Optional. A list of custom clearbox signals.
+                precomputed_expression_values (MutableSequence[float]):
+                    Optional. A list of precomputed expression results for a
+                    given document, in the same order as requested in
+                    ``SearchRequest.custom_ranking_params.expressions_to_precompute``.
             """
 
             class CustomSignal(proto.Message):
@@ -2207,6 +2378,52 @@ class SearchResponse(proto.Message):
                 number=33,
                 message="SearchResponse.SearchResult.RankSignals.CustomSignal",
             )
+            precomputed_expression_values: MutableSequence[float] = proto.RepeatedField(
+                proto.FLOAT,
+                number=34,
+            )
+
+        class RetrievalSignals(proto.Message):
+            r"""Contains a set of signals used by the relevance filter.
+
+            Attributes:
+                retrieval_sources (MutableSequence[google.cloud.discoveryengine_v1.types.SearchResponse.SearchResult.RetrievalSignals.RetrievalSource]):
+                    Optional. Indicates how the result was
+                    retrieved.
+                semantic_relevance_score (float):
+                    Optional. Relevance score used by the filter when
+                    semantic_relevance_threshold is set.
+            """
+
+            class RetrievalSource(proto.Enum):
+                r"""Indicates the source of the retrieval.
+
+                Values:
+                    RETRIEVAL_SOURCE_UNSPECIFIED (0):
+                        Unspecified retrieval source.
+                    KEYWORD_SEARCH (1):
+                        Indicates the result was retrieved by keyword
+                        search.
+                    SEMANTIC_SEARCH (2):
+                        Indicates the result was retrieved by
+                        semantic search.
+                """
+
+                RETRIEVAL_SOURCE_UNSPECIFIED = 0
+                KEYWORD_SEARCH = 1
+                SEMANTIC_SEARCH = 2
+
+            retrieval_sources: MutableSequence[
+                "SearchResponse.SearchResult.RetrievalSignals.RetrievalSource"
+            ] = proto.RepeatedField(
+                proto.ENUM,
+                number=1,
+                enum="SearchResponse.SearchResult.RetrievalSignals.RetrievalSource",
+            )
+            semantic_relevance_score: float = proto.Field(
+                proto.FLOAT,
+                number=2,
+            )
 
         id: str = proto.Field(
             proto.STRING,
@@ -2232,6 +2449,11 @@ class SearchResponse(proto.Message):
             proto.MESSAGE,
             number=7,
             message="SearchResponse.SearchResult.RankSignals",
+        )
+        retrieval_signals: "SearchResponse.SearchResult.RetrievalSignals" = proto.Field(
+            proto.MESSAGE,
+            number=11,
+            message="SearchResponse.SearchResult.RetrievalSignals",
         )
 
     class Facet(proto.Message):
@@ -2987,6 +3209,10 @@ class SearchResponse(proto.Message):
         proto.MESSAGE,
         number=9,
         message=Summary,
+    )
+    applied_controls: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=10,
     )
     query_expansion_info: QueryExpansionInfo = proto.Field(
         proto.MESSAGE,

@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     viewability_provider_messages,
     viewability_provider_service,
@@ -634,7 +635,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Args:
                     request (~.viewability_provider_service.BatchCreateViewabilityProvidersRequest):
-                        The request object. Request object for [BatchCreateViewabilityProviders][]
+                        The request object. Request object for ``BatchCreateViewabilityProviders``
                     method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
@@ -646,29 +647,26 @@ class ViewabilityProviderServiceRestTransport(
 
                 Returns:
                     ~.viewability_provider_service.BatchCreateViewabilityProvidersResponse:
-                        Response object for [BatchCreateViewabilityProviders][]
+                        Response object for ``BatchCreateViewabilityProviders``
                     method.
 
             """
 
             http_options = _BaseViewabilityProviderServiceRestTransport._BaseBatchCreateViewabilityProviders._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_create_viewability_providers(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseViewabilityProviderServiceRestTransport._BaseBatchCreateViewabilityProviders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseViewabilityProviderServiceRestTransport._BaseBatchCreateViewabilityProviders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseViewabilityProviderServiceRestTransport._BaseBatchCreateViewabilityProviders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseViewabilityProviderServiceRestTransport._BaseBatchCreateViewabilityProviders,
+                    "_BaseBatchCreateViewabilityProviders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -803,7 +801,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Args:
                     request (~.viewability_provider_service.BatchUpdateViewabilityProvidersRequest):
-                        The request object. Request object for [BatchUpdateViewabilityProviders][]
+                        The request object. Request object for ``BatchUpdateViewabilityProviders``
                     method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
@@ -815,29 +813,26 @@ class ViewabilityProviderServiceRestTransport(
 
                 Returns:
                     ~.viewability_provider_service.BatchUpdateViewabilityProvidersResponse:
-                        Response object for [BatchUpdateViewabilityProviders][]
+                        Response object for ``BatchUpdateViewabilityProviders``
                     method.
 
             """
 
             http_options = _BaseViewabilityProviderServiceRestTransport._BaseBatchUpdateViewabilityProviders._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_update_viewability_providers(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseViewabilityProviderServiceRestTransport._BaseBatchUpdateViewabilityProviders._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseViewabilityProviderServiceRestTransport._BaseBatchUpdateViewabilityProviders._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseViewabilityProviderServiceRestTransport._BaseBatchUpdateViewabilityProviders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseViewabilityProviderServiceRestTransport._BaseBatchUpdateViewabilityProviders,
+                    "_BaseBatchUpdateViewabilityProviders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -972,7 +967,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Args:
                     request (~.viewability_provider_service.CreateViewabilityProviderRequest):
-                        The request object. Request object for [CreateViewabilityProvider][] method.
+                        The request object. Request object for ``CreateViewabilityProvider`` method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
                     timeout (float): The timeout for this request.
@@ -993,21 +988,18 @@ class ViewabilityProviderServiceRestTransport(
             """
 
             http_options = _BaseViewabilityProviderServiceRestTransport._BaseCreateViewabilityProvider._get_http_options()
-
             request, metadata = self._interceptor.pre_create_viewability_provider(
                 request, metadata
             )
-            transcoded_request = _BaseViewabilityProviderServiceRestTransport._BaseCreateViewabilityProvider._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseViewabilityProviderServiceRestTransport._BaseCreateViewabilityProvider._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseViewabilityProviderServiceRestTransport._BaseCreateViewabilityProvider._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseViewabilityProviderServiceRestTransport._BaseCreateViewabilityProvider,
+                    "_BaseCreateViewabilityProvider__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1134,7 +1126,7 @@ class ViewabilityProviderServiceRestTransport(
 
             Args:
                 request (~.viewability_provider_service.GetViewabilityProviderRequest):
-                    The request object. Request object for [GetViewabilityProvider][] method.
+                    The request object. Request object for ``GetViewabilityProvider`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -1155,17 +1147,18 @@ class ViewabilityProviderServiceRestTransport(
             """
 
             http_options = _BaseViewabilityProviderServiceRestTransport._BaseGetViewabilityProvider._get_http_options()
-
             request, metadata = self._interceptor.pre_get_viewability_provider(
                 request, metadata
             )
-            transcoded_request = _BaseViewabilityProviderServiceRestTransport._BaseGetViewabilityProvider._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseViewabilityProviderServiceRestTransport._BaseGetViewabilityProvider._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseViewabilityProviderServiceRestTransport._BaseGetViewabilityProvider,
+                    "_BaseGetViewabilityProvider__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1292,7 +1285,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Args:
                     request (~.viewability_provider_service.ListViewabilityProvidersRequest):
-                        The request object. Request object for [ListViewabilityProviders][] method.
+                        The request object. Request object for ``ListViewabilityProviders`` method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
                     timeout (float): The timeout for this request.
@@ -1303,7 +1296,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Returns:
                     ~.viewability_provider_service.ListViewabilityProvidersResponse:
-                        Response object for [ListViewabilityProviders][]
+                        Response object for ``ListViewabilityProviders``
                     containing matching
                     [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]
                     objects.
@@ -1311,17 +1304,18 @@ class ViewabilityProviderServiceRestTransport(
             """
 
             http_options = _BaseViewabilityProviderServiceRestTransport._BaseListViewabilityProviders._get_http_options()
-
             request, metadata = self._interceptor.pre_list_viewability_providers(
                 request, metadata
             )
-            transcoded_request = _BaseViewabilityProviderServiceRestTransport._BaseListViewabilityProviders._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseViewabilityProviderServiceRestTransport._BaseListViewabilityProviders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseViewabilityProviderServiceRestTransport._BaseListViewabilityProviders,
+                    "_BaseListViewabilityProviders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1449,7 +1443,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Args:
                     request (~.viewability_provider_service.UpdateViewabilityProviderRequest):
-                        The request object. Request object for [UpdateViewabilityProvider][] method.
+                        The request object. Request object for ``UpdateViewabilityProvider`` method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
                     timeout (float): The timeout for this request.
@@ -1470,21 +1464,18 @@ class ViewabilityProviderServiceRestTransport(
             """
 
             http_options = _BaseViewabilityProviderServiceRestTransport._BaseUpdateViewabilityProvider._get_http_options()
-
             request, metadata = self._interceptor.pre_update_viewability_provider(
                 request, metadata
             )
-            transcoded_request = _BaseViewabilityProviderServiceRestTransport._BaseUpdateViewabilityProvider._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseViewabilityProviderServiceRestTransport._BaseUpdateViewabilityProvider._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseViewabilityProviderServiceRestTransport._BaseUpdateViewabilityProvider._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseViewabilityProviderServiceRestTransport._BaseUpdateViewabilityProvider,
+                    "_BaseUpdateViewabilityProvider__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1702,17 +1693,18 @@ class ViewabilityProviderServiceRestTransport(
             """
 
             http_options = _BaseViewabilityProviderServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseViewabilityProviderServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseViewabilityProviderServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseViewabilityProviderServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1820,15 +1812,16 @@ class ViewabilityProviderServiceRestTransport(
             """
 
             http_options = _BaseViewabilityProviderServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseViewabilityProviderServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseViewabilityProviderServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseViewabilityProviderServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -18,10 +18,12 @@ from .assessment_task import (
     AssessmentTaskDetails,
 )
 from .migration_entities import (
+    LineageOutput,
     MigrationSubtask,
     MigrationTask,
     MigrationTaskResult,
     MigrationWorkflow,
+    TaskOutput,
     TranslationTaskResult,
 )
 from .migration_error_details import (
@@ -92,10 +94,12 @@ from .translation_usability import (
 __all__ = (
     "AssessmentFeatureHandle",
     "AssessmentTaskDetails",
+    "LineageOutput",
     "MigrationSubtask",
     "MigrationTask",
     "MigrationTaskResult",
     "MigrationWorkflow",
+    "TaskOutput",
     "TranslationTaskResult",
     "ErrorDetail",
     "ErrorLocation",

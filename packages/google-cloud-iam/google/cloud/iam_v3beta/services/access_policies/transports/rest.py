@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.iam_v3beta._compat import transcode_request
 from google.cloud.iam_v3beta.types import (
     access_policies_service,
     access_policy_resources,
@@ -654,21 +655,18 @@ class AccessPoliciesRestTransport(_BaseAccessPoliciesRestTransport):
             """
 
             http_options = _BaseAccessPoliciesRestTransport._BaseCreateAccessPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_create_access_policy(
                 request, metadata
             )
-            transcoded_request = _BaseAccessPoliciesRestTransport._BaseCreateAccessPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAccessPoliciesRestTransport._BaseCreateAccessPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessPoliciesRestTransport._BaseCreateAccessPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessPoliciesRestTransport._BaseCreateAccessPolicy,
+                    "_BaseCreateAccessPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -805,17 +803,18 @@ class AccessPoliciesRestTransport(_BaseAccessPoliciesRestTransport):
             """
 
             http_options = _BaseAccessPoliciesRestTransport._BaseDeleteAccessPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_access_policy(
                 request, metadata
             )
-            transcoded_request = _BaseAccessPoliciesRestTransport._BaseDeleteAccessPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessPoliciesRestTransport._BaseDeleteAccessPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessPoliciesRestTransport._BaseDeleteAccessPolicy,
+                    "_BaseDeleteAccessPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -948,17 +947,18 @@ class AccessPoliciesRestTransport(_BaseAccessPoliciesRestTransport):
             """
 
             http_options = _BaseAccessPoliciesRestTransport._BaseGetAccessPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_access_policy(
                 request, metadata
             )
-            transcoded_request = _BaseAccessPoliciesRestTransport._BaseGetAccessPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessPoliciesRestTransport._BaseGetAccessPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessPoliciesRestTransport._BaseGetAccessPolicy,
+                    "_BaseGetAccessPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1097,17 +1097,18 @@ class AccessPoliciesRestTransport(_BaseAccessPoliciesRestTransport):
             """
 
             http_options = _BaseAccessPoliciesRestTransport._BaseListAccessPolicies._get_http_options()
-
             request, metadata = self._interceptor.pre_list_access_policies(
                 request, metadata
             )
-            transcoded_request = _BaseAccessPoliciesRestTransport._BaseListAccessPolicies._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessPoliciesRestTransport._BaseListAccessPolicies._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessPoliciesRestTransport._BaseListAccessPolicies,
+                    "_BaseListAccessPolicies__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1250,17 +1251,18 @@ class AccessPoliciesRestTransport(_BaseAccessPoliciesRestTransport):
             """
 
             http_options = _BaseAccessPoliciesRestTransport._BaseSearchAccessPolicyBindings._get_http_options()
-
             request, metadata = self._interceptor.pre_search_access_policy_bindings(
                 request, metadata
             )
-            transcoded_request = _BaseAccessPoliciesRestTransport._BaseSearchAccessPolicyBindings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessPoliciesRestTransport._BaseSearchAccessPolicyBindings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessPoliciesRestTransport._BaseSearchAccessPolicyBindings,
+                    "_BaseSearchAccessPolicyBindings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1407,21 +1409,18 @@ class AccessPoliciesRestTransport(_BaseAccessPoliciesRestTransport):
             """
 
             http_options = _BaseAccessPoliciesRestTransport._BaseUpdateAccessPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_update_access_policy(
                 request, metadata
             )
-            transcoded_request = _BaseAccessPoliciesRestTransport._BaseUpdateAccessPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAccessPoliciesRestTransport._BaseUpdateAccessPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessPoliciesRestTransport._BaseUpdateAccessPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessPoliciesRestTransport._BaseUpdateAccessPolicy,
+                    "_BaseUpdateAccessPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1624,15 +1623,16 @@ class AccessPoliciesRestTransport(_BaseAccessPoliciesRestTransport):
             http_options = (
                 _BaseAccessPoliciesRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAccessPoliciesRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAccessPoliciesRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAccessPoliciesRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

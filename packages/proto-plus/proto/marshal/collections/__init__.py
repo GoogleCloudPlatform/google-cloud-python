@@ -13,9 +13,7 @@
 # limitations under the License.
 
 from .maps import MapComposite
-from .repeated import Repeated
-from .repeated import RepeatedComposite
-
+from .repeated import Repeated, RepeatedComposite
 
 __all__ = (
     "MapComposite",

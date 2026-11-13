@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.vmmigration_v1._compat import transcode_request
 from google.cloud.vmmigration_v1.types import vmmigration
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -3934,21 +3935,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseAddGroupMigration._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_add_group_migration(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseAddGroupMigration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseAddGroupMigration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseAddGroupMigration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseAddGroupMigration,
+                    "_BaseAddGroupMigration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4088,21 +4086,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseCancelCloneJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_clone_job(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCancelCloneJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCancelCloneJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCancelCloneJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCancelCloneJob,
+                    "_BaseCancelCloneJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4242,21 +4237,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseCancelCutoverJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_cutover_job(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCancelCutoverJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCancelCutoverJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCancelCutoverJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCancelCutoverJob,
+                    "_BaseCancelCutoverJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4394,21 +4386,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseCancelDiskMigrationJob._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_disk_migration_job(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCancelDiskMigrationJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCancelDiskMigrationJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCancelDiskMigrationJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCancelDiskMigrationJob,
+                    "_BaseCancelDiskMigrationJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4546,21 +4535,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseCancelImageImportJob._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_image_import_job(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCancelImageImportJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCancelImageImportJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCancelImageImportJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCancelImageImportJob,
+                    "_BaseCancelImageImportJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4700,21 +4686,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseCreateCloneJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_clone_job(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCreateCloneJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCreateCloneJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCreateCloneJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCreateCloneJob,
+                    "_BaseCreateCloneJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4854,21 +4837,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseCreateCutoverJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_cutover_job(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCreateCutoverJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCreateCutoverJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCreateCutoverJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCreateCutoverJob,
+                    "_BaseCreateCutoverJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5008,21 +4988,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseCreateDatacenterConnector._get_http_options()
-
             request, metadata = self._interceptor.pre_create_datacenter_connector(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCreateDatacenterConnector._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCreateDatacenterConnector._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCreateDatacenterConnector._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCreateDatacenterConnector,
+                    "_BaseCreateDatacenterConnector__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5162,21 +5139,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseCreateDiskMigrationJob._get_http_options()
-
             request, metadata = self._interceptor.pre_create_disk_migration_job(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCreateDiskMigrationJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCreateDiskMigrationJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCreateDiskMigrationJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCreateDiskMigrationJob,
+                    "_BaseCreateDiskMigrationJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5316,25 +5290,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseCreateGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_group(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseCreateGroup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseVmMigrationRestTransport._BaseCreateGroup._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseCreateGroup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCreateGroup,
+                    "_BaseCreateGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5474,21 +5439,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseCreateImageImport._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_image_import(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCreateImageImport._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCreateImageImport._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCreateImageImport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCreateImageImport,
+                    "_BaseCreateImageImport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5628,21 +5590,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseCreateMigratingVm._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_migrating_vm(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCreateMigratingVm._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCreateMigratingVm._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCreateMigratingVm._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCreateMigratingVm,
+                    "_BaseCreateMigratingVm__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5782,25 +5741,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseCreateSource._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_source(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseCreateSource._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseVmMigrationRestTransport._BaseCreateSource._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseCreateSource._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCreateSource,
+                    "_BaseCreateSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5938,21 +5888,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseCreateTargetProject._get_http_options()
-
             request, metadata = self._interceptor.pre_create_target_project(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCreateTargetProject._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCreateTargetProject._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCreateTargetProject._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCreateTargetProject,
+                    "_BaseCreateTargetProject__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6090,21 +6037,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseCreateUtilizationReport._get_http_options()
-
             request, metadata = self._interceptor.pre_create_utilization_report(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCreateUtilizationReport._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCreateUtilizationReport._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCreateUtilizationReport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCreateUtilizationReport,
+                    "_BaseCreateUtilizationReport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6243,17 +6187,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseDeleteDatacenterConnector._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_datacenter_connector(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseDeleteDatacenterConnector._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseDeleteDatacenterConnector._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseDeleteDatacenterConnector,
+                    "_BaseDeleteDatacenterConnector__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6391,17 +6336,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseDeleteDiskMigrationJob._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_disk_migration_job(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseDeleteDiskMigrationJob._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseDeleteDiskMigrationJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseDeleteDiskMigrationJob,
+                    "_BaseDeleteDiskMigrationJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6539,19 +6485,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseDeleteGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_group(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseDeleteGroup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseDeleteGroup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseDeleteGroup,
+                    "_BaseDeleteGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6689,17 +6632,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseDeleteImageImport._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_image_import(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseDeleteImageImport._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseDeleteImageImport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseDeleteImageImport,
+                    "_BaseDeleteImageImport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6837,17 +6781,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseDeleteMigratingVm._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_migrating_vm(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseDeleteMigratingVm._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseDeleteMigratingVm._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseDeleteMigratingVm,
+                    "_BaseDeleteMigratingVm__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6985,19 +6930,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseDeleteSource._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_source(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseDeleteSource._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseDeleteSource._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseDeleteSource,
+                    "_BaseDeleteSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7133,17 +7075,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseDeleteTargetProject._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_target_project(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseDeleteTargetProject._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseDeleteTargetProject._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseDeleteTargetProject,
+                    "_BaseDeleteTargetProject__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7279,17 +7222,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseDeleteUtilizationReport._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_utilization_report(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseDeleteUtilizationReport._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseDeleteUtilizationReport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseDeleteUtilizationReport,
+                    "_BaseDeleteUtilizationReport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7428,21 +7372,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseExtendMigration._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_extend_migration(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseExtendMigration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseExtendMigration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseExtendMigration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseExtendMigration,
+                    "_BaseExtendMigration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7580,15 +7521,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseFetchInventory._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_fetch_inventory(request, metadata)
-            transcoded_request = _BaseVmMigrationRestTransport._BaseFetchInventory._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseFetchInventory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseFetchInventory,
+                    "_BaseFetchInventory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7727,17 +7669,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseFetchStorageInventory._get_http_options()
-
             request, metadata = self._interceptor.pre_fetch_storage_inventory(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseFetchStorageInventory._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseFetchStorageInventory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseFetchStorageInventory,
+                    "_BaseFetchStorageInventory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7880,21 +7823,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseFinalizeMigration._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_finalize_migration(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseFinalizeMigration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseFinalizeMigration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseFinalizeMigration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseFinalizeMigration,
+                    "_BaseFinalizeMigration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8043,19 +7983,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseGetCloneJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_clone_job(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseGetCloneJob._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseGetCloneJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetCloneJob,
+                    "_BaseGetCloneJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8198,17 +8135,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseGetCutoverJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_cutover_job(request, metadata)
-            transcoded_request = _BaseVmMigrationRestTransport._BaseGetCutoverJob._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseGetCutoverJob._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetCutoverJob,
+                    "_BaseGetCutoverJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8350,17 +8286,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseGetDatacenterConnector._get_http_options()
-
             request, metadata = self._interceptor.pre_get_datacenter_connector(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseGetDatacenterConnector._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseGetDatacenterConnector._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetDatacenterConnector,
+                    "_BaseGetDatacenterConnector__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8498,17 +8435,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseGetDiskMigrationJob._get_http_options()
-
             request, metadata = self._interceptor.pre_get_disk_migration_job(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseGetDiskMigrationJob._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseGetDiskMigrationJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetDiskMigrationJob,
+                    "_BaseGetDiskMigrationJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8646,19 +8584,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseGetGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_group(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseGetGroup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseGetGroup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetGroup,
+                    "_BaseGetGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8798,17 +8733,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseGetImageImport._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_image_import(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseGetImageImport._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseGetImageImport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetImageImport,
+                    "_BaseGetImageImport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8947,17 +8883,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseGetImageImportJob._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_image_import_job(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseGetImageImportJob._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseGetImageImportJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetImageImportJob,
+                    "_BaseGetImageImportJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9097,17 +9034,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseGetMigratingVm._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_migrating_vm(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseGetMigratingVm._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseGetMigratingVm._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetMigratingVm,
+                    "_BaseGetMigratingVm__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9245,17 +9183,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseGetReplicationCycle._get_http_options()
-
             request, metadata = self._interceptor.pre_get_replication_cycle(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseGetReplicationCycle._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseGetReplicationCycle._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetReplicationCycle,
+                    "_BaseGetReplicationCycle__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9394,19 +9333,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseGetSource._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_source(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseGetSource._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseGetSource._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetSource,
+                    "_BaseGetSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9546,17 +9482,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseGetTargetProject._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_target_project(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseGetTargetProject._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseGetTargetProject._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetTargetProject,
+                    "_BaseGetTargetProject__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9694,17 +9631,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseGetUtilizationReport._get_http_options()
-
             request, metadata = self._interceptor.pre_get_utilization_report(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseGetUtilizationReport._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseGetUtilizationReport._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetUtilizationReport,
+                    "_BaseGetUtilizationReport__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9843,17 +9781,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseListCloneJobs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_clone_jobs(request, metadata)
-            transcoded_request = _BaseVmMigrationRestTransport._BaseListCloneJobs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseListCloneJobs._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListCloneJobs,
+                    "_BaseListCloneJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9994,17 +9931,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseListCutoverJobs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_cutover_jobs(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseListCutoverJobs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseListCutoverJobs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListCutoverJobs,
+                    "_BaseListCutoverJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10144,17 +10082,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseListDatacenterConnectors._get_http_options()
-
             request, metadata = self._interceptor.pre_list_datacenter_connectors(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseListDatacenterConnectors._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseListDatacenterConnectors._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListDatacenterConnectors,
+                    "_BaseListDatacenterConnectors__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10293,17 +10232,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseListDiskMigrationJobs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_disk_migration_jobs(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseListDiskMigrationJobs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseListDiskMigrationJobs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListDiskMigrationJobs,
+                    "_BaseListDiskMigrationJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10444,19 +10384,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseListGroups._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_groups(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseListGroups._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseListGroups._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListGroups,
+                    "_BaseListGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10593,17 +10530,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseListImageImportJobs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_image_import_jobs(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseListImageImportJobs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseListImageImportJobs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListImageImportJobs,
+                    "_BaseListImageImportJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10744,17 +10682,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseListImageImports._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_image_imports(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseListImageImports._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseListImageImports._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListImageImports,
+                    "_BaseListImageImports__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10895,17 +10834,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseListMigratingVms._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_migrating_vms(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseListMigratingVms._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseListMigratingVms._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListMigratingVms,
+                    "_BaseListMigratingVms__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11044,17 +10984,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseListReplicationCycles._get_http_options()
-
             request, metadata = self._interceptor.pre_list_replication_cycles(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseListReplicationCycles._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseListReplicationCycles._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListReplicationCycles,
+                    "_BaseListReplicationCycles__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11195,19 +11136,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseListSources._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_sources(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseListSources._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseListSources._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListSources,
+                    "_BaseListSources__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11344,17 +11282,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseListTargetProjects._get_http_options()
-
             request, metadata = self._interceptor.pre_list_target_projects(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseListTargetProjects._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseListTargetProjects._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListTargetProjects,
+                    "_BaseListTargetProjects__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11493,17 +11432,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseListUtilizationReports._get_http_options()
-
             request, metadata = self._interceptor.pre_list_utilization_reports(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseListUtilizationReports._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseListUtilizationReports._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListUtilizationReports,
+                    "_BaseListUtilizationReports__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11646,19 +11586,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BasePauseMigration._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_pause_migration(request, metadata)
-            transcoded_request = _BaseVmMigrationRestTransport._BasePauseMigration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BasePauseMigration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BasePauseMigration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BasePauseMigration,
+                    "_BasePauseMigration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11796,21 +11733,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseRemoveGroupMigration._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_group_migration(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseRemoveGroupMigration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseRemoveGroupMigration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseRemoveGroupMigration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseRemoveGroupMigration,
+                    "_BaseRemoveGroupMigration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11950,21 +11884,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseResumeMigration._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_resume_migration(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseResumeMigration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseResumeMigration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseResumeMigration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseResumeMigration,
+                    "_BaseResumeMigration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12102,21 +12033,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseRunDiskMigrationJob._get_http_options()
-
             request, metadata = self._interceptor.pre_run_disk_migration_job(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseRunDiskMigrationJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseRunDiskMigrationJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseRunDiskMigrationJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseRunDiskMigrationJob,
+                    "_BaseRunDiskMigrationJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12256,19 +12184,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseStartMigration._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_start_migration(request, metadata)
-            transcoded_request = _BaseVmMigrationRestTransport._BaseStartMigration._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseStartMigration._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseStartMigration._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseStartMigration,
+                    "_BaseStartMigration__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12406,21 +12331,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseUpdateDiskMigrationJob._get_http_options()
-
             request, metadata = self._interceptor.pre_update_disk_migration_job(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseUpdateDiskMigrationJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseUpdateDiskMigrationJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseUpdateDiskMigrationJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseUpdateDiskMigrationJob,
+                    "_BaseUpdateDiskMigrationJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12560,25 +12482,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseUpdateGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_group(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseUpdateGroup._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseVmMigrationRestTransport._BaseUpdateGroup._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseUpdateGroup._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseUpdateGroup,
+                    "_BaseUpdateGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12718,21 +12631,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseUpdateMigratingVm._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_migrating_vm(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseUpdateMigratingVm._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseUpdateMigratingVm._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseUpdateMigratingVm._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseUpdateMigratingVm,
+                    "_BaseUpdateMigratingVm__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12872,25 +12782,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseUpdateSource._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_source(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseUpdateSource._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseVmMigrationRestTransport._BaseUpdateSource._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseUpdateSource._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseUpdateSource,
+                    "_BaseUpdateSource__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13028,21 +12929,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             """
 
             http_options = _BaseVmMigrationRestTransport._BaseUpdateTargetProject._get_http_options()
-
             request, metadata = self._interceptor.pre_update_target_project(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseUpdateTargetProject._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseUpdateTargetProject._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseUpdateTargetProject._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseUpdateTargetProject,
+                    "_BaseUpdateTargetProject__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13182,21 +13080,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseUpgradeAppliance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_upgrade_appliance(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseUpgradeAppliance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseUpgradeAppliance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseUpgradeAppliance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseUpgradeAppliance,
+                    "_BaseUpgradeAppliance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13904,19 +13799,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14048,17 +13940,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseVmMigrationRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14188,21 +14079,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmMigrationRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14307,17 +14195,18 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseVmMigrationRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14424,19 +14313,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseVmMigrationRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmMigrationRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14568,15 +14454,16 @@ class VmMigrationRestTransport(_BaseVmMigrationRestTransport):
             http_options = (
                 _BaseVmMigrationRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseVmMigrationRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmMigrationRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmMigrationRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

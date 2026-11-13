@@ -139,7 +139,7 @@ class _MutateRowsOperationAsync:
                     self._handle_entry_error(idx, exc)
             finally:
                 # raise exception detailing incomplete mutations
-                all_errors: list[Exception] = []
+                all_errors: list[bt_exceptions.FailedMutationEntryError] = []
                 for idx, exc_list in self.errors.items():
                     if len(exc_list) == 0:
                         raise core_exceptions.ClientError(

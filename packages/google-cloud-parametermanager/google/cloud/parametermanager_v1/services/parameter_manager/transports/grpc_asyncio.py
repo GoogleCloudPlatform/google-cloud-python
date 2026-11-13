@@ -638,6 +638,309 @@ class ParameterManagerGrpcAsyncIOTransport(ParameterManagerTransport):
             )
         return self._stubs["delete_parameter_version"]
 
+    @property
+    def list_templates(
+        self,
+    ) -> Callable[
+        [service.ListTemplatesRequest], Awaitable[service.ListTemplatesResponse]
+    ]:
+        r"""Return a callable for the list templates method over gRPC.
+
+        Lists Templates in a given project and location.
+
+        Returns:
+            Callable[[~.ListTemplatesRequest],
+                    Awaitable[~.ListTemplatesResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_templates" not in self._stubs:
+            self._stubs["list_templates"] = self._logged_channel.unary_unary(
+                "/google.cloud.parametermanager.v1.ParameterManager/ListTemplates",
+                request_serializer=service.ListTemplatesRequest.serialize,
+                response_deserializer=service.ListTemplatesResponse.deserialize,
+            )
+        return self._stubs["list_templates"]
+
+    @property
+    def get_template(
+        self,
+    ) -> Callable[[service.GetTemplateRequest], Awaitable[service.Template]]:
+        r"""Return a callable for the get template method over gRPC.
+
+        Gets details of a single Template.
+
+        Returns:
+            Callable[[~.GetTemplateRequest],
+                    Awaitable[~.Template]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_template" not in self._stubs:
+            self._stubs["get_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.parametermanager.v1.ParameterManager/GetTemplate",
+                request_serializer=service.GetTemplateRequest.serialize,
+                response_deserializer=service.Template.deserialize,
+            )
+        return self._stubs["get_template"]
+
+    @property
+    def create_template(
+        self,
+    ) -> Callable[[service.CreateTemplateRequest], Awaitable[service.Template]]:
+        r"""Return a callable for the create template method over gRPC.
+
+        Creates a new Template in a given project and
+        location.
+
+        Returns:
+            Callable[[~.CreateTemplateRequest],
+                    Awaitable[~.Template]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_template" not in self._stubs:
+            self._stubs["create_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.parametermanager.v1.ParameterManager/CreateTemplate",
+                request_serializer=service.CreateTemplateRequest.serialize,
+                response_deserializer=service.Template.deserialize,
+            )
+        return self._stubs["create_template"]
+
+    @property
+    def update_template(
+        self,
+    ) -> Callable[[service.UpdateTemplateRequest], Awaitable[service.Template]]:
+        r"""Return a callable for the update template method over gRPC.
+
+        Updates a single Template.
+
+        Returns:
+            Callable[[~.UpdateTemplateRequest],
+                    Awaitable[~.Template]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_template" not in self._stubs:
+            self._stubs["update_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.parametermanager.v1.ParameterManager/UpdateTemplate",
+                request_serializer=service.UpdateTemplateRequest.serialize,
+                response_deserializer=service.Template.deserialize,
+            )
+        return self._stubs["update_template"]
+
+    @property
+    def delete_template(
+        self,
+    ) -> Callable[[service.DeleteTemplateRequest], Awaitable[empty_pb2.Empty]]:
+        r"""Return a callable for the delete template method over gRPC.
+
+        Deletes a single Template.
+
+        Returns:
+            Callable[[~.DeleteTemplateRequest],
+                    Awaitable[~.Empty]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_template" not in self._stubs:
+            self._stubs["delete_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.parametermanager.v1.ParameterManager/DeleteTemplate",
+                request_serializer=service.DeleteTemplateRequest.serialize,
+                response_deserializer=empty_pb2.Empty.FromString,
+            )
+        return self._stubs["delete_template"]
+
+    @property
+    def list_template_versions(
+        self,
+    ) -> Callable[
+        [service.ListTemplateVersionsRequest],
+        Awaitable[service.ListTemplateVersionsResponse],
+    ]:
+        r"""Return a callable for the list template versions method over gRPC.
+
+        Lists TemplateVersions in a given project, location,
+        and template.
+
+        Returns:
+            Callable[[~.ListTemplateVersionsRequest],
+                    Awaitable[~.ListTemplateVersionsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_template_versions" not in self._stubs:
+            self._stubs["list_template_versions"] = self._logged_channel.unary_unary(
+                "/google.cloud.parametermanager.v1.ParameterManager/ListTemplateVersions",
+                request_serializer=service.ListTemplateVersionsRequest.serialize,
+                response_deserializer=service.ListTemplateVersionsResponse.deserialize,
+            )
+        return self._stubs["list_template_versions"]
+
+    @property
+    def get_template_version(
+        self,
+    ) -> Callable[
+        [service.GetTemplateVersionRequest], Awaitable[service.TemplateVersion]
+    ]:
+        r"""Return a callable for the get template version method over gRPC.
+
+        Gets details of a single TemplateVersion.
+
+        Returns:
+            Callable[[~.GetTemplateVersionRequest],
+                    Awaitable[~.TemplateVersion]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_template_version" not in self._stubs:
+            self._stubs["get_template_version"] = self._logged_channel.unary_unary(
+                "/google.cloud.parametermanager.v1.ParameterManager/GetTemplateVersion",
+                request_serializer=service.GetTemplateVersionRequest.serialize,
+                response_deserializer=service.TemplateVersion.deserialize,
+            )
+        return self._stubs["get_template_version"]
+
+    @property
+    def create_template_version(
+        self,
+    ) -> Callable[
+        [service.CreateTemplateVersionRequest], Awaitable[service.TemplateVersion]
+    ]:
+        r"""Return a callable for the create template version method over gRPC.
+
+        Creates a new TemplateVersion in a given project,
+        location, and template.
+
+        Returns:
+            Callable[[~.CreateTemplateVersionRequest],
+                    Awaitable[~.TemplateVersion]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_template_version" not in self._stubs:
+            self._stubs["create_template_version"] = self._logged_channel.unary_unary(
+                "/google.cloud.parametermanager.v1.ParameterManager/CreateTemplateVersion",
+                request_serializer=service.CreateTemplateVersionRequest.serialize,
+                response_deserializer=service.TemplateVersion.deserialize,
+            )
+        return self._stubs["create_template_version"]
+
+    @property
+    def update_template_version(
+        self,
+    ) -> Callable[
+        [service.UpdateTemplateVersionRequest], Awaitable[service.TemplateVersion]
+    ]:
+        r"""Return a callable for the update template version method over gRPC.
+
+        Updates a single TemplateVersion.
+
+        Returns:
+            Callable[[~.UpdateTemplateVersionRequest],
+                    Awaitable[~.TemplateVersion]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_template_version" not in self._stubs:
+            self._stubs["update_template_version"] = self._logged_channel.unary_unary(
+                "/google.cloud.parametermanager.v1.ParameterManager/UpdateTemplateVersion",
+                request_serializer=service.UpdateTemplateVersionRequest.serialize,
+                response_deserializer=service.TemplateVersion.deserialize,
+            )
+        return self._stubs["update_template_version"]
+
+    @property
+    def delete_template_version(
+        self,
+    ) -> Callable[[service.DeleteTemplateVersionRequest], Awaitable[empty_pb2.Empty]]:
+        r"""Return a callable for the delete template version method over gRPC.
+
+        Deletes a single TemplateVersion.
+
+        Returns:
+            Callable[[~.DeleteTemplateVersionRequest],
+                    Awaitable[~.Empty]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_template_version" not in self._stubs:
+            self._stubs["delete_template_version"] = self._logged_channel.unary_unary(
+                "/google.cloud.parametermanager.v1.ParameterManager/DeleteTemplateVersion",
+                request_serializer=service.DeleteTemplateVersionRequest.serialize,
+                response_deserializer=empty_pb2.Empty.FromString,
+            )
+        return self._stubs["delete_template_version"]
+
+    @property
+    def render_template_version(
+        self,
+    ) -> Callable[
+        [service.RenderTemplateVersionRequest],
+        Awaitable[service.RenderTemplateVersionResponse],
+    ]:
+        r"""Return a callable for the render template version method over gRPC.
+
+        Gets rendered version of a TemplateVersion.
+
+        Returns:
+            Callable[[~.RenderTemplateVersionRequest],
+                    Awaitable[~.RenderTemplateVersionResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "render_template_version" not in self._stubs:
+            self._stubs["render_template_version"] = self._logged_channel.unary_unary(
+                "/google.cloud.parametermanager.v1.ParameterManager/RenderTemplateVersion",
+                request_serializer=service.RenderTemplateVersionRequest.serialize,
+                response_deserializer=service.RenderTemplateVersionResponse.deserialize,
+            )
+        return self._stubs["render_template_version"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -739,6 +1042,61 @@ class ParameterManagerGrpcAsyncIOTransport(ParameterManagerTransport):
             self.delete_parameter_version: self._wrap_method(
                 self.delete_parameter_version,
                 default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_templates: self._wrap_method(
+                self.list_templates,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_template: self._wrap_method(
+                self.get_template,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_template: self._wrap_method(
+                self.create_template,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_template: self._wrap_method(
+                self.update_template,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_template: self._wrap_method(
+                self.delete_template,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_template_versions: self._wrap_method(
+                self.list_template_versions,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_template_version: self._wrap_method(
+                self.get_template_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_template_version: self._wrap_method(
+                self.create_template_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_template_version: self._wrap_method(
+                self.update_template_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_template_version: self._wrap_method(
+                self.delete_template_version,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.render_template_version: self._wrap_method(
+                self.render_template_version,
+                default_timeout=None,
                 client_info=client_info,
             ),
             self.get_location: self._wrap_method(

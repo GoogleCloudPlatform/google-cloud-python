@@ -32,7 +32,7 @@ import pytest
 import requests
 
 try:
-    import opentelemetry
+    import opentelemetry.sdk as opentelemetry
 except ImportError:
     opentelemetry = None
 
@@ -54,7 +54,7 @@ import google.cloud.bigquery.retry
 import google.cloud.bigquery.table
 from google.api_core import client_info
 from google.cloud import bigquery
-from google.cloud.bigquery import ParquetOptions, exceptions
+from google.cloud.bigquery import ParquetOptions, exceptions, version
 from google.cloud.bigquery.dataset import Dataset, DatasetReference
 from google.cloud.bigquery.enums import DatasetView, TimestampPrecision, UpdateMode
 from google.cloud.bigquery.retry import DEFAULT_TIMEOUT
@@ -840,6 +840,62 @@ class TestClient(unittest.TestCase):
         self.assertIs(kwargs["client_options"], mock.sentinel.client_options)
         self.assertIn("test-agent", kwargs["client_info"].user_agent)
         self.assertIn("pandas-gbq", kwargs["client_info"].user_agent)
+        self.assertIn(
+            f"legacy-gcb/{version.__version__}", kwargs["client_info"].user_agent
+        )
+
+    def test_ensure_bqstorage_client_default_universe(self):
+        bigquery_storage = pytest.importorskip("google.cloud.bigquery_storage")
+
+        mock_client = mock.create_autospec(bigquery_storage.BigQueryReadClient)
+        creds = _make_credentials()
+        client = self._make_one(project=self.PROJECT, credentials=creds)
+
+        with mock.patch(
+            "google.cloud.bigquery_storage.BigQueryReadClient", mock_client
+        ):
+            client._ensure_bqstorage_client()
+
+        _, kwargs = mock_client.call_args
+        self.assertIsNone(kwargs["client_options"])
+
+    def test_ensure_bqstorage_client_uses_client_universe(self):
+        bigquery_storage = pytest.importorskip("google.cloud.bigquery_storage")
+
+        mock_client = mock.create_autospec(bigquery_storage.BigQueryReadClient)
+        creds = _make_credentials()
+        client = self._make_one(
+            project=self.PROJECT,
+            credentials=creds,
+            client_options={"universe_domain": "foo.com"},
+        )
+
+        with mock.patch(
+            "google.cloud.bigquery_storage.BigQueryReadClient", mock_client
+        ):
+            client._ensure_bqstorage_client()
+
+        _, kwargs = mock_client.call_args
+        self.assertEqual(kwargs["client_options"].universe_domain, "foo.com")
+
+    def test_ensure_bqstorage_client_keeps_given_client_options(self):
+        bigquery_storage = pytest.importorskip("google.cloud.bigquery_storage")
+
+        mock_client = mock.create_autospec(bigquery_storage.BigQueryReadClient)
+        creds = _make_credentials()
+        client = self._make_one(
+            project=self.PROJECT,
+            credentials=creds,
+            client_options={"universe_domain": "foo.com"},
+        )
+
+        with mock.patch(
+            "google.cloud.bigquery_storage.BigQueryReadClient", mock_client
+        ):
+            client._ensure_bqstorage_client(client_options=mock.sentinel.client_options)
+
+        _, kwargs = mock_client.call_args
+        self.assertIs(kwargs["client_options"], mock.sentinel.client_options)
 
     def test_ensure_bqstorage_client_pandas_gbq_installed(self):
         bigquery_storage = pytest.importorskip("google.cloud.bigquery_storage")
@@ -857,15 +913,17 @@ class TestClient(unittest.TestCase):
         mock_pandas = mock.Mock()
         mock_pandas.__version__ = "0.13.0"
 
-        with mock.patch(
-            "google.cloud.bigquery_storage.BigQueryReadClient", mock_client
-        ), mock.patch.dict(sys.modules, {"pandas_gbq": mock_pandas}):
+        with (
+            mock.patch("google.cloud.bigquery_storage.BigQueryReadClient", mock_client),
+            mock.patch.dict(sys.modules, {"pandas_gbq": mock_pandas}),
+        ):
             client._ensure_bqstorage_client(client_info=client_info)
 
         mock_client.assert_called_once()
         _, kwargs = mock_client.call_args
         self.assertEqual(
-            kwargs["client_info"].user_agent, "app-agent pandas-gbq/0.13.0"
+            kwargs["client_info"].user_agent,
+            f"app-agent legacy-gcb/{version.__version__} pandas-gbq/0.13.0",
         )
 
     def test_ensure_bqstorage_client_pandas_gbq_not_installed(self):
@@ -881,14 +939,18 @@ class TestClient(unittest.TestCase):
             user_agent="app-agent"
         )
 
-        with mock.patch(
-            "google.cloud.bigquery_storage.BigQueryReadClient", mock_client
-        ), mock.patch.dict(sys.modules, {"pandas_gbq": None}):
+        with (
+            mock.patch("google.cloud.bigquery_storage.BigQueryReadClient", mock_client),
+            mock.patch.dict(sys.modules, {"pandas_gbq": None}),
+        ):
             client._ensure_bqstorage_client(client_info=client_info)
 
         mock_client.assert_called_once()
         _, kwargs = mock_client.call_args
-        self.assertEqual(kwargs["client_info"].user_agent, "app-agent pandas-gbq/0.0.0")
+        self.assertEqual(
+            kwargs["client_info"].user_agent,
+            f"app-agent legacy-gcb/{version.__version__} pandas-gbq/0.0.0",
+        )
 
     def test_ensure_bqstorage_client_client_info_none(self):
         bigquery_storage = pytest.importorskip("google.cloud.bigquery_storage")
@@ -898,14 +960,18 @@ class TestClient(unittest.TestCase):
         creds = _make_credentials()
         client = self._make_one(project=self.PROJECT, credentials=creds)
 
-        with mock.patch(
-            "google.cloud.bigquery_storage.BigQueryReadClient", mock_client
-        ), mock.patch.dict(sys.modules, {"pandas_gbq": None}):
+        with (
+            mock.patch("google.cloud.bigquery_storage.BigQueryReadClient", mock_client),
+            mock.patch.dict(sys.modules, {"pandas_gbq": None}),
+        ):
             client._ensure_bqstorage_client(client_info=None)
 
         mock_client.assert_called_once()
         _, kwargs = mock_client.call_args
-        self.assertEqual(kwargs["client_info"].user_agent, "pandas-gbq/0.0.0")
+        self.assertEqual(
+            kwargs["client_info"].user_agent,
+            f"legacy-gcb/{version.__version__} pandas-gbq/0.0.0",
+        )
 
     def test_ensure_bqstorage_client_client_info_user_agent_none(self):
         bigquery_storage = pytest.importorskip("google.cloud.bigquery_storage")
@@ -919,14 +985,18 @@ class TestClient(unittest.TestCase):
 
         client_info = google.api_core.gapic_v1.client_info.ClientInfo(user_agent=None)
 
-        with mock.patch(
-            "google.cloud.bigquery_storage.BigQueryReadClient", mock_client
-        ), mock.patch.dict(sys.modules, {"pandas_gbq": None}):
+        with (
+            mock.patch("google.cloud.bigquery_storage.BigQueryReadClient", mock_client),
+            mock.patch.dict(sys.modules, {"pandas_gbq": None}),
+        ):
             client._ensure_bqstorage_client(client_info=client_info)
 
         mock_client.assert_called_once()
         _, kwargs = mock_client.call_args
-        self.assertEqual(kwargs["client_info"].user_agent, "pandas-gbq/0.0.0")
+        self.assertEqual(
+            kwargs["client_info"].user_agent,
+            f"legacy-gcb/{version.__version__} pandas-gbq/0.0.0",
+        )
 
     def test_ensure_bqstorage_client_missing_dependency(self):
         creds = _make_credentials()
@@ -1016,6 +1086,126 @@ class TestClient(unittest.TestCase):
         ]
         assert matching_warnings, "Obsolete dependency warning not raised."
 
+    def test_get_shared_bqstorage_client_creates_one_client(self):
+        bigquery_storage = pytest.importorskip("google.cloud.bigquery_storage")
+        from google.cloud.bigquery import client as client_module
+
+        mock_client = mock.create_autospec(bigquery_storage.BigQueryReadClient)
+        creds = _make_credentials()
+        client = self._make_one(project=self.PROJECT, credentials=creds)
+
+        with mock.patch(
+            "google.cloud.bigquery_storage.BigQueryReadClient", mock_client
+        ):
+            first = client._get_shared_bqstorage_client()
+            second = client._get_shared_bqstorage_client()
+
+        self.assertIs(first, mock_client.return_value)
+        self.assertIs(second, first)
+        mock_client.assert_called_once_with(
+            credentials=creds,
+            client_options=None,
+            client_info=mock.ANY,
+            transport=client_module._create_bqstorage_transport,
+        )
+
+    @pytest.mark.skipif(
+        packaging.version.parse(getattr(google.api_core, "__version__", "0.0.0"))
+        < packaging.version.Version("2.15.0"),
+        reason="universe_domain not supported with google-api-core < 2.15.0",
+    )
+    def test_get_shared_bqstorage_client_uses_universe_domain(self):
+        bigquery_storage = pytest.importorskip("google.cloud.bigquery_storage")
+
+        mock_client = mock.create_autospec(bigquery_storage.BigQueryReadClient)
+        creds = _make_credentials()
+        client = self._make_one(
+            project=self.PROJECT,
+            credentials=creds,
+            client_options={"universe_domain": "foo.com"},
+        )
+
+        with mock.patch(
+            "google.cloud.bigquery_storage.BigQueryReadClient", mock_client
+        ):
+            client._get_shared_bqstorage_client()
+
+        _, kwargs = mock_client.call_args
+        self.assertEqual(kwargs["client_options"].universe_domain, "foo.com")
+
+    def test_get_shared_bqstorage_client_tries_again_if_unavailable(self):
+        from google.cloud.bigquery import client as client_module
+
+        creds = _make_credentials()
+        client = self._make_one(project=self.PROJECT, credentials=creds)
+
+        with mock.patch.object(
+            client, "_ensure_bqstorage_client", return_value=None
+        ) as ensure:
+            self.assertIsNone(client._get_shared_bqstorage_client())
+            self.assertIsNone(client._get_shared_bqstorage_client())
+
+        expected = mock.call(transport=client_module._create_bqstorage_transport)
+        self.assertEqual(ensure.call_args_list, [expected, expected])
+
+    def test_get_shared_bqstorage_client_creates_one_client_across_threads(self):
+        import threading
+        import time
+
+        from google.cloud.bigquery import client as client_module
+
+        creds = _make_credentials()
+        client = self._make_one(project=self.PROJECT, credentials=creds)
+
+        def slow_create(**kwargs):
+            time.sleep(0.05)
+            return mock.Mock()
+
+        results = []
+
+        def get_client():
+            results.append(client._get_shared_bqstorage_client())
+
+        with mock.patch.object(
+            client, "_ensure_bqstorage_client", side_effect=slow_create
+        ) as ensure:
+            threads = [threading.Thread(target=get_client) for _ in range(5)]
+            for thread in threads:
+                thread.start()
+            for thread in threads:
+                thread.join()
+
+        ensure.assert_called_once_with(
+            transport=client_module._create_bqstorage_transport
+        )
+        self.assertEqual(len(results), 5)
+        self.assertTrue(all(result is results[0] for result in results))
+
+    def test_get_shared_bqstorage_client_channel_sends_keepalive_pings(self):
+        bigquery_storage = pytest.importorskip("google.cloud.bigquery_storage")
+        import google.auth.credentials
+        import grpc
+
+        transport_class = bigquery_storage.BigQueryReadClient.get_transport_class(
+            "grpc"
+        )
+        creds = google.auth.credentials.AnonymousCredentials()
+        client = self._make_one(project=self.PROJECT, credentials=creds)
+        channel = grpc.insecure_channel("localhost:1")
+
+        with mock.patch.object(
+            transport_class, "create_channel", return_value=channel
+        ) as create_channel:
+            bqstorage_client = client._get_shared_bqstorage_client()
+        channel.close()
+
+        self.assertIsInstance(bqstorage_client._transport, transport_class)
+        options = create_channel.call_args.kwargs["options"]
+        self.assertIn(("grpc.keepalive_time_ms", 60000), options)
+        self.assertIn(("grpc.keepalive_timeout_ms", 60000), options)
+        # The transport's own options are kept.
+        self.assertIn(("grpc.max_receive_message_length", -1), options)
+
     def test_create_routine_w_minimal_resource(self):
         from google.cloud.bigquery.routine import Routine, RoutineReference
 
@@ -1084,7 +1274,7 @@ class TestClient(unittest.TestCase):
         )
 
     def test_span_status_is_set(self):
-        pytest.importorskip("opentelemetry")
+        pytest.importorskip("opentelemetry.sdk")
         from google.cloud.bigquery.routine import Routine
 
         tracer_provider = TracerProvider()
@@ -1636,6 +1826,23 @@ class TestClient(unittest.TestCase):
         http.close.assert_called_once()
         http._auth_request.session.close.assert_called_once()
 
+    def test_close_closes_shared_bqstorage_client(self):
+        creds = _make_credentials()
+        http = mock.Mock()
+        http._auth_request.session = mock.Mock()
+        client = self._make_one(project=self.PROJECT, credentials=creds, _http=http)
+        first, second = mock.Mock(), mock.Mock()
+
+        with mock.patch.object(
+            client, "_ensure_bqstorage_client", side_effect=[first, second]
+        ):
+            self.assertIs(client._get_shared_bqstorage_client(), first)
+            client.close()
+            self.assertIs(client._get_shared_bqstorage_client(), second)
+
+        first._transport.close.assert_called_once_with()
+        second._transport.close.assert_not_called()
+
     def test_get_model(self):
         path = "projects/%s/datasets/%s/models/%s" % (
             self.PROJECT,
@@ -1798,13 +2005,19 @@ class TestClient(unittest.TestCase):
         http.request.assert_called_once_with(
             url=mock.ANY,
             method="GET",
-            headers={
-                "X-Goog-API-Client": expected_user_agent,
-                "Accept-Encoding": "gzip",
-                "User-Agent": expected_user_agent,
-            },
+            headers=mock.ANY,
             data=mock.ANY,
             timeout=DEFAULT_TIMEOUT,
+        )
+        _, kwargs = http.request.call_args
+        actual_headers = {k.lower(): v for k, v in kwargs["headers"].items()}
+        self.assertEqual(
+            actual_headers,
+            {
+                "x-goog-api-client": expected_user_agent,
+                "accept-encoding": "gzip",
+                "user-agent": expected_user_agent,
+            },
         )
         self.assertIn("my-application/1.2.3", expected_user_agent)
 
@@ -9151,9 +9364,10 @@ class TestClientUpload(object):
             SchemaField("unknown_col", "BYTES"),
         )
         job_config = job.LoadJobConfig(schema=schema)
-        with load_patch as load_table_from_file, pytest.raises(
-            ValueError
-        ) as exc_context:
+        with (
+            load_patch as load_table_from_file,
+            pytest.raises(ValueError) as exc_context,
+        ):
             client.load_table_from_dataframe(
                 dataframe, self.TABLE_REF, job_config=job_config, location=self.LOCATION
             )
@@ -9366,6 +9580,101 @@ class TestClientUpload(object):
         sent_config = load_table_from_file.mock_calls[0][2]["job_config"]
         assert sent_config.source_format == job.SourceFormat.CSV
 
+    def test_load_table_from_dataframe_with_csv_source_format_datetime_objects(self):
+        pandas = pytest.importorskip("pandas")
+        from google.cloud.bigquery import job
+        from google.cloud.bigquery.schema import SchemaField
+
+        client = self._make_client()
+        schema = [
+            SchemaField("dt_col", "DATETIME"),
+            SchemaField("ts_col", "TIMESTAMP"),
+            SchemaField("str_col", "STRING"),
+        ]
+        dataframe = pandas.DataFrame(
+            {
+                "dt_col": [
+                    datetime.datetime(1, 1, 1, 0, 0, 0),
+                    None,
+                    pandas.NaT,
+                    datetime.datetime(9999, 12, 31, 23, 59, 59, 999999),
+                ],
+                "ts_col": [
+                    datetime.datetime(1, 1, 1, 0, 0, 0, tzinfo=datetime.timezone.utc),
+                    None,
+                    "0002-01-01 00:00:00+00:00",
+                    datetime.datetime(
+                        9999, 12, 31, 23, 59, 59, 999999, tzinfo=datetime.timezone.utc
+                    ),
+                ],
+                "str_col": ["a", None, "b", "c"],
+            },
+            dtype="object",
+        )
+        job_config = job.LoadJobConfig(
+            schema=schema,
+            source_format=job.SourceFormat.CSV,
+        )
+
+        captured_csv = []
+
+        def fake_load_table_from_file(self_client, file_obj, *args, **kwargs):
+            captured_csv.append(file_obj.read().decode("utf-8"))
+            return mock.Mock()
+
+        load_patch = mock.patch(
+            "google.cloud.bigquery.client.Client.load_table_from_file",
+            autospec=True,
+            side_effect=fake_load_table_from_file,
+        )
+        with load_patch:
+            client.load_table_from_dataframe(
+                dataframe, self.TABLE_REF, job_config=job_config
+            )
+
+        assert captured_csv == [
+            "0001-01-01 00:00:00,0001-01-01 00:00:00+00:00,a\n"
+            ",,\n"
+            ",0002-01-01 00:00:00+00:00,b\n"
+            "9999-12-31 23:59:59.999999,9999-12-31 23:59:59.999999+00:00,c\n"
+        ]
+
+    def test_load_table_from_dataframe_with_csv_source_format_no_schema(self):
+        pandas = pytest.importorskip("pandas")
+        from google.cloud.bigquery import job
+
+        client = self._make_client()
+        dataframe = pandas.DataFrame({"x": [object(), object()]})
+        job_config = job.LoadJobConfig(
+            write_disposition=job.WriteDisposition.WRITE_TRUNCATE,
+            source_format=job.SourceFormat.CSV,
+        )
+
+        load_patch = mock.patch(
+            "google.cloud.bigquery.client.Client.load_table_from_file", autospec=True
+        )
+        schema_patch = mock.patch(
+            "google.cloud.bigquery._pandas_helpers.dataframe_to_bq_schema",
+            autospec=True,
+            return_value=None,
+        )
+        with (
+            load_patch as load_table_from_file,
+            schema_patch,
+            pytest.warns(
+                PendingDeprecationWarning,
+                match="Schema could not be detected for all columns",
+            ),
+        ):
+            client.load_table_from_dataframe(
+                dataframe, self.TABLE_REF, job_config=job_config
+            )
+
+        load_table_from_file.assert_called_once()
+        sent_config = load_table_from_file.mock_calls[0][2]["job_config"]
+        assert sent_config.schema is None
+        assert sent_config.source_format == job.SourceFormat.CSV
+
     def test_load_table_from_dataframe_w_higher_scale_decimal128_datatype(self):
         pandas = pytest.importorskip("pandas")
         pytest.importorskip("pyarrow")
@@ -9423,9 +9732,13 @@ class TestClientUpload(object):
         get_table_patch = mock.patch(
             "google.cloud.bigquery.client.Client.get_table", autospec=True
         )
-        with load_patch, get_table_patch, pytest.warns(
-            PendingDeprecationWarning,
-            match="Loading DataFrames via google-cloud-bigquery is deprecated",
+        with (
+            load_patch,
+            get_table_patch,
+            pytest.warns(
+                PendingDeprecationWarning,
+                match="Loading DataFrames via google-cloud-bigquery is deprecated",
+            ),
         ):
             client.load_table_from_dataframe(dataframe, self.TABLE_REF)
 
@@ -9847,7 +10160,7 @@ class TestClientUpload(object):
 
         client = self._make_client()
 
-        emoji = "\U0001F3E6"
+        emoji = "\U0001f3e6"
         json_row = {"emoji": emoji}
         json_rows = [json_row]
 

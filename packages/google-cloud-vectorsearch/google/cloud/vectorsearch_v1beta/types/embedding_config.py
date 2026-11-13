@@ -82,15 +82,19 @@ class VertexEmbeddingConfig(proto.Message):
             https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models#embeddings-models
             for the list of supported models.
         text_template (str):
-            Required. Required: Text template for the
-            input to the model. The template must contain
-            one or more references to fields in the
-            DataObject, e.g.:
-
+            Optional. Text template for the input to the
+            model. The template must contain one or more
+            references to fields in the DataObject, e.g.:
             "Movie Title: {title} ---- Movie Plot: {plot}".
+
+            Required when using the text-only path.
         task_type (google.cloud.vectorsearch_v1beta.types.EmbeddingTaskType):
-            Required. Required: Task type for the
-            embeddings.
+            Optional. Optional: Task type for the
+            embeddings. Required for text-only embedding
+            models, see
+            https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/embeddings/task-types
+            Not needed for multi modal embedding models, see
+            https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/embeddings/get-multimodal-embeddings#specify-task-instructions
     """
 
     model_id: str = proto.Field(

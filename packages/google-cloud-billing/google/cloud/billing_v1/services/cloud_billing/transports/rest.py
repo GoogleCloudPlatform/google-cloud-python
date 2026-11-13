@@ -30,6 +30,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.billing_v1._compat import transcode_request
 from google.cloud.billing_v1.types import cloud_billing
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -865,21 +866,18 @@ class CloudBillingRestTransport(_BaseCloudBillingRestTransport):
             """
 
             http_options = _BaseCloudBillingRestTransport._BaseCreateBillingAccount._get_http_options()
-
             request, metadata = self._interceptor.pre_create_billing_account(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBillingRestTransport._BaseCreateBillingAccount._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudBillingRestTransport._BaseCreateBillingAccount._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBillingRestTransport._BaseCreateBillingAccount._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBillingRestTransport._BaseCreateBillingAccount,
+                    "_BaseCreateBillingAccount__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1017,17 +1015,18 @@ class CloudBillingRestTransport(_BaseCloudBillingRestTransport):
             """
 
             http_options = _BaseCloudBillingRestTransport._BaseGetBillingAccount._get_http_options()
-
             request, metadata = self._interceptor.pre_get_billing_account(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBillingRestTransport._BaseGetBillingAccount._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBillingRestTransport._BaseGetBillingAccount._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBillingRestTransport._BaseGetBillingAccount,
+                    "_BaseGetBillingAccount__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1238,17 +1237,16 @@ class CloudBillingRestTransport(_BaseCloudBillingRestTransport):
             http_options = (
                 _BaseCloudBillingRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseCloudBillingRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudBillingRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBillingRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1388,17 +1386,18 @@ class CloudBillingRestTransport(_BaseCloudBillingRestTransport):
             """
 
             http_options = _BaseCloudBillingRestTransport._BaseGetProjectBillingInfo._get_http_options()
-
             request, metadata = self._interceptor.pre_get_project_billing_info(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBillingRestTransport._BaseGetProjectBillingInfo._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBillingRestTransport._BaseGetProjectBillingInfo._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBillingRestTransport._BaseGetProjectBillingInfo,
+                    "_BaseGetProjectBillingInfo__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1534,17 +1533,18 @@ class CloudBillingRestTransport(_BaseCloudBillingRestTransport):
             """
 
             http_options = _BaseCloudBillingRestTransport._BaseListBillingAccounts._get_http_options()
-
             request, metadata = self._interceptor.pre_list_billing_accounts(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBillingRestTransport._BaseListBillingAccounts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBillingRestTransport._BaseListBillingAccounts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBillingRestTransport._BaseListBillingAccounts,
+                    "_BaseListBillingAccounts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1680,17 +1680,18 @@ class CloudBillingRestTransport(_BaseCloudBillingRestTransport):
             """
 
             http_options = _BaseCloudBillingRestTransport._BaseListProjectBillingInfo._get_http_options()
-
             request, metadata = self._interceptor.pre_list_project_billing_info(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBillingRestTransport._BaseListProjectBillingInfo._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBillingRestTransport._BaseListProjectBillingInfo._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBillingRestTransport._BaseListProjectBillingInfo,
+                    "_BaseListProjectBillingInfo__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1830,21 +1831,18 @@ class CloudBillingRestTransport(_BaseCloudBillingRestTransport):
             """
 
             http_options = _BaseCloudBillingRestTransport._BaseMoveBillingAccount._get_http_options()
-
             request, metadata = self._interceptor.pre_move_billing_account(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBillingRestTransport._BaseMoveBillingAccount._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudBillingRestTransport._BaseMoveBillingAccount._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBillingRestTransport._BaseMoveBillingAccount._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBillingRestTransport._BaseMoveBillingAccount,
+                    "_BaseMoveBillingAccount__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2057,23 +2055,16 @@ class CloudBillingRestTransport(_BaseCloudBillingRestTransport):
             http_options = (
                 _BaseCloudBillingRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseCloudBillingRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseCloudBillingRestTransport._BaseSetIamPolicy._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudBillingRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBillingRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2209,21 +2200,18 @@ class CloudBillingRestTransport(_BaseCloudBillingRestTransport):
             """
 
             http_options = _BaseCloudBillingRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBillingRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudBillingRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBillingRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBillingRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2362,21 +2350,18 @@ class CloudBillingRestTransport(_BaseCloudBillingRestTransport):
             """
 
             http_options = _BaseCloudBillingRestTransport._BaseUpdateBillingAccount._get_http_options()
-
             request, metadata = self._interceptor.pre_update_billing_account(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBillingRestTransport._BaseUpdateBillingAccount._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudBillingRestTransport._BaseUpdateBillingAccount._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBillingRestTransport._BaseUpdateBillingAccount._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBillingRestTransport._BaseUpdateBillingAccount,
+                    "_BaseUpdateBillingAccount__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2520,21 +2505,18 @@ class CloudBillingRestTransport(_BaseCloudBillingRestTransport):
             """
 
             http_options = _BaseCloudBillingRestTransport._BaseUpdateProjectBillingInfo._get_http_options()
-
             request, metadata = self._interceptor.pre_update_project_billing_info(
                 request, metadata
             )
-            transcoded_request = _BaseCloudBillingRestTransport._BaseUpdateProjectBillingInfo._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudBillingRestTransport._BaseUpdateProjectBillingInfo._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudBillingRestTransport._BaseUpdateProjectBillingInfo._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudBillingRestTransport._BaseUpdateProjectBillingInfo,
+                    "_BaseUpdateProjectBillingInfo__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

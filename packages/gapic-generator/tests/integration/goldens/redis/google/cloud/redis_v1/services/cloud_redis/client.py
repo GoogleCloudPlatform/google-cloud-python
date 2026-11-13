@@ -27,6 +27,7 @@ from google.cloud.redis_v1 import gapic_version as package_version
 from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
+from google.cloud.redis_v1._compat import _observability
 from google.cloud.redis_v1._compat import get_universe_domain, get_api_endpoint, get_default_mtls_endpoint, should_use_client_cert, read_environment_variables
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials             # type: ignore
@@ -62,13 +63,11 @@ from .transports.base import CloudRedisTransport, DEFAULT_CLIENT_INFO
 from .transports.grpc import CloudRedisGrpcTransport
 from .transports.grpc_asyncio import CloudRedisGrpcAsyncIOTransport
 from .transports.rest import CloudRedisRestTransport
-ASYNC_REST_EXCEPTION = None
 try:
     from .transports.rest_asyncio import AsyncCloudRedisRestTransport
-    HAS_ASYNC_REST_DEPENDENCIES = True
-except ImportError as e: # pragma: NO COVER
+    HAS_ASYNC_REST_DEPENDENCIES = True  # pragma: NO COVER
+except ImportError: # pragma: NO COVER
     HAS_ASYNC_REST_DEPENDENCIES = False
-    ASYNC_REST_EXCEPTION = e
 
 
 class CloudRedisClientMeta(type):
@@ -99,7 +98,9 @@ class CloudRedisClientMeta(type):
         """
         # If a specific transport is requested, return that one.
         if label == "rest_asyncio" and not HAS_ASYNC_REST_DEPENDENCIES:  # pragma: NO COVER
-            raise ASYNC_REST_EXCEPTION
+            raise ImportError(
+                "`rest_asyncio` transport requires the library to be installed with the `async_rest` extra. Install the library with the `async_rest` extra using `pip install google-cloud-redis[async_rest]`"
+            )
         if label:
             return cls._transport_registry[label]
 
@@ -506,7 +507,7 @@ class CloudRedisClient(metaclass=CloudRedisClientMeta):
                 else cast(Callable[..., CloudRedisTransport], transport)
             )
 
-            if "rest_asyncio" in str(transport_init):
+            if "rest_asyncio" in str(transport_init):  # pragma: NO COVER
                 unsupported_params = {
                     "google.api_core.client_options.ClientOptions.credentials_file": self._client_options.credentials_file,
                     "google.api_core.client_options.ClientOptions.scopes": self._client_options.scopes,
@@ -520,10 +521,14 @@ class CloudRedisClient(metaclass=CloudRedisClientMeta):
                     raise core_exceptions.AsyncRestUnsupportedParameterError(  # type: ignore
                         f"The following provided parameters are not supported for `transport=rest_asyncio`: {', '.join(provided_unsupported_params)}"
                     )
+                client_options = None
+                if _observability is not None and _observability.is_otel_capabilities_enabled(self._client_options):  # pragma: NO COVER
+                    client_options = self._client_options  # pragma: NO COVER
                 self._transport = transport_init(
                     credentials=credentials,
                     host=self._api_endpoint,
                     client_info=client_info,
+                    **({"client_options": client_options} if client_options is not None else {}),
                 )
                 return
 
@@ -532,18 +537,32 @@ class CloudRedisClient(metaclass=CloudRedisClientMeta):
             if api_key_value and hasattr(google.auth._default, "get_api_key_credentials"):
                 credentials = google.auth._default.get_api_key_credentials(api_key_value)
 
+            # When OpenTelemetry tracing is enabled, pass client_options to the transport
+            # so it can wire tracing interceptors and method spans.
+            client_options = None
+            if (
+                _observability is not None
+                and _observability.is_otel_capabilities_enabled(self._client_options)
+            ):
+                # NOTE: Coverage tool ignores this line in environments running
+                # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+                # Lifecycle: Can be lifted once lowest constraints require google-api-core >= 2.36.0.
+                client_options = self._client_options  # pragma: NO COVER
+
             # initialize with the provided callable or the passed in class
-            self._transport = transport_init(
-                credentials=credentials,
-                credentials_file=self._client_options.credentials_file,
-                host=self._api_endpoint,
-                scopes=self._client_options.scopes,
-                client_cert_source_for_mtls=self._client_cert_source,
-                quota_project_id=self._client_options.quota_project_id,
-                client_info=client_info,
-                always_use_jwt_access=True,
-                api_audience=self._client_options.api_audience,
-            )
+            transport_kwargs = {
+                "credentials": credentials,
+                "credentials_file": self._client_options.credentials_file,
+                "host": self._api_endpoint,
+                "scopes": self._client_options.scopes,
+                "client_cert_source_for_mtls": self._client_cert_source,
+                "quota_project_id": self._client_options.quota_project_id,
+                "client_info": client_info,
+                "always_use_jwt_access": True,
+                "api_audience": self._client_options.api_audience,
+                **({"client_options": client_options} if client_options is not None else {}),
+            }
+            self._transport = transport_init(**transport_kwargs)
 
         if "async" not in str(self._transport):
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(std_logging.DEBUG):  # pragma: NO COVER

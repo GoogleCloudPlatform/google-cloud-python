@@ -30,6 +30,10 @@ from google.api_core import exceptions as core_exceptions
 from google.api_core import extended_operation
 {% endif %}
 from google.api_core import gapic_v1
+{% if service.has_resumable_upload_methods %}
+from google.api_core.resumable_transfer import ResumableUploadConfig
+{% endif %}
+from {{package_path}}._compat import _observability
 from {{package_path}}._compat import get_universe_domain, get_api_endpoint, get_default_mtls_endpoint, should_use_client_cert, read_environment_variables
 {% if has_auto_populated_fields %}
 from {{package_path}}._compat import setup_request_id
@@ -82,14 +86,12 @@ from .transports.grpc_asyncio import {{ service.grpc_asyncio_transport_name }}
 from .transports.rest import {{ service.name }}RestTransport
 {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2121): Remove this condition when async rest is GA. #}
 {% if rest_async_io_enabled %}
-ASYNC_REST_EXCEPTION = None
 try:
     from .transports.rest_asyncio import Async{{ service.name }}RestTransport
-    HAS_ASYNC_REST_DEPENDENCIES = True
+    HAS_ASYNC_REST_DEPENDENCIES = True  # pragma: NO COVER
 {# NOTE: `pragma: NO COVER` is needed since the coverage for presubmits isn't combined. #}
-except ImportError as e: # pragma: NO COVER
+except ImportError: # pragma: NO COVER
     HAS_ASYNC_REST_DEPENDENCIES = False
-    ASYNC_REST_EXCEPTION = e
 
 {% endif %}{# if rest_async_io_enabled #}
 {% endif %}
@@ -133,7 +135,9 @@ class {{ service.client_name }}Meta(type):
         {% if rest_async_io_enabled %}
         {# NOTE: `pragma: NO COVER` is needed since the coverage for presubmits isn't combined. #}
         if label == "rest_asyncio" and not HAS_ASYNC_REST_DEPENDENCIES:  # pragma: NO COVER
-            raise ASYNC_REST_EXCEPTION
+            raise ImportError(
+                "`rest_asyncio` transport requires the library to be installed with the `async_rest` extra. Install the library with the `async_rest` extra using `pip install {{ api.naming.warehouse_package_name }}[async_rest]`"
+            )
         {% endif %}
         if label:
             return cls._transport_registry[label]
@@ -314,17 +318,17 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
                 client_cert_source = mtls.default_client_cert_source()
         return client_cert_source
 
-    
+
     def _validate_universe_domain(self):
         """Validates client's and credentials' universe domains are consistent.
-        
+
         Returns:
             bool: True iff the configured universe domain is valid.
 
         Raises:
             ValueError: If the configured universe domain is not valid.
         """
-        
+
         # NOTE (b/349488459): universe validation is disabled until further notice.
         return True
 
@@ -355,21 +359,21 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
     @property
     def api_endpoint(self) -> str:
         """Return the API endpoint used by the client instance.
-        
+
         Returns:
             str: The API endpoint used by the client instance.
         """
         return self._api_endpoint
-    
+
     @property
     def universe_domain(self) -> str:
         """Return the universe domain used by the client instance.
-        
+
         Returns:
             str: The universe domain used by the client instance.
         """
         return self._universe_domain
-    
+
     def __init__(self, *,
             credentials: Optional[ga_credentials.Credentials] = None,
             transport: Optional[Union[str, {{ service.name }}Transport, Callable[..., {{ service.name }}Transport]]] = None,
@@ -397,8 +401,8 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
                 {% endif %}
             client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
                 Custom options for the client.
-                
-                1. The ``api_endpoint`` property can be used to override the              
+
+                1. The ``api_endpoint`` property can be used to override the
                 default endpoint provided by the client when ``transport`` is
                 not explicitly provided. Only if this property is not set and
                 ``transport`` was not explicitly provided, the endpoint is
@@ -415,7 +419,7 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
                 not provided, the default SSL client certificate will be used if
                 present. If GOOGLE_API_USE_CLIENT_CERTIFICATE is "false" or not
                 set, no client certificate will be used.
-                
+
                 3. The ``universe_domain`` property can be used to override the
                 default "googleapis.com" universe. Note that the ``api_endpoint``
                 property still takes precedence; and ``universe_domain`` is
@@ -473,7 +477,7 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
             self._transport = cast({{ service.name }}Transport, transport)
             self._api_endpoint = self._transport.host
 
-        self._api_endpoint = (self._api_endpoint or 
+        self._api_endpoint = (self._api_endpoint or
             get_api_endpoint(
                 api_override=self._client_options.api_endpoint,
                 universe_domain=self._universe_domain,
@@ -494,7 +498,7 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
                 else cast(Callable[..., {{ service.name }}Transport], transport)
             )
 
-            if "rest_asyncio" in str(transport_init):
+            if "rest_asyncio" in str(transport_init):  # pragma: NO COVER
                 {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2136): Support the following parameters in async rest: #}
                 unsupported_params = {
                     "google.api_core.client_options.ClientOptions.credentials_file": self._client_options.credentials_file,
@@ -510,10 +514,14 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
                     raise core_exceptions.AsyncRestUnsupportedParameterError(  # type: ignore
                         f"The following provided parameters are not supported for `transport=rest_asyncio`: {', '.join(provided_unsupported_params)}"
                     )
+                client_options = None
+                if _observability is not None and _observability.is_otel_capabilities_enabled(self._client_options):  # pragma: NO COVER
+                    client_options = self._client_options  # pragma: NO COVER
                 self._transport = transport_init(
                     credentials=credentials,
                     host=self._api_endpoint,
                     client_info=client_info,
+                    **({"client_options": client_options} if client_options is not None else {}),
                 )
                 return
 
@@ -531,19 +539,33 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
                 else cast(Callable[..., {{ service.name }}Transport], transport)
             )
             {% endif %}
+            # When OpenTelemetry tracing is enabled, pass client_options to the transport
+            # so it can wire tracing interceptors and method spans.
+            client_options = None
+            if (
+                _observability is not None
+                and _observability.is_otel_capabilities_enabled(self._client_options)
+            ):
+                # NOTE: Coverage tool ignores this line in environments running
+                # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+                # Lifecycle: Can be lifted once lowest constraints require google-api-core >= 2.36.0.
+                client_options = self._client_options  # pragma: NO COVER
+
             # initialize with the provided callable or the passed in class
-            self._transport = transport_init(
-                credentials=credentials,
-                credentials_file=self._client_options.credentials_file,
-                host=self._api_endpoint,
-                scopes=self._client_options.scopes,
-                client_cert_source_for_mtls=self._client_cert_source,
-                quota_project_id=self._client_options.quota_project_id,
-                client_info=client_info,
-                always_use_jwt_access=True,
-                api_audience=self._client_options.api_audience,
-            )
-        
+            transport_kwargs = {
+                "credentials": credentials,
+                "credentials_file": self._client_options.credentials_file,
+                "host": self._api_endpoint,
+                "scopes": self._client_options.scopes,
+                "client_cert_source_for_mtls": self._client_cert_source,
+                "quota_project_id": self._client_options.quota_project_id,
+                "client_info": client_info,
+                "always_use_jwt_access": True,
+                "api_audience": self._client_options.api_audience,
+                **({"client_options": client_options} if client_options is not None else {}),
+            }
+            self._transport = transport_init(**transport_kwargs)
+
         if "async" not in str(self._transport):
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(std_logging.DEBUG):  # pragma: NO COVER
                 _LOGGER.debug(
@@ -827,7 +849,7 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("resource", request_pb.resource),)),
         )
-        
+
         # Validate the universe domain.
         self._validate_universe_domain()
 

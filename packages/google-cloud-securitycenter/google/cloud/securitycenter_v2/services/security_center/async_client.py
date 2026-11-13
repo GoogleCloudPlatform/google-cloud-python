@@ -1122,7 +1122,7 @@ class SecurityCenterAsyncClient:
             self._client._transport.create_mute_config
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)$"
@@ -1647,7 +1647,7 @@ class SecurityCenterAsyncClient:
             self._client._transport.delete_mute_config
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/muteConfigs/[^/]+$"
@@ -2499,7 +2499,7 @@ class SecurityCenterAsyncClient:
             self._client._transport.get_mute_config
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/muteConfigs/[^/]+$"
@@ -3612,7 +3612,7 @@ class SecurityCenterAsyncClient:
             self._client._transport.list_mute_configs
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/muteConfigs$"
@@ -5261,7 +5261,7 @@ class SecurityCenterAsyncClient:
             self._client._transport.update_mute_config
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile(
             "^projects/[^/]+/locations/(?P<location>[^/]+)/muteConfigs/[^/]+$"

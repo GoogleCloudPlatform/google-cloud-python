@@ -21,16 +21,17 @@ Compute Engine using the Compute Engine metadata server.
 
 import datetime
 import logging
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
-
-from google.auth import _helpers
-from google.auth import _regional_access_boundary_utils
-from google.auth import credentials
-from google.auth import exceptions
-from google.auth import iam
-from google.auth import jwt
-from google.auth import metrics
+from google.auth import (
+    _helpers,
+    _regional_access_boundary_utils,
+    credentials,
+    exceptions,
+    iam,
+    jwt,
+    metrics,
+)
 from google.auth.compute_engine import _metadata
 from google.oauth2 import _client
 
@@ -174,7 +175,8 @@ class Credentials(
         return _metadata._is_service_account_email(self.service_account_email)
 
     def _build_regional_access_boundary_lookup_url(
-        self, request: "Optional[google.auth.transport.Request]" = None  # noqa: F821
+        self,
+        request: "Optional[google.auth.transport.Request]" = None,  # noqa: F821
     ):
         """Builds and returns the URL for the regional access boundary lookup API for GCE.
 
@@ -338,6 +340,7 @@ class IDTokenCredentials(
         signer=None,
         use_metadata_identity_endpoint=False,
         quota_project_id=None,
+        bind_id_token=None,
     ):
         """
         Args:
@@ -362,18 +365,34 @@ class IDTokenCredentials(
                 otherwise ValueError will be raised.
             quota_project_id (Optional[str]): The project ID used for quota and
                 billing.
+            bind_id_token (Optional[bool]): Controls whether to request a
+                certificate-bound ID token. Can only be set when
+                ``use_metadata_identity_endpoint`` is ``True``.
+                If ``True``, requests a bound token whenever a valid Agent
+                Identity certificate is available and token binding is not
+                disabled via ``GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN``, falling
+                back to an unbound token otherwise (or raising
+                :class:`~google.auth.exceptions.RefreshError` if a configured
+                certificate is not found after retries). If ``False``, always
+                requests an unbound token. If ``None`` (default), token binding
+                is determined automatically by the library. Set ``True`` or
+                ``False`` explicitly if your application requires a specific
+                behavior.
 
         Raises:
             ValueError:
                 If ``use_metadata_identity_endpoint`` is set to True, and one of
                 ``token_uri``, ``additional_claims``, ``service_account_email``,
-                 ``signer`` arguments is set.
+                ``signer`` arguments is set, or if
+                ``use_metadata_identity_endpoint`` is False and
+                ``bind_id_token`` is not None.
         """
         super(IDTokenCredentials, self).__init__()
 
         self._quota_project_id = quota_project_id
         self._use_metadata_identity_endpoint = use_metadata_identity_endpoint
         self._target_audience = target_audience
+        self._bind_id_token = bind_id_token
 
         if use_metadata_identity_endpoint:
             if token_uri or additional_claims or service_account_email or signer:
@@ -385,8 +404,13 @@ class IDTokenCredentials(
             self._token_uri = None
             self._additional_claims = None
             self._signer = None
+        elif bind_id_token is not None:
+            raise ValueError(
+                "If use_metadata_identity_endpoint is False, bind_id_token "
+                "must not be set"
+            )
 
-        if service_account_email is None:
+        if service_account_email is None and request is not None:
             sa_info = _metadata.get_service_account_info(request)
             self._service_account_email = sa_info["email"]
         else:
@@ -407,6 +431,31 @@ class IDTokenCredentials(
             else:
                 self._additional_claims = {}
 
+    def _make_copy(self):
+        # since the signer is already instantiated,
+        # the request is not needed
+        if self._use_metadata_identity_endpoint:
+            cred = self.__class__(
+                None,
+                target_audience=self._target_audience,
+                use_metadata_identity_endpoint=True,
+                quota_project_id=self._quota_project_id,
+            )
+            cred._service_account_email = self._service_account_email
+            cred._bind_id_token = getattr(self, "_bind_id_token", None)
+            return cred
+        else:
+            return self.__class__(
+                None,
+                service_account_email=self._service_account_email,
+                token_uri=self._token_uri,
+                target_audience=self._target_audience,
+                additional_claims=self._additional_claims.copy(),
+                signer=self.signer,
+                use_metadata_identity_endpoint=False,
+                quota_project_id=self._quota_project_id,
+            )
+
     def with_target_audience(self, target_audience):
         """Create a copy of these credentials with the specified target
         audience.
@@ -417,69 +466,25 @@ class IDTokenCredentials(
             google.auth.service_account.IDTokenCredentials: A new credentials
                 instance.
         """
-        # since the signer is already instantiated,
-        # the request is not needed
-        if self._use_metadata_identity_endpoint:
-            return self.__class__(
-                None,
-                target_audience=target_audience,
-                use_metadata_identity_endpoint=True,
-                quota_project_id=self._quota_project_id,
-            )
-        else:
-            return self.__class__(
-                None,
-                service_account_email=self._service_account_email,
-                token_uri=self._token_uri,
-                target_audience=target_audience,
-                additional_claims=self._additional_claims.copy(),
-                signer=self.signer,
-                use_metadata_identity_endpoint=False,
-                quota_project_id=self._quota_project_id,
-            )
+        cred = self._make_copy()
+        cred._target_audience = target_audience
+        return cred
 
     @_helpers.copy_docstring(credentials.CredentialsWithQuotaProject)
     def with_quota_project(self, quota_project_id):
-        # since the signer is already instantiated,
-        # the request is not needed
-        if self._use_metadata_identity_endpoint:
-            return self.__class__(
-                None,
-                target_audience=self._target_audience,
-                use_metadata_identity_endpoint=True,
-                quota_project_id=quota_project_id,
-            )
-        else:
-            return self.__class__(
-                None,
-                service_account_email=self._service_account_email,
-                token_uri=self._token_uri,
-                target_audience=self._target_audience,
-                additional_claims=self._additional_claims.copy(),
-                signer=self.signer,
-                use_metadata_identity_endpoint=False,
-                quota_project_id=quota_project_id,
-            )
+        cred = self._make_copy()
+        cred._quota_project_id = quota_project_id
+        return cred
 
     @_helpers.copy_docstring(credentials.CredentialsWithTokenUri)
     def with_token_uri(self, token_uri):
-        # since the signer is already instantiated,
-        # the request is not needed
         if self._use_metadata_identity_endpoint:
             raise ValueError(
-                "If use_metadata_identity_endpoint is set, token_uri" " must not be set"
+                "If use_metadata_identity_endpoint is set, token_uri must not be set"
             )
-        else:
-            return self.__class__(
-                None,
-                service_account_email=self._service_account_email,
-                token_uri=token_uri,
-                target_audience=self._target_audience,
-                additional_claims=self._additional_claims.copy(),
-                signer=self.signer,
-                use_metadata_identity_endpoint=False,
-                quota_project_id=self.quota_project_id,
-            )
+        cred = self._make_copy()
+        cred._token_uri = token_uri
+        return cred
 
     def _make_authorization_grant_assertion(self):
         """Create the OAuth 2.0 assertion.
@@ -528,11 +533,19 @@ class IDTokenCredentials(
         try:
             path = "instance/service-accounts/default/identity"
             params = {"audience": self._target_audience, "format": "full"}
-            metrics_header = {
-                metrics.API_CLIENT_HEADER: metrics.token_request_id_token_mds()
-            }
+            bind_token = getattr(self, "_bind_id_token", None) is not False
+            method, body, headers = _metadata._build_token_request_options(
+                metrics.token_request_id_token_mds(),
+                bind_token=bind_token,
+            )
+
             id_token = _metadata.get(
-                request, path, params=params, headers=metrics_header
+                request,
+                path,
+                params=params,
+                headers=headers,
+                method=method,
+                body=body,
             )
         except exceptions.TransportError as caught_exc:
             new_exc = exceptions.RefreshError(caught_exc)

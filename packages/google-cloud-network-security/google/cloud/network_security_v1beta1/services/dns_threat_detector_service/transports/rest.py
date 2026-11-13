@@ -35,6 +35,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.network_security_v1beta1._compat import transcode_request
 from google.cloud.network_security_v1beta1.types import dns_threat_detector
 from google.cloud.network_security_v1beta1.types import (
     dns_threat_detector as gcn_dns_threat_detector,
@@ -721,21 +722,18 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseCreateDnsThreatDetector._get_http_options()
-
             request, metadata = self._interceptor.pre_create_dns_threat_detector(
                 request, metadata
             )
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseCreateDnsThreatDetector._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDnsThreatDetectorServiceRestTransport._BaseCreateDnsThreatDetector._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseCreateDnsThreatDetector._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseCreateDnsThreatDetector,
+                    "_BaseCreateDnsThreatDetector__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -871,17 +869,18 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseDeleteDnsThreatDetector._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_dns_threat_detector(
                 request, metadata
             )
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseDeleteDnsThreatDetector._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseDeleteDnsThreatDetector._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseDeleteDnsThreatDetector,
+                    "_BaseDeleteDnsThreatDetector__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -988,17 +987,18 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseGetDnsThreatDetector._get_http_options()
-
             request, metadata = self._interceptor.pre_get_dns_threat_detector(
                 request, metadata
             )
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseGetDnsThreatDetector._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseGetDnsThreatDetector._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseGetDnsThreatDetector,
+                    "_BaseGetDnsThreatDetector__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1138,17 +1138,18 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseListDnsThreatDetectors._get_http_options()
-
             request, metadata = self._interceptor.pre_list_dns_threat_detectors(
                 request, metadata
             )
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseListDnsThreatDetectors._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseListDnsThreatDetectors._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseListDnsThreatDetectors,
+                    "_BaseListDnsThreatDetectors__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1295,21 +1296,18 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseUpdateDnsThreatDetector._get_http_options()
-
             request, metadata = self._interceptor.pre_update_dns_threat_detector(
                 request, metadata
             )
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseUpdateDnsThreatDetector._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDnsThreatDetectorServiceRestTransport._BaseUpdateDnsThreatDetector._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseUpdateDnsThreatDetector._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseUpdateDnsThreatDetector,
+                    "_BaseUpdateDnsThreatDetector__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1512,15 +1510,16 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1651,15 +1650,16 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1792,15 +1792,16 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1934,19 +1935,16 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDnsThreatDetectorServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2081,21 +2079,18 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDnsThreatDetectorServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2227,21 +2222,18 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDnsThreatDetectorServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2347,17 +2339,18 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2465,15 +2458,16 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2606,15 +2600,16 @@ class DnsThreatDetectorServiceRestTransport(_BaseDnsThreatDetectorServiceRestTra
             """
 
             http_options = _BaseDnsThreatDetectorServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseDnsThreatDetectorServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDnsThreatDetectorServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDnsThreatDetectorServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

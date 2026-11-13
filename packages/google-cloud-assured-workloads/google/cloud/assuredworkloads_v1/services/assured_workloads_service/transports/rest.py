@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.assuredworkloads_v1._compat import transcode_request
 from google.cloud.assuredworkloads_v1.types import assuredworkloads
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -671,19 +672,16 @@ class AssuredWorkloadsServiceRestTransport(_BaseAssuredWorkloadsServiceRestTrans
             """
 
             http_options = _BaseAssuredWorkloadsServiceRestTransport._BaseCreateWorkload._get_http_options()
-
             request, metadata = self._interceptor.pre_create_workload(request, metadata)
-            transcoded_request = _BaseAssuredWorkloadsServiceRestTransport._BaseCreateWorkload._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAssuredWorkloadsServiceRestTransport._BaseCreateWorkload._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAssuredWorkloadsServiceRestTransport._BaseCreateWorkload._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssuredWorkloadsServiceRestTransport._BaseCreateWorkload,
+                    "_BaseCreateWorkload__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -815,15 +813,16 @@ class AssuredWorkloadsServiceRestTransport(_BaseAssuredWorkloadsServiceRestTrans
             """
 
             http_options = _BaseAssuredWorkloadsServiceRestTransport._BaseDeleteWorkload._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_workload(request, metadata)
-            transcoded_request = _BaseAssuredWorkloadsServiceRestTransport._BaseDeleteWorkload._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAssuredWorkloadsServiceRestTransport._BaseDeleteWorkload._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssuredWorkloadsServiceRestTransport._BaseDeleteWorkload,
+                    "_BaseDeleteWorkload__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -947,15 +946,16 @@ class AssuredWorkloadsServiceRestTransport(_BaseAssuredWorkloadsServiceRestTrans
             """
 
             http_options = _BaseAssuredWorkloadsServiceRestTransport._BaseGetWorkload._get_http_options()
-
             request, metadata = self._interceptor.pre_get_workload(request, metadata)
-            transcoded_request = _BaseAssuredWorkloadsServiceRestTransport._BaseGetWorkload._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAssuredWorkloadsServiceRestTransport._BaseGetWorkload._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssuredWorkloadsServiceRestTransport._BaseGetWorkload,
+                    "_BaseGetWorkload__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1110,15 +1110,16 @@ class AssuredWorkloadsServiceRestTransport(_BaseAssuredWorkloadsServiceRestTrans
             """
 
             http_options = _BaseAssuredWorkloadsServiceRestTransport._BaseListWorkloads._get_http_options()
-
             request, metadata = self._interceptor.pre_list_workloads(request, metadata)
-            transcoded_request = _BaseAssuredWorkloadsServiceRestTransport._BaseListWorkloads._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAssuredWorkloadsServiceRestTransport._BaseListWorkloads._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssuredWorkloadsServiceRestTransport._BaseListWorkloads,
+                    "_BaseListWorkloads__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1263,21 +1264,18 @@ class AssuredWorkloadsServiceRestTransport(_BaseAssuredWorkloadsServiceRestTrans
             """
 
             http_options = _BaseAssuredWorkloadsServiceRestTransport._BaseRestrictAllowedResources._get_http_options()
-
             request, metadata = self._interceptor.pre_restrict_allowed_resources(
                 request, metadata
             )
-            transcoded_request = _BaseAssuredWorkloadsServiceRestTransport._BaseRestrictAllowedResources._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAssuredWorkloadsServiceRestTransport._BaseRestrictAllowedResources._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAssuredWorkloadsServiceRestTransport._BaseRestrictAllowedResources._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssuredWorkloadsServiceRestTransport._BaseRestrictAllowedResources,
+                    "_BaseRestrictAllowedResources__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1420,19 +1418,16 @@ class AssuredWorkloadsServiceRestTransport(_BaseAssuredWorkloadsServiceRestTrans
             """
 
             http_options = _BaseAssuredWorkloadsServiceRestTransport._BaseUpdateWorkload._get_http_options()
-
             request, metadata = self._interceptor.pre_update_workload(request, metadata)
-            transcoded_request = _BaseAssuredWorkloadsServiceRestTransport._BaseUpdateWorkload._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAssuredWorkloadsServiceRestTransport._BaseUpdateWorkload._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAssuredWorkloadsServiceRestTransport._BaseUpdateWorkload._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssuredWorkloadsServiceRestTransport._BaseUpdateWorkload,
+                    "_BaseUpdateWorkload__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1658,15 +1653,16 @@ class AssuredWorkloadsServiceRestTransport(_BaseAssuredWorkloadsServiceRestTrans
             """
 
             http_options = _BaseAssuredWorkloadsServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAssuredWorkloadsServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAssuredWorkloadsServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssuredWorkloadsServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1797,15 +1793,16 @@ class AssuredWorkloadsServiceRestTransport(_BaseAssuredWorkloadsServiceRestTrans
             """
 
             http_options = _BaseAssuredWorkloadsServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseAssuredWorkloadsServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAssuredWorkloadsServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssuredWorkloadsServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

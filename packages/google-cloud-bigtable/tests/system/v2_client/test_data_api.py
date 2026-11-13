@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import operator
-import struct
 from datetime import datetime, timedelta, timezone
 
 import pytest
@@ -45,6 +44,8 @@ FLOAT_CELL_VAL2 = -1.4
 
 INITIAL_ROW_SPLITS = [b"row_split_1", b"row_split_2", b"row_split_3"]
 JOY_EMOJI = "\N{FACE WITH TEARS OF JOY}"
+
+GAP_MARGIN_OF_ERROR = 0.05
 
 PASS_ALL_FILTER = row_filters.PassAllFilter(True)
 BLOCK_ALL_FILTER = row_filters.BlockAllFilter(True)
@@ -214,6 +215,37 @@ def test_table_read_rows_filter_millis(data_table):
     row_data.consume_all()
 
 
+def test_table_direct_row_commit(data_table, rows_to_delete):
+    from google.rpc import code_pb2
+
+    row = data_table.direct_row(ROW_KEY)
+
+    # Test set cell
+    row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1)
+    row.set_cell(COLUMN_FAMILY_ID1, COL_NAME2, CELL_VAL1)
+    status = row.commit()
+    rows_to_delete.append(row)
+    assert status.code == code_pb2.Code.OK
+    row_data = data_table.read_row(ROW_KEY)
+    assert row_data.cells[COLUMN_FAMILY_ID1][COL_NAME1][0].value == CELL_VAL1
+    assert row_data.cells[COLUMN_FAMILY_ID1][COL_NAME2][0].value == CELL_VAL1
+
+    # Test delete cell
+    row.delete_cell(COLUMN_FAMILY_ID1, COL_NAME1)
+    status = row.commit()
+    assert status.code == code_pb2.Code.OK
+    row_data = data_table.read_row(ROW_KEY)
+    assert COL_NAME1 not in row_data.cells[COLUMN_FAMILY_ID1]
+    assert row_data.cells[COLUMN_FAMILY_ID1][COL_NAME2][0].value == CELL_VAL1
+
+    # Test delete row
+    row.delete()
+    status = row.commit()
+    assert status.code == code_pb2.Code.OK
+    row_data = data_table.read_row(ROW_KEY)
+    assert row_data is None
+
+
 def test_table_mutate_rows(data_table, rows_to_delete):
     row1 = data_table.direct_row(ROW_KEY)
     row1.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1)
@@ -243,43 +275,12 @@ def test_table_mutate_rows(data_table, rows_to_delete):
     assert row2_data.cells[COLUMN_FAMILY_ID1][COL_NAME1][0].value == CELL_VAL4
 
 
-def _add_test_error_handler(retry):
-    """Overwrites the current on_error function to assert that backoff values are within expected bounds."""
-    import time
-
-    curr_time = time.monotonic()
-    times_triggered = 0
-
-    # Assert that the retry handler works properly.
-    def test_error_handler(exc):
-        nonlocal curr_time, times_triggered
-        next_time = time.monotonic()
-        if times_triggered >= 1:
-            gap = next_time - curr_time
-
-            # Exponential backoff = uniform randomness from 0 to max_gap
-            max_gap = min(
-                retry._initial * retry._multiplier**times_triggered,
-                retry._maximum,
-            )
-            # Allow a small tolerance margin (1.0s) for OS sleep scheduling latency
-            assert gap <= max_gap + 1.0
-        times_triggered += 1
-        curr_time = next_time
-
-    retry._on_error = test_error_handler
-
-
 def test_table_mutate_rows_retries_timeout(data_table, rows_to_delete):
-    import copy
-
     import mock
-    from google.api_core import retry as retries
-    from google.api_core.exceptions import InvalidArgument
     from google.rpc.code_pb2 import Code
     from google.rpc.status_pb2 import Status
 
-    from google.cloud.bigtable.table import DEFAULT_RETRY, _BigtableRetryableError
+    from google.cloud.bigtable.table import DEFAULT_RETRY
     from google.cloud.bigtable_v2 import MutateRowsResponse
 
     # Simulate a server error on row 2, and a normal response on row 1, followed by a bunch of error
@@ -314,6 +315,9 @@ def test_table_mutate_rows_retries_timeout(data_table, rows_to_delete):
 
     final_success_response = [MutateRowsResponse(entries=[MutateRowsResponse.Entry()])]
 
+    # Explicit timestamp ensures mutations are idempotent and eligible for retry.
+    timestamp = datetime(2023, 1, 1, tzinfo=timezone.utc)
+
     with mock.patch.object(
         data_table._instance._client.table_data_client, "mutate_rows"
     ) as mutate_mock:
@@ -326,16 +330,13 @@ def test_table_mutate_rows_retries_timeout(data_table, rows_to_delete):
 
         row = data_table.direct_row(ROW_KEY)
         rows_to_delete.append(row)
-        row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1)
+        row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1, timestamp=timestamp)
 
         row_2 = data_table.direct_row(ROW_KEY_ALT)
         rows_to_delete.append(row_2)
-        row_2.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1)
+        row_2.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1, timestamp=timestamp)
 
-        # Testing the default retry
-        default_retry_copy = copy.copy(DEFAULT_RETRY)
-        _add_test_error_handler(default_retry_copy)
-        statuses = data_table.mutate_rows([row, row_2], retry=default_retry_copy)
+        statuses = data_table.mutate_rows([row, row_2])
         assert statuses[0].code == Code.OK
         assert statuses[1].code == Code.OK
 
@@ -349,34 +350,41 @@ def test_table_mutate_rows_retries_timeout(data_table, rows_to_delete):
 
         row = data_table.direct_row(ROW_KEY)
         rows_to_delete.append(row)
-        row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1)
+        row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1, timestamp=timestamp)
 
         row_2 = data_table.direct_row(ROW_KEY_ALT)
         rows_to_delete.append(row_2)
-        row_2.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1)
+        row_2.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1, timestamp=timestamp)
 
-        # Testing the default retry
-        default_retry_copy = copy.copy(DEFAULT_RETRY)
-        _add_test_error_handler(default_retry_copy)
-        statuses = data_table.mutate_rows([row, row_2], retry=default_retry_copy)
+        statuses = data_table.mutate_rows([row, row_2])
+        assert statuses[0].code == Code.OK
+        assert statuses[1].code == Code.DEADLINE_EXCEEDED
+
+    # Retries with deadline 0 should do nothing.
+    with mock.patch.object(
+        data_table._instance._client.table_data_client, "mutate_rows"
+    ) as mutate_mock:
+        mutate_mock.side_effect = [
+            initial_error_response,
+            followup_error_response,
+            followup_error_response,
+            final_success_response,
+        ]
+
+        row = data_table.direct_row(ROW_KEY)
+        rows_to_delete.append(row)
+        row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1, timestamp=timestamp)
+
+        row_2 = data_table.direct_row(ROW_KEY_ALT)
+        rows_to_delete.append(row_2)
+        row_2.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1, timestamp=timestamp)
+
+        do_nothing_retry = DEFAULT_RETRY.with_deadline(0.0)
+
+        statuses = data_table.mutate_rows([row, row_2], retry=do_nothing_retry)
         assert statuses[0].code == Code.OK
         assert statuses[1].code == Code.INTERNAL
-
-    # Because of the way the retriable mutate worker class works, unusual things can happen
-    # when passing in custom retry predicates.
-    row = data_table.direct_row(ROW_KEY)
-    rows_to_delete.append(row)
-
-    row_2 = data_table.direct_row(ROW_KEY_ALT)
-    rows_to_delete.append(row_2)
-
-    retry = DEFAULT_RETRY.with_predicate(
-        retries.if_exception_type(_BigtableRetryableError, InvalidArgument)
-    )
-    _add_test_error_handler(retry)
-    statuses = data_table.mutate_rows([row, row_2], retry=retry)
-    assert statuses[0] is None
-    assert statuses[1] is None
+        mutate_mock.assert_called_once()
 
 
 def _populate_table(
@@ -464,26 +472,23 @@ def test_table_mutate_rows_integers(data_table, rows_to_delete):
 
 
 def test_table_mutate_rows_input_errors(data_table, rows_to_delete):
-    from google.api_core.exceptions import InvalidArgument
-
-    from google.cloud.bigtable.table import _MAX_BULK_MUTATIONS, TooManyMutationsError
+    from google.cloud.bigtable.table import _MAX_BULK_MUTATIONS
 
     row = data_table.direct_row(ROW_KEY)
     rows_to_delete.append(row)
 
-    # Mutate row with 0 mutations gives an API error from the service, not
-    # from the client library.
-    with pytest.raises(InvalidArgument):
+    # Mutate row with 0 mutations gives a ValueError from the client library.
+    with pytest.raises(ValueError):
         data_table.mutate_rows([row])
 
     row.clear()
 
-    # Mutate row with >100k mutations gives a TooManyMutationsError from the
+    # Mutate row with >100k mutations gives a ValueError from the
     # client library.
     for _ in range(0, _MAX_BULK_MUTATIONS + 1):
         row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1)
 
-    with pytest.raises(TooManyMutationsError):
+    with pytest.raises(ValueError):
         data_table.mutate_rows([row])
 
 
@@ -720,6 +725,27 @@ def _assert_data_table_read_rows_retry_correct(rows_data):
             )
 
 
+def test_table_read_rows_multiple_reads(
+    data_table_read_rows_retry_tests,
+):
+    from types import SimpleNamespace
+
+    rows_data = data_table_read_rows_retry_tests.read_rows()
+    first_iteration = SimpleNamespace()
+    first_iteration.rows = {}
+
+    second_iteration = SimpleNamespace()
+    second_iteration.rows = {}
+    for item in rows_data:
+        first_iteration.rows[item.row_key] = item
+
+    for item in rows_data:
+        second_iteration.rows[item.row_key] = item
+
+    _assert_data_table_read_rows_retry_correct(first_iteration)
+    assert second_iteration.rows == {}
+
+
 def test_table_read_rows_retry_unretriable_error_establishing_stream(
     data_table_read_rows_retry_tests,
 ):
@@ -727,11 +753,12 @@ def test_table_read_rows_retry_unretriable_error_establishing_stream(
 
     error_injector = data_table_read_rows_retry_tests.error_injector
     error_injector.errors_to_inject = [
-        error_injector.make_exception(StatusCode.ABORTED, fail_mid_stream=False)
+        error_injector.make_exception(StatusCode.DATA_LOSS, fail_mid_stream=False)
     ]
 
-    with pytest.raises(exceptions.Aborted):
-        data_table_read_rows_retry_tests.read_rows()
+    rows_data = data_table_read_rows_retry_tests.read_rows()
+    with pytest.raises(exceptions.DataLoss):
+        rows_data.consume_all()
 
 
 def test_table_read_rows_retry_retriable_error_establishing_stream(
@@ -792,25 +819,25 @@ def test_table_read_rows_retry_retriable_errors_mid_stream(
 def test_table_read_rows_retry_retriable_internal_errors_mid_stream(
     data_table_read_rows_retry_tests,
 ):
-    from google.cloud.bigtable.row_data import RETRYABLE_INTERNAL_ERROR_MESSAGES
+    from google.cloud.bigtable.data._helpers import _RETRYABLE_INTERNAL_ERROR_MESSAGES
 
     error_injector = data_table_read_rows_retry_tests.error_injector
     error_injector.errors_to_inject = [
         error_injector.make_exception(
             StatusCode.INTERNAL,
-            message=RETRYABLE_INTERNAL_ERROR_MESSAGES[0],
+            message=_RETRYABLE_INTERNAL_ERROR_MESSAGES[0],
             fail_mid_stream=True,
             successes_before_fail=2,
         ),
         error_injector.make_exception(
             StatusCode.INTERNAL,
-            message=RETRYABLE_INTERNAL_ERROR_MESSAGES[1],
+            message=_RETRYABLE_INTERNAL_ERROR_MESSAGES[1],
             fail_mid_stream=True,
             successes_before_fail=1,
         ),
         error_injector.make_exception(
             StatusCode.INTERNAL,
-            message=RETRYABLE_INTERNAL_ERROR_MESSAGES[2],
+            message=_RETRYABLE_INTERNAL_ERROR_MESSAGES[2],
             fail_mid_stream=True,
             successes_before_fail=0,
         ),
@@ -853,12 +880,12 @@ def test_table_read_rows_retry_retriable_error_mid_stream_unretriable_error_rees
         error_injector.make_exception(
             StatusCode.UNAVAILABLE, fail_mid_stream=True, successes_before_fail=5
         ),
-        error_injector.make_exception(StatusCode.ABORTED, fail_mid_stream=False),
+        error_injector.make_exception(StatusCode.DATA_LOSS, fail_mid_stream=False),
     ]
 
     rows_data = data_table_read_rows_retry_tests.read_rows()
 
-    with pytest.raises(exceptions.Aborted):
+    with pytest.raises(exceptions.DataLoss):
         rows_data.consume_all()
 
 
@@ -889,29 +916,32 @@ def test_table_read_rows_retry_timeout_mid_stream(
 
     from google.api_core import exceptions
 
+    from google.cloud.bigtable.data._helpers import _RETRYABLE_INTERNAL_ERROR_MESSAGES
     from google.cloud.bigtable.row_data import (
         DEFAULT_RETRY_READ_ROWS,
-        RETRYABLE_INTERNAL_ERROR_MESSAGES,
     )
 
     error_injector = data_table_read_rows_retry_tests.error_injector
     error_injector.errors_to_inject = [
         error_injector.make_exception(
             StatusCode.INTERNAL,
-            message=RETRYABLE_INTERNAL_ERROR_MESSAGES[0],
+            message=_RETRYABLE_INTERNAL_ERROR_MESSAGES[0],
             fail_mid_stream=True,
             successes_before_fail=5,
         ),
     ] + [
         error_injector.make_exception(
             StatusCode.INTERNAL,
-            message=RETRYABLE_INTERNAL_ERROR_MESSAGES[0],
+            message=_RETRYABLE_INTERNAL_ERROR_MESSAGES[0],
             fail_mid_stream=True,
             successes_before_fail=0,
         ),
     ] * 20
 
     # Shorten the deadline so the timeout test is shorter.
+    data_table_read_rows_retry_tests._table_impl.default_read_rows_operation_timeout = (
+        10.0
+    )
     rows_data = data_table_read_rows_retry_tests.read_rows(
         retry=DEFAULT_RETRY_READ_ROWS.with_deadline(10.0)
     )
@@ -940,10 +970,14 @@ def test_table_read_rows_retry_timeout_establishing_stream(
     ] * 20
 
     # Shorten the deadline so the timeout test is shorter.
+    data_table_read_rows_retry_tests._table_impl.default_read_rows_operation_timeout = (
+        10.0
+    )
+    rows_data = data_table_read_rows_retry_tests.read_rows(
+        retry=DEFAULT_RETRY_READ_ROWS.with_deadline(10.0)
+    )
     with pytest.raises(exceptions.RetryError):
-        data_table_read_rows_retry_tests.read_rows(
-            retry=DEFAULT_RETRY_READ_ROWS.with_deadline(10.0)
-        )
+        rows_data.consume_all()
 
 
 def test_table_check_and_mutate_rows(data_table, rows_to_delete):
@@ -1032,8 +1066,6 @@ def test_table_sample_row_keys(data_table, skip_on_emulator):
 
 
 def test_table_direct_row_input_errors(data_table, rows_to_delete):
-    from google.api_core.exceptions import InvalidArgument
-
     from google.cloud.bigtable.row import MAX_MUTATIONS
 
     row = data_table.direct_row(ROW_KEY)
@@ -1047,22 +1079,11 @@ def test_table_direct_row_input_errors(data_table, rows_to_delete):
     with pytest.raises(TypeError):
         row.delete_cell(COLUMN_FAMILY_ID1, INT_COL_NAME)
 
-    # Unicode for column name and value does not get converted to bytes because
-    # internally we use to_bytes in ascii mode.
-    with pytest.raises(UnicodeEncodeError):
-        row.set_cell(COLUMN_FAMILY_ID1, JOY_EMOJI, CELL_VAL1)
-
-    with pytest.raises(UnicodeEncodeError):
-        row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, JOY_EMOJI)
-
-    with pytest.raises(UnicodeEncodeError):
-        row.delete_cell(COLUMN_FAMILY_ID1, JOY_EMOJI)
-
-    # Various non int64s, we use struct to pack a Python int to bytes.
-    with pytest.raises(struct.error):
+    # Various non int64s
+    with pytest.raises(ValueError):
         row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, OVERFLOW_INT_CELL_VAL)
 
-    with pytest.raises(struct.error):
+    with pytest.raises(ValueError):
         row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, OVERFLOW_INT_CELL_VAL2)
 
     # Since floats aren't ints, they aren't converted to bytes via struct.pack,
@@ -1079,10 +1100,9 @@ def test_table_direct_row_input_errors(data_table, rows_to_delete):
     with pytest.raises(ValueError):
         row.commit()
 
-    # Not having any mutations gives a server error (InvalidArgument), not
-    # enforced on the client side.
+    # Not having any mutations raises a ValueError
     row.clear()
-    with pytest.raises(InvalidArgument):
+    with pytest.raises(ValueError):
         row.commit()
 
 
@@ -1107,22 +1127,11 @@ def test_table_conditional_row_input_errors(data_table, rows_to_delete):
     with pytest.raises(TypeError):
         true_row.delete_cell(COLUMN_FAMILY_ID1, INT_COL_NAME)
 
-    # Unicode for column name and value does not get converted to bytes because
-    # internally we use to_bytes in ascii mode.
-    with pytest.raises(UnicodeEncodeError):
-        true_row.set_cell(COLUMN_FAMILY_ID1, JOY_EMOJI, CELL_VAL1)
-
-    with pytest.raises(UnicodeEncodeError):
-        true_row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, JOY_EMOJI)
-
-    with pytest.raises(UnicodeEncodeError):
-        true_row.delete_cell(COLUMN_FAMILY_ID1, JOY_EMOJI)
-
-    # Various non int64s, we use struct to pack a Python int to bytes.
-    with pytest.raises(struct.error):
+    # Various non int64s
+    with pytest.raises(ValueError):
         true_row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, OVERFLOW_INT_CELL_VAL)
 
-    with pytest.raises(struct.error):
+    with pytest.raises(ValueError):
         true_row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, OVERFLOW_INT_CELL_VAL2)
 
     # Since floats aren't ints, they aren't converted to bytes via struct.pack,
@@ -1171,39 +1180,17 @@ def test_table_append_row_input_errors(data_table, rows_to_delete):
     rows_to_delete.append(data_table.direct_row(ROW_KEY))
 
     # Column names should be convertible to bytes (str or bytes)
-    with pytest.raises(TypeError):
+    with pytest.raises(AttributeError):
         row.append_cell_value(COLUMN_FAMILY_ID1, INT_COL_NAME, CELL_VAL1)
 
-    with pytest.raises(TypeError):
+    with pytest.raises(AttributeError):
         row.increment_cell_value(COLUMN_FAMILY_ID1, INT_COL_NAME, 1)
 
-    # Unicode for column name and value
-    with pytest.raises(UnicodeEncodeError):
-        row.append_cell_value(COLUMN_FAMILY_ID1, JOY_EMOJI, CELL_VAL1)
-
-    with pytest.raises(UnicodeEncodeError):
-        row.append_cell_value(COLUMN_FAMILY_ID1, COL_NAME1, JOY_EMOJI)
-
-    with pytest.raises(UnicodeEncodeError):
-        row.increment_cell_value(COLUMN_FAMILY_ID1, JOY_EMOJI, 1)
-
-    # Non-integer cell values for increment_cell_value
     with pytest.raises(ValueError):
         row.increment_cell_value(COLUMN_FAMILY_ID1, COL_NAME1, OVERFLOW_INT_CELL_VAL)
 
-    # increment_cell_value does not do input validation on the int_value, instead using
-    # proto-plus to do validation.
-    row.increment_cell_value(COLUMN_FAMILY_ID1, COL_NAME1, FLOAT_CELL_VAL)
-    row.increment_cell_value(COLUMN_FAMILY_ID1, COL_NAME2, FLOAT_CELL_VAL2)
-    row.commit()
-
-    row_data = data_table.read_row(ROW_KEY)
-    assert row_data.cells[COLUMN_FAMILY_ID1][COL_NAME1][0].value == int(
-        FLOAT_CELL_VAL
-    ).to_bytes(8, byteorder="big", signed=True)
-    assert row_data.cells[COLUMN_FAMILY_ID1][COL_NAME2][0].value == int(
-        FLOAT_CELL_VAL2
-    ).to_bytes(8, byteorder="big", signed=True)
+    with pytest.raises(TypeError):
+        row.increment_cell_value(COLUMN_FAMILY_ID1, COL_NAME1, FLOAT_CELL_VAL)
 
     # Can't have more than MAX_MUTATIONS mutations, but only enforced after
     # a row.commit
@@ -1262,3 +1249,134 @@ def test_mutations_batcher_threading(data_table, rows_to_delete):
                 time.sleep(0.01)
     # ensure all mutations were sent
     assert len(all_results) == num_sent
+
+
+def test_mutations_batcher_exceptions(data_table, rows_to_delete):
+    """Test the mutations batcher exception handling"""
+    import mock
+    from google.api_core import exceptions as core_exceptions
+    from google.rpc import code_pb2, status_pb2
+
+    from google.cloud.bigtable.batcher import MutationsBatcher, MutationsBatchError
+    from google.cloud.bigtable_v2 import MutateRowsResponse
+
+    num_sent = 5
+
+    error_response = [
+        MutateRowsResponse(
+            entries=[
+                MutateRowsResponse.Entry(
+                    index=i,
+                    status=status_pb2.Status(
+                        code=code_pb2.INTERNAL,
+                        message="Test error",
+                    ),
+                )
+                for i in range(num_sent)
+            ]
+        )
+    ]
+
+    # Simulate only failures
+    with pytest.raises(MutationsBatchError):
+        with mock.patch.object(
+            data_table._instance._client.table_data_client, "mutate_rows"
+        ) as mutate_mock:
+            mutate_mock.side_effect = [error_response] * 100000
+            with MutationsBatcher(
+                data_table,
+                flush_count=10,
+                flush_interval=1,
+            ) as batcher:
+                for i in range(num_sent):
+                    row = data_table.direct_row("row{}".format(i))
+                    row.set_cell(
+                        COLUMN_FAMILY_ID1, COL_NAME1, "val{}".format(i).encode("utf-8")
+                    )
+                    rows_to_delete.append(row)
+                    batcher.mutate(row)
+                batcher.flush()
+
+    # Test that exceptions are only raised on close.
+    with mock.patch.object(
+        data_table._instance._client.table_data_client, "mutate_rows"
+    ) as mutate_mock:
+        mutate_mock.side_effect = [error_response] * 100000
+        batcher = MutationsBatcher(
+            data_table,
+            flush_count=10,
+            flush_interval=1,
+        )
+        for i in range(num_sent):
+            row = data_table.direct_row("row{}".format(i))
+            row.set_cell(
+                COLUMN_FAMILY_ID1, COL_NAME1, "val{}".format(i).encode("utf-8")
+            )
+            rows_to_delete.append(row)
+            batcher.mutate(row)
+        batcher.flush()
+
+        with pytest.raises(MutationsBatchError):
+            batcher.close()
+
+    # Test RPC-level error.
+    with pytest.raises(MutationsBatchError) as exc_info:
+        with mock.patch.object(
+            data_table._instance._client.table_data_client, "mutate_rows"
+        ) as mutate_mock:
+            mutate_mock.side_effect = core_exceptions.InternalServerError(
+                "Test RPC error"
+            )
+            with MutationsBatcher(
+                data_table,
+                flush_count=10,
+                flush_interval=1,
+            ) as batcher:
+                for i in range(num_sent):
+                    row = data_table.direct_row("row{}".format(i))
+                    row.set_cell(
+                        COLUMN_FAMILY_ID1, COL_NAME1, "val{}".format(i).encode("utf-8")
+                    )
+                    rows_to_delete.append(row)
+                    batcher.mutate(row)
+                batcher.flush()
+    assert len(exc_info.value.exc) == num_sent
+
+
+def test_mutations_batcher_manual_flush(data_table, rows_to_delete):
+    """Test the mutations batcher manual flush"""
+    import mock
+    from google.rpc import code_pb2, status_pb2
+
+    from google.cloud.bigtable.batcher import MutationsBatcher
+
+    num_batches = 5
+    batch_size = 4
+    callback = mock.MagicMock()
+
+    with MutationsBatcher(
+        data_table,
+        flush_count=500,
+        flush_interval=5,
+        batch_completed_callback=callback,
+    ) as batcher:
+        for i in range(num_batches):
+            for j in range(batch_size):
+                num = i * batch_size + j
+                row = data_table.direct_row(f"row{num}".encode("utf-8"))
+                row.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, f"val{num}".encode("utf-8"))
+                rows_to_delete.append(row)
+                batcher.mutate(row)
+            batcher.flush()
+            callback.assert_called_with(
+                [status_pb2.Status(code=code_pb2.OK)] * batch_size
+            )
+
+    # ensure all mutations were sent
+    rows = data_table.read_rows()
+    rows.consume_all()
+    for row_num in range(0, num_batches * batch_size):
+        row = rows.rows[f"row{row_num}".encode("utf-8")]
+        assert row.cells[COLUMN_FAMILY_ID1][COL_NAME1][
+            0
+        ].value == f"val{row_num}".encode("utf-8")

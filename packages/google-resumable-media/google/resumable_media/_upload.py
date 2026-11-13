@@ -28,13 +28,10 @@ import random
 import re
 import sys
 import urllib.parse
-
-from google import resumable_media
-from google.resumable_media import _helpers
-from google.resumable_media import common
-
 from xml.etree import ElementTree
 
+from google import resumable_media
+from google.resumable_media import _helpers, common
 
 _CONTENT_TYPE_HEADER = "content-type"
 _CONTENT_RANGE_TEMPLATE = "bytes {:d}-{:d}/{:d}"

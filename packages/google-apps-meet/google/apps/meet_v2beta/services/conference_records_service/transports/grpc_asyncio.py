@@ -635,7 +635,8 @@ class ConferenceRecordsServiceGrpcAsyncIOTransport(ConferenceRecordsServiceTrans
 
         Note: The transcript entries returned by the Google Meet API
         might not match the transcription found in the Google Docs
-        transcript file. This can occur when the Google Docs transcript
+        transcript file. This can occur when 1) we have interleaved
+        speakers within milliseconds, or 2) the Google Docs transcript
         file is modified after generation.
 
         Returns:
@@ -671,7 +672,8 @@ class ConferenceRecordsServiceGrpcAsyncIOTransport(ConferenceRecordsServiceTrans
 
         Note: The transcript entries returned by the Google Meet
         API might not match the transcription found in the
-        Google Docs transcript file. This can occur when the
+        Google Docs transcript file. This can occur when 1) we
+        have interleaved speakers within milliseconds, or 2) the
         Google Docs transcript file is modified after
         generation.
 
@@ -692,6 +694,62 @@ class ConferenceRecordsServiceGrpcAsyncIOTransport(ConferenceRecordsServiceTrans
                 response_deserializer=service.ListTranscriptEntriesResponse.deserialize,
             )
         return self._stubs["list_transcript_entries"]
+
+    @property
+    def get_smart_note(
+        self,
+    ) -> Callable[[service.GetSmartNoteRequest], Awaitable[resource.SmartNote]]:
+        r"""Return a callable for the get smart note method over gRPC.
+
+        Gets smart notes by smart note ID.
+
+        Returns:
+            Callable[[~.GetSmartNoteRequest],
+                    Awaitable[~.SmartNote]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_smart_note" not in self._stubs:
+            self._stubs["get_smart_note"] = self._logged_channel.unary_unary(
+                "/google.apps.meet.v2beta.ConferenceRecordsService/GetSmartNote",
+                request_serializer=service.GetSmartNoteRequest.serialize,
+                response_deserializer=resource.SmartNote.deserialize,
+            )
+        return self._stubs["get_smart_note"]
+
+    @property
+    def list_smart_notes(
+        self,
+    ) -> Callable[
+        [service.ListSmartNotesRequest], Awaitable[service.ListSmartNotesResponse]
+    ]:
+        r"""Return a callable for the list smart notes method over gRPC.
+
+        Lists the set of smart notes from the conference
+        record. By default, ordered by start time and in
+        ascending order.
+
+        Returns:
+            Callable[[~.ListSmartNotesRequest],
+                    Awaitable[~.ListSmartNotesResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_smart_notes" not in self._stubs:
+            self._stubs["list_smart_notes"] = self._logged_channel.unary_unary(
+                "/google.apps.meet.v2beta.ConferenceRecordsService/ListSmartNotes",
+                request_serializer=service.ListSmartNotesRequest.serialize,
+                response_deserializer=service.ListSmartNotesResponse.deserialize,
+            )
+        return self._stubs["list_smart_notes"]
 
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
@@ -852,6 +910,34 @@ class ConferenceRecordsServiceGrpcAsyncIOTransport(ConferenceRecordsServiceTrans
             ),
             self.list_transcript_entries: self._wrap_method(
                 self.list_transcript_entries,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_smart_note: self._wrap_method(
+                self.get_smart_note,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_smart_notes: self._wrap_method(
+                self.list_smart_notes,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
                     maximum=10.0,

@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.gdchardwaremanagement_v1alpha._compat import transcode_request
 from google.cloud.gdchardwaremanagement_v1alpha.types import resources, service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -2439,19 +2440,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseCancelOrder._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_order(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseCancelOrder._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseCancelOrder._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseCancelOrder._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseCancelOrder,
+                    "_BaseCancelOrder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2589,19 +2587,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseCreateComment._get_http_options()
-
             request, metadata = self._interceptor.pre_create_comment(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseCreateComment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseCreateComment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseCreateComment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseCreateComment,
+                    "_BaseCreateComment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2739,19 +2734,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseCreateHardware._get_http_options()
-
             request, metadata = self._interceptor.pre_create_hardware(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseCreateHardware._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseCreateHardware._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseCreateHardware._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseCreateHardware,
+                    "_BaseCreateHardware__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2889,21 +2881,18 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseCreateHardwareGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_create_hardware_group(
                 request, metadata
             )
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseCreateHardwareGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseCreateHardwareGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseCreateHardwareGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseCreateHardwareGroup,
+                    "_BaseCreateHardwareGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3043,19 +3032,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseCreateOrder._get_http_options()
-
             request, metadata = self._interceptor.pre_create_order(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseCreateOrder._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseCreateOrder._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseCreateOrder._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseCreateOrder,
+                    "_BaseCreateOrder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3193,19 +3179,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseCreateSite._get_http_options()
-
             request, metadata = self._interceptor.pre_create_site(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseCreateSite._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseCreateSite._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseCreateSite._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseCreateSite,
+                    "_BaseCreateSite__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3343,19 +3326,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseCreateZone._get_http_options()
-
             request, metadata = self._interceptor.pre_create_zone(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseCreateZone._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseCreateZone._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseCreateZone._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseCreateZone,
+                    "_BaseCreateZone__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3492,15 +3472,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseDeleteHardware._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_hardware(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseDeleteHardware._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseDeleteHardware._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseDeleteHardware,
+                    "_BaseDeleteHardware__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3636,17 +3617,18 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseDeleteHardwareGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_hardware_group(
                 request, metadata
             )
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseDeleteHardwareGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseDeleteHardwareGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseDeleteHardwareGroup,
+                    "_BaseDeleteHardwareGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3784,15 +3766,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseDeleteOrder._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_order(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseDeleteOrder._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseDeleteOrder._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseDeleteOrder,
+                    "_BaseDeleteOrder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3928,15 +3911,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseDeleteSite._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_site(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseDeleteSite._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseDeleteSite._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseDeleteSite,
+                    "_BaseDeleteSite__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4072,15 +4056,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseDeleteZone._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_zone(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseDeleteZone._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseDeleteZone._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseDeleteZone,
+                    "_BaseDeleteZone__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4215,17 +4200,18 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseGetChangeLogEntry._get_http_options()
-
             request, metadata = self._interceptor.pre_get_change_log_entry(
                 request, metadata
             )
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseGetChangeLogEntry._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseGetChangeLogEntry._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseGetChangeLogEntry,
+                    "_BaseGetChangeLogEntry__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4362,15 +4348,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseGetComment._get_http_options()
-
             request, metadata = self._interceptor.pre_get_comment(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseGetComment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseGetComment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseGetComment,
+                    "_BaseGetComment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4507,15 +4494,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseGetHardware._get_http_options()
-
             request, metadata = self._interceptor.pre_get_hardware(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseGetHardware._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseGetHardware._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseGetHardware,
+                    "_BaseGetHardware__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4653,17 +4641,18 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseGetHardwareGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_get_hardware_group(
                 request, metadata
             )
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseGetHardwareGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseGetHardwareGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseGetHardwareGroup,
+                    "_BaseGetHardwareGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4800,15 +4789,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseGetOrder._get_http_options()
-
             request, metadata = self._interceptor.pre_get_order(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseGetOrder._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseGetOrder._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseGetOrder,
+                    "_BaseGetOrder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4947,15 +4937,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             http_options = (
                 _BaseGDCHardwareManagementRestTransport._BaseGetSite._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_site(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseGetSite._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseGetSite._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseGetSite,
+                    "_BaseGetSite__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5094,15 +5085,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             http_options = (
                 _BaseGDCHardwareManagementRestTransport._BaseGetSku._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_sku(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseGetSku._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseGetSku._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseGetSku,
+                    "_BaseGetSku__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5239,15 +5231,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             http_options = (
                 _BaseGDCHardwareManagementRestTransport._BaseGetZone._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_zone(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseGetZone._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseGetZone._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseGetZone,
+                    "_BaseGetZone__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5382,17 +5375,18 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseListChangeLogEntries._get_http_options()
-
             request, metadata = self._interceptor.pre_list_change_log_entries(
                 request, metadata
             )
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseListChangeLogEntries._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseListChangeLogEntries._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseListChangeLogEntries,
+                    "_BaseListChangeLogEntries__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5531,15 +5525,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseListComments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_comments(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseListComments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseListComments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseListComments,
+                    "_BaseListComments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5674,15 +5669,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseListHardware._get_http_options()
-
             request, metadata = self._interceptor.pre_list_hardware(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseListHardware._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseListHardware._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseListHardware,
+                    "_BaseListHardware__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5817,17 +5813,18 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseListHardwareGroups._get_http_options()
-
             request, metadata = self._interceptor.pre_list_hardware_groups(
                 request, metadata
             )
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseListHardwareGroups._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseListHardwareGroups._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseListHardwareGroups,
+                    "_BaseListHardwareGroups__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5966,15 +5963,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseListOrders._get_http_options()
-
             request, metadata = self._interceptor.pre_list_orders(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseListOrders._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseListOrders._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseListOrders,
+                    "_BaseListOrders__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6109,15 +6107,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseListSites._get_http_options()
-
             request, metadata = self._interceptor.pre_list_sites(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseListSites._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseListSites._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseListSites,
+                    "_BaseListSites__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6252,15 +6251,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseListSkus._get_http_options()
-
             request, metadata = self._interceptor.pre_list_skus(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseListSkus._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseListSkus._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseListSkus,
+                    "_BaseListSkus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6395,15 +6395,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseListZones._get_http_options()
-
             request, metadata = self._interceptor.pre_list_zones(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseListZones._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseListZones._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseListZones,
+                    "_BaseListZones__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6540,21 +6541,18 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseRecordActionOnComment._get_http_options()
-
             request, metadata = self._interceptor.pre_record_action_on_comment(
                 request, metadata
             )
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseRecordActionOnComment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseRecordActionOnComment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseRecordActionOnComment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseRecordActionOnComment,
+                    "_BaseRecordActionOnComment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6697,21 +6695,18 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseRequestOrderDateChange._get_http_options()
-
             request, metadata = self._interceptor.pre_request_order_date_change(
                 request, metadata
             )
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseRequestOrderDateChange._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseRequestOrderDateChange._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseRequestOrderDateChange._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseRequestOrderDateChange,
+                    "_BaseRequestOrderDateChange__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6850,21 +6845,18 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseSignalZoneState._get_http_options()
-
             request, metadata = self._interceptor.pre_signal_zone_state(
                 request, metadata
             )
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseSignalZoneState._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseSignalZoneState._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseSignalZoneState._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseSignalZoneState,
+                    "_BaseSignalZoneState__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7004,19 +6996,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseSubmitOrder._get_http_options()
-
             request, metadata = self._interceptor.pre_submit_order(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseSubmitOrder._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseSubmitOrder._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseSubmitOrder._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseSubmitOrder,
+                    "_BaseSubmitOrder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7154,19 +7143,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseUpdateHardware._get_http_options()
-
             request, metadata = self._interceptor.pre_update_hardware(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseUpdateHardware._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseUpdateHardware._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseUpdateHardware._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseUpdateHardware,
+                    "_BaseUpdateHardware__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7304,21 +7290,18 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseUpdateHardwareGroup._get_http_options()
-
             request, metadata = self._interceptor.pre_update_hardware_group(
                 request, metadata
             )
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseUpdateHardwareGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseUpdateHardwareGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseUpdateHardwareGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseUpdateHardwareGroup,
+                    "_BaseUpdateHardwareGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7458,19 +7441,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseUpdateOrder._get_http_options()
-
             request, metadata = self._interceptor.pre_update_order(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseUpdateOrder._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseUpdateOrder._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseUpdateOrder._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseUpdateOrder,
+                    "_BaseUpdateOrder__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7608,19 +7588,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseUpdateSite._get_http_options()
-
             request, metadata = self._interceptor.pre_update_site(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseUpdateSite._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseUpdateSite._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseUpdateSite._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseUpdateSite,
+                    "_BaseUpdateSite__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7758,19 +7735,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseUpdateZone._get_http_options()
-
             request, metadata = self._interceptor.pre_update_zone(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseUpdateZone._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseUpdateZone._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseUpdateZone._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseUpdateZone,
+                    "_BaseUpdateZone__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8199,15 +8173,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8338,15 +8313,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8475,21 +8451,18 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGDCHardwareManagementRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8595,17 +8568,18 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8713,15 +8687,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8852,15 +8827,16 @@ class GDCHardwareManagementRestTransport(_BaseGDCHardwareManagementRestTransport
             """
 
             http_options = _BaseGDCHardwareManagementRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseGDCHardwareManagementRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGDCHardwareManagementRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGDCHardwareManagementRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

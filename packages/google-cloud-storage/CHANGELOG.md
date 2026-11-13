@@ -4,6 +4,71 @@
 
 [1]: https://pypi.org/project/google-cloud-storage/#history
 
+## [3.17.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-storage-v3.17.0...google-cloud-storage-v3.17.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* **storage:** set GRPC_ALTS_MAX_CONCURRENT_HANDSHAKES=2 in benchmark runner ([#18703](https://github.com/googleapis/google-cloud-python/issues/18703)) ([a9ca134](https://github.com/googleapis/google-cloud-python/commit/a9ca134cf2adf5b487e197682e064af5915c112b))
+
+## [3.17.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-storage-v3.16.0...google-cloud-storage-v3.17.0) (2026-10-08)
+
+
+### Features
+
+* **storage:** add OpenTelemetry metrics gating and configuration module ([#18407](https://github.com/googleapis/google-cloud-python/issues/18407)) ([654e768](https://github.com/googleapis/google-cloud-python/commit/654e7682083e920ab28db8d65f4e896decaf8a69))
+
+## [3.16.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-storage-v3.15.1...google-cloud-storage-v3.16.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [3.15.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-storage-v3.15.0...google-cloud-storage-v3.15.1) (2026-09-29)
+
+
+### Bug Fixes
+
+* **storage:** add correct app hub uri prefix to aco traces ([#18483](https://github.com/googleapis/google-cloud-python/issues/18483)) ([7cead02](https://github.com/googleapis/google-cloud-python/commit/7cead0276b56d3d109114109a3a70343d7872de3))
+
+## [3.15.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-storage-v3.14.1...google-cloud-storage-v3.15.0) (2026-09-24)
+
+
+### Features
+
+* **storage:** support storage_class in AsyncAppendableObjectWriter ([#18289](https://github.com/googleapis/google-cloud-python/issues/18289)) ([dc30df2](https://github.com/googleapis/google-cloud-python/commit/dc30df20164dc2edf28b7373642466d2c5c3bb81))
+* **storage:** support storage_class via Blob in AsyncAppendableObjectWriter ([#18318](https://github.com/googleapis/google-cloud-python/issues/18318)) ([b0872f2](https://github.com/googleapis/google-cloud-python/commit/b0872f267ab57a28f132558f3ceff840661f2b7b))
+
+## [3.14.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-storage-v3.14.0...google-cloud-storage-v3.14.1) (2026-09-08)
+
+
+### Bug Fixes
+
+* **storage:** resolve reST link target mismatch in README and add long_description_content_type ([#18210](https://github.com/googleapis/google-cloud-python/issues/18210)) ([400f465](https://github.com/googleapis/google-cloud-python/commit/400f46526893ae07506301d9852c1207e827f02a)), refs [#18211](https://github.com/googleapis/google-cloud-python/issues/18211)
+
+## [3.14.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-storage-v3.13.1...google-cloud-storage-v3.14.0) (2026-08-21)
+
+
+### Features
+
+* **storage:** expose metadata parameter in asyncio gRPC calls ([#17634](https://github.com/googleapis/google-cloud-python/issues/17634)) ([aaa263d](https://github.com/googleapis/google-cloud-python/commit/aaa263d672a801fd3d567c43e235a75545de3ec3))
+* **storage:** expose object_metadata on AsyncMultiRangeDownloader ([#17411](https://github.com/googleapis/google-cloud-python/issues/17411)) ([a0171ae](https://github.com/googleapis/google-cloud-python/commit/a0171ae7e0c07409d244ab02743ef9f342ff7a7e))
+
+
+### Bug Fixes
+
+* **storage:** add retry support for finalize and close in AsyncAppendableObjectWriter ([#17733](https://github.com/googleapis/google-cloud-python/issues/17733)) ([92bb6dc](https://github.com/googleapis/google-cloud-python/commit/92bb6dc5cf32cfaf215f0423b13d70e338cd2faf))
+* **storage:** ensure bidi-gRPC stream is cleaned up on open failure and close ([#18119](https://github.com/googleapis/google-cloud-python/issues/18119)) ([ac0dfd1](https://github.com/googleapis/google-cloud-python/commit/ac0dfd1fd1d66c36a15a012a409409ccf640c645))
+* **storage:** resume bidi reads after idle-stream aborts ([#18061](https://github.com/googleapis/google-cloud-python/issues/18061)) ([3fe1e21](https://github.com/googleapis/google-cloud-python/commit/3fe1e219b2f4bade65790879024f32c76d65f60e))
+* use lowercase x-goog-api-client header ([#18064](https://github.com/googleapis/google-cloud-python/issues/18064)) ([d465d1e](https://github.com/googleapis/google-cloud-python/commit/d465d1ebdb03bc61abf51be02663d795ac8806af))
+
+
+### Documentation
+
+* correct typos and grammar in README ([#16535](https://github.com/googleapis/google-cloud-python/issues/16535)) ([593a8b0](https://github.com/googleapis/google-cloud-python/commit/593a8b0859e99489d4c944cc6ee5b982b8c17b92))
+* **handwritten:** centralize CONTRIBUTING.rst pointers ([#17642](https://github.com/googleapis/google-cloud-python/issues/17642)) ([23b9499](https://github.com/googleapis/google-cloud-python/commit/23b94994bd5251493b81d91657d1f79a5d3c4b97))
+
 ## [3.13.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-storage-v3.13.0...google-cloud-storage-v3.13.1) (2026-08-06)
 
 

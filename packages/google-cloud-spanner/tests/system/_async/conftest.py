@@ -38,6 +38,8 @@ def spanner_client():
             client_key=_helpers.CLIENT_KEY,
             client_options={"api_endpoint": _helpers.SPANNER_OMNI},
             instance_type="omni",
+            username=_helpers.SPANNER_OMNI_USER,
+            password=_helpers.SPANNER_OMNI_PASSWORD,
         )
     else:
         client_options = {"api_endpoint": _helpers.API_ENDPOINT}
@@ -138,12 +140,36 @@ async def shared_instance(
     instance_config,
 ):
     spanner_client._instance_admin_api = None
-    instance = spanner_client.instance(shared_instance_id, instance_config.name)
 
     if _helpers.CREATE_INSTANCE:
-        op = await instance.create()
-        await op.result(instance_operation_timeout)
+        import time
+
+        from google.cloud.spanner_admin_instance_v1.types import spanner_instance_admin
+
+        create_time = str(int(time.time()))
+        labels = {"python-spanner-systests": "true", "created": create_time}
+
+        request = spanner_instance_admin.CreateInstanceRequest(
+            parent=spanner_client.project_name,
+            instance_id=shared_instance_id,
+            instance=spanner_instance_admin.Instance(
+                config=instance_config.name,
+                display_name=shared_instance_id,
+                node_count=1,
+                labels=labels,
+                edition=spanner_instance_admin.Instance.Edition.ENTERPRISE,
+            ),
+        )
+        created_op = await spanner_client.instance_admin_api.create_instance(
+            request=request
+        )
+        await created_op.result(instance_operation_timeout)
+
+        instance = spanner_client.instance(
+            shared_instance_id, instance_config.name, labels=labels
+        )
     else:
+        instance = spanner_client.instance(shared_instance_id, instance_config.name)
         await instance.reload()
 
     yield instance
@@ -205,3 +231,9 @@ async def databases_to_delete():
 def not_postgres(database_dialect):
     if database_dialect == DatabaseDialect.POSTGRESQL:
         pytest.skip("Skip for Postgres")
+
+
+@pytest.fixture(scope="function")
+def not_emulator():
+    if _helpers.USE_EMULATOR:
+        pytest.skip(f"{_helpers.USE_EMULATOR_ENVVAR} set in environment.")

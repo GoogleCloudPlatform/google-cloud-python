@@ -165,6 +165,17 @@ def lint(session):
     """
     session.install("flake8", RUFF_VERSION)
 
+    # 1. Check imports
+    session.run(
+        "ruff",
+        "check",
+        "--select",
+        "I",
+        f"--target-version=py{DEFAULT_PYTHON_VERSION.replace('.', '')}",
+        "--line-length=88",
+        *LINT_PATHS,
+    )
+
     # 2. Check formatting
     session.run(
         "ruff",

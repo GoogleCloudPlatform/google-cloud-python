@@ -32,6 +32,7 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.servicedirectory_v1beta1._compat import transcode_request
 from google.cloud.servicedirectory_v1beta1.types import (
     endpoint,
     namespace,
@@ -1215,19 +1216,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseCreateEndpoint._get_http_options()
-
             request, metadata = self._interceptor.pre_create_endpoint(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseCreateEndpoint._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegistrationServiceRestTransport._BaseCreateEndpoint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseCreateEndpoint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseCreateEndpoint,
+                    "_BaseCreateEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1370,21 +1368,18 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseCreateNamespace._get_http_options()
-
             request, metadata = self._interceptor.pre_create_namespace(
                 request, metadata
             )
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseCreateNamespace._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegistrationServiceRestTransport._BaseCreateNamespace._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseCreateNamespace._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseCreateNamespace,
+                    "_BaseCreateNamespace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1526,19 +1521,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseCreateService._get_http_options()
-
             request, metadata = self._interceptor.pre_create_service(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseCreateService._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegistrationServiceRestTransport._BaseCreateService._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseCreateService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseCreateService,
+                    "_BaseCreateService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1671,15 +1663,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseDeleteEndpoint._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_endpoint(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseDeleteEndpoint._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseDeleteEndpoint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseDeleteEndpoint,
+                    "_BaseDeleteEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1777,17 +1770,18 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseDeleteNamespace._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_namespace(
                 request, metadata
             )
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseDeleteNamespace._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseDeleteNamespace._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseDeleteNamespace,
+                    "_BaseDeleteNamespace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1885,15 +1879,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseDeleteService._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_service(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseDeleteService._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseDeleteService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseDeleteService,
+                    "_BaseDeleteService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2000,15 +1995,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseGetEndpoint._get_http_options()
-
             request, metadata = self._interceptor.pre_get_endpoint(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseGetEndpoint._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseGetEndpoint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseGetEndpoint,
+                    "_BaseGetEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2219,19 +2215,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegistrationServiceRestTransport._BaseGetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2373,15 +2366,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseGetNamespace._get_http_options()
-
             request, metadata = self._interceptor.pre_get_namespace(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseGetNamespace._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseGetNamespace._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseGetNamespace,
+                    "_BaseGetNamespace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2524,15 +2518,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseGetService._get_http_options()
-
             request, metadata = self._interceptor.pre_get_service(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseGetService._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseGetService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseGetService,
+                    "_BaseGetService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2670,15 +2665,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseListEndpoints._get_http_options()
-
             request, metadata = self._interceptor.pre_list_endpoints(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseListEndpoints._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseListEndpoints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseListEndpoints,
+                    "_BaseListEndpoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2818,15 +2814,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseListNamespaces._get_http_options()
-
             request, metadata = self._interceptor.pre_list_namespaces(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseListNamespaces._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseListNamespaces._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseListNamespaces,
+                    "_BaseListNamespaces__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2966,15 +2963,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseListServices._get_http_options()
-
             request, metadata = self._interceptor.pre_list_services(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseListServices._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseListServices._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseListServices,
+                    "_BaseListServices__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3187,19 +3185,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegistrationServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3336,21 +3331,18 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegistrationServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3493,19 +3485,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseUpdateEndpoint._get_http_options()
-
             request, metadata = self._interceptor.pre_update_endpoint(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseUpdateEndpoint._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegistrationServiceRestTransport._BaseUpdateEndpoint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseUpdateEndpoint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseUpdateEndpoint,
+                    "_BaseUpdateEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3648,21 +3637,18 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseUpdateNamespace._get_http_options()
-
             request, metadata = self._interceptor.pre_update_namespace(
                 request, metadata
             )
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseUpdateNamespace._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegistrationServiceRestTransport._BaseUpdateNamespace._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseUpdateNamespace._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseUpdateNamespace,
+                    "_BaseUpdateNamespace__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3804,19 +3790,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseUpdateService._get_http_options()
-
             request, metadata = self._interceptor.pre_update_service(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseUpdateService._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegistrationServiceRestTransport._BaseUpdateService._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseUpdateService._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseUpdateService,
+                    "_BaseUpdateService__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4115,15 +4098,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4254,15 +4238,16 @@ class RegistrationServiceRestTransport(_BaseRegistrationServiceRestTransport):
             """
 
             http_options = _BaseRegistrationServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseRegistrationServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegistrationServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegistrationServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

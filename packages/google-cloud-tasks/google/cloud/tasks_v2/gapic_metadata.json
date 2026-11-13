@@ -10,6 +10,16 @@
         "grpc": {
           "libraryClient": "CloudTasksClient",
           "rpcs": {
+            "BatchCreateTasks": {
+              "methods": [
+                "batch_create_tasks"
+              ]
+            },
+            "BatchDeleteTasks": {
+              "methods": [
+                "batch_delete_tasks"
+              ]
+            },
             "CreateQueue": {
               "methods": [
                 "create_queue"
@@ -28,6 +38,11 @@
             "DeleteTask": {
               "methods": [
                 "delete_task"
+              ]
+            },
+            "GetCmekConfig": {
+              "methods": [
+                "get_cmek_config"
               ]
             },
             "GetIamPolicy": {
@@ -83,6 +98,11 @@
             "TestIamPermissions": {
               "methods": [
                 "test_iam_permissions"
+              ]
+            },
+            "UpdateCmekConfig": {
+              "methods": [
+                "update_cmek_config"
               ]
             },
             "UpdateQueue": {
@@ -95,6 +115,16 @@
         "grpc-async": {
           "libraryClient": "CloudTasksAsyncClient",
           "rpcs": {
+            "BatchCreateTasks": {
+              "methods": [
+                "batch_create_tasks"
+              ]
+            },
+            "BatchDeleteTasks": {
+              "methods": [
+                "batch_delete_tasks"
+              ]
+            },
             "CreateQueue": {
               "methods": [
                 "create_queue"
@@ -113,6 +143,11 @@
             "DeleteTask": {
               "methods": [
                 "delete_task"
+              ]
+            },
+            "GetCmekConfig": {
+              "methods": [
+                "get_cmek_config"
               ]
             },
             "GetIamPolicy": {
@@ -168,6 +203,11 @@
             "TestIamPermissions": {
               "methods": [
                 "test_iam_permissions"
+              ]
+            },
+            "UpdateCmekConfig": {
+              "methods": [
+                "update_cmek_config"
               ]
             },
             "UpdateQueue": {
@@ -180,6 +220,16 @@
         "rest": {
           "libraryClient": "CloudTasksClient",
           "rpcs": {
+            "BatchCreateTasks": {
+              "methods": [
+                "batch_create_tasks"
+              ]
+            },
+            "BatchDeleteTasks": {
+              "methods": [
+                "batch_delete_tasks"
+              ]
+            },
             "CreateQueue": {
               "methods": [
                 "create_queue"
@@ -198,6 +248,11 @@
             "DeleteTask": {
               "methods": [
                 "delete_task"
+              ]
+            },
+            "GetCmekConfig": {
+              "methods": [
+                "get_cmek_config"
               ]
             },
             "GetIamPolicy": {
@@ -253,6 +308,11 @@
             "TestIamPermissions": {
               "methods": [
                 "test_iam_permissions"
+              ]
+            },
+            "UpdateCmekConfig": {
+              "methods": [
+                "update_cmek_config"
               ]
             },
             "UpdateQueue": {

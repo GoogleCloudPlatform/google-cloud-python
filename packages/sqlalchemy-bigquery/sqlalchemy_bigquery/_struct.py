@@ -17,12 +17,12 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-from sqlalchemy.sql import operators
 import sqlalchemy.sql.coercions
 import sqlalchemy.sql.default_comparator
 import sqlalchemy.sql.roles
 import sqlalchemy.sql.sqltypes
 import sqlalchemy.types
+from sqlalchemy.sql import operators
 
 # from . import base  # Moved to _get_subtype_col_spec to break circular import
 

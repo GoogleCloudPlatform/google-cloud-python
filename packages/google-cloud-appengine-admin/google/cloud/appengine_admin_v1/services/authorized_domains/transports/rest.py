@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.appengine_admin_v1._compat import transcode_request
 from google.cloud.appengine_admin_v1.types import appengine
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -290,17 +291,18 @@ class AuthorizedDomainsRestTransport(_BaseAuthorizedDomainsRestTransport):
             """
 
             http_options = _BaseAuthorizedDomainsRestTransport._BaseListAuthorizedDomains._get_http_options()
-
             request, metadata = self._interceptor.pre_list_authorized_domains(
                 request, metadata
             )
-            transcoded_request = _BaseAuthorizedDomainsRestTransport._BaseListAuthorizedDomains._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAuthorizedDomainsRestTransport._BaseListAuthorizedDomains._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAuthorizedDomainsRestTransport._BaseListAuthorizedDomains,
+                    "_BaseListAuthorizedDomains__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

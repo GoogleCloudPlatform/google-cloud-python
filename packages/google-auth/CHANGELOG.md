@@ -4,6 +4,102 @@
 
 [1]: https://pypi.org/project/google-auth/#history
 
+## [2.62.2](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.62.1...google-auth-v2.62.2) (2026-11-10)
+
+
+### Bug Fixes
+
+* **auth:** prevent race conditions during mTLS cert rotation on 401 responses ([#18168](https://github.com/googleapis/google-cloud-python/issues/18168)) ([b86536f](https://github.com/googleapis/google-cloud-python/commit/b86536f91caa7ff2ea5a37b943444111959422c1))
+* **oauth2:** validate Firebase issuer/subject and warn on omitted audience in verify_firebase_token ([#18777](https://github.com/googleapis/google-cloud-python/issues/18777)) ([1851b9c](https://github.com/googleapis/google-cloud-python/commit/1851b9c3a57d7a5bc7c3da6a7ae89ddc0da0c72a))
+
+
+### Documentation
+
+* **google-auth:** update requests intersphinx URL ([#18978](https://github.com/googleapis/google-cloud-python/issues/18978)) ([2b4575f](https://github.com/googleapis/google-cloud-python/commit/2b4575f36f1441792e51efb9394b636940ed539d))
+
+## [2.62.1](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.62.0...google-auth-v2.62.1) (2026-11-02)
+
+
+### Bug Fixes
+
+* **auth:** strip -fips suffix from AWS service name in SigV4 signing ([#18920](https://github.com/googleapis/google-cloud-python/issues/18920)) ([2e1899e](https://github.com/googleapis/google-cloud-python/commit/2e1899ed52a8c5adeb05422f48581124b4ab3fbe))
+* **auth:** use an unencrypted key for mTLS certificate rotation ([#18709](https://github.com/googleapis/google-cloud-python/issues/18709)) ([8166325](https://github.com/googleapis/google-cloud-python/commit/81663259c3743c6ab76005a5decb2b3628cfcc79))
+
+## [2.62.0](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.61.0...google-auth-v2.62.0) (2026-10-12)
+
+
+### Features
+
+* **auth:** enable bound ID tokens by default on Cloud Run ([#18635](https://github.com/googleapis/google-cloud-python/issues/18635)) ([8b625c4](https://github.com/googleapis/google-cloud-python/commit/8b625c4927371992f4569962292299eced040047))
+
+## [2.61.0](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.60.0...google-auth-v2.61.0) (2026-10-07)
+
+
+### Features
+
+* **auth:** support bound access and ID tokens for GKE ([#18594](https://github.com/googleapis/google-cloud-python/issues/18594)) ([9f5fd7b](https://github.com/googleapis/google-cloud-python/commit/9f5fd7bdf0707a17c363482b094ccd70a4358389))
+
+## [2.60.0](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.59.1...google-auth-v2.60.0) (2026-10-02)
+
+
+### Features
+
+* **auth:** Support sync credentials in AsyncAuthorizedSession ([#18542](https://github.com/googleapis/google-cloud-python/issues/18542)) ([3799568](https://github.com/googleapis/google-cloud-python/commit/379956865248ebc40e5b851ede520056e65abcac))
+
+## [2.59.1](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.59.0...google-auth-v2.59.1) (2026-09-30)
+
+
+### Bug Fixes
+
+* **auth:** support mTLS in requests.Request for token refresh and impersonation ([#18486](https://github.com/googleapis/google-cloud-python/issues/18486)) ([590376d](https://github.com/googleapis/google-cloud-python/commit/590376df522bf5f89e0d23b956a85db61c4d48d7))
+
+## [2.59.0](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.58.1...google-auth-v2.59.0) (2026-09-28)
+
+
+### Features
+
+* declare Python3.15 support ([05b0c34](https://github.com/googleapis/google-cloud-python/commit/05b0c342683b2b0e1b8dccd201ec86ec89612edc))
+
+## [2.58.1](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.58.0...google-auth-v2.58.1) (2026-09-24)
+
+
+### Bug Fixes
+
+* **auth:** allow mTLS retry when credentials raise NotImplementedError on refresh ([#18349](https://github.com/googleapis/google-cloud-python/issues/18349)) ([1665e68](https://github.com/googleapis/google-cloud-python/commit/1665e6867e0c5d7ea8e7857681efc3aae827d9b7))
+
+## [2.58.0](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.57.1...google-auth-v2.58.0) (2026-09-09)
+
+
+### Features
+
+* [aiohttp] Add mTLS reconfiguration logic when certificate mismatch ([906ace7](https://github.com/googleapis/google-cloud-python/commit/906ace77a2a4cfe57954b3da727232e2fd481c22))
+* **auth:** [aiohttp] Add mTLS reconfiguration logic when certificate mismatch for existing credentials & Agent Identity workloads  ([#18224](https://github.com/googleapis/google-cloud-python/issues/18224)) ([906ace7](https://github.com/googleapis/google-cloud-python/commit/906ace77a2a4cfe57954b3da727232e2fd481c22))
+
+## [2.57.1](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.57.0...google-auth-v2.57.1) (2026-09-03)
+
+
+### Bug Fixes
+
+* **auth:** parse hostname for mTLS and PSC endpoint certificate rotation ([#18147](https://github.com/googleapis/google-cloud-python/issues/18147)) ([#18201](https://github.com/googleapis/google-cloud-python/issues/18201)) ([b18bb4c](https://github.com/googleapis/google-cloud-python/commit/b18bb4cb749d2dd10d0e2f7d8505460d305e54fc))
+
+## [2.57.0](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.56.3...google-auth-v2.57.0) (2026-08-21)
+
+
+### Features
+
+* **auth:** add deprecation warning for grpcio &lt; 1.83.0 (PQC support) ([#18070](https://github.com/googleapis/google-cloud-python/issues/18070)) ([68bdaba](https://github.com/googleapis/google-cloud-python/commit/68bdaba04c706706bf614587adbda0774d15d81d))
+
+
+### Bug Fixes
+
+* **auth:** parse hostname for mTLS and PSC endpoint certificate rotat… ([#18153](https://github.com/googleapis/google-cloud-python/issues/18153)) ([b642373](https://github.com/googleapis/google-cloud-python/commit/b6423734a2470acd01a7081a4133e4373206f325))
+* **auth:** prevent TypeError and support home-dir cert fallback for X… ([#18016](https://github.com/googleapis/google-cloud-python/issues/18016)) ([b9a1379](https://github.com/googleapis/google-cloud-python/commit/b9a1379fd673a1cf3b8c1676400ed9789e12de6a))
+
+
+### Documentation
+
+* **handwritten:** centralize CONTRIBUTING.rst pointers ([#17642](https://github.com/googleapis/google-cloud-python/issues/17642)) ([23b9499](https://github.com/googleapis/google-cloud-python/commit/23b94994bd5251493b81d91657d1f79a5d3c4b97))
+
 ## [2.56.3](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.56.2...google-auth-v2.56.3) (2026-08-06)
 
 

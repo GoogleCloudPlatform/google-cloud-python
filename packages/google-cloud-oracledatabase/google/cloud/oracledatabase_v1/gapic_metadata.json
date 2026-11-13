@@ -30,6 +30,11 @@
                 "create_cloud_vm_cluster"
               ]
             },
+            "CreateDatabaseConnection": {
+              "methods": [
+                "create_database_connection"
+              ]
+            },
             "CreateDbSystem": {
               "methods": [
                 "create_db_system"
@@ -60,6 +65,11 @@
                 "create_goldengate_deployment"
               ]
             },
+            "CreateOdbDnsZone": {
+              "methods": [
+                "create_odb_dns_zone"
+              ]
+            },
             "CreateOdbNetwork": {
               "methods": [
                 "create_odb_network"
@@ -83,6 +93,11 @@
             "DeleteCloudVmCluster": {
               "methods": [
                 "delete_cloud_vm_cluster"
+              ]
+            },
+            "DeleteDatabaseConnection": {
+              "methods": [
+                "delete_database_connection"
               ]
             },
             "DeleteDbSystem": {
@@ -115,6 +130,11 @@
                 "delete_goldengate_deployment"
               ]
             },
+            "DeleteOdbDnsZone": {
+              "methods": [
+                "delete_odb_dns_zone"
+              ]
+            },
             "DeleteOdbNetwork": {
               "methods": [
                 "delete_odb_network"
@@ -123,6 +143,31 @@
             "DeleteOdbSubnet": {
               "methods": [
                 "delete_odb_subnet"
+              ]
+            },
+            "DisableCloudVmClusterIdentityConnector": {
+              "methods": [
+                "disable_cloud_vm_cluster_identity_connector"
+              ]
+            },
+            "DisableExadbVmClusterIdentityConnector": {
+              "methods": [
+                "disable_exadb_vm_cluster_identity_connector"
+              ]
+            },
+            "EnableCloudVmClusterIdentityConnector": {
+              "methods": [
+                "enable_cloud_vm_cluster_identity_connector"
+              ]
+            },
+            "EnableExadbVmClusterIdentityConnector": {
+              "methods": [
+                "enable_exadb_vm_cluster_identity_connector"
+              ]
+            },
+            "ExecuteSql": {
+              "methods": [
+                "execute_sql"
               ]
             },
             "FailoverAutonomousDatabase": {
@@ -160,6 +205,11 @@
                 "get_database"
               ]
             },
+            "GetDatabaseConnection": {
+              "methods": [
+                "get_database_connection"
+              ]
+            },
             "GetDbSystem": {
               "methods": [
                 "get_db_system"
@@ -188,6 +238,11 @@
             "GetGoldengateDeployment": {
               "methods": [
                 "get_goldengate_deployment"
+              ]
+            },
+            "GetOdbDnsZone": {
+              "methods": [
+                "get_odb_dns_zone"
               ]
             },
             "GetOdbNetwork": {
@@ -240,6 +295,11 @@
                 "list_database_character_sets"
               ]
             },
+            "ListDatabaseConnections": {
+              "methods": [
+                "list_database_connections"
+              ]
+            },
             "ListDatabases": {
               "methods": [
                 "list_databases"
@@ -253,6 +313,11 @@
             "ListDbServers": {
               "methods": [
                 "list_db_servers"
+              ]
+            },
+            "ListDbSystemComputePerformances": {
+              "methods": [
+                "list_db_system_compute_performances"
               ]
             },
             "ListDbSystemInitialStorageSizes": {
@@ -288,6 +353,11 @@
             "ListExascaleDbStorageVaults": {
               "methods": [
                 "list_exascale_db_storage_vaults"
+              ]
+            },
+            "ListFlexComponents": {
+              "methods": [
+                "list_flex_components"
               ]
             },
             "ListGiVersions": {
@@ -333,6 +403,11 @@
             "ListMinorVersions": {
               "methods": [
                 "list_minor_versions"
+              ]
+            },
+            "ListOdbDnsZones": {
+              "methods": [
+                "list_odb_dns_zones"
               ]
             },
             "ListOdbNetworks": {
@@ -395,6 +470,11 @@
                 "switchover_autonomous_database"
               ]
             },
+            "TestDatabaseConnection": {
+              "methods": [
+                "test_database_connection"
+              ]
+            },
             "TestGoldengateConnectionAssignment": {
               "methods": [
                 "test_goldengate_connection_assignment"
@@ -405,9 +485,59 @@
                 "update_autonomous_database"
               ]
             },
+            "UpdateCloudExadataInfrastructure": {
+              "methods": [
+                "update_cloud_exadata_infrastructure"
+              ]
+            },
+            "UpdateCloudVmCluster": {
+              "methods": [
+                "update_cloud_vm_cluster"
+              ]
+            },
+            "UpdateDatabaseConnection": {
+              "methods": [
+                "update_database_connection"
+              ]
+            },
+            "UpdateDbSystem": {
+              "methods": [
+                "update_db_system"
+              ]
+            },
             "UpdateExadbVmCluster": {
               "methods": [
                 "update_exadb_vm_cluster"
+              ]
+            },
+            "UpdateExascaleDbStorageVault": {
+              "methods": [
+                "update_exascale_db_storage_vault"
+              ]
+            },
+            "UpdateGoldengateConnection": {
+              "methods": [
+                "update_goldengate_connection"
+              ]
+            },
+            "UpdateGoldengateConnectionAssignment": {
+              "methods": [
+                "update_goldengate_connection_assignment"
+              ]
+            },
+            "UpdateGoldengateDeployment": {
+              "methods": [
+                "update_goldengate_deployment"
+              ]
+            },
+            "UpdateOdbNetwork": {
+              "methods": [
+                "update_odb_network"
+              ]
+            },
+            "UpdateOdbSubnet": {
+              "methods": [
+                "update_odb_subnet"
               ]
             }
           }
@@ -435,6 +565,11 @@
                 "create_cloud_vm_cluster"
               ]
             },
+            "CreateDatabaseConnection": {
+              "methods": [
+                "create_database_connection"
+              ]
+            },
             "CreateDbSystem": {
               "methods": [
                 "create_db_system"
@@ -465,6 +600,11 @@
                 "create_goldengate_deployment"
               ]
             },
+            "CreateOdbDnsZone": {
+              "methods": [
+                "create_odb_dns_zone"
+              ]
+            },
             "CreateOdbNetwork": {
               "methods": [
                 "create_odb_network"
@@ -488,6 +628,11 @@
             "DeleteCloudVmCluster": {
               "methods": [
                 "delete_cloud_vm_cluster"
+              ]
+            },
+            "DeleteDatabaseConnection": {
+              "methods": [
+                "delete_database_connection"
               ]
             },
             "DeleteDbSystem": {
@@ -520,6 +665,11 @@
                 "delete_goldengate_deployment"
               ]
             },
+            "DeleteOdbDnsZone": {
+              "methods": [
+                "delete_odb_dns_zone"
+              ]
+            },
             "DeleteOdbNetwork": {
               "methods": [
                 "delete_odb_network"
@@ -528,6 +678,31 @@
             "DeleteOdbSubnet": {
               "methods": [
                 "delete_odb_subnet"
+              ]
+            },
+            "DisableCloudVmClusterIdentityConnector": {
+              "methods": [
+                "disable_cloud_vm_cluster_identity_connector"
+              ]
+            },
+            "DisableExadbVmClusterIdentityConnector": {
+              "methods": [
+                "disable_exadb_vm_cluster_identity_connector"
+              ]
+            },
+            "EnableCloudVmClusterIdentityConnector": {
+              "methods": [
+                "enable_cloud_vm_cluster_identity_connector"
+              ]
+            },
+            "EnableExadbVmClusterIdentityConnector": {
+              "methods": [
+                "enable_exadb_vm_cluster_identity_connector"
+              ]
+            },
+            "ExecuteSql": {
+              "methods": [
+                "execute_sql"
               ]
             },
             "FailoverAutonomousDatabase": {
@@ -565,6 +740,11 @@
                 "get_database"
               ]
             },
+            "GetDatabaseConnection": {
+              "methods": [
+                "get_database_connection"
+              ]
+            },
             "GetDbSystem": {
               "methods": [
                 "get_db_system"
@@ -593,6 +773,11 @@
             "GetGoldengateDeployment": {
               "methods": [
                 "get_goldengate_deployment"
+              ]
+            },
+            "GetOdbDnsZone": {
+              "methods": [
+                "get_odb_dns_zone"
               ]
             },
             "GetOdbNetwork": {
@@ -645,6 +830,11 @@
                 "list_database_character_sets"
               ]
             },
+            "ListDatabaseConnections": {
+              "methods": [
+                "list_database_connections"
+              ]
+            },
             "ListDatabases": {
               "methods": [
                 "list_databases"
@@ -658,6 +848,11 @@
             "ListDbServers": {
               "methods": [
                 "list_db_servers"
+              ]
+            },
+            "ListDbSystemComputePerformances": {
+              "methods": [
+                "list_db_system_compute_performances"
               ]
             },
             "ListDbSystemInitialStorageSizes": {
@@ -693,6 +888,11 @@
             "ListExascaleDbStorageVaults": {
               "methods": [
                 "list_exascale_db_storage_vaults"
+              ]
+            },
+            "ListFlexComponents": {
+              "methods": [
+                "list_flex_components"
               ]
             },
             "ListGiVersions": {
@@ -738,6 +938,11 @@
             "ListMinorVersions": {
               "methods": [
                 "list_minor_versions"
+              ]
+            },
+            "ListOdbDnsZones": {
+              "methods": [
+                "list_odb_dns_zones"
               ]
             },
             "ListOdbNetworks": {
@@ -800,6 +1005,11 @@
                 "switchover_autonomous_database"
               ]
             },
+            "TestDatabaseConnection": {
+              "methods": [
+                "test_database_connection"
+              ]
+            },
             "TestGoldengateConnectionAssignment": {
               "methods": [
                 "test_goldengate_connection_assignment"
@@ -810,9 +1020,59 @@
                 "update_autonomous_database"
               ]
             },
+            "UpdateCloudExadataInfrastructure": {
+              "methods": [
+                "update_cloud_exadata_infrastructure"
+              ]
+            },
+            "UpdateCloudVmCluster": {
+              "methods": [
+                "update_cloud_vm_cluster"
+              ]
+            },
+            "UpdateDatabaseConnection": {
+              "methods": [
+                "update_database_connection"
+              ]
+            },
+            "UpdateDbSystem": {
+              "methods": [
+                "update_db_system"
+              ]
+            },
             "UpdateExadbVmCluster": {
               "methods": [
                 "update_exadb_vm_cluster"
+              ]
+            },
+            "UpdateExascaleDbStorageVault": {
+              "methods": [
+                "update_exascale_db_storage_vault"
+              ]
+            },
+            "UpdateGoldengateConnection": {
+              "methods": [
+                "update_goldengate_connection"
+              ]
+            },
+            "UpdateGoldengateConnectionAssignment": {
+              "methods": [
+                "update_goldengate_connection_assignment"
+              ]
+            },
+            "UpdateGoldengateDeployment": {
+              "methods": [
+                "update_goldengate_deployment"
+              ]
+            },
+            "UpdateOdbNetwork": {
+              "methods": [
+                "update_odb_network"
+              ]
+            },
+            "UpdateOdbSubnet": {
+              "methods": [
+                "update_odb_subnet"
               ]
             }
           }
@@ -840,6 +1100,11 @@
                 "create_cloud_vm_cluster"
               ]
             },
+            "CreateDatabaseConnection": {
+              "methods": [
+                "create_database_connection"
+              ]
+            },
             "CreateDbSystem": {
               "methods": [
                 "create_db_system"
@@ -870,6 +1135,11 @@
                 "create_goldengate_deployment"
               ]
             },
+            "CreateOdbDnsZone": {
+              "methods": [
+                "create_odb_dns_zone"
+              ]
+            },
             "CreateOdbNetwork": {
               "methods": [
                 "create_odb_network"
@@ -893,6 +1163,11 @@
             "DeleteCloudVmCluster": {
               "methods": [
                 "delete_cloud_vm_cluster"
+              ]
+            },
+            "DeleteDatabaseConnection": {
+              "methods": [
+                "delete_database_connection"
               ]
             },
             "DeleteDbSystem": {
@@ -925,6 +1200,11 @@
                 "delete_goldengate_deployment"
               ]
             },
+            "DeleteOdbDnsZone": {
+              "methods": [
+                "delete_odb_dns_zone"
+              ]
+            },
             "DeleteOdbNetwork": {
               "methods": [
                 "delete_odb_network"
@@ -933,6 +1213,31 @@
             "DeleteOdbSubnet": {
               "methods": [
                 "delete_odb_subnet"
+              ]
+            },
+            "DisableCloudVmClusterIdentityConnector": {
+              "methods": [
+                "disable_cloud_vm_cluster_identity_connector"
+              ]
+            },
+            "DisableExadbVmClusterIdentityConnector": {
+              "methods": [
+                "disable_exadb_vm_cluster_identity_connector"
+              ]
+            },
+            "EnableCloudVmClusterIdentityConnector": {
+              "methods": [
+                "enable_cloud_vm_cluster_identity_connector"
+              ]
+            },
+            "EnableExadbVmClusterIdentityConnector": {
+              "methods": [
+                "enable_exadb_vm_cluster_identity_connector"
+              ]
+            },
+            "ExecuteSql": {
+              "methods": [
+                "execute_sql"
               ]
             },
             "FailoverAutonomousDatabase": {
@@ -970,6 +1275,11 @@
                 "get_database"
               ]
             },
+            "GetDatabaseConnection": {
+              "methods": [
+                "get_database_connection"
+              ]
+            },
             "GetDbSystem": {
               "methods": [
                 "get_db_system"
@@ -998,6 +1308,11 @@
             "GetGoldengateDeployment": {
               "methods": [
                 "get_goldengate_deployment"
+              ]
+            },
+            "GetOdbDnsZone": {
+              "methods": [
+                "get_odb_dns_zone"
               ]
             },
             "GetOdbNetwork": {
@@ -1050,6 +1365,11 @@
                 "list_database_character_sets"
               ]
             },
+            "ListDatabaseConnections": {
+              "methods": [
+                "list_database_connections"
+              ]
+            },
             "ListDatabases": {
               "methods": [
                 "list_databases"
@@ -1063,6 +1383,11 @@
             "ListDbServers": {
               "methods": [
                 "list_db_servers"
+              ]
+            },
+            "ListDbSystemComputePerformances": {
+              "methods": [
+                "list_db_system_compute_performances"
               ]
             },
             "ListDbSystemInitialStorageSizes": {
@@ -1098,6 +1423,11 @@
             "ListExascaleDbStorageVaults": {
               "methods": [
                 "list_exascale_db_storage_vaults"
+              ]
+            },
+            "ListFlexComponents": {
+              "methods": [
+                "list_flex_components"
               ]
             },
             "ListGiVersions": {
@@ -1143,6 +1473,11 @@
             "ListMinorVersions": {
               "methods": [
                 "list_minor_versions"
+              ]
+            },
+            "ListOdbDnsZones": {
+              "methods": [
+                "list_odb_dns_zones"
               ]
             },
             "ListOdbNetworks": {
@@ -1205,6 +1540,11 @@
                 "switchover_autonomous_database"
               ]
             },
+            "TestDatabaseConnection": {
+              "methods": [
+                "test_database_connection"
+              ]
+            },
             "TestGoldengateConnectionAssignment": {
               "methods": [
                 "test_goldengate_connection_assignment"
@@ -1215,9 +1555,59 @@
                 "update_autonomous_database"
               ]
             },
+            "UpdateCloudExadataInfrastructure": {
+              "methods": [
+                "update_cloud_exadata_infrastructure"
+              ]
+            },
+            "UpdateCloudVmCluster": {
+              "methods": [
+                "update_cloud_vm_cluster"
+              ]
+            },
+            "UpdateDatabaseConnection": {
+              "methods": [
+                "update_database_connection"
+              ]
+            },
+            "UpdateDbSystem": {
+              "methods": [
+                "update_db_system"
+              ]
+            },
             "UpdateExadbVmCluster": {
               "methods": [
                 "update_exadb_vm_cluster"
+              ]
+            },
+            "UpdateExascaleDbStorageVault": {
+              "methods": [
+                "update_exascale_db_storage_vault"
+              ]
+            },
+            "UpdateGoldengateConnection": {
+              "methods": [
+                "update_goldengate_connection"
+              ]
+            },
+            "UpdateGoldengateConnectionAssignment": {
+              "methods": [
+                "update_goldengate_connection_assignment"
+              ]
+            },
+            "UpdateGoldengateDeployment": {
+              "methods": [
+                "update_goldengate_deployment"
+              ]
+            },
+            "UpdateOdbNetwork": {
+              "methods": [
+                "update_odb_network"
+              ]
+            },
+            "UpdateOdbSubnet": {
+              "methods": [
+                "update_odb_subnet"
               ]
             }
           }

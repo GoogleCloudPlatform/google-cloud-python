@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     private_auction_messages,
     private_auction_service,
@@ -517,21 +518,18 @@ class PrivateAuctionServiceRestTransport(_BasePrivateAuctionServiceRestTransport
             """
 
             http_options = _BasePrivateAuctionServiceRestTransport._BaseCreatePrivateAuction._get_http_options()
-
             request, metadata = self._interceptor.pre_create_private_auction(
                 request, metadata
             )
-            transcoded_request = _BasePrivateAuctionServiceRestTransport._BaseCreatePrivateAuction._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePrivateAuctionServiceRestTransport._BaseCreatePrivateAuction._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrivateAuctionServiceRestTransport._BaseCreatePrivateAuction._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrivateAuctionServiceRestTransport._BaseCreatePrivateAuction,
+                    "_BaseCreatePrivateAuction__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -671,17 +669,18 @@ class PrivateAuctionServiceRestTransport(_BasePrivateAuctionServiceRestTransport
             """
 
             http_options = _BasePrivateAuctionServiceRestTransport._BaseGetPrivateAuction._get_http_options()
-
             request, metadata = self._interceptor.pre_get_private_auction(
                 request, metadata
             )
-            transcoded_request = _BasePrivateAuctionServiceRestTransport._BaseGetPrivateAuction._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrivateAuctionServiceRestTransport._BaseGetPrivateAuction._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrivateAuctionServiceRestTransport._BaseGetPrivateAuction,
+                    "_BaseGetPrivateAuction__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -822,17 +821,18 @@ class PrivateAuctionServiceRestTransport(_BasePrivateAuctionServiceRestTransport
             """
 
             http_options = _BasePrivateAuctionServiceRestTransport._BaseListPrivateAuctions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_private_auctions(
                 request, metadata
             )
-            transcoded_request = _BasePrivateAuctionServiceRestTransport._BaseListPrivateAuctions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrivateAuctionServiceRestTransport._BaseListPrivateAuctions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrivateAuctionServiceRestTransport._BaseListPrivateAuctions,
+                    "_BaseListPrivateAuctions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -974,21 +974,18 @@ class PrivateAuctionServiceRestTransport(_BasePrivateAuctionServiceRestTransport
             """
 
             http_options = _BasePrivateAuctionServiceRestTransport._BaseUpdatePrivateAuction._get_http_options()
-
             request, metadata = self._interceptor.pre_update_private_auction(
                 request, metadata
             )
-            transcoded_request = _BasePrivateAuctionServiceRestTransport._BaseUpdatePrivateAuction._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BasePrivateAuctionServiceRestTransport._BaseUpdatePrivateAuction._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrivateAuctionServiceRestTransport._BaseUpdatePrivateAuction._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrivateAuctionServiceRestTransport._BaseUpdatePrivateAuction,
+                    "_BaseUpdatePrivateAuction__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1172,17 +1169,18 @@ class PrivateAuctionServiceRestTransport(_BasePrivateAuctionServiceRestTransport
             """
 
             http_options = _BasePrivateAuctionServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BasePrivateAuctionServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrivateAuctionServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrivateAuctionServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1290,15 +1288,16 @@ class PrivateAuctionServiceRestTransport(_BasePrivateAuctionServiceRestTransport
             """
 
             http_options = _BasePrivateAuctionServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BasePrivateAuctionServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrivateAuctionServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrivateAuctionServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -19,9 +19,9 @@ from .rest import {{ service.name }}RestInterceptor
 ASYNC_REST_CLASSES: Tuple[str, ...]
 try:
     from .rest_asyncio import Async{{ service.name }}RestTransport
-    from .rest_asyncio import Async{{ service.name }}RestInterceptor
-    ASYNC_REST_CLASSES = ('Async{{ service.name }}RestTransport', 'Async{{ service.name }}RestInterceptor')
-    HAS_REST_ASYNC = True
+    from .rest_asyncio import Async{{ service.name }}RestInterceptor  # pragma: NO COVER
+    ASYNC_REST_CLASSES = ('Async{{ service.name }}RestTransport', 'Async{{ service.name }}RestInterceptor')  # pragma: NO COVER
+    HAS_REST_ASYNC = True  # pragma: NO COVER
 except ImportError:  # pragma: NO COVER
     ASYNC_REST_CLASSES = ()
     HAS_REST_ASYNC = False

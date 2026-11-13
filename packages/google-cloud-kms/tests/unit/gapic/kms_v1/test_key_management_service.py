@@ -84,6 +84,18 @@ CRED_INFO_JSON = {
 CRED_INFO_STRING = json.dumps(CRED_INFO_JSON)
 
 
+@pytest.fixture(autouse=True)
+def disable_mtls_env():
+    with mock.patch.dict(
+        os.environ,
+        {
+            "GOOGLE_API_USE_CLIENT_CERTIFICATE": "false",
+            "CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE": "false",
+        },
+    ):
+        yield
+
+
 async def mock_async_gen(data, chunk_size=1):
     for i in range(0, len(data)):  # pragma: NO COVER
         chunk = data[i : i + chunk_size]
@@ -139,215 +151,6 @@ def set_event_loop():
             asyncio.set_event_loop(None)
 
 
-def test__get_default_mtls_endpoint():
-    api_endpoint = "example.googleapis.com"
-    api_mtls_endpoint = "example.mtls.googleapis.com"
-    sandbox_endpoint = "example.sandbox.googleapis.com"
-    sandbox_mtls_endpoint = "example.mtls.sandbox.googleapis.com"
-    non_googleapi = "api.example.com"
-    custom_endpoint = ".custom"
-
-    assert KeyManagementServiceClient._get_default_mtls_endpoint(None) is None
-    assert (
-        KeyManagementServiceClient._get_default_mtls_endpoint(api_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        KeyManagementServiceClient._get_default_mtls_endpoint(api_mtls_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        KeyManagementServiceClient._get_default_mtls_endpoint(sandbox_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        KeyManagementServiceClient._get_default_mtls_endpoint(sandbox_mtls_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        KeyManagementServiceClient._get_default_mtls_endpoint(non_googleapi)
-        == non_googleapi
-    )
-    assert (
-        KeyManagementServiceClient._get_default_mtls_endpoint(custom_endpoint)
-        == custom_endpoint
-    )
-
-
-def test__read_environment_variables():
-    assert KeyManagementServiceClient._read_environment_variables() == (
-        False,
-        "auto",
-        None,
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-        assert KeyManagementServiceClient._read_environment_variables() == (
-            True,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}):
-        assert KeyManagementServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}
-    ):
-        if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-            with pytest.raises(ValueError) as excinfo:
-                KeyManagementServiceClient._read_environment_variables()
-            assert (
-                str(excinfo.value)
-                == "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be either `true` or `false`"
-            )
-        else:
-            assert KeyManagementServiceClient._read_environment_variables() == (
-                False,
-                "auto",
-                None,
-            )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "never"}):
-        assert KeyManagementServiceClient._read_environment_variables() == (
-            False,
-            "never",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "always"}):
-        assert KeyManagementServiceClient._read_environment_variables() == (
-            False,
-            "always",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "auto"}):
-        assert KeyManagementServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            None,
-        )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "Unsupported"}):
-        with pytest.raises(MutualTLSChannelError) as excinfo:
-            KeyManagementServiceClient._read_environment_variables()
-    assert (
-        str(excinfo.value)
-        == "Environment variable `GOOGLE_API_USE_MTLS_ENDPOINT` must be `never`, `auto` or `always`"
-    )
-
-    with mock.patch.dict(os.environ, {"GOOGLE_CLOUD_UNIVERSE_DOMAIN": "foo.com"}):
-        assert KeyManagementServiceClient._read_environment_variables() == (
-            False,
-            "auto",
-            "foo.com",
-        )
-
-
-def test_use_client_cert_effective():
-    # Test case 1: Test when `should_use_client_cert` returns True.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=True
-        ):
-            assert KeyManagementServiceClient._use_client_cert_effective() is True
-
-    # Test case 2: Test when `should_use_client_cert` returns False.
-    # We mock the `should_use_client_cert` function to simulate a scenario where
-    # the google-auth library supports automatic mTLS and determines that a
-    # client certificate should NOT be used.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch(
-            "google.auth.transport.mtls.should_use_client_cert", return_value=False
-        ):
-            assert KeyManagementServiceClient._use_client_cert_effective() is False
-
-    # Test case 3: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "true".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
-            assert KeyManagementServiceClient._use_client_cert_effective() is True
-
-    # Test case 4: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "false"}
-        ):
-            assert KeyManagementServiceClient._use_client_cert_effective() is False
-
-    # Test case 5: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "True".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "True"}):
-            assert KeyManagementServiceClient._use_client_cert_effective() is True
-
-    # Test case 6: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "False".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "False"}
-        ):
-            assert KeyManagementServiceClient._use_client_cert_effective() is False
-
-    # Test case 7: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "TRUE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "TRUE"}):
-            assert KeyManagementServiceClient._use_client_cert_effective() is True
-
-    # Test case 8: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to "FALSE".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "FALSE"}
-        ):
-            assert KeyManagementServiceClient._use_client_cert_effective() is False
-
-    # Test case 9: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is not set.
-    # In this case, the method should return False, which is the default value.
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, clear=True):
-            assert KeyManagementServiceClient._use_client_cert_effective() is False
-
-    # Test case 10: Test when `should_use_client_cert` is unavailable and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should raise a ValueError as the environment variable must be either
-    # "true" or "false".
-    if not hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            with pytest.raises(ValueError):
-                KeyManagementServiceClient._use_client_cert_effective()
-
-    # Test case 11: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is set to an invalid value.
-    # The method should return False as the environment variable is set to an invalid value.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(
-            os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "unsupported"}
-        ):
-            assert KeyManagementServiceClient._use_client_cert_effective() is False
-
-    # Test case 12: Test when `should_use_client_cert` is available and the
-    # `GOOGLE_API_USE_CLIENT_CERTIFICATE` environment variable is unset. Also,
-    # the GOOGLE_API_CONFIG environment variable is unset.
-    if hasattr(google.auth.transport.mtls, "should_use_client_cert"):
-        with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": ""}):
-            with mock.patch.dict(os.environ, {"GOOGLE_API_CERTIFICATE_CONFIG": ""}):
-                assert KeyManagementServiceClient._use_client_cert_effective() is False
-
-
 def test__get_client_cert_source():
     mock_provided_cert_source = mock.Mock()
     mock_default_cert_source = mock.Mock()
@@ -383,103 +186,6 @@ def test__get_client_cert_source():
                 )
                 is mock_provided_cert_source
             )
-
-
-@mock.patch.object(
-    KeyManagementServiceClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(KeyManagementServiceClient),
-)
-@mock.patch.object(
-    KeyManagementServiceAsyncClient,
-    "_DEFAULT_ENDPOINT_TEMPLATE",
-    modify_default_endpoint_template(KeyManagementServiceAsyncClient),
-)
-def test__get_api_endpoint():
-    api_override = "foo.com"
-    mock_client_cert_source = mock.Mock()
-    default_universe = KeyManagementServiceClient._DEFAULT_UNIVERSE
-    default_endpoint = KeyManagementServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=default_universe
-    )
-    mock_universe = "bar.com"
-    mock_endpoint = KeyManagementServiceClient._DEFAULT_ENDPOINT_TEMPLATE.format(
-        UNIVERSE_DOMAIN=mock_universe
-    )
-
-    assert (
-        KeyManagementServiceClient._get_api_endpoint(
-            api_override, mock_client_cert_source, default_universe, "always"
-        )
-        == api_override
-    )
-    assert (
-        KeyManagementServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "auto"
-        )
-        == KeyManagementServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        KeyManagementServiceClient._get_api_endpoint(
-            None, None, default_universe, "auto"
-        )
-        == default_endpoint
-    )
-    assert (
-        KeyManagementServiceClient._get_api_endpoint(
-            None, None, default_universe, "always"
-        )
-        == KeyManagementServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        KeyManagementServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, default_universe, "always"
-        )
-        == KeyManagementServiceClient.DEFAULT_MTLS_ENDPOINT
-    )
-    assert (
-        KeyManagementServiceClient._get_api_endpoint(None, None, mock_universe, "never")
-        == mock_endpoint
-    )
-    assert (
-        KeyManagementServiceClient._get_api_endpoint(
-            None, None, default_universe, "never"
-        )
-        == default_endpoint
-    )
-
-    with pytest.raises(MutualTLSChannelError) as excinfo:
-        KeyManagementServiceClient._get_api_endpoint(
-            None, mock_client_cert_source, mock_universe, "auto"
-        )
-    assert (
-        str(excinfo.value)
-        == "mTLS is not supported in any universe other than googleapis.com."
-    )
-
-
-def test__get_universe_domain():
-    client_universe_domain = "foo.com"
-    universe_domain_env = "bar.com"
-
-    assert (
-        KeyManagementServiceClient._get_universe_domain(
-            client_universe_domain, universe_domain_env
-        )
-        == client_universe_domain
-    )
-    assert (
-        KeyManagementServiceClient._get_universe_domain(None, universe_domain_env)
-        == universe_domain_env
-    )
-    assert (
-        KeyManagementServiceClient._get_universe_domain(None, None)
-        == KeyManagementServiceClient._DEFAULT_UNIVERSE
-    )
-
-    with pytest.raises(ValueError) as excinfo:
-        KeyManagementServiceClient._get_universe_domain("", None)
-    assert str(excinfo.value) == "Universe Domain cannot be an empty string."
 
 
 @pytest.mark.parametrize(
@@ -1015,6 +721,7 @@ def test_key_management_service_client_get_mtls_endpoint_and_cert_source(client_
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", None)
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", None)
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -1069,6 +776,7 @@ def test_key_management_service_client_get_mtls_endpoint_and_cert_source(client_
         for config_data, expected_cert_source in test_cases:
             env = os.environ.copy()
             env.pop("GOOGLE_API_USE_CLIENT_CERTIFICATE", "")
+            env.pop("CLOUDSDK_CONTEXT_AWARE_USE_CLIENT_CERTIFICATE", "")
             with mock.patch.dict(os.environ, env, clear=True):
                 config_filename = "mock_certificate_config.json"
                 config_file_content = json.dumps(config_data)
@@ -14563,28 +14271,29 @@ def test_list_key_rings_rest_required_fields(request_type=service.ListKeyRingsRe
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_key_rings._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListKeyRings,
+        "_BaseListKeyRings__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_key_rings._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
+            "orderBy",
+            "pageSize",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -14630,25 +14339,6 @@ def test_list_key_rings_rest_required_fields(request_type=service.ListKeyRingsRe
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_key_rings_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_key_rings._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_key_rings_rest_flattened():
@@ -14825,29 +14515,30 @@ def test_list_crypto_keys_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_crypto_keys._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListCryptoKeys,
+        "_BaseListCryptoKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_crypto_keys._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
-            "version_view",
+            "orderBy",
+            "pageSize",
+            "pageToken",
+            "versionView",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -14893,26 +14584,6 @@ def test_list_crypto_keys_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_crypto_keys_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_crypto_keys._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-                "versionView",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_crypto_keys_rest_flattened():
@@ -15097,29 +14768,30 @@ def test_list_crypto_key_versions_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_crypto_key_versions._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListCryptoKeyVersions,
+        "_BaseListCryptoKeyVersions__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_crypto_key_versions._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
+            "orderBy",
+            "pageSize",
+            "pageToken",
             "view",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -15165,26 +14837,6 @@ def test_list_crypto_key_versions_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_crypto_key_versions_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_crypto_key_versions._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-                "view",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_crypto_key_versions_rest_flattened():
@@ -15368,28 +15020,29 @@ def test_list_import_jobs_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_import_jobs._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListImportJobs,
+        "_BaseListImportJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_import_jobs._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
             "filter",
-            "order_by",
-            "page_size",
-            "page_token",
+            "orderBy",
+            "pageSize",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -15435,25 +15088,6 @@ def test_list_import_jobs_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_import_jobs_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_import_jobs._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "filter",
-                "orderBy",
-                "pageSize",
-                "pageToken",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_import_jobs_rest_flattened():
@@ -15638,26 +15272,27 @@ def test_list_retired_resources_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_retired_resources._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseListRetiredResources,
+        "_BaseListRetiredResources__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).list_retired_resources._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "page_size",
-            "page_token",
+            "pageSize",
+            "pageToken",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -15703,23 +15338,6 @@ def test_list_retired_resources_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_list_retired_resources_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.list_retired_resources._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "pageSize",
-                "pageToken",
-            )
-        )
-        & set(("parent",))
-    )
 
 
 def test_list_retired_resources_rest_flattened():
@@ -15895,19 +15513,19 @@ def test_get_key_ring_rest_required_fields(request_type=service.GetKeyRingReques
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_key_ring._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetKeyRing,
+        "_BaseGetKeyRing__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_key_ring._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -15953,15 +15571,6 @@ def test_get_key_ring_rest_required_fields(request_type=service.GetKeyRingReques
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_key_ring_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_key_ring._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_key_ring_rest_flattened():
@@ -16070,19 +15679,19 @@ def test_get_crypto_key_rest_required_fields(request_type=service.GetCryptoKeyRe
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_crypto_key._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetCryptoKey,
+        "_BaseGetCryptoKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_crypto_key._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -16128,15 +15737,6 @@ def test_get_crypto_key_rest_required_fields(request_type=service.GetCryptoKeyRe
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_crypto_key_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_crypto_key._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_crypto_key_rest_flattened():
@@ -16255,19 +15855,19 @@ def test_get_crypto_key_version_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_crypto_key_version._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetCryptoKeyVersion,
+        "_BaseGetCryptoKeyVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_crypto_key_version._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -16313,15 +15913,6 @@ def test_get_crypto_key_version_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_crypto_key_version_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_crypto_key_version._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_crypto_key_version_rest_flattened():
@@ -16433,21 +16024,22 @@ def test_get_public_key_rest_required_fields(request_type=service.GetPublicKeyRe
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_public_key._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetPublicKey,
+        "_BaseGetPublicKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_public_key._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("public_key_format",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("publicKeyFormat",))
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -16493,15 +16085,6 @@ def test_get_public_key_rest_required_fields(request_type=service.GetPublicKeyRe
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_public_key_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_public_key._get_unset_required_fields({})
-    assert set(unset_fields) == (set(("publicKeyFormat",)) & set(("name",)))
 
 
 def test_get_public_key_rest_flattened():
@@ -16613,21 +16196,22 @@ def test_get_import_job_rest_required_fields(request_type=service.GetImportJobRe
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_import_job._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetImportJob,
+        "_BaseGetImportJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_import_job._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("public_key_format",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("publicKeyFormat",))
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -16673,15 +16257,6 @@ def test_get_import_job_rest_required_fields(request_type=service.GetImportJobRe
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_import_job_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_import_job._get_unset_required_fields({})
-    assert set(unset_fields) == (set(("publicKeyFormat",)) & set(("name",)))
 
 
 def test_get_import_job_rest_flattened():
@@ -16799,19 +16374,19 @@ def test_get_retired_resource_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_retired_resource._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseGetRetiredResource,
+        "_BaseGetRetiredResource__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).get_retired_resource._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -16857,15 +16432,6 @@ def test_get_retired_resource_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_get_retired_resource_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.get_retired_resource._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_get_retired_resource_rest_flattened():
@@ -16981,9 +16547,14 @@ def test_create_key_ring_rest_required_fields(
     # verify fields with default values are dropped
     assert "keyRingId" not in jsonified_request
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_key_ring._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateKeyRing,
+        "_BaseCreateKeyRing__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -16993,12 +16564,8 @@ def test_create_key_ring_rest_required_fields(
     jsonified_request["parent"] = "parent_value"
     jsonified_request["keyRingId"] = "key_ring_id_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_key_ring._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("key_ring_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("keyRingId",))
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -17053,24 +16620,6 @@ def test_create_key_ring_rest_required_fields(
             ]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_key_ring_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_key_ring._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("keyRingId",))
-        & set(
-            (
-                "parent",
-                "keyRingId",
-                "keyRing",
-            )
-        )
-    )
 
 
 def test_create_key_ring_rest_flattened():
@@ -17189,9 +16738,14 @@ def test_create_crypto_key_rest_required_fields(
     # verify fields with default values are dropped
     assert "cryptoKeyId" not in jsonified_request
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_crypto_key._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateCryptoKey,
+        "_BaseCreateCryptoKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -17201,18 +16755,14 @@ def test_create_crypto_key_rest_required_fields(
     jsonified_request["parent"] = "parent_value"
     jsonified_request["cryptoKeyId"] = "crypto_key_id_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_crypto_key._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
-            "crypto_key_id",
-            "skip_initial_version_creation",
-            "trusted_wrapping_enabled",
+            "cryptoKeyId",
+            "skipInitialVersionCreation",
+            "trustedWrappingEnabled",
         )
     )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -17267,30 +16817,6 @@ def test_create_crypto_key_rest_required_fields(
             ]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_crypto_key_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_crypto_key._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(
-            (
-                "cryptoKeyId",
-                "skipInitialVersionCreation",
-                "trustedWrappingEnabled",
-            )
-        )
-        & set(
-            (
-                "parent",
-                "cryptoKeyId",
-                "cryptoKey",
-            )
-        )
-    )
 
 
 def test_create_crypto_key_rest_flattened():
@@ -17413,19 +16939,19 @@ def test_create_crypto_key_version_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_crypto_key_version._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateCryptoKeyVersion,
+        "_BaseCreateCryptoKeyVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_crypto_key_version._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -17472,23 +16998,6 @@ def test_create_crypto_key_version_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_crypto_key_version_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_crypto_key_version._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "parent",
-                "cryptoKeyVersion",
-            )
-        )
-    )
 
 
 def test_create_crypto_key_version_rest_flattened():
@@ -17610,19 +17119,19 @@ def test_delete_crypto_key_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_crypto_key._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteCryptoKey,
+        "_BaseDeleteCryptoKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_crypto_key._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -17665,15 +17174,6 @@ def test_delete_crypto_key_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_crypto_key_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_crypto_key._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_delete_crypto_key_rest_flattened():
@@ -17794,19 +17294,19 @@ def test_delete_crypto_key_version_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_crypto_key_version._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDeleteCryptoKeyVersion,
+        "_BaseDeleteCryptoKeyVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).delete_crypto_key_version._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -17849,15 +17349,6 @@ def test_delete_crypto_key_version_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_delete_crypto_key_version_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.delete_crypto_key_version._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_delete_crypto_key_version_rest_flattened():
@@ -17975,20 +17466,20 @@ def test_import_crypto_key_version_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).import_crypto_key_version._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseImportCryptoKeyVersion,
+        "_BaseImportCryptoKeyVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["parent"] = "parent_value"
     jsonified_request["importJob"] = "import_job_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).import_crypto_key_version._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -18037,24 +17528,6 @@ def test_import_crypto_key_version_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_import_crypto_key_version_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.import_crypto_key_version._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "parent",
-                "algorithm",
-                "importJob",
-            )
-        )
-    )
 
 
 def test_import_trusted_key_wrapped_crypto_key_version_rest_use_cached_wrapped_rpc():
@@ -18115,11 +17588,14 @@ def test_import_trusted_key_wrapped_crypto_key_version_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).import_trusted_key_wrapped_crypto_key_version._get_unset_required_fields(
-        jsonified_request
+    default_values = getattr(
+        transport_class._BaseImportTrustedKeyWrappedCryptoKeyVersion,
+        "_BaseImportTrustedKeyWrappedCryptoKeyVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
     )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -18127,13 +17603,6 @@ def test_import_trusted_key_wrapped_crypto_key_version_rest_required_fields(
     jsonified_request["parent"] = "parent_value"
     jsonified_request["importingKey"] = "importing_key_value"
     jsonified_request["wrappedKey"] = b"wrapped_key_blob"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).import_trusted_key_wrapped_crypto_key_version._get_unset_required_fields(
-        jsonified_request
-    )
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -18184,27 +17653,6 @@ def test_import_trusted_key_wrapped_crypto_key_version_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_import_trusted_key_wrapped_crypto_key_version_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.import_trusted_key_wrapped_crypto_key_version._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "parent",
-                "importingKey",
-                "wrappedKey",
-                "algorithm",
-            )
-        )
-    )
 
 
 def test_export_trusted_key_wrapped_crypto_key_version_rest_use_cached_wrapped_rpc():
@@ -18265,11 +17713,14 @@ def test_export_trusted_key_wrapped_crypto_key_version_rest_required_fields(
     # verify fields with default values are dropped
     assert "wrappingKey" not in jsonified_request
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).export_trusted_key_wrapped_crypto_key_version._get_unset_required_fields(
-        jsonified_request
+    default_values = getattr(
+        transport_class._BaseExportTrustedKeyWrappedCryptoKeyVersion,
+        "_BaseExportTrustedKeyWrappedCryptoKeyVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
     )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -18279,14 +17730,8 @@ def test_export_trusted_key_wrapped_crypto_key_version_rest_required_fields(
     jsonified_request["name"] = "name_value"
     jsonified_request["wrappingKey"] = "wrapping_key_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).export_trusted_key_wrapped_crypto_key_version._get_unset_required_fields(
-        jsonified_request
-    )
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("wrapping_key",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("wrappingKey",))
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -18344,25 +17789,6 @@ def test_export_trusted_key_wrapped_crypto_key_version_rest_required_fields(
             assert sorted(expected_params) == sorted(actual_params)
 
 
-def test_export_trusted_key_wrapped_crypto_key_version_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.export_trusted_key_wrapped_crypto_key_version._get_unset_required_fields(
-        {}
-    )
-    assert set(unset_fields) == (
-        set(("wrappingKey",))
-        & set(
-            (
-                "name",
-                "wrappingKey",
-            )
-        )
-    )
-
-
 def test_create_import_job_rest_use_cached_wrapped_rpc():
     # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
     # instead of constructing them on each call
@@ -18418,9 +17844,14 @@ def test_create_import_job_rest_required_fields(
     # verify fields with default values are dropped
     assert "importJobId" not in jsonified_request
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_import_job._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseCreateImportJob,
+        "_BaseCreateImportJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -18430,12 +17861,8 @@ def test_create_import_job_rest_required_fields(
     jsonified_request["parent"] = "parent_value"
     jsonified_request["importJobId"] = "import_job_id_value"
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).create_import_job._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("import_job_id",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("importJobId",))
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -18490,24 +17917,6 @@ def test_create_import_job_rest_required_fields(
             ]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_create_import_job_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.create_import_job._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("importJobId",))
-        & set(
-            (
-                "parent",
-                "importJobId",
-                "importJob",
-            )
-        )
-    )
 
 
 def test_create_import_job_rest_flattened():
@@ -18626,19 +18035,20 @@ def test_update_crypto_key_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_crypto_key._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateCryptoKey,
+        "_BaseUpdateCryptoKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_crypto_key._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("update_mask",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("updateMask",))
 
     # verify required fields with non-default values are left alone
 
@@ -18683,23 +18093,6 @@ def test_update_crypto_key_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_crypto_key_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_crypto_key._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("updateMask",))
-        & set(
-            (
-                "cryptoKey",
-                "updateMask",
-            )
-        )
-    )
 
 
 def test_update_crypto_key_rest_flattened():
@@ -18821,19 +18214,20 @@ def test_update_crypto_key_version_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_crypto_key_version._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateCryptoKeyVersion,
+        "_BaseUpdateCryptoKeyVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_crypto_key_version._get_unset_required_fields(jsonified_request)
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("update_mask",))
-    jsonified_request.update(unset_fields)
+    assert not set(unset_fields) - set(("updateMask",))
 
     # verify required fields with non-default values are left alone
 
@@ -18878,23 +18272,6 @@ def test_update_crypto_key_version_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_crypto_key_version_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.update_crypto_key_version._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(("updateMask",))
-        & set(
-            (
-                "cryptoKeyVersion",
-                "updateMask",
-            )
-        )
-    )
 
 
 def test_update_crypto_key_version_rest_flattened():
@@ -19018,20 +18395,20 @@ def test_update_crypto_key_primary_version_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_crypto_key_primary_version._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseUpdateCryptoKeyPrimaryVersion,
+        "_BaseUpdateCryptoKeyPrimaryVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
     jsonified_request["cryptoKeyVersionId"] = "crypto_key_version_id_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).update_crypto_key_primary_version._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -19080,25 +18457,6 @@ def test_update_crypto_key_primary_version_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_update_crypto_key_primary_version_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = (
-        transport.update_crypto_key_primary_version._get_unset_required_fields({})
-    )
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "name",
-                "cryptoKeyVersionId",
-            )
-        )
-    )
 
 
 def test_update_crypto_key_primary_version_rest_flattened():
@@ -19221,19 +18579,19 @@ def test_destroy_crypto_key_version_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).destroy_crypto_key_version._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDestroyCryptoKeyVersion,
+        "_BaseDestroyCryptoKeyVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).destroy_crypto_key_version._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -19280,15 +18638,6 @@ def test_destroy_crypto_key_version_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_destroy_crypto_key_version_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.destroy_crypto_key_version._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_destroy_crypto_key_version_rest_flattened():
@@ -19407,19 +18756,19 @@ def test_restore_crypto_key_version_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).restore_crypto_key_version._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseRestoreCryptoKeyVersion,
+        "_BaseRestoreCryptoKeyVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).restore_crypto_key_version._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -19466,15 +18815,6 @@ def test_restore_crypto_key_version_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_restore_crypto_key_version_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.restore_crypto_key_version._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_restore_crypto_key_version_rest_flattened():
@@ -19587,20 +18927,20 @@ def test_encrypt_rest_required_fields(request_type=service.EncryptRequest):
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).encrypt._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseEncrypt,
+        "_BaseEncrypt__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
     jsonified_request["plaintext"] = b"plaintext_blob"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).encrypt._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -19649,23 +18989,6 @@ def test_encrypt_rest_required_fields(request_type=service.EncryptRequest):
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_encrypt_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.encrypt._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "name",
-                "plaintext",
-            )
-        )
-    )
 
 
 def test_encrypt_rest_flattened():
@@ -19780,20 +19103,20 @@ def test_decrypt_rest_required_fields(request_type=service.DecryptRequest):
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).decrypt._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDecrypt,
+        "_BaseDecrypt__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
     jsonified_request["ciphertext"] = b"ciphertext_blob"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).decrypt._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -19842,23 +19165,6 @@ def test_decrypt_rest_required_fields(request_type=service.DecryptRequest):
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_decrypt_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.decrypt._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "name",
-                "ciphertext",
-            )
-        )
-    )
 
 
 def test_decrypt_rest_flattened():
@@ -19973,20 +19279,20 @@ def test_raw_encrypt_rest_required_fields(request_type=service.RawEncryptRequest
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).raw_encrypt._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseRawEncrypt,
+        "_BaseRawEncrypt__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
     jsonified_request["plaintext"] = b"plaintext_blob"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).raw_encrypt._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -20035,23 +19341,6 @@ def test_raw_encrypt_rest_required_fields(request_type=service.RawEncryptRequest
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_raw_encrypt_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.raw_encrypt._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "name",
-                "plaintext",
-            )
-        )
-    )
 
 
 def test_raw_decrypt_rest_use_cached_wrapped_rpc():
@@ -20105,9 +19394,14 @@ def test_raw_decrypt_rest_required_fields(request_type=service.RawDecryptRequest
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).raw_decrypt._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseRawDecrypt,
+        "_BaseRawDecrypt__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -20115,11 +19409,6 @@ def test_raw_decrypt_rest_required_fields(request_type=service.RawDecryptRequest
     jsonified_request["name"] = "name_value"
     jsonified_request["ciphertext"] = b"ciphertext_blob"
     jsonified_request["initializationVector"] = b"initialization_vector_blob"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).raw_decrypt._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -20170,24 +19459,6 @@ def test_raw_decrypt_rest_required_fields(request_type=service.RawDecryptRequest
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_raw_decrypt_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.raw_decrypt._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "name",
-                "ciphertext",
-                "initializationVector",
-            )
-        )
-    )
 
 
 def test_asymmetric_sign_rest_use_cached_wrapped_rpc():
@@ -20241,19 +19512,19 @@ def test_asymmetric_sign_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).asymmetric_sign._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseAsymmetricSign,
+        "_BaseAsymmetricSign__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).asymmetric_sign._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -20300,15 +19571,6 @@ def test_asymmetric_sign_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_asymmetric_sign_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.asymmetric_sign._get_unset_required_fields({})
-    assert set(unset_fields) == (set(()) & set(("name",)))
 
 
 def test_asymmetric_sign_rest_flattened():
@@ -20429,20 +19691,20 @@ def test_asymmetric_decrypt_rest_required_fields(
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).asymmetric_decrypt._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseAsymmetricDecrypt,
+        "_BaseAsymmetricDecrypt__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
     jsonified_request["ciphertext"] = b"ciphertext_blob"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).asymmetric_decrypt._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -20491,23 +19753,6 @@ def test_asymmetric_decrypt_rest_required_fields(
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_asymmetric_decrypt_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.asymmetric_decrypt._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "name",
-                "ciphertext",
-            )
-        )
-    )
 
 
 def test_asymmetric_decrypt_rest_flattened():
@@ -20622,20 +19867,20 @@ def test_mac_sign_rest_required_fields(request_type=service.MacSignRequest):
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).mac_sign._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseMacSign,
+        "_BaseMacSign__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
     jsonified_request["data"] = b"data_blob"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).mac_sign._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -20684,23 +19929,6 @@ def test_mac_sign_rest_required_fields(request_type=service.MacSignRequest):
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_mac_sign_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.mac_sign._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "name",
-                "data",
-            )
-        )
-    )
 
 
 def test_mac_sign_rest_flattened():
@@ -20816,9 +20044,14 @@ def test_mac_verify_rest_required_fields(request_type=service.MacVerifyRequest):
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).mac_verify._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseMacVerify,
+        "_BaseMacVerify__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
@@ -20826,11 +20059,6 @@ def test_mac_verify_rest_required_fields(request_type=service.MacVerifyRequest):
     jsonified_request["name"] = "name_value"
     jsonified_request["data"] = b"data_blob"
     jsonified_request["mac"] = b"mac_blob"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).mac_verify._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -20881,24 +20109,6 @@ def test_mac_verify_rest_required_fields(request_type=service.MacVerifyRequest):
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_mac_verify_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.mac_verify._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "name",
-                "data",
-                "mac",
-            )
-        )
-    )
 
 
 def test_mac_verify_rest_flattened():
@@ -21015,20 +20225,20 @@ def test_decapsulate_rest_required_fields(request_type=service.DecapsulateReques
 
     # verify fields with default values are dropped
 
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).decapsulate._get_unset_required_fields(jsonified_request)
+    default_values = getattr(
+        transport_class._BaseDecapsulate,
+        "_BaseDecapsulate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
 
     jsonified_request["name"] = "name_value"
     jsonified_request["ciphertext"] = b"ciphertext_blob"
-
-    unset_fields = transport_class(
-        credentials=ga_credentials.AnonymousCredentials()
-    ).decapsulate._get_unset_required_fields(jsonified_request)
-    jsonified_request.update(unset_fields)
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -21077,23 +20287,6 @@ def test_decapsulate_rest_required_fields(request_type=service.DecapsulateReques
             expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
-
-
-def test_decapsulate_rest_unset_required_fields():
-    transport = transports.KeyManagementServiceRestTransport(
-        credentials=ga_credentials.AnonymousCredentials
-    )
-
-    unset_fields = transport.decapsulate._get_unset_required_fields({})
-    assert set(unset_fields) == (
-        set(())
-        & set(
-            (
-                "name",
-                "ciphertext",
-            )
-        )
-    )
 
 
 def test_generate_random_bytes_rest_use_cached_wrapped_rpc():
@@ -24948,6 +24141,7 @@ def test_create_crypto_key_rest_call_success(request_type):
             "external_protection_level_options": {
                 "external_key_uri": "external_key_uri_value",
                 "ekm_connection_key_path": "ekm_connection_key_path_value",
+                "ekm_connection_backend_override": "ekm_connection_backend_override_value",
             },
             "reimport_eligible": True,
             "trusted_wrapping_enabled": True,
@@ -25202,6 +24396,7 @@ def test_create_crypto_key_version_rest_call_success(request_type):
         "external_protection_level_options": {
             "external_key_uri": "external_key_uri_value",
             "ekm_connection_key_path": "ekm_connection_key_path_value",
+            "ekm_connection_backend_override": "ekm_connection_backend_override_value",
         },
         "reimport_eligible": True,
         "trusted_wrapping_enabled": True,
@@ -26455,6 +25650,7 @@ def test_update_crypto_key_rest_call_success(request_type):
             "external_protection_level_options": {
                 "external_key_uri": "external_key_uri_value",
                 "ekm_connection_key_path": "ekm_connection_key_path_value",
+                "ekm_connection_backend_override": "ekm_connection_backend_override_value",
             },
             "reimport_eligible": True,
             "trusted_wrapping_enabled": True,
@@ -26713,6 +25909,7 @@ def test_update_crypto_key_version_rest_call_success(request_type):
         "external_protection_level_options": {
             "external_key_uri": "external_key_uri_value",
             "ekm_connection_key_path": "ekm_connection_key_path_value",
+            "ekm_connection_backend_override": "ekm_connection_backend_override_value",
         },
         "reimport_eligible": True,
         "trusted_wrapping_enabled": True,
@@ -30567,11 +29764,39 @@ def test_parse_crypto_key_version_path():
     assert expected == actual
 
 
-def test_import_job_path():
+def test_ekm_connection_path():
     project = "cuttlefish"
     location = "mussel"
-    key_ring = "winkle"
-    import_job = "nautilus"
+    ekm_connection = "winkle"
+    expected = "projects/{project}/locations/{location}/ekmConnections/{ekm_connection}".format(
+        project=project,
+        location=location,
+        ekm_connection=ekm_connection,
+    )
+    actual = KeyManagementServiceClient.ekm_connection_path(
+        project, location, ekm_connection
+    )
+    assert expected == actual
+
+
+def test_parse_ekm_connection_path():
+    expected = {
+        "project": "nautilus",
+        "location": "scallop",
+        "ekm_connection": "abalone",
+    }
+    path = KeyManagementServiceClient.ekm_connection_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = KeyManagementServiceClient.parse_ekm_connection_path(path)
+    assert expected == actual
+
+
+def test_import_job_path():
+    project = "squid"
+    location = "clam"
+    key_ring = "whelk"
+    import_job = "octopus"
     expected = "projects/{project}/locations/{location}/keyRings/{key_ring}/importJobs/{import_job}".format(
         project=project,
         location=location,
@@ -30586,10 +29811,10 @@ def test_import_job_path():
 
 def test_parse_import_job_path():
     expected = {
-        "project": "scallop",
-        "location": "abalone",
-        "key_ring": "squid",
-        "import_job": "clam",
+        "project": "oyster",
+        "location": "nudibranch",
+        "key_ring": "cuttlefish",
+        "import_job": "mussel",
     }
     path = KeyManagementServiceClient.import_job_path(**expected)
 
@@ -30599,9 +29824,9 @@ def test_parse_import_job_path():
 
 
 def test_key_ring_path():
-    project = "whelk"
-    location = "octopus"
-    key_ring = "oyster"
+    project = "winkle"
+    location = "nautilus"
+    key_ring = "scallop"
     expected = "projects/{project}/locations/{location}/keyRings/{key_ring}".format(
         project=project,
         location=location,
@@ -30613,9 +29838,9 @@ def test_key_ring_path():
 
 def test_parse_key_ring_path():
     expected = {
-        "project": "nudibranch",
-        "location": "cuttlefish",
-        "key_ring": "mussel",
+        "project": "abalone",
+        "location": "squid",
+        "key_ring": "clam",
     }
     path = KeyManagementServiceClient.key_ring_path(**expected)
 
@@ -30625,11 +29850,11 @@ def test_parse_key_ring_path():
 
 
 def test_public_key_path():
-    project = "winkle"
-    location = "nautilus"
-    key_ring = "scallop"
-    crypto_key = "abalone"
-    crypto_key_version = "squid"
+    project = "whelk"
+    location = "octopus"
+    key_ring = "oyster"
+    crypto_key = "nudibranch"
+    crypto_key_version = "cuttlefish"
     expected = "projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}/cryptoKeyVersions/{crypto_key_version}/publicKey".format(
         project=project,
         location=location,
@@ -30645,11 +29870,11 @@ def test_public_key_path():
 
 def test_parse_public_key_path():
     expected = {
-        "project": "clam",
-        "location": "whelk",
-        "key_ring": "octopus",
-        "crypto_key": "oyster",
-        "crypto_key_version": "nudibranch",
+        "project": "mussel",
+        "location": "winkle",
+        "key_ring": "nautilus",
+        "crypto_key": "scallop",
+        "crypto_key_version": "abalone",
     }
     path = KeyManagementServiceClient.public_key_path(**expected)
 
@@ -30659,9 +29884,9 @@ def test_parse_public_key_path():
 
 
 def test_retired_resource_path():
-    project = "cuttlefish"
-    location = "mussel"
-    retired_resource = "winkle"
+    project = "squid"
+    location = "clam"
+    retired_resource = "whelk"
     expected = "projects/{project}/locations/{location}/retiredResources/{retired_resource}".format(
         project=project,
         location=location,
@@ -30675,9 +29900,9 @@ def test_retired_resource_path():
 
 def test_parse_retired_resource_path():
     expected = {
-        "project": "nautilus",
-        "location": "scallop",
-        "retired_resource": "abalone",
+        "project": "octopus",
+        "location": "oyster",
+        "retired_resource": "nudibranch",
     }
     path = KeyManagementServiceClient.retired_resource_path(**expected)
 
@@ -30687,7 +29912,7 @@ def test_parse_retired_resource_path():
 
 
 def test_common_billing_account_path():
-    billing_account = "squid"
+    billing_account = "cuttlefish"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -30697,7 +29922,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "clam",
+        "billing_account": "mussel",
     }
     path = KeyManagementServiceClient.common_billing_account_path(**expected)
 
@@ -30707,7 +29932,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "whelk"
+    folder = "winkle"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -30717,7 +29942,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "octopus",
+        "folder": "nautilus",
     }
     path = KeyManagementServiceClient.common_folder_path(**expected)
 
@@ -30727,7 +29952,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "oyster"
+    organization = "scallop"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -30737,7 +29962,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "nudibranch",
+        "organization": "abalone",
     }
     path = KeyManagementServiceClient.common_organization_path(**expected)
 
@@ -30747,7 +29972,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "cuttlefish"
+    project = "squid"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -30757,7 +29982,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "mussel",
+        "project": "clam",
     }
     path = KeyManagementServiceClient.common_project_path(**expected)
 
@@ -30767,8 +29992,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "winkle"
-    location = "nautilus"
+    project = "whelk"
+    location = "octopus"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -30779,8 +30004,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "scallop",
-        "location": "abalone",
+        "project": "oyster",
+        "location": "nudibranch",
     }
     path = KeyManagementServiceClient.common_location_path(**expected)
 

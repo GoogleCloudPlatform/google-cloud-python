@@ -14,7 +14,8 @@
 
 from sqlalchemy import types
 from sqlalchemy.testing import eq_, fixtures
-from google.cloud.sqlalchemy_spanner.sqlalchemy_spanner import _type_map, SpannerDialect
+
+from google.cloud.sqlalchemy_spanner.sqlalchemy_spanner import SpannerDialect, _type_map
 
 
 class TokenlistTest(fixtures.TestBase):

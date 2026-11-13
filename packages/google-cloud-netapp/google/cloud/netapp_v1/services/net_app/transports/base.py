@@ -266,6 +266,16 @@ class NetAppTransport(abc.ABC):
                 default_timeout=60.0,
                 client_info=client_info,
             ),
+            self.start_split: gapic_v1.method.wrap_method(
+                self.start_split,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_split_status: gapic_v1.method.wrap_method(
+                self.get_split_status,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.establish_volume_peering: gapic_v1.method.wrap_method(
                 self.establish_volume_peering,
                 default_timeout=None,
@@ -682,6 +692,21 @@ class NetAppTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.restore_volume: gapic_v1.method.wrap_method(
+                self.restore_volume,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_backup_configs: gapic_v1.method.wrap_method(
+                self.list_backup_configs,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_backup_config: gapic_v1.method.wrap_method(
+                self.update_backup_config,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.get_location: gapic_v1.method.wrap_method(
                 self.get_location,
                 default_timeout=None,
@@ -844,6 +869,24 @@ class NetAppTransport(abc.ABC):
     ) -> Callable[
         [volume.RevertVolumeRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def start_split(
+        self,
+    ) -> Callable[
+        [volume.StartSplitRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_split_status(
+        self,
+    ) -> Callable[
+        [volume.GetSplitStatusRequest],
+        Union[volume.SplitStatus, Awaitable[volume.SplitStatus]],
     ]:
         raise NotImplementedError()
 
@@ -1394,6 +1437,36 @@ class NetAppTransport(abc.ABC):
         Union[
             ontap.ExecuteOntapPatchResponse, Awaitable[ontap.ExecuteOntapPatchResponse]
         ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def restore_volume(
+        self,
+    ) -> Callable[
+        [volume.RestoreVolumeRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_backup_configs(
+        self,
+    ) -> Callable[
+        [volume.ListBackupConfigsRequest],
+        Union[
+            volume.ListBackupConfigsResponse,
+            Awaitable[volume.ListBackupConfigsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_backup_config(
+        self,
+    ) -> Callable[
+        [volume.UpdateBackupConfigRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()
 

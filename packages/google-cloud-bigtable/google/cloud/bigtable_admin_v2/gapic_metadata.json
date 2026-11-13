@@ -90,6 +90,11 @@
                 "get_materialized_view"
               ]
             },
+            "GetMemoryLayer": {
+              "methods": [
+                "get_memory_layer"
+              ]
+            },
             "ListAppProfiles": {
               "methods": [
                 "list_app_profiles"
@@ -118,6 +123,11 @@
             "ListMaterializedViews": {
               "methods": [
                 "list_materialized_views"
+              ]
+            },
+            "ListMemoryLayers": {
+              "methods": [
+                "list_memory_layers"
               ]
             },
             "PartialUpdateCluster": {
@@ -163,6 +173,11 @@
             "UpdateMaterializedView": {
               "methods": [
                 "update_materialized_view"
+              ]
+            },
+            "UpdateMemoryLayer": {
+              "methods": [
+                "update_memory_layer"
               ]
             }
           }
@@ -250,6 +265,11 @@
                 "get_materialized_view"
               ]
             },
+            "GetMemoryLayer": {
+              "methods": [
+                "get_memory_layer"
+              ]
+            },
             "ListAppProfiles": {
               "methods": [
                 "list_app_profiles"
@@ -278,6 +298,11 @@
             "ListMaterializedViews": {
               "methods": [
                 "list_materialized_views"
+              ]
+            },
+            "ListMemoryLayers": {
+              "methods": [
+                "list_memory_layers"
               ]
             },
             "PartialUpdateCluster": {
@@ -323,6 +348,11 @@
             "UpdateMaterializedView": {
               "methods": [
                 "update_materialized_view"
+              ]
+            },
+            "UpdateMemoryLayer": {
+              "methods": [
+                "update_memory_layer"
               ]
             }
           }
@@ -410,6 +440,11 @@
                 "get_materialized_view"
               ]
             },
+            "GetMemoryLayer": {
+              "methods": [
+                "get_memory_layer"
+              ]
+            },
             "ListAppProfiles": {
               "methods": [
                 "list_app_profiles"
@@ -438,6 +473,11 @@
             "ListMaterializedViews": {
               "methods": [
                 "list_materialized_views"
+              ]
+            },
+            "ListMemoryLayers": {
+              "methods": [
+                "list_memory_layers"
               ]
             },
             "PartialUpdateCluster": {
@@ -483,6 +523,11 @@
             "UpdateMaterializedView": {
               "methods": [
                 "update_materialized_view"
+              ]
+            },
+            "UpdateMemoryLayer": {
+              "methods": [
+                "update_memory_layer"
               ]
             }
           }

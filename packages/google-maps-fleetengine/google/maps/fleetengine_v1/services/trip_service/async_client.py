@@ -359,7 +359,7 @@ class TripServiceAsyncClient:
             self._client._transport.create_trip
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.parent)
@@ -446,7 +446,7 @@ class TripServiceAsyncClient:
         # and friendly error handling.
         rpc = self._client._transport._wrapped_methods[self._client._transport.get_trip]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)
@@ -559,7 +559,7 @@ class TripServiceAsyncClient:
             self._client._transport.delete_trip
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)
@@ -639,7 +639,7 @@ class TripServiceAsyncClient:
             self._client._transport.report_billable_trip
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)
@@ -731,7 +731,7 @@ class TripServiceAsyncClient:
             self._client._transport.search_trips
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.parent)
@@ -831,7 +831,7 @@ class TripServiceAsyncClient:
             self._client._transport.update_trip
         ]
 
-        header_params = {}
+        header_params: dict[str, str] = {}
 
         routing_param_regex = re.compile("^(?P<provider_id>providers/[^/]+)$")
         regex_match = routing_param_regex.match(request.name)

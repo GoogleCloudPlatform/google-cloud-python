@@ -145,6 +145,44 @@ class AuditManagerTransport(abc.ABC):
     def _prep_wrapped_messages(self, client_info):
         # Precompute the wrapped methods.
         self._wrapped_methods = {
+            self.create_audit_schedule: gapic_v1.method.wrap_method(
+                self.create_audit_schedule,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.update_audit_schedule: gapic_v1.method.wrap_method(
+                self.update_audit_schedule,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_audit_schedule: gapic_v1.method.wrap_method(
+                self.get_audit_schedule,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_audit_schedules: gapic_v1.method.wrap_method(
+                self.list_audit_schedules,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
             self.enroll_resource: gapic_v1.method.wrap_method(
                 self.enroll_resource,
                 default_timeout=60.0,
@@ -274,6 +312,45 @@ class AuditManagerTransport(abc.ABC):
     @property
     def operations_client(self):
         """Return the client designed to process long-running operations."""
+        raise NotImplementedError()
+
+    @property
+    def create_audit_schedule(
+        self,
+    ) -> Callable[
+        [auditmanager.CreateAuditScheduleRequest],
+        Union[auditmanager.AuditSchedule, Awaitable[auditmanager.AuditSchedule]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_audit_schedule(
+        self,
+    ) -> Callable[
+        [auditmanager.UpdateAuditScheduleRequest],
+        Union[auditmanager.AuditSchedule, Awaitable[auditmanager.AuditSchedule]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_audit_schedule(
+        self,
+    ) -> Callable[
+        [auditmanager.GetAuditScheduleRequest],
+        Union[auditmanager.AuditSchedule, Awaitable[auditmanager.AuditSchedule]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_audit_schedules(
+        self,
+    ) -> Callable[
+        [auditmanager.ListAuditSchedulesRequest],
+        Union[
+            auditmanager.ListAuditSchedulesResponse,
+            Awaitable[auditmanager.ListAuditSchedulesResponse],
+        ],
+    ]:
         raise NotImplementedError()
 
     @property

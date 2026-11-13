@@ -14,15 +14,18 @@
 # limitations under the License.
 #
 """Google Cloud Storage utilities."""
+
 import os
 import re
 from typing import Dict, List, Optional, Tuple
 
 from google.api_core.gapic_v1 import client_info
 
-from google.cloud import documentai  # type: ignore[attr-defined]
-from google.cloud import documentai_toolbox
-from google.cloud import storage  # type: ignore[attr-defined]
+from google.cloud import (  # type: ignore[attr-defined]
+    documentai,
+    documentai_toolbox,
+    storage,
+)
 from google.cloud.documentai_toolbox import constants
 
 

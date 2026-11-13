@@ -20,7 +20,7 @@ from typing import MutableMapping, MutableSequence
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import proto  # type: ignore
 
-from google.ads.admanager_v1.types import child_publisher_messages
+from google.ads.admanager_v1.types import child_publisher_messages, mcm_enums
 
 __protobuf__ = proto.module(
     package="google.ads.admanager.v1",
@@ -34,12 +34,21 @@ __protobuf__ = proto.module(
         "UpdateChildPublisherRequest",
         "BatchUpdateChildPublishersRequest",
         "BatchUpdateChildPublishersResponse",
+        "RenegotiateChildPublisherAgreementRequest",
+        "BatchRenegotiateChildPublisherAgreementsRequest",
+        "BatchRenegotiateChildPublisherAgreementsResponse",
+        "BatchResendChildPublisherInvitationEmailsRequest",
+        "BatchResendChildPublisherInvitationEmailsResponse",
+        "BatchWithdrawChildPublishersRequest",
+        "BatchWithdrawChildPublishersResponse",
+        "BatchRejectChildPublishersRequest",
+        "BatchRejectChildPublishersResponse",
     },
 )
 
 
 class GetChildPublisherRequest(proto.Message):
-    r"""Request object for [GetChildPublisher][] method.
+    r"""Request object for ``GetChildPublisher`` method.
 
     Attributes:
         name (str):
@@ -56,33 +65,43 @@ class GetChildPublisherRequest(proto.Message):
 
 
 class ListChildPublishersRequest(proto.Message):
-    r"""Request object for [ListChildPublishers][] method.
+    r"""Request object for ``ListChildPublishers`` method.
 
     Attributes:
         parent (str):
             Required. The parent, which owns this collection of
-            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s.
+            [ChildPublishers][google.ads.admanager.v1.ChildPublisher].
             Format: ``networks/{network_code}``
         page_size (int):
             Optional. The maximum number of
-            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s to
+            [ChildPublishers][google.ads.admanager.v1.ChildPublisher] to
             return. The service may return fewer than this value. If
             unspecified, at most 50
-            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s
+            [ChildPublishers][google.ads.admanager.v1.ChildPublisher]
             will be returned. The maximum value is 1000; values greater
             than 1000 will be coerced to 1000.
         page_token (str):
             Optional. A page token, received from a previous
-            [ListChildPublishers][] call. Provide this to retrieve the
+            ``ListChildPublishers`` call. Provide this to retrieve the
             subsequent page.
 
             When paginating, all other parameters provided to
-            [ListChildPublishers][] must match the call that provided
+            ``ListChildPublishers`` must match the call that provided
             the page token.
         filter (str):
             Optional. Expression to filter the response. See syntax
             details at
             https://developers.google.com/ad-manager/api/beta/filters
+
+            Syntax summary: double-quoted ``"..."`` (never ``'...'``)
+            strings and RFC 3339 timestamps, full resource names on
+            reference fields (for example,
+            ``order = "networks/123/orders/456"``, not ``*Id`` or bare
+            IDs), prefix or suffix ``*`` wildcards with ``=``
+            (``displayName = "foo*"``), ``:`` for substring or
+            repeated-field matching, unquoted enums and booleans,
+            uppercase ``AND``/``OR``/``NOT``, and standalone
+            ``IN(field, SET(v1, v2))`` (not ``field IN (...)``).
 
             **Filterable fields:**
 
@@ -137,7 +156,7 @@ class ListChildPublishersRequest(proto.Message):
 
 
 class ListChildPublishersResponse(proto.Message):
-    r"""Response object for [ListChildPublishers][] containing matching
+    r"""Response object for ``ListChildPublishers`` containing matching
     [ChildPublisher][google.ads.admanager.v1.ChildPublisher] objects.
 
     Attributes:
@@ -186,7 +205,7 @@ class ListChildPublishersResponse(proto.Message):
 
 
 class CreateChildPublisherRequest(proto.Message):
-    r"""Request object for [CreateChildPublisher][] method.
+    r"""Request object for ``CreateChildPublisher`` method.
 
     Attributes:
         parent (str):
@@ -211,12 +230,12 @@ class CreateChildPublisherRequest(proto.Message):
 
 
 class BatchCreateChildPublishersRequest(proto.Message):
-    r"""Request object for [BatchCreateChildPublishers][] method.
+    r"""Request object for ``BatchCreateChildPublishers`` method.
 
     Attributes:
         parent (str):
             Required. The parent resource where
-            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s
+            [ChildPublishers][google.ads.admanager.v1.ChildPublisher]
             will be created. Format: ``networks/{network_code}`` The
             parent field in the CreateChildPublisherRequest must match
             this field.
@@ -239,7 +258,7 @@ class BatchCreateChildPublishersRequest(proto.Message):
 
 
 class BatchCreateChildPublishersResponse(proto.Message):
-    r"""Response object for [BatchCreateChildPublishers][] method.
+    r"""Response object for ``BatchCreateChildPublishers`` method.
 
     Attributes:
         child_publishers (MutableSequence[google.ads.admanager_v1.types.ChildPublisher]):
@@ -257,7 +276,7 @@ class BatchCreateChildPublishersResponse(proto.Message):
 
 
 class UpdateChildPublisherRequest(proto.Message):
-    r"""Request object for [UpdateChildPublisher][] method.
+    r"""Request object for ``UpdateChildPublisher`` method.
 
     Attributes:
         child_publisher (google.ads.admanager_v1.types.ChildPublisher):
@@ -287,12 +306,12 @@ class UpdateChildPublisherRequest(proto.Message):
 
 
 class BatchUpdateChildPublishersRequest(proto.Message):
-    r"""Request object for [BatchUpdateChildPublishers][] method.
+    r"""Request object for ``BatchUpdateChildPublishers`` method.
 
     Attributes:
         parent (str):
             Required. The parent resource where
-            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s
+            [ChildPublishers][google.ads.admanager.v1.ChildPublisher]
             will be updated. Format: ``networks/{network_code}`` The
             parent field in the UpdateChildPublisherRequest must match
             this field.
@@ -315,7 +334,7 @@ class BatchUpdateChildPublishersRequest(proto.Message):
 
 
 class BatchUpdateChildPublishersResponse(proto.Message):
-    r"""Response object for [BatchUpdateChildPublishers][] method.
+    r"""Response object for ``BatchUpdateChildPublishers`` method.
 
     Attributes:
         child_publishers (MutableSequence[google.ads.admanager_v1.types.ChildPublisher]):
@@ -330,6 +349,209 @@ class BatchUpdateChildPublishersResponse(proto.Message):
             message=child_publisher_messages.ChildPublisher,
         )
     )
+
+
+class RenegotiateChildPublisherAgreementRequest(proto.Message):
+    r"""Request message to renegotiate a
+    [ChildPublisher][google.ads.admanager.v1.ChildPublisher]'s agreement
+    (i.e., invite with updated terms).
+
+    Attributes:
+        name (str):
+            Required. Resource name of the
+            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
+            whose agreement is being renegotiated. Format:
+            ``networks/{network_code}/childPublisher/{child_publisher_id}``
+        display_name (str):
+            Optional. The display name to set for the
+            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
+            whose agreement is being renegotiated.
+        email_address (str):
+            Optional. The email address to set for the
+            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
+            whose agreement is being renegotiated.
+        network (str):
+            Optional. The resource name of the Ad Manager network to set
+            for the
+            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
+            whose agreement is being renegotiated.
+
+            This field may not update the
+            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]'s
+            Ad Manager network if it is already associated with one.
+
+            Format: ``networks/{network_code}``
+        delegation_type (google.ads.admanager_v1.types.DelegationTypeEnum.DelegationType):
+            Optional. The type of delegation to set for the
+            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
+            whose agreement is being renegotiated.
+        parent_revenue_share_millipercent (int):
+            Optional. The revenue share to set that the parent publisher
+            will receive in millipercent (e.g., 15000 millipercent is
+            %15) for the
+            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
+            whose agreement is being renegotiated.
+
+            This field is only settable for Manage Account
+            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s of
+            non-reseller parent publishers. Otherwise, it is ignored and
+            always 100%.
+        seller_id (str):
+            Optional. The seller ID to set for the
+            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
+            whose agreement is being renegotiated.
+
+            This field is only applicable to Manage Inventory
+            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    display_name: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    email_address: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    network: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    delegation_type: mcm_enums.DelegationTypeEnum.DelegationType = proto.Field(
+        proto.ENUM,
+        number=5,
+        enum=mcm_enums.DelegationTypeEnum.DelegationType,
+    )
+    parent_revenue_share_millipercent: int = proto.Field(
+        proto.INT64,
+        number=6,
+    )
+    seller_id: str = proto.Field(
+        proto.STRING,
+        number=7,
+    )
+
+
+class BatchRenegotiateChildPublisherAgreementsRequest(proto.Message):
+    r"""Request message for ``BatchRenegotiateChildPublisherAgreements``
+    method.
+
+    Attributes:
+        parent (str):
+            Required. Format: ``networks/{network_code}``
+        requests (MutableSequence[google.ads.admanager_v1.types.RenegotiateChildPublisherAgreementRequest]):
+            Required. The requests to renegotiate
+            [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
+            agreements.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    requests: MutableSequence["RenegotiateChildPublisherAgreementRequest"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=2,
+            message="RenegotiateChildPublisherAgreementRequest",
+        )
+    )
+
+
+class BatchRenegotiateChildPublisherAgreementsResponse(proto.Message):
+    r"""Response message for ``BatchRenegotiateChildPublisherAgreements``
+    method.
+
+    """
+
+
+class BatchResendChildPublisherInvitationEmailsRequest(proto.Message):
+    r"""Request message for ``BatchResendChildPublisherInvitationEmails``
+    method.
+
+    Attributes:
+        parent (str):
+            Required. Format: ``networks/{network_code}``
+        names (MutableSequence[str]):
+            Required. Resource names of the
+            [ChildPublishers][google.ads.admanager.v1.ChildPublisher]
+            that should be resent invitation emails. Format:
+            ``networks/{network_code}/childPublisher/{child_publisher_id}``
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    names: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
+
+
+class BatchResendChildPublisherInvitationEmailsResponse(proto.Message):
+    r"""Response message for ``BatchResendChildPublisherInvitationEmails``
+    method.
+
+    """
+
+
+class BatchWithdrawChildPublishersRequest(proto.Message):
+    r"""Request message for ``BatchWithdrawChildPublishers`` method.
+
+    Attributes:
+        parent (str):
+            Required. Format: ``networks/{network_code}``
+        names (MutableSequence[str]):
+            Required. Resource names of the
+            [ChildPublishers][google.ads.admanager.v1.ChildPublisher] to
+            withdraw. Format:
+            ``networks/{network_code}/childPublisher/{child_publisher_id}``
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    names: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
+
+
+class BatchWithdrawChildPublishersResponse(proto.Message):
+    r"""Response message for ``BatchWithdrawChildPublishers`` method."""
+
+
+class BatchRejectChildPublishersRequest(proto.Message):
+    r"""Request message for ``BatchRejectChildPublishers`` method.
+
+    Attributes:
+        parent (str):
+            Required. Format: ``networks/{network_code}``
+        names (MutableSequence[str]):
+            Required. Resource names of the
+            [ChildPublishers][google.ads.admanager.v1.ChildPublisher] to
+            reject. Format:
+            ``networks/{network_code}/childPublisher/{child_publisher_id}``
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    names: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
+
+
+class BatchRejectChildPublishersResponse(proto.Message):
+    r"""Response message for ``BatchRejectChildPublishers`` method."""
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

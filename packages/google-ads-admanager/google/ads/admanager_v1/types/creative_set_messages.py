@@ -47,7 +47,7 @@ class CreativeSet(proto.Message):
             This field is a member of `oneof`_ ``_display_name``.
         master_creative (str):
             Required. Immutable. The master
-            `Creative <google.ads.admanager.v1.Creative>`__ to which the
+            [Creative][google.ads.admanager.v1.Creative] to which the
             ``CreativeSet`` is associated.
 
             This field is a member of `oneof`_ ``_master_creative``.

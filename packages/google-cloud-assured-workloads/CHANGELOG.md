@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-assured-workloads/#history
 
+## [2.5.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-assured-workloads-v2.4.0...google-cloud-assured-workloads-v2.5.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [2.4.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-assured-workloads-v2.3.0...google-cloud-assured-workloads-v2.4.0) (2026-06-02)
 
 

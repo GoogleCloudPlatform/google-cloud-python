@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.compute_v1beta._compat import transcode_request
 from google.cloud.compute_v1beta.types import compute
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1344,25 +1345,18 @@ class DisksRestTransport(_BaseDisksRestTransport):
             http_options = (
                 _BaseDisksRestTransport._BaseAddResourcePolicies._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_add_resource_policies(
                 request, metadata
             )
-            transcoded_request = _BaseDisksRestTransport._BaseAddResourcePolicies._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseDisksRestTransport._BaseAddResourcePolicies._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDisksRestTransport._BaseAddResourcePolicies._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseAddResourcePolicies,
+                    "_BaseAddResourcePolicies__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1499,19 +1493,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             http_options = (
                 _BaseDisksRestTransport._BaseAggregatedList._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_aggregated_list(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseAggregatedList._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDisksRestTransport._BaseAggregatedList._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseAggregatedList,
+                    "_BaseAggregatedList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1674,23 +1665,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             """
 
             http_options = _BaseDisksRestTransport._BaseBulkInsert._get_http_options()
-
             request, metadata = self._interceptor.pre_bulk_insert(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseBulkInsert._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDisksRestTransport._BaseBulkInsert._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDisksRestTransport._BaseBulkInsert._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseBulkInsert,
+                    "_BaseBulkInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1856,23 +1840,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             http_options = (
                 _BaseDisksRestTransport._BaseBulkSetLabels._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_bulk_set_labels(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseBulkSetLabels._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDisksRestTransport._BaseBulkSetLabels._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDisksRestTransport._BaseBulkSetLabels._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseBulkSetLabels,
+                    "_BaseBulkSetLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2038,23 +2015,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             http_options = (
                 _BaseDisksRestTransport._BaseCreateSnapshot._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_snapshot(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseCreateSnapshot._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDisksRestTransport._BaseCreateSnapshot._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDisksRestTransport._BaseCreateSnapshot._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseCreateSnapshot,
+                    "_BaseCreateSnapshot__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2216,17 +2186,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             """
 
             http_options = _BaseDisksRestTransport._BaseDelete._get_http_options()
-
             request, metadata = self._interceptor.pre_delete(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseDelete._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDisksRestTransport._BaseDelete._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseDelete,
+                    "_BaseDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2377,17 +2346,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             """
 
             http_options = _BaseDisksRestTransport._BaseGet._get_http_options()
-
             request, metadata = self._interceptor.pre_get(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseGet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDisksRestTransport._BaseGet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseGet,
+                    "_BaseGet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2593,19 +2561,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             """
 
             http_options = _BaseDisksRestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDisksRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2767,21 +2732,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             """
 
             http_options = _BaseDisksRestTransport._BaseInsert._get_http_options()
-
             request, metadata = self._interceptor.pre_insert(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseInsert._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDisksRestTransport._BaseInsert._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDisksRestTransport._BaseInsert._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseInsert,
+                    "_BaseInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2915,17 +2875,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             """
 
             http_options = _BaseDisksRestTransport._BaseList._get_http_options()
-
             request, metadata = self._interceptor.pre_list(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseList._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDisksRestTransport._BaseList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseList,
+                    "_BaseList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3090,21 +3049,18 @@ class DisksRestTransport(_BaseDisksRestTransport):
             http_options = (
                 _BaseDisksRestTransport._BaseRemoveResourcePolicies._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_remove_resource_policies(
                 request, metadata
             )
-            transcoded_request = _BaseDisksRestTransport._BaseRemoveResourcePolicies._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDisksRestTransport._BaseRemoveResourcePolicies._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDisksRestTransport._BaseRemoveResourcePolicies._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseRemoveResourcePolicies,
+                    "_BaseRemoveResourcePolicies__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3267,21 +3223,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             """
 
             http_options = _BaseDisksRestTransport._BaseResize._get_http_options()
-
             request, metadata = self._interceptor.pre_resize(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseResize._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDisksRestTransport._BaseResize._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDisksRestTransport._BaseResize._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseResize,
+                    "_BaseResize__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3491,23 +3442,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             """
 
             http_options = _BaseDisksRestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDisksRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDisksRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3671,23 +3615,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             """
 
             http_options = _BaseDisksRestTransport._BaseSetLabels._get_http_options()
-
             request, metadata = self._interceptor.pre_set_labels(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseSetLabels._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDisksRestTransport._BaseSetLabels._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDisksRestTransport._BaseSetLabels._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseSetLabels,
+                    "_BaseSetLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3855,21 +3792,18 @@ class DisksRestTransport(_BaseDisksRestTransport):
             http_options = (
                 _BaseDisksRestTransport._BaseStartAsyncReplication._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_start_async_replication(
                 request, metadata
             )
-            transcoded_request = _BaseDisksRestTransport._BaseStartAsyncReplication._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDisksRestTransport._BaseStartAsyncReplication._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDisksRestTransport._BaseStartAsyncReplication._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseStartAsyncReplication,
+                    "_BaseStartAsyncReplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4036,17 +3970,18 @@ class DisksRestTransport(_BaseDisksRestTransport):
             http_options = (
                 _BaseDisksRestTransport._BaseStopAsyncReplication._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_stop_async_replication(
                 request, metadata
             )
-            transcoded_request = _BaseDisksRestTransport._BaseStopAsyncReplication._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDisksRestTransport._BaseStopAsyncReplication._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseStopAsyncReplication,
+                    "_BaseStopAsyncReplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4212,21 +4147,18 @@ class DisksRestTransport(_BaseDisksRestTransport):
             """
 
             http_options = _BaseDisksRestTransport._BaseStopGroupAsyncReplication._get_http_options()
-
             request, metadata = self._interceptor.pre_stop_group_async_replication(
                 request, metadata
             )
-            transcoded_request = _BaseDisksRestTransport._BaseStopGroupAsyncReplication._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDisksRestTransport._BaseStopGroupAsyncReplication._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDisksRestTransport._BaseStopGroupAsyncReplication._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseStopGroupAsyncReplication,
+                    "_BaseStopGroupAsyncReplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4366,27 +4298,18 @@ class DisksRestTransport(_BaseDisksRestTransport):
             http_options = (
                 _BaseDisksRestTransport._BaseTestIamPermissions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseDisksRestTransport._BaseTestIamPermissions._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDisksRestTransport._BaseTestIamPermissions._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4549,21 +4472,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             """
 
             http_options = _BaseDisksRestTransport._BaseUpdate._get_http_options()
-
             request, metadata = self._interceptor.pre_update(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseUpdate._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDisksRestTransport._BaseUpdate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDisksRestTransport._BaseUpdate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseUpdate,
+                    "_BaseUpdate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4727,23 +4645,16 @@ class DisksRestTransport(_BaseDisksRestTransport):
             """
 
             http_options = _BaseDisksRestTransport._BaseUpdateKmsKey._get_http_options()
-
             request, metadata = self._interceptor.pre_update_kms_key(request, metadata)
-            transcoded_request = (
-                _BaseDisksRestTransport._BaseUpdateKmsKey._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseDisksRestTransport._BaseUpdateKmsKey._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseDisksRestTransport._BaseUpdateKmsKey._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDisksRestTransport._BaseUpdateKmsKey,
+                    "_BaseUpdateKmsKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

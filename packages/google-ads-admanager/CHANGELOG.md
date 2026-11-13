@@ -4,6 +4,56 @@
 
 [1]: https://pypi.org/project/google-ads-admanager/#history
 
+## [0.10.8](https://github.com/googleapis/google-cloud-python/compare/google-ads-admanager-v0.10.7...google-ads-admanager-v0.10.8) (2026-11-12)
+
+
+### Features
+
+* update API sources and regenerate ([#19036](https://github.com/googleapis/google-cloud-python/issues/19036)) ([b64a9e5](https://github.com/googleapis/google-cloud-python/commit/b64a9e51a22810d4e3b4c44b13847eb96c604628))
+
+## [0.10.7](https://github.com/googleapis/google-cloud-python/compare/google-ads-admanager-v0.10.6...google-ads-admanager-v0.10.7) (2026-10-08)
+
+
+### Features
+
+* update API sources and regenerate ([#18593](https://github.com/googleapis/google-cloud-python/issues/18593)) ([d0505e8](https://github.com/googleapis/google-cloud-python/commit/d0505e8bc7615f2c649d3e25ebc7e3ccca45f22b))
+
+## [0.10.6](https://github.com/googleapis/google-cloud-python/compare/google-ads-admanager-v0.10.5...google-ads-admanager-v0.10.6) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [0.10.5](https://github.com/googleapis/google-cloud-python/compare/google-ads-admanager-v0.10.4...google-ads-admanager-v0.10.5) (2026-09-17)
+
+
+### Features
+
+* update API sources and regenerate ([#18396](https://github.com/googleapis/google-cloud-python/issues/18396)) ([e9f8e59](https://github.com/googleapis/google-cloud-python/commit/e9f8e590b7b395e660cc5437535166dfb920d246))
+* update API sources and regenerate. ([e9f8e59](https://github.com/googleapis/google-cloud-python/commit/e9f8e590b7b395e660cc5437535166dfb920d246))
+
+## [0.10.4](https://github.com/googleapis/google-cloud-python/compare/google-ads-admanager-v0.10.3...google-ads-admanager-v0.10.4) (2026-09-14)
+
+
+### Features
+
+* update API sources and regenerate ([#18324](https://github.com/googleapis/google-cloud-python/issues/18324)) ([0766fb6](https://github.com/googleapis/google-cloud-python/commit/0766fb69c28973d5d51cffc490f195c60e8eee10))
+
+## [0.10.3](https://github.com/googleapis/google-cloud-python/compare/google-ads-admanager-v0.10.2...google-ads-admanager-v0.10.3) (2026-09-03)
+
+
+### Features
+
+* update googleapis and regenerate ([#18229](https://github.com/googleapis/google-cloud-python/issues/18229)) ([d4f8a57](https://github.com/googleapis/google-cloud-python/commit/d4f8a57abadd282ad95472e77daa59d8fb98cbcf))
+
+## [0.10.2](https://github.com/googleapis/google-cloud-python/compare/google-ads-admanager-v0.10.1...google-ads-admanager-v0.10.2) (2026-08-21)
+
+
+### Features
+
+* update googleapis and regenerate ([#18087](https://github.com/googleapis/google-cloud-python/issues/18087)) ([db1622a](https://github.com/googleapis/google-cloud-python/commit/db1622a9cfac112b40c93842737d7a5deeb3e8bd))
+
 ## [0.10.1](https://github.com/googleapis/google-cloud-python/compare/google-ads-admanager-v0.10.0...google-ads-admanager-v0.10.1) (2026-08-06)
 
 

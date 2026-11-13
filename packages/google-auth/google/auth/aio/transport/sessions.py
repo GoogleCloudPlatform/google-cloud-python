@@ -13,18 +13,23 @@
 # limitations under the License.
 
 import asyncio
-from contextlib import asynccontextmanager
+import collections.abc
 import functools
+import http.client as http_client
+import inspect
+import logging
 import time
-from typing import Mapping, Optional, TYPE_CHECKING, Union
 import warnings
+from contextlib import asynccontextmanager
+from typing import TYPE_CHECKING, Mapping, Optional, Union
 
-from google.auth import _exponential_backoff, exceptions
+import google.auth.credentials
+import google.auth.transport._mtls_helper
+from google.auth import _exponential_backoff, _helpers, exceptions
 from google.auth.aio import transport
 from google.auth.aio.credentials import Credentials
 from google.auth.aio.transport import mtls
 from google.auth.exceptions import TimeoutError
-import google.auth.transport._mtls_helper
 
 if TYPE_CHECKING:  # pragma: NO COVER
     import aiohttp
@@ -37,6 +42,7 @@ else:
     except (ImportError, AttributeError):
         ClientTimeout = None
 
+_LOGGER = logging.getLogger(__name__)
 
 # Tracks the internal aiohttp installation and usage
 try:
@@ -66,6 +72,8 @@ async def timeout_guard(timeout):
     total_timeout = timeout
 
     def _remaining_time():
+        if total_timeout is None:
+            return None
         elapsed = time.monotonic() - start
         remaining = total_timeout - elapsed
         if remaining <= 0:
@@ -91,6 +99,106 @@ async def timeout_guard(timeout):
         _remaining_time()
 
 
+class _SyncCredentialsAdapter(Credentials):
+    """Adapts synchronous credentials to the asynchronous credentials interface.
+
+    :class:`AsyncAuthorizedSession` wraps :class:`google.auth.credentials.Credentials`
+    (e.g. application default credentials) with this adapter so that they can be
+    used with an asynchronous transport. Calls are delegated to the wrapped
+    credentials using a synchronous transport, and blocking calls such as
+    refreshing the access token run in a worker thread so that the event loop
+    is not blocked.
+
+    Args:
+        credentials (google.auth.credentials.Credentials): The synchronous
+            credentials to adapt.
+    """
+
+    def __init__(self, credentials: google.auth.credentials.Credentials):
+        self._credentials = credentials
+        # Synchronous credentials cannot use the asynchronous transport of the
+        # session, so they are called with a synchronous transport instead.
+        self._sync_request_instance = None
+        # Synchronous credentials are not safe to refresh concurrently, which
+        # concurrent requests would otherwise do from multiple worker threads.
+        # Instead, at most one refresh is in flight and concurrent callers share it.
+        self._pending_refresh: Optional["asyncio.Task[None]"] = None
+
+    @property
+    def _sync_request(self):
+        if self._sync_request_instance is None:
+            # Imported here because `requests` is an optional dependency of
+            # google-auth. It is installed alongside `aiohttp` by the `aiohttp` extra.
+            from google.auth.transport import requests as sync_requests
+
+            self._sync_request_instance = sync_requests.Request()
+        return self._sync_request_instance
+
+    def close(self):
+        if (
+            self._sync_request_instance is not None
+            and hasattr(self._sync_request_instance, "session")
+            and self._sync_request_instance.session is not None
+        ):
+            self._sync_request_instance.session.close()
+
+    @property
+    def token(self):
+        """Optional[str]: The bearer token that can be used in HTTP headers to make
+        authenticated requests."""
+        return self._credentials.token
+
+    @property
+    def expiry(self):
+        """Optional[datetime]: When the token expires and is no longer valid.
+        If this is None, the token is assumed to never expire."""
+        return self._credentials.expiry
+
+    @property
+    @_helpers.copy_docstring(google.auth.credentials.Credentials)
+    def valid(self):
+        return self._credentials.valid
+
+    @property
+    @_helpers.copy_docstring(google.auth.credentials.Credentials)
+    def expired(self):
+        return self._credentials.expired
+
+    async def _refresh_shared(self):
+        """Refreshes the wrapped credentials, joining a refresh already in flight.
+
+        The refresh is shielded from cancellation: a caller that is cancelled
+        while waiting (e.g. because of a timeout) stops waiting, but the refresh
+        completes so that the next caller joins it rather than starting a
+        second, concurrent refresh.
+        """
+        if self._pending_refresh is None or self._pending_refresh.done():
+            self._pending_refresh = asyncio.create_task(
+                asyncio.to_thread(self._credentials.refresh, self._sync_request)
+            )
+        await asyncio.shield(self._pending_refresh)
+
+    @_helpers.copy_docstring(Credentials)
+    async def apply(self, headers, token=None):
+        self._credentials.apply(headers, token=token)
+
+    @_helpers.copy_docstring(Credentials)
+    async def refresh(self, request):
+        await self._refresh_shared()
+
+    @_helpers.copy_docstring(Credentials)
+    async def before_request(self, request, method, url, headers):
+        if not self._credentials.valid:
+            await self._refresh_shared()
+        await asyncio.to_thread(
+            self._credentials.before_request,
+            self._sync_request,
+            method,
+            url,
+            headers,
+        )
+
+
 class AsyncAuthorizedSession:
     """This is an asynchronous implementation of :class:`google.auth.requests.AuthorizedSession` class.
     We utilize an instance of a class that implements :class:`google.auth.aio.transport.Request` configured
@@ -113,8 +221,9 @@ class AsyncAuthorizedSession:
     credentials' headers to the request and refreshing credentials as needed.
 
     Args:
-        credentials (google.auth.aio.credentials.Credentials):
-            The credentials to add to the request.
+        credentials (Union[google.auth.aio.credentials.Credentials, google.auth.credentials.Credentials]):
+            The credentials to add to the request. Synchronous credentials
+            (e.g. application default credentials) are also supported.
         auth_request (Optional[google.auth.aio.transport.Request]):
             An instance of a class that implements
             :class:`~google.auth.aio.transport.Request` used to make requests
@@ -126,28 +235,40 @@ class AsyncAuthorizedSession:
         - google.auth.exceptions.TransportError: If `auth_request` is `None`
             and the external package `aiohttp` is not installed.
         - google.auth.exceptions.InvalidType: If the provided credentials are
-            not of type `google.auth.aio.credentials.Credentials`.
+            not of type `google.auth.aio.credentials.Credentials` or
+            `google.auth.credentials.Credentials`.
     """
 
     def __init__(
-        self, credentials: Credentials, auth_request: Optional[transport.Request] = None
+        self,
+        credentials: Union[Credentials, google.auth.credentials.Credentials],
+        auth_request: Optional[transport.Request] = None,
     ):
-        if not isinstance(credentials, Credentials):
+        if isinstance(credentials, google.auth.credentials.Credentials):
+            credentials = _SyncCredentialsAdapter(credentials)
+        elif not isinstance(credentials, Credentials):
             raise exceptions.InvalidType(
-                f"The configured credentials of type {type(credentials)} are invalid and must be of type `google.auth.aio.credentials.Credentials`"
+                f"The configured credentials of type {type(credentials)} are invalid and must be of type `google.auth.aio.credentials.Credentials` or `google.auth.credentials.Credentials`"
             )
-        self._credentials = credentials
+        self._credentials: Credentials = credentials
         _auth_request = auth_request
         if not _auth_request and AIOHTTP_INSTALLED:
             _auth_request = AiohttpRequest()
         self._is_mtls = False
         self._mtls_init_task = None
         self._cached_cert = None
+        self._client_cert_callback = None
+        self._old_auth_requests: list[transport.Request] = []
         if _auth_request is None:
             raise exceptions.TransportError(
                 "`auth_request` must either be configured or the external package `aiohttp` must be installed to use the default value."
             )
         self._auth_request = _auth_request
+        self._mtls_rotation_lock: Optional[asyncio.Lock] = None
+        self._mtls_check_counter = 0
+        self._mtls_reconfig_counter = 0
+        self._refresh_lock: Optional[asyncio.Lock] = None
+        self._refresh_counter = 0
 
     async def configure_mtls_channel(self, client_cert_callback=None):
         """Configure the client certificate and key for SSL connection.
@@ -175,6 +296,7 @@ class AsyncAuthorizedSession:
                 creation failed for any reason.
         """
         if self._mtls_init_task is None:
+            self._client_cert_callback = client_cert_callback
 
             async def _do_configure():
                 # Run the blocking check in an executor
@@ -204,12 +326,19 @@ class AsyncAuthorizedSession:
 
                             old_auth_request = self._auth_request
                             self._auth_request = AiohttpRequest(session=new_session)
+                            self._old_auth_requests.append(old_auth_request)
 
-                            try:
-                                await old_auth_request.close()
-                            except Exception:
-                                # Suppress so it doesn't abort the mTLS configuration
-                                pass
+                            while len(self._old_auth_requests) > 2:
+                                oldest_auth_request = self._old_auth_requests[0]
+                                try:
+                                    if hasattr(oldest_auth_request, "close"):
+                                        res = oldest_auth_request.close()
+                                        if inspect.isawaitable(res):
+                                            await res
+                                except Exception:
+                                    pass
+                                self._old_auth_requests.pop(0)
+
                         else:
                             is_mtls = False
                             warnings.warn(
@@ -233,7 +362,11 @@ class AsyncAuthorizedSession:
 
             self._mtls_init_task = asyncio.create_task(_do_configure())
 
-        return await self._mtls_init_task
+        try:
+            return await self._mtls_init_task
+        except BaseException:
+            self._mtls_init_task = None
+            raise
 
     async def request(
         self,
@@ -277,10 +410,13 @@ class AsyncAuthorizedSession:
                 google.auth.exceptions.TimeoutError: If the method does not complete within
                 the configured `max_allowed_time` or the request exceeds the configured
                 `timeout`.
+                google.auth.exceptions.MutualTLSChannelError: If mutual TLS
+                channel reconfiguration fails for any reason during certificate rotation.
         """
-        if self._mtls_init_task:
+        _auth_retry_count = kwargs.pop("_auth_retry_count", 0)
+        if self._mtls_init_task and not self._mtls_init_task.done():
             try:
-                await self._mtls_init_task
+                await asyncio.shield(self._mtls_init_task)
             except Exception:
                 # Suppress all exceptions from the background mTLS initialization task,
                 # allowing the request to fail naturally elsewhere.
@@ -288,13 +424,16 @@ class AsyncAuthorizedSession:
         retries = _exponential_backoff.AsyncExponentialBackoff(
             total_attempts=total_attempts,
         )
-        if headers is None:
-            headers = {}
+        request_headers = dict(headers) if headers is not None else {}
+        start_time = time.monotonic()
+        refresh_counter_at_error = self._refresh_counter
+        check_counter_at_error = self._mtls_check_counter
+        reconfig_counter_at_error = self._mtls_reconfig_counter
         async with timeout_guard(max_allowed_time) as with_timeout:
             await with_timeout(
                 # Note: before_request will attempt to refresh credentials if expired.
                 self._credentials.before_request(
-                    self._auth_request, method, url, headers
+                    self._auth_request, method, url, request_headers
                 )
             )
             actual_timeout: float = 0.0
@@ -307,11 +446,215 @@ class AsyncAuthorizedSession:
             async for _ in retries:  # pragma: no branch
                 response = await with_timeout(
                     self._auth_request(
-                        url, method, data, headers, actual_timeout, **kwargs
+                        url, method, data, request_headers, actual_timeout, **kwargs
                     )
                 )
+
                 if response.status_code not in transport.DEFAULT_RETRYABLE_STATUS_CODES:
                     break
+
+        if response.status_code == http_client.UNAUTHORIZED:
+            if _auth_retry_count < 2:
+                try:
+                    if max_allowed_time is not None:
+                        elapsed = time.monotonic() - start_time
+                        remaining_time = max(0.0, max_allowed_time - elapsed)
+                        if remaining_time == 0.0:
+                            raise google.auth.exceptions.TimeoutError(
+                                "Timeout exceeded before credential refresh could begin"
+                            )
+                    else:
+                        remaining_time = None
+                    is_streaming = data is not None and (
+                        isinstance(
+                            data,
+                            (collections.abc.Iterator, collections.abc.AsyncIterable),
+                        )
+                        or hasattr(data, "read")
+                    )
+
+                    async def _recover_auth_state():
+                        is_mtls_endpoint = False
+                        if self._is_mtls:
+                            is_mtls_endpoint = (
+                                google.auth.transport._mtls_helper.is_mtls_endpoint(url)
+                            )
+                            # Snapshot the stale certificate state BEFORE acquiring the lock.
+                            # This represents the cert that caused the 401 rejection.
+                            if is_mtls_endpoint:
+                                if self._mtls_rotation_lock is None:
+                                    self._mtls_rotation_lock = asyncio.Lock()
+                                async with self._mtls_rotation_lock:
+                                    # Check if another coroutine already reconfigured mTLS or
+                                    # ran the validation check.
+                                    if (
+                                        self._mtls_check_counter
+                                        > check_counter_at_error
+                                    ):
+                                        pass
+                                    else:
+                                        try:
+                                            (
+                                                call_cert_bytes,
+                                                call_key_bytes,
+                                                cached_fingerprint,
+                                                current_cert_fingerprint,
+                                            ) = await mtls.check_parameters_for_unauthorized_response(
+                                                self._cached_cert,
+                                                self._client_cert_callback,
+                                            )
+                                        except (
+                                            exceptions.ClientCertError,
+                                            exceptions.MutualTLSChannelError,
+                                            OSError,
+                                            ValueError,
+                                            ImportError,
+                                        ) as e:
+                                            _LOGGER.warning(
+                                                "Failed to check client certificate parameters: %s. Proceeding with original response.",
+                                                e,
+                                            )
+                                        else:
+                                            if (
+                                                current_cert_fingerprint is not None
+                                                and cached_fingerprint
+                                                != current_cert_fingerprint
+                                            ):
+                                                saved_callback = (
+                                                    self._client_cert_callback
+                                                )
+                                                try:
+                                                    _LOGGER.info(
+                                                        "Client certificate has changed, reconfiguring mTLS "
+                                                        "channel."
+                                                    )
+                                                    if self._mtls_init_task is not None:
+                                                        if not self._mtls_init_task.done():
+                                                            try:
+                                                                await (
+                                                                    self._mtls_init_task
+                                                                )
+                                                            except Exception:
+                                                                pass
+                                                        self._mtls_init_task = None
+                                                    await self.configure_mtls_channel(
+                                                        lambda: (
+                                                            call_cert_bytes,
+                                                            call_key_bytes,
+                                                        )
+                                                    )
+                                                    self._mtls_reconfig_counter += 1
+                                                except Exception as e:
+                                                    _LOGGER.error(
+                                                        "Failed to reconfigure mTLS channel: %s",
+                                                        e,
+                                                    )
+                                                    raise exceptions.MutualTLSChannelError(
+                                                        "Failed to reconfigure mTLS channel"
+                                                    ) from e
+                                                finally:
+                                                    self._client_cert_callback = (
+                                                        saved_callback
+                                                    )
+                                            else:
+                                                if current_cert_fingerprint is None:
+                                                    _LOGGER.info(
+                                                        "Skipping reconfiguration of mTLS channel because the client"
+                                                        " certificate does not exist."
+                                                    )
+                                                else:
+                                                    _LOGGER.info(
+                                                        "Skipping reconfiguration of mTLS channel because the client"
+                                                        " certificate has not changed."
+                                                    )
+                                        # Always increment so waiting tasks skip the check block
+                                        self._mtls_check_counter += 1
+                        if self._refresh_lock is None:
+                            self._refresh_lock = asyncio.Lock()
+
+                        async with self._refresh_lock:
+                            # Check if another task already refreshed credentials while we were waiting
+                            if self._refresh_counter > refresh_counter_at_error:
+                                _LOGGER.debug(
+                                    "Credentials were already refreshed by a concurrent task. Skipping duplicate refresh."
+                                )
+                            else:
+                                try:
+                                    await self._credentials.refresh(self._auth_request)
+                                except NotImplementedError:
+                                    _LOGGER.debug(
+                                        "Credentials do not implement refresh()."
+                                    )
+                                    # A retry only helps when an mTLS reconfiguration
+                                    # occurred for this mTLS endpoint. Short-circuit on
+                                    # non-mTLS endpoints first so that a concurrent
+                                    # rotation (which bumps the session-wide counter)
+                                    # cannot trigger a spurious retry here.
+                                    if (
+                                        not is_mtls_endpoint
+                                        or self._mtls_reconfig_counter
+                                        <= reconfig_counter_at_error
+                                    ):
+                                        return response
+                                except (
+                                    exceptions.RefreshError,
+                                    getattr(exceptions, "InvalidOperation", Exception),
+                                ) as e:
+                                    _LOGGER.debug(
+                                        "Credential refresh failed, returning 401 response. Error: %s",
+                                        e,
+                                    )
+                                    return response
+                                else:
+                                    self._refresh_counter += 1
+
+                        if is_streaming:
+                            return response
+                        # Return None to explicitly signal successful recovery & trigger retry if needed
+                        return None
+
+                    async with timeout_guard(remaining_time) as auth_with_timeout:
+                        early_return_response = await auth_with_timeout(
+                            _recover_auth_state()
+                        )
+                except (Exception, asyncio.CancelledError):
+                    if hasattr(response, "close"):
+                        try:
+                            res = response.close()
+                            if inspect.isawaitable(res):
+                                await res
+                        except Exception:
+                            pass
+                    raise
+                # If it returned a response (meaning streaming or error), bail out
+                if early_return_response is not None:
+                    return early_return_response
+                if hasattr(response, "close"):
+                    try:
+                        res = response.close()
+                        if inspect.isawaitable(res):
+                            await res
+                    except Exception:
+                        pass
+                if max_allowed_time is not None:
+                    remaining_time = max(
+                        0.0, max_allowed_time - (time.monotonic() - start_time)
+                    )
+                    if remaining_time == 0.0:
+                        raise google.auth.exceptions.TimeoutError(
+                            "Timeout exceeded before retrying the request"
+                        )
+                kwargs["_auth_retry_count"] = _auth_retry_count + 1
+                return await self.request(
+                    method,
+                    url,
+                    data=data,
+                    headers=headers,
+                    max_allowed_time=remaining_time,
+                    timeout=timeout,
+                    total_attempts=total_attempts,
+                    **kwargs,
+                )
         return response
 
     @functools.wraps(request)
@@ -594,4 +937,20 @@ class AsyncAuthorizedSession:
                 await self._mtls_init_task
             except asyncio.CancelledError:
                 pass
-        await self._auth_request.close()
+        try:
+            if hasattr(self._auth_request, "close"):
+                res = self._auth_request.close()
+                if inspect.isawaitable(res):
+                    await res
+        finally:
+            if hasattr(self._credentials, "close"):
+                self._credentials.close()
+            for old_request in self._old_auth_requests:
+                try:
+                    if hasattr(old_request, "close"):
+                        res = old_request.close()
+                        if inspect.isawaitable(res):
+                            await res
+                except Exception:
+                    pass
+            self._old_auth_requests.clear()

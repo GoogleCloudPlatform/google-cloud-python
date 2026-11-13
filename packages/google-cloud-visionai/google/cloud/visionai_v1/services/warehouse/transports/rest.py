@@ -35,6 +35,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.visionai_v1._compat import transcode_request
 from google.cloud.visionai_v1.types import warehouse
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -3709,21 +3710,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseAddCollectionItem._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_add_collection_item(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseAddCollectionItem._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseAddCollectionItem._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseAddCollectionItem._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseAddCollectionItem,
+                    "_BaseAddCollectionItem__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3866,23 +3864,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseAnalyzeAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_analyze_asset(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseAnalyzeAsset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseAnalyzeAsset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseAnalyzeAsset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseAnalyzeAsset,
+                    "_BaseAnalyzeAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4021,25 +4012,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseAnalyzeCorpus._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_analyze_corpus(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseAnalyzeCorpus._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseWarehouseRestTransport._BaseAnalyzeCorpus._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseAnalyzeCorpus._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseAnalyzeCorpus,
+                    "_BaseAnalyzeCorpus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4173,23 +4155,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseClipAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_clip_asset(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseClipAsset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseClipAsset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseClipAsset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseClipAsset,
+                    "_BaseClipAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4330,21 +4305,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseCreateAnnotation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_annotation(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseCreateAnnotation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseCreateAnnotation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseCreateAnnotation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseCreateAnnotation,
+                    "_BaseCreateAnnotation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4488,23 +4460,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseCreateAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_asset(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseCreateAsset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseCreateAsset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseCreateAsset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseCreateAsset,
+                    "_BaseCreateAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4645,21 +4610,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseCreateCollection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_collection(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseCreateCollection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseCreateCollection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseCreateCollection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseCreateCollection,
+                    "_BaseCreateCollection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4798,23 +4760,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseCreateCorpus._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_corpus(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseCreateCorpus._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseCreateCorpus._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseCreateCorpus._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseCreateCorpus,
+                    "_BaseCreateCorpus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4953,21 +4908,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseCreateDataSchema._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_data_schema(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseCreateDataSchema._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseCreateDataSchema._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseCreateDataSchema._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseCreateDataSchema,
+                    "_BaseCreateDataSchema__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5106,23 +5058,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseCreateIndex._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_index(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseCreateIndex._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseCreateIndex._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseCreateIndex._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseCreateIndex,
+                    "_BaseCreateIndex__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5262,21 +5207,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseCreateIndexEndpoint._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_index_endpoint(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseCreateIndexEndpoint._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseCreateIndexEndpoint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseCreateIndexEndpoint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseCreateIndexEndpoint,
+                    "_BaseCreateIndexEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5416,21 +5358,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseCreateSearchConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_search_config(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseCreateSearchConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseCreateSearchConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseCreateSearchConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseCreateSearchConfig,
+                    "_BaseCreateSearchConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5572,21 +5511,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             """
 
             http_options = _BaseWarehouseRestTransport._BaseCreateSearchHypernym._get_http_options()
-
             request, metadata = self._interceptor.pre_create_search_hypernym(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseCreateSearchHypernym._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseCreateSearchHypernym._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseCreateSearchHypernym._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseCreateSearchHypernym,
+                    "_BaseCreateSearchHypernym__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5720,17 +5656,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseDeleteAnnotation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_annotation(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseDeleteAnnotation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseDeleteAnnotation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseDeleteAnnotation,
+                    "_BaseDeleteAnnotation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5833,19 +5770,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseDeleteAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_asset(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseDeleteAsset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseDeleteAsset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseDeleteAsset,
+                    "_BaseDeleteAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5983,17 +5917,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseDeleteCollection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_collection(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseDeleteCollection._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseDeleteCollection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseDeleteCollection,
+                    "_BaseDeleteCollection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6123,19 +6058,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseDeleteCorpus._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_corpus(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseDeleteCorpus._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseDeleteCorpus._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseDeleteCorpus,
+                    "_BaseDeleteCorpus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6233,17 +6165,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseDeleteDataSchema._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_data_schema(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseDeleteDataSchema._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseDeleteDataSchema._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseDeleteDataSchema,
+                    "_BaseDeleteDataSchema__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6346,19 +6279,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseDeleteIndex._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_index(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseDeleteIndex._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseDeleteIndex._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseDeleteIndex,
+                    "_BaseDeleteIndex__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6496,17 +6426,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseDeleteIndexEndpoint._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_index_endpoint(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseDeleteIndexEndpoint._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseDeleteIndexEndpoint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseDeleteIndexEndpoint,
+                    "_BaseDeleteIndexEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6637,17 +6568,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseDeleteSearchConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_search_config(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseDeleteSearchConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseDeleteSearchConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseDeleteSearchConfig,
+                    "_BaseDeleteSearchConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6744,17 +6676,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             """
 
             http_options = _BaseWarehouseRestTransport._BaseDeleteSearchHypernym._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_search_hypernym(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseDeleteSearchHypernym._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseDeleteSearchHypernym._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseDeleteSearchHypernym,
+                    "_BaseDeleteSearchHypernym__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6858,23 +6791,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseDeployIndex._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_deploy_index(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseDeployIndex._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseDeployIndex._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseDeployIndex._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseDeployIndex,
+                    "_BaseDeployIndex__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7013,27 +6939,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseGenerateHlsUri._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_generate_hls_uri(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseGenerateHlsUri._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseWarehouseRestTransport._BaseGenerateHlsUri._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseGenerateHlsUri._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGenerateHlsUri,
+                    "_BaseGenerateHlsUri__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7174,21 +7091,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             """
 
             http_options = _BaseWarehouseRestTransport._BaseGenerateRetrievalUrl._get_http_options()
-
             request, metadata = self._interceptor.pre_generate_retrieval_url(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseGenerateRetrievalUrl._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseGenerateRetrievalUrl._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseGenerateRetrievalUrl._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGenerateRetrievalUrl,
+                    "_BaseGenerateRetrievalUrl__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7331,19 +7245,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseGetAnnotation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_annotation(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseGetAnnotation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseGetAnnotation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGetAnnotation,
+                    "_BaseGetAnnotation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7482,19 +7393,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             """
 
             http_options = _BaseWarehouseRestTransport._BaseGetAsset._get_http_options()
-
             request, metadata = self._interceptor.pre_get_asset(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseGetAsset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseGetAsset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGetAsset,
+                    "_BaseGetAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7634,19 +7542,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseGetCollection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_collection(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseGetCollection._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseGetCollection._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGetCollection,
+                    "_BaseGetCollection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7784,19 +7689,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseGetCorpus._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_corpus(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseGetCorpus._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseGetCorpus._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGetCorpus,
+                    "_BaseGetCorpus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7935,19 +7837,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseGetDataSchema._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_data_schema(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseGetDataSchema._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseGetDataSchema._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGetDataSchema,
+                    "_BaseGetDataSchema__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8084,19 +7983,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             """
 
             http_options = _BaseWarehouseRestTransport._BaseGetIndex._get_http_options()
-
             request, metadata = self._interceptor.pre_get_index(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseGetIndex._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseGetIndex._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGetIndex,
+                    "_BaseGetIndex__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8234,17 +8130,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseGetIndexEndpoint._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_index_endpoint(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseGetIndexEndpoint._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseGetIndexEndpoint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGetIndexEndpoint,
+                    "_BaseGetIndexEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8383,19 +8280,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseGetSearchConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_search_config(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseGetSearchConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseGetSearchConfig._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGetSearchConfig,
+                    "_BaseGetSearchConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8537,17 +8433,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseGetSearchHypernym._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_search_hypernym(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseGetSearchHypernym._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseGetSearchHypernym._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGetSearchHypernym,
+                    "_BaseGetSearchHypernym__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8687,23 +8584,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseImportAssets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_import_assets(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseImportAssets._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseImportAssets._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseImportAssets._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseImportAssets,
+                    "_BaseImportAssets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8840,23 +8730,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseIndexAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_index_asset(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseIndexAsset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseIndexAsset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseIndexAsset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseIndexAsset,
+                    "_BaseIndexAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9010,19 +8893,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseListAnnotations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_annotations(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseListAnnotations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseListAnnotations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseListAnnotations,
+                    "_BaseListAnnotations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9158,19 +9040,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseListAssets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_assets(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseListAssets._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseListAssets._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseListAssets,
+                    "_BaseListAssets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9306,19 +9185,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseListCollections._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_collections(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseListCollections._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseListCollections._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseListCollections,
+                    "_BaseListCollections__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9454,19 +9332,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseListCorpora._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_corpora(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseListCorpora._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseListCorpora._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseListCorpora,
+                    "_BaseListCorpora__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9602,19 +9477,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseListDataSchemas._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_data_schemas(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseListDataSchemas._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseListDataSchemas._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseListDataSchemas,
+                    "_BaseListDataSchemas__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9755,17 +9629,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseListIndexEndpoints._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_index_endpoints(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseListIndexEndpoints._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseListIndexEndpoints._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseListIndexEndpoints,
+                    "_BaseListIndexEndpoints__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9901,19 +9776,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseListIndexes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_indexes(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseListIndexes._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseListIndexes._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseListIndexes,
+                    "_BaseListIndexes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10052,17 +9924,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseListSearchConfigs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_search_configs(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseListSearchConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseListSearchConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseListSearchConfigs,
+                    "_BaseListSearchConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10203,17 +10076,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseListSearchHypernyms._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_search_hypernyms(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseListSearchHypernyms._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseListSearchHypernyms._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseListSearchHypernyms,
+                    "_BaseListSearchHypernyms__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10353,21 +10227,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             """
 
             http_options = _BaseWarehouseRestTransport._BaseRemoveCollectionItem._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_collection_item(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseRemoveCollectionItem._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseRemoveCollectionItem._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseRemoveCollectionItem._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseRemoveCollectionItem,
+                    "_BaseRemoveCollectionItem__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10510,21 +10381,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseRemoveIndexAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_remove_index_asset(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseRemoveIndexAsset._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseRemoveIndexAsset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseRemoveIndexAsset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseRemoveIndexAsset,
+                    "_BaseRemoveIndexAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10660,23 +10528,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseSearchAssets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_assets(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseSearchAssets._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseSearchAssets._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseSearchAssets._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseSearchAssets,
+                    "_BaseSearchAssets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10817,21 +10678,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseSearchIndexEndpoint._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_index_endpoint(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseSearchIndexEndpoint._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseSearchIndexEndpoint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseSearchIndexEndpoint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseSearchIndexEndpoint,
+                    "_BaseSearchIndexEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10975,25 +10833,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseUndeployIndex._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_undeploy_index(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseUndeployIndex._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseWarehouseRestTransport._BaseUndeployIndex._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseUndeployIndex._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseUndeployIndex,
+                    "_BaseUndeployIndex__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11133,21 +10982,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseUpdateAnnotation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_annotation(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseUpdateAnnotation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseUpdateAnnotation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseUpdateAnnotation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseUpdateAnnotation,
+                    "_BaseUpdateAnnotation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11290,23 +11136,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseUpdateAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_asset(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseUpdateAsset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseUpdateAsset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseUpdateAsset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseUpdateAsset,
+                    "_BaseUpdateAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11448,21 +11287,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseUpdateCollection._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_collection(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseUpdateCollection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseUpdateCollection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseUpdateCollection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseUpdateCollection,
+                    "_BaseUpdateCollection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11604,23 +11440,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseUpdateCorpus._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_corpus(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseUpdateCorpus._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseUpdateCorpus._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseUpdateCorpus._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseUpdateCorpus,
+                    "_BaseUpdateCorpus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11761,21 +11590,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseUpdateDataSchema._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_data_schema(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseUpdateDataSchema._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseUpdateDataSchema._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseUpdateDataSchema._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseUpdateDataSchema,
+                    "_BaseUpdateDataSchema__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11914,23 +11740,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseUpdateIndex._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_index(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseUpdateIndex._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseUpdateIndex._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseUpdateIndex._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseUpdateIndex,
+                    "_BaseUpdateIndex__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12070,21 +11889,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseUpdateIndexEndpoint._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_index_endpoint(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseUpdateIndexEndpoint._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseUpdateIndexEndpoint._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseUpdateIndexEndpoint._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseUpdateIndexEndpoint,
+                    "_BaseUpdateIndexEndpoint__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12224,21 +12040,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseUpdateSearchConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_search_config(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseUpdateSearchConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseUpdateSearchConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseUpdateSearchConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseUpdateSearchConfig,
+                    "_BaseUpdateSearchConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12380,21 +12193,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             """
 
             http_options = _BaseWarehouseRestTransport._BaseUpdateSearchHypernym._get_http_options()
-
             request, metadata = self._interceptor.pre_update_search_hypernym(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseUpdateSearchHypernym._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseWarehouseRestTransport._BaseUpdateSearchHypernym._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseUpdateSearchHypernym._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseUpdateSearchHypernym,
+                    "_BaseUpdateSearchHypernym__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12533,23 +12343,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseUploadAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_upload_asset(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseUploadAsset._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWarehouseRestTransport._BaseUploadAsset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseUploadAsset._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseUploadAsset,
+                    "_BaseUploadAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12687,17 +12490,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseViewCollectionItems._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_view_collection_items(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseViewCollectionItems._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseViewCollectionItems._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseViewCollectionItems,
+                    "_BaseViewCollectionItems__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12838,17 +12642,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseViewIndexedAssets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_view_indexed_assets(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseViewIndexedAssets._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseWarehouseRestTransport._BaseViewIndexedAssets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseViewIndexedAssets,
+                    "_BaseViewIndexedAssets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13505,19 +13310,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13649,19 +13451,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13791,25 +13590,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseWarehouseRestTransport._BaseCancelOperation._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13914,19 +13706,18 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseWarehouseRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseDeleteOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14033,19 +13824,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14177,19 +13965,16 @@ class WarehouseRestTransport(_BaseWarehouseRestTransport):
             http_options = (
                 _BaseWarehouseRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseWarehouseRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWarehouseRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWarehouseRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

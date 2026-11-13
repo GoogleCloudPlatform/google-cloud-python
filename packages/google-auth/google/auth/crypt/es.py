@@ -12,25 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""ECDSA verifier and signer that use the ``cryptography`` library.
-"""
+"""ECDSA verifier and signer that use the ``cryptography`` library."""
 
 from dataclasses import dataclass
 from typing import Any, Dict, Optional, Union
 
 import cryptography.exceptions
-from cryptography.hazmat import backends
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import ec
-from cryptography.hazmat.primitives.asymmetric import padding
-from cryptography.hazmat.primitives.asymmetric.utils import decode_dss_signature
-from cryptography.hazmat.primitives.asymmetric.utils import encode_dss_signature
 import cryptography.x509
+from cryptography.hazmat import backends
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import ec, padding
+from cryptography.hazmat.primitives.asymmetric.utils import (
+    decode_dss_signature,
+    encode_dss_signature,
+)
 
 from google.auth import _helpers
 from google.auth.crypt import base
-
 
 _CERTIFICATE_MARKER = b"-----BEGIN CERTIFICATE-----"
 _BACKEND = backends.default_backend()

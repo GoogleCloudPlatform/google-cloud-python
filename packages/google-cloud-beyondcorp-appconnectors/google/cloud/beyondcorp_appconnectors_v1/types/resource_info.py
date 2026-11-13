@@ -26,6 +26,8 @@ __protobuf__ = proto.module(
     manifest={
         "HealthStatus",
         "ResourceInfo",
+        "ContainerHealthDetails",
+        "RemoteAgentDetails",
     },
 )
 
@@ -55,23 +57,11 @@ class HealthStatus(proto.Enum):
 
 
 class ResourceInfo(proto.Message):
-    r"""ResourceInfo represents the information/status of an app connector
-    resource. Such as:
-
-    - remote_agent
-
-      - container
-
-        - runtime
-        - appgateway
-
-          - appconnector
-
-            - appconnection
-
-              - tunnel
-
-          - logagent
+    r"""ResourceInfo represents the information or status of an app
+    connector resource component that's used to report on various parts
+    of the system. For example, ResourceInfo can be used to convey the
+    status of a remote_agent, including the status of an appgateway for
+    an runtime environment in a container instance.
 
     Attributes:
         id (str):
@@ -115,6 +105,45 @@ class ResourceInfo(proto.Message):
         number=5,
         message="ResourceInfo",
     )
+
+
+class ContainerHealthDetails(proto.Message):
+    r"""ContainerHealthDetails reflects the health details of a
+    container.
+
+    Attributes:
+        expected_config_version (str):
+            The version of the expected config.
+        current_config_version (str):
+            The version of the current config.
+        extended_status (MutableMapping[str, str]):
+            The extended status. Such as ExitCode,
+            StartedAt, FinishedAt, etc.
+        error_msg (str):
+            The latest error message.
+    """
+
+    expected_config_version: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    current_config_version: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    extended_status: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=3,
+    )
+    error_msg: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+
+
+class RemoteAgentDetails(proto.Message):
+    r"""RemoteAgentDetails reflects the details of a remote agent."""
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

@@ -29,7 +29,6 @@ from typing import AsyncGenerator, Mapping, Optional
 
 import google.auth.transport
 
-
 _DEFAULT_TIMEOUT_SECONDS = 180
 
 DEFAULT_RETRYABLE_STATUS_CODES = google.auth.transport.DEFAULT_RETRYABLE_STATUS_CODES
@@ -111,7 +110,7 @@ class Request(metaclass=abc.ABCMeta):
         body: Optional[bytes],
         headers: Optional[Mapping[str, str]],
         timeout: float,
-        **kwargs
+        **kwargs,
     ) -> Response:
         """Make an HTTP request.
 

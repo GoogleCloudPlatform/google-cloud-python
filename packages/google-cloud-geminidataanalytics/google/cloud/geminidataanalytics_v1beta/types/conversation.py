@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
@@ -25,6 +26,7 @@ __protobuf__ = proto.module(
     manifest={
         "Conversation",
         "CreateConversationRequest",
+        "UpdateConversationRequest",
         "GetConversationRequest",
         "ListConversationsRequest",
         "ListConversationsResponse",
@@ -69,6 +71,9 @@ class Conversation(proto.Message):
             that can be set by the client to tag a
             conversation (e.g. to filter conversations for
             specific surfaces/products).
+        title (str):
+            Optional. The display name for the
+            conversation (max 63 chars).
         kms_key (str):
             Optional. Customer managed encryption key (CMEK) to use for
             encrypting the Conversation resources. Encryption will
@@ -78,11 +83,6 @@ class Conversation(proto.Message):
             projects/{project_id}/locations/{location}/keyRings/{key_ring_name}/cryptoKeys/{key_name}.
 
             This field is a member of `oneof`_ ``_kms_key``.
-        memory_paused (bool):
-            Optional. Whether memory is paused for this
-            conversation.
-
-            This field is a member of `oneof`_ ``_memory_paused``.
     """
 
     name: str = proto.Field(
@@ -108,14 +108,13 @@ class Conversation(proto.Message):
         proto.STRING,
         number=9,
     )
+    title: str = proto.Field(
+        proto.STRING,
+        number=6,
+    )
     kms_key: str = proto.Field(
         proto.STRING,
         number=10,
-        optional=True,
-    )
-    memory_paused: bool = proto.Field(
-        proto.BOOL,
-        number=11,
         optional=True,
     )
 
@@ -159,6 +158,46 @@ class CreateConversationRequest(proto.Message):
     request_id: str = proto.Field(
         proto.STRING,
         number=4,
+    )
+
+
+class UpdateConversationRequest(proto.Message):
+    r"""Request for updating a conversation.
+
+    Attributes:
+        conversation (google.cloud.geminidataanalytics_v1beta.types.Conversation):
+            Required. The resource being updated.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. Field mask is used to specify the fields to be
+            overwritten in the Conversation resource by the update. The
+            fields specified in the update_mask are relative to the
+            resource, not the full request. A field will be overwritten
+            if it is in the mask. If the user does not provide a mask
+            then all fields with non-default values present in the
+            request will be overwritten. If a wildcard mask is provided,
+            all fields will be overwritten.
+        request_id (str):
+            Optional. An optional request ID to identify
+            requests. Specify a unique request ID so that if
+            you must retry your request, the server will
+            know to ignore the request if it has already
+            been completed. The server will guarantee that
+            for at least 60 minutes since the first request.
+    """
+
+    conversation: "Conversation" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="Conversation",
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

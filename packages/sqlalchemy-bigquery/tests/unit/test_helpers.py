@@ -10,8 +10,8 @@ from unittest import mock
 
 import google.auth
 import google.auth.credentials
-from google.oauth2 import service_account
 import pytest
+from google.oauth2 import service_account
 
 from sqlalchemy_bigquery import _helpers
 

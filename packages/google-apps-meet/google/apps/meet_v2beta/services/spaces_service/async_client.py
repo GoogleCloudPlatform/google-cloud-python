@@ -419,7 +419,7 @@ class SpacesServiceAsyncClient:
         r"""Gets details about a meeting space.
 
         For an example, see `Get a meeting
-        space <https://developers.google.com/meet/api/guides/meeting-spaces#get-meeting-space>`__.
+        space <https://developers.google.com/workspace/meet/api/guides/meeting-spaces#get-meeting-space>`__.
 
         .. code-block:: python
 
@@ -473,7 +473,7 @@ class SpacesServiceAsyncClient:
                 Meet <https://support.google.com/meet/answer/10710509>`__.
 
                 For more information, see `How Meet identifies a meeting
-                space <https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space>`__.
+                space <https://developers.google.com/workspace/meet/api/guides/meeting-spaces#identify-meeting-space>`__.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -555,7 +555,7 @@ class SpacesServiceAsyncClient:
         r"""Updates details about a meeting space.
 
         For an example, see `Update a meeting
-        space <https://developers.google.com/meet/api/guides/meeting-spaces#update-meeting-space>`__.
+        space <https://developers.google.com/workspace/meet/api/guides/meeting-spaces#update-meeting-space>`__.
 
         .. code-block:: python
 
@@ -689,7 +689,7 @@ class SpacesServiceAsyncClient:
         WebRTC data channels.
 
         See `Meet Media API
-        overview <https://developers.google.com/meet/media-api/guides/overview>`__
+        overview <https://developers.google.com/workspace/meet/media-api/guides/overview>`__
         for more details about this connection.
 
         .. code-block:: python
@@ -748,7 +748,7 @@ class SpacesServiceAsyncClient:
                    WebRTC.
 
                    See [Meet Media API
-                   overview](https://developers.google.com/meet/media-api/guides/overview)
+                   overview](https://developers.google.com/workspace/meet/media-api/guides/overview)
                    for more details about this connection.
 
         """
@@ -813,7 +813,7 @@ class SpacesServiceAsyncClient:
         r"""Ends an active conference (if there's one).
 
         For an example, see `End active
-        conference <https://developers.google.com/meet/api/guides/meeting-spaces#end-active-conference>`__.
+        conference <https://developers.google.com/workspace/meet/api/guides/meeting-spaces#end-active-conference>`__.
 
         .. code-block:: python
 
@@ -852,7 +852,7 @@ class SpacesServiceAsyncClient:
                 sensitive. For example, ``jQCFfuBOdN5z``.
 
                 For more information, see `How Meet identifies a meeting
-                space <https://developers.google.com/meet/api/guides/meeting-spaces#identify-meeting-space>`__.
+                space <https://developers.google.com/workspace/meet/api/guides/meeting-spaces#identify-meeting-space>`__.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -921,9 +921,7 @@ class SpacesServiceAsyncClient:
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> resource.Member:
-        r"""`Developer
-        Preview <https://developers.google.com/workspace/preview>`__:
-        Create a member.
+        r"""Creates a member.
 
         This API supports the ``fields`` parameter in
         `SystemParameterContext <https://cloud.google.com/apis/docs/system-parameters>`__.
@@ -1045,9 +1043,7 @@ class SpacesServiceAsyncClient:
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> resource.Member:
-        r"""`Developer
-        Preview <https://developers.google.com/workspace/preview>`__:
-        Get a member.
+        r"""Gets a member.
 
         This API supports the ``fields`` parameter in
         `SystemParameterContext <https://cloud.google.com/apis/docs/system-parameters>`__.
@@ -1163,9 +1159,7 @@ class SpacesServiceAsyncClient:
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> pagers.ListMembersAsyncPager:
-        r"""`Developer
-        Preview <https://developers.google.com/workspace/preview>`__:
-        List members.
+        r"""Lists members.
 
         This API supports the ``fields`` parameter in
         `SystemParameterContext <https://cloud.google.com/apis/docs/system-parameters>`__.
@@ -1294,10 +1288,8 @@ class SpacesServiceAsyncClient:
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> None:
-        r"""`Developer
-        Preview <https://developers.google.com/workspace/preview>`__:
-        Delete the member who was previously assigned roles in the
-        space.
+        r"""Deletes the member who was previously assigned roles
+        in the space.
 
         .. code-block:: python
 
@@ -1386,6 +1378,220 @@ class SpacesServiceAsyncClient:
             timeout=timeout,
             metadata=metadata,
         )
+
+    async def update_member(
+        self,
+        request: Optional[Union[service.UpdateMemberRequest, dict]] = None,
+        *,
+        member: Optional[resource.Member] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> resource.Member:
+        r"""Updates a member.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.apps import meet_v2beta
+
+            async def sample_update_member():
+                # Create a client
+                client = meet_v2beta.SpacesServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = meet_v2beta.UpdateMemberRequest(
+                )
+
+                # Make the request
+                response = await client.update_member(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.apps.meet_v2beta.types.UpdateMemberRequest, dict]]):
+                The request object. Request to update a member.
+            member (:class:`google.apps.meet_v2beta.types.Member`):
+                Required. The Member to update.
+                Format: spaces/{space}/members/{member}
+
+                This corresponds to the ``member`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. Field mask used to specify the fields to be
+                updated in the member. If update_mask isn't provided(not
+                set, set with empty paths, or only has "" as paths), it
+                defaults to update all fields provided with values in
+                the request. Using "\*" as update_mask will update all
+                fields, including deleting fields not set in the
+                request. In case of BatchUpdate, it must be absent or
+                the same as the update_mask in BatchUpdateMembersRequest
+                when UpdateMemberRequest is built as a child request of
+                BatchUpdateMembersRequest.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.apps.meet_v2beta.types.Member:
+                Users who are configured to have a
+                role in the space. These users can join
+                the space without knocking.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [member, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, service.UpdateMemberRequest):
+            request = service.UpdateMemberRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if member is not None:
+            request.member = member
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_member
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("member.name", request.member.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def batch_update_members(
+        self,
+        request: Optional[Union[service.BatchUpdateMembersRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> service.BatchUpdateMembersResponse:
+        r"""Updates members of one space within a batch.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.apps import meet_v2beta
+
+            async def sample_batch_update_members():
+                # Create a client
+                client = meet_v2beta.SpacesServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = meet_v2beta.BatchUpdateMembersRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                response = await client.batch_update_members(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.apps.meet_v2beta.types.BatchUpdateMembersRequest, dict]]):
+                The request object. Request to update members of one
+                space within a batch.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.apps.meet_v2beta.types.BatchUpdateMembersResponse:
+                Response of batch update members.
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, service.BatchUpdateMembersRequest):
+            request = service.BatchUpdateMembersRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.batch_update_members
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
 
     async def __aenter__(self) -> "SpacesServiceAsyncClient":
         return self

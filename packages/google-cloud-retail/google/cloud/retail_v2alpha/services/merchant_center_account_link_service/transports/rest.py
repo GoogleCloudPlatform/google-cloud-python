@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.retail_v2alpha._compat import transcode_request
 from google.cloud.retail_v2alpha.types import merchant_center_account_link_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -496,23 +497,20 @@ class MerchantCenterAccountLinkServiceRestTransport(
             """
 
             http_options = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseCreateMerchantCenterAccountLink._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_create_merchant_center_account_link(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseCreateMerchantCenterAccountLink._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseCreateMerchantCenterAccountLink._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseCreateMerchantCenterAccountLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMerchantCenterAccountLinkServiceRestTransport._BaseCreateMerchantCenterAccountLink,
+                    "_BaseCreateMerchantCenterAccountLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -649,19 +647,20 @@ class MerchantCenterAccountLinkServiceRestTransport(
             """
 
             http_options = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseDeleteMerchantCenterAccountLink._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_delete_merchant_center_account_link(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseDeleteMerchantCenterAccountLink._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseDeleteMerchantCenterAccountLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMerchantCenterAccountLinkServiceRestTransport._BaseDeleteMerchantCenterAccountLink,
+                    "_BaseDeleteMerchantCenterAccountLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -772,19 +771,20 @@ class MerchantCenterAccountLinkServiceRestTransport(
             """
 
             http_options = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseListMerchantCenterAccountLinks._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_merchant_center_account_links(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseListMerchantCenterAccountLinks._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseListMerchantCenterAccountLinks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMerchantCenterAccountLinkServiceRestTransport._BaseListMerchantCenterAccountLinks,
+                    "_BaseListMerchantCenterAccountLinks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -967,15 +967,16 @@ class MerchantCenterAccountLinkServiceRestTransport(
             """
 
             http_options = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMerchantCenterAccountLinkServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1106,15 +1107,16 @@ class MerchantCenterAccountLinkServiceRestTransport(
             """
 
             http_options = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMerchantCenterAccountLinkServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMerchantCenterAccountLinkServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

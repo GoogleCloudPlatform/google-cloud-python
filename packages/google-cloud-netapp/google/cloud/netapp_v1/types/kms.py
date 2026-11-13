@@ -266,7 +266,7 @@ class KmsConfig(proto.Message):
 
     Attributes:
         name (str):
-            Identifier. Name of the KmsConfig. Format:
+            Identifier. Name of the ``KmsConfig``. Format:
             ``projects/{project}/locations/{location}/kmsConfigs/{kms_config}``
         crypto_key_name (str):
             Required. Customer-managed crypto key resource full name.

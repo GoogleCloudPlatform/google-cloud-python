@@ -40,7 +40,6 @@ async def sample_analyze_content():
 
     # Initialize request argument(s)
     text_input = dialogflow_v2.TextInput()
-    text_input.text = "text_value"
     text_input.language_code = "language_code_value"
 
     request = dialogflow_v2.AnalyzeContentRequest(

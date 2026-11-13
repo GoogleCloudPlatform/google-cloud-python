@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.vectorsearch_v1._compat import transcode_request
 from google.cloud.vectorsearch_v1.types import vectorsearch_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1125,21 +1126,18 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseCreateCollection._get_http_options()
-
             request, metadata = self._interceptor.pre_create_collection(
                 request, metadata
             )
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseCreateCollection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVectorSearchServiceRestTransport._BaseCreateCollection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseCreateCollection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseCreateCollection,
+                    "_BaseCreateCollection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1277,19 +1275,16 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseCreateIndex._get_http_options()
-
             request, metadata = self._interceptor.pre_create_index(request, metadata)
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseCreateIndex._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVectorSearchServiceRestTransport._BaseCreateIndex._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseCreateIndex._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseCreateIndex,
+                    "_BaseCreateIndex__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1426,17 +1421,18 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseDeleteCollection._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_collection(
                 request, metadata
             )
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseDeleteCollection._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseDeleteCollection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseDeleteCollection,
+                    "_BaseDeleteCollection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1572,15 +1568,16 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseDeleteIndex._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_index(request, metadata)
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseDeleteIndex._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseDeleteIndex._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseDeleteIndex,
+                    "_BaseDeleteIndex__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1718,21 +1715,18 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseExportDataObjects._get_http_options()
-
             request, metadata = self._interceptor.pre_export_data_objects(
                 request, metadata
             )
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseExportDataObjects._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVectorSearchServiceRestTransport._BaseExportDataObjects._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseExportDataObjects._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseExportDataObjects,
+                    "_BaseExportDataObjects__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1868,15 +1862,16 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseGetCollection._get_http_options()
-
             request, metadata = self._interceptor.pre_get_collection(request, metadata)
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseGetCollection._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseGetCollection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseGetCollection,
+                    "_BaseGetCollection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2012,15 +2007,16 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             http_options = (
                 _BaseVectorSearchServiceRestTransport._BaseGetIndex._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_index(request, metadata)
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseGetIndex._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseGetIndex._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseGetIndex,
+                    "_BaseGetIndex__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2160,21 +2156,18 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseImportDataObjects._get_http_options()
-
             request, metadata = self._interceptor.pre_import_data_objects(
                 request, metadata
             )
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseImportDataObjects._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVectorSearchServiceRestTransport._BaseImportDataObjects._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseImportDataObjects._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseImportDataObjects,
+                    "_BaseImportDataObjects__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2313,17 +2306,18 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseListCollections._get_http_options()
-
             request, metadata = self._interceptor.pre_list_collections(
                 request, metadata
             )
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseListCollections._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseListCollections._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseListCollections,
+                    "_BaseListCollections__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2463,15 +2457,16 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseListIndexes._get_http_options()
-
             request, metadata = self._interceptor.pre_list_indexes(request, metadata)
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseListIndexes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseListIndexes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseListIndexes,
+                    "_BaseListIndexes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2612,21 +2607,18 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseUpdateCollection._get_http_options()
-
             request, metadata = self._interceptor.pre_update_collection(
                 request, metadata
             )
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseUpdateCollection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVectorSearchServiceRestTransport._BaseUpdateCollection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseUpdateCollection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseUpdateCollection,
+                    "_BaseUpdateCollection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2764,19 +2756,16 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseUpdateIndex._get_http_options()
-
             request, metadata = self._interceptor.pre_update_index(request, metadata)
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseUpdateIndex._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVectorSearchServiceRestTransport._BaseUpdateIndex._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseUpdateIndex._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseUpdateIndex,
+                    "_BaseUpdateIndex__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3027,15 +3016,16 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseGetLocation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3166,15 +3156,16 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3303,21 +3294,18 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVectorSearchServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3421,17 +3409,18 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3537,15 +3526,16 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3676,15 +3666,16 @@ class VectorSearchServiceRestTransport(_BaseVectorSearchServiceRestTransport):
             """
 
             http_options = _BaseVectorSearchServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseVectorSearchServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVectorSearchServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVectorSearchServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

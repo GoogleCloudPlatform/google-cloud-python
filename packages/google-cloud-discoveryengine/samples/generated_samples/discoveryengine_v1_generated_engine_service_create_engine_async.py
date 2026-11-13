@@ -41,7 +41,7 @@ async def sample_create_engine():
     # Initialize request argument(s)
     engine = discoveryengine_v1.Engine()
     engine.display_name = "display_name_value"
-    engine.solution_type = "SOLUTION_TYPE_GENERATIVE_CHAT"
+    engine.solution_type = "SOLUTION_TYPE_AI_MODE"
 
     request = discoveryengine_v1.CreateEngineRequest(
         parent="parent_value",

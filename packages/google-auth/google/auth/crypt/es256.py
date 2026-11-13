@@ -12,11 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""ECDSA (ES256) verifier and signer that use the ``cryptography`` library.
-"""
+"""ECDSA (ES256) verifier and signer that use the ``cryptography`` library."""
 
-from google.auth.crypt.es import EsSigner
-from google.auth.crypt.es import EsVerifier
+from google.auth.crypt.es import EsSigner, EsVerifier
 
 
 class ES256Verifier(EsVerifier):

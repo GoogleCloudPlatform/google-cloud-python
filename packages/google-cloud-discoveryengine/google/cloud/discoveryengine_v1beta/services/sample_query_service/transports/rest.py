@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.discoveryengine_v1beta._compat import transcode_request
 from google.cloud.discoveryengine_v1beta.types import (
     import_config,
     sample_query,
@@ -798,21 +799,18 @@ class SampleQueryServiceRestTransport(_BaseSampleQueryServiceRestTransport):
             """
 
             http_options = _BaseSampleQueryServiceRestTransport._BaseCreateSampleQuery._get_http_options()
-
             request, metadata = self._interceptor.pre_create_sample_query(
                 request, metadata
             )
-            transcoded_request = _BaseSampleQueryServiceRestTransport._BaseCreateSampleQuery._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSampleQueryServiceRestTransport._BaseCreateSampleQuery._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSampleQueryServiceRestTransport._BaseCreateSampleQuery._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSampleQueryServiceRestTransport._BaseCreateSampleQuery,
+                    "_BaseCreateSampleQuery__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -946,17 +944,18 @@ class SampleQueryServiceRestTransport(_BaseSampleQueryServiceRestTransport):
             """
 
             http_options = _BaseSampleQueryServiceRestTransport._BaseDeleteSampleQuery._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_sample_query(
                 request, metadata
             )
-            transcoded_request = _BaseSampleQueryServiceRestTransport._BaseDeleteSampleQuery._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSampleQueryServiceRestTransport._BaseDeleteSampleQuery._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSampleQueryServiceRestTransport._BaseDeleteSampleQuery,
+                    "_BaseDeleteSampleQuery__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1061,17 +1060,18 @@ class SampleQueryServiceRestTransport(_BaseSampleQueryServiceRestTransport):
             """
 
             http_options = _BaseSampleQueryServiceRestTransport._BaseGetSampleQuery._get_http_options()
-
             request, metadata = self._interceptor.pre_get_sample_query(
                 request, metadata
             )
-            transcoded_request = _BaseSampleQueryServiceRestTransport._BaseGetSampleQuery._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSampleQueryServiceRestTransport._BaseGetSampleQuery._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSampleQueryServiceRestTransport._BaseGetSampleQuery,
+                    "_BaseGetSampleQuery__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1212,21 +1212,18 @@ class SampleQueryServiceRestTransport(_BaseSampleQueryServiceRestTransport):
             """
 
             http_options = _BaseSampleQueryServiceRestTransport._BaseImportSampleQueries._get_http_options()
-
             request, metadata = self._interceptor.pre_import_sample_queries(
                 request, metadata
             )
-            transcoded_request = _BaseSampleQueryServiceRestTransport._BaseImportSampleQueries._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSampleQueryServiceRestTransport._BaseImportSampleQueries._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSampleQueryServiceRestTransport._BaseImportSampleQueries._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSampleQueryServiceRestTransport._BaseImportSampleQueries,
+                    "_BaseImportSampleQueries__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1367,17 +1364,18 @@ class SampleQueryServiceRestTransport(_BaseSampleQueryServiceRestTransport):
             """
 
             http_options = _BaseSampleQueryServiceRestTransport._BaseListSampleQueries._get_http_options()
-
             request, metadata = self._interceptor.pre_list_sample_queries(
                 request, metadata
             )
-            transcoded_request = _BaseSampleQueryServiceRestTransport._BaseListSampleQueries._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSampleQueryServiceRestTransport._BaseListSampleQueries._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSampleQueryServiceRestTransport._BaseListSampleQueries,
+                    "_BaseListSampleQueries__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1519,21 +1517,18 @@ class SampleQueryServiceRestTransport(_BaseSampleQueryServiceRestTransport):
             """
 
             http_options = _BaseSampleQueryServiceRestTransport._BaseUpdateSampleQuery._get_http_options()
-
             request, metadata = self._interceptor.pre_update_sample_query(
                 request, metadata
             )
-            transcoded_request = _BaseSampleQueryServiceRestTransport._BaseUpdateSampleQuery._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSampleQueryServiceRestTransport._BaseUpdateSampleQuery._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSampleQueryServiceRestTransport._BaseUpdateSampleQuery._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSampleQueryServiceRestTransport._BaseUpdateSampleQuery,
+                    "_BaseUpdateSampleQuery__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1727,21 +1722,18 @@ class SampleQueryServiceRestTransport(_BaseSampleQueryServiceRestTransport):
             """
 
             http_options = _BaseSampleQueryServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSampleQueryServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSampleQueryServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSampleQueryServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSampleQueryServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1848,15 +1840,16 @@ class SampleQueryServiceRestTransport(_BaseSampleQueryServiceRestTransport):
             """
 
             http_options = _BaseSampleQueryServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseSampleQueryServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSampleQueryServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSampleQueryServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1987,15 +1980,16 @@ class SampleQueryServiceRestTransport(_BaseSampleQueryServiceRestTransport):
             """
 
             http_options = _BaseSampleQueryServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseSampleQueryServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSampleQueryServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSampleQueryServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

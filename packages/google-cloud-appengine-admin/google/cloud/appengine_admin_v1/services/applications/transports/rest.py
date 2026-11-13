@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.appengine_admin_v1._compat import transcode_request
 from google.cloud.appengine_admin_v1.types import appengine, application
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -496,21 +497,18 @@ class ApplicationsRestTransport(_BaseApplicationsRestTransport):
             """
 
             http_options = _BaseApplicationsRestTransport._BaseCreateApplication._get_http_options()
-
             request, metadata = self._interceptor.pre_create_application(
                 request, metadata
             )
-            transcoded_request = _BaseApplicationsRestTransport._BaseCreateApplication._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApplicationsRestTransport._BaseCreateApplication._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApplicationsRestTransport._BaseCreateApplication._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApplicationsRestTransport._BaseCreateApplication,
+                    "_BaseCreateApplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -648,15 +646,16 @@ class ApplicationsRestTransport(_BaseApplicationsRestTransport):
             http_options = (
                 _BaseApplicationsRestTransport._BaseGetApplication._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_application(request, metadata)
-            transcoded_request = _BaseApplicationsRestTransport._BaseGetApplication._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApplicationsRestTransport._BaseGetApplication._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApplicationsRestTransport._BaseGetApplication,
+                    "_BaseGetApplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -795,21 +794,18 @@ class ApplicationsRestTransport(_BaseApplicationsRestTransport):
             """
 
             http_options = _BaseApplicationsRestTransport._BaseRepairApplication._get_http_options()
-
             request, metadata = self._interceptor.pre_repair_application(
                 request, metadata
             )
-            transcoded_request = _BaseApplicationsRestTransport._BaseRepairApplication._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApplicationsRestTransport._BaseRepairApplication._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApplicationsRestTransport._BaseRepairApplication._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApplicationsRestTransport._BaseRepairApplication,
+                    "_BaseRepairApplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -946,21 +942,18 @@ class ApplicationsRestTransport(_BaseApplicationsRestTransport):
             """
 
             http_options = _BaseApplicationsRestTransport._BaseUpdateApplication._get_http_options()
-
             request, metadata = self._interceptor.pre_update_application(
                 request, metadata
             )
-            transcoded_request = _BaseApplicationsRestTransport._BaseUpdateApplication._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseApplicationsRestTransport._BaseUpdateApplication._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseApplicationsRestTransport._BaseUpdateApplication._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseApplicationsRestTransport._BaseUpdateApplication,
+                    "_BaseUpdateApplication__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

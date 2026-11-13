@@ -79,7 +79,7 @@ def test_table_friendly_name_dialect_option(faux_conn):
     )
 
     assert " ".join(faux_conn.test_data["execute"][-1][0].strip().split()) == (
-        "CREATE TABLE `some_table` ( `id` INT64 )" " OPTIONS(friendly_name='bob')"
+        "CREATE TABLE `some_table` ( `id` INT64 ) OPTIONS(friendly_name='bob')"
     )
 
 

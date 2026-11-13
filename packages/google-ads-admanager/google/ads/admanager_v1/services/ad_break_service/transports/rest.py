@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import ad_break_messages, ad_break_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -523,19 +524,16 @@ class AdBreakServiceRestTransport(_BaseAdBreakServiceRestTransport):
             http_options = (
                 _BaseAdBreakServiceRestTransport._BaseCreateAdBreak._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_ad_break(request, metadata)
-            transcoded_request = _BaseAdBreakServiceRestTransport._BaseCreateAdBreak._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdBreakServiceRestTransport._BaseCreateAdBreak._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdBreakServiceRestTransport._BaseCreateAdBreak._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdBreakServiceRestTransport._BaseCreateAdBreak,
+                    "_BaseCreateAdBreak__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -668,15 +666,16 @@ class AdBreakServiceRestTransport(_BaseAdBreakServiceRestTransport):
             http_options = (
                 _BaseAdBreakServiceRestTransport._BaseDeleteAdBreak._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_ad_break(request, metadata)
-            transcoded_request = _BaseAdBreakServiceRestTransport._BaseDeleteAdBreak._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdBreakServiceRestTransport._BaseDeleteAdBreak._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdBreakServiceRestTransport._BaseDeleteAdBreak,
+                    "_BaseDeleteAdBreak__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -778,17 +777,16 @@ class AdBreakServiceRestTransport(_BaseAdBreakServiceRestTransport):
             http_options = (
                 _BaseAdBreakServiceRestTransport._BaseGetAdBreak._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_ad_break(request, metadata)
-            transcoded_request = _BaseAdBreakServiceRestTransport._BaseGetAdBreak._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseAdBreakServiceRestTransport._BaseGetAdBreak._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdBreakServiceRestTransport._BaseGetAdBreak,
+                    "_BaseGetAdBreak__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -926,15 +924,16 @@ class AdBreakServiceRestTransport(_BaseAdBreakServiceRestTransport):
             http_options = (
                 _BaseAdBreakServiceRestTransport._BaseListAdBreaks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_ad_breaks(request, metadata)
-            transcoded_request = _BaseAdBreakServiceRestTransport._BaseListAdBreaks._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdBreakServiceRestTransport._BaseListAdBreaks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdBreakServiceRestTransport._BaseListAdBreaks,
+                    "_BaseListAdBreaks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1073,19 +1072,16 @@ class AdBreakServiceRestTransport(_BaseAdBreakServiceRestTransport):
             http_options = (
                 _BaseAdBreakServiceRestTransport._BaseUpdateAdBreak._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_ad_break(request, metadata)
-            transcoded_request = _BaseAdBreakServiceRestTransport._BaseUpdateAdBreak._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAdBreakServiceRestTransport._BaseUpdateAdBreak._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdBreakServiceRestTransport._BaseUpdateAdBreak._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdBreakServiceRestTransport._BaseUpdateAdBreak,
+                    "_BaseUpdateAdBreak__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1262,17 +1258,18 @@ class AdBreakServiceRestTransport(_BaseAdBreakServiceRestTransport):
             """
 
             http_options = _BaseAdBreakServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAdBreakServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdBreakServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdBreakServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1379,15 +1376,16 @@ class AdBreakServiceRestTransport(_BaseAdBreakServiceRestTransport):
             http_options = (
                 _BaseAdBreakServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAdBreakServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAdBreakServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAdBreakServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

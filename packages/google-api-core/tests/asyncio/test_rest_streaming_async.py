@@ -28,7 +28,7 @@ except ImportError:  # pragma: NO COVER
     import mock  # type: ignore
 
 import proto
-import pytest  # noqa: I202
+import pytest
 
 try:
     from google.auth.aio.transport import Response

@@ -19,8 +19,7 @@ from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import exceptions
-from google.auth import pluggable
+from google.auth import exceptions, pluggable
 from google.auth.credentials import DEFAULT_UNIVERSE_DOMAIN
 from tests.test__default import WORKFORCE_AUDIENCE
 

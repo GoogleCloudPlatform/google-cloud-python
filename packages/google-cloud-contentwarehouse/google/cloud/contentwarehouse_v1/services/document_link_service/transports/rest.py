@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.contentwarehouse_v1._compat import transcode_request
 from google.cloud.contentwarehouse_v1.types import document_link_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -458,21 +459,18 @@ class DocumentLinkServiceRestTransport(_BaseDocumentLinkServiceRestTransport):
             """
 
             http_options = _BaseDocumentLinkServiceRestTransport._BaseCreateDocumentLink._get_http_options()
-
             request, metadata = self._interceptor.pre_create_document_link(
                 request, metadata
             )
-            transcoded_request = _BaseDocumentLinkServiceRestTransport._BaseCreateDocumentLink._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDocumentLinkServiceRestTransport._BaseCreateDocumentLink._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDocumentLinkServiceRestTransport._BaseCreateDocumentLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDocumentLinkServiceRestTransport._BaseCreateDocumentLink,
+                    "_BaseCreateDocumentLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -610,21 +608,18 @@ class DocumentLinkServiceRestTransport(_BaseDocumentLinkServiceRestTransport):
             """
 
             http_options = _BaseDocumentLinkServiceRestTransport._BaseDeleteDocumentLink._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_document_link(
                 request, metadata
             )
-            transcoded_request = _BaseDocumentLinkServiceRestTransport._BaseDeleteDocumentLink._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDocumentLinkServiceRestTransport._BaseDeleteDocumentLink._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDocumentLinkServiceRestTransport._BaseDeleteDocumentLink._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDocumentLinkServiceRestTransport._BaseDeleteDocumentLink,
+                    "_BaseDeleteDocumentLink__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -732,21 +727,18 @@ class DocumentLinkServiceRestTransport(_BaseDocumentLinkServiceRestTransport):
             """
 
             http_options = _BaseDocumentLinkServiceRestTransport._BaseListLinkedSources._get_http_options()
-
             request, metadata = self._interceptor.pre_list_linked_sources(
                 request, metadata
             )
-            transcoded_request = _BaseDocumentLinkServiceRestTransport._BaseListLinkedSources._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDocumentLinkServiceRestTransport._BaseListLinkedSources._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDocumentLinkServiceRestTransport._BaseListLinkedSources._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDocumentLinkServiceRestTransport._BaseListLinkedSources,
+                    "_BaseListLinkedSources__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -892,21 +884,18 @@ class DocumentLinkServiceRestTransport(_BaseDocumentLinkServiceRestTransport):
             """
 
             http_options = _BaseDocumentLinkServiceRestTransport._BaseListLinkedTargets._get_http_options()
-
             request, metadata = self._interceptor.pre_list_linked_targets(
                 request, metadata
             )
-            transcoded_request = _BaseDocumentLinkServiceRestTransport._BaseListLinkedTargets._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDocumentLinkServiceRestTransport._BaseListLinkedTargets._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDocumentLinkServiceRestTransport._BaseListLinkedTargets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDocumentLinkServiceRestTransport._BaseListLinkedTargets,
+                    "_BaseListLinkedTargets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1092,15 +1081,16 @@ class DocumentLinkServiceRestTransport(_BaseDocumentLinkServiceRestTransport):
             """
 
             http_options = _BaseDocumentLinkServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseDocumentLinkServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDocumentLinkServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDocumentLinkServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

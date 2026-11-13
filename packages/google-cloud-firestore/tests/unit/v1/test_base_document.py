@@ -247,6 +247,30 @@ def test_documentsnapshot_constructor():
     assert snapshot.update_time is mock.sentinel.update_time
 
 
+def test_documentsnapshot_generic_typing():
+    from typing import get_args, get_origin
+
+    from google.cloud.firestore_v1.async_document import AsyncDocumentReference
+    from google.cloud.firestore_v1.base_document import (
+        BaseDocumentReference,
+        DocRefType,
+    )
+    from google.cloud.firestore_v1.document import (
+        DocumentReference,
+        DocumentSnapshot,
+    )
+
+    assert DocRefType.__bound__ is BaseDocumentReference
+
+    sync_snapshot_type = DocumentSnapshot[DocumentReference]
+    assert get_origin(sync_snapshot_type) is DocumentSnapshot
+    assert get_args(sync_snapshot_type) == (DocumentReference,)
+
+    async_snapshot_type = DocumentSnapshot[AsyncDocumentReference]
+    assert get_origin(async_snapshot_type) is DocumentSnapshot
+    assert get_args(async_snapshot_type) == (AsyncDocumentReference,)
+
+
 def test_documentsnapshot___eq___other_type():
     snapshot = _make_w_ref()
     other = object()

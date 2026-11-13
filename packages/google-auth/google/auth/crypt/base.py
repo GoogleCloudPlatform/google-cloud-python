@@ -103,7 +103,7 @@ class FromServiceAccountMixin(metaclass=abc.ABCMeta):
         """
         if _JSON_FILE_PRIVATE_KEY not in info:
             raise exceptions.MalformedError(
-                "The private_key field was not found in the service account " "info."
+                "The private_key field was not found in the service account info."
             )
 
         return cls.from_string(

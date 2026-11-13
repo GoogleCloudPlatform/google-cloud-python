@@ -4,6 +4,28 @@
 
 [1]: https://pypi.org/project/google-cloud-kms/#history
 
+## [3.19.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-kms-v3.18.0...google-cloud-kms-v3.19.0) (2026-11-12)
+
+
+### Features
+
+* update API sources and regenerate ([#19036](https://github.com/googleapis/google-cloud-python/issues/19036)) ([b64a9e5](https://github.com/googleapis/google-cloud-python/commit/b64a9e51a22810d4e3b4c44b13847eb96c604628))
+
+## [3.18.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-kms-v3.17.0...google-cloud-kms-v3.18.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [3.17.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-kms-v3.16.0...google-cloud-kms-v3.17.0) (2026-09-17)
+
+
+### Features
+
+* update API sources and regenerate ([#18396](https://github.com/googleapis/google-cloud-python/issues/18396)) ([e9f8e59](https://github.com/googleapis/google-cloud-python/commit/e9f8e590b7b395e660cc5437535166dfb920d246))
+* update API sources and regenerate. ([e9f8e59](https://github.com/googleapis/google-cloud-python/commit/e9f8e590b7b395e660cc5437535166dfb920d246))
+
 ## [3.16.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-kms-v3.15.0...google-cloud-kms-v3.16.0) (2026-07-16)
 
 

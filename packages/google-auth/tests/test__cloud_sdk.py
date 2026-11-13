@@ -21,10 +21,7 @@ from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import _cloud_sdk
-from google.auth import environment_vars
-from google.auth import exceptions
-
+from google.auth import _cloud_sdk, environment_vars, exceptions
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 AUTHORIZED_USER_FILE = os.path.join(DATA_DIR, "authorized_user.json")

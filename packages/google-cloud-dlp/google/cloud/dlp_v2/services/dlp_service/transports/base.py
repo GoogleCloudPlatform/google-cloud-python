@@ -737,6 +737,31 @@ class DlpServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.create_content_policy: gapic_v1.method.wrap_method(
+                self.create_content_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_content_policy: gapic_v1.method.wrap_method(
+                self.update_content_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_content_policy: gapic_v1.method.wrap_method(
+                self.get_content_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_content_policies: gapic_v1.method.wrap_method(
+                self.list_content_policies,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_content_policy: gapic_v1.method.wrap_method(
+                self.delete_content_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
         }
 
     def close(self):
@@ -1247,6 +1272,53 @@ class DlpServiceTransport(abc.ABC):
         self,
     ) -> Callable[
         [dlp.UpdateConnectionRequest], Union[dlp.Connection, Awaitable[dlp.Connection]]
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_content_policy(
+        self,
+    ) -> Callable[
+        [dlp.CreateContentPolicyRequest],
+        Union[dlp.ContentPolicy, Awaitable[dlp.ContentPolicy]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_content_policy(
+        self,
+    ) -> Callable[
+        [dlp.UpdateContentPolicyRequest],
+        Union[dlp.ContentPolicy, Awaitable[dlp.ContentPolicy]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_content_policy(
+        self,
+    ) -> Callable[
+        [dlp.GetContentPolicyRequest],
+        Union[dlp.ContentPolicy, Awaitable[dlp.ContentPolicy]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_content_policies(
+        self,
+    ) -> Callable[
+        [dlp.ListContentPoliciesRequest],
+        Union[
+            dlp.ListContentPoliciesResponse, Awaitable[dlp.ListContentPoliciesResponse]
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_content_policy(
+        self,
+    ) -> Callable[
+        [dlp.DeleteContentPolicyRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
     ]:
         raise NotImplementedError()
 

@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.vmwareengine_v1._compat import transcode_request
 from google.cloud.vmwareengine_v1.types import vmwareengine, vmwareengine_resources
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -4732,19 +4733,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseCreateCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_cluster(request, metadata)
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseCreateCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseCreateCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseCreateCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseCreateCluster,
+                    "_BaseCreateCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4884,21 +4882,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseCreateExternalAccessRule._get_http_options()
-
             request, metadata = self._interceptor.pre_create_external_access_rule(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseCreateExternalAccessRule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseCreateExternalAccessRule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseCreateExternalAccessRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseCreateExternalAccessRule,
+                    "_BaseCreateExternalAccessRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5038,21 +5033,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseCreateExternalAddress._get_http_options()
-
             request, metadata = self._interceptor.pre_create_external_address(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseCreateExternalAddress._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseCreateExternalAddress._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseCreateExternalAddress._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseCreateExternalAddress,
+                    "_BaseCreateExternalAddress__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5190,21 +5182,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseCreateHcxActivationKey._get_http_options()
-
             request, metadata = self._interceptor.pre_create_hcx_activation_key(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseCreateHcxActivationKey._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseCreateHcxActivationKey._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseCreateHcxActivationKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseCreateHcxActivationKey,
+                    "_BaseCreateHcxActivationKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5342,21 +5331,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseCreateLoggingServer._get_http_options()
-
             request, metadata = self._interceptor.pre_create_logging_server(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseCreateLoggingServer._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseCreateLoggingServer._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseCreateLoggingServer._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseCreateLoggingServer,
+                    "_BaseCreateLoggingServer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5496,23 +5482,20 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseCreateManagementDnsZoneBinding._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_create_management_dns_zone_binding(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseCreateManagementDnsZoneBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseCreateManagementDnsZoneBinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseCreateManagementDnsZoneBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseCreateManagementDnsZoneBinding,
+                    "_BaseCreateManagementDnsZoneBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5654,21 +5637,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseCreateNetworkPeering._get_http_options()
-
             request, metadata = self._interceptor.pre_create_network_peering(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseCreateNetworkPeering._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseCreateNetworkPeering._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseCreateNetworkPeering._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseCreateNetworkPeering,
+                    "_BaseCreateNetworkPeering__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5806,21 +5786,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseCreateNetworkPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_create_network_policy(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseCreateNetworkPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseCreateNetworkPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseCreateNetworkPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseCreateNetworkPolicy,
+                    "_BaseCreateNetworkPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5958,21 +5935,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseCreatePrivateCloud._get_http_options()
-
             request, metadata = self._interceptor.pre_create_private_cloud(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseCreatePrivateCloud._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseCreatePrivateCloud._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseCreatePrivateCloud._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseCreatePrivateCloud,
+                    "_BaseCreatePrivateCloud__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6111,21 +6085,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseCreatePrivateConnection._get_http_options()
-
             request, metadata = self._interceptor.pre_create_private_connection(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseCreatePrivateConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseCreatePrivateConnection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseCreatePrivateConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseCreatePrivateConnection,
+                    "_BaseCreatePrivateConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6265,21 +6236,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseCreateVmwareEngineNetwork._get_http_options()
-
             request, metadata = self._interceptor.pre_create_vmware_engine_network(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseCreateVmwareEngineNetwork._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseCreateVmwareEngineNetwork._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseCreateVmwareEngineNetwork._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseCreateVmwareEngineNetwork,
+                    "_BaseCreateVmwareEngineNetwork__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6420,15 +6388,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseDeleteCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_cluster(request, metadata)
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseDeleteCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseDeleteCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseDeleteCluster,
+                    "_BaseDeleteCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6566,17 +6535,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseDeleteExternalAccessRule._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_external_access_rule(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseDeleteExternalAccessRule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseDeleteExternalAccessRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseDeleteExternalAccessRule,
+                    "_BaseDeleteExternalAccessRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6714,17 +6684,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseDeleteExternalAddress._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_external_address(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseDeleteExternalAddress._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseDeleteExternalAddress._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseDeleteExternalAddress,
+                    "_BaseDeleteExternalAddress__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6860,17 +6831,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseDeleteLoggingServer._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_logging_server(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseDeleteLoggingServer._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseDeleteLoggingServer._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseDeleteLoggingServer,
+                    "_BaseDeleteLoggingServer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7008,19 +6980,20 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseDeleteManagementDnsZoneBinding._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_delete_management_dns_zone_binding(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseDeleteManagementDnsZoneBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseDeleteManagementDnsZoneBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseDeleteManagementDnsZoneBinding,
+                    "_BaseDeleteManagementDnsZoneBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7160,17 +7133,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseDeleteNetworkPeering._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_network_peering(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseDeleteNetworkPeering._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseDeleteNetworkPeering._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseDeleteNetworkPeering,
+                    "_BaseDeleteNetworkPeering__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7306,17 +7280,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseDeleteNetworkPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_network_policy(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseDeleteNetworkPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseDeleteNetworkPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseDeleteNetworkPolicy,
+                    "_BaseDeleteNetworkPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7452,17 +7427,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseDeletePrivateCloud._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_private_cloud(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseDeletePrivateCloud._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseDeletePrivateCloud._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseDeletePrivateCloud,
+                    "_BaseDeletePrivateCloud__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7599,17 +7575,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseDeletePrivateConnection._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_private_connection(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseDeletePrivateConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseDeletePrivateConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseDeletePrivateConnection,
+                    "_BaseDeletePrivateConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7747,17 +7724,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseDeleteVmwareEngineNetwork._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_vmware_engine_network(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseDeleteVmwareEngineNetwork._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseDeleteVmwareEngineNetwork._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseDeleteVmwareEngineNetwork,
+                    "_BaseDeleteVmwareEngineNetwork__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7896,19 +7874,20 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseFetchNetworkPolicyExternalAddresses._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_fetch_network_policy_external_addresses(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseFetchNetworkPolicyExternalAddresses._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseFetchNetworkPolicyExternalAddresses._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseFetchNetworkPolicyExternalAddresses,
+                    "_BaseFetchNetworkPolicyExternalAddresses__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8049,19 +8028,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseGetCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_cluster(request, metadata)
-            transcoded_request = (
-                _BaseVmwareEngineRestTransport._BaseGetCluster._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmwareEngineRestTransport._BaseGetCluster._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetCluster,
+                    "_BaseGetCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8201,17 +8177,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseGetDnsBindPermission._get_http_options()
-
             request, metadata = self._interceptor.pre_get_dns_bind_permission(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetDnsBindPermission._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGetDnsBindPermission._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetDnsBindPermission,
+                    "_BaseGetDnsBindPermission__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8355,17 +8332,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseGetDnsForwarding._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_dns_forwarding(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetDnsForwarding._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGetDnsForwarding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetDnsForwarding,
+                    "_BaseGetDnsForwarding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8504,17 +8482,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseGetExternalAccessRule._get_http_options()
-
             request, metadata = self._interceptor.pre_get_external_access_rule(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetExternalAccessRule._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGetExternalAccessRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetExternalAccessRule,
+                    "_BaseGetExternalAccessRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8654,17 +8633,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseGetExternalAddress._get_http_options()
-
             request, metadata = self._interceptor.pre_get_external_address(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetExternalAddress._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGetExternalAddress._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetExternalAddress,
+                    "_BaseGetExternalAddress__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8808,17 +8788,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseGetHcxActivationKey._get_http_options()
-
             request, metadata = self._interceptor.pre_get_hcx_activation_key(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetHcxActivationKey._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGetHcxActivationKey._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetHcxActivationKey,
+                    "_BaseGetHcxActivationKey__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8959,17 +8940,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseGetLoggingServer._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_logging_server(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetLoggingServer._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGetLoggingServer._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetLoggingServer,
+                    "_BaseGetLoggingServer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9117,17 +9099,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseGetManagementDnsZoneBinding._get_http_options()
-
             request, metadata = self._interceptor.pre_get_management_dns_zone_binding(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetManagementDnsZoneBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGetManagementDnsZoneBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetManagementDnsZoneBinding,
+                    "_BaseGetManagementDnsZoneBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9270,17 +9253,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseGetNetworkPeering._get_http_options()
-
             request, metadata = self._interceptor.pre_get_network_peering(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetNetworkPeering._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGetNetworkPeering._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetNetworkPeering,
+                    "_BaseGetNetworkPeering__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9430,17 +9414,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseGetNetworkPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_network_policy(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetNetworkPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGetNetworkPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetNetworkPolicy,
+                    "_BaseGetNetworkPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9577,19 +9562,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseGetNode._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_node(request, metadata)
-            transcoded_request = (
-                _BaseVmwareEngineRestTransport._BaseGetNode._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmwareEngineRestTransport._BaseGetNode._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetNode,
+                    "_BaseGetNode__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9726,19 +9708,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseGetNodeType._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_node_type(request, metadata)
-            transcoded_request = (
-                _BaseVmwareEngineRestTransport._BaseGetNodeType._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmwareEngineRestTransport._BaseGetNodeType._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetNodeType,
+                    "_BaseGetNodeType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -9878,17 +9857,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseGetPrivateCloud._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_private_cloud(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetPrivateCloud._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGetPrivateCloud._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetPrivateCloud,
+                    "_BaseGetPrivateCloud__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10028,17 +10008,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseGetPrivateConnection._get_http_options()
-
             request, metadata = self._interceptor.pre_get_private_connection(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetPrivateConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGetPrivateConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetPrivateConnection,
+                    "_BaseGetPrivateConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10180,19 +10161,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseGetSubnet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_subnet(request, metadata)
-            transcoded_request = (
-                _BaseVmwareEngineRestTransport._BaseGetSubnet._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmwareEngineRestTransport._BaseGetSubnet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetSubnet,
+                    "_BaseGetSubnet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10330,17 +10308,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseGetVmwareEngineNetwork._get_http_options()
-
             request, metadata = self._interceptor.pre_get_vmware_engine_network(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetVmwareEngineNetwork._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGetVmwareEngineNetwork._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetVmwareEngineNetwork,
+                    "_BaseGetVmwareEngineNetwork__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10481,21 +10460,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseGrantDnsBindPermission._get_http_options()
-
             request, metadata = self._interceptor.pre_grant_dns_bind_permission(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGrantDnsBindPermission._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseGrantDnsBindPermission._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseGrantDnsBindPermission._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGrantDnsBindPermission,
+                    "_BaseGrantDnsBindPermission__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10633,17 +10609,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseListClusters._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_clusters(request, metadata)
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListClusters._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmwareEngineRestTransport._BaseListClusters._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListClusters,
+                    "_BaseListClusters__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10784,17 +10759,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseListExternalAccessRules._get_http_options()
-
             request, metadata = self._interceptor.pre_list_external_access_rules(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListExternalAccessRules._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListExternalAccessRules._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListExternalAccessRules,
+                    "_BaseListExternalAccessRules__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -10933,17 +10909,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseListExternalAddresses._get_http_options()
-
             request, metadata = self._interceptor.pre_list_external_addresses(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListExternalAddresses._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListExternalAddresses._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListExternalAddresses,
+                    "_BaseListExternalAddresses__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11082,17 +11059,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseListHcxActivationKeys._get_http_options()
-
             request, metadata = self._interceptor.pre_list_hcx_activation_keys(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListHcxActivationKeys._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListHcxActivationKeys._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListHcxActivationKeys,
+                    "_BaseListHcxActivationKeys__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11231,17 +11209,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseListLoggingServers._get_http_options()
-
             request, metadata = self._interceptor.pre_list_logging_servers(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListLoggingServers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListLoggingServers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListLoggingServers,
+                    "_BaseListLoggingServers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11382,17 +11361,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseListManagementDnsZoneBindings._get_http_options()
-
             request, metadata = self._interceptor.pre_list_management_dns_zone_bindings(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListManagementDnsZoneBindings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListManagementDnsZoneBindings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListManagementDnsZoneBindings,
+                    "_BaseListManagementDnsZoneBindings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11537,17 +11517,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseListNetworkPeerings._get_http_options()
-
             request, metadata = self._interceptor.pre_list_network_peerings(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListNetworkPeerings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListNetworkPeerings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListNetworkPeerings,
+                    "_BaseListNetworkPeerings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11686,17 +11667,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseListNetworkPolicies._get_http_options()
-
             request, metadata = self._interceptor.pre_list_network_policies(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListNetworkPolicies._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListNetworkPolicies._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListNetworkPolicies,
+                    "_BaseListNetworkPolicies__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11837,19 +11819,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseListNodes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_nodes(request, metadata)
-            transcoded_request = (
-                _BaseVmwareEngineRestTransport._BaseListNodes._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmwareEngineRestTransport._BaseListNodes._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListNodes,
+                    "_BaseListNodes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -11988,15 +11967,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseListNodeTypes._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_node_types(request, metadata)
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListNodeTypes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListNodeTypes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListNodeTypes,
+                    "_BaseListNodeTypes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12135,17 +12115,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseListPeeringRoutes._get_http_options()
-
             request, metadata = self._interceptor.pre_list_peering_routes(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListPeeringRoutes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListPeeringRoutes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListPeeringRoutes,
+                    "_BaseListPeeringRoutes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12284,17 +12265,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseListPrivateClouds._get_http_options()
-
             request, metadata = self._interceptor.pre_list_private_clouds(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListPrivateClouds._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListPrivateClouds._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListPrivateClouds,
+                    "_BaseListPrivateClouds__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12435,19 +12417,20 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseListPrivateConnectionPeeringRoutes._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_list_private_connection_peering_routes(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListPrivateConnectionPeeringRoutes._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListPrivateConnectionPeeringRoutes._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListPrivateConnectionPeeringRoutes,
+                    "_BaseListPrivateConnectionPeeringRoutes__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12590,17 +12573,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseListPrivateConnections._get_http_options()
-
             request, metadata = self._interceptor.pre_list_private_connections(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListPrivateConnections._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListPrivateConnections._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListPrivateConnections,
+                    "_BaseListPrivateConnections__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12741,19 +12725,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseListSubnets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_subnets(request, metadata)
-            transcoded_request = (
-                _BaseVmwareEngineRestTransport._BaseListSubnets._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmwareEngineRestTransport._BaseListSubnets._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListSubnets,
+                    "_BaseListSubnets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -12894,17 +12875,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseListVmwareEngineNetworks._get_http_options()
-
             request, metadata = self._interceptor.pre_list_vmware_engine_networks(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListVmwareEngineNetworks._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListVmwareEngineNetworks._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListVmwareEngineNetworks,
+                    "_BaseListVmwareEngineNetworks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13049,23 +13031,20 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseRepairManagementDnsZoneBinding._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_repair_management_dns_zone_binding(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseRepairManagementDnsZoneBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseRepairManagementDnsZoneBinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseRepairManagementDnsZoneBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseRepairManagementDnsZoneBinding,
+                    "_BaseRepairManagementDnsZoneBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13207,21 +13186,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseResetNsxCredentials._get_http_options()
-
             request, metadata = self._interceptor.pre_reset_nsx_credentials(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseResetNsxCredentials._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseResetNsxCredentials._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseResetNsxCredentials._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseResetNsxCredentials,
+                    "_BaseResetNsxCredentials__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13360,21 +13336,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseResetVcenterCredentials._get_http_options()
-
             request, metadata = self._interceptor.pre_reset_vcenter_credentials(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseResetVcenterCredentials._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseResetVcenterCredentials._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseResetVcenterCredentials._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseResetVcenterCredentials,
+                    "_BaseResetVcenterCredentials__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13514,21 +13487,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseRevokeDnsBindPermission._get_http_options()
-
             request, metadata = self._interceptor.pre_revoke_dns_bind_permission(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseRevokeDnsBindPermission._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseRevokeDnsBindPermission._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseRevokeDnsBindPermission._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseRevokeDnsBindPermission,
+                    "_BaseRevokeDnsBindPermission__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13662,17 +13632,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseShowNsxCredentials._get_http_options()
-
             request, metadata = self._interceptor.pre_show_nsx_credentials(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseShowNsxCredentials._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseShowNsxCredentials._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseShowNsxCredentials,
+                    "_BaseShowNsxCredentials__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13809,17 +13780,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseShowVcenterCredentials._get_http_options()
-
             request, metadata = self._interceptor.pre_show_vcenter_credentials(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseShowVcenterCredentials._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseShowVcenterCredentials._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseShowVcenterCredentials,
+                    "_BaseShowVcenterCredentials__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -13960,21 +13932,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseUndeletePrivateCloud._get_http_options()
-
             request, metadata = self._interceptor.pre_undelete_private_cloud(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUndeletePrivateCloud._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseUndeletePrivateCloud._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseUndeletePrivateCloud._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUndeletePrivateCloud,
+                    "_BaseUndeletePrivateCloud__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14114,19 +14083,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseUpdateCluster._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_cluster(request, metadata)
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUpdateCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseUpdateCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseUpdateCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUpdateCluster,
+                    "_BaseUpdateCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14264,21 +14230,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseUpdateDnsForwarding._get_http_options()
-
             request, metadata = self._interceptor.pre_update_dns_forwarding(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUpdateDnsForwarding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseUpdateDnsForwarding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseUpdateDnsForwarding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUpdateDnsForwarding,
+                    "_BaseUpdateDnsForwarding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14418,21 +14381,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseUpdateExternalAccessRule._get_http_options()
-
             request, metadata = self._interceptor.pre_update_external_access_rule(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUpdateExternalAccessRule._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseUpdateExternalAccessRule._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseUpdateExternalAccessRule._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUpdateExternalAccessRule,
+                    "_BaseUpdateExternalAccessRule__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14572,21 +14532,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseUpdateExternalAddress._get_http_options()
-
             request, metadata = self._interceptor.pre_update_external_address(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUpdateExternalAddress._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseUpdateExternalAddress._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseUpdateExternalAddress._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUpdateExternalAddress,
+                    "_BaseUpdateExternalAddress__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14724,21 +14681,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseUpdateLoggingServer._get_http_options()
-
             request, metadata = self._interceptor.pre_update_logging_server(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUpdateLoggingServer._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseUpdateLoggingServer._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseUpdateLoggingServer._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUpdateLoggingServer,
+                    "_BaseUpdateLoggingServer__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -14878,23 +14832,20 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseUpdateManagementDnsZoneBinding._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_update_management_dns_zone_binding(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUpdateManagementDnsZoneBinding._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseUpdateManagementDnsZoneBinding._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseUpdateManagementDnsZoneBinding._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUpdateManagementDnsZoneBinding,
+                    "_BaseUpdateManagementDnsZoneBinding__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -15036,21 +14987,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseUpdateNetworkPeering._get_http_options()
-
             request, metadata = self._interceptor.pre_update_network_peering(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUpdateNetworkPeering._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseUpdateNetworkPeering._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseUpdateNetworkPeering._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUpdateNetworkPeering,
+                    "_BaseUpdateNetworkPeering__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -15188,21 +15136,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseUpdateNetworkPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_update_network_policy(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUpdateNetworkPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseUpdateNetworkPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseUpdateNetworkPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUpdateNetworkPolicy,
+                    "_BaseUpdateNetworkPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -15340,21 +15285,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseUpdatePrivateCloud._get_http_options()
-
             request, metadata = self._interceptor.pre_update_private_cloud(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUpdatePrivateCloud._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseUpdatePrivateCloud._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseUpdatePrivateCloud._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUpdatePrivateCloud,
+                    "_BaseUpdatePrivateCloud__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -15493,21 +15435,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseUpdatePrivateConnection._get_http_options()
-
             request, metadata = self._interceptor.pre_update_private_connection(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUpdatePrivateConnection._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseUpdatePrivateConnection._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseUpdatePrivateConnection._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUpdatePrivateConnection,
+                    "_BaseUpdatePrivateConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -15647,23 +15586,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseUpdateSubnet._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_subnet(request, metadata)
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUpdateSubnet._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseVmwareEngineRestTransport._BaseUpdateSubnet._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmwareEngineRestTransport._BaseUpdateSubnet._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUpdateSubnet,
+                    "_BaseUpdateSubnet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -15803,21 +15735,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseUpdateVmwareEngineNetwork._get_http_options()
-
             request, metadata = self._interceptor.pre_update_vmware_engine_network(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseUpdateVmwareEngineNetwork._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseUpdateVmwareEngineNetwork._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseUpdateVmwareEngineNetwork._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseUpdateVmwareEngineNetwork,
+                    "_BaseUpdateVmwareEngineNetwork__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -16716,19 +16645,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseVmwareEngineRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmwareEngineRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -16860,15 +16786,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -17000,17 +16927,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmwareEngineRestTransport._BaseGetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -17143,23 +17069,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = (
-                _BaseVmwareEngineRestTransport._BaseSetIamPolicy._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmwareEngineRestTransport._BaseSetIamPolicy._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -17291,21 +17210,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             """
 
             http_options = _BaseVmwareEngineRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVmwareEngineRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -17435,17 +17351,18 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseDeleteOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -17552,17 +17469,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseVmwareEngineRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -17694,15 +17610,16 @@ class VmwareEngineRestTransport(_BaseVmwareEngineRestTransport):
             http_options = (
                 _BaseVmwareEngineRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseVmwareEngineRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVmwareEngineRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVmwareEngineRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

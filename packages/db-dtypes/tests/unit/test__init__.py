@@ -44,9 +44,10 @@ def test_check_python_version_warns_on_unsupported(mock_version_tuple, version_s
     mock_version = VersionInfo(*mock_version_tuple)
 
     # Mock sys.version_info and warnings.warn
-    with mock.patch("sys.version_info", new=mock_version), mock.patch(
-        MOCK_WARN
-    ) as mock_warn_call:
+    with (
+        mock.patch("sys.version_info", new=mock_version),
+        mock.patch(MOCK_WARN) as mock_warn_call,
+    ):
         _check_python_version()  # Call the function
 
         # Assert that warnings.warn was called exactly once
@@ -83,9 +84,10 @@ def test_check_python_version_does_not_warn_on_supported(mock_version_tuple):
     mock_version = VersionInfo(*mock_version_tuple)
 
     # Mock sys.version_info and warnings.warn
-    with mock.patch("sys.version_info", new=mock_version), mock.patch(
-        MOCK_WARN
-    ) as mock_warn_call:
+    with (
+        mock.patch("sys.version_info", new=mock_version),
+        mock.patch(MOCK_WARN) as mock_warn_call,
+    ):
         _check_python_version()
 
         # Assert that warnings.warn was NOT called

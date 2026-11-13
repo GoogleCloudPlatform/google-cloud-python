@@ -1066,6 +1066,19 @@ class API:
         )
 
     @cached_property
+    def has_resumable_upload_methods(self) -> bool:
+        """Return whether any service in the API has resumable upload methods.
+
+        Used in package-level templates (such as setup.py.j2) where the full API
+        is in scope rather than an individual service, to determine whether the
+        generated package requires resumable upload dependencies.
+        """
+        return any(
+            service.has_resumable_upload_methods
+            for service in self.services.values()
+        )
+
+    @cached_property
     def _has_iam_overrides(self) -> bool:
         if not self.has_iam_mixin:
             return False
@@ -1651,6 +1664,7 @@ class _ProtoBuilder:
                 output=self.api_messages[meth_pb.output_type.lstrip(".")],
                 retry=retry,
                 timeout=timeout,
+                resumable_upload_prefix=self.opts.resumable_upload_prefix,
             )
 
         # Done; return the answer.

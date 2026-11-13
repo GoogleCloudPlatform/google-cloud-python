@@ -31,6 +31,7 @@ __protobuf__ = proto.module(
         "CreateBackupRequest",
         "DeleteBackupRequest",
         "UpdateBackupRequest",
+        "OntapSource",
     },
 )
 
@@ -59,9 +60,10 @@ class Backup(proto.Message):
             Output only. Type of backup, manually created
             or created by a backup policy.
         source_volume (str):
-            Volume full name of this backup belongs to. Either
-            source_volume or ontap_source should be provided. Format:
-            ``projects/{projects_id}/locations/{location}/volumes/{volume_id}``
+            The resource name of the volume that this backup belongs to.
+            You must provide either ``source_volume`` or
+            ``ontap_source``. Format:
+            ``projects/{project_id}/locations/{location}/volumes/{volume_id}``
         source_snapshot (str):
             If specified, backup will be created from the given
             snapshot. If not specified, there will be a new snapshot
@@ -93,6 +95,9 @@ class Backup(proto.Message):
         enforced_retention_end_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The time until which the backup
             is not deletable.
+        ontap_source (google.cloud.netapp_v1.types.OntapSource):
+            Optional. Represents source details for ONTAP backups.
+            Either source_volume or ontap_source should be provided.
     """
 
     class State(proto.Enum):
@@ -211,6 +216,11 @@ class Backup(proto.Message):
         proto.MESSAGE,
         number=15,
         message=timestamp_pb2.Timestamp,
+    )
+    ontap_source: "OntapSource" = proto.Field(
+        proto.MESSAGE,
+        number=16,
+        message="OntapSource",
     )
 
 
@@ -391,6 +401,41 @@ class UpdateBackupRequest(proto.Message):
         proto.MESSAGE,
         number=2,
         message="Backup",
+    )
+
+
+class OntapSource(proto.Message):
+    r"""Represents ONTAP source details.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        storage_pool (str):
+            Required. Name of the storage pool. This must be specified
+            for creating backups for ONTAP mode volumes. Format:
+            ``projects/{projects_id}/locations/{location}/storagePools/{storage_pool_id}``
+
+            This field is a member of `oneof`_ ``_storage_pool``.
+        volume_uuid (str):
+            Required. The UUID of the ONTAP source
+            volume.
+        snapshot_uuid (str):
+            Optional. The UUID of the ONTAP source
+            snapshot.
+    """
+
+    storage_pool: str = proto.Field(
+        proto.STRING,
+        number=1,
+        optional=True,
+    )
+    volume_uuid: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    snapshot_uuid: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

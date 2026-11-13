@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     suggested_ad_unit_messages,
     suggested_ad_unit_service,
@@ -466,21 +467,18 @@ class SuggestedAdUnitServiceRestTransport(_BaseSuggestedAdUnitServiceRestTranspo
             """
 
             http_options = _BaseSuggestedAdUnitServiceRestTransport._BaseBatchApproveSuggestedAdUnits._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_approve_suggested_ad_units(
                 request, metadata
             )
-            transcoded_request = _BaseSuggestedAdUnitServiceRestTransport._BaseBatchApproveSuggestedAdUnits._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseSuggestedAdUnitServiceRestTransport._BaseBatchApproveSuggestedAdUnits._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSuggestedAdUnitServiceRestTransport._BaseBatchApproveSuggestedAdUnits._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSuggestedAdUnitServiceRestTransport._BaseBatchApproveSuggestedAdUnits,
+                    "_BaseBatchApproveSuggestedAdUnits__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -626,17 +624,18 @@ class SuggestedAdUnitServiceRestTransport(_BaseSuggestedAdUnitServiceRestTranspo
             """
 
             http_options = _BaseSuggestedAdUnitServiceRestTransport._BaseGetSuggestedAdUnit._get_http_options()
-
             request, metadata = self._interceptor.pre_get_suggested_ad_unit(
                 request, metadata
             )
-            transcoded_request = _BaseSuggestedAdUnitServiceRestTransport._BaseGetSuggestedAdUnit._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSuggestedAdUnitServiceRestTransport._BaseGetSuggestedAdUnit._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSuggestedAdUnitServiceRestTransport._BaseGetSuggestedAdUnit,
+                    "_BaseGetSuggestedAdUnit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -777,17 +776,18 @@ class SuggestedAdUnitServiceRestTransport(_BaseSuggestedAdUnitServiceRestTranspo
             """
 
             http_options = _BaseSuggestedAdUnitServiceRestTransport._BaseListSuggestedAdUnits._get_http_options()
-
             request, metadata = self._interceptor.pre_list_suggested_ad_units(
                 request, metadata
             )
-            transcoded_request = _BaseSuggestedAdUnitServiceRestTransport._BaseListSuggestedAdUnits._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSuggestedAdUnitServiceRestTransport._BaseListSuggestedAdUnits._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSuggestedAdUnitServiceRestTransport._BaseListSuggestedAdUnits,
+                    "_BaseListSuggestedAdUnits__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -963,17 +963,18 @@ class SuggestedAdUnitServiceRestTransport(_BaseSuggestedAdUnitServiceRestTranspo
             """
 
             http_options = _BaseSuggestedAdUnitServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseSuggestedAdUnitServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSuggestedAdUnitServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSuggestedAdUnitServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1081,15 +1082,16 @@ class SuggestedAdUnitServiceRestTransport(_BaseSuggestedAdUnitServiceRestTranspo
             """
 
             http_options = _BaseSuggestedAdUnitServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseSuggestedAdUnitServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseSuggestedAdUnitServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSuggestedAdUnitServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

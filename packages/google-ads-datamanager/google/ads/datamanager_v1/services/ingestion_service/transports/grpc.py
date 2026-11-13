@@ -452,6 +452,72 @@ class IngestionServiceGrpcTransport(IngestionServiceTransport):
         return self._stubs["ingest_events"]
 
     @property
+    def ingest_users(
+        self,
+    ) -> Callable[
+        [ingestion_service.IngestUsersRequest], ingestion_service.IngestUsersResponse
+    ]:
+        r"""Return a callable for the ingest users method over gRPC.
+
+        Uploads a list of users to the provided destinations. Unlike
+        [IngestAudienceMembers][google.ads.datamanager.v1.IngestionService.IngestAudienceMembers]
+        (which adds users to specific advertiser audience lists for
+        targeting), ``IngestUsers`` ingests account level identity
+        linkage data (for example, user identifiers linked to mobile
+        IDs) independent of specific audience segments.
+
+        This feature is only available to accounts on an allowlist.
+
+        Returns:
+            Callable[[~.IngestUsersRequest],
+                    ~.IngestUsersResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "ingest_users" not in self._stubs:
+            self._stubs["ingest_users"] = self._logged_channel.unary_unary(
+                "/google.ads.datamanager.v1.IngestionService/IngestUsers",
+                request_serializer=ingestion_service.IngestUsersRequest.serialize,
+                response_deserializer=ingestion_service.IngestUsersResponse.deserialize,
+            )
+        return self._stubs["ingest_users"]
+
+    @property
+    def remove_users(
+        self,
+    ) -> Callable[
+        [ingestion_service.RemoveUsersRequest], ingestion_service.RemoveUsersResponse
+    ]:
+        r"""Return a callable for the remove users method over gRPC.
+
+        Removes a list of users from the provided
+        destinations.
+        This feature is only available to accounts on an
+        allowlist.
+
+        Returns:
+            Callable[[~.RemoveUsersRequest],
+                    ~.RemoveUsersResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "remove_users" not in self._stubs:
+            self._stubs["remove_users"] = self._logged_channel.unary_unary(
+                "/google.ads.datamanager.v1.IngestionService/RemoveUsers",
+                request_serializer=ingestion_service.RemoveUsersRequest.serialize,
+                response_deserializer=ingestion_service.RemoveUsersResponse.deserialize,
+            )
+        return self._stubs["remove_users"]
+
+    @property
     def ingest_ad_events(
         self,
     ) -> Callable[
@@ -464,6 +530,16 @@ class IngestionServiceGrpcTransport(IngestionServiceTransport):
         resources to Google Analytics.
 
         This feature is only available to accounts on an allowlist.
+
+        Authorization Headers:
+
+        This method also requires the following header to define how the
+        API authorizes access for the request:
+
+        - ``login-account``: (Required) The resource name of the Data
+          Partner account where the Google Account of the credentials is
+          a user. Format:
+          ``accountTypes/DATA_PARTNER/accounts/{loginAccountId}``
 
         Returns:
             Callable[[~.IngestAdEventsRequest],

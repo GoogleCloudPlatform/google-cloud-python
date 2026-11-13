@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_inventories_v1._compat import transcode_request
 from google.shopping.merchant_inventories_v1.types import localinventory
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -360,17 +361,18 @@ class LocalInventoryServiceRestTransport(_BaseLocalInventoryServiceRestTransport
             """
 
             http_options = _BaseLocalInventoryServiceRestTransport._BaseDeleteLocalInventory._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_local_inventory(
                 request, metadata
             )
-            transcoded_request = _BaseLocalInventoryServiceRestTransport._BaseDeleteLocalInventory._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLocalInventoryServiceRestTransport._BaseDeleteLocalInventory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLocalInventoryServiceRestTransport._BaseDeleteLocalInventory,
+                    "_BaseDeleteLocalInventory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -481,21 +483,18 @@ class LocalInventoryServiceRestTransport(_BaseLocalInventoryServiceRestTransport
             """
 
             http_options = _BaseLocalInventoryServiceRestTransport._BaseInsertLocalInventory._get_http_options()
-
             request, metadata = self._interceptor.pre_insert_local_inventory(
                 request, metadata
             )
-            transcoded_request = _BaseLocalInventoryServiceRestTransport._BaseInsertLocalInventory._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLocalInventoryServiceRestTransport._BaseInsertLocalInventory._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLocalInventoryServiceRestTransport._BaseInsertLocalInventory._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLocalInventoryServiceRestTransport._BaseInsertLocalInventory,
+                    "_BaseInsertLocalInventory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -635,17 +634,18 @@ class LocalInventoryServiceRestTransport(_BaseLocalInventoryServiceRestTransport
             """
 
             http_options = _BaseLocalInventoryServiceRestTransport._BaseListLocalInventories._get_http_options()
-
             request, metadata = self._interceptor.pre_list_local_inventories(
                 request, metadata
             )
-            transcoded_request = _BaseLocalInventoryServiceRestTransport._BaseListLocalInventories._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLocalInventoryServiceRestTransport._BaseListLocalInventories._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLocalInventoryServiceRestTransport._BaseListLocalInventories,
+                    "_BaseListLocalInventories__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

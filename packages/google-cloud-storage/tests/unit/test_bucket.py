@@ -2098,7 +2098,7 @@ class Test_Bucket(unittest.TestCase):
         cached = client._bucket_metadata_cache.get(name)
         self.assertIsNotNone(cached)
         dest_id, loc = cached
-        self.assertEqual(dest_id, f"projects/_/buckets/{name}")
+        self.assertEqual(dest_id, f"//storage.googleapis.com/projects/_/buckets/{name}")
         self.assertEqual(loc, "global")
 
     def test_reload_w_metageneration_match(self):

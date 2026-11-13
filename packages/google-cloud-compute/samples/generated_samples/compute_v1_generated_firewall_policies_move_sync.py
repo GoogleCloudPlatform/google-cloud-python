@@ -41,7 +41,6 @@ def sample_move():
     # Initialize request argument(s)
     request = compute_v1.MoveFirewallPolicyRequest(
         firewall_policy="firewall_policy_value",
-        parent_id="parent_id_value",
     )
 
     # Make the request

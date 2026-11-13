@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.gke_multicloud_v1._compat import transcode_request
 from google.cloud.gke_multicloud_v1.types import attached_resources, attached_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -915,21 +916,18 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             """
 
             http_options = _BaseAttachedClustersRestTransport._BaseCreateAttachedCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_create_attached_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseCreateAttachedCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAttachedClustersRestTransport._BaseCreateAttachedCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseCreateAttachedCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseCreateAttachedCluster,
+                    "_BaseCreateAttachedCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1069,17 +1067,18 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             """
 
             http_options = _BaseAttachedClustersRestTransport._BaseDeleteAttachedCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_attached_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseDeleteAttachedCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseDeleteAttachedCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseDeleteAttachedCluster,
+                    "_BaseDeleteAttachedCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1218,23 +1217,20 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             """
 
             http_options = _BaseAttachedClustersRestTransport._BaseGenerateAttachedClusterAgentToken._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_generate_attached_cluster_agent_token(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseGenerateAttachedClusterAgentToken._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAttachedClustersRestTransport._BaseGenerateAttachedClusterAgentToken._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseGenerateAttachedClusterAgentToken._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseGenerateAttachedClusterAgentToken,
+                    "_BaseGenerateAttachedClusterAgentToken__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1384,19 +1380,20 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             """
 
             http_options = _BaseAttachedClustersRestTransport._BaseGenerateAttachedClusterInstallManifest._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_generate_attached_cluster_install_manifest(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseGenerateAttachedClusterInstallManifest._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseGenerateAttachedClusterInstallManifest._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseGenerateAttachedClusterInstallManifest,
+                    "_BaseGenerateAttachedClusterInstallManifest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1542,17 +1539,18 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             """
 
             http_options = _BaseAttachedClustersRestTransport._BaseGetAttachedCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_get_attached_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseGetAttachedCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseGetAttachedCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseGetAttachedCluster,
+                    "_BaseGetAttachedCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1694,17 +1692,18 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             """
 
             http_options = _BaseAttachedClustersRestTransport._BaseGetAttachedServerConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_attached_server_config(
                 request, metadata
             )
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseGetAttachedServerConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseGetAttachedServerConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseGetAttachedServerConfig,
+                    "_BaseGetAttachedServerConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1848,21 +1847,18 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             """
 
             http_options = _BaseAttachedClustersRestTransport._BaseImportAttachedCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_import_attached_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseImportAttachedCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAttachedClustersRestTransport._BaseImportAttachedCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseImportAttachedCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseImportAttachedCluster,
+                    "_BaseImportAttachedCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2001,17 +1997,18 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             """
 
             http_options = _BaseAttachedClustersRestTransport._BaseListAttachedClusters._get_http_options()
-
             request, metadata = self._interceptor.pre_list_attached_clusters(
                 request, metadata
             )
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseListAttachedClusters._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseListAttachedClusters._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseListAttachedClusters,
+                    "_BaseListAttachedClusters__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2155,21 +2152,18 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             """
 
             http_options = _BaseAttachedClustersRestTransport._BaseUpdateAttachedCluster._get_http_options()
-
             request, metadata = self._interceptor.pre_update_attached_cluster(
                 request, metadata
             )
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseUpdateAttachedCluster._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAttachedClustersRestTransport._BaseUpdateAttachedCluster._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseUpdateAttachedCluster._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseUpdateAttachedCluster,
+                    "_BaseUpdateAttachedCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2406,21 +2400,18 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             """
 
             http_options = _BaseAttachedClustersRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseAttachedClustersRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2524,17 +2515,18 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             """
 
             http_options = _BaseAttachedClustersRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2641,15 +2633,16 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             http_options = (
                 _BaseAttachedClustersRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2779,15 +2772,16 @@ class AttachedClustersRestTransport(_BaseAttachedClustersRestTransport):
             """
 
             http_options = _BaseAttachedClustersRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseAttachedClustersRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseAttachedClustersRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAttachedClustersRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -24,9 +24,9 @@ Typically, you'll want to use the higher-level helpers in
 import datetime
 import json
 
-from google.auth import external_account_authorized_user
 import google.oauth2.credentials
 import requests_oauthlib
+from google.auth import external_account_authorized_user
 
 _REQUIRED_CONFIG_KEYS = frozenset(("auth_uri", "token_uri", "client_id"))
 
@@ -123,7 +123,7 @@ def credentials_from_session(session, client_config=None):
 
     if not session.token:
         raise ValueError(
-            "There is no access token for this session, did you call " "fetch_token?"
+            "There is no access token for this session, did you call fetch_token?"
         )
 
     if "3pi" in client_config:

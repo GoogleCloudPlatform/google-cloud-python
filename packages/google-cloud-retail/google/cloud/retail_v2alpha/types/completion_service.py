@@ -211,6 +211,11 @@ class CompleteQueryResponse(proto.Message):
             - ``brands``
 
             - ``categories``
+        agent_prompts (MutableSequence[google.cloud.retail_v2alpha.types.CompleteQueryResponse.AgentPrompt]):
+            Conversational prompts to trigger agents like
+            Shopping Agent.
+            This is an experimental feature for select
+            customers.
     """
 
     class CompletionResult(proto.Message):
@@ -245,6 +250,14 @@ class CompleteQueryResponse(proto.Message):
                 customers. If you want to receive this product
                 count information, reach out to the Retail
                 support team.
+            agent_prompts (MutableSequence[google.cloud.retail_v2alpha.types.CompleteQueryResponse.AgentPrompt]):
+                Deprecated: Use
+                [CompleteQueryResponse.agent_prompts][google.cloud.retail.v2alpha.CompleteQueryResponse.agent_prompts]
+                instead. Conversational prompts to trigger agents like
+                Shopping Agent. There may be multiple prompts for a single
+                suggestion.
+
+                This is an experimental feature for select customers.
         """
 
         suggestion: str = proto.Field(
@@ -267,6 +280,13 @@ class CompleteQueryResponse(proto.Message):
         total_product_count: int = proto.Field(
             proto.INT32,
             number=4,
+        )
+        agent_prompts: MutableSequence["CompleteQueryResponse.AgentPrompt"] = (
+            proto.RepeatedField(
+                proto.MESSAGE,
+                number=6,
+                message="CompleteQueryResponse.AgentPrompt",
+            )
         )
 
     class RecentSearchResult(proto.Message):
@@ -295,6 +315,20 @@ class CompleteQueryResponse(proto.Message):
             number=1,
         )
 
+    class AgentPrompt(proto.Message):
+        r"""A conversational prompt to trigger agents like Shopping
+        Agent.
+
+        Attributes:
+            prompt (str):
+                The conversational prompt string.
+        """
+
+        prompt: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+
     completion_results: MutableSequence[CompletionResult] = proto.RepeatedField(
         proto.MESSAGE,
         number=1,
@@ -314,6 +348,11 @@ class CompleteQueryResponse(proto.Message):
         proto.MESSAGE,
         number=4,
         message=AttributeResult,
+    )
+    agent_prompts: MutableSequence[AgentPrompt] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=5,
+        message=AgentPrompt,
     )
 
 

@@ -870,6 +870,42 @@ class AlphaAnalyticsDataGrpcTransport(AlphaAnalyticsDataTransport):
         return self._stubs["list_report_tasks"]
 
     @property
+    def chat(
+        self,
+    ) -> Callable[[analytics_data_api.ChatRequest], analytics_data_api.ChatResponse]:
+        r"""Return a callable for the chat method over gRPC.
+
+        Provides a chat interface for interacting with Google Analytics
+        data through the API.
+
+        This product uses AI and may display inaccurate info. Your chat
+        activity may be used to improve the product and your use is
+        subject to Google's
+        `Terms <https://policies.google.com/terms>`__, `AI Use
+        Policy <https://policies.google.com/terms/generative-ai/use-policy>`__,
+        and `Privacy Policy <https://policies.google.com/privacy>`__.
+        `Learn more about Chat AI
+        Privacy <https://support.google.com/helpguide/answer/14185196>`__.
+
+        Returns:
+            Callable[[~.ChatRequest],
+                    ~.ChatResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "chat" not in self._stubs:
+            self._stubs["chat"] = self._logged_channel.unary_unary(
+                "/google.analytics.data.v1alpha.AlphaAnalyticsData/Chat",
+                request_serializer=analytics_data_api.ChatRequest.serialize,
+                response_deserializer=analytics_data_api.ChatResponse.deserialize,
+            )
+        return self._stubs["chat"]
+
+    @property
     def run_report(
         self,
     ) -> Callable[

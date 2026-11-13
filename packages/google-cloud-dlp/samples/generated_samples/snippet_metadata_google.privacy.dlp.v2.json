@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-dlp",
-    "version": "3.38.0"
+    "version": "3.40.0"
   },
   "snippets": [
     {
@@ -479,6 +479,175 @@
         }
       ],
       "title": "dlp_v2_generated_dlp_service_create_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dlp_v2.DlpServiceAsyncClient",
+          "shortName": "DlpServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dlp_v2.DlpServiceAsyncClient.create_content_policy",
+        "method": {
+          "fullName": "google.privacy.dlp.v2.DlpService.CreateContentPolicy",
+          "service": {
+            "fullName": "google.privacy.dlp.v2.DlpService",
+            "shortName": "DlpService"
+          },
+          "shortName": "CreateContentPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dlp_v2.types.CreateContentPolicyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "content_policy",
+            "type": "google.cloud.dlp_v2.types.ContentPolicy"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dlp_v2.types.ContentPolicy",
+        "shortName": "create_content_policy"
+      },
+      "description": "Sample for CreateContentPolicy",
+      "file": "dlp_v2_generated_dlp_service_create_content_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dlp_v2_generated_DlpService_CreateContentPolicy_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dlp_v2_generated_dlp_service_create_content_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dlp_v2.DlpServiceClient",
+          "shortName": "DlpServiceClient"
+        },
+        "fullName": "google.cloud.dlp_v2.DlpServiceClient.create_content_policy",
+        "method": {
+          "fullName": "google.privacy.dlp.v2.DlpService.CreateContentPolicy",
+          "service": {
+            "fullName": "google.privacy.dlp.v2.DlpService",
+            "shortName": "DlpService"
+          },
+          "shortName": "CreateContentPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dlp_v2.types.CreateContentPolicyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "content_policy",
+            "type": "google.cloud.dlp_v2.types.ContentPolicy"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dlp_v2.types.ContentPolicy",
+        "shortName": "create_content_policy"
+      },
+      "description": "Sample for CreateContentPolicy",
+      "file": "dlp_v2_generated_dlp_service_create_content_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dlp_v2_generated_DlpService_CreateContentPolicy_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dlp_v2_generated_dlp_service_create_content_policy_sync.py"
     },
     {
       "canonical": true,
@@ -1809,6 +1978,161 @@
         }
       ],
       "title": "dlp_v2_generated_dlp_service_delete_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dlp_v2.DlpServiceAsyncClient",
+          "shortName": "DlpServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dlp_v2.DlpServiceAsyncClient.delete_content_policy",
+        "method": {
+          "fullName": "google.privacy.dlp.v2.DlpService.DeleteContentPolicy",
+          "service": {
+            "fullName": "google.privacy.dlp.v2.DlpService",
+            "shortName": "DlpService"
+          },
+          "shortName": "DeleteContentPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dlp_v2.types.DeleteContentPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_content_policy"
+      },
+      "description": "Sample for DeleteContentPolicy",
+      "file": "dlp_v2_generated_dlp_service_delete_content_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dlp_v2_generated_DlpService_DeleteContentPolicy_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dlp_v2_generated_dlp_service_delete_content_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dlp_v2.DlpServiceClient",
+          "shortName": "DlpServiceClient"
+        },
+        "fullName": "google.cloud.dlp_v2.DlpServiceClient.delete_content_policy",
+        "method": {
+          "fullName": "google.privacy.dlp.v2.DlpService.DeleteContentPolicy",
+          "service": {
+            "fullName": "google.privacy.dlp.v2.DlpService",
+            "shortName": "DlpService"
+          },
+          "shortName": "DeleteContentPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dlp_v2.types.DeleteContentPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_content_policy"
+      },
+      "description": "Sample for DeleteContentPolicy",
+      "file": "dlp_v2_generated_dlp_service_delete_content_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dlp_v2_generated_DlpService_DeleteContentPolicy_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dlp_v2_generated_dlp_service_delete_content_policy_sync.py"
     },
     {
       "canonical": true,
@@ -3518,6 +3842,167 @@
         }
       ],
       "title": "dlp_v2_generated_dlp_service_get_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dlp_v2.DlpServiceAsyncClient",
+          "shortName": "DlpServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dlp_v2.DlpServiceAsyncClient.get_content_policy",
+        "method": {
+          "fullName": "google.privacy.dlp.v2.DlpService.GetContentPolicy",
+          "service": {
+            "fullName": "google.privacy.dlp.v2.DlpService",
+            "shortName": "DlpService"
+          },
+          "shortName": "GetContentPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dlp_v2.types.GetContentPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dlp_v2.types.ContentPolicy",
+        "shortName": "get_content_policy"
+      },
+      "description": "Sample for GetContentPolicy",
+      "file": "dlp_v2_generated_dlp_service_get_content_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dlp_v2_generated_DlpService_GetContentPolicy_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dlp_v2_generated_dlp_service_get_content_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dlp_v2.DlpServiceClient",
+          "shortName": "DlpServiceClient"
+        },
+        "fullName": "google.cloud.dlp_v2.DlpServiceClient.get_content_policy",
+        "method": {
+          "fullName": "google.privacy.dlp.v2.DlpService.GetContentPolicy",
+          "service": {
+            "fullName": "google.privacy.dlp.v2.DlpService",
+            "shortName": "DlpService"
+          },
+          "shortName": "GetContentPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dlp_v2.types.GetContentPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dlp_v2.types.ContentPolicy",
+        "shortName": "get_content_policy"
+      },
+      "description": "Sample for GetContentPolicy",
+      "file": "dlp_v2_generated_dlp_service_get_content_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dlp_v2_generated_DlpService_GetContentPolicy_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dlp_v2_generated_dlp_service_get_content_policy_sync.py"
     },
     {
       "canonical": true,
@@ -5773,6 +6258,167 @@
           "fullName": "google.cloud.dlp_v2.DlpServiceAsyncClient",
           "shortName": "DlpServiceAsyncClient"
         },
+        "fullName": "google.cloud.dlp_v2.DlpServiceAsyncClient.list_content_policies",
+        "method": {
+          "fullName": "google.privacy.dlp.v2.DlpService.ListContentPolicies",
+          "service": {
+            "fullName": "google.privacy.dlp.v2.DlpService",
+            "shortName": "DlpService"
+          },
+          "shortName": "ListContentPolicies"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dlp_v2.types.ListContentPoliciesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dlp_v2.services.dlp_service.pagers.ListContentPoliciesAsyncPager",
+        "shortName": "list_content_policies"
+      },
+      "description": "Sample for ListContentPolicies",
+      "file": "dlp_v2_generated_dlp_service_list_content_policies_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dlp_v2_generated_DlpService_ListContentPolicies_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dlp_v2_generated_dlp_service_list_content_policies_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dlp_v2.DlpServiceClient",
+          "shortName": "DlpServiceClient"
+        },
+        "fullName": "google.cloud.dlp_v2.DlpServiceClient.list_content_policies",
+        "method": {
+          "fullName": "google.privacy.dlp.v2.DlpService.ListContentPolicies",
+          "service": {
+            "fullName": "google.privacy.dlp.v2.DlpService",
+            "shortName": "DlpService"
+          },
+          "shortName": "ListContentPolicies"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dlp_v2.types.ListContentPoliciesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dlp_v2.services.dlp_service.pagers.ListContentPoliciesPager",
+        "shortName": "list_content_policies"
+      },
+      "description": "Sample for ListContentPolicies",
+      "file": "dlp_v2_generated_dlp_service_list_content_policies_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dlp_v2_generated_DlpService_ListContentPolicies_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dlp_v2_generated_dlp_service_list_content_policies_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dlp_v2.DlpServiceAsyncClient",
+          "shortName": "DlpServiceAsyncClient"
+        },
         "fullName": "google.cloud.dlp_v2.DlpServiceAsyncClient.list_deidentify_templates",
         "method": {
           "fullName": "google.privacy.dlp.v2.DlpService.ListDeidentifyTemplates",
@@ -8002,6 +8648,183 @@
         }
       ],
       "title": "dlp_v2_generated_dlp_service_update_connection_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.dlp_v2.DlpServiceAsyncClient",
+          "shortName": "DlpServiceAsyncClient"
+        },
+        "fullName": "google.cloud.dlp_v2.DlpServiceAsyncClient.update_content_policy",
+        "method": {
+          "fullName": "google.privacy.dlp.v2.DlpService.UpdateContentPolicy",
+          "service": {
+            "fullName": "google.privacy.dlp.v2.DlpService",
+            "shortName": "DlpService"
+          },
+          "shortName": "UpdateContentPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dlp_v2.types.UpdateContentPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "content_policy",
+            "type": "google.cloud.dlp_v2.types.ContentPolicy"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dlp_v2.types.ContentPolicy",
+        "shortName": "update_content_policy"
+      },
+      "description": "Sample for UpdateContentPolicy",
+      "file": "dlp_v2_generated_dlp_service_update_content_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dlp_v2_generated_DlpService_UpdateContentPolicy_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dlp_v2_generated_dlp_service_update_content_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.dlp_v2.DlpServiceClient",
+          "shortName": "DlpServiceClient"
+        },
+        "fullName": "google.cloud.dlp_v2.DlpServiceClient.update_content_policy",
+        "method": {
+          "fullName": "google.privacy.dlp.v2.DlpService.UpdateContentPolicy",
+          "service": {
+            "fullName": "google.privacy.dlp.v2.DlpService",
+            "shortName": "DlpService"
+          },
+          "shortName": "UpdateContentPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.dlp_v2.types.UpdateContentPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "content_policy",
+            "type": "google.cloud.dlp_v2.types.ContentPolicy"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.dlp_v2.types.ContentPolicy",
+        "shortName": "update_content_policy"
+      },
+      "description": "Sample for UpdateContentPolicy",
+      "file": "dlp_v2_generated_dlp_service_update_content_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "dlp_v2_generated_DlpService_UpdateContentPolicy_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "dlp_v2_generated_dlp_service_update_content_policy_sync.py"
     },
     {
       "canonical": true,

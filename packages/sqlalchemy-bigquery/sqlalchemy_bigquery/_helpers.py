@@ -10,11 +10,11 @@ import json
 import re
 from typing import Optional
 
-from google.api_core import client_info
 import google.auth
+import sqlalchemy
+from google.api_core import client_info
 from google.cloud import bigquery
 from google.oauth2 import service_account
-import sqlalchemy
 
 USER_AGENT_TEMPLATE = "sqlalchemy/{}"
 SCOPES = (

@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-monitoring-metrics-scopes",
-    "version": "1.13.0"
+    "version": "1.14.0"
   },
   "snippets": [
     {

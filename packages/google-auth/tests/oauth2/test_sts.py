@@ -14,15 +14,13 @@
 
 import http.client as http_client
 import json
-from unittest import mock
 import urllib
+from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import exceptions
-from google.auth import transport
-from google.oauth2 import sts
-from google.oauth2 import utils
+from google.auth import exceptions, transport
+from google.oauth2 import sts, utils
 
 CLIENT_ID = "username"
 CLIENT_SECRET = "password"

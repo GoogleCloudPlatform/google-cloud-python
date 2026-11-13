@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-tpu/#history
 
+## [1.28.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-tpu-v1.27.0...google-cloud-tpu-v1.28.0) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [1.27.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-tpu-v1.26.0...google-cloud-tpu-v1.27.0) (2026-06-22)
 
 

@@ -50,6 +50,16 @@
                 "list_data_agents"
               ]
             },
+            "RetrieveAgentOpsObservability": {
+              "methods": [
+                "retrieve_agent_ops_observability"
+              ]
+            },
+            "SetAgentOpsObservability": {
+              "methods": [
+                "set_agent_ops_observability"
+              ]
+            },
             "SetIamPolicy": {
               "methods": [
                 "set_iam_policy"
@@ -108,6 +118,16 @@
             "ListDataAgents": {
               "methods": [
                 "list_data_agents"
+              ]
+            },
+            "RetrieveAgentOpsObservability": {
+              "methods": [
+                "retrieve_agent_ops_observability"
+              ]
+            },
+            "SetAgentOpsObservability": {
+              "methods": [
+                "set_agent_ops_observability"
               ]
             },
             "SetIamPolicy": {
@@ -170,6 +190,16 @@
                 "list_data_agents"
               ]
             },
+            "RetrieveAgentOpsObservability": {
+              "methods": [
+                "retrieve_agent_ops_observability"
+              ]
+            },
+            "SetAgentOpsObservability": {
+              "methods": [
+                "set_agent_ops_observability"
+              ]
+            },
             "SetIamPolicy": {
               "methods": [
                 "set_iam_policy"
@@ -228,6 +258,11 @@
               "methods": [
                 "query_data"
               ]
+            },
+            "UpdateConversation": {
+              "methods": [
+                "update_conversation"
+              ]
             }
           }
         },
@@ -268,6 +303,11 @@
               "methods": [
                 "query_data"
               ]
+            },
+            "UpdateConversation": {
+              "methods": [
+                "update_conversation"
+              ]
             }
           }
         },
@@ -307,6 +347,11 @@
             "QueryData": {
               "methods": [
                 "query_data"
+              ]
+            },
+            "UpdateConversation": {
+              "methods": [
+                "update_conversation"
               ]
             }
           }

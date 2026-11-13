@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.video.live_stream_v1._compat import transcode_request
 from google.cloud.video.live_stream_v1.types import resources, service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -2237,19 +2238,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseCreateAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_asset(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseCreateAsset._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseCreateAsset._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseCreateAsset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseCreateAsset,
+                    "_BaseCreateAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2388,19 +2386,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseCreateChannel._get_http_options()
-
             request, metadata = self._interceptor.pre_create_channel(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseCreateChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseCreateChannel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseCreateChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseCreateChannel,
+                    "_BaseCreateChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2540,19 +2535,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseCreateClip._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_clip(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseCreateClip._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseCreateClip._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseCreateClip._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseCreateClip,
+                    "_BaseCreateClip__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2691,21 +2683,18 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseCreateDvrSession._get_http_options()
-
             request, metadata = self._interceptor.pre_create_dvr_session(
                 request, metadata
             )
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseCreateDvrSession._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseCreateDvrSession._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseCreateDvrSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseCreateDvrSession,
+                    "_BaseCreateDvrSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2846,19 +2835,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseCreateEvent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_event(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseCreateEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseCreateEvent._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseCreateEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseCreateEvent,
+                    "_BaseCreateEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3000,19 +2986,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseCreateInput._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_input(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseCreateInput._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseCreateInput._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseCreateInput._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseCreateInput,
+                    "_BaseCreateInput__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3151,15 +3134,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseDeleteAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_asset(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseDeleteAsset._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseDeleteAsset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseDeleteAsset,
+                    "_BaseDeleteAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3296,15 +3280,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseDeleteChannel._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_channel(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseDeleteChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseDeleteChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseDeleteChannel,
+                    "_BaseDeleteChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3442,15 +3427,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseDeleteClip._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_clip(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseDeleteClip._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseDeleteClip._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseDeleteClip,
+                    "_BaseDeleteClip__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3587,17 +3573,18 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseDeleteDvrSession._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_dvr_session(
                 request, metadata
             )
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseDeleteDvrSession._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseDeleteDvrSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseDeleteDvrSession,
+                    "_BaseDeleteDvrSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3728,15 +3715,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseDeleteEvent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_event(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseDeleteEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseDeleteEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseDeleteEvent,
+                    "_BaseDeleteEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3842,15 +3830,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseDeleteInput._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_input(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseDeleteInput._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseDeleteInput._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseDeleteInput,
+                    "_BaseDeleteInput__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3987,15 +3976,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseGetAsset._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_asset(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseGetAsset._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseGetAsset._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseGetAsset,
+                    "_BaseGetAsset__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4140,15 +4130,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseGetChannel._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_channel(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseGetChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseGetChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseGetChannel,
+                    "_BaseGetChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4290,17 +4281,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseGetClip._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_clip(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseGetClip._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLivestreamServiceRestTransport._BaseGetClip._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseGetClip,
+                    "_BaseGetClip__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4440,15 +4430,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseGetDvrSession._get_http_options()
-
             request, metadata = self._interceptor.pre_get_dvr_session(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseGetDvrSession._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseGetDvrSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseGetDvrSession,
+                    "_BaseGetDvrSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4589,15 +4580,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseGetEvent._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_event(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseGetEvent._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseGetEvent._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseGetEvent,
+                    "_BaseGetEvent__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4737,15 +4729,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseGetInput._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_input(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseGetInput._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseGetInput._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseGetInput,
+                    "_BaseGetInput__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4890,17 +4883,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseGetPool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_pool(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseGetPool._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseLivestreamServiceRestTransport._BaseGetPool._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseGetPool,
+                    "_BaseGetPool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5039,15 +5031,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseListAssets._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_assets(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseListAssets._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseListAssets._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseListAssets,
+                    "_BaseListAssets__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5184,15 +5177,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseListChannels._get_http_options()
-
             request, metadata = self._interceptor.pre_list_channels(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseListChannels._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseListChannels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseListChannels,
+                    "_BaseListChannels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5331,15 +5325,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseListClips._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_clips(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseListClips._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseListClips._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseListClips,
+                    "_BaseListClips__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5477,17 +5472,18 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseListDvrSessions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_dvr_sessions(
                 request, metadata
             )
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseListDvrSessions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseListDvrSessions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseListDvrSessions,
+                    "_BaseListDvrSessions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5626,15 +5622,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseListEvents._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_events(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseListEvents._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseListEvents._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseListEvents,
+                    "_BaseListEvents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5773,15 +5770,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseListInputs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_inputs(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseListInputs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseListInputs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseListInputs,
+                    "_BaseListInputs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5919,19 +5917,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BasePreviewInput._get_http_options()
-
             request, metadata = self._interceptor.pre_preview_input(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BasePreviewInput._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BasePreviewInput._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BasePreviewInput._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BasePreviewInput,
+                    "_BasePreviewInput__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6071,19 +6066,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseStartChannel._get_http_options()
-
             request, metadata = self._interceptor.pre_start_channel(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseStartChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseStartChannel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseStartChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseStartChannel,
+                    "_BaseStartChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6222,21 +6214,18 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseStartDistribution._get_http_options()
-
             request, metadata = self._interceptor.pre_start_distribution(
                 request, metadata
             )
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseStartDistribution._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseStartDistribution._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseStartDistribution._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseStartDistribution,
+                    "_BaseStartDistribution__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6376,19 +6365,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseStopChannel._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_stop_channel(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseStopChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseStopChannel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseStopChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseStopChannel,
+                    "_BaseStopChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6527,21 +6513,18 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseStopDistribution._get_http_options()
-
             request, metadata = self._interceptor.pre_stop_distribution(
                 request, metadata
             )
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseStopDistribution._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseStopDistribution._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseStopDistribution._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseStopDistribution,
+                    "_BaseStopDistribution__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6680,19 +6663,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseUpdateChannel._get_http_options()
-
             request, metadata = self._interceptor.pre_update_channel(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseUpdateChannel._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseUpdateChannel._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseUpdateChannel._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseUpdateChannel,
+                    "_BaseUpdateChannel__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6831,21 +6811,18 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseUpdateDvrSession._get_http_options()
-
             request, metadata = self._interceptor.pre_update_dvr_session(
                 request, metadata
             )
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseUpdateDvrSession._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseUpdateDvrSession._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseUpdateDvrSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseUpdateDvrSession,
+                    "_BaseUpdateDvrSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -6985,19 +6962,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseUpdateInput._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_input(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseUpdateInput._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseUpdateInput._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseUpdateInput._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseUpdateInput,
+                    "_BaseUpdateInput__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7137,19 +7111,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseUpdatePool._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_pool(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseUpdatePool._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseUpdatePool._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseUpdatePool._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseUpdatePool,
+                    "_BaseUpdatePool__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7543,15 +7514,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             http_options = (
                 _BaseLivestreamServiceRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7682,15 +7654,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseListLocations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7819,21 +7792,18 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseLivestreamServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -7937,17 +7907,18 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8052,15 +8023,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -8191,15 +8163,16 @@ class LivestreamServiceRestTransport(_BaseLivestreamServiceRestTransport):
             """
 
             http_options = _BaseLivestreamServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseLivestreamServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseLivestreamServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLivestreamServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

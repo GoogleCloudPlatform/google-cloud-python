@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.errorreporting_v1beta1._compat import transcode_request
 from google.cloud.errorreporting_v1beta1.types import common, error_group_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -339,15 +340,16 @@ class ErrorGroupServiceRestTransport(_BaseErrorGroupServiceRestTransport):
             http_options = (
                 _BaseErrorGroupServiceRestTransport._BaseGetGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_group(request, metadata)
-            transcoded_request = _BaseErrorGroupServiceRestTransport._BaseGetGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseErrorGroupServiceRestTransport._BaseGetGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseErrorGroupServiceRestTransport._BaseGetGroup,
+                    "_BaseGetGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -487,19 +489,16 @@ class ErrorGroupServiceRestTransport(_BaseErrorGroupServiceRestTransport):
             http_options = (
                 _BaseErrorGroupServiceRestTransport._BaseUpdateGroup._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_group(request, metadata)
-            transcoded_request = _BaseErrorGroupServiceRestTransport._BaseUpdateGroup._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseErrorGroupServiceRestTransport._BaseUpdateGroup._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseErrorGroupServiceRestTransport._BaseUpdateGroup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseErrorGroupServiceRestTransport._BaseUpdateGroup,
+                    "_BaseUpdateGroup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

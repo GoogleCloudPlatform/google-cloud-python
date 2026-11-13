@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_accounts_v1._compat import transcode_request
 from google.shopping.merchant_accounts_v1.types import shippingsettings
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -351,17 +352,18 @@ class ShippingSettingsServiceRestTransport(_BaseShippingSettingsServiceRestTrans
             """
 
             http_options = _BaseShippingSettingsServiceRestTransport._BaseGetShippingSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_get_shipping_settings(
                 request, metadata
             )
-            transcoded_request = _BaseShippingSettingsServiceRestTransport._BaseGetShippingSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseShippingSettingsServiceRestTransport._BaseGetShippingSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseShippingSettingsServiceRestTransport._BaseGetShippingSettings,
+                    "_BaseGetShippingSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -507,21 +509,18 @@ class ShippingSettingsServiceRestTransport(_BaseShippingSettingsServiceRestTrans
             """
 
             http_options = _BaseShippingSettingsServiceRestTransport._BaseInsertShippingSettings._get_http_options()
-
             request, metadata = self._interceptor.pre_insert_shipping_settings(
                 request, metadata
             )
-            transcoded_request = _BaseShippingSettingsServiceRestTransport._BaseInsertShippingSettings._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseShippingSettingsServiceRestTransport._BaseInsertShippingSettings._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseShippingSettingsServiceRestTransport._BaseInsertShippingSettings._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseShippingSettingsServiceRestTransport._BaseInsertShippingSettings,
+                    "_BaseInsertShippingSettings__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

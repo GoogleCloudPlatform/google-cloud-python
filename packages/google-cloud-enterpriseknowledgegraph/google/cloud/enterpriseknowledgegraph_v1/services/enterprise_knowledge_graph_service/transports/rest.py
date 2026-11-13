@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.enterpriseknowledgegraph_v1._compat import transcode_request
 from google.cloud.enterpriseknowledgegraph_v1.types import service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -662,21 +663,18 @@ class EnterpriseKnowledgeGraphServiceRestTransport(
             """
 
             http_options = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseCancelEntityReconciliationJob._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_entity_reconciliation_job(
                 request, metadata
             )
-            transcoded_request = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseCancelEntityReconciliationJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseCancelEntityReconciliationJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseCancelEntityReconciliationJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseCancelEntityReconciliationJob,
+                    "_BaseCancelEntityReconciliationJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -783,21 +781,18 @@ class EnterpriseKnowledgeGraphServiceRestTransport(
             """
 
             http_options = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseCreateEntityReconciliationJob._get_http_options()
-
             request, metadata = self._interceptor.pre_create_entity_reconciliation_job(
                 request, metadata
             )
-            transcoded_request = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseCreateEntityReconciliationJob._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseCreateEntityReconciliationJob._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseCreateEntityReconciliationJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseCreateEntityReconciliationJob,
+                    "_BaseCreateEntityReconciliationJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -935,17 +930,18 @@ class EnterpriseKnowledgeGraphServiceRestTransport(
             """
 
             http_options = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseDeleteEntityReconciliationJob._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_entity_reconciliation_job(
                 request, metadata
             )
-            transcoded_request = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseDeleteEntityReconciliationJob._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseDeleteEntityReconciliationJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseDeleteEntityReconciliationJob,
+                    "_BaseDeleteEntityReconciliationJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1050,17 +1046,18 @@ class EnterpriseKnowledgeGraphServiceRestTransport(
             """
 
             http_options = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseGetEntityReconciliationJob._get_http_options()
-
             request, metadata = self._interceptor.pre_get_entity_reconciliation_job(
                 request, metadata
             )
-            transcoded_request = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseGetEntityReconciliationJob._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseGetEntityReconciliationJob._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseGetEntityReconciliationJob,
+                    "_BaseGetEntityReconciliationJob__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1203,17 +1200,18 @@ class EnterpriseKnowledgeGraphServiceRestTransport(
             """
 
             http_options = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseListEntityReconciliationJobs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_entity_reconciliation_jobs(
                 request, metadata
             )
-            transcoded_request = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseListEntityReconciliationJobs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseListEntityReconciliationJobs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseListEntityReconciliationJobs,
+                    "_BaseListEntityReconciliationJobs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1355,15 +1353,16 @@ class EnterpriseKnowledgeGraphServiceRestTransport(
             """
 
             http_options = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseLookup._get_http_options()
-
             request, metadata = self._interceptor.pre_lookup(request, metadata)
-            transcoded_request = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseLookup._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseLookup._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseLookup,
+                    "_BaseLookup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1503,17 +1502,18 @@ class EnterpriseKnowledgeGraphServiceRestTransport(
             """
 
             http_options = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseLookupPublicKg._get_http_options()
-
             request, metadata = self._interceptor.pre_lookup_public_kg(
                 request, metadata
             )
-            transcoded_request = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseLookupPublicKg._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseLookupPublicKg._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseLookupPublicKg,
+                    "_BaseLookupPublicKg__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1651,15 +1651,16 @@ class EnterpriseKnowledgeGraphServiceRestTransport(
             """
 
             http_options = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseSearch._get_http_options()
-
             request, metadata = self._interceptor.pre_search(request, metadata)
-            transcoded_request = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseSearch._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseSearch._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseSearch,
+                    "_BaseSearch__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1799,17 +1800,18 @@ class EnterpriseKnowledgeGraphServiceRestTransport(
             """
 
             http_options = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseSearchPublicKg._get_http_options()
-
             request, metadata = self._interceptor.pre_search_public_kg(
                 request, metadata
             )
-            transcoded_request = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseSearchPublicKg._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseSearchPublicKg._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseEnterpriseKnowledgeGraphServiceRestTransport._BaseSearchPublicKg,
+                    "_BaseSearchPublicKg__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

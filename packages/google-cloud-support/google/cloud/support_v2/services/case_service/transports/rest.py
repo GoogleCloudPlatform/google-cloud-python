@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.support_v2._compat import transcode_request
 from google.cloud.support_v2.types import case, case_service
 from google.cloud.support_v2.types import case as gcs_case
 
@@ -683,23 +684,16 @@ class CaseServiceRestTransport(_BaseCaseServiceRestTransport):
             http_options = (
                 _BaseCaseServiceRestTransport._BaseCloseCase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_close_case(request, metadata)
-            transcoded_request = (
-                _BaseCaseServiceRestTransport._BaseCloseCase._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCaseServiceRestTransport._BaseCloseCase._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCaseServiceRestTransport._BaseCloseCase._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCaseServiceRestTransport._BaseCloseCase,
+                    "_BaseCloseCase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -868,23 +862,16 @@ class CaseServiceRestTransport(_BaseCaseServiceRestTransport):
             http_options = (
                 _BaseCaseServiceRestTransport._BaseCreateCase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_case(request, metadata)
-            transcoded_request = (
-                _BaseCaseServiceRestTransport._BaseCreateCase._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCaseServiceRestTransport._BaseCreateCase._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCaseServiceRestTransport._BaseCreateCase._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCaseServiceRestTransport._BaseCreateCase,
+                    "_BaseCreateCase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1053,25 +1040,16 @@ class CaseServiceRestTransport(_BaseCaseServiceRestTransport):
             http_options = (
                 _BaseCaseServiceRestTransport._BaseEscalateCase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_escalate_case(request, metadata)
-            transcoded_request = (
-                _BaseCaseServiceRestTransport._BaseEscalateCase._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = (
-                _BaseCaseServiceRestTransport._BaseEscalateCase._get_request_body_json(
-                    transcoded_request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCaseServiceRestTransport._BaseEscalateCase._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCaseServiceRestTransport._BaseEscalateCase,
+                    "_BaseEscalateCase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1237,19 +1215,16 @@ class CaseServiceRestTransport(_BaseCaseServiceRestTransport):
             http_options = (
                 _BaseCaseServiceRestTransport._BaseGetCase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_case(request, metadata)
-            transcoded_request = (
-                _BaseCaseServiceRestTransport._BaseGetCase._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCaseServiceRestTransport._BaseGetCase._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCaseServiceRestTransport._BaseGetCase,
+                    "_BaseGetCase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1386,19 +1361,16 @@ class CaseServiceRestTransport(_BaseCaseServiceRestTransport):
             http_options = (
                 _BaseCaseServiceRestTransport._BaseListCases._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_cases(request, metadata)
-            transcoded_request = (
-                _BaseCaseServiceRestTransport._BaseListCases._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCaseServiceRestTransport._BaseListCases._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCaseServiceRestTransport._BaseListCases,
+                    "_BaseListCases__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1537,17 +1509,18 @@ class CaseServiceRestTransport(_BaseCaseServiceRestTransport):
             """
 
             http_options = _BaseCaseServiceRestTransport._BaseSearchCaseClassifications._get_http_options()
-
             request, metadata = self._interceptor.pre_search_case_classifications(
                 request, metadata
             )
-            transcoded_request = _BaseCaseServiceRestTransport._BaseSearchCaseClassifications._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCaseServiceRestTransport._BaseSearchCaseClassifications._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCaseServiceRestTransport._BaseSearchCaseClassifications,
+                    "_BaseSearchCaseClassifications__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1690,19 +1663,16 @@ class CaseServiceRestTransport(_BaseCaseServiceRestTransport):
             http_options = (
                 _BaseCaseServiceRestTransport._BaseSearchCases._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_cases(request, metadata)
-            transcoded_request = (
-                _BaseCaseServiceRestTransport._BaseSearchCases._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCaseServiceRestTransport._BaseSearchCases._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCaseServiceRestTransport._BaseSearchCases,
+                    "_BaseSearchCases__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1872,23 +1842,16 @@ class CaseServiceRestTransport(_BaseCaseServiceRestTransport):
             http_options = (
                 _BaseCaseServiceRestTransport._BaseUpdateCase._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_case(request, metadata)
-            transcoded_request = (
-                _BaseCaseServiceRestTransport._BaseUpdateCase._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseCaseServiceRestTransport._BaseUpdateCase._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCaseServiceRestTransport._BaseUpdateCase._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCaseServiceRestTransport._BaseUpdateCase,
+                    "_BaseUpdateCase__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

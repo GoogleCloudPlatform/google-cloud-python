@@ -180,6 +180,21 @@ class SnapshotsTransport(abc.ABC):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.get_effective_recycle_bin_rule: gapic_v1.method.wrap_method(
+                self.get_effective_recycle_bin_rule,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=600.0,
+                ),
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.get_iam_policy: gapic_v1.method.wrap_method(
                 self.get_iam_policy,
                 default_retry=retries.Retry(
@@ -272,6 +287,18 @@ class SnapshotsTransport(abc.ABC):
     ) -> Callable[
         [compute.GetSnapshotRequest],
         Union[compute.Snapshot, Awaitable[compute.Snapshot]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_effective_recycle_bin_rule(
+        self,
+    ) -> Callable[
+        [compute.GetEffectiveRecycleBinRuleSnapshotRequest],
+        Union[
+            compute.SnapshotsGetEffectiveRecycleBinRuleResponse,
+            Awaitable[compute.SnapshotsGetEffectiveRecycleBinRuleResponse],
+        ],
     ]:
         raise NotImplementedError()
 

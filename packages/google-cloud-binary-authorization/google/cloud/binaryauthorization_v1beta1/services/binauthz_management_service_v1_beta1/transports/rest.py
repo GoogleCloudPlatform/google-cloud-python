@@ -33,6 +33,7 @@ from google.iam.v1 import (
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.binaryauthorization_v1beta1._compat import transcode_request
 from google.cloud.binaryauthorization_v1beta1.types import resources, service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -650,19 +651,16 @@ class BinauthzManagementServiceV1Beta1RestTransport(
             """
 
             http_options = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseCreateAttestor._get_http_options()
-
             request, metadata = self._interceptor.pre_create_attestor(request, metadata)
-            transcoded_request = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseCreateAttestor._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseCreateAttestor._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseCreateAttestor._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseCreateAttestor,
+                    "_BaseCreateAttestor__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -795,15 +793,16 @@ class BinauthzManagementServiceV1Beta1RestTransport(
             """
 
             http_options = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseDeleteAttestor._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_attestor(request, metadata)
-            transcoded_request = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseDeleteAttestor._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseDeleteAttestor._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseDeleteAttestor,
+                    "_BaseDeleteAttestor__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -909,15 +908,16 @@ class BinauthzManagementServiceV1Beta1RestTransport(
             """
 
             http_options = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseGetAttestor._get_http_options()
-
             request, metadata = self._interceptor.pre_get_attestor(request, metadata)
-            transcoded_request = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseGetAttestor._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseGetAttestor._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseGetAttestor,
+                    "_BaseGetAttestor__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1056,15 +1056,16 @@ class BinauthzManagementServiceV1Beta1RestTransport(
             """
 
             http_options = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseGetPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_policy(request, metadata)
-            transcoded_request = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseGetPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseGetPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseGetPolicy,
+                    "_BaseGetPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1204,15 +1205,16 @@ class BinauthzManagementServiceV1Beta1RestTransport(
             """
 
             http_options = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseListAttestors._get_http_options()
-
             request, metadata = self._interceptor.pre_list_attestors(request, metadata)
-            transcoded_request = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseListAttestors._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseListAttestors._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseListAttestors,
+                    "_BaseListAttestors__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1353,19 +1355,16 @@ class BinauthzManagementServiceV1Beta1RestTransport(
             """
 
             http_options = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseUpdateAttestor._get_http_options()
-
             request, metadata = self._interceptor.pre_update_attestor(request, metadata)
-            transcoded_request = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseUpdateAttestor._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseUpdateAttestor._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseUpdateAttestor._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseUpdateAttestor,
+                    "_BaseUpdateAttestor__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1506,19 +1505,16 @@ class BinauthzManagementServiceV1Beta1RestTransport(
             """
 
             http_options = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseUpdatePolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_update_policy(request, metadata)
-            transcoded_request = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseUpdatePolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseUpdatePolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseUpdatePolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseUpdatePolicy,
+                    "_BaseUpdatePolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1711,15 +1707,16 @@ class BinauthzManagementServiceV1Beta1RestTransport(
             """
 
             http_options = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseGetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1851,19 +1848,16 @@ class BinauthzManagementServiceV1Beta1RestTransport(
             """
 
             http_options = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseSetIamPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1998,21 +1992,18 @@ class BinauthzManagementServiceV1Beta1RestTransport(
             """
 
             http_options = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBinauthzManagementServiceV1Beta1RestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.compute_v1._compat import transcode_request
 from google.cloud.compute_v1.types import compute
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1560,21 +1561,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseAbandonInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_abandon_instances(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseAbandonInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseAbandonInstances._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseAbandonInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseAbandonInstances,
+                    "_BaseAbandonInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1744,21 +1742,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseApplyUpdatesToInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_apply_updates_to_instances(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseApplyUpdatesToInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseApplyUpdatesToInstances._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseApplyUpdatesToInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseApplyUpdatesToInstances,
+                    "_BaseApplyUpdatesToInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1925,21 +1920,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseCreateInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_create_instances(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseCreateInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseCreateInstances._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseCreateInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseCreateInstances,
+                    "_BaseCreateInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2107,15 +2099,16 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseDelete._get_http_options()
-
             request, metadata = self._interceptor.pre_delete(request, metadata)
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseDelete._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseDelete._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseDelete,
+                    "_BaseDelete__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2281,21 +2274,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseDeleteInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_instances(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseDeleteInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseDeleteInstances._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseDeleteInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseDeleteInstances,
+                    "_BaseDeleteInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2467,21 +2457,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseDeletePerInstanceConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_per_instance_configs(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseDeletePerInstanceConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseDeletePerInstanceConfigs._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseDeletePerInstanceConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseDeletePerInstanceConfigs,
+                    "_BaseDeletePerInstanceConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2631,15 +2618,16 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseGet._get_http_options()
-
             request, metadata = self._interceptor.pre_get(request, metadata)
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseGet._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseGet._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseGet,
+                    "_BaseGet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2803,19 +2791,16 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseInsert._get_http_options()
-
             request, metadata = self._interceptor.pre_insert(request, metadata)
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseInsert._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseInsert._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseInsert._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseInsert,
+                    "_BaseInsert__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2955,15 +2940,16 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseList._get_http_options()
-
             request, metadata = self._interceptor.pre_list(request, metadata)
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseList._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseList._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseList,
+                    "_BaseList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3100,15 +3086,16 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseListErrors._get_http_options()
-
             request, metadata = self._interceptor.pre_list_errors(request, metadata)
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseListErrors._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseListErrors._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseListErrors,
+                    "_BaseListErrors__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3251,17 +3238,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseListManagedInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_list_managed_instances(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseListManagedInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseListManagedInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseListManagedInstances,
+                    "_BaseListManagedInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3402,17 +3390,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseListPerInstanceConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_per_instance_configs(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseListPerInstanceConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseListPerInstanceConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseListPerInstanceConfigs,
+                    "_BaseListPerInstanceConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3582,19 +3571,16 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BasePatch._get_http_options()
-
             request, metadata = self._interceptor.pre_patch(request, metadata)
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BasePatch._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BasePatch._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BasePatch._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BasePatch,
+                    "_BasePatch__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3764,21 +3750,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BasePatchPerInstanceConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_patch_per_instance_configs(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BasePatchPerInstanceConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BasePatchPerInstanceConfigs._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BasePatchPerInstanceConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BasePatchPerInstanceConfigs,
+                    "_BasePatchPerInstanceConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3945,21 +3928,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseRecreateInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_recreate_instances(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseRecreateInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseRecreateInstances._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseRecreateInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseRecreateInstances,
+                    "_BaseRecreateInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4125,15 +4105,16 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseResize._get_http_options()
-
             request, metadata = self._interceptor.pre_resize(request, metadata)
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseResize._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseResize._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseResize,
+                    "_BaseResize__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4299,21 +4280,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseResumeInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_resume_instances(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseResumeInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseResumeInstances._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseResumeInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseResumeInstances,
+                    "_BaseResumeInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4482,21 +4460,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseSetInstanceTemplate._get_http_options()
-
             request, metadata = self._interceptor.pre_set_instance_template(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseSetInstanceTemplate._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseSetInstanceTemplate._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseSetInstanceTemplate._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseSetInstanceTemplate,
+                    "_BaseSetInstanceTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4663,21 +4638,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseSetTargetPools._get_http_options()
-
             request, metadata = self._interceptor.pre_set_target_pools(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseSetTargetPools._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseSetTargetPools._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseSetTargetPools._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseSetTargetPools,
+                    "_BaseSetTargetPools__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4846,19 +4818,16 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseStartInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_start_instances(request, metadata)
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseStartInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseStartInstances._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseStartInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseStartInstances,
+                    "_BaseStartInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5027,19 +4996,16 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseStopInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_stop_instances(request, metadata)
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseStopInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseStopInstances._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseStopInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseStopInstances,
+                    "_BaseStopInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5208,21 +5174,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseSuspendInstances._get_http_options()
-
             request, metadata = self._interceptor.pre_suspend_instances(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseSuspendInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseSuspendInstances._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseSuspendInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseSuspendInstances,
+                    "_BaseSuspendInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5392,21 +5355,18 @@ class RegionInstanceGroupManagersRestTransport(
             """
 
             http_options = _BaseRegionInstanceGroupManagersRestTransport._BaseUpdatePerInstanceConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_update_per_instance_configs(
                 request, metadata
             )
-            transcoded_request = _BaseRegionInstanceGroupManagersRestTransport._BaseUpdatePerInstanceConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRegionInstanceGroupManagersRestTransport._BaseUpdatePerInstanceConfigs._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRegionInstanceGroupManagersRestTransport._BaseUpdatePerInstanceConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRegionInstanceGroupManagersRestTransport._BaseUpdatePerInstanceConfigs,
+                    "_BaseUpdatePerInstanceConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

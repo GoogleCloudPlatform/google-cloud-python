@@ -229,6 +229,11 @@ class Instance(object):
     ):
         """Create this instance.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.create_instance`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -338,6 +343,11 @@ class Instance(object):
     def exists(self):
         """Check whether the instance already exists.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_instance`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -358,6 +368,11 @@ class Instance(object):
     def reload(self):
         """Reload the metadata for this instance.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_instance`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -375,6 +390,11 @@ class Instance(object):
 
     def update(self):
         """Updates an instance within a project.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.partial_update_instance`
+            instead.
 
         For example:
 
@@ -423,6 +443,11 @@ class Instance(object):
     def delete(self):
         """Delete this instance.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.delete_instance`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -453,6 +478,11 @@ class Instance(object):
 
     def get_iam_policy(self, requested_policy_version=None):
         """Gets the access control policy for an instance resource.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_iam_policy`
+            instead.
 
         For example:
 
@@ -491,6 +521,11 @@ class Instance(object):
         """Sets the access control policy on an instance resource. Replaces any
         existing policy.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.set_iam_policy`
+            instead.
+
         For more information about policy, please see documentation of
         class `google.cloud.bigtable.policy.Policy`
 
@@ -517,6 +552,11 @@ class Instance(object):
     def test_iam_permissions(self, permissions):
         """Returns permissions that the caller has on the specified instance
         resource.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.test_iam_permissions`
+            instead.
 
         For example:
 
@@ -555,6 +595,10 @@ class Instance(object):
         cpu_utilization_percent=None,
     ):
         """Factory to create a cluster associated with this instance.
+
+        .. deprecated:: 2.30.0
+            Use :class:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient`
+            instead.
 
         For example:
 
@@ -620,6 +664,11 @@ class Instance(object):
     def list_clusters(self):
         """List the clusters in this instance.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.list_clusters`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -672,6 +721,11 @@ class Instance(object):
     def list_tables(self):
         """List the tables in this instance.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.list_tables`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -710,6 +764,10 @@ class Instance(object):
         allow_transactional_writes=None,
     ):
         """Factory to create AppProfile associated with this instance.
+
+        .. deprecated:: 2.30.0
+            Use :class:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient`
+            instead.
 
         For example:
 
@@ -763,6 +821,11 @@ class Instance(object):
 
     def list_app_profiles(self):
         """Lists information about AppProfiles in an instance.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.list_app_profiles`
+            instead.
 
         For example:
 

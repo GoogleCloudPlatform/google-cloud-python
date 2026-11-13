@@ -189,6 +189,8 @@ class TollPass(proto.Enum):
             MI, USA.
         US_MI_BCPASS (94):
             MI, USA.
+        US_MI_BREAKAWAY (101):
+            MI, USA.
         US_MI_GROSSE_ILE_TOLL_BRIDGE_PASS_TAG (37):
             MI, USA.
         US_MI_IQ_PROX_CARD (38):
@@ -331,6 +333,7 @@ class TollPass(proto.Enum):
     US_ME_EZPASSME = 35
     US_MI_AMBASSADOR_BRIDGE_PREMIER_COMMUTER_CARD = 36
     US_MI_BCPASS = 94
+    US_MI_BREAKAWAY = 101
     US_MI_GROSSE_ILE_TOLL_BRIDGE_PASS_TAG = 37
     US_MI_IQ_PROX_CARD = 38
     US_MI_IQ_TAG = 95

@@ -975,6 +975,34 @@ class StorageControlGrpcAsyncIOTransport(StorageControlTransport):
         return self._stubs["update_rapid_cache"]
 
     @property
+    def disable_rapid_cache(
+        self,
+    ) -> Callable[
+        [storage_control.DisableRapidCacheRequest], Awaitable[operations_pb2.Operation]
+    ]:
+        r"""Return a callable for the disable rapid cache method over gRPC.
+
+        Disables a Rapid Cache instance.
+
+        Returns:
+            Callable[[~.DisableRapidCacheRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "disable_rapid_cache" not in self._stubs:
+            self._stubs["disable_rapid_cache"] = self._logged_channel.unary_unary(
+                "/google.storage.control.v2.StorageControl/DisableRapidCache",
+                request_serializer=storage_control.DisableRapidCacheRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["disable_rapid_cache"]
+
+    @property
     def get_rapid_cache(
         self,
     ) -> Callable[
@@ -1806,6 +1834,11 @@ class StorageControlGrpcAsyncIOTransport(StorageControlTransport):
             ),
             self.update_rapid_cache: self._wrap_method(
                 self.update_rapid_cache,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.disable_rapid_cache: self._wrap_method(
+                self.disable_rapid_cache,
                 default_timeout=None,
                 client_info=client_info,
             ),

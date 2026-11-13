@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-quotas/#history
 
+## [0.6.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-quotas-v0.6.2...google-cloud-quotas-v0.6.3) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [0.6.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-quotas-v0.6.1...google-cloud-quotas-v0.6.2) (2026-08-06)
 
 

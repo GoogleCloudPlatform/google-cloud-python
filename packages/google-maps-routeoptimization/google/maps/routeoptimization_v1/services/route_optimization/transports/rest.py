@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.maps.routeoptimization_v1._compat import transcode_request
 from google.maps.routeoptimization_v1.types import route_optimization_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -550,21 +551,18 @@ class RouteOptimizationRestTransport(_BaseRouteOptimizationRestTransport):
             """
 
             http_options = _BaseRouteOptimizationRestTransport._BaseBatchOptimizeTours._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_optimize_tours(
                 request, metadata
             )
-            transcoded_request = _BaseRouteOptimizationRestTransport._BaseBatchOptimizeTours._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRouteOptimizationRestTransport._BaseBatchOptimizeTours._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRouteOptimizationRestTransport._BaseBatchOptimizeTours._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRouteOptimizationRestTransport._BaseBatchOptimizeTours,
+                    "_BaseBatchOptimizeTours__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -707,19 +705,16 @@ class RouteOptimizationRestTransport(_BaseRouteOptimizationRestTransport):
             """
 
             http_options = _BaseRouteOptimizationRestTransport._BaseOptimizeTours._get_http_options()
-
             request, metadata = self._interceptor.pre_optimize_tours(request, metadata)
-            transcoded_request = _BaseRouteOptimizationRestTransport._BaseOptimizeTours._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRouteOptimizationRestTransport._BaseOptimizeTours._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRouteOptimizationRestTransport._BaseOptimizeTours._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRouteOptimizationRestTransport._BaseOptimizeTours,
+                    "_BaseOptimizeTours__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -867,21 +862,18 @@ class RouteOptimizationRestTransport(_BaseRouteOptimizationRestTransport):
             """
 
             http_options = _BaseRouteOptimizationRestTransport._BaseOptimizeToursLongRunning._get_http_options()
-
             request, metadata = self._interceptor.pre_optimize_tours_long_running(
                 request, metadata
             )
-            transcoded_request = _BaseRouteOptimizationRestTransport._BaseOptimizeToursLongRunning._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRouteOptimizationRestTransport._BaseOptimizeToursLongRunning._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRouteOptimizationRestTransport._BaseOptimizeToursLongRunning._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRouteOptimizationRestTransport._BaseOptimizeToursLongRunning,
+                    "_BaseOptimizeToursLongRunning__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1021,21 +1013,18 @@ class RouteOptimizationRestTransport(_BaseRouteOptimizationRestTransport):
             """
 
             http_options = _BaseRouteOptimizationRestTransport._BaseOptimizeToursUri._get_http_options()
-
             request, metadata = self._interceptor.pre_optimize_tours_uri(
                 request, metadata
             )
-            transcoded_request = _BaseRouteOptimizationRestTransport._BaseOptimizeToursUri._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseRouteOptimizationRestTransport._BaseOptimizeToursUri._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRouteOptimizationRestTransport._BaseOptimizeToursUri._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRouteOptimizationRestTransport._BaseOptimizeToursUri,
+                    "_BaseOptimizeToursUri__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1214,15 +1203,16 @@ class RouteOptimizationRestTransport(_BaseRouteOptimizationRestTransport):
             """
 
             http_options = _BaseRouteOptimizationRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseRouteOptimizationRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseRouteOptimizationRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseRouteOptimizationRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

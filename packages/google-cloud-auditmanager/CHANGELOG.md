@@ -4,6 +4,36 @@
 
 [1]: https://pypi.org/project/google-cloud-auditmanager/#history
 
+## [0.3.4](https://github.com/googleapis/google-cloud-python/compare/google-cloud-auditmanager-v0.3.3...google-cloud-auditmanager-v0.3.4) (2026-11-05)
+
+
+### Features
+
+* update API sources and regenerate ([#18986](https://github.com/googleapis/google-cloud-python/issues/18986)) ([8c0f333](https://github.com/googleapis/google-cloud-python/commit/8c0f3331260667eb64c70db80a7ab5c52b8ccf36))
+
+## [0.3.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-auditmanager-v0.3.2...google-cloud-auditmanager-v0.3.3) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
+## [0.3.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-auditmanager-v0.3.1...google-cloud-auditmanager-v0.3.2) (2026-09-17)
+
+
+### Features
+
+* update API sources and regenerate ([#18396](https://github.com/googleapis/google-cloud-python/issues/18396)) ([e9f8e59](https://github.com/googleapis/google-cloud-python/commit/e9f8e590b7b395e660cc5437535166dfb920d246))
+* update API sources and regenerate. ([e9f8e59](https://github.com/googleapis/google-cloud-python/commit/e9f8e590b7b395e660cc5437535166dfb920d246))
+
+## [0.3.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-auditmanager-v0.3.0...google-cloud-auditmanager-v0.3.1) (2026-08-21)
+
+
+### Features
+
+* update googleapis and regenerate ([#18087](https://github.com/googleapis/google-cloud-python/issues/18087)) ([db1622a](https://github.com/googleapis/google-cloud-python/commit/db1622a9cfac112b40c93842737d7a5deeb3e8bd))
+* update sources and regenerate ([#18164](https://github.com/googleapis/google-cloud-python/issues/18164)) ([5ff8274](https://github.com/googleapis/google-cloud-python/commit/5ff8274ac2eb9375e918dff68303d3abdc3e6d6f))
+
 ## [0.3.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-auditmanager-v0.2.0...google-cloud-auditmanager-v0.3.0) (2026-06-02)
 
 

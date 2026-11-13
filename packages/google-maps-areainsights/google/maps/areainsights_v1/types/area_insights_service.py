@@ -376,8 +376,14 @@ class LocationFilter(proto.Message):
 
         Attributes:
             place (str):
-                The unique identifier of a specific
-                geographic region.
+                The `place
+                ID <https://developers.google.com/maps/documentation/places/web-service/place-id>`__
+                of the geographic region. Not all region types are
+                supported; see documentation for details.
+
+                **Format:** Must be in the format ``places/PLACE_ID``, where
+                ``PLACE_ID`` is the unique identifier of a place. For
+                example: ``places/ChIJPV4oX_65j4ARVW8IJ6IJUYs``.
 
                 This field is a member of `oneof`_ ``region``.
         """

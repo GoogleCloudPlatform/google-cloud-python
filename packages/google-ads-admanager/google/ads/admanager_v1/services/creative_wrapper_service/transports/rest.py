@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.ads.admanager_v1._compat import transcode_request
 from google.ads.admanager_v1.types import (
     creative_wrapper_messages,
     creative_wrapper_service,
@@ -765,21 +766,18 @@ class CreativeWrapperServiceRestTransport(_BaseCreativeWrapperServiceRestTranspo
             """
 
             http_options = _BaseCreativeWrapperServiceRestTransport._BaseBatchActivateCreativeWrappers._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_activate_creative_wrappers(
                 request, metadata
             )
-            transcoded_request = _BaseCreativeWrapperServiceRestTransport._BaseBatchActivateCreativeWrappers._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCreativeWrapperServiceRestTransport._BaseBatchActivateCreativeWrappers._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeWrapperServiceRestTransport._BaseBatchActivateCreativeWrappers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeWrapperServiceRestTransport._BaseBatchActivateCreativeWrappers,
+                    "_BaseBatchActivateCreativeWrappers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -928,21 +926,18 @@ class CreativeWrapperServiceRestTransport(_BaseCreativeWrapperServiceRestTranspo
             """
 
             http_options = _BaseCreativeWrapperServiceRestTransport._BaseBatchCreateCreativeWrappers._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_create_creative_wrappers(
                 request, metadata
             )
-            transcoded_request = _BaseCreativeWrapperServiceRestTransport._BaseBatchCreateCreativeWrappers._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCreativeWrapperServiceRestTransport._BaseBatchCreateCreativeWrappers._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeWrapperServiceRestTransport._BaseBatchCreateCreativeWrappers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeWrapperServiceRestTransport._BaseBatchCreateCreativeWrappers,
+                    "_BaseBatchCreateCreativeWrappers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1091,23 +1086,20 @@ class CreativeWrapperServiceRestTransport(_BaseCreativeWrapperServiceRestTranspo
             """
 
             http_options = _BaseCreativeWrapperServiceRestTransport._BaseBatchDeactivateCreativeWrappers._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_batch_deactivate_creative_wrappers(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCreativeWrapperServiceRestTransport._BaseBatchDeactivateCreativeWrappers._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCreativeWrapperServiceRestTransport._BaseBatchDeactivateCreativeWrappers._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeWrapperServiceRestTransport._BaseBatchDeactivateCreativeWrappers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeWrapperServiceRestTransport._BaseBatchDeactivateCreativeWrappers,
+                    "_BaseBatchDeactivateCreativeWrappers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1258,21 +1250,18 @@ class CreativeWrapperServiceRestTransport(_BaseCreativeWrapperServiceRestTranspo
             """
 
             http_options = _BaseCreativeWrapperServiceRestTransport._BaseBatchUpdateCreativeWrappers._get_http_options()
-
             request, metadata = self._interceptor.pre_batch_update_creative_wrappers(
                 request, metadata
             )
-            transcoded_request = _BaseCreativeWrapperServiceRestTransport._BaseBatchUpdateCreativeWrappers._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCreativeWrapperServiceRestTransport._BaseBatchUpdateCreativeWrappers._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeWrapperServiceRestTransport._BaseBatchUpdateCreativeWrappers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeWrapperServiceRestTransport._BaseBatchUpdateCreativeWrappers,
+                    "_BaseBatchUpdateCreativeWrappers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1422,21 +1411,18 @@ class CreativeWrapperServiceRestTransport(_BaseCreativeWrapperServiceRestTranspo
             """
 
             http_options = _BaseCreativeWrapperServiceRestTransport._BaseCreateCreativeWrapper._get_http_options()
-
             request, metadata = self._interceptor.pre_create_creative_wrapper(
                 request, metadata
             )
-            transcoded_request = _BaseCreativeWrapperServiceRestTransport._BaseCreateCreativeWrapper._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCreativeWrapperServiceRestTransport._BaseCreateCreativeWrapper._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeWrapperServiceRestTransport._BaseCreateCreativeWrapper._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeWrapperServiceRestTransport._BaseCreateCreativeWrapper,
+                    "_BaseCreateCreativeWrapper__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1581,17 +1567,18 @@ class CreativeWrapperServiceRestTransport(_BaseCreativeWrapperServiceRestTranspo
             """
 
             http_options = _BaseCreativeWrapperServiceRestTransport._BaseGetCreativeWrapper._get_http_options()
-
             request, metadata = self._interceptor.pre_get_creative_wrapper(
                 request, metadata
             )
-            transcoded_request = _BaseCreativeWrapperServiceRestTransport._BaseGetCreativeWrapper._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeWrapperServiceRestTransport._BaseGetCreativeWrapper._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeWrapperServiceRestTransport._BaseGetCreativeWrapper,
+                    "_BaseGetCreativeWrapper__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1732,17 +1719,18 @@ class CreativeWrapperServiceRestTransport(_BaseCreativeWrapperServiceRestTranspo
             """
 
             http_options = _BaseCreativeWrapperServiceRestTransport._BaseListCreativeWrappers._get_http_options()
-
             request, metadata = self._interceptor.pre_list_creative_wrappers(
                 request, metadata
             )
-            transcoded_request = _BaseCreativeWrapperServiceRestTransport._BaseListCreativeWrappers._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeWrapperServiceRestTransport._BaseListCreativeWrappers._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeWrapperServiceRestTransport._BaseListCreativeWrappers,
+                    "_BaseListCreativeWrappers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1891,21 +1879,18 @@ class CreativeWrapperServiceRestTransport(_BaseCreativeWrapperServiceRestTranspo
             """
 
             http_options = _BaseCreativeWrapperServiceRestTransport._BaseUpdateCreativeWrapper._get_http_options()
-
             request, metadata = self._interceptor.pre_update_creative_wrapper(
                 request, metadata
             )
-            transcoded_request = _BaseCreativeWrapperServiceRestTransport._BaseUpdateCreativeWrapper._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCreativeWrapperServiceRestTransport._BaseUpdateCreativeWrapper._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeWrapperServiceRestTransport._BaseUpdateCreativeWrapper._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeWrapperServiceRestTransport._BaseUpdateCreativeWrapper,
+                    "_BaseUpdateCreativeWrapper__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2139,17 +2124,18 @@ class CreativeWrapperServiceRestTransport(_BaseCreativeWrapperServiceRestTranspo
             """
 
             http_options = _BaseCreativeWrapperServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCreativeWrapperServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeWrapperServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeWrapperServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2257,15 +2243,16 @@ class CreativeWrapperServiceRestTransport(_BaseCreativeWrapperServiceRestTranspo
             """
 
             http_options = _BaseCreativeWrapperServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseCreativeWrapperServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCreativeWrapperServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeWrapperServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

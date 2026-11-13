@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-managedkafka/#history
 
+## [0.4.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-managedkafka-v0.4.1...google-cloud-managedkafka-v0.4.2) (2026-10-01)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [0.4.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-managedkafka-v0.4.0...google-cloud-managedkafka-v0.4.1) (2026-06-22)
 
 

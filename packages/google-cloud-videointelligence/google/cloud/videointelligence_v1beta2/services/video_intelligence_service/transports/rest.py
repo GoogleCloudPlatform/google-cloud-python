@@ -29,6 +29,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.videointelligence_v1beta2._compat import transcode_request
 from google.cloud.videointelligence_v1beta2.types import video_intelligence
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -354,19 +355,16 @@ class VideoIntelligenceServiceRestTransport(_BaseVideoIntelligenceServiceRestTra
             """
 
             http_options = _BaseVideoIntelligenceServiceRestTransport._BaseAnnotateVideo._get_http_options()
-
             request, metadata = self._interceptor.pre_annotate_video(request, metadata)
-            transcoded_request = _BaseVideoIntelligenceServiceRestTransport._BaseAnnotateVideo._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseVideoIntelligenceServiceRestTransport._BaseAnnotateVideo._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseVideoIntelligenceServiceRestTransport._BaseAnnotateVideo._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseVideoIntelligenceServiceRestTransport._BaseAnnotateVideo,
+                    "_BaseAnnotateVideo__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.maps.mapmanagement_v2beta._compat import transcode_request
 from google.maps.mapmanagement_v2beta.types import map_management_service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1021,21 +1022,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             http_options = (
                 _BaseMapManagementRestTransport._BaseCreateMapConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_map_config(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseCreateMapConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMapManagementRestTransport._BaseCreateMapConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseCreateMapConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseCreateMapConfig,
+                    "_BaseCreateMapConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1185,21 +1183,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             """
 
             http_options = _BaseMapManagementRestTransport._BaseCreateMapContextConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_map_context_config(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseCreateMapContextConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMapManagementRestTransport._BaseCreateMapContextConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseCreateMapContextConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseCreateMapContextConfig,
+                    "_BaseCreateMapContextConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1342,21 +1337,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             """
 
             http_options = _BaseMapManagementRestTransport._BaseCreateStyleConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_create_style_config(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseCreateStyleConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMapManagementRestTransport._BaseCreateStyleConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseCreateStyleConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseCreateStyleConfig,
+                    "_BaseCreateStyleConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1494,17 +1486,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             http_options = (
                 _BaseMapManagementRestTransport._BaseDeleteMapConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_map_config(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseDeleteMapConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseDeleteMapConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseDeleteMapConfig,
+                    "_BaseDeleteMapConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1601,17 +1594,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             """
 
             http_options = _BaseMapManagementRestTransport._BaseDeleteMapContextConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_map_context_config(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseDeleteMapContextConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseDeleteMapContextConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseDeleteMapContextConfig,
+                    "_BaseDeleteMapContextConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1707,17 +1701,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             """
 
             http_options = _BaseMapManagementRestTransport._BaseDeleteStyleConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_style_config(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseDeleteStyleConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseDeleteStyleConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseDeleteStyleConfig,
+                    "_BaseDeleteStyleConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1828,15 +1823,16 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             http_options = (
                 _BaseMapManagementRestTransport._BaseGetMapConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_map_config(request, metadata)
-            transcoded_request = _BaseMapManagementRestTransport._BaseGetMapConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseGetMapConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseGetMapConfig,
+                    "_BaseGetMapConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1983,17 +1979,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             """
 
             http_options = _BaseMapManagementRestTransport._BaseGetMapContextConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_get_map_context_config(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseGetMapContextConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseGetMapContextConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseGetMapContextConfig,
+                    "_BaseGetMapContextConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2136,17 +2133,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             http_options = (
                 _BaseMapManagementRestTransport._BaseGetStyleConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_style_config(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseGetStyleConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseGetStyleConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseGetStyleConfig,
+                    "_BaseGetStyleConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2284,17 +2282,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             http_options = (
                 _BaseMapManagementRestTransport._BaseListMapConfigs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_map_configs(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseListMapConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseListMapConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseListMapConfigs,
+                    "_BaseListMapConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2431,17 +2430,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             """
 
             http_options = _BaseMapManagementRestTransport._BaseListMapContextConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_map_context_configs(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseListMapContextConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseListMapContextConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseListMapContextConfigs,
+                    "_BaseListMapContextConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2579,17 +2579,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             """
 
             http_options = _BaseMapManagementRestTransport._BaseListStyleConfigs._get_http_options()
-
             request, metadata = self._interceptor.pre_list_style_configs(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseListStyleConfigs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseListStyleConfigs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseListStyleConfigs,
+                    "_BaseListStyleConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2739,21 +2740,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             http_options = (
                 _BaseMapManagementRestTransport._BaseUpdateMapConfig._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_map_config(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseUpdateMapConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMapManagementRestTransport._BaseUpdateMapConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseUpdateMapConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseUpdateMapConfig,
+                    "_BaseUpdateMapConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2903,21 +2901,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             """
 
             http_options = _BaseMapManagementRestTransport._BaseUpdateMapContextConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_map_context_config(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseUpdateMapContextConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMapManagementRestTransport._BaseUpdateMapContextConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseUpdateMapContextConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseUpdateMapContextConfig,
+                    "_BaseUpdateMapContextConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3060,21 +3055,18 @@ class MapManagementRestTransport(_BaseMapManagementRestTransport):
             """
 
             http_options = _BaseMapManagementRestTransport._BaseUpdateStyleConfig._get_http_options()
-
             request, metadata = self._interceptor.pre_update_style_config(
                 request, metadata
             )
-            transcoded_request = _BaseMapManagementRestTransport._BaseUpdateStyleConfig._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseMapManagementRestTransport._BaseUpdateStyleConfig._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseMapManagementRestTransport._BaseUpdateStyleConfig._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMapManagementRestTransport._BaseUpdateStyleConfig,
+                    "_BaseUpdateStyleConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

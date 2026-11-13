@@ -174,6 +174,36 @@ class SpacesServiceTransport(abc.ABC):
                 default_timeout=60.0,
                 client_info=client_info,
             ),
+            self.create_member: gapic_v1.method.wrap_method(
+                self.create_member,
+                default_timeout=80.0,
+                client_info=client_info,
+            ),
+            self.get_member: gapic_v1.method.wrap_method(
+                self.get_member,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_members: gapic_v1.method.wrap_method(
+                self.list_members,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.delete_member: gapic_v1.method.wrap_method(
+                self.delete_member,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.update_member: gapic_v1.method.wrap_method(
+                self.update_member,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.batch_update_members: gapic_v1.method.wrap_method(
+                self.batch_update_members,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
         }
 
     def close(self):
@@ -215,6 +245,62 @@ class SpacesServiceTransport(abc.ABC):
     ) -> Callable[
         [service.EndActiveConferenceRequest],
         Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_member(
+        self,
+    ) -> Callable[
+        [service.CreateMemberRequest],
+        Union[resource.Member, Awaitable[resource.Member]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_member(
+        self,
+    ) -> Callable[
+        [service.GetMemberRequest], Union[resource.Member, Awaitable[resource.Member]]
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_members(
+        self,
+    ) -> Callable[
+        [service.ListMembersRequest],
+        Union[service.ListMembersResponse, Awaitable[service.ListMembersResponse]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_member(
+        self,
+    ) -> Callable[
+        [service.DeleteMemberRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_member(
+        self,
+    ) -> Callable[
+        [service.UpdateMemberRequest],
+        Union[resource.Member, Awaitable[resource.Member]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_update_members(
+        self,
+    ) -> Callable[
+        [service.BatchUpdateMembersRequest],
+        Union[
+            service.BatchUpdateMembersResponse,
+            Awaitable[service.BatchUpdateMembersResponse],
+        ],
     ]:
         raise NotImplementedError()
 

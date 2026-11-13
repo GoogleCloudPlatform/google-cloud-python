@@ -22,10 +22,7 @@ from unittest import mock
 import pytest  # type: ignore
 import requests
 
-from google.auth import _helpers
-from google.auth import environment_vars
-from google.auth import exceptions
-from google.auth import transport
+from google.auth import _helpers, environment_vars, exceptions, transport
 from google.auth.compute_engine import _metadata
 from google.auth.transport import requests as google_auth_requests
 
@@ -487,6 +484,57 @@ def test_get_failure_bad_json():
     )
 
 
+def test_get_body_with_get_method_raises_value_error():
+    request = make_request("{}")
+
+    with pytest.raises(
+        ValueError, match="Request body cannot be specified with GET method."
+    ):
+        _metadata.get(request, PATH, method="GET", body=b"some_body")
+
+    request.assert_not_called()
+
+
+@mock.patch("time.sleep", return_value=None)
+def test_get_post_retry_preserves_method_body_and_headers(mock_sleep):
+    response_503 = mock.create_autospec(transport.Response, instance=True)
+    response_503.status = http_client.SERVICE_UNAVAILABLE
+    response_503.data = _helpers.to_bytes("Service Unavailable")
+    response_503.headers = {}
+
+    response_ok = mock.create_autospec(transport.Response, instance=True)
+    response_ok.status = http_client.OK
+    response_ok.data = _helpers.to_bytes(
+        json.dumps({"access_token": "bound_token", "expires_in": 3600})
+    )
+    response_ok.headers = {"content-type": "application/json"}
+
+    request = mock.create_autospec(transport.Request)
+    request.side_effect = [
+        response_503,
+        exceptions.TransportError("transient transport error"),
+        response_ok,
+    ]
+
+    expected_body = json.dumps({"certificate_chain": "fake_pem_chain"}).encode("utf-8")
+    result = _metadata.get(
+        request,
+        PATH,
+        method="POST",
+        body=expected_body,
+        headers={"Content-Type": "application/json"},
+    )
+
+    assert result == {"access_token": "bound_token", "expires_in": 3600}
+    assert request.call_count == 3
+    for call_args in request.call_args_list:
+        _, kwargs = call_args
+        assert kwargs["method"] == "POST"
+        assert kwargs["body"] == expected_body
+        assert kwargs["headers"]["Content-Type"] == "application/json"
+        assert kwargs["headers"][_metadata._METADATA_FLAVOR_HEADER] == "Google"
+
+
 def test_get_project_id():
     project = "example-project"
     request = make_request(project, headers={"content-type": "text/plain"})
@@ -639,17 +687,11 @@ def test_get_universe_domain_other_error():
 
 
 @mock.patch(
-    "google.auth._agent_identity_utils.get_and_parse_agent_identity_certificate",
-    return_value=None,
-)
-@mock.patch(
     "google.auth.metrics.token_request_access_token_mds",
     return_value=ACCESS_TOKEN_REQUEST_METRICS_HEADER_VALUE,
 )
 @mock.patch("google.auth._helpers.utcnow", return_value=datetime.datetime.min)
-def test_get_service_account_token(
-    utcnow, mock_metrics_header_value, mock_get_agent_cert
-):
+def test_get_service_account_token(utcnow, mock_metrics_header_value):
     ttl = 500
     request = make_request(
         json.dumps({"access_token": "token", "expires_in": ttl}),
@@ -672,17 +714,11 @@ def test_get_service_account_token(
 
 
 @mock.patch(
-    "google.auth._agent_identity_utils.get_and_parse_agent_identity_certificate",
-    return_value=None,
-)
-@mock.patch(
     "google.auth.metrics.token_request_access_token_mds",
     return_value=ACCESS_TOKEN_REQUEST_METRICS_HEADER_VALUE,
 )
 @mock.patch("google.auth._helpers.utcnow", return_value=datetime.datetime.min)
-def test_get_service_account_token_with_scopes_list(
-    utcnow, mock_metrics_header_value, mock_get_agent_cert
-):
+def test_get_service_account_token_with_scopes_list(utcnow, mock_metrics_header_value):
     ttl = 500
     request = make_request(
         json.dumps({"access_token": "token", "expires_in": ttl}),
@@ -708,16 +744,12 @@ def test_get_service_account_token_with_scopes_list(
 
 
 @mock.patch(
-    "google.auth._agent_identity_utils.get_and_parse_agent_identity_certificate",
-    return_value=None,
-)
-@mock.patch(
     "google.auth.metrics.token_request_access_token_mds",
     return_value=ACCESS_TOKEN_REQUEST_METRICS_HEADER_VALUE,
 )
 @mock.patch("google.auth._helpers.utcnow", return_value=datetime.datetime.min)
 def test_get_service_account_token_with_scopes_string(
-    utcnow, mock_metrics_header_value, mock_get_agent_cert
+    utcnow, mock_metrics_header_value
 ):
     ttl = 500
     request = make_request(
@@ -743,10 +775,9 @@ def test_get_service_account_token_with_scopes_string(
     assert expiry == utcnow() + datetime.timedelta(seconds=ttl)
 
 
-@mock.patch("google.auth._agent_identity_utils.calculate_certificate_fingerprint")
 @mock.patch("google.auth._agent_identity_utils.should_request_bound_token")
 @mock.patch(
-    "google.auth._agent_identity_utils.get_and_parse_agent_identity_certificate"
+    "google.auth._agent_identity_utils.get_agent_identity_certificate_and_bytes"
 )
 @mock.patch(
     "google.auth.metrics.token_request_access_token_mds",
@@ -756,38 +787,39 @@ def test_get_service_account_token_with_scopes_string(
 def test_get_service_account_token_with_bound_token(
     utcnow,
     mock_metrics_header_value,
-    mock_get_and_parse,
+    mock_get_cert_and_bytes,
     mock_should_request,
-    mock_calculate_fingerprint,
 ):
     # Test the successful path where a certificate is found and a bound token
     # is requested.
     mock_cert = mock.sentinel.cert
-    mock_get_and_parse.return_value = mock_cert
+    mock_cert_bytes = b"fake_cert_bytes"
+    mock_get_cert_and_bytes.return_value = (mock_cert, mock_cert_bytes)
     mock_should_request.return_value = True
-    mock_calculate_fingerprint.return_value = "fake_fingerprint"
 
     token_response = json.dumps({"access_token": "token", "expires_in": 3600})
     request = make_request(token_response, headers={"content-type": "application/json"})
 
     _metadata.get_service_account_token(request)
 
-    mock_get_and_parse.assert_called_once()
+    mock_get_cert_and_bytes.assert_called_once()
     mock_should_request.assert_called_once_with(mock_cert)
-    mock_calculate_fingerprint.assert_called_once_with(mock_cert)
 
     request.assert_called_once()
     _, kwargs = request.call_args
-    url = kwargs["url"]
-    assert "bindCertificateFingerprint=fake_fingerprint" in url
+    assert kwargs["method"] == "POST"
+    assert kwargs["body"] == json.dumps(
+        {"certificate_chain": mock_cert_bytes.decode("utf-8")}
+    ).encode("utf-8")
+    assert kwargs["headers"]["Content-Type"] == "application/json"
 
 
 @mock.patch(
-    "google.auth._agent_identity_utils.get_and_parse_agent_identity_certificate"
+    "google.auth._agent_identity_utils.get_agent_identity_certificate_and_bytes"
 )
-def test_get_service_account_token_no_cert(mock_get_and_parse):
-    # Test that no fingerprint is added when no certificate is found.
-    mock_get_and_parse.return_value = None
+def test_get_service_account_token_no_cert(mock_get_cert_and_bytes):
+    # Test that a standard GET request without a body is sent when no certificate is found.
+    mock_get_cert_and_bytes.return_value = (None, None)
     token_response = json.dumps({"access_token": "token", "expires_in": 3600})
     request = make_request(token_response, headers={"content-type": "application/json"})
 
@@ -795,19 +827,20 @@ def test_get_service_account_token_no_cert(mock_get_and_parse):
 
     request.assert_called_once()
     _, kwargs = request.call_args
-    url = kwargs["url"]
-    assert "bindCertificateFingerprint" not in url
+    assert kwargs["method"] == "GET"
+    assert "body" not in kwargs
+    assert "Content-Type" not in kwargs["headers"]
 
 
 @mock.patch("google.auth._agent_identity_utils.should_request_bound_token")
 @mock.patch(
-    "google.auth._agent_identity_utils.get_and_parse_agent_identity_certificate"
+    "google.auth._agent_identity_utils.get_agent_identity_certificate_and_bytes"
 )
 def test_get_service_account_token_should_not_bind(
-    mock_get_and_parse, mock_should_request
+    mock_get_cert_and_bytes, mock_should_request
 ):
-    # Test that no fingerprint is added when a cert is found but should not be used.
-    mock_get_and_parse.return_value = mock.sentinel.cert
+    # Test that a standard GET request without a body is sent when a cert is found but should not be used.
+    mock_get_cert_and_bytes.return_value = (mock.sentinel.cert, b"fake_cert_bytes")
     mock_should_request.return_value = False
     token_response = json.dumps({"access_token": "token", "expires_in": 3600})
     request = make_request(token_response, headers={"content-type": "application/json"})
@@ -816,8 +849,23 @@ def test_get_service_account_token_should_not_bind(
 
     request.assert_called_once()
     _, kwargs = request.call_args
-    url = kwargs["url"]
-    assert "bindCertificateFingerprint" not in url
+    assert kwargs["method"] == "GET"
+    assert "body" not in kwargs
+    assert "Content-Type" not in kwargs["headers"]
+
+
+@mock.patch(
+    "google.auth._agent_identity_utils.get_agent_identity_certificate_and_bytes"
+)
+def test__build_token_request_options_unbound(mock_get_cert_and_bytes):
+    method, body, headers = _metadata._build_token_request_options(
+        ACCESS_TOKEN_REQUEST_METRICS_HEADER_VALUE, bind_token=False
+    )
+
+    mock_get_cert_and_bytes.assert_not_called()
+    assert method == "GET"
+    assert body is None
+    assert headers == {"x-goog-api-client": ACCESS_TOKEN_REQUEST_METRICS_HEADER_VALUE}
 
 
 def test_get_service_account_info():

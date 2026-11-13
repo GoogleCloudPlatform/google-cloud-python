@@ -32,6 +32,7 @@ __protobuf__ = proto.module(
         "CancelDeviceSessionRequest",
         "UpdateDeviceSessionRequest",
         "DeviceSession",
+        "ClientInfo",
         "AndroidDevice",
     },
 )
@@ -236,7 +237,10 @@ class DeviceSession(proto.Message):
             Output only. The timestamp that the session
             first became ACTIVE.
         android_device (google.cloud.devicestreaming_v1.types.AndroidDevice):
-            Required. The requested device
+            Required. The requested device.
+        client_info (google.cloud.devicestreaming_v1.types.ClientInfo):
+            Optional. Information about the client which
+            invoked the device session.
     """
 
     class SessionState(proto.Enum):
@@ -364,6 +368,34 @@ class DeviceSession(proto.Message):
         proto.MESSAGE,
         number=15,
         message="AndroidDevice",
+    )
+    client_info: "ClientInfo" = proto.Field(
+        proto.MESSAGE,
+        number=21,
+        message="ClientInfo",
+    )
+
+
+class ClientInfo(proto.Message):
+    r"""Information about the client which invoked the device
+    session.
+
+    Attributes:
+        client (str):
+            Required. Client name, such as gcloud. The
+            maximum length is 64 characters.
+        version (str):
+            Optional. Client version. The maximum length
+            is 64 characters.
+    """
+
+    client: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    version: str = proto.Field(
+        proto.STRING,
+        number=2,
     )
 
 

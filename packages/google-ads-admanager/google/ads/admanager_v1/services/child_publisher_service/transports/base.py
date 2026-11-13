@@ -177,6 +177,26 @@ class ChildPublisherServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.batch_resend_child_publisher_invitation_emails: gapic_v1.method.wrap_method(
+                self.batch_resend_child_publisher_invitation_emails,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_renegotiate_child_publisher_agreements: gapic_v1.method.wrap_method(
+                self.batch_renegotiate_child_publisher_agreements,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_reject_child_publishers: gapic_v1.method.wrap_method(
+                self.batch_reject_child_publishers,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_withdraw_child_publishers: gapic_v1.method.wrap_method(
+                self.batch_withdraw_child_publishers,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.cancel_operation: gapic_v1.method.wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
@@ -266,6 +286,58 @@ class ChildPublisherServiceTransport(abc.ABC):
         Union[
             child_publisher_service.BatchUpdateChildPublishersResponse,
             Awaitable[child_publisher_service.BatchUpdateChildPublishersResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_resend_child_publisher_invitation_emails(
+        self,
+    ) -> Callable[
+        [child_publisher_service.BatchResendChildPublisherInvitationEmailsRequest],
+        Union[
+            child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse,
+            Awaitable[
+                child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_renegotiate_child_publisher_agreements(
+        self,
+    ) -> Callable[
+        [child_publisher_service.BatchRenegotiateChildPublisherAgreementsRequest],
+        Union[
+            child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse,
+            Awaitable[
+                child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_reject_child_publishers(
+        self,
+    ) -> Callable[
+        [child_publisher_service.BatchRejectChildPublishersRequest],
+        Union[
+            child_publisher_service.BatchRejectChildPublishersResponse,
+            Awaitable[child_publisher_service.BatchRejectChildPublishersResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_withdraw_child_publishers(
+        self,
+    ) -> Callable[
+        [child_publisher_service.BatchWithdrawChildPublishersRequest],
+        Union[
+            child_publisher_service.BatchWithdrawChildPublishersResponse,
+            Awaitable[child_publisher_service.BatchWithdrawChildPublishersResponse],
         ],
     ]:
         raise NotImplementedError()

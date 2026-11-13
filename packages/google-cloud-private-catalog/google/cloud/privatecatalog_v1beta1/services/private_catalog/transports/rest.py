@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.privatecatalog_v1beta1._compat import transcode_request
 from google.cloud.privatecatalog_v1beta1.types import private_catalog
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -426,15 +427,16 @@ class PrivateCatalogRestTransport(_BasePrivateCatalogRestTransport):
             http_options = (
                 _BasePrivateCatalogRestTransport._BaseSearchCatalogs._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_catalogs(request, metadata)
-            transcoded_request = _BasePrivateCatalogRestTransport._BaseSearchCatalogs._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrivateCatalogRestTransport._BaseSearchCatalogs._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrivateCatalogRestTransport._BaseSearchCatalogs,
+                    "_BaseSearchCatalogs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -575,15 +577,16 @@ class PrivateCatalogRestTransport(_BasePrivateCatalogRestTransport):
             http_options = (
                 _BasePrivateCatalogRestTransport._BaseSearchProducts._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_products(request, metadata)
-            transcoded_request = _BasePrivateCatalogRestTransport._BaseSearchProducts._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrivateCatalogRestTransport._BaseSearchProducts._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrivateCatalogRestTransport._BaseSearchProducts,
+                    "_BaseSearchProducts__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -724,15 +727,16 @@ class PrivateCatalogRestTransport(_BasePrivateCatalogRestTransport):
             http_options = (
                 _BasePrivateCatalogRestTransport._BaseSearchVersions._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_search_versions(request, metadata)
-            transcoded_request = _BasePrivateCatalogRestTransport._BaseSearchVersions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BasePrivateCatalogRestTransport._BaseSearchVersions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BasePrivateCatalogRestTransport._BaseSearchVersions,
+                    "_BaseSearchVersions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

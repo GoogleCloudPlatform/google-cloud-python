@@ -30,6 +30,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.discoveryengine_v1beta._compat import transcode_request
 from google.cloud.discoveryengine_v1beta.types import (
     completion_service,
     import_config,
@@ -896,21 +897,18 @@ class CompletionServiceRestTransport(_BaseCompletionServiceRestTransport):
             """
 
             http_options = _BaseCompletionServiceRestTransport._BaseAdvancedCompleteQuery._get_http_options()
-
             request, metadata = self._interceptor.pre_advanced_complete_query(
                 request, metadata
             )
-            transcoded_request = _BaseCompletionServiceRestTransport._BaseAdvancedCompleteQuery._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCompletionServiceRestTransport._BaseAdvancedCompleteQuery._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCompletionServiceRestTransport._BaseAdvancedCompleteQuery._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCompletionServiceRestTransport._BaseAdvancedCompleteQuery,
+                    "_BaseAdvancedCompleteQuery__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1057,15 +1055,16 @@ class CompletionServiceRestTransport(_BaseCompletionServiceRestTransport):
             """
 
             http_options = _BaseCompletionServiceRestTransport._BaseCompleteQuery._get_http_options()
-
             request, metadata = self._interceptor.pre_complete_query(request, metadata)
-            transcoded_request = _BaseCompletionServiceRestTransport._BaseCompleteQuery._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCompletionServiceRestTransport._BaseCompleteQuery._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCompletionServiceRestTransport._BaseCompleteQuery,
+                    "_BaseCompleteQuery__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1209,21 +1208,18 @@ class CompletionServiceRestTransport(_BaseCompletionServiceRestTransport):
             """
 
             http_options = _BaseCompletionServiceRestTransport._BaseImportCompletionSuggestions._get_http_options()
-
             request, metadata = self._interceptor.pre_import_completion_suggestions(
                 request, metadata
             )
-            transcoded_request = _BaseCompletionServiceRestTransport._BaseImportCompletionSuggestions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCompletionServiceRestTransport._BaseImportCompletionSuggestions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCompletionServiceRestTransport._BaseImportCompletionSuggestions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCompletionServiceRestTransport._BaseImportCompletionSuggestions,
+                    "_BaseImportCompletionSuggestions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1368,23 +1364,20 @@ class CompletionServiceRestTransport(_BaseCompletionServiceRestTransport):
             """
 
             http_options = _BaseCompletionServiceRestTransport._BaseImportSuggestionDenyListEntries._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_import_suggestion_deny_list_entries(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCompletionServiceRestTransport._BaseImportSuggestionDenyListEntries._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCompletionServiceRestTransport._BaseImportSuggestionDenyListEntries._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCompletionServiceRestTransport._BaseImportSuggestionDenyListEntries._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCompletionServiceRestTransport._BaseImportSuggestionDenyListEntries,
+                    "_BaseImportSuggestionDenyListEntries__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1527,21 +1520,18 @@ class CompletionServiceRestTransport(_BaseCompletionServiceRestTransport):
             """
 
             http_options = _BaseCompletionServiceRestTransport._BasePurgeCompletionSuggestions._get_http_options()
-
             request, metadata = self._interceptor.pre_purge_completion_suggestions(
                 request, metadata
             )
-            transcoded_request = _BaseCompletionServiceRestTransport._BasePurgeCompletionSuggestions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCompletionServiceRestTransport._BasePurgeCompletionSuggestions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCompletionServiceRestTransport._BasePurgeCompletionSuggestions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCompletionServiceRestTransport._BasePurgeCompletionSuggestions,
+                    "_BasePurgeCompletionSuggestions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1682,23 +1672,20 @@ class CompletionServiceRestTransport(_BaseCompletionServiceRestTransport):
             """
 
             http_options = _BaseCompletionServiceRestTransport._BasePurgeSuggestionDenyListEntries._get_http_options()
-
             request, metadata = (
                 self._interceptor.pre_purge_suggestion_deny_list_entries(
                     request, metadata
                 )
             )
-            transcoded_request = _BaseCompletionServiceRestTransport._BasePurgeSuggestionDenyListEntries._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCompletionServiceRestTransport._BasePurgeSuggestionDenyListEntries._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCompletionServiceRestTransport._BasePurgeSuggestionDenyListEntries._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCompletionServiceRestTransport._BasePurgeSuggestionDenyListEntries,
+                    "_BasePurgeSuggestionDenyListEntries__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1840,21 +1827,18 @@ class CompletionServiceRestTransport(_BaseCompletionServiceRestTransport):
             """
 
             http_options = _BaseCompletionServiceRestTransport._BaseRemoveSuggestion._get_http_options()
-
             request, metadata = self._interceptor.pre_remove_suggestion(
                 request, metadata
             )
-            transcoded_request = _BaseCompletionServiceRestTransport._BaseRemoveSuggestion._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCompletionServiceRestTransport._BaseRemoveSuggestion._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCompletionServiceRestTransport._BaseRemoveSuggestion._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCompletionServiceRestTransport._BaseRemoveSuggestion,
+                    "_BaseRemoveSuggestion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2074,21 +2058,18 @@ class CompletionServiceRestTransport(_BaseCompletionServiceRestTransport):
             """
 
             http_options = _BaseCompletionServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseCompletionServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCompletionServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCompletionServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCompletionServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2194,15 +2175,16 @@ class CompletionServiceRestTransport(_BaseCompletionServiceRestTransport):
             """
 
             http_options = _BaseCompletionServiceRestTransport._BaseGetOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseCompletionServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCompletionServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCompletionServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2333,15 +2315,16 @@ class CompletionServiceRestTransport(_BaseCompletionServiceRestTransport):
             """
 
             http_options = _BaseCompletionServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseCompletionServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCompletionServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCompletionServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

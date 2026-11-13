@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.devicestreaming_v1._compat import transcode_request
 from google.cloud.devicestreaming_v1.types import adb_service, service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -499,21 +500,18 @@ class DirectAccessServiceRestTransport(_BaseDirectAccessServiceRestTransport):
             """
 
             http_options = _BaseDirectAccessServiceRestTransport._BaseCancelDeviceSession._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_device_session(
                 request, metadata
             )
-            transcoded_request = _BaseDirectAccessServiceRestTransport._BaseCancelDeviceSession._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDirectAccessServiceRestTransport._BaseCancelDeviceSession._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDirectAccessServiceRestTransport._BaseCancelDeviceSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDirectAccessServiceRestTransport._BaseCancelDeviceSession,
+                    "_BaseCancelDeviceSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -621,21 +619,18 @@ class DirectAccessServiceRestTransport(_BaseDirectAccessServiceRestTransport):
             """
 
             http_options = _BaseDirectAccessServiceRestTransport._BaseCreateDeviceSession._get_http_options()
-
             request, metadata = self._interceptor.pre_create_device_session(
                 request, metadata
             )
-            transcoded_request = _BaseDirectAccessServiceRestTransport._BaseCreateDeviceSession._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDirectAccessServiceRestTransport._BaseCreateDeviceSession._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDirectAccessServiceRestTransport._BaseCreateDeviceSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDirectAccessServiceRestTransport._BaseCreateDeviceSession,
+                    "_BaseCreateDeviceSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -776,17 +771,18 @@ class DirectAccessServiceRestTransport(_BaseDirectAccessServiceRestTransport):
             """
 
             http_options = _BaseDirectAccessServiceRestTransport._BaseGetDeviceSession._get_http_options()
-
             request, metadata = self._interceptor.pre_get_device_session(
                 request, metadata
             )
-            transcoded_request = _BaseDirectAccessServiceRestTransport._BaseGetDeviceSession._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDirectAccessServiceRestTransport._BaseGetDeviceSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDirectAccessServiceRestTransport._BaseGetDeviceSession,
+                    "_BaseGetDeviceSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -924,17 +920,18 @@ class DirectAccessServiceRestTransport(_BaseDirectAccessServiceRestTransport):
             """
 
             http_options = _BaseDirectAccessServiceRestTransport._BaseListDeviceSessions._get_http_options()
-
             request, metadata = self._interceptor.pre_list_device_sessions(
                 request, metadata
             )
-            transcoded_request = _BaseDirectAccessServiceRestTransport._BaseListDeviceSessions._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDirectAccessServiceRestTransport._BaseListDeviceSessions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDirectAccessServiceRestTransport._BaseListDeviceSessions,
+                    "_BaseListDeviceSessions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1077,21 +1074,18 @@ class DirectAccessServiceRestTransport(_BaseDirectAccessServiceRestTransport):
             """
 
             http_options = _BaseDirectAccessServiceRestTransport._BaseUpdateDeviceSession._get_http_options()
-
             request, metadata = self._interceptor.pre_update_device_session(
                 request, metadata
             )
-            transcoded_request = _BaseDirectAccessServiceRestTransport._BaseUpdateDeviceSession._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseDirectAccessServiceRestTransport._BaseUpdateDeviceSession._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseDirectAccessServiceRestTransport._BaseUpdateDeviceSession._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDirectAccessServiceRestTransport._BaseUpdateDeviceSession,
+                    "_BaseUpdateDeviceSession__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

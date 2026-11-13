@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.shopping.merchant_accounts_v1._compat import transcode_request
 from google.shopping.merchant_accounts_v1.types import online_return_policy
 from google.shopping.merchant_accounts_v1.types import (
     online_return_policy as gsma_online_return_policy,
@@ -447,21 +448,18 @@ class OnlineReturnPolicyServiceRestTransport(
             """
 
             http_options = _BaseOnlineReturnPolicyServiceRestTransport._BaseCreateOnlineReturnPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_create_online_return_policy(
                 request, metadata
             )
-            transcoded_request = _BaseOnlineReturnPolicyServiceRestTransport._BaseCreateOnlineReturnPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseOnlineReturnPolicyServiceRestTransport._BaseCreateOnlineReturnPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOnlineReturnPolicyServiceRestTransport._BaseCreateOnlineReturnPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOnlineReturnPolicyServiceRestTransport._BaseCreateOnlineReturnPolicy,
+                    "_BaseCreateOnlineReturnPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -599,17 +597,18 @@ class OnlineReturnPolicyServiceRestTransport(
             """
 
             http_options = _BaseOnlineReturnPolicyServiceRestTransport._BaseDeleteOnlineReturnPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_online_return_policy(
                 request, metadata
             )
-            transcoded_request = _BaseOnlineReturnPolicyServiceRestTransport._BaseDeleteOnlineReturnPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOnlineReturnPolicyServiceRestTransport._BaseDeleteOnlineReturnPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOnlineReturnPolicyServiceRestTransport._BaseDeleteOnlineReturnPolicy,
+                    "_BaseDeleteOnlineReturnPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -715,17 +714,18 @@ class OnlineReturnPolicyServiceRestTransport(
             """
 
             http_options = _BaseOnlineReturnPolicyServiceRestTransport._BaseGetOnlineReturnPolicy._get_http_options()
-
             request, metadata = self._interceptor.pre_get_online_return_policy(
                 request, metadata
             )
-            transcoded_request = _BaseOnlineReturnPolicyServiceRestTransport._BaseGetOnlineReturnPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOnlineReturnPolicyServiceRestTransport._BaseGetOnlineReturnPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOnlineReturnPolicyServiceRestTransport._BaseGetOnlineReturnPolicy,
+                    "_BaseGetOnlineReturnPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -868,17 +868,18 @@ class OnlineReturnPolicyServiceRestTransport(
             """
 
             http_options = _BaseOnlineReturnPolicyServiceRestTransport._BaseListOnlineReturnPolicies._get_http_options()
-
             request, metadata = self._interceptor.pre_list_online_return_policies(
                 request, metadata
             )
-            transcoded_request = _BaseOnlineReturnPolicyServiceRestTransport._BaseListOnlineReturnPolicies._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseOnlineReturnPolicyServiceRestTransport._BaseListOnlineReturnPolicies._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOnlineReturnPolicyServiceRestTransport._BaseListOnlineReturnPolicies,
+                    "_BaseListOnlineReturnPolicies__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

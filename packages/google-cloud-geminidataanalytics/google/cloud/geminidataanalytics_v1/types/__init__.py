@@ -23,6 +23,7 @@ from .context import (
     Context,
     ConversationOptions,
     DatasourceOptions,
+    DynamicField,
     ExampleQuery,
     GlossaryTerm,
     LookerGoldenQuery,
@@ -39,6 +40,7 @@ from .conversation import (
     GetConversationRequest,
     ListConversationsRequest,
     ListConversationsResponse,
+    UpdateConversationRequest,
 )
 from .credentials import (
     Credentials,
@@ -56,6 +58,11 @@ from .data_agent_service import (
     ListDataAgentsRequest,
     ListDataAgentsResponse,
     OperationMetadata,
+    RetrieveAgentOpsObservabilityRequest,
+    RetrieveAgentOpsObservabilityResponse,
+    SetAgentOpsObservabilityMetadata,
+    SetAgentOpsObservabilityRequest,
+    SetAgentOpsObservabilityResponse,
     UpdateDataAgentRequest,
 )
 from .data_analytics_agent import (
@@ -92,6 +99,7 @@ from .data_chat_service import (
     UserMessage,
 )
 from .datasource import (
+    BigQueryDatasetReference,
     BigQueryPropertyGraphReference,
     BigQueryTableReference,
     BigQueryTableReferences,
@@ -104,6 +112,7 @@ from .datasource import (
     LookerExploreReferences,
     PrivateLookerInstanceInfo,
     Schema,
+    SearchScope,
     StudioDatasourceReference,
     StudioDatasourceReferences,
 )
@@ -118,6 +127,7 @@ __all__ = (
     "Context",
     "ConversationOptions",
     "DatasourceOptions",
+    "DynamicField",
     "ExampleQuery",
     "GlossaryTerm",
     "LookerGoldenQuery",
@@ -132,6 +142,7 @@ __all__ = (
     "GetConversationRequest",
     "ListConversationsRequest",
     "ListConversationsResponse",
+    "UpdateConversationRequest",
     "Credentials",
     "OAuthCredentials",
     "DataAgent",
@@ -143,6 +154,11 @@ __all__ = (
     "ListDataAgentsRequest",
     "ListDataAgentsResponse",
     "OperationMetadata",
+    "RetrieveAgentOpsObservabilityRequest",
+    "RetrieveAgentOpsObservabilityResponse",
+    "SetAgentOpsObservabilityMetadata",
+    "SetAgentOpsObservabilityRequest",
+    "SetAgentOpsObservabilityResponse",
     "UpdateDataAgentRequest",
     "DataAnalyticsAgent",
     "AnalysisEvent",
@@ -173,6 +189,7 @@ __all__ = (
     "SystemMessage",
     "TextMessage",
     "UserMessage",
+    "BigQueryDatasetReference",
     "BigQueryPropertyGraphReference",
     "BigQueryTableReference",
     "BigQueryTableReferences",
@@ -184,6 +201,7 @@ __all__ = (
     "LookerExploreReferences",
     "PrivateLookerInstanceInfo",
     "Schema",
+    "SearchScope",
     "StudioDatasourceReference",
     "StudioDatasourceReferences",
     "DataFilterType",

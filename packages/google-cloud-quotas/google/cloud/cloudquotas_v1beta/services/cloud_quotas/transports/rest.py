@@ -28,6 +28,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.cloudquotas_v1beta._compat import transcode_request
 from google.cloud.cloudquotas_v1beta.types import cloudquotas, resources
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -584,21 +585,18 @@ class CloudQuotasRestTransport(_BaseCloudQuotasRestTransport):
             """
 
             http_options = _BaseCloudQuotasRestTransport._BaseCreateQuotaPreference._get_http_options()
-
             request, metadata = self._interceptor.pre_create_quota_preference(
                 request, metadata
             )
-            transcoded_request = _BaseCloudQuotasRestTransport._BaseCreateQuotaPreference._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudQuotasRestTransport._BaseCreateQuotaPreference._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudQuotasRestTransport._BaseCreateQuotaPreference._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudQuotasRestTransport._BaseCreateQuotaPreference,
+                    "_BaseCreateQuotaPreference__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -738,19 +736,16 @@ class CloudQuotasRestTransport(_BaseCloudQuotasRestTransport):
             http_options = (
                 _BaseCloudQuotasRestTransport._BaseGetQuotaInfo._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_quota_info(request, metadata)
-            transcoded_request = (
-                _BaseCloudQuotasRestTransport._BaseGetQuotaInfo._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseCloudQuotasRestTransport._BaseGetQuotaInfo._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudQuotasRestTransport._BaseGetQuotaInfo,
+                    "_BaseGetQuotaInfo__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -890,17 +885,18 @@ class CloudQuotasRestTransport(_BaseCloudQuotasRestTransport):
             """
 
             http_options = _BaseCloudQuotasRestTransport._BaseGetQuotaPreference._get_http_options()
-
             request, metadata = self._interceptor.pre_get_quota_preference(
                 request, metadata
             )
-            transcoded_request = _BaseCloudQuotasRestTransport._BaseGetQuotaPreference._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudQuotasRestTransport._BaseGetQuotaPreference._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudQuotasRestTransport._BaseGetQuotaPreference,
+                    "_BaseGetQuotaPreference__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1039,17 +1035,18 @@ class CloudQuotasRestTransport(_BaseCloudQuotasRestTransport):
             http_options = (
                 _BaseCloudQuotasRestTransport._BaseListQuotaInfos._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_quota_infos(
                 request, metadata
             )
-            transcoded_request = _BaseCloudQuotasRestTransport._BaseListQuotaInfos._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudQuotasRestTransport._BaseListQuotaInfos._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudQuotasRestTransport._BaseListQuotaInfos,
+                    "_BaseListQuotaInfos__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1188,17 +1185,18 @@ class CloudQuotasRestTransport(_BaseCloudQuotasRestTransport):
             """
 
             http_options = _BaseCloudQuotasRestTransport._BaseListQuotaPreferences._get_http_options()
-
             request, metadata = self._interceptor.pre_list_quota_preferences(
                 request, metadata
             )
-            transcoded_request = _BaseCloudQuotasRestTransport._BaseListQuotaPreferences._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudQuotasRestTransport._BaseListQuotaPreferences._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudQuotasRestTransport._BaseListQuotaPreferences,
+                    "_BaseListQuotaPreferences__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1342,21 +1340,18 @@ class CloudQuotasRestTransport(_BaseCloudQuotasRestTransport):
             """
 
             http_options = _BaseCloudQuotasRestTransport._BaseUpdateQuotaPreference._get_http_options()
-
             request, metadata = self._interceptor.pre_update_quota_preference(
                 request, metadata
             )
-            transcoded_request = _BaseCloudQuotasRestTransport._BaseUpdateQuotaPreference._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseCloudQuotasRestTransport._BaseUpdateQuotaPreference._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseCloudQuotasRestTransport._BaseUpdateQuotaPreference._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCloudQuotasRestTransport._BaseUpdateQuotaPreference,
+                    "_BaseUpdateQuotaPreference__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

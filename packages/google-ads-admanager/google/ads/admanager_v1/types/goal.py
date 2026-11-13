@@ -66,7 +66,7 @@ class Goal(proto.Message):
             reserved. If this is an impression cap goal, it represents
             the number of impressions or conversions that the line item
             will stop serving at if reached. For valid line item types,
-            see [LineItem.impressions_cap][].
+            see [LineItem.impressionsCap][LineItem.impressions_cap].
 
             This field is a member of `oneof`_ ``_units``.
     """

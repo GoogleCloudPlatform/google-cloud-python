@@ -30,7 +30,7 @@ with io.open("README.rst", "r") as fh:
     long_description = fh.read()
 
 
-version = "1.4.0"
+version = "1.5.0"
 
 setup(
     name="google-auth-oauthlib",
@@ -51,7 +51,7 @@ setup(
     extras_require={"tool": TOOL_DEPENDENCIES},
     entry_points={
         "console_scripts": [
-            "google-oauthlib-tool" "=google_auth_oauthlib.tool.__main__:main [tool]"
+            "google-oauthlib-tool=google_auth_oauthlib.tool.__main__:main [tool]"
         ]
     },
     python_requires=">=3.10",
@@ -64,6 +64,7 @@ setup(
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",

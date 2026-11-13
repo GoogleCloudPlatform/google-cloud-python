@@ -34,6 +34,7 @@ __protobuf__ = proto.module(
         "MatchedQuery",
         "QueryParameterValues",
         "LookerGoldenQuery",
+        "DynamicField",
         "LookerQuery",
         "GlossaryTerm",
         "ConversationOptions",
@@ -59,6 +60,9 @@ class Context(proto.Message):
             etc) and system instructions (e.g., answer like
             a Pirate) can help the model understand the
             business context around a user question.
+
+            Must be at most 250,000 bytes (approx. 250,000
+            characters for English text).
         datasource_references (google.cloud.geminidataanalytics_v1.types.DatasourceReferences):
             Required. Data sources that are available for
             answering the question.
@@ -302,13 +306,18 @@ class ExampleQuery(proto.Message):
             Optional. The SQL query that should be generated to answer
             the natural language question. For example: "SELECT
             COUNT(\*) FROM orders WHERE order_date BETWEEN '2024-01-01'
-            AND '2024-01-31'".
+            AND '2024-01-31'"
+
+            Must be at most 50,000 bytes (approx. 50,000 characters).
 
             This field is a member of `oneof`_ ``query``.
         natural_language_question (str):
             Optional. A natural language question that a
             user might ask. For example: "How many orders
-            were placed last month?".
+            were placed last month?"
+
+            Must be at most 2,000 bytes (approx. 2,000
+            characters).
         parameters (MutableSequence[google.cloud.geminidataanalytics_v1.types.QueryParameter]):
             Optional. The list of query parameters. Example: The
             parameterized SQL query "SELECT \* FROM my_table WHERE id =
@@ -425,7 +434,10 @@ class LookerGoldenQuery(proto.Message):
         natural_language_questions (MutableSequence[str]):
             Optional. Natural language questions that a
             user might ask. For example: "How many orders
-            were placed last month?".
+            were placed last month?"
+
+            Must be at most 2,000 bytes per question
+            (approx. 2,000 characters).
         looker_query (google.cloud.geminidataanalytics_v1.types.LookerQuery):
             Optional. The Looker Query corresponding to
             the natural language questions.
@@ -439,6 +451,170 @@ class LookerGoldenQuery(proto.Message):
         proto.MESSAGE,
         number=5,
         message="LookerQuery",
+    )
+
+
+class DynamicField(proto.Message):
+    r"""A dynamic field in Looker (Custom Dimension, Custom Measure,
+    or Table Calculation).
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        category (str):
+            Optional. The type of dynamic field: dimension, measure,
+            table_calculation. Looker can use the category type to
+            specify the name of the dynamic field. However, Looker
+            Conversational Analytics keeps the category separate from
+            the name of the dynamic field. For more details, see
+            https://docs.cloud.google.com/looker/docs/reference/param-lookml-dashboard-table-chart#dynamic_fields.
+
+            This field is a member of `oneof`_ ``_category``.
+        name (str):
+            Optional. The name of the dynamic field in
+            LookML.
+
+            This field is a member of `oneof`_ ``_name``.
+        label (str):
+            Optional. The label defines the display name
+            of the dynamic field.
+
+            This field is a member of `oneof`_ ``_label``.
+        based_on (str):
+            Optional. For custom measures, this
+            identifies the measure the field is based on.
+
+            This field is a member of `oneof`_ ``_based_on``.
+        type_ (str):
+            Optional. For custom measures, this
+            identifies the type of aggregation (e.g. sum).
+
+            This field is a member of `oneof`_ ``_type``.
+        description (str):
+            Optional. Description of the dynamic field.
+
+            This field is a member of `oneof`_ ``_description``.
+        expression (str):
+            Optional. Looker expression to create a table
+            calculation.
+
+            This field is a member of `oneof`_ ``_expression``.
+        filter_expression (str):
+            Optional. Looker expression to filter a base
+            measure.
+
+            This field is a member of `oneof`_ ``_filter_expression``.
+        value_format (str):
+            Optional. Value format for the dynamic field.
+
+            This field is a member of `oneof`_ ``_value_format``.
+        value_format_name (str):
+            Optional. Value format name for the dynamic
+            field if using a default named format.
+
+            This field is a member of `oneof`_ ``_value_format_name``.
+        calculation_type (str):
+            Optional. Calculation type for table calculations. Refer to
+            https://docs.cloud.google.com/looker/docs/reference/param-lookml-dashboard-table-chart#calculation_type
+            for all possible values depending on the ``category`` of
+            dynamic field.
+
+            This field is a member of `oneof`_ ``_calculation_type``.
+        args (MutableSequence[str]):
+            Optional. Arguments for custom groups, custom bins, or
+            shortcut calculations. For more details, refer to
+            https://docs.cloud.google.com/looker/docs/reference/param-lookml-dashboard-table-chart#args_for_custom_groups
+        kind_hint (str):
+            Optional. Identifies whether the dynamic
+            field returns a dimension or measure.
+
+            This field is a member of `oneof`_ ``_kind_hint``.
+        type_hint (str):
+            Optional. Identifies the data type the
+            dynamic field's expression should produce.
+
+            This field is a member of `oneof`_ ``_type_hint``.
+        is_disabled (bool):
+            Optional. Whether the dynamic field is
+            disabled.
+
+            This field is a member of `oneof`_ ``_is_disabled``.
+    """
+
+    category: str = proto.Field(
+        proto.STRING,
+        number=1,
+        optional=True,
+    )
+    name: str = proto.Field(
+        proto.STRING,
+        number=2,
+        optional=True,
+    )
+    label: str = proto.Field(
+        proto.STRING,
+        number=3,
+        optional=True,
+    )
+    based_on: str = proto.Field(
+        proto.STRING,
+        number=4,
+        optional=True,
+    )
+    type_: str = proto.Field(
+        proto.STRING,
+        number=5,
+        optional=True,
+    )
+    description: str = proto.Field(
+        proto.STRING,
+        number=6,
+        optional=True,
+    )
+    expression: str = proto.Field(
+        proto.STRING,
+        number=7,
+        optional=True,
+    )
+    filter_expression: str = proto.Field(
+        proto.STRING,
+        number=8,
+        optional=True,
+    )
+    value_format: str = proto.Field(
+        proto.STRING,
+        number=9,
+        optional=True,
+    )
+    value_format_name: str = proto.Field(
+        proto.STRING,
+        number=10,
+        optional=True,
+    )
+    calculation_type: str = proto.Field(
+        proto.STRING,
+        number=11,
+        optional=True,
+    )
+    args: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=12,
+    )
+    kind_hint: str = proto.Field(
+        proto.STRING,
+        number=13,
+        optional=True,
+    )
+    type_hint: str = proto.Field(
+        proto.STRING,
+        number=14,
+        optional=True,
+    )
+    is_disabled: bool = proto.Field(
+        proto.BOOL,
+        number=15,
+        optional=True,
     )
 
 
@@ -468,6 +644,9 @@ class LookerQuery(proto.Message):
             Optional. Limit in the query.
 
             This field is a member of `oneof`_ ``_limit``.
+        dynamic_fields (MutableSequence[google.cloud.geminidataanalytics_v1.types.DynamicField]):
+            Optional. The dynamic fields used in the
+            query.
         query_id (str):
             Optional. The primary identifier for the query resource in
             Looker, used for API operations. Maps to ``id`` (or
@@ -536,6 +715,11 @@ class LookerQuery(proto.Message):
         number=6,
         optional=True,
     )
+    dynamic_fields: MutableSequence["DynamicField"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=9,
+        message="DynamicField",
+    )
     query_id: str = proto.Field(
         proto.STRING,
         number=10,
@@ -555,13 +739,18 @@ class GlossaryTerm(proto.Message):
         display_name (str):
             Required. User friendly display name of the
             glossary term being defined. For example: "CTR",
-            "conversion rate", "pending".
+            "conversion rate", "pending"
+
+            Must be at most 256 bytes.
         description (str):
             Required. The description or meaning of the
             term. For example: "Click-through rate", "The
             percentage of users who complete a desired
             action", "An order that is waiting to be
-            processed.".
+            processed."
+
+            Must be at most 5,000 bytes (approx. 5,000
+            characters).
         labels (MutableSequence[str]):
             Optional. A list of general purpose labels associated to
             this term. For example: ["click rate", "clickthrough",
@@ -604,14 +793,13 @@ class ConversationOptions(proto.Message):
 
         Values:
             MODEL_UNSPECIFIED (0):
-                No model specified. The model may be set on the chat
-                request, or the default model will be used. Currently, this
-                is ``gemini-3.0-flash-preview``.
+                No model specified. The model may be set on
+                the chat request, or the default model will be
+                used.
             LATEST_GA_MODEL (1):
-                Use the most up-to-date non-preview model. Currently, this
-                is ``gemini-2.5-flash``. This constrains the request level
-                settings. The default will change to ``gemini-2.5-flash``,
-                and setting ``thinking_mode`` will not be supported.
+                Use the most up-to-date non-preview model.
+                This may constrain certain request level
+                settings.
         """
 
         MODEL_UNSPECIFIED = 0

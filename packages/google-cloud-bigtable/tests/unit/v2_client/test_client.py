@@ -466,6 +466,52 @@ def test_client_veneer_data_client_initialized():
     assert client._veneer_data_client is already
 
 
+def test_client_veneer_data_client_metrics_exporter_credential_scopes():
+    """
+    The legacy client pins service account credentials to bigtable-only scopes.
+    The veneer data client must not pass those on to its Cloud Monitoring
+    metrics exporter as-is, or every metrics export fails with UNAUTHENTICATED.
+    """
+    import google.auth.crypt
+    from google.oauth2 import service_account
+
+    from google.cloud.bigtable.client import ADMIN_SCOPE, DATA_SCOPE
+    from google.cloud.bigtable.data._metrics.handlers.gcp_exporter import (
+        BigtableMetricsExporter,
+    )
+
+    monitoring_write_scope = "https://www.googleapis.com/auth/monitoring.write"
+    credentials = service_account.Credentials(
+        mock.Mock(spec=google.auth.crypt.Signer),
+        "sa@example.iam.gserviceaccount.com",
+        "https://oauth2.googleapis.com/token",
+    )
+    client = _make_client(project=PROJECT, credentials=credentials, admin=True)
+    # the legacy client narrows the credentials to bigtable scopes
+    assert tuple(client._credentials.scopes) == (DATA_SCOPE, ADMIN_SCOPE)
+
+    with mock.patch.object(BigtableMetricsExporter, "_batch_write"):
+        data_client = client._veneer_data_client
+        try:
+            exporter = data_client._metrics.handlers[0]._exporter
+            exporter_credentials = exporter.client._transport._credentials
+            # the exporter gets a copy of the credentials that can write metrics
+            assert exporter_credentials is not client._credentials
+            assert list(exporter_credentials.scopes) == [monitoring_write_scope]
+            assert (
+                exporter_credentials.service_account_email
+                == credentials.service_account_email
+            )
+            # bigtable traffic keeps using the narrowly scoped credentials
+            assert tuple(data_client._credentials.scopes) == (DATA_SCOPE, ADMIN_SCOPE)
+            assert tuple(data_client.transport._credentials.scopes) == (
+                DATA_SCOPE,
+                ADMIN_SCOPE,
+            )
+        finally:
+            data_client.close()
+
+
 def test_client_data_gapic_client_not_initialized():
     from google.cloud.bigtable_v2 import BigtableClient
 

@@ -85,20 +85,20 @@ class ListCertificatesRequest(proto.Message):
             certificate should be listed, specified in the format
             ``projects/*/locations/*``.
         page_size (int):
-            Maximum number of certificates to return per
-            call.
+            Optional. Maximum number of certificates to
+            return per call.
         page_token (str):
-            The value returned by the last ``ListCertificatesResponse``.
-            Indicates that this is a continuation of a prior
-            ``ListCertificates`` call, and that the system should return
-            the next page of data.
+            Optional. The value returned by the last
+            ``ListCertificatesResponse``. Indicates that this is a
+            continuation of a prior ``ListCertificates`` call, and that
+            the system should return the next page of data.
         filter (str):
-            Filter expression to restrict the
+            Optional. Filter expression to restrict the
             Certificates returned.
         order_by (str):
-            A list of Certificate field names used to specify the order
-            of the returned results. The default sorting order is
-            ascending. To specify descending order for a field, add a
+            Optional. A list of Certificate field names used to specify
+            the order of the returned results. The default sorting order
+            is ascending. To specify descending order for a field, add a
             suffix ``" desc"``.
     """
 
@@ -254,21 +254,21 @@ class ListCertificateMapsRequest(proto.Message):
             certificate maps should be listed, specified in the format
             ``projects/*/locations/*``.
         page_size (int):
-            Maximum number of certificate maps to return
-            per call.
+            Optional. Maximum number of certificate maps
+            to return per call.
         page_token (str):
-            The value returned by the last
+            Optional. The value returned by the last
             ``ListCertificateMapsResponse``. Indicates that this is a
             continuation of a prior ``ListCertificateMaps`` call, and
             that the system should return the next page of data.
         filter (str):
-            Filter expression to restrict the
+            Optional. Filter expression to restrict the
             Certificates Maps returned.
         order_by (str):
-            A list of Certificate Map field names used to specify the
-            order of the returned results. The default sorting order is
-            ascending. To specify descending order for a field, add a
-            suffix ``" desc"``.
+            Optional. A list of Certificate Map field names used to
+            specify the order of the returned results. The default
+            sorting order is ascending. To specify descending order for
+            a field, add a suffix ``" desc"``.
     """
 
     parent: str = proto.Field(
@@ -423,26 +423,26 @@ class ListCertificateMapEntriesRequest(proto.Message):
             specified in the format
             ``projects/*/locations/*/certificateMaps/*``.
         page_size (int):
-            Maximum number of certificate map entries to
-            return. The service may return fewer than this
-            value. If unspecified, at most 50 certificate
-            map entries will be returned. The maximum value
-            is 1000; values above 1000 will be coerced to
-            1000.
+            Optional. Maximum number of certificate map
+            entries to return. The service may return fewer
+            than this value. If unspecified, at most 50
+            certificate map entries will be returned. The
+            maximum value is 1000; values above 1000 will be
+            coerced to 1000.
         page_token (str):
-            The value returned by the last
+            Optional. The value returned by the last
             ``ListCertificateMapEntriesResponse``. Indicates that this
             is a continuation of a prior ``ListCertificateMapEntries``
             call, and that the system should return the next page of
             data.
         filter (str):
-            Filter expression to restrict the returned
-            Certificate Map Entries.
+            Optional. Filter expression to restrict the
+            returned Certificate Map Entries.
         order_by (str):
-            A list of Certificate Map Entry field names used to specify
-            the order of the returned results. The default sorting order
-            is ascending. To specify descending order for a field, add a
-            suffix ``" desc"``.
+            Optional. A list of Certificate Map Entry field names used
+            to specify the order of the returned results. The default
+            sorting order is ascending. To specify descending order for
+            a field, add a suffix ``" desc"``.
     """
 
     parent: str = proto.Field(
@@ -601,21 +601,21 @@ class ListDnsAuthorizationsRequest(proto.Message):
             authorizations should be listed, specified in the format
             ``projects/*/locations/*``.
         page_size (int):
-            Maximum number of dns authorizations to
-            return per call.
+            Optional. Maximum number of dns
+            authorizations to return per call.
         page_token (str):
-            The value returned by the last
+            Optional. The value returned by the last
             ``ListDnsAuthorizationsResponse``. Indicates that this is a
             continuation of a prior ``ListDnsAuthorizations`` call, and
             that the system should return the next page of data.
         filter (str):
-            Filter expression to restrict the Dns
-            Authorizations returned.
+            Optional. Filter expression to restrict the
+            Dns Authorizations returned.
         order_by (str):
-            A list of Dns Authorization field names used to specify the
-            order of the returned results. The default sorting order is
-            ascending. To specify descending order for a field, add a
-            suffix ``" desc"``.
+            Optional. A list of Dns Authorization field names used to
+            specify the order of the returned results. The default
+            sorting order is ascending. To specify descending order for
+            a field, add a suffix ``" desc"``.
     """
 
     parent: str = proto.Field(
@@ -782,8 +782,10 @@ class OperationMetadata(proto.Message):
         requested_cancellation (bool):
             Identifies whether the user has requested cancellation of
             the operation. Operations that have successfully been
-            cancelled have [Operation.error][] value with a
-            [google.rpc.Status.code][google.rpc.Status.code] of 1,
+            cancelled have
+            [google.longrunning.Operation.error][google.longrunning.Operation.error]
+            value with a
+            [google.rpc.Status.code][google.rpc.Status.code] of ``1``,
             corresponding to ``Code.CANCELLED``.
         api_version (str):
             API version used to start the operation.
@@ -833,12 +835,12 @@ class Certificate(proto.Message):
 
     Attributes:
         name (str):
-            A user-defined name of the certificate. Certificate names
-            must be unique globally and match pattern
+            Identifier. A user-defined name of the certificate.
+            Certificate names must be unique globally and match pattern
             ``projects/*/locations/*/certificates/*``.
         description (str):
-            One or more paragraphs of text description of
-            a certificate.
+            Optional. One or more paragraphs of text
+            description of a certificate.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The creation timestamp of a
             Certificate.
@@ -846,7 +848,8 @@ class Certificate(proto.Message):
             Output only. The last update timestamp of a
             Certificate.
         labels (MutableMapping[str, str]):
-            Set of labels associated with a Certificate.
+            Optional. Set of labels associated with a
+            Certificate.
         self_managed (google.cloud.certificate_manager_v1.types.Certificate.SelfManagedCertificate):
             If set, defines data of a self-managed
             certificate.
@@ -855,6 +858,11 @@ class Certificate(proto.Message):
         managed (google.cloud.certificate_manager_v1.types.Certificate.ManagedCertificate):
             If set, contains configuration and state of a
             managed certificate.
+
+            This field is a member of `oneof`_ ``type``.
+        managed_identity (google.cloud.certificate_manager_v1.types.Certificate.ManagedIdentityCertificate):
+            If set, contains configuration and state of a
+            managed identity certificate.
 
             This field is a member of `oneof`_ ``type``.
         san_dnsnames (MutableSequence[str]):
@@ -871,7 +879,18 @@ class Certificate(proto.Message):
             Output only. The expiry timestamp of a
             Certificate.
         scope (google.cloud.certificate_manager_v1.types.Certificate.Scope):
-            Immutable. The scope of the certificate.
+            Optional. Immutable. The scope of the
+            certificate.
+        used_by (MutableSequence[google.cloud.certificate_manager_v1.types.Certificate.UsedBy]):
+            Output only. The list of resources that use
+            this Certificate.
+        tags (MutableMapping[str, str]):
+            Optional. Input only. Immutable. Tag
+            keys/values directly bound to this resource. For
+            example:
+
+              "123/environment": "production",
+              "123/costCenter": "marketing".
     """
 
     class Scope(proto.Enum):
@@ -879,22 +898,30 @@ class Certificate(proto.Message):
 
         Values:
             DEFAULT (0):
-                Certificates with default scope are served
-                from core Google data centers. If unsure, choose
-                this option.
+                Use the DEFAULT scope if you plan to use the
+                certificate with global external Application
+                Load Balancer, global external proxy Network
+                Load Balancer, or any of the regional Google
+                Cloud services.
             EDGE_CACHE (1):
-                Certificates with scope EDGE_CACHE are special-purposed
-                certificates, served from Edge Points of Presence. See
+                Use the EDGE_CACHE scope if you plan to use the certificate
+                with Media CDN. The certificates are served from Edge Points
+                of Presence. See
                 https://cloud.google.com/vpc/docs/edge-locations.
             ALL_REGIONS (2):
-                Certificates with ALL_REGIONS scope are served from all
-                Google Cloud regions. See
+                Use the ALL_REGIONS scope if you plan to use the certificate
+                with cross-region internal Application Load Balancer. The
+                certificates are served from all Google Cloud regions. See
                 https://cloud.google.com/compute/docs/regions-zones.
+            CLIENT_AUTH (3):
+                Associated with certificates used as client
+                certificates in Backend mTLS.
         """
 
         DEFAULT = 0
         EDGE_CACHE = 1
         ALL_REGIONS = 2
+        CLIENT_AUTH = 3
 
     class SelfManagedCertificate(proto.Message):
         r"""Certificate data for a SelfManaged Certificate.
@@ -904,12 +931,12 @@ class Certificate(proto.Message):
 
         Attributes:
             pem_certificate (str):
-                Input only. The PEM-encoded certificate
-                chain. Leaf certificate comes first, followed by
-                intermediate ones if any.
+                Optional. Input only. The PEM-encoded
+                certificate chain. Leaf certificate comes first,
+                followed by intermediate ones if any.
             pem_private_key (str):
-                Input only. The PEM-encoded private key of
-                the leaf certificate.
+                Optional. Input only. The PEM-encoded private
+                key of the leaf certificate.
         """
 
         pem_certificate: str = proto.Field(
@@ -928,15 +955,15 @@ class Certificate(proto.Message):
 
         Attributes:
             domains (MutableSequence[str]):
-                Immutable. The domains for which a managed
-                SSL certificate will be generated. Wildcard
-                domains are only supported with DNS challenge
-                resolution.
+                Optional. Immutable. The domains for which a
+                managed SSL certificate will be generated.
+                Wildcard domains are only supported with DNS
+                challenge resolution.
             dns_authorizations (MutableSequence[str]):
-                Immutable. Authorizations that will be used
-                for performing domain authorization.
+                Optional. Immutable. Authorizations that will
+                be used for performing domain authorization.
             issuance_config (str):
-                Immutable. The resource name for a
+                Optional. Immutable. The resource name for a
                 [CertificateIssuanceConfig][google.cloud.certificatemanager.v1.CertificateIssuanceConfig]
                 used to configure private PKI certificates in the format
                 ``projects/*/locations/*/certificateIssuanceConfigs/*``. If
@@ -1034,7 +1061,8 @@ class Certificate(proto.Message):
 
             Attributes:
                 domain (str):
-                    Domain name of the authorization attempt.
+                    Output only. Domain name of the authorization
+                    attempt.
                 state (google.cloud.certificate_manager_v1.types.Certificate.ManagedCertificate.AuthorizationAttemptInfo.State):
                     Output only. State of the domain for managed
                     certificate issuance.
@@ -1047,6 +1075,13 @@ class Certificate(proto.Message):
                     configuration issues. Not guaranteed to be
                     stable. For programmatic access use
                     FailureReason enum.
+                attempt_time (google.protobuf.timestamp_pb2.Timestamp):
+                    Output only. The timestamp, when the
+                    authorization attempt was made.
+                troubleshooting (google.cloud.certificate_manager_v1.types.Certificate.ManagedCertificate.AuthorizationAttemptInfo.Troubleshooting):
+                    Output only. Troubleshooting information for
+                    the authorization attempt. This field is only
+                    populated if the authorization attempt failed.
             """
 
             class State(proto.Enum):
@@ -1099,6 +1134,134 @@ class Certificate(proto.Message):
                 CAA = 2
                 RATE_LIMITED = 3
 
+            class Troubleshooting(proto.Message):
+                r"""Troubleshooting information for the authorization attempt.
+
+                Attributes:
+                    issues (MutableSequence[google.cloud.certificate_manager_v1.types.Certificate.ManagedCertificate.AuthorizationAttemptInfo.Troubleshooting.Issue]):
+                        Output only. The list of issues discovered
+                        during the authorization attempt.
+                    cname (google.cloud.certificate_manager_v1.types.Certificate.ManagedCertificate.AuthorizationAttemptInfo.Troubleshooting.CNAME):
+                        Output only. CNAME troubleshooting
+                        information.
+                    ips (google.cloud.certificate_manager_v1.types.Certificate.ManagedCertificate.AuthorizationAttemptInfo.Troubleshooting.IPs):
+                        Output only. IPs troubleshooting information.
+                """
+
+                class Issue(proto.Enum):
+                    r"""The issue discovered during the authorization attempt.
+
+                    Values:
+                        ISSUE_UNSPECIFIED (0):
+                            Issue is unspecified.
+                        CNAME_MISMATCH (1):
+                            The resolved CNAME value doesn't match the
+                            expected CNAME.
+                        RESOLVED_TO_NOT_SERVING (2):
+                            Domain has A/AAAA records that point to IPs,
+                            where the certificate is not attached.
+                        RESOLVED_TO_SERVING_ON_ALT_PORTS (3):
+                            Domain has A/AAAA records that point to IPs,
+                            where the certificate is attached, but port 443
+                            is not open.
+                        NO_RESOLVED_IPS (4):
+                            Domain doesn't have any A/AAAA records.
+                        CERTIFICATE_NOT_ATTACHED (5):
+                            Certificate is not configured to be served
+                            from any IPs (e.g. Certificate is not attached
+                            to any load balancer).
+                    """
+
+                    ISSUE_UNSPECIFIED = 0
+                    CNAME_MISMATCH = 1
+                    RESOLVED_TO_NOT_SERVING = 2
+                    RESOLVED_TO_SERVING_ON_ALT_PORTS = 3
+                    NO_RESOLVED_IPS = 4
+                    CERTIFICATE_NOT_ATTACHED = 5
+
+                class CNAME(proto.Message):
+                    r"""CNAME troubleshooting information.
+
+                    Attributes:
+                        name (str):
+                            Output only. The name of the CNAME record for the domain,
+                            equals to ``dns_resource_record.name`` in the corresponding
+                            ``DnsAuthorization``.
+                        expected_data (str):
+                            Output only. The expected value of the CNAME record for the
+                            domain, equals to ``dns_resource_record.data`` in the
+                            corresponding ``DnsAuthorization``.
+                        resolved_data (MutableSequence[str]):
+                            Output only. The resolved CNAME chain. Empty list if the
+                            CNAME record for ``CNAME.name`` is not found. Otherwise the
+                            first item is the value of the CNAME record for
+                            ``CNAME.name``. If the CNAME chain is longer, the second
+                            item is the value of the CNAME record for the first item,
+                            and so on.
+                    """
+
+                    name: str = proto.Field(
+                        proto.STRING,
+                        number=1,
+                    )
+                    expected_data: str = proto.Field(
+                        proto.STRING,
+                        number=2,
+                    )
+                    resolved_data: MutableSequence[str] = proto.RepeatedField(
+                        proto.STRING,
+                        number=3,
+                    )
+
+                class IPs(proto.Message):
+                    r"""IPs troubleshooting information.
+
+                    Attributes:
+                        serving (MutableSequence[str]):
+                            Output only. The list of IP addresses, where
+                            the certificate is attached and port 443 is
+                            open.
+                        serving_on_alt_ports (MutableSequence[str]):
+                            Output only. The list of IP addresses, where
+                            the certificate is attached, but port 443 is not
+                            open.
+                        resolved (MutableSequence[str]):
+                            Output only. The list of IP addresses
+                            resolved from the domain's A/AAAA records. Can
+                            contain both ipv4 and ipv6 addresses.
+                    """
+
+                    serving: MutableSequence[str] = proto.RepeatedField(
+                        proto.STRING,
+                        number=1,
+                    )
+                    serving_on_alt_ports: MutableSequence[str] = proto.RepeatedField(
+                        proto.STRING,
+                        number=2,
+                    )
+                    resolved: MutableSequence[str] = proto.RepeatedField(
+                        proto.STRING,
+                        number=3,
+                    )
+
+                issues: MutableSequence[
+                    "Certificate.ManagedCertificate.AuthorizationAttemptInfo.Troubleshooting.Issue"
+                ] = proto.RepeatedField(
+                    proto.ENUM,
+                    number=1,
+                    enum="Certificate.ManagedCertificate.AuthorizationAttemptInfo.Troubleshooting.Issue",
+                )
+                cname: "Certificate.ManagedCertificate.AuthorizationAttemptInfo.Troubleshooting.CNAME" = proto.Field(
+                    proto.MESSAGE,
+                    number=2,
+                    message="Certificate.ManagedCertificate.AuthorizationAttemptInfo.Troubleshooting.CNAME",
+                )
+                ips: "Certificate.ManagedCertificate.AuthorizationAttemptInfo.Troubleshooting.IPs" = proto.Field(
+                    proto.MESSAGE,
+                    number=3,
+                    message="Certificate.ManagedCertificate.AuthorizationAttemptInfo.Troubleshooting.IPs",
+                )
+
             domain: str = proto.Field(
                 proto.STRING,
                 number=1,
@@ -1116,6 +1279,16 @@ class Certificate(proto.Message):
             details: str = proto.Field(
                 proto.STRING,
                 number=4,
+            )
+            attempt_time: timestamp_pb2.Timestamp = proto.Field(
+                proto.MESSAGE,
+                number=5,
+                message=timestamp_pb2.Timestamp,
+            )
+            troubleshooting: "Certificate.ManagedCertificate.AuthorizationAttemptInfo.Troubleshooting" = proto.Field(
+                proto.MESSAGE,
+                number=6,
+                message="Certificate.ManagedCertificate.AuthorizationAttemptInfo.Troubleshooting",
             )
 
         domains: MutableSequence[str] = proto.RepeatedField(
@@ -1148,6 +1321,58 @@ class Certificate(proto.Message):
             proto.MESSAGE,
             number=5,
             message="Certificate.ManagedCertificate.AuthorizationAttemptInfo",
+        )
+
+    class ManagedIdentityCertificate(proto.Message):
+        r"""Configuration and state of a Managed Identity Certificate.
+        Certificate Manager provisions and renews Managed Identity
+        Certificates automatically, for as long as it's authorized to do
+        so.
+
+        Attributes:
+            identity (str):
+                Required. Immutable. SPIFFE ID of the Managed
+                Identity used for this certificate.
+            state (google.cloud.certificate_manager_v1.types.Certificate.ManagedCertificate.State):
+                Output only. State of the managed certificate
+                resource.
+            provisioning_issue (google.cloud.certificate_manager_v1.types.Certificate.ManagedCertificate.ProvisioningIssue):
+                Output only. Information about issues with
+                provisioning a managed certificate.
+        """
+
+        identity: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        state: "Certificate.ManagedCertificate.State" = proto.Field(
+            proto.ENUM,
+            number=2,
+            enum="Certificate.ManagedCertificate.State",
+        )
+        provisioning_issue: "Certificate.ManagedCertificate.ProvisioningIssue" = (
+            proto.Field(
+                proto.MESSAGE,
+                number=3,
+                message="Certificate.ManagedCertificate.ProvisioningIssue",
+            )
+        )
+
+    class UsedBy(proto.Message):
+        r"""Defines a resource that uses the certificate.
+
+        Attributes:
+            name (str):
+                Output only. Full name of the resource
+                https://google.aip.dev/122#full-resource-names, e.g.
+                ``//certificatemanager.googleapis.com/projects/*/locations/*/certificateMaps/*/certificateMapEntries/*``
+                or
+                ``//compute.googleapis.com/projects/*/locations/*/targetHttpsProxies/*``.
+        """
+
+        name: str = proto.Field(
+            proto.STRING,
+            number=1,
         )
 
     name: str = proto.Field(
@@ -1185,6 +1410,12 @@ class Certificate(proto.Message):
         oneof="type",
         message=ManagedCertificate,
     )
+    managed_identity: ManagedIdentityCertificate = proto.Field(
+        proto.MESSAGE,
+        number=18,
+        oneof="type",
+        message=ManagedIdentityCertificate,
+    )
     san_dnsnames: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=6,
@@ -1203,6 +1434,16 @@ class Certificate(proto.Message):
         number=12,
         enum=Scope,
     )
+    used_by: MutableSequence[UsedBy] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=15,
+        message=UsedBy,
+    )
+    tags: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=17,
+    )
 
 
 class CertificateMap(proto.Message):
@@ -1210,12 +1451,12 @@ class CertificateMap(proto.Message):
 
     Attributes:
         name (str):
-            A user-defined name of the Certificate Map. Certificate Map
-            names must be unique globally and match pattern
-            ``projects/*/locations/*/certificateMaps/*``.
+            Identifier. A user-defined name of the Certificate Map.
+            Certificate Map names must be unique globally and match
+            pattern ``projects/*/locations/*/certificateMaps/*``.
         description (str):
-            One or more paragraphs of text description of
-            a certificate map.
+            Optional. One or more paragraphs of text
+            description of a certificate map.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The creation timestamp of a
             Certificate Map.
@@ -1223,13 +1464,20 @@ class CertificateMap(proto.Message):
             Output only. The update timestamp of a
             Certificate Map.
         labels (MutableMapping[str, str]):
-            Set of labels associated with a Certificate
-            Map.
+            Optional. Set of labels associated with a
+            Certificate Map.
         gclb_targets (MutableSequence[google.cloud.certificate_manager_v1.types.CertificateMap.GclbTarget]):
             Output only. A list of GCLB targets that use
             this Certificate Map. A Target Proxy is only
             present on this list if it's attached to a
             Forwarding Rule.
+        tags (MutableMapping[str, str]):
+            Optional. Input only. Immutable. Tag
+            keys/values directly bound to this resource. For
+            example:
+
+              "123/environment": "production",
+              "123/costCenter": "marketing".
     """
 
     class GclbTarget(proto.Message):
@@ -1327,6 +1575,11 @@ class CertificateMap(proto.Message):
         number=4,
         message=GclbTarget,
     )
+    tags: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=7,
+    )
 
 
 class CertificateMapEntry(proto.Message):
@@ -1341,13 +1594,13 @@ class CertificateMapEntry(proto.Message):
 
     Attributes:
         name (str):
-            A user-defined name of the Certificate Map Entry.
-            Certificate Map Entry names must be unique globally and
-            match pattern
+            Identifier. A user-defined name of the Certificate Map
+            Entry. Certificate Map Entry names must be unique globally
+            and match pattern
             ``projects/*/locations/*/certificateMaps/*/certificateMapEntries/*``.
         description (str):
-            One or more paragraphs of text description of
-            a certificate map entry.
+            Optional. One or more paragraphs of text
+            description of a certificate map entry.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The creation timestamp of a
             Certificate Map Entry.
@@ -1355,8 +1608,8 @@ class CertificateMapEntry(proto.Message):
             Output only. The update timestamp of a
             Certificate Map Entry.
         labels (MutableMapping[str, str]):
-            Set of labels associated with a Certificate
-            Map Entry.
+            Optional. Set of labels associated with a
+            Certificate Map Entry.
         hostname (str):
             A Hostname (FQDN, e.g. ``example.com``) or a wildcard
             hostname expression (``*.example.com``) for a set of
@@ -1370,10 +1623,10 @@ class CertificateMapEntry(proto.Message):
 
             This field is a member of `oneof`_ ``match``.
         certificates (MutableSequence[str]):
-            A set of Certificates defines for the given ``hostname``.
-            There can be defined up to four certificates in each
-            Certificate Map Entry. Each certificate must match pattern
-            ``projects/*/locations/*/certificates/*``.
+            Optional. A set of Certificates defines for the given
+            ``hostname``. There can be defined up to four certificates
+            in each Certificate Map Entry. Each certificate must match
+            pattern ``projects/*/locations/*/certificates/*``.
         state (google.cloud.certificate_manager_v1.types.ServingState):
             Output only. A serving state of this
             Certificate Map Entry.
@@ -1446,7 +1699,7 @@ class DnsAuthorization(proto.Message):
 
     Attributes:
         name (str):
-            A user-defined name of the dns authorization.
+            Identifier. A user-defined name of the dns authorization.
             DnsAuthorization names must be unique globally and match
             pattern ``projects/*/locations/*/dnsAuthorizations/*``.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
@@ -1456,11 +1709,11 @@ class DnsAuthorization(proto.Message):
             Output only. The last update timestamp of a
             DnsAuthorization.
         labels (MutableMapping[str, str]):
-            Set of labels associated with a
+            Optional. Set of labels associated with a
             DnsAuthorization.
         description (str):
-            One or more paragraphs of text description of
-            a DnsAuthorization.
+            Optional. One or more paragraphs of text
+            description of a DnsAuthorization.
         domain (str):
             Required. Immutable. A domain that is being authorized. A
             DnsAuthorization resource covers a single domain and its
@@ -1471,10 +1724,18 @@ class DnsAuthorization(proto.Message):
             Output only. DNS Resource Record that needs
             to be added to DNS configuration.
         type_ (google.cloud.certificate_manager_v1.types.DnsAuthorization.Type):
-            Immutable. Type of DnsAuthorization. If unset during
-            resource creation the following default will be used:
+            Optional. Immutable. Type of DnsAuthorization. If unset
+            during resource creation the following default will be used:
 
-            - in location global: FIXED_RECORD.
+            - in location ``global``: FIXED_RECORD,
+            - in other locations: PER_PROJECT_RECORD.
+        tags (MutableMapping[str, str]):
+            Optional. Input only. Immutable. Tag
+            keys/values directly bound to this resource. For
+            example:
+
+              "123/environment": "production",
+              "123/costCenter": "marketing".
     """
 
     class Type(proto.Enum):
@@ -1561,6 +1822,11 @@ class DnsAuthorization(proto.Message):
         proto.ENUM,
         number=11,
         enum=Type,
+    )
+    tags: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=12,
     )
 
 

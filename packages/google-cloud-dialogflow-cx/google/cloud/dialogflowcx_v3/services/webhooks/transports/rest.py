@@ -31,6 +31,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.dialogflowcx_v3._compat import transcode_request
 from google.cloud.dialogflowcx_v3.types import webhook
 from google.cloud.dialogflowcx_v3.types import webhook as gcdc_webhook
 
@@ -599,23 +600,16 @@ class WebhooksRestTransport(_BaseWebhooksRestTransport):
             http_options = (
                 _BaseWebhooksRestTransport._BaseCreateWebhook._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_webhook(request, metadata)
-            transcoded_request = (
-                _BaseWebhooksRestTransport._BaseCreateWebhook._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWebhooksRestTransport._BaseCreateWebhook._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWebhooksRestTransport._BaseCreateWebhook._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebhooksRestTransport._BaseCreateWebhook,
+                    "_BaseCreateWebhook__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -749,19 +743,16 @@ class WebhooksRestTransport(_BaseWebhooksRestTransport):
             http_options = (
                 _BaseWebhooksRestTransport._BaseDeleteWebhook._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_webhook(request, metadata)
-            transcoded_request = (
-                _BaseWebhooksRestTransport._BaseDeleteWebhook._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWebhooksRestTransport._BaseDeleteWebhook._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebhooksRestTransport._BaseDeleteWebhook,
+                    "_BaseDeleteWebhook__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -869,19 +860,16 @@ class WebhooksRestTransport(_BaseWebhooksRestTransport):
             http_options = (
                 _BaseWebhooksRestTransport._BaseGetWebhook._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_webhook(request, metadata)
-            transcoded_request = (
-                _BaseWebhooksRestTransport._BaseGetWebhook._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWebhooksRestTransport._BaseGetWebhook._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebhooksRestTransport._BaseGetWebhook,
+                    "_BaseGetWebhook__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1018,19 +1006,16 @@ class WebhooksRestTransport(_BaseWebhooksRestTransport):
             http_options = (
                 _BaseWebhooksRestTransport._BaseListWebhooks._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_webhooks(request, metadata)
-            transcoded_request = (
-                _BaseWebhooksRestTransport._BaseListWebhooks._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWebhooksRestTransport._BaseListWebhooks._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebhooksRestTransport._BaseListWebhooks,
+                    "_BaseListWebhooks__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1175,23 +1160,16 @@ class WebhooksRestTransport(_BaseWebhooksRestTransport):
             http_options = (
                 _BaseWebhooksRestTransport._BaseUpdateWebhook._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_update_webhook(request, metadata)
-            transcoded_request = (
-                _BaseWebhooksRestTransport._BaseUpdateWebhook._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            body = _BaseWebhooksRestTransport._BaseUpdateWebhook._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWebhooksRestTransport._BaseUpdateWebhook._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebhooksRestTransport._BaseUpdateWebhook,
+                    "_BaseUpdateWebhook__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1367,19 +1345,16 @@ class WebhooksRestTransport(_BaseWebhooksRestTransport):
             http_options = (
                 _BaseWebhooksRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = (
-                _BaseWebhooksRestTransport._BaseGetLocation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWebhooksRestTransport._BaseGetLocation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebhooksRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1511,19 +1486,16 @@ class WebhooksRestTransport(_BaseWebhooksRestTransport):
             http_options = (
                 _BaseWebhooksRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = (
-                _BaseWebhooksRestTransport._BaseListLocations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWebhooksRestTransport._BaseListLocations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebhooksRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1652,21 +1624,18 @@ class WebhooksRestTransport(_BaseWebhooksRestTransport):
             http_options = (
                 _BaseWebhooksRestTransport._BaseCancelOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = (
-                _BaseWebhooksRestTransport._BaseCancelOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWebhooksRestTransport._BaseCancelOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebhooksRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1771,19 +1740,16 @@ class WebhooksRestTransport(_BaseWebhooksRestTransport):
             http_options = (
                 _BaseWebhooksRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = (
-                _BaseWebhooksRestTransport._BaseGetOperation._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWebhooksRestTransport._BaseGetOperation._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebhooksRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1915,19 +1881,16 @@ class WebhooksRestTransport(_BaseWebhooksRestTransport):
             http_options = (
                 _BaseWebhooksRestTransport._BaseListOperations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = (
-                _BaseWebhooksRestTransport._BaseListOperations._get_transcoded_request(
-                    http_options, request
-                )
-            )
-
-            # Jsonify the query params
-            query_params = (
-                _BaseWebhooksRestTransport._BaseListOperations._get_query_params_json(
-                    transcoded_request
-                )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseWebhooksRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

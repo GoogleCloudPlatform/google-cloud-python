@@ -34,11 +34,8 @@ Those steps are:
 
 import sys
 
-from google.auth import exceptions
-from google.auth import metrics
-from google.oauth2 import _client
-from google.oauth2 import challenges
-
+from google.auth import exceptions, metrics
+from google.oauth2 import _client, challenges
 
 _REAUTH_SCOPE = "https://www.googleapis.com/auth/accounts.reauth"
 _REAUTH_API = "https://reauth.googleapis.com/v2/sessions"

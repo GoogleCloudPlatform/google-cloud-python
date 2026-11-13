@@ -209,51 +209,24 @@ class EnableManagedRotationRequest(proto.Message):
             [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
             in the format ``projects/*/secrets/*`` or
             ``projects/*/locations/*/secrets/*``.
-        cloud_sql_single_user_credentials (google.cloud.secretmanager_v1.types.EnableManagedRotationRequest.CloudSQLSingleUserCredentials):
+        cloud_sql_single_user_credentials (google.cloud.secretmanager_v1.types.CloudSqlSingleUserCredentials):
             Credentials required for Cloud SQL DB for
             Single user Managed Rotation.
 
-            This field is a member of `oneof`_ ``credentials``.
+            This field is a member of `oneof`_ ``credential``.
     """
-
-    class CloudSQLSingleUserCredentials(proto.Message):
-        r"""These are the credentials required for Cloud SQL DB for
-        Single user Managed Rotation.
-
-        Attributes:
-            instance_id (str):
-                Required. Instance ID of the Cloud SQL
-                instance.
-            username (str):
-                Required. Username of the Cloud SQL instance.
-            password (str):
-                Optional. Password of the Cloud SQL instance.
-                If this is not provided, a random password will
-                be generated.
-        """
-
-        instance_id: str = proto.Field(
-            proto.STRING,
-            number=1,
-        )
-        username: str = proto.Field(
-            proto.STRING,
-            number=2,
-        )
-        password: str = proto.Field(
-            proto.STRING,
-            number=3,
-        )
 
     parent: str = proto.Field(
         proto.STRING,
         number=1,
     )
-    cloud_sql_single_user_credentials: CloudSQLSingleUserCredentials = proto.Field(
-        proto.MESSAGE,
-        number=2,
-        oneof="credentials",
-        message=CloudSQLSingleUserCredentials,
+    cloud_sql_single_user_credentials: resources.CloudSqlSingleUserCredentials = (
+        proto.Field(
+            proto.MESSAGE,
+            number=2,
+            oneof="credential",
+            message=resources.CloudSqlSingleUserCredentials,
+        )
     )
 
 

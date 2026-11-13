@@ -9,6 +9,7 @@ import os
 from django_spanner.base import DatabaseWrapper
 from django_spanner.client import DatabaseClient
 from django_spanner.operations import DatabaseOperations
+from django_spanner.version import __version__
 
 # from unittest import TestCase
 from tests._helpers import OpenTelemetryBase
@@ -22,7 +23,7 @@ class SpannerSimpleTestClass(OpenTelemetryBase):
 
         cls.INSTANCE_ID = "instance_id"
         cls.DATABASE_ID = "database_id"
-        cls.USER_AGENT = "django_spanner/2.2.0a1"
+        cls.USER_AGENT = f"django_spanner/{__version__}"
         cls.OPTIONS = {"option": "dummy"}
 
         cls.settings_dict = {

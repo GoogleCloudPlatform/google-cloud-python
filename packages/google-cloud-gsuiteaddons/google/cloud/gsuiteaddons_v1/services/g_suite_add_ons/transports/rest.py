@@ -29,6 +29,7 @@ from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.gsuiteaddons_v1._compat import transcode_request
 from google.cloud.gsuiteaddons_v1.types import gsuiteaddons
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -657,21 +658,18 @@ class GSuiteAddOnsRestTransport(_BaseGSuiteAddOnsRestTransport):
             http_options = (
                 _BaseGSuiteAddOnsRestTransport._BaseCreateDeployment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_create_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseGSuiteAddOnsRestTransport._BaseCreateDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGSuiteAddOnsRestTransport._BaseCreateDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGSuiteAddOnsRestTransport._BaseCreateDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGSuiteAddOnsRestTransport._BaseCreateDeployment,
+                    "_BaseCreateDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -805,17 +803,18 @@ class GSuiteAddOnsRestTransport(_BaseGSuiteAddOnsRestTransport):
             http_options = (
                 _BaseGSuiteAddOnsRestTransport._BaseDeleteDeployment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_delete_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseGSuiteAddOnsRestTransport._BaseDeleteDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGSuiteAddOnsRestTransport._BaseDeleteDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGSuiteAddOnsRestTransport._BaseDeleteDeployment,
+                    "_BaseDeleteDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -921,17 +920,18 @@ class GSuiteAddOnsRestTransport(_BaseGSuiteAddOnsRestTransport):
             http_options = (
                 _BaseGSuiteAddOnsRestTransport._BaseGetAuthorization._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_authorization(
                 request, metadata
             )
-            transcoded_request = _BaseGSuiteAddOnsRestTransport._BaseGetAuthorization._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGSuiteAddOnsRestTransport._BaseGetAuthorization._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGSuiteAddOnsRestTransport._BaseGetAuthorization,
+                    "_BaseGetAuthorization__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1067,15 +1067,16 @@ class GSuiteAddOnsRestTransport(_BaseGSuiteAddOnsRestTransport):
             http_options = (
                 _BaseGSuiteAddOnsRestTransport._BaseGetDeployment._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_deployment(request, metadata)
-            transcoded_request = _BaseGSuiteAddOnsRestTransport._BaseGetDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGSuiteAddOnsRestTransport._BaseGetDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGSuiteAddOnsRestTransport._BaseGetDeployment,
+                    "_BaseGetDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1214,17 +1215,18 @@ class GSuiteAddOnsRestTransport(_BaseGSuiteAddOnsRestTransport):
             http_options = (
                 _BaseGSuiteAddOnsRestTransport._BaseGetInstallStatus._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_install_status(
                 request, metadata
             )
-            transcoded_request = _BaseGSuiteAddOnsRestTransport._BaseGetInstallStatus._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGSuiteAddOnsRestTransport._BaseGetInstallStatus._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGSuiteAddOnsRestTransport._BaseGetInstallStatus,
+                    "_BaseGetInstallStatus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1356,21 +1358,18 @@ class GSuiteAddOnsRestTransport(_BaseGSuiteAddOnsRestTransport):
             """
 
             http_options = _BaseGSuiteAddOnsRestTransport._BaseInstallDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_install_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseGSuiteAddOnsRestTransport._BaseInstallDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGSuiteAddOnsRestTransport._BaseInstallDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGSuiteAddOnsRestTransport._BaseInstallDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGSuiteAddOnsRestTransport._BaseInstallDeployment,
+                    "_BaseInstallDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1474,17 +1473,18 @@ class GSuiteAddOnsRestTransport(_BaseGSuiteAddOnsRestTransport):
             http_options = (
                 _BaseGSuiteAddOnsRestTransport._BaseListDeployments._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_deployments(
                 request, metadata
             )
-            transcoded_request = _BaseGSuiteAddOnsRestTransport._BaseListDeployments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGSuiteAddOnsRestTransport._BaseListDeployments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGSuiteAddOnsRestTransport._BaseListDeployments,
+                    "_BaseListDeployments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1622,21 +1622,18 @@ class GSuiteAddOnsRestTransport(_BaseGSuiteAddOnsRestTransport):
             """
 
             http_options = _BaseGSuiteAddOnsRestTransport._BaseReplaceDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_replace_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseGSuiteAddOnsRestTransport._BaseReplaceDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGSuiteAddOnsRestTransport._BaseReplaceDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGSuiteAddOnsRestTransport._BaseReplaceDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGSuiteAddOnsRestTransport._BaseReplaceDeployment,
+                    "_BaseReplaceDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1769,21 +1766,18 @@ class GSuiteAddOnsRestTransport(_BaseGSuiteAddOnsRestTransport):
             """
 
             http_options = _BaseGSuiteAddOnsRestTransport._BaseUninstallDeployment._get_http_options()
-
             request, metadata = self._interceptor.pre_uninstall_deployment(
                 request, metadata
             )
-            transcoded_request = _BaseGSuiteAddOnsRestTransport._BaseUninstallDeployment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseGSuiteAddOnsRestTransport._BaseUninstallDeployment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseGSuiteAddOnsRestTransport._BaseUninstallDeployment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGSuiteAddOnsRestTransport._BaseUninstallDeployment,
+                    "_BaseUninstallDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

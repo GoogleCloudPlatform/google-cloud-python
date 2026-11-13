@@ -34,6 +34,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 from requests import __version__ as requests_version
 
+from google.cloud.notebooks_v1beta1._compat import transcode_request
 from google.cloud.notebooks_v1beta1.types import environment, instance, service
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -1558,21 +1559,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseCreateEnvironment._get_http_options()
-
             request, metadata = self._interceptor.pre_create_environment(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseCreateEnvironment._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseCreateEnvironment._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseCreateEnvironment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseCreateEnvironment,
+                    "_BaseCreateEnvironment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1710,19 +1708,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseCreateInstance._get_http_options()
-
             request, metadata = self._interceptor.pre_create_instance(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseCreateInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseCreateInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseCreateInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseCreateInstance,
+                    "_BaseCreateInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -1860,17 +1855,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseDeleteEnvironment._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_environment(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseDeleteEnvironment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseDeleteEnvironment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseDeleteEnvironment,
+                    "_BaseDeleteEnvironment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2006,15 +2002,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseDeleteInstance._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_instance(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseDeleteInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseDeleteInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseDeleteInstance,
+                    "_BaseDeleteInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2150,15 +2147,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseGetEnvironment._get_http_options()
-
             request, metadata = self._interceptor.pre_get_environment(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseGetEnvironment._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseGetEnvironment._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseGetEnvironment,
+                    "_BaseGetEnvironment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2297,15 +2295,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             http_options = (
                 _BaseNotebookServiceRestTransport._BaseGetInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_instance(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseGetInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseGetInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseGetInstance,
+                    "_BaseGetInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2443,17 +2442,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseIsInstanceUpgradeable._get_http_options()
-
             request, metadata = self._interceptor.pre_is_instance_upgradeable(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseIsInstanceUpgradeable._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseIsInstanceUpgradeable._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseIsInstanceUpgradeable,
+                    "_BaseIsInstanceUpgradeable__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2591,17 +2591,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseListEnvironments._get_http_options()
-
             request, metadata = self._interceptor.pre_list_environments(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseListEnvironments._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseListEnvironments._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseListEnvironments,
+                    "_BaseListEnvironments__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2742,15 +2743,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             http_options = (
                 _BaseNotebookServiceRestTransport._BaseListInstances._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_instances(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseListInstances._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseListInstances._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseListInstances,
+                    "_BaseListInstances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -2889,21 +2891,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseRegisterInstance._get_http_options()
-
             request, metadata = self._interceptor.pre_register_instance(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseRegisterInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseRegisterInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseRegisterInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseRegisterInstance,
+                    "_BaseRegisterInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3042,21 +3041,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseReportInstanceInfo._get_http_options()
-
             request, metadata = self._interceptor.pre_report_instance_info(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseReportInstanceInfo._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseReportInstanceInfo._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseReportInstanceInfo._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseReportInstanceInfo,
+                    "_BaseReportInstanceInfo__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3196,19 +3192,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             http_options = (
                 _BaseNotebookServiceRestTransport._BaseResetInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_reset_instance(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseResetInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseResetInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseResetInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseResetInstance,
+                    "_BaseResetInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3347,21 +3340,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseSetInstanceAccelerator._get_http_options()
-
             request, metadata = self._interceptor.pre_set_instance_accelerator(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseSetInstanceAccelerator._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseSetInstanceAccelerator._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseSetInstanceAccelerator._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseSetInstanceAccelerator,
+                    "_BaseSetInstanceAccelerator__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3501,21 +3491,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseSetInstanceLabels._get_http_options()
-
             request, metadata = self._interceptor.pre_set_instance_labels(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseSetInstanceLabels._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseSetInstanceLabels._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseSetInstanceLabels._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseSetInstanceLabels,
+                    "_BaseSetInstanceLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3654,21 +3641,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseSetInstanceMachineType._get_http_options()
-
             request, metadata = self._interceptor.pre_set_instance_machine_type(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseSetInstanceMachineType._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseSetInstanceMachineType._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseSetInstanceMachineType._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseSetInstanceMachineType,
+                    "_BaseSetInstanceMachineType__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3810,19 +3794,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             http_options = (
                 _BaseNotebookServiceRestTransport._BaseStartInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_start_instance(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseStartInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseStartInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseStartInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseStartInstance,
+                    "_BaseStartInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -3962,19 +3943,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             http_options = (
                 _BaseNotebookServiceRestTransport._BaseStopInstance._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_stop_instance(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseStopInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseStopInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseStopInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseStopInstance,
+                    "_BaseStopInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4112,21 +4090,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseUpgradeInstance._get_http_options()
-
             request, metadata = self._interceptor.pre_upgrade_instance(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseUpgradeInstance._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseUpgradeInstance._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseUpgradeInstance._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseUpgradeInstance,
+                    "_BaseUpgradeInstance__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4265,21 +4240,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseUpgradeInstanceInternal._get_http_options()
-
             request, metadata = self._interceptor.pre_upgrade_instance_internal(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseUpgradeInstanceInternal._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseUpgradeInstanceInternal._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseUpgradeInstanceInternal._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseUpgradeInstanceInternal,
+                    "_BaseUpgradeInstanceInternal__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4577,15 +4549,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             http_options = (
                 _BaseNotebookServiceRestTransport._BaseGetLocation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_location(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseGetLocation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseGetLocation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseGetLocation,
+                    "_BaseGetLocation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4717,15 +4690,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             http_options = (
                 _BaseNotebookServiceRestTransport._BaseListLocations._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_list_locations(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseListLocations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseListLocations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseListLocations,
+                    "_BaseListLocations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4857,15 +4831,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             http_options = (
                 _BaseNotebookServiceRestTransport._BaseGetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseGetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseGetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseGetIamPolicy,
+                    "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -4998,19 +4973,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             http_options = (
                 _BaseNotebookServiceRestTransport._BaseSetIamPolicy._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseSetIamPolicy._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseSetIamPolicy._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseSetIamPolicy._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseSetIamPolicy,
+                    "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5143,21 +5115,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseTestIamPermissions._get_http_options()
-
             request, metadata = self._interceptor.pre_test_iam_permissions(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseTestIamPermissions._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseTestIamPermissions._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseTestIamPermissions._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseTestIamPermissions,
+                    "_BaseTestIamPermissions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5286,21 +5255,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseCancelOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_cancel_operation(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseCancelOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            body = _BaseNotebookServiceRestTransport._BaseCancelOperation._get_request_body_json(
-                transcoded_request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseCancelOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseCancelOperation,
+                    "_BaseCancelOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5403,17 +5369,18 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseDeleteOperation._get_http_options()
-
             request, metadata = self._interceptor.pre_delete_operation(
                 request, metadata
             )
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseDeleteOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseDeleteOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseDeleteOperation,
+                    "_BaseDeleteOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5520,15 +5487,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             http_options = (
                 _BaseNotebookServiceRestTransport._BaseGetOperation._get_http_options()
             )
-
             request, metadata = self._interceptor.pre_get_operation(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseGetOperation._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseGetOperation._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseGetOperation,
+                    "_BaseGetOperation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
@@ -5658,15 +5626,16 @@ class NotebookServiceRestTransport(_BaseNotebookServiceRestTransport):
             """
 
             http_options = _BaseNotebookServiceRestTransport._BaseListOperations._get_http_options()
-
             request, metadata = self._interceptor.pre_list_operations(request, metadata)
-            transcoded_request = _BaseNotebookServiceRestTransport._BaseListOperations._get_transcoded_request(
-                http_options, request
-            )
-
-            # Jsonify the query params
-            query_params = _BaseNotebookServiceRestTransport._BaseListOperations._get_query_params_json(
-                transcoded_request
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNotebookServiceRestTransport._BaseListOperations,
+                    "_BaseListOperations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
             )
 
             if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(

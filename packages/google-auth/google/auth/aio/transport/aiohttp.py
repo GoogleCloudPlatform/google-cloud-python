@@ -16,7 +16,7 @@
 
 import asyncio
 import logging
-from typing import AsyncGenerator, Mapping, Optional, TYPE_CHECKING, Union
+from typing import TYPE_CHECKING, AsyncGenerator, Mapping, Optional, Union
 
 try:
     import aiohttp  # type: ignore
@@ -25,8 +25,7 @@ except ImportError as caught_exc:  # pragma: NO COVER
         "The aiohttp library is not installed from please install the aiohttp package to use the aiohttp transport."
     ) from caught_exc
 
-from google.auth import _helpers
-from google.auth import exceptions
+from google.auth import _helpers, exceptions
 from google.auth.aio import _helpers as _helpers_async
 from google.auth.aio import transport
 
