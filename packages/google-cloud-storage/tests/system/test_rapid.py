@@ -761,9 +761,8 @@ def test_mrd_open_with_read_handle_over_cloud_path(
             multi_stream_config=multi_stream_config,
         )
         await new_mrd.open()
-        # persisted_size is set regardless of whether we use read_handle or not
-        # because read_handle won't work in CLOUD_PATH.
-        assert new_mrd.persisted_size == len(_BYTES_TO_UPLOAD)
+        # persisted_size not set when opened with read_handle
+        assert new_mrd.persisted_size is None
         buffer = BytesIO()
         await new_mrd.download_ranges(
             [(0, 0, buffer)], accepts_memoryview=accepts_memoryview
