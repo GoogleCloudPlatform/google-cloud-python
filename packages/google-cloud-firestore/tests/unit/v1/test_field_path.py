@@ -59,6 +59,10 @@ def test__tokenize_field_path_w_dotted_escaped():
     _expect_tokenize_field_path("_0.`1`.`+2`", ["_0", ".", "`1`", ".", "`+2`"])
 
 
+def test__tokenize_field_path_w_quoted_trailing_escaped_backslash():
+    _expect_tokenize_field_path(r"`a\\`.`b c`", [r"`a\\`", ".", "`b c`"])
+
+
 def test__tokenize_field_path_w_unconsumed_characters():
     from google.cloud.firestore_v1 import field_path
 
@@ -148,6 +152,12 @@ def test_parse_field_path_w_escaped_backslash():
     from google.cloud.firestore_v1 import field_path
 
     assert field_path.parse_field_path("`a\\\\b`.c.d") == ["a\\b", "c", "d"]
+
+
+def test_parse_field_path_w_trailing_escaped_backslash():
+    from google.cloud.firestore_v1 import field_path
+
+    assert field_path.parse_field_path("`a\\\\`.`b c`") == ["a\\", "b c"]
 
 
 def test_parse_field_path_w_first_name_escaped_wo_closing_backtick():
@@ -449,6 +459,14 @@ def test_fieldpath_from_string_w_non_ascii_dotted():
     path_string = "a.一"
     field_path = field_path.FieldPath.from_string(path_string)
     assert field_path.parts == ("a", "一")
+
+
+def test_fieldpath_from_string_w_trailing_escaped_backslash():
+    from google.cloud.firestore_v1 import field_path
+
+    path_string = field_path.FieldPath("a\\", "b c").to_api_repr()
+    field_path = field_path.FieldPath.from_string(path_string)
+    assert field_path.parts == ("a\\", "b c")
 
 
 def test_fieldpath___hash___w_single_part():

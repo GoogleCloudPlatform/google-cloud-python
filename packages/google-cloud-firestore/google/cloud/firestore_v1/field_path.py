@@ -36,7 +36,7 @@ _SIMPLE_FIELD_NAME = re.compile("^[_a-zA-Z][_a-zA-Z0-9]*$")
 _LEADING_ALPHA_INVALID = re.compile(r"^[_a-zA-Z][_a-zA-Z0-9]*[~*/\[\]]")
 PATH_ELEMENT_TOKENS = [
     ("SIMPLE", r"[_a-zA-Z][_a-zA-Z0-9]*"),  # unquoted elements
-    ("QUOTED", r"`(?:\\`|[^`])*?`"),  # quoted elements, unquoted
+    ("QUOTED", r"`(?:\\.|[^`\\])*`"),  # quoted elements, unquoted
     ("DOT", r"\."),  # separator
 ]
 TOKENS_PATTERN = "|".join("(?P<{}>{})".format(*pair) for pair in PATH_ELEMENT_TOKENS)
