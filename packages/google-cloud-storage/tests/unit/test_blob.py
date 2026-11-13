@@ -6347,6 +6347,7 @@ class Test_Blob(unittest.TestCase):
         self.assertIs(blob.client, client)
         self.assertEqual(blob.name, "b")
         self.assertEqual(blob.bucket.name, "bucket_name")
+        self.assertEqual(blob.uri, basic_uri)
 
         nested_uri = "gs://bucket_name/path1/path2/b#name"
         blob = Blob.from_uri(nested_uri, client)
@@ -6355,6 +6356,7 @@ class Test_Blob(unittest.TestCase):
         self.assertIs(blob.client, client)
         self.assertEqual(blob.name, "path1/path2/b#name")
         self.assertEqual(blob.bucket.name, "bucket_name")
+        self.assertEqual(blob.uri, nested_uri)
 
     def test_from_uri_w_invalid_uri(self):
         from google.cloud.storage.blob import Blob
@@ -6375,6 +6377,12 @@ class Test_Blob(unittest.TestCase):
         self.assertIs(blob.client, client)
         self.assertEqual(blob.name, "b")
         self.assertEqual(blob.bucket.name, "buckets.example.com")
+        self.assertEqual(blob.uri, uri)
+
+    def test_get_uri_from_blob_w_unset_bucket_name(self):
+        blob = self._make_one(name="b", bucket=None)
+        with pytest.raises(ValueError, match="Bucket must be set to generate a URI."):
+            blob.uri
 
     @mock.patch("warnings.warn")
     def test_from_string(self, mock_warn):

@@ -816,6 +816,28 @@ class Bucket(_PropertyMixin):
 
         return cls(client, name=netloc)
 
+    @property
+    def uri(self) -> str:
+        """Get the URI associated to the bucket object.
+
+        .. code-block:: python
+
+            from google.cloud import storage
+            from google.cloud.storage.bucket import Bucket
+            client = storage.Client()
+            uri = "gs://bucket"
+            bucket = Bucket.from_uri(uri, client=client)
+            assert bucket.uri == uri
+
+        :raises: :exc:`ValueError` if name is not set.
+        :rtype: str
+        :returns: The bucket uri.
+        """
+        if self.name is None:
+            raise ValueError("Bucket name must be set to generate a URI.")
+
+        return f"gs://{self.name}"
+
     @classmethod
     def from_string(cls, uri, client=None):
         """Get a constructor for bucket object by URI.

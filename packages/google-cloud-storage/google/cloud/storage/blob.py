@@ -422,6 +422,28 @@ class Blob(_PropertyMixin):
         bucket = Bucket(client, name=match.group("bucket_name"))
         return cls(match.group("object_name"), bucket)
 
+    @property
+    def uri(self) -> str:
+        """Get the URI associated to the blob object.
+
+        .. code-block:: python
+
+            from google.cloud import storage
+            from google.cloud.storage.blob import Blob
+            client = storage.Client()
+            uri = "gs://bucket/object"
+            blob = Blob.from_uri(uri, client=client)
+            assert blob.uri == uri
+
+        :raises :exc:`ValueError` if bucket is not set.
+        :rtype: str
+        :returns: The blob uri.
+        """
+        if self.bucket is None:
+            raise ValueError("Bucket must be set to generate a URI.")
+
+        return f"{self.bucket.uri}/{self.name}"
+
     @classmethod
     def from_string(cls, uri, client=None):
         """(Deprecated) Get a constructor for blob object by URI.
