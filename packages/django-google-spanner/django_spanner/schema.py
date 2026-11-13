@@ -60,8 +60,11 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
     def __enter__(self):
         super().__enter__()
         self._restore_autocommit = False
+        batch_ddl = self.connection.settings_dict.get("OPTIONS", {}).get(
+            "batch_ddl", False
+        )
         if (
-            getattr(self.connection, "_batch_ddl_in_schema_editor", False)
+            batch_ddl
             and not self.collect_sql
             and not self.connection.in_atomic_block
             and self.connection.get_autocommit()

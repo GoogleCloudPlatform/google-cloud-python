@@ -182,6 +182,7 @@ class DatabaseWrapper(BaseDatabaseWrapper):
         conn_params.pop("instance", None)
         conn_params.pop("instance_id", None)
         conn_params.pop("client", None)
+        conn_params.pop("batch_ddl", None)
         # Ensure client is initialized
         instance = self.instance
         return self.Database.connect(

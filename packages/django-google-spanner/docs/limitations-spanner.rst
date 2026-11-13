@@ -20,9 +20,10 @@ it inherently. The workaround is to use python-spanner objects and run Mutations
 
 Batch DDL
 ~~~~~~~~~
-Migrations (creation and updation) of tables in Django are sequential operations. 
-Django doesn't inherently support doing batch DDL operations. However, customers 
-can use python-spanner objects to run batch DDL for unmanaged tables in Django.
+By default, migrations (creation and update of tables) in Django execute DDL
+statements sequentially. You can opt in to batching DDL statements within each
+``schema_editor()`` context by setting ``'OPTIONS': {'batch_ddl': True}`` in
+``DATABASES``, or use python-spanner objects directly for unmanaged tables.
 
 Stale Reads
 ~~~~~~~~~~~
@@ -91,7 +92,7 @@ Workaround
    * - Mutations
      - Python-spanner database objects can be used to run Mutation queries. `Link <https://cloud.google.com/spanner/docs/modify-mutation-api#python>`__.
    * - Batch DDL
-     - Using unmanaged tables in Django. `Link <https://docs.djangoproject.com/en/4.0/ref/models/options/#managed>`__ and Directly using Python spanner objects to execute batch DDL statements. `Link <https://cloud.google.com/spanner/docs/getting-started/python#create_a_database>`__.
+     - Set ``'OPTIONS': {'batch_ddl': True}`` in ``DATABASES`` to batch DDL statements within ``schema_editor()``, or use unmanaged tables (`Link <https://docs.djangoproject.com/en/5.2/ref/models/options/#managed>`__) with python-spanner objects directly (`Link <https://cloud.google.com/spanner/docs/getting-started/python#create_a_database>`__).
    * - Stale Reads
      - Python-spanner database objects can be used to perform stale reads. `Link <https://cloud.google.com/spanner/docs/reads#python>`__.
    * - Interleaving

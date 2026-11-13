@@ -518,14 +518,14 @@ class TestUtils(SpannerSimpleTestClass):
         normal_field = mock.MagicMock(generated=False, db_default=None)
         self.assertTrue(schema_editor.skip_default(normal_field))
 
-    def test_schema_editor_batches_ddl_when_flag_enabled(self):
+    def test_schema_editor_batches_ddl_when_option_enabled(self):
         """Toggles set_autocommit(False), commits, and restores set_autocommit(True)."""
         events = []
         mock_conn = mock.MagicMock()
         mock_conn.in_atomic_block = False
         mock_conn.features.can_rollback_ddl = False
         mock_conn.get_autocommit.return_value = True
-        mock_conn._batch_ddl_in_schema_editor = True
+        mock_conn.settings_dict = {"OPTIONS": {"batch_ddl": True}}
         mock_conn.commit.side_effect = lambda: events.append("commit")
         mock_conn.set_autocommit.side_effect = lambda val: events.append(
             ("set_autocommit", val)
@@ -558,7 +558,7 @@ class TestUtils(SpannerSimpleTestClass):
         mock_conn.in_atomic_block = False
         mock_conn.features.can_rollback_ddl = False
         mock_conn.get_autocommit.return_value = True
-        mock_conn._batch_ddl_in_schema_editor = True
+        mock_conn.settings_dict = {"OPTIONS": {"batch_ddl": True}}
         mock_conn.rollback.side_effect = lambda: events.append("rollback")
         mock_conn.set_autocommit.side_effect = lambda val: events.append(
             ("set_autocommit", val)
@@ -585,7 +585,7 @@ class TestUtils(SpannerSimpleTestClass):
             mock_conn.in_atomic_block = False
             mock_conn.features.can_rollback_ddl = False
             mock_conn.get_autocommit.return_value = True
-            mock_conn._batch_ddl_in_schema_editor = True
+            mock_conn.settings_dict = {"OPTIONS": {"batch_ddl": True}}
             mock_conn.commit.side_effect = lambda: events.append("commit")
             mock_conn.rollback.side_effect = lambda: events.append("rollback")
             mock_conn.set_autocommit.side_effect = lambda val: events.append(
@@ -615,7 +615,7 @@ class TestUtils(SpannerSimpleTestClass):
         mock_conn.in_atomic_block = False
         mock_conn.features.can_rollback_ddl = False
         mock_conn.get_autocommit.return_value = True
-        mock_conn._batch_ddl_in_schema_editor = True
+        mock_conn.settings_dict = {"OPTIONS": {"batch_ddl": True}}
 
         def failing_commit():
             events.append("commit")
@@ -643,17 +643,22 @@ class TestUtils(SpannerSimpleTestClass):
         )
 
     def test_schema_editor_skips_autocommit_toggle_by_default(self):
-        """Does not toggle autocommit when _batch_ddl_in_schema_editor is False/unset."""
-        mock_conn = mock.MagicMock()
-        mock_conn.in_atomic_block = False
-        mock_conn.features.can_rollback_ddl = False
-        mock_conn.get_autocommit.return_value = True
-        mock_conn._batch_ddl_in_schema_editor = False
+        """Does not toggle autocommit when OPTIONS['batch_ddl'] is False or unset."""
+        for settings_dict in (
+            {},
+            {"OPTIONS": {}},
+            {"OPTIONS": {"batch_ddl": False}},
+        ):
+            mock_conn = mock.MagicMock()
+            mock_conn.in_atomic_block = False
+            mock_conn.features.can_rollback_ddl = False
+            mock_conn.get_autocommit.return_value = True
+            mock_conn.settings_dict = settings_dict
 
-        with DatabaseSchemaEditor(mock_conn):
-            pass
+            with DatabaseSchemaEditor(mock_conn):
+                pass
 
-        mock_conn.set_autocommit.assert_not_called()
+            mock_conn.set_autocommit.assert_not_called()
 
     def test_schema_editor_skips_autocommit_toggle_for_collect_sql_or_atomic_or_manual(
         self,
@@ -668,7 +673,7 @@ class TestUtils(SpannerSimpleTestClass):
             mock_conn.in_atomic_block = in_atomic
             mock_conn.features.can_rollback_ddl = False
             mock_conn.get_autocommit.return_value = is_autocommit
-            mock_conn._batch_ddl_in_schema_editor = True
+            mock_conn.settings_dict = {"OPTIONS": {"batch_ddl": True}}
 
             with DatabaseSchemaEditor(mock_conn, collect_sql=collect_sql):
                 pass

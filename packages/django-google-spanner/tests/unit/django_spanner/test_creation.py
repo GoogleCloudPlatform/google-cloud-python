@@ -14,39 +14,18 @@ from tests.unit.django_spanner.simple_test import SpannerSimpleTestClass
 
 
 class TestCreation(SpannerSimpleTestClass):
-    def test_create_test_db_enables_ddl_batching_and_returns_db_name(self):
+    def test_create_test_db_returns_db_name_without_private_flag(self):
         creation = DatabaseCreation(self.connection)
-        observed_flags = []
-
-        def fake_super_create_test_db(*args, **kwargs):
-            observed_flags.append(
-                getattr(self.connection, "_batch_ddl_in_schema_editor", False)
-            )
-            return "test_database_id"
 
         with mock.patch.object(
             BaseDatabaseCreation,
             "create_test_db",
-            side_effect=fake_super_create_test_db,
+            return_value="test_database_id",
         ):
             result = creation.create_test_db(verbosity=0, autoclobber=True)
 
         self.assertEqual(result, "test_database_id")
-        self.assertEqual(observed_flags, [True])
-        self.assertFalse(self.connection._batch_ddl_in_schema_editor)
-
-    def test_create_test_db_resets_ddl_batching_on_error(self):
-        creation = DatabaseCreation(self.connection)
-
-        with mock.patch.object(
-            BaseDatabaseCreation,
-            "create_test_db",
-            side_effect=RuntimeError("boom"),
-        ):
-            with self.assertRaises(RuntimeError):
-                creation.create_test_db(verbosity=0, autoclobber=True)
-
-        self.assertFalse(self.connection._batch_ddl_in_schema_editor)
+        self.assertFalse(hasattr(self.connection, "_batch_ddl_in_schema_editor"))
 
     def test_create_test_db_marks_skips_when_env_set(self):
         creation = DatabaseCreation(self.connection)

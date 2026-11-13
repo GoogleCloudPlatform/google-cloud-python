@@ -411,17 +411,19 @@ class TestBasics(MockServerTestBase):
         self.assertEqual(exec_requests[14].param_types["a0"].code, TypeCode.JSON)
         self.assertEqual(exec_requests[14].params["a0"], "null")
 
-    def test_sync_apps_batches_ddl_when_create_test_db_flag_enabled(self):
+    def test_sync_apps_batches_ddl_when_batch_ddl_option_enabled(self):
         cmd = MigrateCommand()
         cmd.verbosity = 0
-        with mock.patch.object(
-            connection.introspection, "table_names", return_value=[]
-        ):
-            connection._batch_ddl_in_schema_editor = True
-            try:
+        connection.close()
+        connection.settings_dict["OPTIONS"]["batch_ddl"] = True
+        try:
+            with mock.patch.object(
+                connection.introspection, "table_names", return_value=[]
+            ):
                 cmd.sync_apps(connection, ["auth", "contenttypes", "sessions", "sites"])
-            finally:
-                connection._batch_ddl_in_schema_editor = False
+            self.assertNotIn("batch_ddl", connection.connection._connection_variables)
+        finally:
+            connection.settings_dict["OPTIONS"].pop("batch_ddl", None)
 
         ddl_requests = self.database_admin_service.requests
         self.assertEqual(len(ddl_requests), 1)
@@ -439,13 +441,13 @@ class TestBasics(MockServerTestBase):
         with connection.schema_editor() as editor:
             editor.create_model(LocalAuthor)
 
-        # Without _batch_ddl_in_schema_editor, CREATE TABLE and CREATE UNIQUE INDEX
+        # Without OPTIONS["batch_ddl"], CREATE TABLE and CREATE UNIQUE INDEX
         # execute as 2 separate UpdateDatabaseDdlRequest calls.
         ddl_requests = self.database_admin_service.requests
         self.assertEqual(len(ddl_requests), 2)
         self.assertTrue(transaction.get_autocommit())
 
-    def test_migration_with_runpython_and_deferred_sql_under_create_test_db_flag(self):
+    def test_migration_with_runpython_and_deferred_sql_with_batch_ddl_option(self):
         add_select1_result()
 
         def run_query(apps, schema_editor):
@@ -472,12 +474,12 @@ class TestBasics(MockServerTestBase):
         ]
         state = ProjectState()
 
-        connection._batch_ddl_in_schema_editor = True
+        connection.settings_dict["OPTIONS"]["batch_ddl"] = True
         try:
             with connection.schema_editor(atomic=mig.atomic) as editor:
                 mig.apply(state, editor)
         finally:
-            connection._batch_ddl_in_schema_editor = False
+            connection.settings_dict["OPTIONS"].pop("batch_ddl", None)
 
         ddl_requests = self.database_admin_service.requests
         self.assertEqual(len(ddl_requests), 2)
@@ -495,21 +497,22 @@ class TestBasics(MockServerTestBase):
             class Meta:
                 app_label = "tests"
 
-        connection._batch_ddl_in_schema_editor = True
+        connection.settings_dict["OPTIONS"]["batch_ddl"] = True
         try:
             with self.assertRaises(RuntimeError):
                 with connection.schema_editor() as editor:
                     editor.create_model(BrokenModel)
                     raise RuntimeError("abort schema block")
         finally:
-            connection._batch_ddl_in_schema_editor = False
+            connection.settings_dict["OPTIONS"].pop("batch_ddl", None)
 
         self.assertEqual(len(self.database_admin_service.requests), 0)
         self.assertTrue(transaction.get_autocommit())
         self.assertTrue(connection.connection.autocommit)
 
-    def test_create_test_db_end_to_end_batches_syncdb_ddls(self):
+    def test_create_test_db_end_to_end_batches_syncdb_ddls_when_batch_ddl_enabled(self):
         orig_name = connection.settings_dict["NAME"]
+        connection.settings_dict["OPTIONS"]["batch_ddl"] = True
 
         def fake_migrate_syncdb(*args, **kwargs):
             cmd = MigrateCommand()
@@ -541,17 +544,18 @@ class TestBasics(MockServerTestBase):
                 db_name = connection.creation.create_test_db(**create_kwargs)
 
             self.assertEqual(db_name, "django_test_db")
-            self.assertFalse(getattr(connection, "_batch_ddl_in_schema_editor", False))
+            self.assertFalse(hasattr(connection, "_batch_ddl_in_schema_editor"))
             ddl_requests = self.database_admin_service.requests
             self.assertEqual(len(ddl_requests), 1)
             # sites (table + unique index) + sessions (table + expire_date index) = 4 DDLs
             self.assertEqual(len(ddl_requests[0].statements), 4)
             self.assertTrue(transaction.get_autocommit())
         finally:
+            connection.settings_dict["OPTIONS"].pop("batch_ddl", None)
             connection.settings_dict["NAME"] = orig_name
 
     def test_schema_editor_deferred_sql_exception_discards_queued_ddl(self):
-        connection._batch_ddl_in_schema_editor = True
+        connection.settings_dict["OPTIONS"]["batch_ddl"] = True
         try:
             with self.assertRaises(ValueError):
                 with connection.schema_editor() as editor:
@@ -560,7 +564,7 @@ class TestBasics(MockServerTestBase):
                         "CREATE INDEX idx_s ON tests_singer (first_name); SELECT 1"
                     )
         finally:
-            connection._batch_ddl_in_schema_editor = False
+            connection.settings_dict["OPTIONS"].pop("batch_ddl", None)
 
         self.assertEqual(len(self.database_admin_service.requests), 0)
         self.assertTrue(transaction.get_autocommit())
@@ -570,7 +574,7 @@ class TestBasics(MockServerTestBase):
         from google.api_core.exceptions import InvalidArgument
 
         connection.ensure_connection()
-        connection._batch_ddl_in_schema_editor = True
+        connection.settings_dict["OPTIONS"]["batch_ddl"] = True
         try:
             with mock.patch.object(
                 connection.connection.database,
@@ -581,7 +585,7 @@ class TestBasics(MockServerTestBase):
                     with connection.schema_editor() as editor:
                         editor.create_model(Singer)
         finally:
-            connection._batch_ddl_in_schema_editor = False
+            connection.settings_dict["OPTIONS"].pop("batch_ddl", None)
 
         self.assertTrue(transaction.get_autocommit())
         self.assertTrue(connection.connection.autocommit)
