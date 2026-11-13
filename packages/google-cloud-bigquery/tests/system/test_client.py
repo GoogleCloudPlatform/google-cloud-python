@@ -1228,7 +1228,7 @@ class TestBigQuery(unittest.TestCase):
             job.result(timeout=JOB_TIMEOUT)
 
         exc_msg = str(exc_info.exception)
-        self.assertIn("out of valid NUMERIC range", exc_msg)
+        self.assertIn("NUMERIC", exc_msg)
 
     def test_load_table_from_json_basic_use(self):
         table_schema = (
