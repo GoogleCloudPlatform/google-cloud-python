@@ -167,37 +167,6 @@ _LIST_ROWS_FROM_QUERY_RESULTS_FIELDS = "jobReference,totalRows,pageToken,rows"
 # https://github.com/googleapis/python-bigquery/issues/438
 _MIN_GET_QUERY_RESULTS_TIMEOUT = 120
 
-# While a stream is open and the connection is idle, the shared BigQuery
-# Storage client pings the server after a minute, and closes the connection
-# if a ping isn't answered within a minute. A dropped ReadRows stream is
-# resumed at the next unread row.
-_BQSTORAGE_KEEPALIVE_TIME_MS = 60 * 1000
-_BQSTORAGE_KEEPALIVE_TIMEOUT_MS = 60 * 1000
-
-
-# TODO(https://github.com/googleapis/google-cloud-python/issues/18784): Use the
-# default transport once google-cloud-bigquery-storage sets keepalive itself.
-def _create_bqstorage_transport(**kwargs):
-    """Create a BigQuery Storage gRPC transport whose channel sends keepalive
-    pings.
-
-    ``BigQueryReadClient`` calls this with the arguments it passes to its
-    default transport.
-    """
-    from google.cloud import bigquery_storage
-
-    transport_class = bigquery_storage.BigQueryReadClient.get_transport_class("grpc")
-
-    def create_channel(*args, options=(), **channel_kwargs):
-        options = list(options) + [
-            ("grpc.keepalive_time_ms", _BQSTORAGE_KEEPALIVE_TIME_MS),
-            ("grpc.keepalive_timeout_ms", _BQSTORAGE_KEEPALIVE_TIMEOUT_MS),
-        ]
-        return transport_class.create_channel(*args, options=options, **channel_kwargs)
-
-    return transport_class(channel=create_channel, **kwargs)
-
-
 _LOAD_TABLE_FROM_DATAFRAME_DEPRECATED = (
     "Loading DataFrames via google-cloud-bigquery is deprecated. "
     "For direct, optimized loading, please call 'pandas_gbq.to_gbq()' directly."
@@ -650,7 +619,6 @@ class Client(ClientWithProject):
         client_info: Optional[
             "google.api_core.gapic_v1.client_info.ClientInfo"
         ] = DEFAULT_BQSTORAGE_CLIENT_INFO,
-        transport: Optional[Callable[..., Any]] = None,
     ) -> Optional["google.cloud.bigquery_storage.BigQueryReadClient"]:
         """Create a BigQuery Storage API client using this client's credentials.
 
@@ -665,9 +633,6 @@ class Client(ClientWithProject):
             client_info:
                 The client info used with a new BigQuery Storage client
                 instance if one is created.
-            transport:
-                A callable that creates the transport of a new BigQuery Storage
-                client instance. If ``None``, the default transport is used.
 
         Returns:
             A BigQuery Storage API client.
@@ -740,7 +705,6 @@ class Client(ClientWithProject):
                 credentials=self._credentials,
                 client_options=client_options,
                 client_info=amended_client_info,
-                transport=transport,
             )
 
         return bqstorage_client
@@ -762,9 +726,7 @@ class Client(ClientWithProject):
         """
         with self._shared_bqstorage_client_lock:
             if self._shared_bqstorage_client is None:
-                self._shared_bqstorage_client = self._ensure_bqstorage_client(
-                    transport=_create_bqstorage_transport,
-                )
+                self._shared_bqstorage_client = self._ensure_bqstorage_client()
             return self._shared_bqstorage_client
 
     def _dataset_from_arg(self, dataset) -> Union[Dataset, DatasetReference]:

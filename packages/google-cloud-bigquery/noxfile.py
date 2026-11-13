@@ -279,6 +279,16 @@ def system(session):
         extras = "[all]"
     session.install("-e", f".{extras}", "-c", constraints_path)
 
+    # TODO(https://github.com/googleapis/google-cloud-python/issues/18785):
+    # Remove once the bqstorage extra requires google-cloud-bigquery-storage
+    # 2.44.0. Until then, ARROW query results need the in-repo version, which
+    # sends keepalive pings by default and doesn't cancel finished streams.
+    session.install(
+        "-e",
+        str(CURRENT_DIRECTORY.parent / "google-cloud-bigquery-storage"),
+        "--no-deps",
+    )
+
     # Test with some broken "extras" in case the user didn't install the extra
     # directly. For example, pandas-gbq is recommended for pandas features, but
     # we want to test that we fallback to the previous behavior. For context,

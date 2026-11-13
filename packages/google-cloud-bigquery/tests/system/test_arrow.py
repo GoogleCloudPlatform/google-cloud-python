@@ -775,8 +775,6 @@ def _query_arrow(client, row_count):
 
 
 def test_query_and_wait_arrow_queries_share_one_bqstorage_client():
-    from google.cloud.bigquery import client as client_module
-
     with bigquery.Client() as client:
         # Wrap the client factory to count how many clients get created.
         ensure = mock.Mock(wraps=client._ensure_bqstorage_client)
@@ -794,7 +792,7 @@ def test_query_and_wait_arrow_queries_share_one_bqstorage_client():
 
     for table in tables:
         assert table.column("x").to_pylist() == list(range(1, 1001))
-    ensure.assert_called_once_with(transport=client_module._create_bqstorage_transport)
+    ensure.assert_called_once_with()
     assert shared is not None
     # Leaving the with block calls close(), which closes the shared channel.
     assert client._shared_bqstorage_client is None
@@ -807,25 +805,19 @@ def test_query_and_wait_arrow_ending_a_read_early_cancels_only_its_stream():
 
     # Wrap ReadRowsStream.cancel() to record calls without changing it.
     cancel_stream = reader.ReadRowsStream.cancel
-    cancelled_open = []
+    cancelled = []
 
-    def record_open_cancel(stream):
-        # google-cloud-bigquery-storage 2.43.0's __del__ also calls cancel()
-        # on finished streams, which does nothing. Count only cancels of a
-        # stream that's still open.
-        # TODO(https://github.com/googleapis/google-cloud-python/issues/18785):
-        # Count every cancel() once the bqstorage extra requires a release
-        # whose __del__ skips finished streams.
-        if stream._wrapped is not None:
-            cancelled_open.append(stream)
+    def record_cancel(stream):
+        cancelled.append(stream._name)
         return cancel_stream(stream)
 
     with bigquery.Client() as client, mock.patch.object(
-        reader.ReadRowsStream, "cancel", autospec=True, side_effect=record_open_cancel
+        reader.ReadRowsStream, "cancel", autospec=True, side_effect=record_cancel
     ):
         ended_early_rows = _query_arrow(client, 100000)
         ended_early = ended_early_rows.to_arrow_iterable()
-        read_fully = _query_arrow(client, 100000).to_arrow_iterable()
+        read_fully_rows = _query_arrow(client, 100000)
+        read_fully = read_fully_rows.to_arrow_iterable()
         # Two reads reach the stream, whether or not jobs.query returned a
         # first page.
         next(ended_early)
@@ -835,8 +827,12 @@ def test_query_and_wait_arrow_ending_a_read_early_cancels_only_its_stream():
         ended_early.close()
         rows.extend(read_fully)
 
-    (stream,) = cancelled_open
-    assert stream._name.endswith(f"/jobs/{ended_early_rows.job_id}/streams/_default")
+    # Streams left over from other tests can be garbage collected, and
+    # cancelled, while this one runs, so only look at this test's two streams.
+    ended_early_stream = f"/jobs/{ended_early_rows.job_id}/streams/_default"
+    read_fully_stream = f"/jobs/{read_fully_rows.job_id}/streams/_default"
+    assert sum(name.endswith(ended_early_stream) for name in cancelled) == 1
+    assert not any(name.endswith(read_fully_stream) for name in cancelled)
     table = pyarrow.Table.from_batches(rows)
     assert table.column("x").to_pylist() == list(range(1, 100001))
 
