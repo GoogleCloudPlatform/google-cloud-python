@@ -360,6 +360,17 @@ def downscoping(session):
     )
 
 
+@nox.session(python=PYTHON_VERSIONS_SYNC)
+def dpop_credentials(session):
+    session.install(*TEST_DEPENDENCIES_SYNC)
+    session.install(LIBRARY_DIR)
+    default(
+        session,
+        "system_tests_sync/test_dpop_credentials.py",
+        *session.posargs,
+    )
+
+
 # ASYNC SYSTEM TESTS
 
 @nox.session(python=PYTHON_VERSIONS_ASYNC)

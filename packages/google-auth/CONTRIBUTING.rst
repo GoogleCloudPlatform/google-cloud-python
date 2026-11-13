@@ -127,3 +127,44 @@ grpc Tests
 
 These tests use the Pub/Sub API. Grant the service account specified by `GOOGLE_APPLICATION_CREDENTIALS`
 permissions to list topics. The service account should have at least `roles/pubsub.viewer`.
+
+DPoP Authorized User System Tests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+DPoP authorized user system tests are completely separate from ``authorized_user.json``
+and the existing authorized user tests.
+
+Because the ``gcloud`` CLI does not yet support DPoP-bound credentials, generate
+two EC P-256 private keys with ``openssl`` (one valid key to bind the credentials
+and one mismatched key for negative testing) and use the included helper script
+to create ``system_tests/data/dpop_authorized_user.json``:
+
+1. Generate the valid and mismatched EC P-256 software keys::
+
+       $ mkdir -p system_tests/data
+       $ openssl ecparam -name prime256v1 -genkey -noout -out system_tests/data/dpop_key.pem
+       $ openssl ecparam -name prime256v1 -genkey -noout -out system_tests/data/dpop_bad_key.pem
+       $ chmod 600 system_tests/data/dpop_key.pem system_tests/data/dpop_bad_key.pem
+
+2. In Google Cloud Console, go to **APIs & Services > Credentials**, create an
+   **OAuth client ID** of type **Desktop app**, and save the downloaded client
+   secret JSON file to ``system_tests/data/dpop_client_secrets.json``. Ensure
+   your test Google account is permitted on the OAuth consent screen (listed
+   under Test Users if the app is in Testing status).
+3. Run the setup helper from ``packages/google-auth`` (with ``google-auth``
+   and ``requests`` installed in your active environment)::
+
+       $ python system_tests/create_dpop_credentials.py
+
+   This loads ``system_tests/data/dpop_key.pem`` and
+   ``system_tests/data/dpop_client_secrets.json``, completes the browser OAuth
+   2.0 loopback flow using a DPoP proof on code exchange, and saves the bound
+   credential JSON to ``system_tests/data/dpop_authorized_user.json``.
+4. Run the dedicated DPoP Nox session::
+
+       $ nox -f system_tests/noxfile.py -s dpop_credentials
+
+The suite verifies DPoP token refresh, missing/stale nonce recovery, deferred
+signer factory initialization, and authenticated ``userinfo`` requests using
+``dpop_key.pem``, and confirms that refreshing fails without a DPoP header,
+with an invalid proof signature, and when signing with ``dpop_bad_key.pem``.
