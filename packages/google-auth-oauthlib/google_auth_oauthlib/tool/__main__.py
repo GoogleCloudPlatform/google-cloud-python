@@ -107,9 +107,12 @@ def main(client_secrets, scope, save, credentials):
 
         config_path = os.path.dirname(credentials)
         if config_path and not os.path.isdir(config_path):
-            os.makedirs(config_path)
+            os.makedirs(config_path, mode=0o700)
 
-        with open(credentials, "w") as outfile:
+        # The file holds the refresh token and client secret, so restrict it
+        # to the current user instead of relying on the process umask.
+        fd = os.open(credentials, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+        with os.fdopen(fd, "w") as outfile:
             json.dump(creds_data, outfile)
 
         click.echo("credentials saved: %s" % credentials)

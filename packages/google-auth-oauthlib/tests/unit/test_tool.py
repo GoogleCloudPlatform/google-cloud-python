@@ -15,6 +15,7 @@
 import io
 import json
 import os.path
+import stat
 import tempfile
 from unittest import mock
 
@@ -131,3 +132,33 @@ class TestMain(object):
         assert not result.exception
         assert "saved" in result.output
         assert result.exit_code == 0
+
+    @pytest.mark.skipif(
+        os.name == "nt", reason="POSIX file permissions are not available on Windows"
+    )
+    def test_save_file_permissions(self, runner, local_server_mock):
+        with tempfile.TemporaryDirectory() as credentials_tmpdir:
+            credentials_path = os.path.join(
+                credentials_tmpdir, "new-directory", "credentials.json"
+            )
+            result = runner.invoke(
+                cli.main,
+                [
+                    "--client-secrets",
+                    CLIENT_SECRETS_FILE,
+                    "--scope",
+                    "somescope",
+                    "--credentials",
+                    credentials_path,
+                    "--save",
+                ],
+            )
+            local_server_mock.assert_called_with(mock.ANY)
+            assert not result.exception
+            assert result.exit_code == 0
+            # The saved file holds the refresh token and client secret, so neither
+            # it nor the directory created for it may be group or world accessible.
+            file_mode = stat.S_IMODE(os.stat(credentials_path).st_mode)
+            dir_mode = stat.S_IMODE(os.stat(os.path.dirname(credentials_path)).st_mode)
+            assert file_mode & 0o077 == 0
+            assert dir_mode & 0o077 == 0
