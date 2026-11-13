@@ -15,6 +15,7 @@
 """Database cursor for Google Cloud Spanner DB API."""
 
 from collections import namedtuple
+from dataclasses import replace
 
 import sqlparse
 from google.api_core.exceptions import (
@@ -58,6 +59,22 @@ from google.cloud.spanner_v1 import RequestOptions
 from google.cloud.spanner_v1.merged_result_set import MergedResultSet
 
 ColumnDetails = namedtuple("column_details", ["null_ok", "spanner_type"])
+
+
+def _ensure_where_clause(parsed_statement: ParsedStatement) -> ParsedStatement:
+    """Ensure a dummy WHERE clause is present on UPDATE/DELETE statements.
+
+    TODO: Remove this once we no longer automatically add a dummy WHERE clause
+          to DML statements.
+    """
+    if parsed_statement.statement_type == StatementType.UPDATE:
+        sql = parse_utils.ensure_where_clause(parsed_statement.statement.sql)
+        if sql != parsed_statement.statement.sql:
+            return replace(
+                parsed_statement,
+                statement=replace(parsed_statement.statement, sql=sql),
+            )
+    return parsed_statement
 
 
 def check_not_closed(function):
@@ -337,6 +354,7 @@ class Cursor(object):
                     else:
                         self._itr = PeekIterator(self._result_set)
             elif self.connection._batch_mode == BatchMode.DML:
+                self._parsed_statement = _ensure_where_clause(self._parsed_statement)
                 self.connection.execute_batch_dml_statement(self._parsed_statement)
             elif (
                 self._parsed_statement.statement_type == StatementType.QUERY
@@ -353,12 +371,13 @@ class Cursor(object):
                 if not self.connection._client_transaction_started:
                     self.connection.run_prior_DDL_statements()
             elif (
-                self.connection.autocommit_dml_mode
+                not self.connection._client_transaction_started
+                and self.connection.autocommit_dml_mode
                 is AutocommitDmlMode.PARTITIONED_NON_ATOMIC
             ):
                 self._row_count = self.connection.database.execute_partitioned_dml(
-                    sql,
-                    params=args,
+                    self._parsed_statement.statement.sql,
+                    params=self._parsed_statement.statement.params,
                     param_types=self._parsed_statement.statement.param_types,
                     request_options=self.request_options,
                 )
@@ -401,6 +420,7 @@ class Cursor(object):
         # For every other operation, we've got to ensure that
         # any prior DDL statements were run.
         self.connection.run_prior_DDL_statements()
+        self._parsed_statement = _ensure_where_clause(self._parsed_statement)
         statement = self._parsed_statement.statement
         if self.connection._client_transaction_started:
             while True:
@@ -461,6 +481,9 @@ class Cursor(object):
                     + ", with executemany() method is not allowed."
                 )
 
+            self._parsed_statement = _ensure_where_clause(self._parsed_statement)
+            sql = self._parsed_statement.statement.sql
+
             # For every operation, we've got to ensure that any prior DDL
             # statements were run.
             self.connection.run_prior_DDL_statements()
@@ -473,10 +496,12 @@ class Cursor(object):
             ):
                 statements = []
                 for params in seq_of_params:
-                    sql, params = parse_utils.sql_pyformat_args_to_spanner(
-                        operation, params
+                    statement_sql, params = parse_utils.sql_pyformat_args_to_spanner(
+                        sql, params
                     )
-                    statements.append(Statement(sql, params, get_param_types(params)))
+                    statements.append(
+                        Statement(statement_sql, params, get_param_types(params))
+                    )
                 many_result_set = batch_dml_executor.run_batch_dml(self, statements)
             else:
                 many_result_set = StreamedManyResultSets()
