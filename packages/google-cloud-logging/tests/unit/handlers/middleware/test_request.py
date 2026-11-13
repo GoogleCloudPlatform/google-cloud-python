@@ -43,9 +43,7 @@ class TestRequestMiddleware(DjangoBase):
     def setUp(self):
         from google.cloud.logging_v2.handlers.middleware import request
 
-        patch = mock.patch.object(
-            request, "_thread_locals", type(request._thread_locals)()
-        )
+        patch = mock.patch.object(request, "_thread_locals", request.Local())
         patch.start()
         self.addCleanup(patch.stop)
 
@@ -142,9 +140,7 @@ class TestRequestMiddleware(DjangoBase):
         def worker():
             self.assertIsNone(request._get_django_request())
             middleware(worker_request)
-            self.assertIs(
-                request._get_django_request(), worker_request
-            )
+            self.assertIs(request._get_django_request(), worker_request)
 
         with ThreadPoolExecutor(max_workers=1) as executor:
             executor.submit(worker).result()

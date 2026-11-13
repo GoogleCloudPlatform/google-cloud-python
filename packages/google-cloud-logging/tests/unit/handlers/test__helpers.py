@@ -149,9 +149,7 @@ class Test_get_request_data_from_django(unittest.TestCase):
 
         from google.cloud.logging_v2.handlers.middleware import request
 
-        patch = mock.patch.object(
-            request, "_thread_locals", type(request._thread_locals)()
-        )
+        patch = mock.patch.object(request, "_thread_locals", request.Local())
         patch.start()
         self.addCleanup(patch.stop)
 
