@@ -386,3 +386,30 @@ def test_add_resource_labels(resource_type, os_environ, record_attrs, expected_l
     labels = add_resource_labels(resource, record)
 
     assert expected_labels == labels
+
+
+def test_add_resource_labels_gae_trace_does_not_leak():
+    _monitored_resources._get_environmental_labels.cache_clear()
+    resource = Resource(type=_monitored_resources._GAE_RESOURCE_TYPE, labels={})
+
+    record_with_trace = logging.LogRecord(
+        "logname", None, None, None, "test", None, None
+    )
+    record_with_trace._trace = "trace-1"
+    assert add_resource_labels(resource, record_with_trace) == {
+        _monitored_resources._GAE_TRACE_ID_LABEL: "trace-1"
+    }
+
+    record_without_trace = logging.LogRecord(
+        "logname", None, None, None, "test", None, None
+    )
+    record_without_trace._trace = None
+    assert add_resource_labels(resource, record_without_trace) == {}
+
+    record_with_other_trace = logging.LogRecord(
+        "logname", None, None, None, "test", None, None
+    )
+    record_with_other_trace._trace = "trace-2"
+    assert add_resource_labels(resource, record_with_other_trace) == {
+        _monitored_resources._GAE_TRACE_ID_LABEL: "trace-2"
+    }
