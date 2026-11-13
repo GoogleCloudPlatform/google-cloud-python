@@ -435,6 +435,20 @@ def system(session):
             *session.posargs,
         )
     if system_test_folder_exists:
+        # Temporary CI hygiene: drain leaked root collections (>2h old) with a
+        # 1-hour cap before running tests; remove before merging once clean.
+        if not os.environ.get("FIRESTORE_EMULATOR_HOST") and not session.posargs:
+            session.run(
+                "python",
+                os.path.join(
+                    "tests", "system", "util", "cleanup_firestore_documents.py"
+                ),
+                "--min-age-minutes",
+                "120",
+                "--max-seconds",
+                "3600",
+                success_codes=list(range(256)),
+            )
         session.run(
             "py.test",
             "-n",
