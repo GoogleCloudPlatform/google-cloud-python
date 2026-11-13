@@ -7,9 +7,16 @@
 
 from unittest import mock
 
-from django.db import NotSupportedError, connection, connections
+from django.db import NotSupportedError, connection, connections, models
 from django.db.models import Index
-from django.db.models.fields import AutoField, IntegerField
+from django.db.models.fields import (
+    AutoField,
+    IntegerField,
+    PositiveBigIntegerField,
+    PositiveIntegerField,
+    PositiveSmallIntegerField,
+)
+from django.test.utils import isolate_apps
 
 from django_spanner import gen_rand_int64
 from django_spanner.schema import DatabaseSchemaEditor
@@ -517,3 +524,197 @@ class TestUtils(SpannerSimpleTestClass):
 
         normal_field = mock.MagicMock(generated=False, db_default=None)
         self.assertTrue(schema_editor.skip_default(normal_field))
+
+    @isolate_apps("tests")
+    def test_create_model_with_check_constraint_quoting(self):
+        """Check constraint names and column references are quoted cleanly."""
+
+        class QuotedModel(models.Model):
+            order = PositiveIntegerField()
+
+            class Meta:
+                app_label = "tests"
+                db_table = "my-table"
+
+        with DatabaseSchemaEditor(self.connection) as schema_editor:
+            schema_editor.execute = mock.MagicMock()
+            schema_editor.create_model(QuotedModel)
+
+            schema_editor.execute.assert_called_once_with(
+                "CREATE TABLE `my-table` (id INT64 NOT NULL, "
+                "`order` INT64 NOT NULL, "
+                "CONSTRAINT `my-table_order_61957483_check` "
+                "CHECK (`order` >= 0)) PRIMARY KEY(id)",
+                None,
+            )
+
+    @isolate_apps("tests")
+    def test_create_model_with_unconditional_quote_name(self):
+        """Check constraint names remain valid when quote_name always quotes."""
+
+        class SampleModel(models.Model):
+            count = PositiveIntegerField()
+
+            class Meta:
+                app_label = "tests"
+                db_table = "sample_table"
+
+        with (
+            mock.patch.object(
+                self.connection.ops,
+                "quote_name",
+                side_effect=lambda name: f"`{name}`",
+            ),
+            DatabaseSchemaEditor(self.connection) as schema_editor,
+        ):
+            schema_editor.execute = mock.MagicMock()
+            schema_editor.create_model(SampleModel)
+
+            schema_editor.execute.assert_called_once_with(
+                "CREATE TABLE `sample_table` (`id` INT64 NOT NULL, "
+                "`count` INT64 NOT NULL, "
+                "CONSTRAINT `sample_table_count_d895eebb_check` "
+                "CHECK (`count` >= 0)) PRIMARY KEY(`id`)",
+                None,
+            )
+
+    @isolate_apps("tests")
+    def test_check_constraint_name_sanitizes_dots_and_truncates(self):
+        """Check constraint names replace dots and stay within max_name_length."""
+        long_field_name = "f" * 100
+
+        class DottedLongModel(models.Model):
+            class Meta:
+                app_label = "tests"
+                db_table = "my_schema." + "t" * 50
+
+        field = PositiveIntegerField()
+        field.set_attributes_from_name(long_field_name)
+        field.model = DottedLongModel
+
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        constraint_name = schema_editor._check_constraint_name(DottedLongModel, field)
+
+        unquoted_name = constraint_name.removeprefix("`").removesuffix("`")
+        self.assertIn("my_schema_", unquoted_name)
+        self.assertIn("_ffff", unquoted_name)
+        self.assertNotIn(".", unquoted_name)
+        self.assertEqual(len(unquoted_name), 128)
+        self.assertTrue(unquoted_name.endswith("_831720e4_check"))
+
+    @isolate_apps("tests")
+    def test_create_model_with_check_constraint_custom_db_column(self):
+        """Check constraint name and CHECK clause use db_column when overridden."""
+
+        class CustomColumnModel(models.Model):
+            qty = PositiveIntegerField(db_column="order")
+
+            class Meta:
+                app_label = "tests"
+                db_table = "my-table"
+
+        with DatabaseSchemaEditor(self.connection) as schema_editor:
+            schema_editor.execute = mock.MagicMock()
+            schema_editor.create_model(CustomColumnModel)
+
+            schema_editor.execute.assert_called_once_with(
+                "CREATE TABLE `my-table` (id INT64 NOT NULL, "
+                "`order` INT64 NOT NULL, "
+                "CONSTRAINT `my-table_order_61957483_check` "
+                "CHECK (`order` >= 0)) PRIMARY KEY(id)",
+                None,
+            )
+
+    @isolate_apps("tests")
+    def test_alter_field_rename_positive_integer_keeps_check_constraint(self):
+        """Renaming a PositiveIntegerField does not recreate its check constraint."""
+
+        class RenameModel(models.Model):
+            class Meta:
+                app_label = "tests"
+                db_table = "my-table"
+
+        old_field = PositiveIntegerField()
+        old_field.set_attributes_from_name("order")
+        old_field.model = RenameModel
+
+        new_field = PositiveIntegerField()
+        new_field.set_attributes_from_name("new-order")
+        new_field.model = RenameModel
+
+        with DatabaseSchemaEditor(self.connection, collect_sql=True) as schema_editor:
+            schema_editor.alter_field(RenameModel, old_field, new_field)
+
+        self.assertEqual(
+            schema_editor.collected_sql,
+            ["ALTER TABLE `my-table` RENAME COLUMN `order` TO `new-order`;"],
+        )
+
+    @isolate_apps("tests")
+    def test_add_field_with_check_constraint(self):
+        """add_field emits a separate ALTER TABLE ADD CONSTRAINT statement."""
+
+        class ItemModel(models.Model):
+            class Meta:
+                app_label = "tests"
+                db_table = "my-items"
+
+        new_field = PositiveIntegerField(default=5)
+        new_field.set_attributes_from_name("order")
+        new_field.model = ItemModel
+
+        with DatabaseSchemaEditor(self.connection) as schema_editor:
+            schema_editor.execute = mock.MagicMock()
+            schema_editor.add_field(ItemModel, new_field)
+
+            schema_editor.execute.assert_has_calls(
+                [
+                    mock.call("ALTER TABLE `my-items` ADD COLUMN `order` INT64", []),
+                    mock.call("UPDATE `my-items` SET `order`=%s WHERE 1=1", (5,)),
+                    mock.call(
+                        "ALTER TABLE `my-items` ALTER COLUMN `order` INT64 NOT NULL"
+                    ),
+                    mock.call(
+                        "ALTER TABLE `my-items` ADD CONSTRAINT "
+                        "`my-items_order_41e27901_check` "
+                        "CHECK (`order` >= 0)",
+                        None,
+                    ),
+                ]
+            )
+
+    @isolate_apps("tests")
+    def test_add_field_with_check_constraint_collect_sql_and_positive_variants(
+        self,
+    ):
+        """add_field collects valid SQL for all positive integer field types."""
+
+        class ItemModel(models.Model):
+            class Meta:
+                app_label = "tests"
+                db_table = "my-items"
+
+        for field_class in (
+            PositiveIntegerField,
+            PositiveBigIntegerField,
+            PositiveSmallIntegerField,
+        ):
+            with self.subTest(field_class=field_class):
+                new_field = field_class(null=True)
+                new_field.set_attributes_from_name("order")
+                new_field.model = ItemModel
+
+                with DatabaseSchemaEditor(
+                    self.connection, collect_sql=True
+                ) as schema_editor:
+                    schema_editor.add_field(ItemModel, new_field)
+
+                self.assertEqual(
+                    schema_editor.collected_sql,
+                    [
+                        "ALTER TABLE `my-items` ADD COLUMN `order` INT64;",
+                        "ALTER TABLE `my-items` ADD CONSTRAINT "
+                        "`my-items_order_41e27901_check` "
+                        "CHECK (`order` >= 0);",
+                    ],
+                )

@@ -4,7 +4,6 @@
 # license that can be found in the LICENSE file or at
 # https://developers.google.com/open-source/licenses/bsd
 import os
-import uuid
 
 import django
 from django.db import NotSupportedError
@@ -57,6 +56,16 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
     # sql_create_inline_fk = "CONSTRAINT FK_%(to_table)s_%(to_column)s_%(from_table)s_%(from_column)s FOREIGN KEY (%(from_column_norm)s) REFERENCES %(to_table_norm)s  (%(to_column_norm)s)"  # noqa
     sql_create_inline_fk = None
 
+    def _check_constraint_name(self, model, field):
+        """Build a quoted, deterministic check constraint identifier."""
+        return self.quote_name(
+            self._create_index_name(
+                model._meta.db_table.replace(".", "_"),
+                [field.column.replace(".", "_")],
+                suffix="_check",
+            )
+        )
+
     def create_model(self, model):
         """
         Create a table and any accompanying indexes or unique constraints for
@@ -76,15 +85,11 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
             # Check constraints can go on the column SQL here
             db_params = field.db_parameters(connection=self.connection)
             if db_params["check"]:
-                definition += (
-                    ", CONSTRAINT constraint_%s_%s_%s "
-                    % (
-                        model._meta.db_table,
-                        self.quote_name(field.name),
-                        uuid.uuid4().hex[:6].lower(),
-                    )
-                    + self.sql_check_constraint % db_params
-                )
+                constraint_name = self._check_constraint_name(model, field)
+                definition += ", " + self.sql_constraint % {
+                    "name": constraint_name,
+                    "constraint": self.sql_check_constraint % db_params,
+                }
             # Autoincrement SQL (for backends with inline variant)
             col_type_suffix = field.db_type_suffix(connection=self.connection)
             if col_type_suffix:
@@ -241,18 +246,7 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
         # It might not actually have a column behind it
         if definition is None:
             return
-        # Check constraints can go on the column SQL here
         db_params = field.db_parameters(connection=self.connection)
-        if db_params["check"]:
-            definition += (
-                ", CONSTRAINT constraint_%s_%s_%s "
-                % (
-                    model._meta.db_table,
-                    self.quote_name(field.name),
-                    uuid.uuid4().hex[:6].lower(),
-                )
-                + self.sql_check_constraint % db_params
-            )
         # Build the SQL and run it
         sql = self.sql_create_column % {
             "table": self.quote_name(model._meta.db_table),
@@ -284,6 +278,18 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
                         "type": db_params["type"],
                     },
                 }
+            )
+        # Spanner does not allow inline constraints in ALTER TABLE ADD COLUMN.
+        if db_params["check"]:
+            constraint_name = self._check_constraint_name(model, field)
+            self.execute(
+                self.sql_create_check
+                % {
+                    "table": self.quote_name(model._meta.db_table),
+                    "name": constraint_name,
+                    "check": db_params["check"],
+                },
+                None,
             )
         # Add an index, if required
         self.deferred_sql.extend(self._field_indexes_sql(model, field))
