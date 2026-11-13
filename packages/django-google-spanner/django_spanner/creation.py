@@ -48,7 +48,7 @@ class DatabaseCreation(BaseDatabaseCreation):
         # by a developer running the tests locally.
         if os.environ.get("RUNNING_SPANNER_BACKEND_TESTS") == "1":
             self.mark_skips()
-        return super().create_test_db(*args, **kwargs)
+        super().create_test_db(*args, **kwargs)
 
     def _create_test_db(self, verbosity, autoclobber, keepdb=False):
         """

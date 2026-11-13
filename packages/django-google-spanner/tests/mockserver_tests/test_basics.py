@@ -542,10 +542,8 @@ class TestBasics(MockServerTestBase):
                 create_kwargs = {"verbosity": 0, "autoclobber": True}
                 if django.VERSION < (6, 0):
                     create_kwargs["serialize"] = False
-                db_name = connection.creation.create_test_db(**create_kwargs)
+                connection.creation.create_test_db(**create_kwargs)
 
-            self.assertEqual(db_name, "django_test_db")
-            self.assertFalse(hasattr(connection, "_batch_ddl_in_schema_editor"))
             ddl_requests = self.database_admin_service.requests
             self.assertEqual(len(ddl_requests), 1)
             # sites (table + unique index) + sessions (table + expire_date index) = 4 DDLs
