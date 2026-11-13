@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import logging
 import os
 import sys
 import types
@@ -99,3 +100,25 @@ def mock_async_channel():
     channel._stream_unary_interceptors = []
     channel._stream_stream_interceptors = []
     return channel
+
+
+@pytest.fixture
+def mock_logger():
+    """Provides a strict autospecced logging.Logger instance."""
+    return mock.create_autospec(logging.Logger, instance=True, spec_set=True)
+
+
+@pytest.fixture
+def mock_service_logger(monkeypatch, mock_logger):
+    """Enables experimental error logging and patches _observability._get_service_logger."""
+    from google.api_core import _observability
+
+    monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", "true")
+    with mock.patch.object(
+        _observability,
+        "_get_service_logger",
+        return_value=mock_logger,
+        autospec=True,
+        spec_set=True,
+    ):
+        yield mock_logger
