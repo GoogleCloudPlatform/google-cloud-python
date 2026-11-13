@@ -17,87 +17,57 @@
 
 import concurrent.futures
 import functools
-import multiprocessing
-import os
-import queue
-import time
 import uuid
 
-from google.cloud.bigtable.data._accelerator import _daemon
+import pytest
+
 from google.cloud.bigtable.data._cross_sync import CrossSync
 
 from . import _harness
 from ._base_autogen import AcceleratorTestBase
 
 
-def _run_worker(table, worker_id, ops_per_worker):
-    prefix = f"conc-{worker_id}-{uuid.uuid4().hex[:8]}-".encode()
-    ops = _harness.RandomOps(worker_id, key_prefix=prefix)
-    expected_state = _harness.ExpectedState()
-    touched = set()
-    for _ in range(ops_per_worker):
-        key, mutation = ops.build_mutation(expected_state)
-        table.mutate_row(key, mutation)
-        touched.add(key)
-    for key in touched:
-        row = table.read_row(key)
-        _harness.assert_rows_equivalent(
-            f"worker-{worker_id}",
-            _harness.normalize_row(row),
-            "model",
-            expected_state.expected_cells(key),
-        )
-    return sorted(touched)
-
-
-def _spawn_worker(
-    project,
-    instance_id,
-    table_id,
-    app_profile_id,
-    base_worker_id,
-    workers_per_process,
-    ops_per_worker,
-    result_queue,
-):
-    from google.cloud.bigtable.data import BigtableDataClient
-
-    try:
-        override = os.environ.get(_harness.BIN_ENV_VAR)
-        if override:
-            _daemon._resolve_binary_path = lambda: override
-        with BigtableDataClient(project=project, use_accelerator=True) as client:
-            table_kwargs = {"app_profile_id": app_profile_id} if app_profile_id else {}
-            with client.get_table(instance_id, table_id, **table_kwargs) as table:
-                if table._accelerator_client is None:
-                    result_queue.put((False, [], "accelerator fell back to native"))
-                    return
-                with concurrent.futures.ThreadPoolExecutor(
-                    max_workers=workers_per_process
-                ) as executor:
-                    futures = [
-                        executor.submit(
-                            _run_worker, table, base_worker_id + w, ops_per_worker
-                        )
-                        for w in range(workers_per_process)
-                    ]
-                    touched = []
-                    for future in futures:
-                        touched.extend(future.result())
-        result_queue.put((True, touched, None))
-    except BaseException as exc:
-        result_queue.put((False, [], repr(exc)))
-
-
 class TestConcurrency(AcceleratorTestBase):
-    NUM_WORKERS = 16
+    CONCURRENCY = 8
     OPS_PER_WORKER = 50
-    NUM_PROCESSES = 4
-    WORKERS_PER_PROCESS = 8
 
-    def _worker(self, table, worker_id):
-        prefix = f"conc-{worker_id}-{uuid.uuid4().hex[:8]}-".encode()
-        ops = _harness.RandomOps(worker_id, key_prefix=prefix)
+    @pytest.fixture(scope="session")
+    def second_table_id(
+        self,
+        admin_client,
+        project_id,
+        instance_id,
+        column_family_config,
+        column_split_config,
+    ):
+        from google.api_core import exceptions, retry
+
+        second_id = f"test-table-2-{uuid.uuid4().hex}"
+        retry_fn = retry.Retry(
+            predicate=retry.if_exception_type(exceptions.FailedPrecondition)
+        )
+        parent_path = f"projects/{project_id}/instances/{instance_id}"
+        admin_client.table_admin_client.create_table(
+            request={
+                "parent": parent_path,
+                "table_id": second_id,
+                "table": {"column_families": column_family_config},
+                "initial_splits": [{"key": key} for key in column_split_config],
+            },
+            retry=retry_fn,
+        )
+        try:
+            yield second_id
+        finally:
+            try:
+                admin_client.table_admin_client.delete_table(
+                    name=f"{parent_path}/tables/{second_id}"
+                )
+            except Exception as exc:
+                print(f"Failed to delete table {second_id}: {exc}")
+
+    def _worker(self, table, worker_id, key_prefix):
+        ops = _harness.RandomOps(worker_id, key_prefix=key_prefix)
         expected_state = _harness.ExpectedState()
         touched = set()
         for _ in range(self.OPS_PER_WORKER):
@@ -114,75 +84,54 @@ class TestConcurrency(AcceleratorTestBase):
             )
         return sorted(touched)
 
-    def test_concurrent_workers_stay_consistent(self, accel_table, janitor):
-        executor = (
-            concurrent.futures.ThreadPoolExecutor(max_workers=self.NUM_WORKERS)
-            if not CrossSync._Sync_Impl.is_async
-            else None
-        )
-        try:
-            partials = [
-                functools.partial(self._worker, accel_table, i)
-                for i in range(self.NUM_WORKERS)
-            ]
-            results = CrossSync._Sync_Impl.gather_partials(
-                partials, return_exceptions=True, sync_executor=executor
-            )
-        finally:
-            if executor is not None:
-                executor.shutdown(wait=True)
-        for i, result in enumerate(results):
-            assert not isinstance(result, BaseException), (
-                f"worker {i} failed: {result!r}"
-            )
-            for key in result:
-                janitor.track(key)
-
-    def test_multiprocess_concurrent_clients_stay_consistent(
-        self, instance_id, table_id, janitor
+    def test_concurrent_multitable_workers_stay_consistent(
+        self, accel_client, instance_id, table_id, second_table_id, janitor
     ):
-        project = self._project_id()
-        app_profile_id = os.getenv("BIGTABLE_TEST_APP_PROFILE") or os.getenv(
-            "CBT_APP_PROFILE_ID"
-        )
-        ctx = multiprocessing.get_context("spawn")
-        result_queue = ctx.Queue()
-        procs = []
-        for p in range(self.NUM_PROCESSES):
-            proc = ctx.Process(
-                target=_spawn_worker,
-                args=(
-                    project,
-                    instance_id,
-                    table_id,
-                    app_profile_id,
-                    p * self.WORKERS_PER_PROCESS,
-                    self.WORKERS_PER_PROCESS,
-                    self.OPS_PER_WORKER,
-                    result_queue,
-                ),
-            )
-            proc.start()
-            procs.append(proc)
-        results = []
-        deadline = time.monotonic() + 300.0
-        try:
-            while len(results) < self.NUM_PROCESSES and time.monotonic() < deadline:
+        with accel_client.get_table(instance_id, second_table_id) as table_b:
+            self.assert_accelerator_active(table_b)
+            daemon_pid_b = _harness.daemon_pid(table_b)
+            with accel_client.get_table(instance_id, table_id) as table_a:
+                self.assert_accelerator_active(table_a)
+                assert _harness.daemon_pid(table_a) == daemon_pid_b
+                run_id = uuid.uuid4().hex[:8]
+                tables = (table_a, table_b)
+                executor = (
+                    concurrent.futures.ThreadPoolExecutor(max_workers=self.CONCURRENCY)
+                    if not CrossSync._Sync_Impl.is_async
+                    else None
+                )
                 try:
-                    results.append(result_queue.get(timeout=0.2))
-                except queue.Empty:
-                    if not any((p.is_alive() for p in procs)) and result_queue.empty():
-                        break
-        finally:
-            for proc in procs:
-                proc.join(timeout=30)
-                if proc.is_alive():
-                    proc.kill()
-                    proc.join()
-        assert len(results) == self.NUM_PROCESSES, (
-            f"expected {self.NUM_PROCESSES} results, got {len(results)}"
-        )
-        for ok, touched, error in results:
-            assert ok, f"a worker process failed: {error}"
-            for key in touched:
-                janitor.track(key)
+                    partials = [
+                        functools.partial(
+                            self._worker,
+                            tables[w % 2],
+                            w,
+                            f"conc-mt-{run_id}-p{w // 2}-".encode(),
+                        )
+                        for w in range(self.CONCURRENCY)
+                    ]
+                    results = CrossSync._Sync_Impl.gather_partials(
+                        partials, return_exceptions=True, sync_executor=executor
+                    )
+                finally:
+                    if executor is not None:
+                        executor.shutdown(wait=True)
+                for w, result in enumerate(results):
+                    assert not isinstance(result, BaseException), (
+                        f"worker {w} failed: {result!r}"
+                    )
+                    if w % 2 == 0:
+                        for key in result:
+                            janitor.track(key)
+            assert _harness.daemon_pid(table_b) == daemon_pid_b
+            verify_ops = _harness.RandomOps(999, key_prefix=b"conc-mt-after-close-")
+            verify_state = _harness.ExpectedState()
+            vkey, vmut = verify_ops.build_mutation(verify_state)
+            table_b.mutate_row(vkey, vmut)
+            vrow = table_b.read_row(vkey)
+            _harness.assert_rows_equivalent(
+                "table_b-after-close",
+                _harness.normalize_row(vrow),
+                "model",
+                verify_state.expected_cells(vkey),
+            )

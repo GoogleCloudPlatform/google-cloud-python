@@ -13,6 +13,8 @@
 # limitations under the License.
 """Differential read/write correctness tests for the Cloud Bigtable accelerator."""
 
+import concurrent.futures
+import functools
 import uuid
 
 import pytest
@@ -33,7 +35,8 @@ __CROSS_SYNC_OUTPUT__ = "tests.system.data.accelerator.test_fuzz_correctness_aut
 
 @CrossSync.convert_class(sync_name="TestFuzzCorrectness")
 class TestFuzzCorrectnessAsync(AcceleratorTestBase):
-    NUM_OPS = 500
+    CONCURRENCY = 8
+    OPS_PER_WORKER = 64
 
     @CrossSync.convert
     async def _verify_key(self, accel_table, native_table, expected_state, key):
@@ -49,27 +52,58 @@ class TestFuzzCorrectnessAsync(AcceleratorTestBase):
             "accelerator", accel_cells, "native", native_cells
         )
 
-    @pytest.mark.parametrize("seed", [0, 1])
-    @CrossSync.pytest
-    async def test_random_mutations_match_model_and_native(
-        self, accel_table, native_table, janitor, seed
-    ):
-        prefix = f"fuzz-{seed}-{uuid.uuid4().hex[:8]}-".encode()
-        ops = _harness.RandomOps(seed, key_prefix=prefix, include_aggregate=True)
+    @CrossSync.convert
+    async def _fuzz_worker(self, accel_table, native_table, seed, worker_id, run_id):
+        prefix = f"fuzz-{seed}-{run_id}-w{worker_id}-".encode()
+        ops = _harness.RandomOps(
+            seed * 100 + worker_id, key_prefix=prefix, include_aggregate=True
+        )
         expected_state = _harness.ExpectedState()
         touched: set[bytes] = set()
 
-        for i in range(self.NUM_OPS):
+        for i in range(self.OPS_PER_WORKER):
             key, mutation = ops.build_mutation(expected_state)
             await accel_table.mutate_row(key, mutation)
-            janitor.track(key)
             touched.add(key)
-            if touched and i % 10 == 9:
+            if touched and i % 8 == 7:
                 vkey = ops._rand.choice(sorted(touched))
                 await self._verify_key(accel_table, native_table, expected_state, vkey)
 
         for key in sorted(touched):
             await self._verify_key(accel_table, native_table, expected_state, key)
+        return sorted(touched)
+
+    @pytest.mark.parametrize("seed", [0, 1])
+    @CrossSync.pytest
+    async def test_random_mutations_match_model_and_native(
+        self, accel_table, native_table, janitor, seed
+    ):
+        run_id = uuid.uuid4().hex[:8]
+        executor = (
+            concurrent.futures.ThreadPoolExecutor(max_workers=self.CONCURRENCY)
+            if not CrossSync.is_async
+            else None
+        )
+        try:
+            partials = [
+                functools.partial(
+                    self._fuzz_worker, accel_table, native_table, seed, w, run_id
+                )
+                for w in range(self.CONCURRENCY)
+            ]
+            results = await CrossSync.gather_partials(
+                partials, return_exceptions=True, sync_executor=executor
+            )
+        finally:
+            if executor is not None:
+                executor.shutdown(wait=True)
+
+        for w, result in enumerate(results):
+            assert not isinstance(result, BaseException), (
+                f"fuzz worker {w} failed: {result!r}"
+            )
+            for key in result:
+                janitor.track(key)
 
     @CrossSync.pytest
     async def test_multiple_versions_range_delete_and_row_filter(
