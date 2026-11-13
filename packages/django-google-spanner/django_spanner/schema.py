@@ -23,6 +23,8 @@ from google.api_core.exceptions import (
     InvalidArgument,
     OutOfRange,
 )
+from google.cloud.spanner_dbapi import parse_utils
+from google.cloud.spanner_dbapi.parsed_statement import StatementType
 
 from django_spanner import USE_EMULATOR
 from django_spanner._opentelemetry_tracing import trace_call
@@ -76,7 +78,7 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
 
     def _commit_ddls(self):
         try:
-            self.connection.commit()
+            self.connection.connection.commit()
         except (AlreadyExists, FailedPrecondition, OutOfRange) as exc:
             raise IntegrityError(getattr(exc, "details", exc)) from exc
         except InvalidArgument as exc:
@@ -84,9 +86,46 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
         except (InternalServerError, GoogleAPICallError) as exc:
             raise OperationalError(getattr(exc, "details", exc)) from exc
 
+    def _enter_ddl_batch(self):
+        if not self._ddl_batch_active:
+            self.connection.ensure_connection()
+            self.connection._set_autocommit(False)
+            self._ddl_batch_active = True
+
+    def _exit_ddl_batch(self, clean):
+        if not self._ddl_batch_active:
+            return
+        try:
+            if clean:
+                self._commit_ddls()
+            else:
+                self.connection.connection.rollback()
+        finally:
+            self._ddl_batch_active = False
+            self.connection._set_autocommit(True)
+
+    def _ddl_execution_wrapper(self, execute, sql, params, many, context):
+        is_ddl = False
+        if (
+            not many
+            and sql is not None
+            and not self.connection.in_atomic_block
+            and self.connection.get_autocommit()
+        ):
+            parsed = parse_utils.classify_statement(str(sql))
+            is_ddl = parsed is not None and parsed.statement_type == StatementType.DDL
+
+        if is_ddl:
+            self._enter_ddl_batch()
+        elif self._ddl_batch_active:
+            self._exit_ddl_batch(clean=True)
+
+        return execute(sql, params, many, context)
+
     def __enter__(self):
         super().__enter__()
-        self._restore_autocommit = False
+        self._ddl_batch_active = False
+        self._execute_wrapper_cm = None
         batch_ddl = self.connection.settings_dict.get("OPTIONS", {}).get(
             "batch_ddl", False
         )
@@ -96,9 +135,13 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
             and not self.collect_sql
             and not self.connection.in_atomic_block
             and self.connection.get_autocommit()
+            and getattr(self.connection, "_active_ddl_batch_editor", None) is None
         ):
-            self.connection.set_autocommit(False)
-            self._restore_autocommit = True
+            self.connection._active_ddl_batch_editor = self
+            self._execute_wrapper_cm = self.connection.execute_wrapper(
+                self._ddl_execution_wrapper
+            )
+            self._execute_wrapper_cm.__enter__()
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -108,26 +151,14 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
             clean_exit = (exc_type is None) or bool(res)
             return res
         finally:
-            if getattr(self, "_restore_autocommit", False):
-                try:
-                    if clean_exit:
-                        self._commit_ddls()
-                    else:
-                        self.connection.rollback()
-                finally:
-                    self.connection.set_autocommit(True)
-
-    def execute(self, sql, params=()):
-        if (
-            getattr(self, "_restore_autocommit", False)
-            and not self.collect_sql
-            and getattr(
-                self.connection.connection, "_spanner_transaction_started", False
-            )
-            is True
-        ):
-            self._commit_ddls()
-        return super().execute(sql, params)
+            try:
+                self._exit_ddl_batch(clean=clean_exit)
+            finally:
+                if getattr(self, "_execute_wrapper_cm", None) is not None:
+                    self._execute_wrapper_cm.__exit__(exc_type, exc_value, traceback)
+                    self._execute_wrapper_cm = None
+                if getattr(self.connection, "_active_ddl_batch_editor", None) is self:
+                    self.connection._active_ddl_batch_editor = None
 
     def create_model(self, model):
         """

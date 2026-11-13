@@ -30,6 +30,7 @@ from google.cloud.spanner_v1 import (
     CommitRequest,
     CreateSessionRequest,
     ExecuteSqlRequest,
+    RollbackRequest,
     TypeCode,
 )
 
@@ -649,3 +650,93 @@ class TestBasics(MockServerTestBase):
 
         self.assertEqual(len(self.database_admin_service.requests), 2)
         self.assertTrue(transaction.get_autocommit())
+
+    def test_schema_editor_nested_atomic_integrity_error_rolls_back_and_recovers(self):
+        import grpc
+        from django.db import IntegrityError
+
+        add_select1_result()
+        failing_sql = "UPDATE tests_singer SET first_name=@a0 WHERE id=@a1"
+        self.spanner_service.mock_spanner.add_error(
+            failing_sql,
+            grpc.StatusCode.ALREADY_EXISTS,
+            "UNIQUE violation on index",
+        )
+
+        connection.settings_dict["OPTIONS"]["batch_ddl"] = True
+        try:
+            with connection.schema_editor():
+                self.assertTrue(transaction.get_autocommit())
+                with self.assertRaises(IntegrityError):
+                    with transaction.atomic():
+                        with connection.cursor() as cursor:
+                            cursor.execute(
+                                "UPDATE tests_singer SET first_name=%s WHERE id=%s",
+                                ["dup", 1],
+                            )
+                self.assertFalse(connection.needs_rollback)
+                with connection.cursor() as cursor:
+                    cursor.execute("select 1")
+                    self.assertEqual(cursor.fetchone()[0], 1)
+        finally:
+            self.spanner_service.mock_spanner.errors.pop(failing_sql.lower(), None)
+            connection.settings_dict["OPTIONS"].pop("batch_ddl", None)
+
+        self.assertTrue(
+            any(isinstance(r, RollbackRequest) for r in self.spanner_service.requests)
+        )
+        self.assertTrue(transaction.get_autocommit())
+        self.assertTrue(connection.connection.autocommit)
+
+    def test_migration_create_model_then_runpython_flushes_ddl_before_atomic(self):
+        add_update_count("UPDATE tests_singer SET first_name=@a0 WHERE id=@a1", 1)
+        events = []
+
+        def run_atomic_dml(apps, schema_editor):
+            events.append(
+                (
+                    "runpython_state",
+                    schema_editor.connection.in_atomic_block,
+                    schema_editor.connection.commit_on_exit,
+                    len(self.database_admin_service.requests),
+                )
+            )
+            with schema_editor.connection.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE tests_singer SET first_name=%s WHERE id=%s",
+                    ["updated", 1],
+                )
+
+        mig = Migration("0001_create_then_runpython", "tests")
+        mig.operations = [
+            CreateModel(
+                name="BatchModelBeforeRunPython",
+                fields=[
+                    ("id", models.BigAutoField(primary_key=True)),
+                    ("code", models.CharField(max_length=50, unique=True)),
+                ],
+            ),
+            RunPython(run_atomic_dml),
+        ]
+        state = ProjectState()
+
+        connection.settings_dict["OPTIONS"]["batch_ddl"] = True
+        try:
+            with connection.schema_editor(atomic=mig.atomic) as editor:
+                mig.apply(state, editor)
+        finally:
+            connection.settings_dict["OPTIONS"].pop("batch_ddl", None)
+
+        # CreateModel's CREATE TABLE was flushed before RunPython's atomic() block began,
+        # and RunPython ran inside a real outermost atomic block (commit_on_exit=True).
+        self.assertEqual(events, [("runpython_state", True, True, 1)])
+        # Deferred CREATE UNIQUE INDEX flushed on schema_editor.__exit__.
+        ddl_requests = self.database_admin_service.requests
+        self.assertEqual(len(ddl_requests), 2)
+        self.assertEqual(len(ddl_requests[0].statements), 1)
+        self.assertEqual(len(ddl_requests[1].statements), 1)
+        self.assertTrue(
+            any(isinstance(r, CommitRequest) for r in self.spanner_service.requests)
+        )
+        self.assertTrue(transaction.get_autocommit())
+        self.assertTrue(connection.connection.autocommit)
