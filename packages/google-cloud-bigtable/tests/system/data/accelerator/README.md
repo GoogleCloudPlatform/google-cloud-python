@@ -1,4 +1,4 @@
-# Cloud Bigtable Accelerator System Test Harness
+# Cloud Bigtable Accelerator System Tests
 
 Shared environment setup, fixtures, and state/process helpers for live Cloud Bigtable Python accelerator system tests. Tests using this harness run against a real Cloud Bigtable instance and a real Go accelerator binary; emulator and binary-less environments skip cleanly.
 
