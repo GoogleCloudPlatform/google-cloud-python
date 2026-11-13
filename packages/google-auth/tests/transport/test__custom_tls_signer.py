@@ -214,7 +214,7 @@ def test_custom_tls_signer_provider():
             ENTERPRISE_CERT_FILE_PROVIDER
         )
         signer_object.load_libraries()
-        signer_object.attach_to_ssl_context(ssl.SSLContext())
+        signer_object.attach_to_ssl_context(ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT))
 
     assert signer_object.should_use_provider()
     assert signer_object._enterprise_cert_file_path == ENTERPRISE_CERT_FILE_PROVIDER
@@ -237,7 +237,7 @@ def test_custom_tls_signer_failed_to_attach():
         signer_object._sign_callback = mock.MagicMock()
         signer_object._cert = b"mock cert"
         signer_object._offload_lib.ConfigureSslContext.return_value = False
-        signer_object.attach_to_ssl_context(ssl.SSLContext())
+        signer_object.attach_to_ssl_context(ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT))
     assert excinfo.match("failed to configure ECP Offload SSL context")
 
 
@@ -248,7 +248,7 @@ def test_custom_tls_signer_failed_to_attach_provider():
         )
         signer_object._provider_lib = mock.MagicMock()
         signer_object._provider_lib.ECP_attach_to_ctx.return_value = False
-        signer_object.attach_to_ssl_context(ssl.SSLContext())
+        signer_object.attach_to_ssl_context(ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT))
     assert excinfo.match("failed to configure ECP Provider SSL context")
 
 
@@ -257,12 +257,12 @@ def test_custom_tls_signer_failed_to_attach_no_libs():
         signer_object = _custom_tls_signer.CustomTlsSigner(ENTERPRISE_CERT_FILE)
         signer_object._offload_lib = None
         signer_object._signer_lib = None
-        signer_object.attach_to_ssl_context(ssl.SSLContext())
+        signer_object.attach_to_ssl_context(ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT))
     assert excinfo.match("Invalid ECP configuration.")
 
 
 def test_cast_ssl_ctx_to_void_p_stdlib_success():
-    context = ssl.SSLContext()
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     fake_impl = mock.Mock()
     fake_impl.name = "cpython"
     with mock.patch("sys.implementation", fake_impl):
@@ -281,7 +281,7 @@ def test_cast_ssl_ctx_to_void_p_stdlib_success():
 
 
 def test_cast_ssl_ctx_to_void_p_stdlib_unsupported_runtime_pypy():
-    context = ssl.SSLContext()
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     fake_impl = mock.Mock()
     fake_impl.name = "pypy"
 
@@ -294,7 +294,7 @@ def test_cast_ssl_ctx_to_void_p_stdlib_unsupported_runtime_pypy():
 
 
 def test_cast_ssl_ctx_to_void_p_stdlib_unsupported_runtime_trace_refs():
-    context = ssl.SSLContext()
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     fake_impl = mock.Mock()
     fake_impl.name = "cpython"
 
@@ -317,7 +317,7 @@ def test_cast_ssl_ctx_to_void_p_stdlib_type_error():
 
 
 def test_cast_ssl_ctx_to_void_p_stdlib_unsupported_runtime_debug_flag():
-    context = ssl.SSLContext()
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     fake_impl = mock.Mock()
     fake_impl.name = "cpython"
     with (
@@ -332,7 +332,7 @@ def test_cast_ssl_ctx_to_void_p_stdlib_unsupported_runtime_debug_flag():
 
 
 def test_cast_ssl_ctx_to_void_p_stdlib_unsupported_runtime_free_threaded():
-    context = ssl.SSLContext()
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 
     def mock_get_config_var(var):
         if var == "Py_GIL_DISABLED":
@@ -353,7 +353,7 @@ def test_cast_ssl_ctx_to_void_p_stdlib_unsupported_runtime_free_threaded():
 
 
 def test_cast_ssl_ctx_to_void_p_stdlib_dynamic_offset():
-    context = ssl.SSLContext()
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     with mock.patch("sys.getsizeof", return_value=40) as mock_sizeof:
         with mock.patch("ctypes.c_void_p.from_address") as mock_from_address:
             _custom_tls_signer._cast_ssl_ctx_to_void_p_stdlib(context)
