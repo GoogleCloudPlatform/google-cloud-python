@@ -39,8 +39,9 @@ async def _token_endpoint_request_no_throw(
     This function doesn't throw on response errors.
 
     Args:
-        request (google.auth.transport.Request): A callable used to make
-            HTTP requests.
+        request (google.auth.aio.transport.Request): A callable used to make
+            HTTP requests. Responses may expose ``read()`` and ``status_code``
+            or the legacy ``content()`` and ``status`` interface.
         token_uri (str): The OAuth 2.0 authorizations server's token endpoint
             URI.
         body (Mapping[str, str]): The parameters to send in the request body.
@@ -74,8 +75,11 @@ async def _token_endpoint_request_no_throw(
             method="POST", url=token_uri, headers=headers, body=body
         )
 
-        # Using data.read() resulted in zlib decompression errors. This may require future investigation.
-        response_body1 = await response.content()
+        if hasattr(response, "read"):
+            response_body1 = await response.read()
+        else:
+            # Legacy content() decodes compressed bodies, unlike data.read().
+            response_body1 = await response.content()
 
         response_body = (
             response_body1.decode("utf-8")
@@ -88,11 +92,17 @@ async def _token_endpoint_request_no_throw(
         except ValueError:
             response_data = response_body
 
-        if response.status == http_client.OK:
+        status_code = (
+            response.status_code
+            if hasattr(response, "status_code")
+            else response.status
+        )
+
+        if status_code == http_client.OK:
             return True, response_data, None
 
         retryable_error = client._can_retry(
-            status_code=response.status, response_data=response_data
+            status_code=status_code, response_data=response_data
         )
 
         if not can_retry or not retryable_error:
@@ -107,8 +117,9 @@ async def _token_endpoint_request(
     """Makes a request to the OAuth 2.0 authorization server's token endpoint.
 
     Args:
-        request (google.auth.transport.Request): A callable used to make
-            HTTP requests.
+        request (google.auth.aio.transport.Request): A callable used to make
+            HTTP requests. Responses may expose ``read()`` and ``status_code``
+            or the legacy ``content()`` and ``status`` interface.
         token_uri (str): The OAuth 2.0 authorizations server's token endpoint
             URI.
         body (Mapping[str, str]): The parameters to send in the request body.

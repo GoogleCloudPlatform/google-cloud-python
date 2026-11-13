@@ -14,6 +14,7 @@
 
 import asyncio
 import datetime
+import gzip
 import http.client as http_client
 import json
 import urllib
@@ -24,6 +25,8 @@ import pytest  # type: ignore
 from google.auth import _helpers, exceptions
 from google.auth import _jwt_async as jwt
 from google.auth.aio import transport as aio_transport
+from google.auth.aio.transport import aiohttp as aiohttp_transport
+from google.auth.transport import _aiohttp_requests
 from google.oauth2 import _client as sync_client
 from google.oauth2 import _client_async as _client
 from tests.oauth2 import test__client as test_client
@@ -53,8 +56,9 @@ def make_aio_request(response_data, status_code=http_client.OK, text=False):
 
 
 @pytest.mark.asyncio
-async def test__token_endpoint_request():
-    request = make_request({"test": "response"})
+@pytest.mark.parametrize("request_factory", [make_request, make_aio_request])
+async def test__token_endpoint_request(request_factory):
+    request = request_factory({"test": "response"})
 
     result = await _client._token_endpoint_request(
         request, "http://example.com", {"test": "params"}
@@ -73,8 +77,9 @@ async def test__token_endpoint_request():
 
 
 @pytest.mark.asyncio
-async def test__token_endpoint_request_text():
-    request = make_request("response", text=True)
+@pytest.mark.parametrize("request_factory", [make_request, make_aio_request])
+async def test__token_endpoint_request_text(request_factory):
+    request = request_factory("response", text=True)
 
     result = await _client._token_endpoint_request(
         request, "http://example.com", {"test": "params"}
@@ -93,8 +98,9 @@ async def test__token_endpoint_request_text():
 
 
 @pytest.mark.asyncio
-async def test__token_endpoint_request_json():
-    request = make_request({"test": "response"})
+@pytest.mark.parametrize("request_factory", [make_request, make_aio_request])
+async def test__token_endpoint_request_json(request_factory):
+    request = request_factory({"test": "response"})
     access_token = "access_token"
 
     result = await _client._token_endpoint_request(
@@ -121,12 +127,40 @@ async def test__token_endpoint_request_json():
 
 
 @pytest.mark.asyncio
-async def test__token_endpoint_request_error():
-    request = make_request({}, status=http_client.BAD_REQUEST)
+@pytest.mark.parametrize("request_factory", [make_request, make_aio_request])
+async def test__token_endpoint_request_error(request_factory):
+    request = request_factory({}, http_client.BAD_REQUEST)
 
     with pytest.raises(exceptions.RefreshError) as excinfo:
         await _client._token_endpoint_request(request, "http://example.com", {})
     assert not excinfo.value.retryable
+
+
+@pytest.mark.asyncio
+async def test__token_endpoint_request_aiohttp_response():
+    response = mock.Mock()
+    response.status = http_client.OK
+    response.read = mock.AsyncMock(return_value=b'{"access_token": "token"}')
+    request = mock.AsyncMock(return_value=aiohttp_transport.Response(response))
+
+    result = await _client._token_endpoint_request(request, "http://example.com", {})
+
+    assert result == {"access_token": "token"}
+
+
+@pytest.mark.asyncio
+async def test__token_endpoint_request_legacy_compressed_response():
+    response = mock.Mock()
+    response.status = http_client.OK
+    response.headers = {"Content-Encoding": "gzip"}
+    response.content.read = mock.AsyncMock(
+        return_value=gzip.compress(b'{"access_token": "token"}')
+    )
+    request = mock.AsyncMock(return_value=_aiohttp_requests._CombinedResponse(response))
+
+    result = await _client._token_endpoint_request(request, "http://example.com", {})
+
+    assert result == {"access_token": "token"}
 
 
 @pytest.mark.asyncio
@@ -485,9 +519,12 @@ async def test_refresh_grant_retry_with_retry(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("can_retry", [True, False])
+@pytest.mark.parametrize("request_factory", [make_request, make_aio_request])
 @mock.patch("time.sleep", return_value=None)
-async def test__token_endpoint_request_no_throw_with_retry(mock_sleep, can_retry):
-    mock_request = make_request(
+async def test__token_endpoint_request_no_throw_with_retry(
+    mock_sleep, request_factory, can_retry
+):
+    mock_request = request_factory(
         {"error": "help", "error_description": "I'm alive"},
         http_client.INTERNAL_SERVER_ERROR,
     )
