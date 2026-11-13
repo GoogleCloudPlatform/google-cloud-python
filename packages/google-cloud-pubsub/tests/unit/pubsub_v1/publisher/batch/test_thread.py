@@ -329,10 +329,14 @@ def test_blocking__commit_wrong_messageid_length():
     [
         (google.api_core.exceptions.InternalServerError("Internal server error"),),
         (auth_exceptions.TransportError("some transport error"),),
+        (auth_exceptions.RefreshError("credentials could not be refreshed"),),
+        (TypeError("invalid retry"),),
+        (ValueError("invalid timeout"),),
     ],
 )
 def test_block__commmit_api_error(error):
-    batch = create_batch()
+    batch_done_callback = mock.Mock()
+    batch = create_batch(batch_done_callback=batch_done_callback)
     futures = (
         batch.publish(
             wrapper=PublishMessageWrapper(
@@ -352,9 +356,29 @@ def test_block__commmit_api_error(error):
     with patch:
         batch._commit()
 
+    assert batch.status == BatchStatus.ERROR
+    batch_done_callback.assert_called_once_with(False)
     for future in futures:
         assert future.done()
-        assert future.exception() == error[0]
+        assert future.exception() is error[0]
+
+
+@pytest.mark.parametrize("option", ["retry", "timeout"])
+def test_commit_invalid_rpc_options(option):
+    batch = create_batch(**{f"commit_{option}": "invalid"})
+    future = batch.publish(
+        wrapper=PublishMessageWrapper(
+            message=gapic_types.PubsubMessage(data=b"message")
+        )
+    )
+
+    # Exercise the real GAPIC wrapper in the commit thread. Invalid RPC options
+    # fail before sending a request and must reach the caller through its future.
+    batch.commit()
+
+    with pytest.raises(TypeError, match="not callable"):
+        future.result(timeout=3)
+    assert batch.status == BatchStatus.ERROR
 
 
 def test_block__commmit_retry_error():

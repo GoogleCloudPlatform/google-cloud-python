@@ -21,9 +21,7 @@ import typing
 from datetime import datetime
 from typing import Any, Callable, List, Optional, Sequence
 
-import google.api_core.exceptions
 from google.api_core import gapic_v1
-from google.auth import exceptions as auth_exceptions
 from opentelemetry import trace
 
 from google.cloud.pubsub_v1.open_telemetry.publish_message_wrapper import (
@@ -341,12 +339,9 @@ class Batch(base.Batch):
                     )
                     span.set_attribute(key="messaging.message.id", value=message_id)
                     wrapper.end_create_span()
-        except (
-            google.api_core.exceptions.GoogleAPIError,
-            auth_exceptions.TransportError,
-        ) as exc:
-            # We failed to publish, even after retries, so set the exception on
-            # all futures and exit.
+        except Exception as exc:
+            # Any publishing error must reach the futures. Otherwise, an
+            # unexpected exception leaves callers waiting indefinitely.
             self._status = base.BatchStatus.ERROR
 
             if self._client.open_telemetry_enabled:
