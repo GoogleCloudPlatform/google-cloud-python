@@ -245,6 +245,24 @@ class TestWriteResumptionStrategy:
     # Tests for update_state_from_response
     # -------------------------------------------------------------------------
 
+    @pytest.mark.asyncio
+    async def test_recover_later_append_uses_buffer_relative_offset(self, strategy):
+        write_state = _WriteState(250, io.BytesIO(b"C" * 1000), 10**9)
+        write_state.buffer_start_offset = 2000
+        write_state.bytes_sent = 2500
+        write_state.persisted_size = 2250
+        write_state.user_buffer.seek(500)
+        state = {"write_state": write_state}
+
+        await strategy.recover_state_on_failure(
+            exceptions.ServiceUnavailable("disconnected"), state
+        )
+        requests = strategy.generate_requests(state)
+
+        assert [request.write_offset for request in requests] == [2250, 2500, 2750]
+        assert b"".join(r.checksummed_data.content for r in requests) == b"C" * 750
+        assert write_state.bytes_sent == 3000
+
     def test_update_state_from_response_all_fields(self, strategy):
         """Verify all fields from a BidiWriteObjectResponse update the state."""
         write_state = _WriteState(

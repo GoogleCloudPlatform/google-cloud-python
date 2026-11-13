@@ -48,6 +48,8 @@ class _WriteState:
     ):
         self.chunk_size = chunk_size
         self.user_buffer = user_buffer
+        # Absolute object offset corresponding to the beginning of user_buffer.
+        self.buffer_start_offset: int = 0
         self.persisted_size: int = 0
         # Bytes sent to the server (it may be unpersisted),
         # i.e. latest object size = persisted_size + some more bytes.
@@ -76,7 +78,7 @@ class _WriteResumptionStrategy(_BaseResumptionStrategy):
         write_state: _WriteState = state["write_state"]
 
         requests = []
-        # The buffer should already be seeked to the correct position (persisted_size)
+        # The buffer should already be seeked to the buffer-relative persisted position
         # by the `recover_state_on_failure` method before this is called.
         while not write_state.is_finalized:
             chunk = write_state.user_buffer.read(write_state.chunk_size)
@@ -149,7 +151,9 @@ class _WriteResumptionStrategy(_BaseResumptionStrategy):
                 write_state.write_handle = redirect_proto.write_handle
 
         # We must assume any data sent beyond 'persisted_size' was lost.
-        # Reset the user buffer to the last known good byte confirmed by the server.
-        write_state.user_buffer.seek(write_state.persisted_size)
-        write_state.bytes_sent = write_state.persisted_size
+        # The last response may predate this append. Reopening the stream will
+        # obtain and validate the authoritative persisted size before sending.
+        resume_offset = max(write_state.persisted_size, write_state.buffer_start_offset)
+        write_state.user_buffer.seek(resume_offset - write_state.buffer_start_offset)
+        write_state.bytes_sent = resume_offset
         write_state.bytes_since_last_flush = 0

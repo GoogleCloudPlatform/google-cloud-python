@@ -570,7 +570,8 @@ class AsyncAppendableObjectWriter:
         :type enable_checksum: bool
         :param enable_checksum: (Optional) If True, calculates and checks checksums for each chunk. Defaults to True.
 
-        :raises ValueError: If the stream is not open.
+        :raises ValueError: If the stream is not open, or recovery requires an
+            offset outside the current append buffer.
         """
         if not self._is_stream_open:
             raise ValueError("Stream is not open. Call open() before append().")
@@ -623,7 +624,14 @@ class AsyncAppendableObjectWriter:
                         write_state.write_handle = self.write_handle
                         write_state.routing_token = None
 
-                        write_state.user_buffer.seek(write_state.persisted_size)
+                        buffer_offset = (
+                            write_state.persisted_size - write_state.buffer_start_offset
+                        )
+                        if not 0 <= buffer_offset <= len(data):
+                            raise ValueError(
+                                "Cannot resume upload: persisted offset is outside the current append buffer."
+                            )
+                        write_state.user_buffer.seek(buffer_offset)
                         write_state.bytes_sent = write_state.persisted_size
                         write_state.bytes_since_last_flush = 0
                         self.bytes_appended_since_last_flush = 0
@@ -667,6 +675,7 @@ class AsyncAppendableObjectWriter:
             write_state.persisted_size = self.persisted_size
             # offset is set during `open()` call.
             write_state.bytes_sent = self.offset or 0
+            write_state.buffer_start_offset = write_state.bytes_sent
             write_state.bytes_since_last_flush = self.bytes_appended_since_last_flush
 
             retry_manager = _BidiStreamRetryManager(

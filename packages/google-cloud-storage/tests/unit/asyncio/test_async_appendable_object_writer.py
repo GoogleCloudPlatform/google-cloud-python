@@ -800,6 +800,67 @@ class TestAsyncAppendableObjectWriter:
                 assert writer.persisted_size == 5
 
     @pytest.mark.asyncio
+    @pytest.mark.parametrize("known_size", [0, 2000, 2250])
+    @pytest.mark.parametrize("reopened_size", [2000, 2250, 3000])
+    async def test_later_append_retry_preserves_data(
+        self, mock_appendable_writer, known_size, reopened_size
+    ):
+        from google.api_core.retry_async import AsyncRetry
+
+        writer = self._make_one(mock_appendable_writer["mock_client"])
+        writer._is_stream_open = True
+        writer.offset = 2000
+        writer.persisted_size = known_size
+        stream = mock_appendable_writer["mock_stream"]
+        writer.write_obj_stream = stream
+        stream.send.side_effect = [exceptions.ServiceUnavailable("disconnected"), None]
+        data = bytes(range(250)) * 4
+
+        async def reopen(metadata=None):
+            writer.persisted_size = reopened_size
+            writer.offset = reopened_size
+            writer._is_stream_open = True
+
+        with mock.patch.object(writer, "open", side_effect=reopen) as open_mock:
+            await writer.append(data, retry_policy=AsyncRetry(initial=0, maximum=0))
+
+        open_mock.assert_awaited_once()
+        resent = [call.args[0] for call in stream.send.await_args_list[1:]]
+        assert (
+            b"".join(r.checksummed_data.content for r in resent)
+            == data[reopened_size - 2000 :]
+        )
+        if resent:
+            assert resent[0].write_offset == reopened_size
+        assert writer.offset == 3000
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("reopened_size", [1999, 3001])
+    async def test_later_append_retry_rejects_unrecoverable_offset(
+        self, mock_appendable_writer, reopened_size
+    ):
+        from google.api_core.retry_async import AsyncRetry
+
+        writer = self._make_one(mock_appendable_writer["mock_client"])
+        writer._is_stream_open = True
+        writer.offset = 2000
+        writer.persisted_size = 2000
+        stream = mock_appendable_writer["mock_stream"]
+        writer.write_obj_stream = stream
+        stream.send.side_effect = [exceptions.ServiceUnavailable("disconnected"), None]
+
+        async def reopen(metadata=None):
+            writer.persisted_size = reopened_size
+            writer._is_stream_open = True
+
+        with mock.patch.object(writer, "open", side_effect=reopen):
+            with pytest.raises(ValueError, match="outside the current append buffer"):
+                await writer.append(
+                    b"C" * 1000, retry_policy=AsyncRetry(initial=0, maximum=0)
+                )
+        assert stream.send.await_count == 1
+
+    @pytest.mark.asyncio
     async def test_append_unimplemented_string_raises(self, mock_appendable_writer):
         writer = self._make_one(mock_appendable_writer["mock_client"])
         with pytest.raises(NotImplementedError):
