@@ -139,7 +139,7 @@ def _parse_expiry(response_data):
         return None
 
 
-def _token_endpoint_request_no_throw(
+def _token_endpoint_request_no_throw_with_headers(
     request,
     token_uri,
     body,
@@ -147,11 +147,11 @@ def _token_endpoint_request_no_throw(
     use_json=False,
     can_retry=True,
     headers=None,
-    return_response_headers=False,
     **kwargs,
 ):
-    """Makes a request to the OAuth 2.0 authorization server's token endpoint.
-    This function doesn't throw on response errors.
+    """Makes a request to the OAuth 2.0 authorization server's token endpoint
+    and also returns the response headers.  This function doesn't throw on
+    response errors.
 
     Args:
         request (google.auth.transport.Request): A callable used to make
@@ -164,9 +164,6 @@ def _token_endpoint_request_no_throw(
             content type. The default value is False.
         can_retry (bool): Enable or disable request retry behavior.
         headers (Optional[Mapping[str, str]]): The headers for the request.
-        return_response_headers (Optional[bool]): If True, the response
-            headers will be included as a fourth element in the returned
-            tuple.  The default value is False.
         kwargs: Additional arguments passed on to the request method. The
             kwargs will be passed to `requests.request` method, see:
             https://docs.python-requests.org/en/latest/api/#requests.request.
@@ -176,11 +173,11 @@ def _token_endpoint_request_no_throw(
             side SSL certificate verification.
 
     Returns:
-        Tuple(bool, Mapping[str, str], Optional[bool]): A boolean indicating
-          if the request is successful, a mapping for the JSON-decoded response
-          data and in the case of an error a boolean indicating if the error
-          is retryable.  If ``return_response_headers`` is True, a fourth
-          element containing the response headers mapping is appended.
+        Tuple[bool, Mapping[str, str], Optional[bool], Mapping[str, str]]: A
+          boolean indicating if the request is successful, a mapping for the
+          JSON-decoded response data, in the case of an error a boolean
+          indicating if the error is retryable, and a mapping containing the
+          response headers.
     """
     if use_json:
         headers_to_use = {"Content-Type": _JSON_CONTENT_TYPE}
@@ -218,22 +215,72 @@ def _token_endpoint_request_no_throw(
             response_data = response_body
 
         if response.status == http_client.OK:
-            if return_response_headers:
-                return True, response_data, None, response_headers
-            return True, response_data, None
+            return True, response_data, None, response_headers
 
         retryable_error = _can_retry(
             status_code=response.status, response_data=response_data
         )
 
         if not can_retry or not retryable_error:
-            if return_response_headers:
-                return False, response_data, retryable_error, response_headers
-            return False, response_data, retryable_error
+            return False, response_data, retryable_error, response_headers
 
-    if return_response_headers:
-        return False, response_data, retryable_error, response_headers
-    return False, response_data, retryable_error
+    return False, response_data, retryable_error, response_headers
+
+
+def _token_endpoint_request_no_throw(
+    request,
+    token_uri,
+    body,
+    access_token=None,
+    use_json=False,
+    can_retry=True,
+    headers=None,
+    **kwargs,
+):
+    """Makes a request to the OAuth 2.0 authorization server's token endpoint.
+    This function doesn't throw on response errors.
+
+    Args:
+        request (google.auth.transport.Request): A callable used to make
+            HTTP requests.
+        token_uri (str): The OAuth 2.0 authorizations server's token endpoint
+            URI.
+        body (Mapping[str, str]): The parameters to send in the request body.
+        access_token (Optional(str)): The access token needed to make the request.
+        use_json (Optional(bool)): Use urlencoded format or json format for the
+            content type. The default value is False.
+        can_retry (bool): Enable or disable request retry behavior.
+        headers (Optional[Mapping[str, str]]): The headers for the request.
+        kwargs: Additional arguments passed on to the request method. The
+            kwargs will be passed to `requests.request` method, see:
+            https://docs.python-requests.org/en/latest/api/#requests.request.
+            For example, you can use `cert=("cert_pem_path", "key_pem_path")`
+            to set up client side SSL certificate, and use
+            `verify="ca_bundle_path"` to set up the CA certificates for sever
+            side SSL certificate verification.
+
+    Returns:
+        Tuple(bool, Mapping[str, str], Optional[bool]): A boolean indicating
+          if the request is successful, a mapping for the JSON-decoded response
+          data and in the case of an error a boolean indicating if the error
+          is retryable.
+    """
+    (
+        response_status_ok,
+        response_data,
+        retryable_error,
+        _,
+    ) = _token_endpoint_request_no_throw_with_headers(
+        request,
+        token_uri,
+        body,
+        access_token=access_token,
+        use_json=use_json,
+        can_retry=can_retry,
+        headers=headers,
+        **kwargs,
+    )
+    return response_status_ok, response_data, retryable_error
 
 
 def _token_endpoint_request(
@@ -259,9 +306,6 @@ def _token_endpoint_request(
             content type. The default value is False.
         can_retry (bool): Enable or disable request retry behavior.
         headers (Optional[Mapping[str, str]]): The headers for the request.
-        return_response_headers (Optional[bool]): If True, the response
-            headers will be included as a fourth element in the returned
-            tuple.  The default value is False.
         kwargs: Additional arguments passed on to the request method. The
             kwargs will be passed to `requests.request` method, see:
             https://docs.python-requests.org/en/latest/api/#requests.request.

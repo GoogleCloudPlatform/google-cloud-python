@@ -12,9 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import http.client as http_client
 import json
 import os
 import tempfile
+import threading
+import urllib.parse
 from unittest import mock
 
 import pytest  # type: ignore
@@ -23,7 +26,6 @@ from cryptography.hazmat.primitives.asymmetric import ec
 from google.auth import dpop, exceptions, transport
 from google.auth.dpop import SoftwareDPoPSigner
 from google.oauth2 import _client, dpop_credentials, reauth
-from google.oauth2 import credentials as _oauth2_credentials
 
 _TOKEN_URI = "https://oauth2.googleapis.com/token"
 _REFRESH_TOKEN = "refresh_token"
@@ -111,6 +113,110 @@ class TestDPoPCredentials(object):
         assert creds.dpop_signer is signer
         assert factory_called[0] == 1
 
+    def test_dpop_signer_factory_concurrent_access(self):
+        """Concurrent first access invokes the signer factory only once."""
+        signer = self.make_dpop_signer()
+        call_count = [0]
+        count_lock = threading.Lock()
+        barrier = threading.Barrier(8)
+
+        def slow_factory():
+            with count_lock:
+                call_count[0] += 1
+            return signer
+
+        creds = self.make_credentials(dpop_signer=slow_factory)
+        results = []
+
+        def worker():
+            barrier.wait(timeout=5)
+            results.append(creds.dpop_signer)
+
+        threads = [threading.Thread(target=worker) for _ in range(8)]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join(timeout=5)
+            assert not thread.is_alive()
+
+        assert call_count[0] == 1
+        assert len(results) == 8
+        assert all(result is signer for result in results)
+        assert creds._dpop_signer_factory is None
+
+    def test_dpop_signer_factory_double_checked_locking(self):
+        """Second thread reaching the lock sees the already-resolved signer."""
+        signer = self.make_dpop_signer()
+        call_count = [0]
+        factory_entered = threading.Event()
+        waiter_waiting = threading.Event()
+        release_factory = threading.Event()
+
+        def blocking_factory():
+            call_count[0] += 1
+            factory_entered.set()
+            assert release_factory.wait(timeout=5)
+            return signer
+
+        creds = self.make_credentials(dpop_signer=blocking_factory)
+        real_lock = creds._dpop_signer_lock
+        counter_lock = threading.Lock()
+        lock_enters = [0]
+
+        class SignalingLock(object):
+            def __enter__(self):
+                with counter_lock:
+                    lock_enters[0] += 1
+                    is_waiter = lock_enters[0] == 2
+                if is_waiter:
+                    waiter_waiting.set()
+                return real_lock.__enter__()
+
+            def __exit__(self, *args):
+                return real_lock.__exit__(*args)
+
+        creds._dpop_signer_lock = SignalingLock()
+        results = [None, None]
+
+        def first_worker():
+            results[0] = creds.dpop_signer
+
+        def second_worker():
+            assert factory_entered.wait(timeout=5)
+            results[1] = creds.dpop_signer
+
+        t1 = threading.Thread(target=first_worker)
+        t2 = threading.Thread(target=second_worker)
+        t1.start()
+        t2.start()
+
+        assert waiter_waiting.wait(timeout=5)
+        release_factory.set()
+        t1.join(timeout=5)
+        t2.join(timeout=5)
+        assert not t1.is_alive()
+        assert not t2.is_alive()
+
+        assert call_count[0] == 1
+        assert results[0] is signer
+        assert results[1] is signer
+
+    def test_dpop_signer_setter_clears_factory(self):
+        """Setting dpop_signer explicitly prevents deferred factory invocation."""
+        signer_factory = mock.Mock(return_value=self.make_dpop_signer())
+
+        creds = self.make_credentials(dpop_signer=signer_factory)
+        explicit_signer = self.make_dpop_signer()
+        creds.dpop_signer = explicit_signer
+
+        assert creds.dpop_signer is explicit_signer
+        assert creds._dpop_signer_factory is None
+        signer_factory.assert_not_called()
+
+        creds.dpop_signer = None
+        assert creds.dpop_signer is None
+        signer_factory.assert_not_called()
+
     def test_dpop_signer_property(self):
         signer = self.make_dpop_signer()
         creds = self.make_credentials(dpop_signer=signer)
@@ -134,6 +240,7 @@ class TestDPoPCredentials(object):
         state = creds.__getstate__()
 
         assert "_dpop_signer" not in state
+        assert "_dpop_signer_lock" not in state
         assert state["_dpop_nonce"] == "n1"
 
     def test_pickle_with_callable_factory(self):
@@ -231,73 +338,12 @@ class TestDPoPCredentials(object):
         assert headers["authorization"] == "Bearer {}".format(_ACCESS_TOKEN)
 
     # ------------------------------------------------------------------
-    # _after_refresh()
+    # before_request() integration (refresh → apply; no DPoP on API calls)
     # ------------------------------------------------------------------
 
-    def test_after_refresh_injects_dpop_proof(self):
-        signer = self.make_dpop_signer()
-        creds = self.make_credentials(dpop_signer=signer, dpop_nonce="after-nonce")
-        request = mock.create_autospec(transport.Request)
-        headers = {}
-
-        creds._after_refresh(request, "GET", "https://api.example.com/data", headers)
-
-        assert "DPoP" in headers
-        proof = headers["DPoP"]
-        # DPoP proof is a compact JWS: header.payload.signature
-        parts = proof.split(".")
-        assert len(parts) == 3
-
-    def test_after_refresh_no_signer(self):
-        creds = self.make_credentials()
-        request = mock.create_autospec(transport.Request)
-        headers = {}
-
-        creds._after_refresh(request, "GET", "https://api.example.com/data", headers)
-
-        assert "DPoP" not in headers
-
-    def test_after_refresh_no_token(self):
-        signer = self.make_dpop_signer()
-        creds = dpop_credentials.DPoPCredentials(
-            token=None,
-            dpop_signer=signer,
-            refresh_token=self.REFRESH_TOKEN,
-            token_uri=self.TOKEN_URI,
-            client_id=self.CLIENT_ID,
-            client_secret=self.CLIENT_SECRET,
-        )
-        request = mock.create_autospec(transport.Request)
-        headers = {}
-
-        creds._after_refresh(request, "GET", "https://api.example.com/data", headers)
-
-        assert "DPoP" not in headers
-
-    @mock.patch.object(_oauth2_credentials.Credentials, "_after_refresh", autospec=True)
-    def test_after_refresh_calls_super(self, mock_parent_after_refresh):
-        signer = self.make_dpop_signer()
-        creds = self.make_credentials(dpop_signer=signer)
-        request = mock.create_autospec(transport.Request)
-        headers = {}
-
-        creds._after_refresh(request, "GET", "https://api.example.com/data", headers)
-
-        # Verify super()._after_refresh() was called, which is
-        # required for Regional Access Boundary support.
-        mock_parent_after_refresh.assert_called_once_with(
-            creds, request, "GET", "https://api.example.com/data", headers
-        )
-
-    # ------------------------------------------------------------------
-    # before_request() integration (refresh → _after_refresh → apply)
-    # ------------------------------------------------------------------
-
-    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
+    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw_with_headers")
     def test_before_request_full_cycle(self, mock_token_request):
-        """Verifies the complete before_request() flow produces both
-        Authorization: Bearer and DPoP headers on the outgoing request.
-        """
+        """Verifies before_request() refreshes with DPoP and applies Bearer."""
         signer = self.make_dpop_signer()
         creds = self.make_credentials(dpop_signer=signer)
         # Expire the token so before_request triggers a refresh.
@@ -317,23 +363,22 @@ class TestDPoPCredentials(object):
             request, "GET", "https://api.example.com/resource", headers
         )
 
-        # Bearer token in Authorization header.
+        # Token refresh used DPoP, and outgoing API call uses Bearer only.
+        mock_token_request.assert_called_once()
+        assert "dpop" in mock_token_request.call_args[1]["headers"]
         assert headers["authorization"] == "Bearer new-access-token"
+        assert not any(k.lower() == "dpop" for k in headers)
 
-        # DPoP proof in DPoP header.
-        assert "DPoP" in headers
-        parts = headers["DPoP"].split(".")
-        assert len(parts) == 3
-
-    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
-    def test_before_request_valid_token_skips_refresh(self, mock_token_request):
-        """When the token is valid, before_request() should skip refresh
-        but still apply the Bearer token.
-        """
+    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw_with_headers")
+    def test_before_request_valid_token_skips_refresh_and_signer(
+        self, mock_token_request
+    ):
+        """When the token is valid, before_request() skips refresh and signer."""
         import datetime
 
-        signer = self.make_dpop_signer()
-        creds = self.make_credentials(dpop_signer=signer)
+        signer_factory = mock.Mock(return_value=self.make_dpop_signer())
+
+        creds = self.make_credentials(dpop_signer=signer_factory)
         # Set a far-future expiry so token is valid.
         creds.expiry = datetime.datetime.max
 
@@ -345,17 +390,19 @@ class TestDPoPCredentials(object):
             headers,
         )
 
-        # No refresh should have occurred.
+        # Neither token refresh nor deferred signer construction should run.
         mock_token_request.assert_not_called()
+        signer_factory.assert_not_called()
 
-        # Bearer header is applied.
+        # Bearer header is applied without a DPoP header.
         assert headers["authorization"] == "Bearer {}".format(_ACCESS_TOKEN)
+        assert not any(k.lower() == "dpop" for k in headers)
 
     # ------------------------------------------------------------------
     # _call_refresh_grant()
     # ------------------------------------------------------------------
 
-    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
+    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw_with_headers")
     def test_refresh_happy_path(self, mock_token_request):
         signer = self.make_dpop_signer()
         creds = self.make_credentials(dpop_signer=signer)
@@ -376,10 +423,7 @@ class TestDPoPCredentials(object):
         call_kwargs = mock_token_request.call_args
         # Verify DPoP header was sent.
         sent_headers = call_kwargs[1].get("headers") or call_kwargs[0][3]
-        assert "DPoP" in sent_headers
-
-        # Verify return_response_headers=True was passed.
-        assert call_kwargs[1]["return_response_headers"] is True
+        assert "dpop" in sent_headers
 
         # Verify the result contains the expected tokens.
         access_token, refresh_token, expiry, response_data, rapt = result
@@ -389,7 +433,7 @@ class TestDPoPCredentials(object):
         # Verify nonce was captured from response headers.
         assert creds.dpop_nonce == "server-nonce-xyz"
 
-    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
+    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw_with_headers")
     def test_refresh_nonce_challenge(self, mock_token_request):
         signer = self.make_dpop_signer()
         creds = self.make_credentials(dpop_signer=signer)
@@ -423,7 +467,7 @@ class TestDPoPCredentials(object):
         access_token = result[0]
         assert access_token == "new-access-token"
 
-    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
+    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw_with_headers")
     def test_refresh_nonce_captured_on_success(self, mock_token_request):
         signer = self.make_dpop_signer()
         creds = self.make_credentials(dpop_signer=signer)
@@ -440,7 +484,7 @@ class TestDPoPCredentials(object):
 
         assert creds.dpop_nonce == "captured-nonce"
 
-    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
+    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw_with_headers")
     def test_refresh_error(self, mock_token_request):
         signer = self.make_dpop_signer()
         creds = self.make_credentials(dpop_signer=signer)
@@ -463,60 +507,108 @@ class TestDPoPCredentials(object):
         with pytest.raises(ValueError, match="requires a dpop_signer"):
             creds._call_refresh_grant(request)
 
-    @mock.patch("google.oauth2.reauth.get_rapt_token")
-    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
-    def test_refresh_rapt_challenge_with_reauth_enabled(
-        self, mock_token_request, mock_get_rapt
-    ):
+    @staticmethod
+    def _make_response(status, data, headers=None):
+        resp = mock.create_autospec(transport.Response, instance=True)
+        resp.status = status
+        resp.data = json.dumps(data).encode("utf-8")
+        resp.headers = headers or {}
+        return resp
+
+    def test_refresh_rapt_challenge_with_reauth_enabled(self):
         signer = self.make_dpop_signer()
         creds = self.make_credentials(dpop_signer=signer)
         creds._enable_reauth_refresh = True
-        request = mock.create_autospec(transport.Request)
-        mock_get_rapt.return_value = "rapt-token-123"
+        request = mock.create_autospec(transport.Request, instance=True)
 
-        # First call: RAPT challenge.
-        # Second call: success after RAPT is included.
-        mock_token_request.side_effect = [
-            (
-                False,
+        # 1. Initial token refresh triggers rapt_required.
+        # 2. Internal refresh for _REAUTH_SCOPE succeeds with DPoP.
+        # 3. Reauth API sessions:start returns AUTHENTICATED with rapt token.
+        # 4. Retry token refresh with rapt succeeds.
+        request.side_effect = [
+            self._make_response(
+                http_client.BAD_REQUEST,
                 {
                     "error": reauth._REAUTH_NEEDED_ERROR,
                     "error_subtype": reauth._REAUTH_NEEDED_ERROR_RAPT_REQUIRED,
                 },
-                False,
-                {},
             ),
-            (
-                True,
+            self._make_response(
+                http_client.OK,
+                {"access_token": "reauth-access-token", "expires_in": 3600},
+            ),
+            self._make_response(
+                http_client.OK,
+                {
+                    "status": reauth._AUTHENTICATED,
+                    "encodedProofOfReauthToken": "rapt-token-123",
+                },
+            ),
+            self._make_response(
+                http_client.OK,
                 _SUCCESS_RESPONSE_DATA,
-                None,
-                _NONCE_HEADERS,
+                headers=_NONCE_HEADERS,
             ),
         ]
 
         result = creds._call_refresh_grant(request)
 
-        # Verify reauth.get_rapt_token was called.
-        mock_get_rapt.assert_called_once_with(
-            request,
-            self.CLIENT_ID,
-            self.CLIENT_SECRET,
-            self.REFRESH_TOKEN,
-            self.TOKEN_URI,
-            scopes=None,
+        assert request.call_count == 4
+
+        # Call 1: _REAUTH_SCOPE token refresh must include a DPoP proof.
+        reauth_token_call = request.call_args_list[1][1]
+        assert reauth_token_call["url"] == self.TOKEN_URI
+        assert "dpop" in reauth_token_call["headers"]
+        reauth_token_body = urllib.parse.parse_qs(
+            reauth_token_call["body"].decode("utf-8")
         )
+        assert reauth_token_body["scope"] == [reauth._REAUTH_SCOPE]
 
-        # Two calls to the endpoint: initial + retry with RAPT.
-        assert mock_token_request.call_count == 2
+        # Call 2: Reauth API call carries Bearer token and DPoP proof.
+        reauth_api_call = request.call_args_list[2][1]
+        assert reauth_api_call["url"] == reauth._REAUTH_API + ":start"
+        assert (
+            reauth_api_call["headers"]["Authorization"] == "Bearer reauth-access-token"
+        )
+        assert "dpop" in reauth_api_call["headers"]
 
-        # Verify the second call includes the rapt token in the body.
-        second_call_body = mock_token_request.call_args_list[1][0][2]
-        assert second_call_body["rapt"] == "rapt-token-123"
+        # Call 3: Final token refresh includes the rapt token and DPoP proof.
+        final_call = request.call_args_list[3][1]
+        assert final_call["url"] == self.TOKEN_URI
+        assert "dpop" in final_call["headers"]
+        final_body = urllib.parse.parse_qs(final_call["body"].decode("utf-8"))
+        assert final_body["rapt"] == ["rapt-token-123"]
 
-        access_token = result[0]
-        assert access_token == "new-access-token"
+        assert result[0] == "new-access-token"
+        assert result[4] == "rapt-token-123"
+        assert creds.dpop_nonce == "server-nonce-xyz"
 
-    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
+    def test_refresh_rapt_challenge_reauth_token_error_raises(self):
+        signer = self.make_dpop_signer()
+        creds = self.make_credentials(dpop_signer=signer)
+        creds._enable_reauth_refresh = True
+        request = mock.create_autospec(transport.Request, instance=True)
+
+        request.side_effect = [
+            self._make_response(
+                http_client.BAD_REQUEST,
+                {
+                    "error": reauth._REAUTH_NEEDED_ERROR,
+                    "error_subtype": reauth._REAUTH_NEEDED_ERROR_RAPT_REQUIRED,
+                },
+            ),
+            self._make_response(
+                http_client.BAD_REQUEST,
+                {"error": "invalid_grant", "error_description": "Token revoked"},
+            ),
+        ]
+
+        with pytest.raises(exceptions.RefreshError, match="Token revoked"):
+            creds._call_refresh_grant(request)
+
+        assert request.call_count == 2
+
+    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw_with_headers")
     def test_refresh_rapt_challenge_without_reauth_raises(self, mock_token_request):
         signer = self.make_dpop_signer()
         creds = self.make_credentials(dpop_signer=signer)
@@ -536,41 +628,41 @@ class TestDPoPCredentials(object):
         with pytest.raises(exceptions.RefreshError, match="Reauthentication"):
             creds._call_refresh_grant(request)
 
-    @mock.patch("google.oauth2.reauth.get_rapt_token")
-    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
-    def test_refresh_rapt_challenge_invalid_rapt_subtype(
-        self, mock_token_request, mock_get_rapt
-    ):
+    def test_refresh_rapt_challenge_invalid_rapt_subtype(self):
         signer = self.make_dpop_signer()
         creds = self.make_credentials(dpop_signer=signer)
         creds._enable_reauth_refresh = True
-        request = mock.create_autospec(transport.Request)
-        mock_get_rapt.return_value = "rapt-token-456"
+        request = mock.create_autospec(transport.Request, instance=True)
 
-        mock_token_request.side_effect = [
-            (
-                False,
+        request.side_effect = [
+            self._make_response(
+                http_client.BAD_REQUEST,
                 {
                     "error": reauth._REAUTH_NEEDED_ERROR,
                     "error_subtype": reauth._REAUTH_NEEDED_ERROR_INVALID_RAPT,
                 },
-                False,
-                {},
             ),
-            (
-                True,
-                _SUCCESS_RESPONSE_DATA,
-                None,
-                {},
+            self._make_response(
+                http_client.OK,
+                {"access_token": "reauth-access-token", "expires_in": 3600},
             ),
+            self._make_response(
+                http_client.OK,
+                {
+                    "status": reauth._AUTHENTICATED,
+                    "encodedProofOfReauthToken": "rapt-token-456",
+                },
+            ),
+            self._make_response(http_client.OK, _SUCCESS_RESPONSE_DATA),
         ]
 
         result = creds._call_refresh_grant(request)
 
-        mock_get_rapt.assert_called_once()
+        assert request.call_count == 4
         assert result[0] == "new-access-token"
+        assert result[4] == "rapt-token-456"
 
-    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
+    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw_with_headers")
     def test_refresh_with_scopes_passed_to_body(self, mock_token_request):
         signer = self.make_dpop_signer()
         creds = self.make_credentials(dpop_signer=signer)
@@ -588,7 +680,7 @@ class TestDPoPCredentials(object):
         call_body = mock_token_request.call_args[0][2]
         assert call_body["scope"] == "email profile"
 
-    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
+    @mock.patch("google.oauth2._client._token_endpoint_request_no_throw_with_headers")
     def test_refresh_with_rapt_token_passed_to_body(self, mock_token_request):
         signer = self.make_dpop_signer()
         creds = self.make_credentials(dpop_signer=signer)
@@ -857,44 +949,42 @@ class TestDPoPCredentials(object):
 
 
 class TestExtractDpopNonce(object):
-    """Tests for dpop.extract_dpop_nonce() helper."""
+    """Tests for dpop._extract_dpop_nonce() helper."""
 
     def test_extracts_nonce_exact_case(self):
         headers = {"DPoP-Nonce": "abc"}
 
-        result = dpop.extract_dpop_nonce(headers)
+        result = dpop._extract_dpop_nonce(headers)
 
         assert result == "abc"
 
     def test_extracts_nonce_lowercase(self):
         headers = {"dpop-nonce": "abc"}
 
-        result = dpop.extract_dpop_nonce(headers)
+        result = dpop._extract_dpop_nonce(headers)
 
         assert result == "abc"
 
     def test_returns_none_when_absent(self):
         headers = {"other": "header"}
 
-        result = dpop.extract_dpop_nonce(headers)
+        result = dpop._extract_dpop_nonce(headers)
 
         assert result is None
 
     def test_returns_none_for_empty_headers(self):
-        result = dpop.extract_dpop_nonce({})
+        result = dpop._extract_dpop_nonce({})
 
         assert result is None
 
     def test_returns_none_for_none(self):
-        result = dpop.extract_dpop_nonce(None)
+        result = dpop._extract_dpop_nonce(None)
 
         assert result is None
 
 
-class TestTokenEndpointRequestNoThrowWithResponseHeaders(object):
-    """Tests for the return_response_headers flag on
-    _client._token_endpoint_request_no_throw.
-    """
+class TestTokenEndpointRequestNoThrowWithHeaders(object):
+    """Tests for _client._token_endpoint_request_no_throw_with_headers."""
 
     @classmethod
     def _make_mock_response(cls, status=200, data=None, headers=None):
@@ -906,7 +996,7 @@ class TestTokenEndpointRequestNoThrowWithResponseHeaders(object):
         response.headers = headers or {}
         return response
 
-    def test_returns_3_tuple_by_default(self):
+    def test_no_throw_returns_3_tuple(self):
         request = mock.create_autospec(transport.Request)
         request.return_value = self._make_mock_response(
             status=200,
@@ -920,12 +1010,12 @@ class TestTokenEndpointRequestNoThrowWithResponseHeaders(object):
             {"grant_type": "authorization_code"},
         )
 
-        # Default: 3-tuple (success, data, retryable_error).
+        # Standard helper returns a 3-tuple (success, data, retryable_error).
         assert len(result) == 3
         assert result[0] is True
         assert result[1]["access_token"] == "tok"
 
-    def test_returns_4_tuple_when_requested(self):
+    def test_with_headers_returns_4_tuple(self):
         response_headers = {"DPoP-Nonce": "server-nonce", "X-Other": "value"}
         request = mock.create_autospec(transport.Request)
         request.return_value = self._make_mock_response(
@@ -934,14 +1024,13 @@ class TestTokenEndpointRequestNoThrowWithResponseHeaders(object):
             headers=response_headers,
         )
 
-        result = _client._token_endpoint_request_no_throw(
+        result = _client._token_endpoint_request_no_throw_with_headers(
             request,
             _TOKEN_URI,
             {"grant_type": "authorization_code"},
-            return_response_headers=True,
         )
 
-        # With return_response_headers=True: 4-tuple.
+        # Header-returning helper always returns a 4-tuple.
         assert len(result) == 4
         assert result[0] is True
         assert result[1]["access_token"] == "tok"
@@ -957,11 +1046,10 @@ class TestTokenEndpointRequestNoThrowWithResponseHeaders(object):
             headers=error_headers,
         )
 
-        result = _client._token_endpoint_request_no_throw(
+        result = _client._token_endpoint_request_no_throw_with_headers(
             request,
             _TOKEN_URI,
             {"grant_type": "authorization_code"},
-            return_response_headers=True,
             can_retry=False,
         )
 

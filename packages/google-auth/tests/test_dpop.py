@@ -30,8 +30,7 @@ from google.auth import _helpers, dpop, exceptions
 
 def _b64url_decode(data):
     """Base64url-decode without padding."""
-    if isinstance(data, str):
-        data = data.encode("ascii")
+    data = data.encode("ascii")
     padding_needed = 4 - len(data) % 4
     if padding_needed != 4:
         data += b"=" * padding_needed
@@ -53,7 +52,7 @@ def _decode_jwt(token):
 
 
 class TestComputeJwkThumbprint(object):
-    """Tests for :func:`dpop.compute_jwk_thumbprint`."""
+    """Tests for :func:`dpop._compute_jwk_thumbprint`."""
 
     @classmethod
     def make_ec256_signer(cls):
@@ -89,13 +88,13 @@ class TestComputeJwkThumbprint(object):
         digest = hashlib.sha256(canonical_json).digest()
         expected = _helpers.unpadded_urlsafe_b64encode(digest).decode("ascii")
 
-        result = dpop.compute_jwk_thumbprint(jwk)
+        result = dpop._compute_jwk_thumbprint(jwk)
         assert result == expected
 
     def test_ec384_thumbprint(self):
         signer = self.make_ec384_signer()
         jwk = signer.public_jwk
-        result = dpop.compute_jwk_thumbprint(jwk)
+        result = dpop._compute_jwk_thumbprint(jwk)
         # Thumbprint is a non-empty base64url string.
         assert isinstance(result, str)
         assert len(result) > 0
@@ -117,45 +116,45 @@ class TestComputeJwkThumbprint(object):
         digest = hashlib.sha256(canonical_json).digest()
         expected = _helpers.unpadded_urlsafe_b64encode(digest).decode("ascii")
 
-        result = dpop.compute_jwk_thumbprint(jwk)
+        result = dpop._compute_jwk_thumbprint(jwk)
         assert result == expected
 
     def test_missing_required_field_raises(self):
         # An EC JWK missing the "x" field.
         jwk = {"kty": "EC", "crv": "P-256", "y": "some_y_value"}
         with pytest.raises(exceptions.InvalidValue, match="missing required"):
-            dpop.compute_jwk_thumbprint(jwk)
+            dpop._compute_jwk_thumbprint(jwk)
 
     def test_unsupported_key_type_raises(self):
         jwk = {"kty": "OKP", "crv": "Ed25519", "x": "abc"}
         with pytest.raises(exceptions.InvalidValue, match="Unsupported key type"):
-            dpop.compute_jwk_thumbprint(jwk)
+            dpop._compute_jwk_thumbprint(jwk)
 
     def test_none_key_type_raises(self):
         jwk = {"crv": "P-256", "x": "abc", "y": "def"}
         with pytest.raises(exceptions.InvalidValue, match="Unsupported key type"):
-            dpop.compute_jwk_thumbprint(jwk)
+            dpop._compute_jwk_thumbprint(jwk)
 
 
 class TestComputeAccessTokenHash(object):
-    """Tests for :func:`dpop.compute_access_token_hash`."""
+    """Tests for :func:`dpop._compute_access_token_hash`."""
 
     def test_known_token_hash(self):
         token = "test-access-token-12345"
         digest = hashlib.sha256(token.encode("ascii")).digest()
         expected = _helpers.unpadded_urlsafe_b64encode(digest).decode("ascii")
-        result = dpop.compute_access_token_hash(token)
+        result = dpop._compute_access_token_hash(token)
         assert result == expected
 
     def test_bytes_input(self):
         token = b"bytes-access-token"
         digest = hashlib.sha256(token).digest()
         expected = _helpers.unpadded_urlsafe_b64encode(digest).decode("ascii")
-        result = dpop.compute_access_token_hash(token)
+        result = dpop._compute_access_token_hash(token)
         assert result == expected
 
     def test_hash_is_base64url_string(self):
-        result = dpop.compute_access_token_hash("some-token")
+        result = dpop._compute_access_token_hash("some-token")
         assert isinstance(result, str)
         # Should be 43 characters (256 bits base64url without padding).
         assert len(result) == 43
@@ -180,41 +179,41 @@ class TestComputeAuthCodeJti(object):
 
 
 class TestNormalizeDpopUrl(object):
-    """Tests for :func:`dpop.normalize_dpop_url`."""
+    """Tests for :func:`dpop._normalize_dpop_url`."""
 
     def test_strips_query_string(self):
         url = "https://example.com/path?foo=bar&baz=qux"
-        result = dpop.normalize_dpop_url(url)
+        result = dpop._normalize_dpop_url(url)
         assert result == "https://example.com/path"
 
     def test_strips_fragment(self):
         url = "https://example.com/path#section"
-        result = dpop.normalize_dpop_url(url)
+        result = dpop._normalize_dpop_url(url)
         assert result == "https://example.com/path"
 
     def test_lowercases_scheme_and_host(self):
         url = "HTTPS://Example.COM/Path"
-        result = dpop.normalize_dpop_url(url)
+        result = dpop._normalize_dpop_url(url)
         assert result == "https://example.com/Path"
 
     def test_preserves_path(self):
         url = "https://example.com/api/v1/Resource"
-        result = dpop.normalize_dpop_url(url)
+        result = dpop._normalize_dpop_url(url)
         assert result == "https://example.com/api/v1/Resource"
 
     def test_adds_trailing_slash_when_path_empty(self):
         url = "https://example.com"
-        result = dpop.normalize_dpop_url(url)
+        result = dpop._normalize_dpop_url(url)
         assert result == "https://example.com/"
 
     def test_strips_query_and_fragment_together(self):
         url = "https://example.com/path?q=1#frag"
-        result = dpop.normalize_dpop_url(url)
+        result = dpop._normalize_dpop_url(url)
         assert result == "https://example.com/path"
 
     def test_preserves_port(self):
         url = "https://example.com:8443/resource"
-        result = dpop.normalize_dpop_url(url)
+        result = dpop._normalize_dpop_url(url)
         assert result == "https://example.com:8443/resource"
 
 
@@ -234,7 +233,7 @@ class TestDerRawEcdsaConversion(object):
         data = b"test data to sign"
         der_sig = key.sign(data, ec.ECDSA(hashes.SHA256()))
         raw_sig = dpop.der_to_raw_ecdsa_signature(der_sig, 32)
-        der_sig_again = dpop.raw_to_der_ecdsa_signature(raw_sig)
+        der_sig_again = dpop._raw_to_der_ecdsa_signature(raw_sig)
         raw_sig_again = dpop.der_to_raw_ecdsa_signature(der_sig_again, 32)
         assert raw_sig == raw_sig_again
 
@@ -243,7 +242,7 @@ class TestDerRawEcdsaConversion(object):
         data = b"test data to sign"
         der_sig = key.sign(data, ec.ECDSA(hashes.SHA384()))
         raw_sig = dpop.der_to_raw_ecdsa_signature(der_sig, 48)
-        der_sig_again = dpop.raw_to_der_ecdsa_signature(raw_sig)
+        der_sig_again = dpop._raw_to_der_ecdsa_signature(raw_sig)
         raw_sig_again = dpop.der_to_raw_ecdsa_signature(der_sig_again, 48)
         assert raw_sig == raw_sig_again
 
@@ -267,7 +266,7 @@ class TestDerRawEcdsaConversion(object):
         data = b"verify me"
         der_sig = key.sign(data, ec.ECDSA(hashes.SHA256()))
         raw_sig = dpop.der_to_raw_ecdsa_signature(der_sig, 32)
-        der_sig_back = dpop.raw_to_der_ecdsa_signature(raw_sig)
+        der_sig_back = dpop._raw_to_der_ecdsa_signature(raw_sig)
         # Should not raise.
         key.public_key().verify(der_sig_back, data, ec.ECDSA(hashes.SHA256()))
 
@@ -280,10 +279,10 @@ class TestDPoPSigner(object):
             dpop.DPoPSigner()
 
     def test_thumbprint_property_uses_compute_jwk_thumbprint(self):
-        """thumbprint delegates to compute_jwk_thumbprint."""
+        """thumbprint delegates to _compute_jwk_thumbprint."""
         ec_key = ec.generate_private_key(ec.SECP256R1())
         signer = dpop.SoftwareDPoPSigner(ec_key)
-        expected = dpop.compute_jwk_thumbprint(signer.public_jwk)
+        expected = dpop._compute_jwk_thumbprint(signer.public_jwk)
         assert signer.thumbprint == expected
 
     def test_key_id_defaults_to_none(self):
@@ -339,7 +338,7 @@ class TestSoftwareDPoPSigner(object):
         signer = dpop.SoftwareDPoPSigner(key)
         data = b"roundtrip test data"
         raw_sig = signer.sign(data)
-        der_sig = dpop.raw_to_der_ecdsa_signature(raw_sig)
+        der_sig = dpop._raw_to_der_ecdsa_signature(raw_sig)
         # Should not raise.
         key.public_key().verify(der_sig, data, ec.ECDSA(hashes.SHA256()))
 
@@ -606,7 +605,7 @@ class TestCreateProof(object):
             access_token=access_token,
         )
         _, payload, _ = _decode_jwt(proof)
-        expected_ath = dpop.compute_access_token_hash(access_token)
+        expected_ath = dpop._compute_access_token_hash(access_token)
         assert payload["ath"] == expected_ath
 
     @mock.patch("time.time", return_value=1700000000)
@@ -670,7 +669,7 @@ class TestCreateProof(object):
         parts = proof.split(".")
         signing_input = "{}.{}".format(parts[0], parts[1]).encode("ascii")
         raw_sig = _b64url_decode(parts[2])
-        der_sig = dpop.raw_to_der_ecdsa_signature(raw_sig)
+        der_sig = dpop._raw_to_der_ecdsa_signature(raw_sig)
         # Should not raise.
         key.public_key().verify(der_sig, signing_input, ec.ECDSA(hashes.SHA256()))
 

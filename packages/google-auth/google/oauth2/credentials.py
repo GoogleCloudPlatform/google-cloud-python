@@ -463,7 +463,7 @@ class Credentials(
         """Performs the token refresh grant call.
 
         Subclasses may override this to customize the token request,
-        for example to add DPoP proof-of-possession headers.
+        for example to add DPoP proof of possession headers.
 
         Args:
             request (google.auth.transport.Request): The object used to make

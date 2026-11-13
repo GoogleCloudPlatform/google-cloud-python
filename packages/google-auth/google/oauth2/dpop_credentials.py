@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""OAuth 2.0 credentials with DPoP (RFC 9449) proof-of-possession.
+"""OAuth 2.0 credentials with DPoP (RFC 9449) proof of possession.
 
 This module provides :class:`DPoPCredentials`, a subclass of
 :class:`google.oauth2.credentials.Credentials` that binds OAuth 2.0
 refresh and access tokens to a cryptographic key using Demonstrating
-Proof-of-Possession (DPoP) as defined in `RFC 9449`_.
+Proof of Possession (DPoP) as defined in `RFC 9449`_.
 
 In Google's implementation, DPoP proofs are validated by the
 authorization server during token refresh and code exchange.  A
@@ -48,9 +48,11 @@ Usage with a deferred signer (e.g. hardware token)::
 
 import io
 import json
+import sys
+import threading
 
 from google.auth import exceptions, metrics
-from google.auth.dpop import DPoPSigner, extract_dpop_nonce
+from google.auth.dpop import DPoPSigner, _extract_dpop_nonce
 from google.oauth2 import _client, reauth
 from google.oauth2 import credentials as _oauth2_credentials
 
@@ -58,7 +60,7 @@ _USE_DPOP_NONCE_ERROR = "use_dpop_nonce"
 
 
 class DPoPCredentials(_oauth2_credentials.Credentials):
-    """OAuth 2.0 credentials with DPoP proof-of-possession.
+    """OAuth 2.0 credentials with DPoP proof of possession.
 
     This is a subclass of :class:`google.oauth2.credentials.Credentials`
     that adds DPoP proof generation to token refresh requests, binding
@@ -90,6 +92,7 @@ class DPoPCredentials(_oauth2_credentials.Credentials):
                 :class:`google.oauth2.credentials.Credentials`.
         """
         super(DPoPCredentials, self).__init__(token, **kwargs)
+        self._dpop_signer_lock = threading.Lock()
         if callable(dpop_signer) and not isinstance(dpop_signer, DPoPSigner):
             self._dpop_signer_factory = dpop_signer
             self._dpop_signer = None
@@ -107,8 +110,10 @@ class DPoPCredentials(_oauth2_credentials.Credentials):
         the factory (one-shot resolution).
         """
         if self._dpop_signer is None and self._dpop_signer_factory is not None:
-            self._dpop_signer = self._dpop_signer_factory()
-            self._dpop_signer_factory = None  # one-shot; release the ref
+            with self._dpop_signer_lock:
+                if self._dpop_signer is None and self._dpop_signer_factory is not None:
+                    self._dpop_signer = self._dpop_signer_factory()
+                    self._dpop_signer_factory = None  # one-shot; release the ref
         return self._dpop_signer
 
     @dpop_signer.setter
@@ -121,7 +126,9 @@ class DPoPCredentials(_oauth2_credentials.Credentials):
             signer (Optional[google.auth.dpop.DPoPSigner]): The DPoP
                 signer to bind to these credentials.
         """
-        self._dpop_signer = signer
+        with self._dpop_signer_lock:
+            self._dpop_signer = signer
+            self._dpop_signer_factory = None
 
     @property
     def dpop_nonce(self):
@@ -142,6 +149,8 @@ class DPoPCredentials(_oauth2_credentials.Credentials):
         state.pop("_dpop_signer", None)
         # _dpop_signer_factory may hold unpicklable closures/references.
         state.pop("_dpop_signer_factory", None)
+        # threading.Lock is unpicklable and must be recreated on unpickle.
+        state.pop("_dpop_signer_lock", None)
         return state
 
     def __setstate__(self, d):
@@ -156,37 +165,94 @@ class DPoPCredentials(_oauth2_credentials.Credentials):
         # Signer and factory are never pickled; must be re-attached.
         self._dpop_signer = None
         self._dpop_signer_factory = None
+        self._dpop_signer_lock = threading.Lock()
 
-    def _after_refresh(self, request, method, url, headers):
-        """Attaches a DPoP proof for the resource server request.
+    def _send_dpop_token_request(self, request, body):
+        """Sends a DPoP-authenticated request to the token endpoint.
 
-        After credentials are refreshed, this hook creates a DPoP proof
-        JWT bound to the target URL and the current access token (via
-        the ``ath`` claim) per RFC 9449 §4.3.
-
-        .. note::
-
-            Google resource servers currently ignore the ``DPoP``
-            header entirely — the ``Authorization`` header uses the
-            ``Bearer`` scheme and the ``DPoP`` proof is not validated.
-            This header is included for RFC 9449 compliance and
-            forward compatibility with stricter enforcement.
-
-        Args:
-            request (google.auth.transport.Request): The object used to
-                make HTTP requests.
-            method (str): The HTTP method of the request.
-            url (str): The target resource server URI.
-            headers (Mapping): The request headers to update.
+        Attaches a fresh ``DPoP`` proof header, captures any returned
+        ``DPoP-Nonce``, and retries once on ``use_dpop_nonce``.
         """
-        super(DPoPCredentials, self)._after_refresh(request, method, url, headers)
-        if self.dpop_signer is not None and self.token:
-            headers["DPoP"] = self.dpop_signer.create_proof(
+        headers = {metrics.API_CLIENT_HEADER: metrics.token_request_user()}
+
+        def _post():
+            headers["dpop"] = self.dpop_signer.create_proof(
+                "POST", self._token_uri, nonce=self._dpop_nonce
+            )
+            (
+                ok,
+                data,
+                retryable,
+                resp_headers,
+            ) = _client._token_endpoint_request_no_throw_with_headers(
+                request,
+                self._token_uri,
+                body,
+                headers=headers,
+            )
+            self._dpop_nonce = _extract_dpop_nonce(resp_headers) or self._dpop_nonce
+            return ok, data, retryable
+
+        response_status_ok, response_data, retryable_error = _post()
+
+        # Handle use_dpop_nonce challenge — retry once with the new
+        # nonce the server just gave us.
+        if (
+            not response_status_ok
+            and isinstance(response_data, dict)
+            and response_data.get("error") == _USE_DPOP_NONCE_ERROR
+        ):
+            response_status_ok, response_data, retryable_error = _post()
+
+        return response_status_ok, response_data, retryable_error
+
+    def _get_rapt_token(self, request, scopes=None):
+        """Obtains a RAPT token using a DPoP-bound reauth refresh."""
+        sys.stderr.write("Reauthentication required.\n")
+
+        # Get a reauth-scoped access token using a DPoP-authenticated grant.
+        reauth_body = {
+            "grant_type": _client._REFRESH_GRANT_TYPE,
+            "client_id": self._client_id,
+            "client_secret": self._client_secret,
+            "refresh_token": self._refresh_token,
+            "scope": reauth._REAUTH_SCOPE,
+        }
+        (
+            response_status_ok,
+            response_data,
+            retryable_error,
+        ) = self._send_dpop_token_request(request, reauth_body)
+        if not response_status_ok:
+            _client._handle_error_response(response_data, retryable_error)
+
+        reauth_access_token, _, _, _ = _client._handle_refresh_grant_response(
+            response_data, self._refresh_token
+        )
+
+        def _dpop_reauth_request(url, method="GET", body=None, headers=None, **kwargs):
+            req_headers = dict(headers or {})
+            req_headers["dpop"] = self.dpop_signer.create_proof(
                 method,
                 url,
                 nonce=self._dpop_nonce,
-                access_token=self.token,
+                access_token=reauth_access_token,
             )
+            return request(
+                url=url,
+                method=method,
+                body=body,
+                headers=req_headers,
+                **kwargs,
+            )
+
+        rapt_token = reauth._obtain_rapt(
+            _dpop_reauth_request,
+            reauth_access_token,
+            requested_scopes=scopes,
+        )
+        sys.stderr.write("Reauthentication successful.\n")
+        return rapt_token
 
     def _call_refresh_grant(self, request, scopes=None):
         """DPoP-aware token refresh grant.
@@ -218,16 +284,13 @@ class DPoPCredentials(_oauth2_credentials.Credentials):
                 "for non-DPoP flows."
             )
 
-        token_uri = self._token_uri
         refresh_token = self._refresh_token
-        client_id = self._client_id
-        client_secret = self._client_secret
         rapt_token = self._rapt_token
 
         body = {
             "grant_type": _client._REFRESH_GRANT_TYPE,
-            "client_id": client_id,
-            "client_secret": client_secret,
+            "client_id": self._client_id,
+            "client_secret": self._client_secret,
             "refresh_token": refresh_token,
         }
         if scopes:
@@ -235,50 +298,11 @@ class DPoPCredentials(_oauth2_credentials.Credentials):
         if rapt_token:
             body["rapt"] = rapt_token
 
-        headers = {metrics.API_CLIENT_HEADER: metrics.token_request_user()}
-        headers["DPoP"] = self.dpop_signer.create_proof(
-            "POST", token_uri, nonce=self._dpop_nonce
-        )
-
         (
             response_status_ok,
             response_data,
             retryable_error,
-            response_headers,
-        ) = _client._token_endpoint_request_no_throw(
-            request,
-            token_uri,
-            body,
-            headers=headers,
-            return_response_headers=True,
-        )
-
-        # Always capture the server-provided nonce from any response.
-        self._dpop_nonce = extract_dpop_nonce(response_headers) or self._dpop_nonce
-
-        # Handle use_dpop_nonce challenge — retry once with the new
-        # nonce the server just gave us.
-        if (
-            not response_status_ok
-            and isinstance(response_data, dict)
-            and response_data.get("error") == _USE_DPOP_NONCE_ERROR
-        ):
-            headers["DPoP"] = self.dpop_signer.create_proof(
-                "POST", token_uri, nonce=self._dpop_nonce
-            )
-            (
-                response_status_ok,
-                response_data,
-                retryable_error,
-                response_headers,
-            ) = _client._token_endpoint_request_no_throw(
-                request,
-                token_uri,
-                body,
-                headers=headers,
-                return_response_headers=True,
-            )
-            self._dpop_nonce = extract_dpop_nonce(response_headers) or self._dpop_nonce
+        ) = self._send_dpop_token_request(request, body)
 
         # Handle reauth/RAPT challenge.
         if (
@@ -299,31 +323,13 @@ class DPoPCredentials(_oauth2_credentials.Credentials):
                     "reauthenticate."
                 )
 
-            rapt_token = reauth.get_rapt_token(
-                request,
-                client_id,
-                client_secret,
-                refresh_token,
-                token_uri,
-                scopes=scopes,
-            )
+            rapt_token = self._get_rapt_token(request, scopes=scopes)
             body["rapt"] = rapt_token
-            headers["DPoP"] = self.dpop_signer.create_proof(
-                "POST", token_uri, nonce=self._dpop_nonce
-            )
             (
                 response_status_ok,
                 response_data,
                 retryable_error,
-                response_headers,
-            ) = _client._token_endpoint_request_no_throw(
-                request,
-                token_uri,
-                body,
-                headers=headers,
-                return_response_headers=True,
-            )
-            self._dpop_nonce = extract_dpop_nonce(response_headers) or self._dpop_nonce
+            ) = self._send_dpop_token_request(request, body)
 
         if not response_status_ok:
             _client._handle_error_response(response_data, retryable_error)

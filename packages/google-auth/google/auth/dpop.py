@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Demonstrating Proof-of-Possession (DPoP) support per RFC 9449.
+"""Demonstrating Proof of Possession (DPoP) support per RFC 9449.
 
 This module provides the abstract base class :class:`DPoPSigner` and a
-concrete implementation :class:`SoftwareDPoPSigner`, as well as
-cryptographic helpers for creating DPoP proof JWTs and computing
-RFC 7638 JWK thumbprints.
+concrete implementation :class:`SoftwareDPoPSigner`, along with helpers
+for custom signer implementations (:func:`der_to_raw_ecdsa_signature`) and
+authorization code exchanges (:func:`compute_auth_code_jti`).
 
 Third-party keystores (such as hardware tokens, TPMs, YubiKeys,
 PKCS#11 devices, or cloud KMS) can be integrated by subclassing
@@ -42,7 +42,7 @@ from cryptography.hazmat.primitives.asymmetric.utils import (
 from google.auth import _helpers, exceptions
 
 
-def compute_jwk_thumbprint(jwk):
+def _compute_jwk_thumbprint(jwk):
     """Computes the RFC 7638 SHA-256 JSON Web Key (JWK) Thumbprint.
 
     The thumbprint is calculated by canonicalizing the required public
@@ -88,7 +88,7 @@ def compute_jwk_thumbprint(jwk):
     return _helpers.unpadded_urlsafe_b64encode(digest).decode("ascii")
 
 
-def compute_access_token_hash(access_token):
+def _compute_access_token_hash(access_token):
     """Computes the RFC 9449 access token hash (``ath`` claim).
 
     The ``ath`` claim value is the unpadded base64url encoding of the
@@ -125,7 +125,7 @@ def compute_auth_code_jti(code):
     return _helpers.unpadded_urlsafe_b64encode(digest).decode("ascii")
 
 
-def normalize_dpop_url(url):
+def _normalize_dpop_url(url):
     """Normalizes a URL for the DPoP ``htu`` claim per RFC 9449 §4.3.
 
     The URL is normalized to lowercase scheme and host, with the path
@@ -166,7 +166,7 @@ def der_to_raw_ecdsa_signature(der_signature, curve_byte_size=32):
     )
 
 
-def raw_to_der_ecdsa_signature(raw_signature):
+def _raw_to_der_ecdsa_signature(raw_signature):
     """Converts a raw (R || S) ECDSA signature to ASN.1 DER format.
 
     Args:
@@ -214,7 +214,7 @@ class DPoPSigner(metaclass=abc.ABCMeta):
     @property
     def thumbprint(self):
         """str: RFC 7638 SHA-256 JWK thumbprint."""
-        return compute_jwk_thumbprint(self.public_jwk)
+        return _compute_jwk_thumbprint(self.public_jwk)
 
     @abc.abstractmethod
     def sign(self, data):
@@ -251,9 +251,7 @@ class DPoPSigner(metaclass=abc.ABCMeta):
             nonce (Optional[str]): A server-provided DPoP nonce, if
                 available.
             access_token (Optional[Union[str, bytes]]): The access token
-                to bind via the ``ath`` claim per RFC 9449 §4.3.
-                Google resource servers currently ignore this header
-                entirely; it is included for forward compatibility.
+                to bind via the ``ath`` claim per RFC 9449 §4.2.
             jti (Optional[str]): Explicit unique JWT ID.  If omitted, a
                 random UUIDv4 is generated.  For Google OAuth code
                 exchange, this MUST be ``compute_auth_code_jti(code)``.
@@ -273,7 +271,7 @@ class DPoPSigner(metaclass=abc.ABCMeta):
         payload = {
             "jti": jti or str(uuid.uuid4()),
             "htm": method.upper(),
-            "htu": normalize_dpop_url(url),
+            "htu": _normalize_dpop_url(url),
             "iat": int(time.time()),
         }
 
@@ -281,7 +279,7 @@ class DPoPSigner(metaclass=abc.ABCMeta):
             payload["nonce"] = nonce
 
         if access_token:
-            payload["ath"] = compute_access_token_hash(access_token)
+            payload["ath"] = _compute_access_token_hash(access_token)
 
         if extra_claims:
             payload.update(extra_claims)
@@ -479,7 +477,7 @@ class SoftwareDPoPSigner(DPoPSigner):
         return cls(key, key_id=key_id)
 
 
-def extract_dpop_nonce(headers):
+def _extract_dpop_nonce(headers):
     """Extracts the ``DPoP-Nonce`` header value (case-insensitive).
 
     Args:
