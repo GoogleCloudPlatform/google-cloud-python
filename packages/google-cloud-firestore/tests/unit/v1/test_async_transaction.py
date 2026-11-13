@@ -995,6 +995,45 @@ async def test_async_transactional_reentrant_calls_keep_retry_ids_separate():
     )
 
 
+@pytest.mark.asyncio
+async def test_async_transaction_preserves_subclass_pre_commit():
+    from google.api_core import exceptions
+
+    from google.cloud.firestore_v1.async_transaction import _AsyncTransactional
+
+    runners = []
+
+    class CustomTransactional(_AsyncTransactional):
+        async def _pre_commit(self, transaction, *args, **kwargs):
+            runners.append(self)
+            return await super()._pre_commit(transaction, *args, **kwargs)
+
+    to_wrap = AsyncMock(return_value=mock.sentinel.result, spec=[])
+    wrapped = CustomTransactional(to_wrap)
+    first = _make_transaction(b"first")
+    second = _make_transaction(b"second")
+    first._client._firestore_api.commit.side_effect = [
+        exceptions.Aborted("Contention"),
+        mock.Mock(write_results=[]),
+    ]
+
+    assert await wrapped(first, "pos", key="word") is mock.sentinel.result
+    assert await wrapped(second, "pos", key="word") is mock.sentinel.result
+    assert len(runners) == 3
+    assert runners[0] is runners[1]
+    assert runners[0] is not runners[2]
+    assert all(runner is not wrapped for runner in runners)
+    assert runners[0].retry_id == b"first"
+    assert runners[2].retry_id == b"second"
+    to_wrap.assert_has_calls(
+        [
+            mock.call(first, "pos", key="word"),
+            mock.call(first, "pos", key="word"),
+            mock.call(second, "pos", key="word"),
+        ]
+    )
+
+
 def test_async_transactional_factory():
     from google.cloud.firestore_v1.async_transaction import (
         _AsyncTransactional,

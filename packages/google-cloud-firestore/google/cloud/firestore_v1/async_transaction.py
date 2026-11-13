@@ -330,7 +330,7 @@ class _AsyncTransactional(_BaseTransactional, Generic[T, P]):
         """
         # Each invocation needs its own retry IDs, including concurrent and
         # reentrant calls to the same decorated callable.
-        runner = _AsyncTransactional(self.to_wrap)
+        runner = self.__class__(self.to_wrap)
         retryable_exceptions = (
             (exceptions.Aborted) if not transaction._read_only else ()
         )
