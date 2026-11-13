@@ -1,0 +1,247 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+steps:
+  - name: 'us-central1-docker.pkg.dev/client-library-releases/release-images-prod/python-multi@sha256:d529954c373542171f9fc411e0102cebe542b511e320a965edf8820285f4f122'
+    id: 'run-system-tests-shard'
+    env:
+      # Populate standard GCP project environment variables expected by system test suites.
+      - 'GOOGLE_CLOUD_PROJECT=${PROJECT_ID}'
+      - 'GCLOUD_PROJECT=${PROJECT_ID}'
+      - 'PROJECT_ID=${PROJECT_ID}'
+      # Pass sharding and diff parameters consumed by ci/get_package_shards.py.
+      - 'MAX_SHARDS=${_MAX_SHARDS}'
+      - 'SHARD_INDEX=${_SHARD_INDEX}'
+      - 'BUILD_TYPE=${_BUILD_TYPE}'
+      - 'TARGET_BRANCH=${_BASE_BRANCH}'
+      - 'TEST_ALL_PACKAGES=${_TEST_ALL_PACKAGES}'
+      - 'ENABLED_PACKAGES=${_ENABLED_PACKAGES}'
+      - 'PACKAGE_WEIGHTS=${_PACKAGE_WEIGHTS}'
+      # Specify the nox session consumed by ci/run_conditional_tests.sh and ci/run_single_test.sh.
+      - 'NOX_SESSION=${_NOX_SESSION}'
+      - 'TEST_TYPE=${_NOX_SESSION}'
+      # Configure parallel package execution, time budget/threshold, and unbuffered Python output.
+      - 'PARALLEL_WORKERS=${_PARALLEL_WORKERS}'
+      - 'TIME_BUDGET_MINUTES=${_TIME_BUDGET_MINUTES}'
+      - 'HARD_TIMEOUT_MINUTES=${_HARD_TIMEOUT_MINUTES}'
+      - 'PYTHONUNBUFFERED=1'
+    script: |
+      #!/usr/bin/env bash
+      set -eo pipefail
+
+      # Derive PY_VERSION (e.g. "3.12" from "system-3.12") required by ci/run_single_test.sh.
+      export PY_VERSION="${NOX_SESSION#system-}"
+
+      # Deepen both the checked-out PR commit and target branch history so git diff in
+      # ci/get_package_shards.py finds the merge base in Cloud Build's shallow checkout,
+      # and populate local refs/heads/${TARGET_BRANCH} so ci/run_conditional_tests.sh's
+      # local insteadOf fetch succeeds silently.
+      git fetch --no-tags --quiet origin \
+        "$(git rev-parse HEAD)" \
+        "+refs/heads/${TARGET_BRANCH}:refs/remotes/origin/${TARGET_BRANCH}" \
+        "+refs/heads/${TARGET_BRANCH}:refs/heads/${TARGET_BRANCH}" \
+        --depth=200 || true
+
+      # Import ci/get_package_shards.py without modifying the script on disk.
+      # Filter get_packages() in memory to _ENABLED_PACKAGES so unmigrated packages are ignored.
+      PACKAGE_LIST=$(python3 -c '
+      import os
+      import sys
+
+      sys.path.insert(0, "ci")
+      import get_package_shards
+
+      # Normalize enabled package paths to include a trailing slash so they match
+      # the directory format ("packages/<name>/") returned by get_package_shards.get_packages().
+      # When CI infrastructure (ci/, .github/) or core dependencies change,
+      # get_package_shards.get_packages_to_test() automatically selects all packages
+      # returned by get_packages(). Passing handwritten_only=False to original_get_packages
+      # ensures every package explicitly listed in _ENABLED_PACKAGES is included.
+      enabled_packages = {
+          package_path.strip().rstrip("/") + "/"
+          for package_path in os.environ.get("ENABLED_PACKAGES", "").replace(",", " ").split()
+          if package_path.strip()
+      }
+      if enabled_packages:
+          original_get_packages = get_package_shards.get_packages
+
+          def filtered_get_packages(*args, **kwargs):
+              filtered_packages = {}
+              for package_name, package_paths in original_get_packages(
+                  handwritten_only=False
+              ).items():
+                  kept_paths = [
+                      path for path in package_paths if path in enabled_packages
+                  ]
+                  if kept_paths:
+                      filtered_packages[package_name] = kept_paths
+              return filtered_packages
+
+          get_package_shards.get_packages = filtered_get_packages
+
+      # Compute the packages that need testing and distribute them across balanced shards.
+      packages_to_test = get_package_shards.get_packages_to_test()
+      shards = get_package_shards.group_packages(packages_to_test)
+
+      shard_index = int(os.environ.get("SHARD_INDEX", "0"))
+      print(shards[shard_index].get("packages", "") if shard_index < len(shards) else "")
+      ')
+
+      # Report immediate green (< 10s) if no enabled packages in this PR map to this shard index.
+      if [[ -z "${PACKAGE_LIST}" ]]; then
+        echo "No enabled packages assigned to shard ${SHARD_INDEX}. Exiting 0."
+        exit 0
+      fi
+
+      # Create runtime shims in /tmp/cloudbuild_shims so tracked repository files remain unmodified.
+      mkdir -p /tmp/cloudbuild_shims
+
+      # 1. Pytest plugin (cloudbuild_pytest_plugin.py):
+      #    - Package noxfile.py files skip the system session if GOOGLE_APPLICATION_CREDENTIALS
+      #      is unset. We export a placeholder value ("CLOUD_BUILD_ADC") to satisfy noxfile.py,
+      #      then remove it here at pytest startup so google.auth.default() automatically uses
+      #      the Cloud Build worker VM's Application Default Credentials (ADC).
+      #    - Package noxfile.py files invoke `py.test --quiet`, which only outputs dots (".")
+      #      without newlines and causes Cloud Build logs to appear frozen for several minutes.
+      #      Overriding `quiet = 0` and `verbose = 1` makes pytest print one newline-terminated
+      #      status line as each individual test finishes.
+      cat << 'EOF' > /tmp/cloudbuild_shims/cloudbuild_pytest_plugin.py
+      import os
+
+      if os.environ.get("GOOGLE_APPLICATION_CREDENTIALS") == "CLOUD_BUILD_ADC":
+          os.environ.pop("GOOGLE_APPLICATION_CREDENTIALS", None)
+
+
+      def pytest_configure(config):
+          config.option.quiet = 0
+          config.option.verbose = max(config.option.verbose, 1)
+      EOF
+
+      # 2. Nox wrapper (/tmp/cloudbuild_shims/nox):
+      #    - When PARALLEL_WORKERS > 1, `ci/run_conditional_tests.sh` redirects each worker's
+      #      stdout/stderr (file descriptors 1 and 2) to a temporary log file, which otherwise
+      #      produces no console output until the entire package finishes.
+      #    - Before invoking `ci/run_conditional_tests.sh`, we duplicate the container's live
+      #      stdout to file descriptor 3 (`exec 3>&1`). This wrapper streams every output line
+      #      prefixed with `[<package_name>]` directly to file descriptor 3 in real time while
+      #      also saving the raw output to a temporary file (`TEMP_LOG_FILE`).
+      #    - At completion, it calculates how much of the per-package time budget was used
+      #      (e.g., 18 minutes out of a 20-minute budget = 90%) and logs the summary.
+      #    - If the nox session fails, it outputs the `=== FAILURES ===` section to stdout so
+      #      `ci/run_conditional_tests.sh` prints a clean failure summary at the end of the run.
+      cat << 'EOF' > /tmp/cloudbuild_shims/nox
+      #!/usr/bin/env bash
+      PACKAGE_NAME=$(basename "$PWD")
+      REAL_NOX=$(which -a nox | grep -v '/tmp/cloudbuild_shims' | head -n 1)
+      TEMP_LOG_FILE=$(mktemp)
+      START_TIME=$(date +%s)
+      echo "[${PACKAGE_NAME}] Starting nox $*" >&3
+      "$REAL_NOX" "$@" 2>&1 | awk -v package_prefix="[${PACKAGE_NAME}] " -v log_file="${TEMP_LOG_FILE}" '{
+        print $0 > log_file; fflush(log_file);
+        print package_prefix $0 > "/dev/fd/3"; fflush("/dev/fd/3");
+      }'
+      EXIT_CODE=${PIPESTATUS[0]}
+
+      # Calculate elapsed time and percentage of the target time budget spent on this package.
+      ELAPSED_SECONDS=$(( $(date +%s) - START_TIME ))
+      BUDGET_MINUTES="${TIME_BUDGET_MINUTES:-20}"
+      HARD_LIMIT_MINUTES="${HARD_TIMEOUT_MINUTES:-30}"
+      BUDGET_SECONDS=$(( BUDGET_MINUTES * 60 ))
+      BUDGET_PERCENTAGE=$(( (ELAPSED_SECONDS * 100 + BUDGET_SECONDS / 2) / BUDGET_SECONDS ))
+      BUDGET_MESSAGE=$(printf "Time budget usage: %d%% (%dm %02ds / %dm budget, %dm hard threshold)" \
+        "${BUDGET_PERCENTAGE}" "$(( ELAPSED_SECONDS / 60 ))" "$(( ELAPSED_SECONDS % 60 ))" \
+        "${BUDGET_MINUTES}" "${HARD_LIMIT_MINUTES}")
+      echo "[${PACKAGE_NAME}] ${BUDGET_MESSAGE}" >&3
+      echo "${BUDGET_MESSAGE}"
+
+      # Compare actual runtime in minutes against the configured weight in PACKAGE_WEIGHTS
+      # (defaulting to 1). Only propose an adjustment when the difference is at least 3 minutes
+      # (>= 15% of the 20-minute budget) to avoid noise from normal test runtime variance.
+      PROPOSED_WEIGHT=$(( (ELAPSED_SECONDS + 30) / 60 ))
+      if [[ ${PROPOSED_WEIGHT} -lt 1 ]]; then
+        PROPOSED_WEIGHT=1
+      fi
+      CONFIGURED_WEIGHT=$(echo "${PACKAGE_WEIGHTS:-}" | tr ' ' '\n' | awk -F: -v package_name="${PACKAGE_NAME}" '
+        $1 == package_name { gsub(/[[:space:]]/, "", $2); if ($2 != "") print $2 }
+      ' | tail -n 1)
+      CONFIGURED_WEIGHT="${CONFIGURED_WEIGHT:-1}"
+      WEIGHT_DIFFERENCE=$(( PROPOSED_WEIGHT - CONFIGURED_WEIGHT ))
+      if [[ ${WEIGHT_DIFFERENCE} -lt 0 ]]; then
+        WEIGHT_DIFFERENCE=$(( -WEIGHT_DIFFERENCE ))
+      fi
+      if [[ ${WEIGHT_DIFFERENCE} -ge 3 ]]; then
+        WEIGHT_MESSAGE="Weight adjustment needed for ${PACKAGE_NAME}: configured=${CONFIGURED_WEIGHT}, proposed=${PROPOSED_WEIGHT} (${PACKAGE_NAME}:${PROPOSED_WEIGHT})"
+        echo "[${PACKAGE_NAME}] ${WEIGHT_MESSAGE}" >&3
+        echo "${WEIGHT_MESSAGE}"
+      fi
+
+      # Emit failure details to stdout (captured by run_conditional_tests.sh) only when tests fail
+      # so passing runs do not print their logs a second time.
+      if [[ ${EXIT_CODE} -ne 0 ]]; then
+        sed -n '/=== FAILURES ===/,$p' "${TEMP_LOG_FILE}"
+      fi
+      rm -f "${TEMP_LOG_FILE}"
+      exit ${EXIT_CODE}
+      EOF
+      chmod +x /tmp/cloudbuild_shims/nox
+
+      # Set placeholder credentials for noxfile.py if not already set.
+      if [[ -z "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]]; then
+        export GOOGLE_APPLICATION_CREDENTIALS="CLOUD_BUILD_ADC"
+      fi
+
+      # Prepend /tmp/cloudbuild_shims to PATH and PYTHONPATH so our nox wrapper and pytest
+      # plugin are picked up automatically by ci/run_single_test.sh and pytest.
+      export PATH="/tmp/cloudbuild_shims:${PATH}"
+      export PYTHONPATH="/tmp/cloudbuild_shims${PYTHONPATH:+:${PYTHONPATH}}"
+      export PYTEST_ADDOPTS="-p cloudbuild_pytest_plugin ${PYTEST_ADDOPTS:-}"
+
+      # Open file descriptor 3 pointing to the container's live stdout so child workers
+      # spawned by xargs in ci/run_conditional_tests.sh can stream real-time logs.
+      exec 3>&1
+
+      # Export PACKAGE_LIST and delegate execution to the existing monorepo test runner script.
+      export PACKAGE_LIST
+      echo "=== System Shard ${SHARD_INDEX}/${MAX_SHARDS} running ${NOX_SESSION} for: ${PACKAGE_LIST} ==="
+      ./ci/run_conditional_tests.sh
+
+# Hard 30-minute (1800s) CI timeout ceiling.
+timeout: 1800s
+
+substitutions:
+  _MAX_SHARDS: '1'
+  _SHARD_INDEX: '0'
+  _PARALLEL_WORKERS: '4'
+  _TIME_BUDGET_MINUTES: '20'
+  _HARD_TIMEOUT_MINUTES: '30'
+  _BUILD_TYPE: 'presubmit'
+  _BASE_BRANCH: 'main'
+  _TEST_ALL_PACKAGES: 'false'
+  _ENABLED_PACKAGES: >-
+    packages/bigquery-magics
+    packages/google-cloud-bigquery-storage
+    packages/google-cloud-compute
+    packages/google-cloud-datastore
+    packages/google-cloud-dns
+    packages/google-cloud-error-reporting
+    packages/google-cloud-logging
+    packages/google-resumable-media
+    packages/pandas-gbq
+    packages/sqlalchemy-bigquery
+  _NOX_SESSION: 'system-3.12'
+  _PACKAGE_WEIGHTS: ''
+
+options:
+  machineType: 'E2_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY
