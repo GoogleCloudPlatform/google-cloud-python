@@ -26,6 +26,13 @@ from google.api_core import _observability, exceptions
 from google.api_core._feature_gating_helpers import FeatureGatingError
 from google.api_core.client_options import ClientOptions
 
+_INVALID_ARGUMENT_CODE = (
+    "INVALID_ARGUMENT" if exceptions.grpc is not None else "BAD_REQUEST"
+)
+_UNAVAILABLE_CODE = (
+    "UNAVAILABLE" if exceptions.grpc is not None else "SERVICE_UNAVAILABLE"
+)
+
 
 def test_is_otel_capabilities_enabled_disabled(monkeypatch):
     """Proves that is_otel_capabilities_enabled returns False when the tracing environment variable is disabled."""
@@ -2020,14 +2027,6 @@ def test_extract_error_message(target_exc, http_response, fallback, expected):
     )
 
 
-_INVALID_ARGUMENT_CODE = (
-    "INVALID_ARGUMENT" if exceptions.grpc is not None else "BAD_REQUEST"
-)
-_UNAVAILABLE_CODE = (
-    "UNAVAILABLE" if exceptions.grpc is not None else "SERVICE_UNAVAILABLE"
-)
-
-
 @pytest.mark.parametrize(
     "exc,kwargs,expected",
     [
@@ -2374,3 +2373,102 @@ def test_build_telemetry_error_attributes_include_exception(
     assert expected_exc_msg_substr in attrs_inc["exception.message"]
     assert "Traceback (most recent call last):" in attrs_inc["exception.stacktrace"]
     assert "raise exc_factory()" in attrs_inc["exception.stacktrace"]
+
+
+@pytest.mark.parametrize(
+    "method_name,expected_full,expected_service,expected_method",
+    [
+        pytest.param(None, "", "", "", id="none_method_name"),
+        pytest.param("", "", "", "", id="empty_string_method_name"),
+        pytest.param(
+            b"/my.Service/Method",
+            "my.Service/Method",
+            "my.Service",
+            "Method",
+            id="bytes_method_name",
+        ),
+        pytest.param(
+            "/my.Service/Method",
+            "my.Service/Method",
+            "my.Service",
+            "Method",
+            id="string_method_name",
+        ),
+        pytest.param(
+            "MethodOnly",
+            "MethodOnly",
+            "",
+            "MethodOnly",
+            id="no_slash_method_only",
+        ),
+        pytest.param(
+            "/pkg/my.Service/Method",
+            "pkg/my.Service/Method",
+            "pkg/my.Service",
+            "Method",
+            id="multiple_slashes_rpartition",
+        ),
+    ],
+)
+def test_extract_rpc_identity(
+    method_name, expected_full, expected_service, expected_method
+):
+    """Proves extract_rpc_identity decodes and partitions method names safely."""
+    full, service, method = _observability.extract_rpc_identity(method_name)
+    assert full == expected_full
+    assert service == expected_service
+    assert method == expected_method
+
+
+@pytest.mark.parametrize(
+    "response_obj,expected_status",
+    [
+        pytest.param(
+            type("Response", (), {"status_code": 200, "status": 500})(),
+            200,
+            id="status_code_takes_precedence_over_status",
+        ),
+        pytest.param(
+            type("Response", (), {"status_code": None, "status": 404})(),
+            404,
+            id="falls_back_to_status_when_status_code_none",
+        ),
+        pytest.param(
+            type("Response", (), {"status": 503})(),
+            503,
+            id="status_int_only",
+        ),
+        pytest.param(
+            type("Response", (), {"status_code": True})(),
+            None,
+            id="bool_status_code_excluded",
+        ),
+        pytest.param(
+            type("Response", (), {"status_code": "200"})(),
+            None,
+            id="string_status_code_excluded",
+        ),
+        pytest.param(object(), None, id="missing_status_attributes"),
+        pytest.param(None, None, id="none_response"),
+    ],
+)
+def test_extract_http_status_code(response_obj, expected_status):
+    """Proves _extract_http_status_code extracts genuine int status codes and ignores invalid types."""
+    assert _observability._extract_http_status_code(response_obj) == expected_status
+
+
+@pytest.mark.parametrize(
+    "kind,expected",
+    [
+        pytest.param("grpc", "grpc", id="grpc_kind"),
+        pytest.param("grpc_asyncio", "grpc", id="grpc_asyncio_kind"),
+        pytest.param("rest", "http", id="rest_kind"),
+        pytest.param("rest_asyncio", "http", id="rest_asyncio_kind"),
+        pytest.param("http", "http", id="http_kind"),
+        pytest.param("", "grpc", id="empty_string_defaults_to_grpc"),
+        pytest.param(None, "grpc", id="none_defaults_to_grpc"),
+    ],
+)
+def test_resolve_rpc_system(kind, expected):
+    """Proves _resolve_rpc_system normalizes transport kinds to OTel rpc.system.name."""
+    assert _observability._resolve_rpc_system(kind) == expected
