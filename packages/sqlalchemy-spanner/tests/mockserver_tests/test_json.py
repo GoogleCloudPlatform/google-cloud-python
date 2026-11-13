@@ -195,6 +195,37 @@ LIMIT 1
         assert "UNION ALL" not in req.sql
         assert "secrets" not in req.sql
 
+    def test_select_json_where_filter(self):
+        from tests.mockserver_tests.json_model import Venue
+
+        sql = (
+            "SELECT venues.id, venues.name, venues.description \n"
+            "FROM venues \n"
+            "WHERE JSON_VALUE(venues.description, @a0) = @a1"
+        )
+        add_venue_query_result(sql, '{"type":"Stadium"}')
+        engine = self.create_engine()
+
+        with Session(engine.execution_options(read_only=True)) as session:
+            venue = (
+                session.execute(
+                    select(Venue).where(Venue.description["type"] == "Stadium")
+                )
+                .scalars()
+                .first()
+            )
+            eq_(venue.name, "Test")
+
+        requests = [
+            r for r in self.spanner_service.requests if isinstance(r, ExecuteSqlRequest)
+        ]
+        eq_(1, len(requests))
+        eq_(sql, requests[0].sql)
+        eq_('$."type"', requests[0].params["a0"])
+        eq_("Stadium", requests[0].params["a1"])
+        eq_(TypeCode.STRING, requests[0].param_types["a0"].code)
+        eq_(TypeCode.STRING, requests[0].param_types["a1"].code)
+
 
 def add_venue_query_result(sql: str, description: str):
     result = result_set.ResultSet(

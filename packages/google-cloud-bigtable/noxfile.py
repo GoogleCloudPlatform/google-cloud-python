@@ -512,9 +512,6 @@ def docfx(session):
         os.path.join("docs", ""),
         os.path.join("docs", "_build", "html", ""),
     )
-    # Customization: Add extra sections to the table of contents for the Classic vs Async clients
-    session.install("pyyaml")
-    session.run("python", "docs/scripts/patch_devsite_toc.py")
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION)

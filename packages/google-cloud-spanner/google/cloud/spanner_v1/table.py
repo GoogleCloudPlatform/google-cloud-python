@@ -40,10 +40,7 @@ class Table(object):
     """
 
     def __init__(self, table_id, database, schema_name=None):
-        if schema_name is None:
-            self._schema_name = database.default_schema_name
-        else:
-            self._schema_name = schema_name
+        self._schema_name = schema_name or database.default_schema_name
         self._table_id = table_id
         self._database = database
 
@@ -75,22 +72,35 @@ class Table(object):
         :rtype: str
         :returns: The qualified table name.
         """
+        table_id = self._quote_identifier(self.table_id)
         if self.schema_name == self._database.default_schema_name:
-            return self._quote_identifier(self.table_id)
-        return "{}.{}".format(
-            self._quote_identifier(self.schema_name),
-            self._quote_identifier(self.table_id),
-        )
+            return table_id
+        return f"{self._quote_identifier(self.schema_name)}.{table_id}"
 
     def _quote_identifier(self, identifier):
         """Quotes the given identifier using the rules of the dialect of the database of this table.
 
+        :type identifier: str
+        :param identifier: The identifier to quote.
+
         :rtype: str
         :returns: The quoted identifier.
+        :raises TypeError: if the identifier is not a string.
+        :raises ValueError: if the identifier is empty or contains control characters.
         """
+        if not isinstance(identifier, str):
+            raise TypeError(
+                f"Identifier must be a string, got {type(identifier).__name__}"
+            )
+        if not identifier:
+            raise ValueError("Identifier cannot be empty")
+        if any(ord(char) < 32 or ord(char) == 127 for char in identifier):
+            raise ValueError(f"Invalid identifier: {identifier!r}")
         if self._database.database_dialect == DatabaseDialect.POSTGRESQL:
-            return '"{}"'.format(identifier)
-        return "`{}`".format(identifier)
+            escaped = identifier.replace('"', '""')
+            return f'"{escaped}"'
+        escaped = identifier.replace("\\", "\\\\").replace("`", "\\`")
+        return f"`{escaped}`"
 
     def exists(self):
         """Test whether this table exists.

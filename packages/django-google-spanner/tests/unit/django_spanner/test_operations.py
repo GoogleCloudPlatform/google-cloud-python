@@ -10,11 +10,14 @@ from datetime import timedelta
 from decimal import Decimal
 from unittest import mock
 
+import sqlparse
 from django.conf import settings
 from django.core.management.color import no_style
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import JSONField
 from django.db.utils import DatabaseError
+from django.utils.safestring import mark_safe
+from google.cloud.spanner_dbapi.parse_utils import classify_statement
 from google.cloud.spanner_dbapi.types import DateStr
 from google.cloud.spanner_v1 import JsonObject
 
@@ -30,9 +33,271 @@ class TestOperations(SpannerSimpleTestClass):
         quoted_name = self.db_operations.quote_name("abc")
         self.assertEqual(quoted_name, "abc")
 
+    def test_quote_name_empty_string(self):
+        self.assertEqual(self.db_operations.quote_name(""), "")
+
+    def test_quote_name_regular_identifiers(self):
+        for identifier in ("_", "_col_1", "TestsAuthor", "col123", "table", "value"):
+            with self.subTest(identifier=identifier):
+                self.assertEqual(self.db_operations.quote_name(identifier), identifier)
+
     def test_quote_name_spanner_reserved_keyword_escaped(self):
         quoted_name = self.db_operations.quote_name("ALL")
         self.assertEqual(quoted_name, "`ALL`")
+
+    def test_quote_name_reserved_keywords_case_insensitive(self):
+        for keyword in ("all", "SELECT", "group", "UNION"):
+            with self.subTest(keyword=keyword):
+                self.assertEqual(self.db_operations.quote_name(keyword), f"`{keyword}`")
+
+    def test_quote_name_single_identifier_with_dots(self):
+        for identifier in ("my.table", "schema.table.col", "a.", ".a", "a..b", "."):
+            with self.subTest(identifier=identifier):
+                self.assertEqual(
+                    self.db_operations.quote_name(identifier), f"`{identifier}`"
+                )
+
+    def test_quote_name_non_regular_identifiers(self):
+        for identifier in (
+            "0",
+            "123col",
+            "col name",
+            "col-name",
+            "café",
+            "   ",
+            " abc ",
+            "\uff40",
+            "²",
+            "٠",
+            "ſ",
+            "K",
+            "İ",
+        ):
+            with self.subTest(identifier=identifier):
+                self.assertEqual(
+                    self.db_operations.quote_name(identifier), f"`{identifier}`"
+                )
+
+    def test_quote_name_delimiters_and_injection_payloads(self):
+        cases = [
+            ("`", r"`\x60`"),
+            ("``", r"`\x60\x60`"),
+            ("a`", r"`a\x60`"),
+            ("`a", r"`\x60a`"),
+            ("`0", r"`\x600`"),
+            (r"\x60", r"`\\x60`"),
+            (" `abc`", r"` \x60abc\x60`"),
+            ("`abc` ", r"`\x60abc\x60 `"),
+            ("\x00`abc`", r"`\x00\x60abc\x60`"),
+            ("`abc`\x00", r"`\x60abc\x60\x00`"),
+            ("`a\nb`", r"`\x60a\nb\x60`"),
+            ("`a\rb`", r"`\x60a\rb\x60`"),
+            ("`a\x00b`", r"`\x60a\x00b\x60`"),
+            ("`a\x1fb`", r"`\x60a\x1fb\x60`"),
+            ("`a\x7fb`", r"`\x60a\x7fb\x60`"),
+            ("col`name", r"`col\x60name`"),
+            (r"col\name", r"`col\\name`"),
+            ("\\", r"`\\`"),
+            ("\\\\", r"`\\\\`"),
+            (r"col\`name", r"`col\\\x60name`"),
+            (r"`a\`", r"`\x60a\\\x60`"),
+            (r"`a\\\`", r"`\x60a\\\\\\\x60`"),
+            (r"`a\\`b`", r"`\x60a\\\\\x60b\x60`"),
+            (r"`a\`b`", r"`\x60a\\\x60b\x60`"),
+            (
+                r"`a\` /**/ UNION SELECT 1 # `",
+                r"`\x60a\\\x60 /**/ UNION SELECT 1 # \x60`",
+            ),
+            (
+                "`a\\` --\n UNION SELECT secret FROM users -- `",
+                r"`\x60a\\\x60 --\n UNION SELECT secret FROM users -- \x60`",
+            ),
+            (
+                r"`a\` ; DROP TABLE users # `",
+                r"`\x60a\\\x60 ; DROP TABLE users # \x60`",
+            ),
+            (r"`\z`", r"`\x60\\z\x60`"),
+            (r"`\x`", r"`\x60\\x\x60`"),
+            (r"`a\xb`", r"`\x60a\\xb\x60`"),
+            (r"`a\xZZb`", r"`\x60a\\xZZb\x60`"),
+            (r"`a\u0060b`", r"`\x60a\\u0060b\x60`"),
+            (r"`a\060b`", r"`\x60a\\060b\x60`"),
+            (r"`a\'b`", r"`\x60a\\'b\x60`"),
+            (r"`a\"b`", r'`\x60a\\"b\x60`'),
+            ("`a\\\n`", r"`\x60a\\\n\x60`"),
+            ("`a` OR 1=1 -- `", r"`\x60a\x60 OR 1=1 -- \x60`"),
+            ("`a`.`b`", r"`\x60a\x60.\x60b\x60`"),
+            ("`a\\", r"`\x60a\\`"),
+            ("col\n` OR 1=1 -- ", r"`col\n\x60 OR 1=1 -- `"),
+            ("col`/*`*/; DROP TABLE t`", r"`col\x60/*\x60*/; DROP TABLE t\x60`"),
+            ("col` # comment", r"`col\x60 # comment`"),
+            ("col`; DROP TABLE t; --", r"`col\x60; DROP TABLE t; --`"),
+            ("col' OR '1'='1", "`col' OR '1'='1`"),
+            ('col" OR "1"="1', '`col" OR "1"="1`'),
+            ("col@p0", "`col@p0`"),
+            ("col%s", "`col%s`"),
+            (mark_safe("col`; DROP TABLE t"), r"`col\x60; DROP TABLE t`"),
+        ]
+        for identifier, expected in cases:
+            with self.subTest(identifier=identifier):
+                self.assertEqual(self.db_operations.quote_name(identifier), expected)
+
+    def test_quote_name_already_quoted_single_identifier(self):
+        for identifier in (
+            "`abc`",
+            "`SELECT`",
+            "`a.b`",
+            r"`a\x60b`",
+            r"`a\x0Ab`",
+            r"`a\x7Fb`",
+            r"`a\x00b`",
+            r"`a\\`",
+            r"`a\ab`",
+            r"`a\bb`",
+            r"`a\fb`",
+            r"`a\nb`",
+            r"`a\rb`",
+            r"`a\tb`",
+            r"`a\vb`",
+        ):
+            with self.subTest(identifier=identifier):
+                self.assertEqual(self.db_operations.quote_name(identifier), identifier)
+
+    def test_quote_name_idempotent(self):
+        for identifier in (
+            "",
+            "abc",
+            "SELECT",
+            "my.table",
+            "col`name",
+            r"col\name",
+            "`a` OR 1=1 -- `",
+            "`a`.`b`",
+            r"`a\` /**/ UNION SELECT 1 # `",
+            "``",
+            "`already`",
+            r"`a\\`",
+            "col\nname",
+            "col\x00name",
+        ):
+            with self.subTest(identifier=identifier):
+                once = self.db_operations.quote_name(identifier)
+                twice = self.db_operations.quote_name(once)
+                self.assertEqual(twice, once)
+
+    def test_quote_name_escapes_control_characters(self):
+        named_escapes = {
+            "\a": r"\a",
+            "\b": r"\b",
+            "\f": r"\f",
+            "\n": r"\n",
+            "\r": r"\r",
+            "\t": r"\t",
+            "\v": r"\v",
+        }
+        for code in (*range(0x20), 0x7F):
+            char = chr(code)
+            expected_escape = named_escapes.get(char, f"\\x{code:02x}")
+            with self.subTest(code=code):
+                self.assertEqual(
+                    self.db_operations.quote_name(f"col{char}name"),
+                    f"`col{expected_escape}name`",
+                )
+
+        for identifier, expected in (
+            ("col\a\b\f\vname", r"`col\a\b\f\vname`"),
+            ("abc\n", r"`abc\n`"),
+            ("`abc`\n", r"`\x60abc\x60\n`"),
+            ("\n`abc`", r"`\n\x60abc\x60`"),
+        ):
+            with self.subTest(identifier=identifier):
+                self.assertEqual(self.db_operations.quote_name(identifier), expected)
+
+    def test_quote_name_sqlparse_safety(self):
+        payloads = (
+            "`",
+            "``",
+            "\\",
+            r"`a\`",
+            "col\rname",
+            "col\x00name",
+            "-- c",
+            "/* c */",
+            "# c",
+            "col' OR '1'='1",
+            'col" OR "1"="1',
+            "my.table",
+            r"`a\` /**/ UNION SELECT 1 # `",
+            "`a\\` --\n UNION SELECT secret FROM users -- `",
+            r"`a\` ; DROP TABLE users # `",
+            "col\n` OR 1=1 -- ",
+            "col`; DROP TABLE t; --",
+            "col`/*`*/; DROP TABLE t`",
+        )
+        for payload in payloads:
+            with self.subTest(payload=payload):
+                quoted = self.db_operations.quote_name(payload)
+                select_sql = f"SELECT {quoted} FROM `users` WHERE `admin` = FALSE"
+                delete_sql = f"DELETE FROM {quoted} WHERE 1=1"
+                for sql, token_index in ((select_sql, 2), (delete_sql, 4)):
+                    self.assertEqual(sqlparse.format(sql, strip_comments=True), sql)
+                    self.assertEqual(len(sqlparse.split(sql)), 1)
+                    self.assertEqual(
+                        str(sqlparse.parse(sql)[0].tokens[token_index]), quoted
+                    )
+                    parsed = classify_statement(sql)
+                    self.assertEqual(parsed.statement.sql, sql)
+
+    def test_quote_name_invalid_types(self):
+        for invalid in (None, 123, True, False, 1.5, b"abc", ["abc"], {"a": 1}):
+            expected_message = (
+                rf"^Identifier must be a string, got {type(invalid).__name__}$"
+            )
+            with (
+                self.subTest(invalid=invalid),
+                self.assertRaisesRegex(TypeError, expected_message),
+            ):
+                self.db_operations.quote_name(invalid)
+
+    def test_quote_name_running_spanner_backend_tests(self):
+        with mock.patch.dict(
+            "django_spanner.operations.os.environ",
+            {"RUNNING_SPANNER_BACKEND_TESTS": "1"},
+        ):
+            self.assertEqual(
+                self.db_operations.quote_name("my col-name"), "my_col_name"
+            )
+            self.assertEqual(self.db_operations.quote_name("SELECT"), "`SELECT`")
+            self.assertEqual(
+                self.db_operations.quote_name("my-col.name"), "`my_col.name`"
+            )
+            self.assertEqual(self.db_operations.quote_name("my-select"), "my_select")
+            self.assertEqual(self.db_operations.quote_name("ALL "), "ALL_")
+            self.assertEqual(
+                self.db_operations.quote_name("my col`; DROP TABLE t"),
+                r"`my_col\x60;_DROP_TABLE_t`",
+            )
+            self.assertEqual(self.db_operations.quote_name("`a b-c`"), "`a_b_c`")
+            self.assertEqual(self.db_operations.quote_name("a b\nc"), r"`a_b\nc`")
+            self.assertEqual(self.db_operations.quote_name("`already`"), "`already`")
+            self.assertEqual(self.db_operations.quote_name(""), "")
+            self.assertEqual(self.db_operations.quote_name("   "), "___")
+            for sample in ("my col-name", "SELECT", "`a b-c`", "a b\nc"):
+                once = self.db_operations.quote_name(sample)
+                self.assertEqual(self.db_operations.quote_name(once), once)
+
+        with mock.patch.dict(
+            "django_spanner.operations.os.environ",
+            {"RUNNING_SPANNER_BACKEND_TESTS": "0"},
+        ):
+            self.assertEqual(
+                self.db_operations.quote_name("my col-name"), "`my col-name`"
+            )
+
+        with mock.patch.dict("django_spanner.operations.os.environ", {}, clear=True):
+            self.assertEqual(
+                self.db_operations.quote_name("my col-name"), "`my col-name`"
+            )
 
     def test_bulk_batch_size(self):
         self.assertEqual(
