@@ -1,0 +1,3 @@
+package: google-cloud-logging
+package: google-cloud-dns
+group: handwritten

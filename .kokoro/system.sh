@@ -160,6 +160,8 @@ reap_parallel_results() {
     fi
   done
 
+
+
   if [ "$failed_count" -gt 0 ]; then
     echo "=================================================="
     echo "@FAILED - DETAILED LOGS FOR FAILED PACKAGES"
@@ -182,6 +184,7 @@ reap_parallel_results() {
           cat "$LOG_DIR/$pkg.log"
         else
           echo "Warning: No log file found for failed package $pkg"
+
         fi
         echo ""
       fi
@@ -290,6 +293,14 @@ for path in `find 'packages' \
   fi
 done
 
+# --- Ad-hoc Testing Integration ---
+# If this is a Pull Request, check for the 'test:adhoc' label and override packages if active.
+# This fails open and is isolated to minimize impact on production.
+if [[ -n "${KOKORO_GITHUB_PULL_REQUEST_NUMBER}" ]] && [[ -f "ci/adhoc/setup_adhoc.sh" ]]; then
+    source ci/adhoc/setup_adhoc.sh
+fi
+# --- End Ad-hoc Testing Integration ---
+
 # Parallel Execution Logic
 MAX_JOBS=${MAX_JOBS:-4}
 
@@ -315,18 +326,20 @@ export system_test_script PROJECT_ROOT KOKORO_GFILE_DIR
 # Stream package names to xargs for parallel execution
 # -P "$MAX_JOBS" controls concurrency
 # -I {} replaces {} with the package name
-printf '%s\n' "${PACKAGES_TO_TEST[@]}" \
-  | xargs -n 1 -P "$MAX_JOBS" \
+[ ${#PACKAGES_TO_TEST[@]} -eq 0 ] || printf '%s\0' "${PACKAGES_TO_TEST[@]}" \
+  | xargs -0 -n 1 -P "$MAX_JOBS" \
     bash -c '
       pkg="$0"
+
       # Determine log location: prefer Sponge artifacts directory if available
       if [ -n "$KOKORO_ARTIFACTS_DIR" ]; then
         pkg_log_dir="$KOKORO_ARTIFACTS_DIR/$pkg"
-        mkdir -p "$pkg_log_dir" || { touch "$LOG_DIR/$pkg.failed"; exit 1; }
+        mkdir -p "$pkg_log_dir" || { echo "Failed to mkdir $pkg_log_dir"; touch "$LOG_DIR/$pkg.failed"; exit 1; }
         log_file="$pkg_log_dir/sponge_log.log"
       else
         log_file="$LOG_DIR/$pkg.log"
       fi
+      echo "Log file for $pkg: $log_file"
 
       # Run test; if it fails, create a .failed file to signal failure to the reaper
       run_package_test "$pkg" > "$log_file" 2>&1 || touch "$LOG_DIR/$pkg.failed"

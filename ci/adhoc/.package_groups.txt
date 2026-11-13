@@ -1,0 +1,4 @@
+handwritten: google-cloud-translate
+handwritten: google-cloud-logging
+core: google-api-core
+core: google-cloud-core
