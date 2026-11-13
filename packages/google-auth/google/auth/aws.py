@@ -68,7 +68,8 @@ _DEFAULT_AWS_REGIONAL_CREDENTIAL_VERIFICATION_URL = (
 )
 # IMDSV2 session token lifetime. This is set to a low value because the session token is used immediately.
 _IMDSV2_SESSION_TOKEN_TTL_SECONDS = "300"
-
+# ECS base url for container credentials
+_ECS_CONTAINER_CREDENTIALS_BASE = 'http://169.254.170.2'
 
 class RequestSigner(object):
     """Implements an AWS request signer based on the AWS Signature Version 4 signing
@@ -420,30 +421,15 @@ class _DefaultAwsSecurityCredentialsSupplier(AwsSecurityCredentialsSupplier):
     def get_aws_security_credentials(self, context, request):
         # Check environment variables for permanent credentials first.
         # https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html
-        env_aws_access_key_id = os.environ.get(environment_vars.AWS_ACCESS_KEY_ID)
-        env_aws_secret_access_key = os.environ.get(
-            environment_vars.AWS_SECRET_ACCESS_KEY
-        )
-        # This is normally not available for permanent credentials.
-        env_aws_session_token = os.environ.get(environment_vars.AWS_SESSION_TOKEN)
-        if env_aws_access_key_id and env_aws_secret_access_key:
-            return AwsSecurityCredentials(
-                env_aws_access_key_id, env_aws_secret_access_key, env_aws_session_token
-            )
+        creds = self._load_environment_credentials()
+        if creds is not None:
+            return creds
 
-        imdsv2_session_token = self._get_imdsv2_session_token(request)
-        role_name = self._get_metadata_role_name(request, imdsv2_session_token)
+        creds = self._load_container_credentials(request)
+        if creds is not None:
+            return creds
 
-        # Get security credentials.
-        credentials = self._get_metadata_security_credentials(
-            request, role_name, imdsv2_session_token
-        )
-
-        return AwsSecurityCredentials(
-            credentials.get("AccessKeyId"),
-            credentials.get("SecretAccessKey"),
-            credentials.get("Token"),
-        )
+        return self._load_ec2_credentials(request)
 
     @_helpers.copy_docstring(AwsSecurityCredentialsSupplier)
     def get_aws_region(self, context, request):
@@ -483,6 +469,84 @@ class _DefaultAwsSecurityCredentialsSupplier(AwsSecurityCredentialsSupplier):
         # This endpoint will return the region in format: us-east-2b.
         # Only the us-east-2 part should be used.
         return response_body[:-1]
+
+    def _load_environment_credentials(self):
+        """
+        Looks for the AWS_* environment variables and returns them as creds
+        if present.
+        """
+        env_aws_access_key_id = os.environ.get(environment_vars.AWS_ACCESS_KEY_ID)
+        env_aws_secret_access_key = os.environ.get(
+            environment_vars.AWS_SECRET_ACCESS_KEY
+        )
+        # This is normally not available for permanent credentials.
+        env_aws_session_token = os.environ.get(environment_vars.AWS_SESSION_TOKEN)
+        if env_aws_access_key_id and env_aws_secret_access_key:
+            return AwsSecurityCredentials(
+                env_aws_access_key_id, env_aws_secret_access_key, env_aws_session_token
+            )
+
+        return None
+
+    def _load_container_credentials(self, request):
+        """
+        Looks for container credentials environment variable(s) and if present
+        uses them to load credentials.
+
+        https://docs.aws.amazon.com/sdkref/latest/guide/feature-container-credentials.html
+        """
+        full_uri = os.environ.get(environment_vars.AWS_CONTAINER_CREDENTIALS_FULL_URI)
+        relative_uri = os.environ.get(
+            environment_vars.AWS_CONTAINER_CREDENTIALS_RELATIVE_URI
+        )
+        if not full_uri and not relative_uri:
+            return None
+
+        # per the docs relative uri is appended to the ECS hostname
+        if not full_uri:
+            full_uri = _ECS_CONTAINER_CREDENTIALS_BASE + relative_uri
+
+        headers = None
+        if environment_vars.AWS_CONTAINER_AUTHORIZATION_TOKEN in os.environ:
+            headers = {
+                "Authorization": os.environ[
+                    environment_vars.AWS_CONTAINER_AUTHORIZATION_TOKEN
+                ]
+            }
+        elif environment_vars.AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE in os.environ:
+            token_file = os.environ[
+                environment_vars.AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE
+            ]
+            with open(token_file, "r") as f:
+                token = f.read().strip()
+            headers = {"Authorization": token}
+
+        response = request(url=full_uri, method="GET", headers=headers)
+        creds = self._parse_aws_credentials_response(response, 'container credentials')
+
+        return AwsSecurityCredentials(
+            creds.get("AccessKeyId"),
+            creds.get("SecretAccessKey"),
+            creds.get("Token"),
+        )
+
+    def _load_ec2_credentials(self, request):
+        """
+        Attempts to load aws credentials from the EC2 instance metadata endpoints.
+        """
+        imdsv2_session_token = self._get_imdsv2_session_token(request)
+        role_name = self._get_metadata_role_name(request, imdsv2_session_token)
+
+        # Get security credentials.
+        credentials = self._get_metadata_security_credentials(
+            request, role_name, imdsv2_session_token
+        )
+
+        return AwsSecurityCredentials(
+            credentials.get("AccessKeyId"),
+            credentials.get("SecretAccessKey"),
+            credentials.get("Token"),
+        )
 
     def _get_imdsv2_session_token(self, request):
         if request is not None and self._imdsv2_session_token_url is not None:
@@ -539,6 +603,9 @@ class _DefaultAwsSecurityCredentialsSupplier(AwsSecurityCredentialsSupplier):
             headers=headers,
         )
 
+        return self._parse_aws_credentials_response(response, 'IMDSv2 security credentials')
+
+    def _parse_aws_credentials_response(self, response, loc):
         # support both string and bytes type response.data
         response_body = (
             response.data.decode("utf-8")
@@ -548,7 +615,7 @@ class _DefaultAwsSecurityCredentialsSupplier(AwsSecurityCredentialsSupplier):
 
         if response.status != http_client.OK:
             raise exceptions.RefreshError(
-                "Unable to retrieve AWS security credentials: {}".format(response_body)
+                "Unable to retrieve AWS security credentials from {}: {}".format(loc, response_body)
             )
 
         credentials_response = json.loads(response_body)
@@ -724,8 +791,10 @@ class Credentials(external_account.Credentials):
         environment variable or from the AWS metadata server availability-zone
         if not found in the environment variable.
 
-        Check AWS credentials in environment variables. If not found, retrieve
-        from the AWS metadata server security-credentials endpoint.
+        Check AWS credentials in environment variables. Check if container
+        credentials environment variables are present and if so use those to
+        retrieve credentials. Fall back on retrieving from the AWS metadata
+        server security-credentials endpoint.
 
         When retrieving AWS credentials from the metadata server
         security-credentials endpoint, the AWS role needs to be determined by
