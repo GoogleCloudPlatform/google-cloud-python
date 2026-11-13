@@ -274,11 +274,80 @@ def test_select_struct(faux_conn, metadata):
     assert row.x == '{"y": 1}'
 
 
-def test_select_label_starts_w_digit(faux_conn):
-    # Make sure label names are legal identifiers
-    faux_conn.execute(sqlalchemy.select(sqlalchemy.literal(1).label("2foo")))
+@pytest.mark.parametrize("name", ["2", "2foo"])
+@pytest.mark.parametrize("quoted", [False, True])
+def test_select_label_starts_w_digit(faux_conn, name, quoted):
+    if quoted:
+        name = sqlalchemy.sql.quoted_name(name, quote=True)
+
+    result = faux_conn.execute(sqlalchemy.select(sqlalchemy.literal(1).label(name)))
+    assert list(result.keys()) == [name]
+    assert result.cursor.description[0][0] == name
     assert (
-        faux_conn.test_data["execute"][-1][0] == "SELECT %(param_1:INT64)s AS `_2foo`"
+        faux_conn.test_data["execute"][-1][0] == f"SELECT %(param_1:INT64)s AS `{name}`"
+    )
+
+
+@pytest.mark.parametrize("name", ["2", "2foo"])
+@pytest.mark.parametrize("quoted", [False, True])
+@pytest.mark.parametrize("source_type", ["subquery", "cte"])
+def test_select_numeric_label_from_source(faux_conn, name, quoted, source_type):
+    if quoted:
+        name = sqlalchemy.sql.quoted_name(name, quote=True)
+
+    statement = sqlalchemy.select(sqlalchemy.literal(1).label(name))
+    source = getattr(statement, source_type)("source")
+    result = faux_conn.execute(sqlalchemy.select(source.c[name]))
+
+    assert list(result.keys()) == [name]
+    assert result.scalar() == 1
+    sql = faux_conn.test_data["execute"][-1][0]
+    assert f"SELECT `source`.`{name}`" in sql
+    assert f"SELECT %(param_1:INT64)s AS `{name}`" in sql
+
+
+@pytest.mark.parametrize("name", ["2", "2foo"])
+@pytest.mark.parametrize("quoted", [False, True])
+@pytest.mark.parametrize("reference_by_name", [False, True])
+def test_select_numeric_label_group_and_order_by(
+    faux_conn, name, quoted, reference_by_name
+):
+    if quoted:
+        name = sqlalchemy.sql.quoted_name(name, quote=True)
+
+    label = sqlalchemy.literal(1).label(name)
+    reference = name if reference_by_name else label
+    result = faux_conn.execute(
+        sqlalchemy.select(label).group_by(reference).order_by(reference)
+    )
+
+    assert result.scalar() == 1
+    assert faux_conn.test_data["execute"][-1][0] == (
+        f"SELECT %(param_1:INT64)s AS `{name}` GROUP BY `{name}` ORDER BY `{name}`"
+    )
+
+
+def test_select_numeric_label_does_not_collide_with_underscore(faux_conn):
+    source = sqlalchemy.select(
+        sqlalchemy.literal(1).label("2"), sqlalchemy.literal(2).label("_2")
+    ).subquery("source")
+
+    result = faux_conn.execute(sqlalchemy.select(source.c["2"], source.c["_2"]))
+
+    assert list(result.keys()) == ["2", "_2"]
+    assert tuple(result.one()) == (1, 2)
+    assert faux_conn.test_data["execute"][-1][0] == (
+        "SELECT `source`.`2`, `source`.`_2` \n"
+        "FROM (SELECT %(param_1:INT64)s AS `2`, %(param_2:INT64)s AS `_2`) AS `source`"
+    )
+
+
+@pytest.mark.parametrize("name,expected", [("+foo", "_+foo"), ("foo.bar", "foo_bar")])
+def test_select_label_normalization(faux_conn, name, expected):
+    faux_conn.execute(sqlalchemy.select(sqlalchemy.literal(1).label(name)))
+
+    assert faux_conn.test_data["execute"][-1][0] == (
+        f"SELECT %(param_1:INT64)s AS `{expected}`"
     )
 
 

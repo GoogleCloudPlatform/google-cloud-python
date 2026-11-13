@@ -455,7 +455,7 @@ def test_labels(session, table, session_using_test_dataset, table_using_test_dat
         result = session.query(
             # Valid
             table.c.string.label("abc"),
-            # Invalid, needs to start with underscore
+            # Valid flexible column name, starts with a number
             table.c.string.label("123"),
             # Valid
             table.c.string.label("_123abc"),

@@ -110,11 +110,11 @@ class BigQueryIdentifierPreparer(IdentifierPreparer):
     def format_label(self, label, name=None):
         name = name or label.name
 
-        # Fields must start with a letter or underscore
-        if not name[0].isalpha() and name[0] != "_":
+        # Flexible column names can start with a letter, number, or underscore.
+        if not name[0].isalnum() and name[0] != "_":
             name = "_" + name
 
-        # Fields must contain only letters, numbers, and underscores
+        # Replace characters disallowed in flexible column names.
         name = FIELD_ILLEGAL_CHARACTERS.sub("_", name)
 
         result = self.quote(name)
