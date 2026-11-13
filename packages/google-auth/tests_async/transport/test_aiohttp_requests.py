@@ -383,6 +383,34 @@ class TestAuthorizedSession(object):
         assert authed_session._auth_request == auth_request
 
     @pytest.mark.asyncio
+    async def test_context_manager_closes_session(self):
+        http = mock.create_autospec(
+            aiohttp.ClientSession, instance=True, _auto_decompress=False
+        )
+        auth_request = aiohttp_requests.Request(http)
+
+        async with aiohttp_requests.AuthorizedSession(
+            mock.sentinel.credentials, auth_request=auth_request
+        ) as session:
+            pass
+
+        assert session.closed
+
+    @pytest.mark.asyncio
+    async def test_explicit_close_session(self):
+        http = mock.create_autospec(
+            aiohttp.ClientSession, instance=True, _auto_decompress=False
+        )
+        auth_request = aiohttp_requests.Request(http)
+
+        session = aiohttp_requests.AuthorizedSession(
+            mock.sentinel.credentials, auth_request=auth_request
+        )
+
+        await session.close()
+        assert session.closed
+
+    @pytest.mark.asyncio
     async def test_request(self):
         with aioresponses() as mocked:
             credentials = mock.Mock(wraps=CredentialsStub())
