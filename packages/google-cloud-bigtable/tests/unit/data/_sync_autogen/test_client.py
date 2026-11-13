@@ -2769,6 +2769,35 @@ class TestMutateRow:
                     table.mutate_row("key", mutations=mutations)
                     assert e.value.args[0] == "No mutations provided"
 
+    def test_mutate_row_attempt_timeout_per_retry(self):
+        """Each retry attempt should draw a fresh timeout from _attempt_timeout_generator"""
+        subpath = "_async" if CrossSync._Sync_Impl.is_async else "_sync_autogen"
+        timeout_gen = iter([5.0, 1.5])
+        with self._make_client(project="project") as client:
+            with client.get_table("instance", "table") as table:
+                with (
+                    mock.patch(
+                        f"google.cloud.bigtable.data.{subpath}.client._attempt_timeout_generator",
+                        return_value=timeout_gen,
+                    ) as mock_timeout_gen,
+                    mock.patch.object(client._gapic_client, "mutate_row") as mock_gapic,
+                ):
+                    mock_gapic.side_effect = [
+                        core_exceptions.ServiceUnavailable("transient"),
+                        None,
+                    ]
+                    mutation = mutations.DeleteAllFromRow()
+                    table.mutate_row(
+                        "row_key",
+                        mutation,
+                        operation_timeout=10.0,
+                        attempt_timeout=5.0,
+                    )
+                    mock_timeout_gen.assert_called_once_with(5.0, 10.0)
+                    assert mock_gapic.call_count == 2
+                    assert mock_gapic.call_args_list[0].kwargs["timeout"] == 5.0
+                    assert mock_gapic.call_args_list[1].kwargs["timeout"] == 1.5
+
 
 class TestBulkMutateRows:
     def _make_client(self, *args, **kwargs):
