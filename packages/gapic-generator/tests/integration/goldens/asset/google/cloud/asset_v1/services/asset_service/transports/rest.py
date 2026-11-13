@@ -1272,7 +1272,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1320,7 +1320,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_analyze_iam_policy(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_analyze_iam_policy_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.AnalyzeIamPolicyResponse.to_json(response)
                 except:
@@ -1425,7 +1425,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1472,7 +1472,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_analyze_iam_policy_longrunning(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_analyze_iam_policy_longrunning_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1574,7 +1574,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1622,7 +1622,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_analyze_move(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_analyze_move_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.AnalyzeMoveResponse.to_json(response)
                 except:
@@ -1724,7 +1724,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1772,7 +1772,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_analyze_org_policies(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_analyze_org_policies_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.AnalyzeOrgPoliciesResponse.to_json(response)
                 except:
@@ -1875,7 +1875,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1923,7 +1923,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_analyze_org_policy_governed_assets(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_analyze_org_policy_governed_assets_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.AnalyzeOrgPolicyGovernedAssetsResponse.to_json(response)
                 except:
@@ -2026,7 +2026,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2074,7 +2074,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_analyze_org_policy_governed_containers(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_analyze_org_policy_governed_containers_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.AnalyzeOrgPolicyGovernedContainersResponse.to_json(response)
                 except:
@@ -2173,7 +2173,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2221,7 +2221,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_batch_get_assets_history(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_batch_get_assets_history_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.BatchGetAssetsHistoryResponse.to_json(response)
                 except:
@@ -2324,7 +2324,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2372,7 +2372,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_batch_get_effective_iam_policies(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_batch_get_effective_iam_policies_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.BatchGetEffectiveIamPoliciesResponse.to_json(response)
                 except:
@@ -2480,7 +2480,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2529,7 +2529,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_create_feed(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_feed_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.Feed.to_json(response)
                 except:
@@ -2631,7 +2631,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2680,7 +2680,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_create_saved_query(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_saved_query_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.SavedQuery.to_json(response)
                 except:
@@ -2775,7 +2775,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2889,7 +2889,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3011,7 +3011,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3058,7 +3058,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_export_assets(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_export_assets_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -3165,7 +3165,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3213,7 +3213,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_get_feed(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_feed_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.Feed.to_json(response)
                 except:
@@ -3314,7 +3314,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3362,7 +3362,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_get_saved_query(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_saved_query_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.SavedQuery.to_json(response)
                 except:
@@ -3461,7 +3461,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3509,7 +3509,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_list_assets(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_assets_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.ListAssetsResponse.to_json(response)
                 except:
@@ -3608,7 +3608,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3656,7 +3656,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_list_feeds(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_feeds_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.ListFeedsResponse.to_json(response)
                 except:
@@ -3755,7 +3755,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3803,7 +3803,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_list_saved_queries(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_saved_queries_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.ListSavedQueriesResponse.to_json(response)
                 except:
@@ -3903,7 +3903,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3952,7 +3952,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_query_assets(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_query_assets_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.QueryAssetsResponse.to_json(response)
                 except:
@@ -4051,7 +4051,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -4099,7 +4099,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_search_all_iam_policies(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_search_all_iam_policies_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.SearchAllIamPoliciesResponse.to_json(response)
                 except:
@@ -4198,7 +4198,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -4246,7 +4246,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_search_all_resources(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_search_all_resources_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.SearchAllResourcesResponse.to_json(response)
                 except:
@@ -4354,7 +4354,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -4403,7 +4403,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_update_feed(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_feed_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.Feed.to_json(response)
                 except:
@@ -4505,7 +4505,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -4554,7 +4554,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = self._interceptor.post_update_saved_query(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_saved_query_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = asset_service.SavedQuery.to_json(response)
                 except:
@@ -4841,7 +4841,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -4885,7 +4885,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             resp = operations_pb2.Operation()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_operation(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:

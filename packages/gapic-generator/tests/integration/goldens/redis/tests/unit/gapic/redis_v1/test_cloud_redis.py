@@ -13642,3 +13642,24 @@ def test_cloud_redis_base_transport_wrap_async_method_older_api_core_fallbacks(m
         assert "client_options" not in kwargs
         assert "method_name" not in kwargs
         assert "is_streaming" not in kwargs
+
+
+@pytest.mark.parametrize("has_handlers", [True, False])
+def test_cloud_redis_grpc_logging_interceptor_has_handlers(
+    monkeypatch, has_handlers
+):
+    logger = mock.MagicMock()
+    logger.isEnabledFor.return_value = True
+    logger.hasHandlers.return_value = has_handlers
+    monkeypatch.setattr(transports.grpc, "CLIENT_LOGGING_SUPPORTED", True)
+    monkeypatch.setattr(transports.grpc, "_LOGGER", logger)
+
+    response = mock.MagicMock()
+    response.result.return_value = "ok"
+    response.trailing_metadata.return_value = ()
+    out = transports.grpc._LoggingClientInterceptor().intercept_unary_unary(
+        lambda *_: response, mock.MagicMock(metadata=()), "req"
+    )
+    assert out is response
+    assert response.result.called is has_handlers
+    assert logger.debug.called is has_handlers
