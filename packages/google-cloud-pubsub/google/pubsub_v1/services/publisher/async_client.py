@@ -17,6 +17,7 @@ import logging as std_logging
 import re
 from collections import OrderedDict
 from typing import (
+    Any,
     Callable,
     Dict,
     Mapping,
@@ -39,10 +40,7 @@ from google.oauth2 import service_account  # type: ignore
 
 from google.pubsub_v1 import gapic_version as package_version
 
-try:
-    OptionalRetry = Union[retries.AsyncRetry, gapic_v1.method._MethodDefault, None]
-except AttributeError:  # pragma: NO COVER
-    OptionalRetry = Union[retries.AsyncRetry, object, None]  # type: ignore
+OptionalRetry = Union[retries.AsyncRetry, gapic_v1.method._MethodDefault, None]
 
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
@@ -552,7 +550,7 @@ class PublisherAsyncClient:
 
     async def publish(
         self,
-        request: Optional[Union[pubsub.PublishRequest, dict]] = None,
+        request: Optional[Union[pubsub.PublishRequest, Dict[str, Any]]] = None,
         *,
         topic: Optional[str] = None,
         messages: Optional[MutableSequence[pubsub.PubsubMessage]] = None,

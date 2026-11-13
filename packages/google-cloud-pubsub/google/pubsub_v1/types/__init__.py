@@ -15,6 +15,8 @@
 #
 from typing import Union
 
+from google.api_core.timeout import ConstantTimeout, ExponentialTimeout
+
 from .pubsub import (
     AcknowledgeRequest,
     AIInference,
@@ -94,10 +96,9 @@ from .schema import (
 )
 
 TimeoutType = Union[
-    int,
     float,
-    "google.api_core.timeout.ConstantTimeout",
-    "google.api_core.timeout.ExponentialTimeout",
+    ConstantTimeout,
+    ExponentialTimeout,
 ]
 """The type of the timeout parameter of publisher client methods."""
 
