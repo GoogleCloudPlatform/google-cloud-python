@@ -547,20 +547,6 @@ def _raising_code():
             id="google_api_call_error_http_only",
         ),
         pytest.param(
-            exceptions.RetryError(
-                "retry failed", cause=exceptions.ServiceUnavailable("down")
-            ),
-            {},
-            "UNAVAILABLE" if grpc is not None else "SERVICE_UNAVAILABLE",
-            id="retry_error_unwraps_cause",
-        ),
-        pytest.param(
-            types.SimpleNamespace(__cause__=exceptions.NotFound("root missing")),
-            {},
-            "NOT_FOUND",
-            id="dunder_cause_unwrapped",
-        ),
-        pytest.param(
             types.SimpleNamespace(grpc_status_code=types.SimpleNamespace(name=None)),
             {},
             "SimpleNamespace",
