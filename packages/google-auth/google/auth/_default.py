@@ -29,8 +29,8 @@ from typing import TYPE_CHECKING, Optional, Sequence
 from google.auth import environment_vars, exceptions
 
 if TYPE_CHECKING:  # pragma: NO COVER
-    import google.auth.credentials.Credentials  # type: ignore
-    import google.auth.transport.Request  # type: ignore
+    import google.auth.credentials
+    import google.auth.transport
 
 _LOGGER = logging.getLogger(__name__)
 
