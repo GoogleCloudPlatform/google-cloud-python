@@ -457,7 +457,10 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
     def quote_value(self, value):
         # A more complete implementation isn't currently required.
         if isinstance(value, str):
-            return "'%s'" % value.replace("'", "''")
+            # Cloud Spanner (GoogleSQL) escapes quotes with a backslash, not by
+            # doubling them, and treats backslash as an escape character. Match
+            # the escaping used for generated/db_default columns above.
+            return "'%s'" % value.replace("\\", "\\\\").replace("'", "\\'")
         if isinstance(value, bool):
             return "TRUE" if value else "FALSE"
         return str(value)

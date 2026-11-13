@@ -40,6 +40,19 @@ class TestUtils(SpannerSimpleTestClass):
         schema_editor = DatabaseSchemaEditor(self.connection)
         self.assertEqual(schema_editor.quote_value(value=1.1), "1.1")
 
+    def test_quote_value_str_escaping(self):
+        """
+        String values must be escaped the GoogleSQL way (backslash), so a
+        quote or backslash in the value can't break out of the literal.
+        """
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        self.assertEqual(schema_editor.quote_value(value="O'Brien"), "'O\\'Brien'")
+        self.assertEqual(schema_editor.quote_value(value="a\\b"), "'a\\\\b'")
+        self.assertEqual(
+            schema_editor.quote_value(value="\\' OR 1=1 -- "),
+            "'\\\\\\' OR 1=1 -- '",
+        )
+
     def test_skip_default(self):
         """
         Tries skipping default as Cloud spanner doesn't support it.
