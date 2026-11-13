@@ -43,7 +43,7 @@ _AGGREGATE_VALUE_BYTES = 8
 
 # Guard window (in ops) to avoid opposite-kind mutations on the same key within
 # a retry straggler window.
-DELETE_AFTER_WRITE_GUARD_OPS = 128
+DELETE_AFTER_WRITE_GUARD_OPS = 512
 
 # Env var used by tests / runners to override the binary location.
 BIN_ENV_VAR = "BIGTABLE_ACCELERATOR_BIN"
@@ -95,6 +95,8 @@ class ExpectedState:
                     del col[ts]
             if not col:
                 self._rows[row_key].pop((family, qualifier), None)
+                if not self._rows[row_key]:
+                    self._rows.pop(row_key, None)
         return DeleteRangeFromColumn(family, qualifier, start, end)
 
     def delete_from_family(self, row_key: bytes, family: str) -> DeleteAllFromFamily:
@@ -102,6 +104,8 @@ class ExpectedState:
         if row is not None:
             for key in [k for k in row if k[0] == family]:
                 del row[key]
+            if not row:
+                self._rows.pop(row_key, None)
         return DeleteAllFromFamily(family)
 
     def delete_from_row(self, row_key: bytes) -> DeleteAllFromRow:
@@ -342,6 +346,30 @@ class RandomOps:
         )
         return self._rand.choice(families)
 
+    def _build_multi_cf_mutations(
+        self, key: bytes, expected_state: ExpectedState
+    ) -> list[object]:
+        """Build an atomic write list touching multiple CFs and qualifiers."""
+        mutations: list[object] = []
+        for idx, fam in enumerate(self._families):
+            max_cols = min(3, len(self._qualifiers))
+            min_cols = 2 if idx == 0 and max_cols >= 2 else 1
+            num_cols = self._rand.randint(min_cols, max_cols)
+            for qual in self._rand.sample(self._qualifiers, num_cols):
+                mutations.append(
+                    expected_state.set_cell(
+                        key, fam, qual, self.value(), self.ms_timestamp()
+                    )
+                )
+        if self._include_aggregate and self._rand.random() < 0.5:
+            mutations.append(
+                expected_state.add_to_cell(
+                    key, self.agg_qualifier(), self.add_delta(), self.ms_timestamp()
+                )
+            )
+        self._rand.shuffle(mutations)
+        return mutations
+
     def build_mutation(self, expected_state: ExpectedState) -> tuple[bytes, object]:
         self._op_index += 1
         roll = self._rand.random()
@@ -366,6 +394,8 @@ class RandomOps:
             )
         if roll < 0.70 or recently_written:
             self._last_write_op[key] = self._op_index
+            if self._rand.random() < 0.35:
+                return key, self._build_multi_cf_mutations(key, expected_state)
             return key, expected_state.set_cell(
                 key, self.family(), self.qualifier(), self.value(), self.ms_timestamp()
             )
