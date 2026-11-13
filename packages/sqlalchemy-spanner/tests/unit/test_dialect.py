@@ -41,6 +41,37 @@ class TestSpannerDialect(fixtures.TestBase):
         executed_sql = mock_snapshot.execute_sql.call_args[0][0]
         assert "i.index_type != 'SEARCH'" in executed_sql
 
+    def test_get_multi_pk_constraint_includes_name(self):
+        """Test reflected primary keys include the constraint name."""
+        dialect = SpannerDialect()
+        connection = MagicMock()
+        mock_snapshot = MagicMock()
+        # Mock rows: schema, table, column_name, constraint_name
+        mock_snapshot.execute_sql.return_value = [
+            ["", "singers", "singer_id", "PK_singers"],
+            ["", "albums", "singer_id", "PK_albums"],
+            ["", "albums", "album_id", "PK_albums"],
+        ]
+        connection.connection.database.snapshot.return_value.__enter__.return_value = (
+            mock_snapshot
+        )
+
+        eq_(
+            dialect.get_multi_pk_constraint(connection),
+            {
+                (None, "singers"): {
+                    "name": "PK_singers",
+                    "constrained_columns": ["singer_id"],
+                },
+                (None, "albums"): {
+                    "name": "PK_albums",
+                    "constrained_columns": ["singer_id", "album_id"],
+                },
+            },
+        )
+        executed_sql = mock_snapshot.execute_sql.call_args[0][0]
+        assert "tc.constraint_name" in executed_sql
+
     def test_get_multi_indexes_handles_none_column_ordering(self):
         """Test get_multi_indexes with None column ordering."""
         dialect = SpannerDialect()

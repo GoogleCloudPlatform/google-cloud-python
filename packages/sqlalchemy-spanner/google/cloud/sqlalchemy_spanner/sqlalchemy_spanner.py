@@ -1573,7 +1573,7 @@ class SpannerDialect(DefaultDialect):
         table_type_query = self._get_table_type_query(kind, True)
 
         sql = """
-            SELECT tc.table_schema, tc.table_name, kcu.column_name
+            SELECT tc.table_schema, tc.table_name, kcu.column_name, tc.constraint_name
             FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS tc
             JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS kcu
                 USING (TABLE_CATALOG, TABLE_SCHEMA, CONSTRAINT_NAME)
@@ -1597,11 +1597,10 @@ class SpannerDialect(DefaultDialect):
 
             for row in rows:
                 row[0] = row[0] or None
-                table_info = result_dict.get(
-                    (row[0], row[1]), {"constrained_columns": []}
-                )
-                table_info["constrained_columns"].append(row[2])
-                result_dict[(row[0], row[1])] = table_info
+                key = (row[0], row[1])
+                if key not in result_dict:
+                    result_dict[key] = {"name": row[3], "constrained_columns": []}
+                result_dict[key]["constrained_columns"].append(row[2])
 
         return result_dict
 

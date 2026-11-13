@@ -891,6 +891,23 @@ class ComponentReflectionTest(_ComponentReflectionTest):
             result = insp.get_multi_pk_constraint(**kw)
             self._check_table_dict(result, exp, self._required_pk_keys, make_lists=True)
 
+    def test_get_pk_constraint_name(self, connection):
+        """
+        SPANNER SPECIFIC TEST:
+
+        Spanner names primary key constraints PK_<table>. Checks that reflected
+        primary keys include that name, as ReflectedPrimaryKeyConstraint requires
+        and Alembic's autogenerate expects.
+        """
+        insp = inspect(connection)
+        eq_(
+            insp.get_pk_constraint("users"),
+            {"name": "PK_users", "constrained_columns": ["user_id"]},
+        )
+        result = insp.get_multi_pk_constraint(filter_names=["users", "dingalings"])
+        eq_(result[(None, "users")]["name"], "PK_users")
+        eq_(result[(None, "dingalings")]["name"], "PK_dingalings")
+
     def exp_fks(
         self,
         schema=None,
