@@ -27,6 +27,8 @@ import sys
 import threading
 import time
 
+from google.api_core.retry import exponential_sleep_generator
+
 from google.cloud.logging_v2 import _helpers
 from google.cloud.logging_v2.handlers.transports.base import Transport
 from google.cloud.logging_v2.logger import _GLOBAL_RESOURCE
@@ -34,6 +36,8 @@ from google.cloud.logging_v2.logger import _GLOBAL_RESOURCE
 _DEFAULT_GRACE_PERIOD = 5.0  # Seconds
 _DEFAULT_MAX_BATCH_SIZE = 10
 _DEFAULT_MAX_LATENCY = 0  # Seconds
+_DEFAULT_INITIAL_BACKOFF = 1.0  # Seconds
+_DEFAULT_MAX_BACKOFF = 60.0  # Seconds
 _WORKER_THREAD_NAME = "google.cloud.logging.Worker"
 _WORKER_TERMINATOR = object()
 _LOGGER = logging.getLogger(__name__)
@@ -107,6 +111,7 @@ class _Worker(object):
         self._max_latency = max_latency
         self._queue = queue.Queue(0)
         self._operational_lock = threading.Lock()
+        self._stop_event = threading.Event()
         self._thread = None
 
     @property
@@ -121,8 +126,10 @@ class _Worker(object):
             if total_logs > 0:
                 batch.commit()
                 _LOGGER.debug("Submitted %d logs", total_logs)
+            return True
         except Exception:
             _LOGGER.error("Failed to submit %d logs.", total_logs, exc_info=True)
+            return False
 
     def _thread_main(self):
         """The entry point for the worker thread.
@@ -133,6 +140,7 @@ class _Worker(object):
         _LOGGER.debug("Background thread started.")
 
         done = False
+        sleep_generator = None
         while not done:
             batch = self._cloud_logger.batch()
             items = _get_many(
@@ -149,7 +157,13 @@ class _Worker(object):
 
             # We cannot commit logs upstream if the main thread is shutting down
             if threading.main_thread().is_alive():
-                self._safely_commit_batch(batch)
+                if self._safely_commit_batch(batch):
+                    sleep_generator = None
+                elif not done:
+                    sleep_generator = sleep_generator or exponential_sleep_generator(
+                        _DEFAULT_INITIAL_BACKOFF, _DEFAULT_MAX_BACKOFF
+                    )
+                    self._stop_event.wait(timeout=next(sleep_generator))
 
             for it in items:
                 self._queue.task_done()
@@ -166,6 +180,7 @@ class _Worker(object):
             if self.is_alive:
                 return
 
+            self._stop_event.clear()
             self._thread = threading.Thread(
                 target=self._thread_main, name=_WORKER_THREAD_NAME
             )
@@ -196,6 +211,7 @@ class _Worker(object):
 
         with self._operational_lock:
             self._queue.put_nowait(_WORKER_TERMINATOR)
+            self._stop_event.set()
 
             if grace_period is not None:
                 print("Waiting up to %d seconds." % (grace_period,), file=sys.stderr)
@@ -240,6 +256,8 @@ class _Worker(object):
                         formatted by the associated log formatters.
             kwargs: Additional optional arguments for the logger
         """
+        if threading.current_thread() is self._thread:
+            return
         # set python logger name as label if missing
         labels = kwargs.pop("labels", {})
         if record.name:

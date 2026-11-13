@@ -907,6 +907,43 @@ class TestCloudLoggingHandler(unittest.TestCase):
         handler.close()
         self.assertFalse(handler._transport_open)
 
+    def test_ctor_transport_kwargs_forwarded_and_reopened(self):
+        from google.cloud.logging_v2.logger import _GLOBAL_RESOURCE
+
+        created_transports = []
+
+        class _KwargsTransport(_Transport):
+            def __init__(self, client, name, resource=None, **kwargs):
+                super().__init__(client, name, resource=resource)
+                self.kwargs = kwargs
+                created_transports.append(self)
+
+        client = _Client(self.PROJECT)
+        handler = self._make_one(
+            client,
+            transport=_KwargsTransport,
+            resource=_GLOBAL_RESOURCE,
+            batch_size=50,
+            max_latency=0.5,
+            grace_period=10.0,
+        )
+        self.assertEqual(
+            handler.transport.kwargs,
+            {"batch_size": 50, "max_latency": 0.5, "grace_period": 10.0},
+        )
+
+        # Closing and emitting again should preserve transport kwargs
+        handler.close()
+        record = logging.LogRecord(
+            "loggername", logging.INFO, None, None, "hello", None, None
+        )
+        handler.handle(record)
+        self.assertEqual(len(created_transports), 2)
+        self.assertEqual(
+            created_transports[1].kwargs,
+            {"batch_size": 50, "max_latency": 0.5, "grace_period": 10.0},
+        )
+
 
 class TestFormatAndParseMessage(unittest.TestCase):
     def test_none(self):
