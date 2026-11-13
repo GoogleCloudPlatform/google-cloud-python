@@ -13,6 +13,8 @@
 # limitations under the License.
 
 import datetime
+import threading
+from concurrent.futures import ThreadPoolExecutor
 
 import mock
 import pytest
@@ -611,8 +613,8 @@ def test__transactional___call__success_first_attempt(database):
     assert result is mock.sentinel.result
 
     assert transaction._id is None
-    assert wrapped.current_id == txn_id
-    assert wrapped.retry_id == txn_id
+    assert wrapped.current_id is None
+    assert wrapped.retry_id is None
 
     # Verify mocks.
     to_wrap.assert_called_once_with(transaction, "a", b="c")
@@ -657,8 +659,8 @@ def test__transactional___call__success_second_attempt(database):
     assert result is mock.sentinel.result
 
     assert transaction._id is None
-    assert wrapped.current_id == txn_id
-    assert wrapped.retry_id == txn_id
+    assert wrapped.current_id is None
+    assert wrapped.retry_id is None
 
     # Verify mocks.
     wrapped_call = mock.call(transaction, "a", b="c")
@@ -721,8 +723,8 @@ def test_transactional___call__failure_max_attempts(database, max_attempts):
     assert exc_info.value.__cause__ == exc
 
     assert transaction._id is None
-    assert wrapped.current_id == txn_id
-    assert wrapped.retry_id == txn_id
+    assert wrapped.current_id is None
+    assert wrapped.retry_id is None
 
     # Verify mocks.
     assert to_wrap.call_count == max_attempts
@@ -790,8 +792,8 @@ def test_transactional___call__failure_readonly(database, max_attempts):
     assert exc_info.value == exc
 
     assert transaction._id is None
-    assert wrapped.current_id == txn_id
-    assert wrapped.retry_id == txn_id
+    assert wrapped.current_id is None
+    assert wrapped.retry_id is None
 
     # Verify mocks.
     to_wrap.assert_called_once_with(transaction, "here", there=1.5)
@@ -850,7 +852,7 @@ def test_transactional___call__failure_with_non_retryable(database, max_attempts
     assert exc_info.value == exc
 
     assert transaction._id is None
-    assert wrapped.current_id == txn_id
+    assert wrapped.current_id is None
 
     # Verify mocks.
     to_wrap.assert_called_once_with(transaction, "here", there=1.5)
@@ -909,7 +911,7 @@ def test_transactional___call__failure_with_rollback_failure(database):
     assert exc_info.value.__context__ == exc
 
     assert transaction._id is None
-    assert wrapped.current_id == txn_id
+    assert wrapped.current_id is None
 
     # Verify mocks.
     to_wrap.assert_called_once_with(transaction, "here", there=1.5)
@@ -934,6 +936,84 @@ def test_transactional___call__failure_with_rollback_failure(database):
             "transaction": txn_id,
         },
         metadata=transaction._client._rpc_metadata,
+    )
+
+
+@pytest.mark.parametrize("aborted_commits", [1, 2])
+def test_transactional_concurrent_calls_keep_retry_ids_separate(aborted_commits):
+    from google.api_core import exceptions
+
+    from google.cloud.firestore_v1.transaction import transactional
+    from google.cloud.firestore_v1.types import common
+
+    first = _make_transaction_pb(b"first")
+    second = _make_transaction_pb(b"second")
+    first._client._firestore_api.commit.side_effect = [
+        exceptions.Aborted("Contention")
+    ] * aborted_commits + [mock.Mock(write_results=[])]
+    first_started = threading.Event()
+    second_started = threading.Event()
+    first_finished = threading.Event()
+
+    @transactional
+    def update(transaction, *, result):
+        if transaction is first:
+            first_started.set()
+            assert second_started.wait(5)
+        else:
+            second_started.set()
+            assert first_finished.wait(5)
+        return result
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        first_call = executor.submit(update, first, result="first result")
+        assert first_started.wait(5)
+        second_call = executor.submit(update, second, result="second result")
+        try:
+            assert first_call.result(timeout=5) == "first result"
+        finally:
+            first_finished.set()
+        assert second_call.result(timeout=5) == "second result"
+
+    requests = first._client._firestore_api.begin_transaction.call_args_list
+    assert requests[0].kwargs["request"]["options"] is None
+    for call in requests[1:]:
+        assert call.kwargs["request"]["options"] == common.TransactionOptions(
+            read_write=common.TransactionOptions.ReadWrite(retry_transaction=b"first")
+        )
+    second._client._firestore_api.begin_transaction.assert_called_once()
+    assert (
+        second._client._firestore_api.begin_transaction.call_args.kwargs["request"][
+            "options"
+        ]
+        is None
+    )
+    first._client._firestore_api.rollback.assert_not_called()
+    second._client._firestore_api.rollback.assert_not_called()
+
+
+def test_transactional_reentrant_calls_keep_retry_ids_separate():
+    from google.api_core import exceptions
+
+    from google.cloud.firestore_v1.transaction import transactional
+
+    outer = _make_transaction_pb(b"outer")
+    inner = _make_transaction_pb(b"inner")
+    outer._client._firestore_api.commit.side_effect = [
+        exceptions.Aborted("Contention"),
+        mock.Mock(write_results=[]),
+    ]
+
+    @transactional
+    def update(transaction):
+        if transaction is outer:
+            return update(inner)
+        return "result"
+
+    assert update(outer) == "result"
+    calls = outer._client._firestore_api.begin_transaction.call_args_list
+    assert (
+        calls[1].kwargs["request"]["options"].read_write.retry_transaction == b"outer"
     )
 
 
