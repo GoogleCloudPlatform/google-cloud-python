@@ -72,11 +72,11 @@ dependencies.
 
 Supported Python Versions
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-Python >= 3.10
+Python >= 3.11
 
 Unsupported Python Versions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Python <= 3.9.
+Python <= 3.10.
 
 The last version of this library compatible with Python 2.7 and 3.5 is
 `google-cloud-bigquery==1.28.0`.

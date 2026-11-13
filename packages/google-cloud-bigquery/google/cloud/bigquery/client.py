@@ -142,7 +142,6 @@ ResumableTimeoutType = Union[
 ]  # for resumable media methods
 
 if typing.TYPE_CHECKING:  # pragma: NO COVER
-    # os.PathLike is only subscriptable in Python 3.9+, thus shielding with a condition.
     PathType = Union[str, bytes, os.PathLike[str], os.PathLike[bytes], io.IOBase]
 _DEFAULT_CHUNKSIZE = 100 * 1024 * 1024  # 100 MB
 _MAX_MULTIPART_SIZE = 5 * 1024 * 1024
