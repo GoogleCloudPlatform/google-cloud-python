@@ -15,6 +15,7 @@
 """Python :mod:`logging` handlers for Cloud Logging."""
 
 import collections
+import functools
 import json
 import logging
 from typing import IO, Optional, Type
@@ -187,9 +188,9 @@ class CloudLoggingHandler(logging.StreamHandler):
         self.name = name
         self.client = client
         client._handlers.add(self)
-        self.transport = transport(client, name, resource=resource)
+        self._transport_cls = functools.partial(transport, **kwargs)
+        self.transport = self._transport_cls(client, name, resource=resource)
         self._transport_open = True
-        self._transport_cls = transport
         self.project_id = client.project
         self.resource = resource
         self.labels = labels

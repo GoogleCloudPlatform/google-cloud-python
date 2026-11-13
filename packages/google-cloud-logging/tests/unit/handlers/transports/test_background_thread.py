@@ -585,6 +585,106 @@ class Test_Worker(unittest.TestCase):
         worker.flush()
         worker._queue.join.assert_called()
 
+    def test__thread_main_backoff_on_error_and_reset(self):
+        from google.api_core.exceptions import ResourceExhausted
+
+        from google.cloud.logging_v2.handlers.transports import background_thread
+
+        logger = _Logger(self.NAME)
+        outcomes = [
+            ResourceExhausted("quota exceeded"),
+            ResourceExhausted("quota exceeded"),
+            None,
+            ResourceExhausted("quota exceeded"),
+            ResourceExhausted("quota exceeded"),
+        ]
+
+        class _SequenceBatch(_Batch):
+            def commit(self):
+                self.commit_called = True
+                outcome = outcomes.pop(0)
+                if outcome is not None:
+                    raise outcome
+                del self.entries[:]
+
+        logger._batch_cls = _SequenceBatch
+        worker = self._make_one(logger, max_batch_size=2)
+        for msg in ("1a", "1b", "2a", "2b", "3a", "3b", "4a", "4b", "5a"):
+            self._enqueue_record(worker, msg)
+        worker._queue.put_nowait(background_thread._WORKER_TERMINATOR)
+
+        with mock.patch(
+            "google.cloud.logging_v2.handlers.transports.background_thread.exponential_sleep_generator",
+            side_effect=[iter([0.5, 1.5]), iter([0.25])],
+        ) as sleep_gen_mock:
+            with mock.patch.object(worker._stop_event, "wait") as wait_mock:
+                worker._thread_main()
+
+        self.assertEqual(sleep_gen_mock.call_count, 2)
+        self.assertEqual(
+            wait_mock.call_args_list,
+            [
+                mock.call(timeout=0.5),
+                mock.call(timeout=1.5),
+                mock.call(timeout=0.25),
+            ],
+        )
+        self.assertEqual(worker._queue.qsize(), 0)
+
+    def test_stop_interrupts_backoff(self):
+        import itertools
+        import threading
+
+        from google.api_core.exceptions import ResourceExhausted
+
+        entered_backoff = threading.Event()
+        logger = _Logger(self.NAME)
+
+        class _FailingBatch(_Batch):
+            def commit(self):
+                self.commit_called = True
+                raise ResourceExhausted("quota exceeded")
+
+        logger._batch_cls = _FailingBatch
+        worker = self._make_one(logger, max_batch_size=1)
+
+        orig_wait = worker._stop_event.wait
+
+        def _signaling_wait(timeout=None):
+            entered_backoff.set()
+            return orig_wait(timeout=timeout)
+
+        with self._init_atexit_mock():
+            with mock.patch(
+                "google.cloud.logging_v2.handlers.transports.background_thread.exponential_sleep_generator",
+                return_value=itertools.repeat(30.0),
+            ):
+                with mock.patch.object(
+                    worker._stop_event, "wait", side_effect=_signaling_wait
+                ):
+                    worker.start()
+                    # Enqueue two records so done=False on the first failed batch
+                    self._enqueue_record(worker, "1")
+                    self._enqueue_record(worker, "2")
+                    self.assertTrue(entered_backoff.wait(timeout=2.0))
+
+                    start_stop = time.monotonic()
+                    stopped = worker.stop(grace_period=2.0)
+                    elapsed = time.monotonic() - start_stop
+
+        self.assertTrue(stopped)
+        self.assertLess(elapsed, 1.5)
+
+    def test_enqueue_from_worker_thread_ignored(self):
+        import threading
+
+        worker = self._make_one(_Logger(self.NAME))
+        worker._thread = threading.current_thread()
+
+        self._enqueue_record(worker, "recursive error log")
+
+        self.assertTrue(worker._queue.empty())
+
 
 class _Thread(object):
     def __init__(self, target, name):
