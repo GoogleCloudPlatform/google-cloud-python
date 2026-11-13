@@ -2345,6 +2345,7 @@ async def test_get_all(client, cleanup, database):
     document3 = client.document(collection_name, "c")
     # Add to clean-up before API requests (in case ``create()`` fails).
     cleanup(document1.delete)
+    cleanup(document2.delete)
     cleanup(document3.delete)
 
     data1 = {"a": {"b": 2, "c": 3}, "d": 4, "e": 0}
@@ -2507,9 +2508,9 @@ async def _persist_documents(
         col_ref = client.collection(collection_name)
         document_id: str = block["data"]["name"]
         doc_ref = col_ref.document(document_id)
-        await doc_ref.set(block["data"])
         if cleanup is not None:
             cleanup(doc_ref.delete)
+        await doc_ref.set(block["data"])
 
         if "subcollections" in block:
             for subcollection_name, inner_blocks in block["subcollections"].items():
@@ -2517,6 +2518,7 @@ async def _persist_documents(
                     client,
                     f"{collection_name}/{document_id}/{subcollection_name}",
                     inner_blocks,
+                    cleanup=cleanup,
                 )
 
 
