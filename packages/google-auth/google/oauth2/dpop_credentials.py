@@ -188,16 +188,7 @@ class DPoPCredentials(_oauth2_credentials.Credentials):
                 access_token=self.token,
             )
 
-    def _call_refresh_grant(
-        self,
-        request,
-        token_uri,
-        refresh_token,
-        client_id,
-        client_secret,
-        scopes=None,
-        rapt_token=None,
-    ):
+    def _call_refresh_grant(self, request, scopes=None):
         """DPoP-aware token refresh grant.
 
         Creates a DPoP proof for the token endpoint, handles
@@ -207,12 +198,7 @@ class DPoPCredentials(_oauth2_credentials.Credentials):
         Args:
             request (google.auth.transport.Request): The object used to
                 make HTTP requests.
-            token_uri (str): The OAuth 2.0 token endpoint URI.
-            refresh_token (str): The refresh token.
-            client_id (str): The OAuth 2.0 client ID.
-            client_secret (str): The OAuth 2.0 client secret.
             scopes (Optional[Sequence[str]]): The requested scopes.
-            rapt_token (Optional[str]): The reauth Proof Token.
 
         Returns:
             Tuple[str, str, Optional[datetime], Mapping[str, str], str]:
@@ -231,6 +217,12 @@ class DPoPCredentials(_oauth2_credentials.Credentials):
                 "refresh. Use google.oauth2.credentials.Credentials "
                 "for non-DPoP flows."
             )
+
+        token_uri = self._token_uri
+        refresh_token = self._refresh_token
+        client_id = self._client_id
+        client_secret = self._client_secret
+        rapt_token = self._rapt_token
 
         body = {
             "grant_type": _client._REFRESH_GRANT_TYPE,

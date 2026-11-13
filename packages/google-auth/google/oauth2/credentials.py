@@ -434,15 +434,7 @@ class Credentials(
             expiry,
             grant_response,
             rapt_token,
-        ) = self._call_refresh_grant(
-            request,
-            self._token_uri,
-            self._refresh_token,
-            self._client_id,
-            self._client_secret,
-            scopes=scopes,
-            rapt_token=self._rapt_token,
-        )
+        ) = self._call_refresh_grant(request, scopes=scopes)
 
         self.token = access_token
         self.expiry = expiry
@@ -467,16 +459,7 @@ class Credentials(
                     )
                 )
 
-    def _call_refresh_grant(
-        self,
-        request,
-        token_uri,
-        refresh_token,
-        client_id,
-        client_secret,
-        scopes=None,
-        rapt_token=None,
-    ):
+    def _call_refresh_grant(self, request, scopes=None):
         """Performs the token refresh grant call.
 
         Subclasses may override this to customize the token request,
@@ -485,12 +468,7 @@ class Credentials(
         Args:
             request (google.auth.transport.Request): The object used to make
                 HTTP requests.
-            token_uri (str): The OAuth 2.0 token endpoint URI.
-            refresh_token (str): The refresh token.
-            client_id (str): The OAuth 2.0 client ID.
-            client_secret (str): The OAuth 2.0 client secret.
             scopes (Optional[Sequence[str]]): The requested scopes.
-            rapt_token (Optional[str]): The reauth Proof Token.
 
         Returns:
             Tuple[str, str, Optional[datetime], Mapping[str, str], str]:
@@ -503,12 +481,12 @@ class Credentials(
         """
         return reauth.refresh_grant(
             request,
-            token_uri,
-            refresh_token,
-            client_id,
-            client_secret,
+            self._token_uri,
+            self._refresh_token,
+            self._client_id,
+            self._client_secret,
             scopes=scopes,
-            rapt_token=rapt_token,
+            rapt_token=self._rapt_token,
             enable_reauth_refresh=self._enable_reauth_refresh,
         )
 

@@ -368,13 +368,7 @@ class TestDPoPCredentials(object):
             _NONCE_HEADERS,
         )
 
-        result = creds._call_refresh_grant(
-            request,
-            self.TOKEN_URI,
-            self.REFRESH_TOKEN,
-            self.CLIENT_ID,
-            self.CLIENT_SECRET,
-        )
+        result = creds._call_refresh_grant(request)
 
         # Verify the endpoint was called once.
         assert mock_token_request.call_count == 1
@@ -418,13 +412,7 @@ class TestDPoPCredentials(object):
             ),
         ]
 
-        result = creds._call_refresh_grant(
-            request,
-            self.TOKEN_URI,
-            self.REFRESH_TOKEN,
-            self.CLIENT_ID,
-            self.CLIENT_SECRET,
-        )
+        result = creds._call_refresh_grant(request)
 
         # Verify two calls were made (initial + retry).
         assert mock_token_request.call_count == 2
@@ -448,13 +436,7 @@ class TestDPoPCredentials(object):
             {"DPoP-Nonce": "captured-nonce"},
         )
 
-        creds._call_refresh_grant(
-            request,
-            self.TOKEN_URI,
-            self.REFRESH_TOKEN,
-            self.CLIENT_ID,
-            self.CLIENT_SECRET,
-        )
+        creds._call_refresh_grant(request)
 
         assert creds.dpop_nonce == "captured-nonce"
 
@@ -472,26 +454,14 @@ class TestDPoPCredentials(object):
         )
 
         with pytest.raises(exceptions.RefreshError):
-            creds._call_refresh_grant(
-                request,
-                self.TOKEN_URI,
-                self.REFRESH_TOKEN,
-                self.CLIENT_ID,
-                self.CLIENT_SECRET,
-            )
+            creds._call_refresh_grant(request)
 
     def test_refresh_without_signer_raises(self):
         creds = self.make_credentials()  # no signer
         request = mock.create_autospec(transport.Request)
 
         with pytest.raises(ValueError, match="requires a dpop_signer"):
-            creds._call_refresh_grant(
-                request,
-                self.TOKEN_URI,
-                self.REFRESH_TOKEN,
-                self.CLIENT_ID,
-                self.CLIENT_SECRET,
-            )
+            creds._call_refresh_grant(request)
 
     @mock.patch("google.oauth2.reauth.get_rapt_token")
     @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
@@ -524,13 +494,7 @@ class TestDPoPCredentials(object):
             ),
         ]
 
-        result = creds._call_refresh_grant(
-            request,
-            self.TOKEN_URI,
-            self.REFRESH_TOKEN,
-            self.CLIENT_ID,
-            self.CLIENT_SECRET,
-        )
+        result = creds._call_refresh_grant(request)
 
         # Verify reauth.get_rapt_token was called.
         mock_get_rapt.assert_called_once_with(
@@ -570,13 +534,7 @@ class TestDPoPCredentials(object):
         )
 
         with pytest.raises(exceptions.RefreshError, match="Reauthentication"):
-            creds._call_refresh_grant(
-                request,
-                self.TOKEN_URI,
-                self.REFRESH_TOKEN,
-                self.CLIENT_ID,
-                self.CLIENT_SECRET,
-            )
+            creds._call_refresh_grant(request)
 
     @mock.patch("google.oauth2.reauth.get_rapt_token")
     @mock.patch("google.oauth2._client._token_endpoint_request_no_throw")
@@ -607,13 +565,7 @@ class TestDPoPCredentials(object):
             ),
         ]
 
-        result = creds._call_refresh_grant(
-            request,
-            self.TOKEN_URI,
-            self.REFRESH_TOKEN,
-            self.CLIENT_ID,
-            self.CLIENT_SECRET,
-        )
+        result = creds._call_refresh_grant(request)
 
         mock_get_rapt.assert_called_once()
         assert result[0] == "new-access-token"
@@ -631,14 +583,7 @@ class TestDPoPCredentials(object):
             {},
         )
 
-        creds._call_refresh_grant(
-            request,
-            self.TOKEN_URI,
-            self.REFRESH_TOKEN,
-            self.CLIENT_ID,
-            self.CLIENT_SECRET,
-            scopes=["email", "profile"],
-        )
+        creds._call_refresh_grant(request, scopes=["email", "profile"])
 
         call_body = mock_token_request.call_args[0][2]
         assert call_body["scope"] == "email profile"
@@ -647,6 +592,7 @@ class TestDPoPCredentials(object):
     def test_refresh_with_rapt_token_passed_to_body(self, mock_token_request):
         signer = self.make_dpop_signer()
         creds = self.make_credentials(dpop_signer=signer)
+        creds._rapt_token = "existing-rapt"
         request = mock.create_autospec(transport.Request)
 
         mock_token_request.return_value = (
@@ -656,14 +602,7 @@ class TestDPoPCredentials(object):
             {},
         )
 
-        creds._call_refresh_grant(
-            request,
-            self.TOKEN_URI,
-            self.REFRESH_TOKEN,
-            self.CLIENT_ID,
-            self.CLIENT_SECRET,
-            rapt_token="existing-rapt",
-        )
+        creds._call_refresh_grant(request)
 
         call_body = mock_token_request.call_args[0][2]
         assert call_body["rapt"] == "existing-rapt"
