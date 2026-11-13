@@ -920,6 +920,36 @@ class TestQueryJob(_Base):
             timeout=123,
         )
 
+    def test_reload_query_results_uses_default_timeout(self):
+        conn = make_connection({})
+        client = _make_client(self.PROJECT, connection=conn)
+        job = self._make_one(self.JOB_ID, self.QUERY, client)
+
+        job._reload_query_results()
+
+        query_results_path = f"/projects/{self.PROJECT}/queries/{self.JOB_ID}"
+        conn.api_request.assert_called_once_with(
+            method="GET",
+            path=query_results_path,
+            query_params={"maxResults": 0},
+            timeout=DEFAULT_GET_JOB_TIMEOUT,
+        )
+
+    def test_reload_query_results_with_none_timeout(self):
+        conn = make_connection({})
+        client = _make_client(self.PROJECT, connection=conn)
+        job = self._make_one(self.JOB_ID, self.QUERY, client)
+
+        job._reload_query_results(timeout=None)
+
+        query_results_path = f"/projects/{self.PROJECT}/queries/{self.JOB_ID}"
+        conn.api_request.assert_called_once_with(
+            method="GET",
+            path=query_results_path,
+            query_params={"maxResults": 0},
+            timeout=None,
+        )
+
     def test_result_reloads_job_state_until_done(self):
         """Verify that result() doesn't return until state == 'DONE'.
 
@@ -1045,7 +1075,7 @@ class TestQueryJob(_Base):
             method="GET",
             path=query_results_path,
             query_params={"maxResults": 0, "location": "EU"},
-            timeout=None,
+            timeout=DEFAULT_GET_JOB_TIMEOUT,
         )
         reload_call = mock.call(
             method="GET",
@@ -1176,7 +1206,7 @@ class TestQueryJob(_Base):
                 "maxResults": 0,
                 "location": "US",
             },
-            timeout=None,
+            timeout=DEFAULT_GET_JOB_TIMEOUT,
         )
 
         connection.api_request.assert_has_calls(
@@ -1223,7 +1253,7 @@ class TestQueryJob(_Base):
             method="GET",
             path=query_results_path,
             query_params={"maxResults": 0, "location": "EU"},
-            timeout=None,
+            timeout=DEFAULT_GET_JOB_TIMEOUT,
         )
         query_results_page_call = mock.call(
             method="GET",
@@ -1411,7 +1441,7 @@ class TestQueryJob(_Base):
                 "formatOptions.useInt64Timestamp": True,
                 "location": "US",
             },
-            timeout=None,
+            timeout=DEFAULT_GET_JOB_TIMEOUT,
         )
         query_page_2_call = mock.call(
             timeout=None,
@@ -1525,7 +1555,7 @@ class TestQueryJob(_Base):
                 "location": "US",
                 "formatOptions.useInt64Timestamp": True,
             },
-            timeout=None,
+            timeout=DEFAULT_GET_JOB_TIMEOUT,
         )
         query_page_2_call = mock.call(
             timeout=None,

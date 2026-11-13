@@ -42,6 +42,7 @@ from google.cloud.bigquery.query import (
 )
 from google.cloud.bigquery.retry import (
     DEFAULT_RETRY,
+    DEFAULT_GET_JOB_TIMEOUT,
     DEFAULT_JOB_RETRY,
     POLLING_DEFAULT_VALUE,
 )
@@ -1498,7 +1499,7 @@ class QueryJob(_AsyncJob):
     def _reload_query_results(
         self,
         retry: "retries.Retry" = DEFAULT_RETRY,
-        timeout: Optional[float] = None,
+        timeout: Optional[Union[float, object]] = POLLING_DEFAULT_VALUE,
         page_size: int = 0,
         start_index: Optional[int] = None,
     ):
@@ -1544,16 +1545,16 @@ class QueryJob(_AsyncJob):
             self._done_timeout = max(0, self._done_timeout)
             timeout_ms = int(api_timeout * 1000)
 
-        # If an explicit timeout is not given, fall back to the transport timeout
-        # stored in _blocking_poll() in the process of polling for job completion.
-        if timeout is not None:
-            transport_timeout = timeout
-        else:
+        if timeout is POLLING_DEFAULT_VALUE:
+            # Fall back to the transport timeout stored in _blocking_poll()
+            # while polling for job completion. If no transport timeout was
+            # provided, use the same default as jobs.get.
             transport_timeout = self._transport_timeout
-
-            # Handle PollingJob._DEFAULT_VALUE.
             if not isinstance(transport_timeout, (float, int)):
-                transport_timeout = None
+                transport_timeout = DEFAULT_GET_JOB_TIMEOUT
+        else:
+            # An explicit None keeps the request unbounded.
+            transport_timeout = timeout
 
         self._query_results = self._client._get_query_results(
             self.job_id,
