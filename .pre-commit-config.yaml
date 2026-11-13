@@ -21,13 +21,19 @@ repos:
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
-- repo: https://github.com/astral-sh/ruff-pre-commit
-  # Ruff version.
-  rev: v0.14.14
-  hooks:
-    # Run the linter.
-    - id: ruff-check
-      args: [ --select, I, --fix, --target-version=py310, --line-length=88 ]
-    # Run the formatter.
-    - id: ruff-format
-      args: [ --target-version=py310, --line-length=88 ]
+-   repo: local
+    hooks:
+    -   id: ruff-check
+        name: ruff check (monorepo)
+        entry: python ci/run_ruff.py check
+        language: python
+        additional_dependencies: ['ruff==0.14.14']
+        types: [python]
+        require_serial: true
+    -   id: ruff-format
+        name: ruff format (monorepo)
+        entry: python ci/run_ruff.py format
+        language: python
+        additional_dependencies: ['ruff==0.14.14']
+        types: [python]
+        require_serial: true
