@@ -688,7 +688,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -813,7 +817,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -859,7 +867,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
             resp = self._interceptor.post_attempt_streaming_sequence(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_attempt_streaming_sequence_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 http_response = {
                 "headers":  dict(response.headers),
                 "status": response.status_code,
@@ -958,7 +970,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1007,7 +1023,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
             resp = self._interceptor.post_create_sequence(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_sequence_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = gs_sequence.Sequence.to_json(response)
                 except:
@@ -1112,7 +1132,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1161,7 +1185,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
             resp = self._interceptor.post_create_streaming_sequence(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_streaming_sequence_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = sequence.StreamingSequence.to_json(response)
                 except:
@@ -1262,7 +1290,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1310,7 +1342,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
             resp = self._interceptor.post_get_sequence_report(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_sequence_report_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = sequence.SequenceReport.to_json(response)
                 except:
@@ -1412,7 +1448,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1460,7 +1500,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
             resp = self._interceptor.post_get_streaming_sequence_report(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_streaming_sequence_report_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = sequence.StreamingSequenceReport.to_json(response)
                 except:
@@ -1611,7 +1655,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1655,7 +1703,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
             resp = locations_pb2.ListLocationsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_list_locations(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1758,7 +1810,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1802,7 +1858,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
             resp = locations_pb2.Location()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_location(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1906,7 +1966,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1951,7 +2015,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
             resp = policy_pb2.Policy()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_set_iam_policy(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2054,7 +2122,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2098,7 +2170,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
             resp = policy_pb2.Policy()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_iam_policy(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2202,7 +2278,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2247,7 +2327,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
             resp = iam_policy_pb2.TestIamPermissionsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_test_iam_permissions(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2350,7 +2434,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2394,7 +2482,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
             resp = operations_pb2.ListOperationsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_list_operations(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2497,7 +2589,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2541,7 +2637,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
             resp = operations_pb2.Operation()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_operation(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2641,7 +2741,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2762,7 +2866,11 @@ class SequenceServiceRestTransport(_BaseSequenceServiceRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:

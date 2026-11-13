@@ -646,7 +646,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -695,7 +699,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
             resp = self._interceptor.post_create_user(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_user_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = identity.User.to_json(response)
                 except:
@@ -792,7 +800,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -912,7 +924,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -960,7 +976,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
             resp = self._interceptor.post_get_user(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_user_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = identity.User.to_json(response)
                 except:
@@ -1064,7 +1084,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1112,7 +1136,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
             resp = self._interceptor.post_list_users(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_users_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = identity.ListUsersResponse.to_json(response)
                 except:
@@ -1214,7 +1242,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1263,7 +1295,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
             resp = self._interceptor.post_update_user(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_user_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = identity.User.to_json(response)
                 except:
@@ -1406,7 +1442,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1450,7 +1490,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
             resp = locations_pb2.ListLocationsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_list_locations(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1553,7 +1597,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1597,7 +1645,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
             resp = locations_pb2.Location()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_location(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1701,7 +1753,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1746,7 +1802,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
             resp = policy_pb2.Policy()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_set_iam_policy(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1849,7 +1909,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1893,7 +1957,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
             resp = policy_pb2.Policy()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_iam_policy(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1997,7 +2065,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2042,7 +2114,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
             resp = iam_policy_pb2.TestIamPermissionsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_test_iam_permissions(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2145,7 +2221,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2189,7 +2269,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
             resp = operations_pb2.ListOperationsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_list_operations(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2292,7 +2376,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2336,7 +2424,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
             resp = operations_pb2.Operation()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_operation(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2436,7 +2528,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2557,7 +2653,11 @@ class IdentityRestTransport(_BaseIdentityRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:

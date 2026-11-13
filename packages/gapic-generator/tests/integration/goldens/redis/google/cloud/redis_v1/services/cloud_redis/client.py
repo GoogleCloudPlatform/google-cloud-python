@@ -565,7 +565,11 @@ class CloudRedisClient(metaclass=CloudRedisClientMeta):
             self._transport = transport_init(**transport_kwargs)
 
         if "async" not in str(self._transport):
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(std_logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(std_logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 _LOGGER.debug(
                     "Created client `google.cloud.redis_v1.CloudRedisClient`.",
                     extra = {

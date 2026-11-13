@@ -259,7 +259,11 @@ class EchoAsyncClient:
 
         )
 
-        if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(std_logging.DEBUG):  # pragma: NO COVER
+        if (
+            CLIENT_LOGGING_SUPPORTED
+            and _LOGGER.isEnabledFor(std_logging.DEBUG)
+            and _LOGGER.hasHandlers()
+        ):  # pragma: NO COVER
             _LOGGER.debug(
                 "Created client `google.showcase_v1beta1.EchoAsyncClient`.",
                 extra = {

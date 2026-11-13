@@ -451,7 +451,11 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -500,7 +504,11 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             resp = self._interceptor.post_generate_access_token(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_generate_access_token_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = common.GenerateAccessTokenResponse.to_json(response)
                 except:
@@ -600,7 +608,11 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -649,7 +661,11 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             resp = self._interceptor.post_generate_id_token(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_generate_id_token_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = common.GenerateIdTokenResponse.to_json(response)
                 except:
@@ -749,7 +765,11 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -798,7 +818,11 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             resp = self._interceptor.post_sign_blob(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_sign_blob_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = common.SignBlobResponse.to_json(response)
                 except:
@@ -898,7 +922,11 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -947,7 +975,11 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             resp = self._interceptor.post_sign_jwt(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_sign_jwt_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = common.SignJwtResponse.to_json(response)
                 except:

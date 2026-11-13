@@ -8862,3 +8862,94 @@ def test_cloud_redis_base_transport_wrap_async_method_older_api_core_fallbacks(m
         assert "client_options" not in kwargs
         assert "method_name" not in kwargs
         assert "is_streaming" not in kwargs
+
+
+def test_cloud_redis_grpc_logging_interceptor_requires_handlers(monkeypatch):
+    std_logging = transports.grpc.std_logging
+    logger = std_logging.getLogger("test_no_handlers_cloud_redis_sync")
+    logger.handlers = []
+    logger.setLevel(std_logging.DEBUG)
+    logger.propagate = False
+
+    monkeypatch.setattr(transports.grpc, "CLIENT_LOGGING_SUPPORTED", True)
+    monkeypatch.setattr(transports.grpc, "_LOGGER", logger)
+
+    interceptor = transports.grpc._LoggingClientInterceptor()
+    call_details = mock.MagicMock(method="/test.Service/Method", metadata=())
+    response = mock.MagicMock()
+    response.result.side_effect = AssertionError("result() should not be called without handlers")
+    continuation = mock.MagicMock(return_value=response)
+
+    out = interceptor.intercept_unary_unary(continuation, call_details, object())
+    assert out is response
+    response.result.assert_not_called()
+
+    records = []
+
+    class _ListHandler(std_logging.Handler):
+        def emit(self, record):
+            records.append(record)
+
+    logger.addHandler(_ListHandler())
+    try:
+        response.result.side_effect = None
+        response.result.return_value = "ok"
+        response.trailing_metadata.return_value = ()
+        out = interceptor.intercept_unary_unary(continuation, call_details, "req")
+        assert out is response
+        assert len(records) == 2
+    finally:
+        logger.handlers = []
+
+
+@pytest.mark.asyncio
+async def test_cloud_redis_grpc_aio_logging_interceptor_requires_handlers(
+    monkeypatch,
+):
+    std_logging = transports.grpc_asyncio.std_logging
+    logger = std_logging.getLogger("test_no_handlers_cloud_redis_async")
+    logger.handlers = []
+    logger.setLevel(std_logging.DEBUG)
+    logger.propagate = False
+
+    monkeypatch.setattr(transports.grpc_asyncio, "CLIENT_LOGGING_SUPPORTED", True)
+    monkeypatch.setattr(transports.grpc_asyncio, "_LOGGER", logger)
+
+    interceptor = transports.grpc_asyncio._LoggingClientAIOInterceptor()
+    call_details = mock.MagicMock(method="/test.Service/Method", metadata=())
+
+    class _NoAwaitResponse:
+        def __await__(self):
+            raise AssertionError("response should not be awaited without handlers")
+
+    sentinel = _NoAwaitResponse()
+    continuation = AsyncMock(return_value=sentinel)
+
+    out = await interceptor.intercept_unary_unary(continuation, call_details, object())
+    assert out is sentinel
+
+    records = []
+
+    class _ListHandler(std_logging.Handler):
+        def emit(self, record):
+            records.append(record)
+
+    class _AwaitableResponse:
+        async def trailing_metadata(self):
+            return ()
+
+        def __await__(self):
+            async def _coro():
+                return "ok"
+
+            return _coro().__await__()
+
+    logger.addHandler(_ListHandler())
+    try:
+        aio_response = _AwaitableResponse()
+        continuation = AsyncMock(return_value=aio_response)
+        out = await interceptor.intercept_unary_unary(continuation, call_details, "req")
+        assert out is aio_response
+        assert len(records) == 2
+    finally:
+        logger.handlers = []

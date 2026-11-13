@@ -728,7 +728,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -777,7 +781,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
             resp = self._interceptor.post_cancel_job(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_cancel_job_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = storage_batch_operations.CancelJobResponse.to_json(response)
                 except:
@@ -880,7 +888,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -927,7 +939,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
             resp = self._interceptor.post_create_job(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_job_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1022,7 +1038,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1143,7 +1163,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1191,7 +1215,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
             resp = self._interceptor.post_get_bucket_operation(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_bucket_operation_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = storage_batch_operations_types.BucketOperation.to_json(response)
                 except:
@@ -1292,7 +1320,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1340,7 +1372,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
             resp = self._interceptor.post_get_job(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_job_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = storage_batch_operations_types.Job.to_json(response)
                 except:
@@ -1442,7 +1478,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1490,7 +1530,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
             resp = self._interceptor.post_list_bucket_operations(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_bucket_operations_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = storage_batch_operations.ListBucketOperationsResponse.to_json(response)
                 except:
@@ -1589,7 +1633,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1637,7 +1685,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
             resp = self._interceptor.post_list_jobs(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_jobs_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = storage_batch_operations.ListJobsResponse.to_json(response)
                 except:
@@ -1796,7 +1848,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1840,7 +1896,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
             resp = locations_pb2.Location()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_location(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1943,7 +2003,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1987,7 +2051,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
             resp = locations_pb2.ListLocationsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_list_locations(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2088,7 +2156,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2210,7 +2282,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2334,7 +2410,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2378,7 +2458,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
             resp = operations_pb2.Operation()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_operation(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2481,7 +2565,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
                 rest_numeric_enums=False,
             )
 
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2525,7 +2613,11 @@ class StorageBatchOperationsRestTransport(_BaseStorageBatchOperationsRestTranspo
             resp = operations_pb2.ListOperationsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_list_operations(resp)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
