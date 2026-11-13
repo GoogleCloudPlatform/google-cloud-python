@@ -19,10 +19,12 @@
 from __future__ import annotations
 
 import contextlib
+import functools
+import traceback
 import urllib.parse
 from typing import TYPE_CHECKING, Any, Callable, Sequence
 
-from google.api_core import _feature_gating_helpers
+from google.api_core import _feature_gating_helpers, exceptions
 from google.api_core.client_options import ClientOptions
 
 try:
@@ -41,6 +43,19 @@ if TYPE_CHECKING:
     from google.api_core.grpc_helpers import ClientInterceptor  # noqa: F401
 
 _TRACER_PROVIDER = "tracer_provider"
+
+
+@functools.cache
+def has_opentelemetry() -> bool:
+    """Checks once per process if opentelemetry-api is installed."""
+    try:
+        # Ignored by mypy: Optional dependency only checked at runtime
+        # flake8: Imported only to verify package installation
+        import opentelemetry.trace  # type: ignore[import-not-found] # noqa: F401
+
+        return True
+    except ImportError:
+        return False
 
 
 def is_otel_capabilities_enabled(
@@ -72,6 +87,208 @@ def is_otel_capabilities_enabled(
             pass
 
     return False
+
+
+def extract_trace_context(span: Any = None) -> dict[str, Any]:
+    """Extracts trace_id, span_id, and Cloud Logging trace correlation fields.
+
+    If `span` is None, falls back to `opentelemetry.trace.get_current_span()`
+    when OpenTelemetry is installed. Returns an empty dict if no valid recording
+    span context exists or if OpenTelemetry is not installed.
+
+    Args:
+        span (Optional[Any]): The active OpenTelemetry span, if any.
+
+    Returns:
+        dict[str, Any]: Trace and span correlation attributes.
+    """
+    try:
+        if span is None:
+            if not has_opentelemetry():
+                return {}
+            # Ignored by mypy: Optional dependency only loaded after
+            # has_opentelemetry() check
+            from opentelemetry import trace  # type: ignore[import-not-found]
+
+            span = trace.get_current_span()
+
+        ctx = span.get_span_context()
+        if not ctx or not ctx.is_valid:
+            return {}
+
+        trace_id_hex = f"{ctx.trace_id:032x}"
+        span_id_hex = f"{ctx.span_id:016x}"
+        # Per W3C Trace Context, trace_flags is an 8-bit integer (TraceFlags(int))
+        # that uses bits as configuration flags; the least-significant (last) bit
+        # (0x01) indicates whether the span is sampled (True: recorded/exported,
+        # allowing Cloud Logging to link the log entry to Cloud Trace) or not
+        # (False: not recorded). Using bitmask (& 0x01) handles both TraceFlags(0x01)
+        # instances and raw TraceFlags.SAMPLED (int) constants passed to SpanContext.
+        sampled = bool(ctx.trace_flags & 0x01)
+
+        return {
+            "trace_id": trace_id_hex,
+            "span_id": span_id_hex,
+            "logging.googleapis.com/trace": trace_id_hex,
+            "logging.googleapis.com/spanId": span_id_hex,
+            "logging.googleapis.com/trace_sampled": sampled,
+        }
+    except Exception:
+        # Defensive fail-open: telemetry correlation must never crash an RPC call.
+        return {}
+
+
+def _extract_error_info_fields(target_exc: Any) -> tuple[Any, Any, Any]:
+    """Resolves (domain, reason, metadata) from an exception, ErrorInfo, or dict."""
+    # Prefer native GoogleAPICallError properties (.domain, .reason, .metadata)
+    # when present; fall back to .error_info or raw gRPC trailing_metadata.
+    error_info = getattr(target_exc, "error_info", None)
+    if error_info is None and not (
+        getattr(target_exc, "reason", None)
+        or getattr(target_exc, "domain", None)
+        or getattr(target_exc, "metadata", None)
+    ):
+        rpc_call = (
+            target_exc
+            if hasattr(target_exc, "trailing_metadata")
+            else getattr(target_exc, "response", None)
+        )
+        if rpc_call is not None and hasattr(rpc_call, "trailing_metadata"):
+            try:
+                _, error_info = exceptions._parse_grpc_error_details(rpc_call)
+            # Defensive fail-open: malformed trailing metadata must not abort
+            # error attribute extraction.
+            except Exception:
+                pass
+
+    source = error_info if error_info is not None else target_exc
+    if isinstance(source, dict):
+        return (
+            source.get("domain"),
+            source.get("reason"),
+            source.get("metadata"),
+        )
+    return (
+        getattr(source, "domain", None),
+        getattr(source, "reason", None),
+        getattr(source, "metadata", None),
+    )
+
+
+def _extract_error_message(
+    target_exc: Any, http_response: Any = None, fallback: str | None = None
+) -> str | None:
+    """Resolves the human-readable error message across HTTP, gRPC, and Python errors."""
+    http_msg = (
+        _TraceContext._extract_http_error_message(http_response)
+        if http_response is not None
+        else None
+    )
+    details = getattr(target_exc, "details", None)
+    details_msg = details() if callable(details) else details
+    exc_msg = str(target_exc) if isinstance(target_exc, BaseException) else None
+    raw_message = (
+        http_msg
+        or getattr(target_exc, "message", None)
+        or details_msg
+        or fallback
+        or exc_msg
+    )
+    return str(raw_message) if raw_message else None
+
+
+def build_telemetry_error_attributes(
+    exc: BaseException | None,
+    status_code: str | None = None,
+    status_message: str | None = None,
+    include_exception: bool = False,
+) -> dict[str, Any]:
+    """Extracts rpc.response.status_code, gcp.errors.*, error.type, status.message, and exception.* fields.
+
+    Error details and ErrorInfo structures are resolved by inspecting:
+    * RetryError wrapper: Unwraps RetryError once to the underlying RPC error.
+    * Canonical status code: Resolves rpc.response.status_code via
+      exceptions._extract_status_code.
+    * GoogleAPICallError & ErrorInfo attributes: Reads .domain, .reason, and
+      .metadata directly (or from .error_info / gRPC trailing_metadata).
+    * Unified attribute extraction: Populates gcp.errors.domain, error.type,
+      gcp.errors.metadata.*, status.message, and optional exception.* fields.
+
+    Args:
+        exc (Optional[BaseException]): An exception (e.g. GoogleAPICallError
+            or grpc.RpcError) or ErrorInfo object.
+        status_code (Optional[str]): Optional pre-extracted or HTTP status code
+            fallback when exc is None or lacks a status code.
+        status_message (Optional[str]): Optional status message fallback when
+            exc is None or lacks a message.
+        include_exception (bool): When True, also populates exception.type,
+            exception.message, and exception.stacktrace.
+
+    Returns:
+        dict[str, Any]: Extracted error and exception attributes.
+    """
+    if exc is None:
+        if status_code is None:
+            return {}
+        code_str = str(status_code)
+        return {
+            "rpc.response.status_code": code_str,
+            "error.type": code_str,
+            "status.message": status_message or f"HTTP {code_str}",
+        }
+
+    # Unwrap RetryError by one level to reach the underlying RPC failure without
+    # unwrapping past a GoogleAPICallError or transport error to its __cause__.
+    target_exc = (
+        (exc.cause or exc.__cause__ or exc)
+        if isinstance(exc, exceptions.RetryError)
+        else exc
+    )
+    resolved_code = exceptions._extract_status_code(target_exc, default=status_code)
+    domain, reason, metadata = _extract_error_info_fields(target_exc)
+
+    # GoogleAPICallError.response holds either an HTTP Response or a gRPC Call
+    # (which has trailing_metadata). Validate once up front so http_response is
+    # only retained when it is an actual HTTP response with an integer status code.
+    http_response = getattr(target_exc, "response", None)
+    http_status = (
+        getattr(http_response, "status_code", getattr(http_response, "status", None))
+        if http_response is not None and not hasattr(http_response, "trailing_metadata")
+        else None
+    )
+    if not isinstance(http_status, int) or isinstance(http_status, bool):
+        http_status = None
+        http_response = None
+
+    # Populate OpenTelemetry semantic error attributes and ErrorInfo metadata
+    attrs: dict[str, Any] = {"rpc.response.status_code": resolved_code}
+    if domain:
+        attrs["gcp.errors.domain"] = domain
+    if reason:
+        attrs["error.type"] = reason
+    elif http_status is not None:
+        attrs["error.type"] = str(http_status)
+    else:
+        # Every failed span or log records a low-cardinality error.type; reuse
+        # the resolved canonical status code name or exception class name.
+        attrs["error.type"] = resolved_code
+
+    if metadata:
+        attrs.update({f"gcp.errors.metadata.{k}": str(v) for k, v in metadata.items()})
+
+    # Extract human-readable error description for cross-language parity
+    message = _extract_error_message(target_exc, http_response, status_message)
+    if message:
+        attrs["status.message"] = message
+
+    # Populate exception.* diagnostic fields for the terminal exception raised to
+    # the caller when structured logging is enabled
+    if include_exception:
+        attrs["exception.type"] = exc.__class__.__name__
+        attrs["exception.message"] = str(exc)
+        attrs["exception.stacktrace"] = "".join(traceback.format_exception(exc))
+
+    return attrs
 
 
 def _extract_endpoint_attributes(
