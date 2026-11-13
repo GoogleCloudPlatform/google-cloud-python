@@ -506,7 +506,6 @@ def dataframe_to_bq_schema(dataframe, bq_schema):
 
     bq_schema_out = []
     unknown_type_columns = []
-    dataframe_reset_index = dataframe.reset_index()
     for column, dtype in list_columns_and_indexes(dataframe):
         # Step 1: use provided type from schema, if present.
         bq_field = bq_schema_index.get(column)
@@ -519,7 +518,8 @@ def dataframe_to_bq_schema(dataframe, bq_schema):
         # pandas dtype.
         bq_type = _PANDAS_DTYPE_TO_BQ.get(dtype.name)
         if bq_type is None:
-            sample_data = _first_valid(dataframe_reset_index[column])
+            values = get_column_or_index(dataframe, column)
+            sample_data = _first_valid(values)
             if (
                 isinstance(sample_data, _BaseGeometry)
                 and sample_data is not None  # Paranoia
@@ -530,7 +530,7 @@ def dataframe_to_bq_schema(dataframe, bq_schema):
             continue
 
         # Step 3: try with pyarrow if available
-        bq_field = _get_schema_by_pyarrow(column, dataframe_reset_index[column])
+        bq_field = _get_schema_by_pyarrow(column, values)
         if bq_field is not None:
             bq_schema_out.append(bq_field)
             continue

@@ -1317,6 +1317,99 @@ def test_dataframe_to_bq_schema_returns_schema_with_pandas_gbq(
 
 
 @pytest.mark.skipif(pandas is None, reason="Requires `pandas`")
+@pytest.mark.skipif(isinstance(pyarrow, mock.Mock), reason="Requires `pyarrow`")
+@pytest.mark.parametrize(
+    "values, dtype, field_type, mode",
+    [
+        (["hello", "world"], "object", "STRING", "NULLABLE"),
+        ([1, 2], "int64", "INTEGER", "NULLABLE"),
+        ([1, 2], "object", "INT64", "NULLABLE"),
+        ([], "int64", "INTEGER", "NULLABLE"),
+        ([None, None], "float64", "FLOAT", "NULLABLE"),
+        (
+            [[], [datetime.datetime(2023, 1, 1)]],
+            "object",
+            "DATETIME",
+            "REPEATED",
+        ),
+    ],
+)
+def test_dataframe_to_bq_schema_overlapping_index_prefers_column(
+    module_under_test, monkeypatch, values, dtype, field_type, mode
+):
+    monkeypatch.setattr(module_under_test, "pandas_gbq", None)
+    dataframe = pandas.DataFrame({"value": pandas.Series(values, dtype=dtype)})
+    # Different values and duplicate labels check both column precedence and
+    # positional access when sampling values for type inference.
+    dataframe.index = pandas.Index(["index value"] * len(values), name="value")
+    original = dataframe.copy(deep=True)
+
+    with pytest.warns(FutureWarning, match="pandas-gbq"):
+        returned_schema = module_under_test.dataframe_to_bq_schema(dataframe, [])
+
+    assert returned_schema == (schema.SchemaField("value", field_type, mode),)
+    pandas.testing.assert_frame_equal(dataframe, original)
+
+
+@pytest.mark.skipif(pandas is None, reason="Requires `pandas`")
+@pytest.mark.parametrize("values", [[], [None, None]])
+def test_dataframe_to_bq_schema_overlapping_index_unknown_type(
+    module_under_test, monkeypatch, values
+):
+    monkeypatch.setattr(module_under_test, "pandas_gbq", None)
+    dataframe = pandas.DataFrame({"value": pandas.Series(values, dtype=object)})
+    dataframe.index.name = "value"
+    original = dataframe.copy(deep=True)
+
+    with pytest.warns(FutureWarning, match="pandas-gbq"):
+        with pytest.warns(UserWarning, match="Could not determine the type.*value"):
+            returned_schema = module_under_test.dataframe_to_bq_schema(dataframe, [])
+
+    assert returned_schema is None
+    pandas.testing.assert_frame_equal(dataframe, original)
+
+
+@pytest.mark.skipif(pandas is None, reason="Requires `pandas`")
+@pytest.mark.skipif(isinstance(pyarrow, mock.Mock), reason="Requires `pyarrow`")
+def test_dataframe_to_bq_schema_overlapping_multiindex(module_under_test, monkeypatch):
+    monkeypatch.setattr(module_under_test, "pandas_gbq", None)
+    dataframe = pandas.DataFrame({"value": ["hello", "world"]}, dtype=object)
+    dataframe.index = pandas.MultiIndex.from_arrays(
+        [[1, 1], ["a", "a"], [False, True]], names=["value", "row", None]
+    )
+    original = dataframe.copy(deep=True)
+
+    with pytest.warns(FutureWarning, match="pandas-gbq"):
+        returned_schema = module_under_test.dataframe_to_bq_schema(dataframe, [])
+
+    assert returned_schema == (
+        schema.SchemaField("row", "STRING"),
+        schema.SchemaField("value", "STRING"),
+    )
+    pandas.testing.assert_frame_equal(dataframe, original)
+
+
+@pytest.mark.skipif(pandas is None, reason="Requires `pandas`")
+@pytest.mark.parametrize("values", [[], [None, None]])
+def test_dataframe_to_bq_schema_overlapping_index_with_schema(
+    module_under_test, monkeypatch, values
+):
+    monkeypatch.setattr(module_under_test, "pandas_gbq", None)
+    dataframe = pandas.DataFrame({"value": pandas.Series(values, dtype=object)})
+    dataframe.index.name = "value"
+    original = dataframe.copy(deep=True)
+    expected_schema = (schema.SchemaField("value", "INTEGER", "REQUIRED"),)
+
+    with pytest.warns(FutureWarning, match="pandas-gbq"):
+        returned_schema = module_under_test.dataframe_to_bq_schema(
+            dataframe, expected_schema
+        )
+
+    assert returned_schema == expected_schema
+    pandas.testing.assert_frame_equal(dataframe, original)
+
+
+@pytest.mark.skipif(pandas is None, reason="Requires `pandas`")
 def test_dataframe_to_bq_schema_w_named_index(module_under_test, monkeypatch):
     monkeypatch.setattr(module_under_test, "pandas_gbq", None)
 

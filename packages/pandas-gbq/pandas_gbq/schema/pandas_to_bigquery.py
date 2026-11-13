@@ -112,7 +112,13 @@ def dataframe_to_bigquery_fields(
             continue
 
         # Try to automatically determine the type based on a few rows of the data.
-        values = dataframe.reset_index()[column]
+        # Select the column or index level directly so that an index with the
+        # same name as a column is ignored, just as in list_columns_and_indexes.
+        if column in dataframe.columns:
+            values = dataframe[column]
+        else:
+            values = dataframe.index.get_level_values(column).to_series()
+        values = values.reset_index(drop=True)
         bq_field = values_to_bigquery_field(column, values, default_type=default_type)
 
         if bq_field:

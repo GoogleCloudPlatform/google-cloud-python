@@ -19,6 +19,77 @@ def module_under_test():
     return pandas_to_bigquery
 
 
+@pytest.mark.parametrize("index", [False, True])
+@pytest.mark.parametrize(
+    "values, dtype, field_type, mode",
+    [
+        (["hello", "world"], "object", "STRING", "NULLABLE"),
+        ([1, 2], "int64", "INTEGER", "NULLABLE"),
+        ([1, 2], "object", "INTEGER", "NULLABLE"),
+        ([], "object", "STRING", "NULLABLE"),
+        ([None, None], "object", "STRING", "NULLABLE"),
+        (
+            [[], [datetime.datetime(2023, 1, 1)]],
+            "object",
+            "DATETIME",
+            "REPEATED",
+        ),
+    ],
+)
+def test_dataframe_to_bigquery_fields_overlapping_index_prefers_column(
+    module_under_test, index, values, dtype, field_type, mode
+):
+    dataframe = pandas.DataFrame({"value": pandas.Series(values, dtype=dtype)})
+    # Different values and duplicate labels check both column precedence and
+    # positional access when sampling values for type inference.
+    dataframe.index = pandas.Index(["index value"] * len(values), name="value")
+    original = dataframe.copy(deep=True)
+
+    returned_schema = module_under_test.dataframe_to_bigquery_fields(
+        dataframe, index=index
+    )
+
+    assert returned_schema == (schema.SchemaField("value", field_type, mode),)
+    pandas.testing.assert_frame_equal(dataframe, original)
+
+
+@pytest.mark.parametrize("index", [False, True])
+def test_dataframe_to_bigquery_fields_overlapping_multiindex(module_under_test, index):
+    dataframe = pandas.DataFrame({"value": ["hello", "world"]}, dtype=object)
+    dataframe.index = pandas.MultiIndex.from_arrays(
+        [[1, 1], ["a", "a"], [False, True]], names=["value", "row", None]
+    )
+    original = dataframe.copy(deep=True)
+
+    returned_schema = module_under_test.dataframe_to_bigquery_fields(
+        dataframe, index=index
+    )
+
+    expected_schema = (schema.SchemaField("value", "STRING"),)
+    if index:
+        expected_schema = (schema.SchemaField("row", "STRING"),) + expected_schema
+    assert returned_schema == expected_schema
+    pandas.testing.assert_frame_equal(dataframe, original)
+
+
+@pytest.mark.parametrize("index", [False, True])
+@pytest.mark.parametrize("values", [[], [None, None]])
+def test_dataframe_to_bigquery_fields_overlapping_index_with_schema(
+    module_under_test, index, values
+):
+    dataframe = pandas.DataFrame({"value": pandas.Series(values, dtype=object)})
+    dataframe.index.name = "value"
+    original = dataframe.copy(deep=True)
+    expected_schema = (schema.SchemaField("value", "INTEGER", "REQUIRED"),)
+
+    returned_schema = module_under_test.dataframe_to_bigquery_fields(
+        dataframe, override_bigquery_fields=expected_schema, index=index
+    )
+
+    assert returned_schema == expected_schema
+    pandas.testing.assert_frame_equal(dataframe, original)
+
+
 def test_dataframe_to_bigquery_fields_w_named_index(module_under_test):
     df_data = collections.OrderedDict(
         [
