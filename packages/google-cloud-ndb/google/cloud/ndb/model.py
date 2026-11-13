@@ -6363,11 +6363,14 @@ class Expando(Model):
     def __setattr__(self, name, value):
         if self._properties is None:
             raise TypeError("self._properties cannot be None")
-        if (
-            name.startswith("_")
-            or isinstance(getattr(self.__class__, name, None), (Property, property))
-            or isinstance(self._properties.get(name, None), (Property, property))
+        if name.startswith("_") or isinstance(
+            getattr(self.__class__, name, None), (Property, property)
         ):
+            # Only names backed by a class level descriptor can be delegated to
+            # ``object.__setattr__``: the descriptor is what writes ``_values``.
+            # A dynamic property has no descriptor, so delegating would put the
+            # value in ``__dict__`` and leave ``_values`` stale, which is what
+            # ``put()`` serializes. ``__delattr__`` draws the same line.
             return super(Expando, self).__setattr__(name, value)
 
         if "." in name:

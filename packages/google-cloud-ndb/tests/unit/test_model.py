@@ -6176,6 +6176,27 @@ class TestExpando:
         assert expansive.a.c == "two"
 
     @staticmethod
+    def test___setattr__updates_dynamic_property():
+        """Regression test for issue #18204
+
+        Re-assigning a dynamic property must update ``_values``, which is what
+        ``put()`` serializes, rather than shadowing it in ``__dict__``.
+        """
+
+        class Expansive(model.Expando):
+            foo = model.StringProperty()
+
+        expansive = Expansive(foo="x")
+
+        expansive.bar = 2.0
+        assert expansive._values["bar"] == 2.0
+
+        expansive.bar = 9.99
+        assert expansive.bar == 9.99
+        assert expansive._values["bar"] == 9.99
+        assert "bar" not in expansive.__dict__
+
+    @staticmethod
     def test___delattr__():
         class Expansive(model.Expando):
             foo = model.StringProperty()
