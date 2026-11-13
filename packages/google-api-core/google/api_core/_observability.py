@@ -206,7 +206,7 @@ def build_telemetry_error_attributes(
     """Extracts rpc.response.status_code, gcp.errors.*, error.type, status.message, and exception.* fields.
 
     Error details and ErrorInfo structures are resolved by inspecting:
-    * Chained exceptions: Unwraps RetryError or __cause__ to the root error.
+    * RetryError wrapper: Unwraps RetryError once to the underlying RPC error.
     * Canonical status code: Resolves rpc.response.status_code via
       exceptions._extract_status_code.
     * GoogleAPICallError & ErrorInfo attributes: Reads .domain, .reason, and
@@ -237,10 +237,13 @@ def build_telemetry_error_attributes(
             "status.message": status_message or f"HTTP {code_str}",
         }
 
-    # Unwrap chained wrapper exceptions (e.g. RetryError) by one level to reach
-    # the enriched GoogleAPICallError without unwrapping past it to the raw
-    # transport error.
-    target_exc = getattr(exc, "cause", None) or getattr(exc, "__cause__", None) or exc
+    # Unwrap RetryError by one level to reach the underlying RPC failure without
+    # unwrapping past a GoogleAPICallError or transport error to its __cause__.
+    target_exc = (
+        (exc.cause or exc.__cause__ or exc)
+        if isinstance(exc, exceptions.RetryError)
+        else exc
+    )
     resolved_code = exceptions._extract_status_code(target_exc, default=status_code)
     domain, reason, metadata = _extract_error_info_fields(target_exc)
 

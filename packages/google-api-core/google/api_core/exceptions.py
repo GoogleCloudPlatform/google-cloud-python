@@ -654,7 +654,6 @@ def _extract_status_code(exc: BaseException | None, default: str | None = None) 
     """Extract canonical status code name string from an exception.
 
     Status code name strings are resolved by inspecting the following:
-    * Chained exceptions: Unwraps RetryError or __cause__ to the root error.
     * Enum & code attributes: Inspects .grpc_status_code on GoogleAPICallError
       or .code on gRPC/HTTP errors.
     * Integer status codes: Maps raw gRPC integer status codes or HTTP status
@@ -675,14 +674,11 @@ def _extract_status_code(exc: BaseException | None, default: str | None = None) 
     if exc is None:
         return default or ""
 
-    # 1. Unwrap chained exceptions: unwrap RetryError or __cause__ to the root failure
-    target = getattr(exc, "cause", None) or getattr(exc, "__cause__", None) or exc
-
-    # 2. Check enum & code attributes: .grpc_status_code enum or callable/non-callable .code
-    status = getattr(target, "grpc_status_code", None)
-    if status is None and hasattr(target, "code"):
+    # Check enum & code attributes: .grpc_status_code enum or callable/non-callable .code
+    status = getattr(exc, "grpc_status_code", None)
+    if status is None and hasattr(exc, "code"):
         try:
-            status = target.code() if callable(target.code) else target.code
+            status = exc.code() if callable(exc.code) else exc.code
         # Defensive fallback: observability status extraction must never raise
         # if a third-party or mock exception implements a failing .code() method.
         except Exception:
@@ -692,7 +688,7 @@ def _extract_status_code(exc: BaseException | None, default: str | None = None) 
     if name:
         return str(name)
 
-    # 3. Check integer status codes: map raw gRPC integer codes or HTTP status codes to canonical names
+    # Map raw gRPC integer codes or HTTP status codes to canonical names
     if isinstance(status, int):
         if status in _INT_TO_GRPC_CODE:
             grpc_code = _INT_TO_GRPC_CODE[status]
@@ -702,8 +698,8 @@ def _extract_status_code(exc: BaseException | None, default: str | None = None) 
         except ValueError:
             return str(status)
 
-    # 4. Fallback: default to explicit default or exception class name for standard Python errors
-    return default or target.__class__.__name__
+    # Default to explicit default or exception class name for standard Python errors
+    return default or exc.__class__.__name__
 
 
 def _is_informative_grpc_error(rpc_exc):

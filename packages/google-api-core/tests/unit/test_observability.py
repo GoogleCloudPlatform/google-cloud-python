@@ -2136,7 +2136,7 @@ _UNAVAILABLE_CODE = (
         ),
         pytest.param(
             _with_cause(
-                RuntimeError("wrapper error"),
+                exceptions.RetryError("Deadline exceeded", cause=None),
                 exceptions.BadRequest(
                     "Service disabled",
                     error_info=error_details_pb2.ErrorInfo(
@@ -2152,7 +2152,43 @@ _UNAVAILABLE_CODE = (
                 "gcp.errors.metadata.k": "v",
                 "status.message": "Service disabled",
             },
-            id="dunder_cause_unwrapping",
+            id="retry_error_dunder_cause_unwrapping",
+        ),
+        pytest.param(
+            _with_cause(
+                exceptions.BadRequest(
+                    "Service disabled",
+                    error_info=error_details_pb2.ErrorInfo(
+                        domain="d", reason="r", metadata={"k": "v"}
+                    ),
+                ),
+                ValueError("raw transport cause"),
+            ),
+            {},
+            {
+                "rpc.response.status_code": "BAD_REQUEST",
+                "gcp.errors.domain": "d",
+                "error.type": "r",
+                "gcp.errors.metadata.k": "v",
+                "status.message": "Service disabled",
+            },
+            id="google_api_call_error_with_cause_not_unwrapped",
+        ),
+        pytest.param(
+            exceptions.RetryError(
+                "Deadline of 0.1s exceeded",
+                cause=_with_cause(
+                    exceptions.ServiceUnavailable("Persistent outage"),
+                    ValueError("raw socket cause"),
+                ),
+            ),
+            {},
+            {
+                "rpc.response.status_code": _UNAVAILABLE_CODE,
+                "error.type": _UNAVAILABLE_CODE,
+                "status.message": "Persistent outage",
+            },
+            id="retry_error_wrapping_google_api_call_error_with_cause_not_double_unwrapped",
         ),
         pytest.param(
             exceptions.ServiceUnavailable(
