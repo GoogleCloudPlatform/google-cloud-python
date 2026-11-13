@@ -432,7 +432,13 @@ class _DefaultAwsSecurityCredentialsSupplier(AwsSecurityCredentialsSupplier):
             )
 
         imdsv2_session_token = self._get_imdsv2_session_token(request)
-        role_name = self._get_metadata_role_name(request, imdsv2_session_token)
+
+        # In Fargate environments, the metadata endpoint doesn't use role
+        # names in the URL structure, so we skip the role name lookup.
+        if self._is_fargate_environment():
+            role_name = None
+        else:
+            role_name = self._get_metadata_role_name(request, imdsv2_session_token)
 
         # Get security credentials.
         credentials = self._get_metadata_security_credentials(
@@ -533,8 +539,15 @@ class _DefaultAwsSecurityCredentialsSupplier(AwsSecurityCredentialsSupplier):
         else:
             headers = None
 
+        # In Fargate environments, use the security credentials URL directly
+        # without appending the role name.
+        if role_name is not None:
+            url = "{}/{}".format(self._security_credentials_url, role_name)
+        else:
+            url = self._security_credentials_url
+
         response = request(
-            url="{}/{}".format(self._security_credentials_url, role_name),
+            url=url,
             method="GET",
             headers=headers,
         )
@@ -600,6 +613,23 @@ class _DefaultAwsSecurityCredentialsSupplier(AwsSecurityCredentialsSupplier):
             )
 
         return response_body
+
+    @staticmethod
+    def _is_fargate_environment():
+        """Checks if the current environment is an AWS Fargate container.
+
+        Fargate containers expose credentials through a different metadata
+        endpoint structure that doesn't use role names in the URL. This is
+        detected via ECS-specific environment variables.
+
+        Returns:
+            bool: True if running in a Fargate environment.
+        """
+        return bool(
+            os.environ.get("ECS_CONTAINER_METADATA_URI_V4")
+            or os.environ.get("ECS_CONTAINER_METADATA_URI")
+            or "AWS_ECS_FARGATE" in os.environ.get("AWS_EXECUTION_ENV", "")
+        )
 
 
 class Credentials(external_account.Credentials):
