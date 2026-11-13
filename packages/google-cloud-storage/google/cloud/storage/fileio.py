@@ -134,7 +134,9 @@ class BlobReader(io.BufferedIOBase):
             fetch_start = self._pos
             if size > 0:
                 # Fetch the larger of self._chunk_size or the remaining_size.
-                fetch_end = fetch_start + max(remaining_size, self._chunk_size)
+                # end is inclusive in download_as_bytes,
+                # so subtract 1 to fetch exactly chunk_size or remaining_size bytes.
+                fetch_end = fetch_start + max(remaining_size, self._chunk_size) - 1
             else:
                 fetch_end = None
 

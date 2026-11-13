@@ -71,7 +71,9 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
         blob = mock.Mock()
 
         def read_from_fake_data(start=0, end=None, **_):
-            return TEST_BINARY_DATA[start:end]
+            # end is inclusive in download_as_bytes.
+            stop = end + 1 if end is not None else None
+            return TEST_BINARY_DATA[start:stop]
 
         blob.download_as_bytes = mock.Mock(side_effect=read_from_fake_data)
         download_kwargs = {"if_metageneration_match": 1}
@@ -80,7 +82,7 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
         # Read and trigger the first download of chunk_size.
         self.assertEqual(reader.read(1), TEST_BINARY_DATA[0:1])
         blob.download_as_bytes.assert_called_once_with(
-            start=0, end=8, checksum=None, retry=DEFAULT_RETRY, **download_kwargs
+            start=0, end=7, checksum=None, retry=DEFAULT_RETRY, **download_kwargs
         )
 
         # Read from buffered data only.
@@ -92,7 +94,7 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
         self.assertEqual(reader._pos, 12)
         self.assertEqual(blob.download_as_bytes.call_count, 2)
         blob.download_as_bytes.assert_called_with(
-            start=8, end=16, checksum=None, retry=DEFAULT_RETRY, **download_kwargs
+            start=8, end=15, checksum=None, retry=DEFAULT_RETRY, **download_kwargs
         )
 
         # Read a larger amount, requiring a download larger than chunk_size.
@@ -100,7 +102,7 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
         self.assertEqual(reader._pos, 28)
         self.assertEqual(blob.download_as_bytes.call_count, 3)
         blob.download_as_bytes.assert_called_with(
-            start=16, end=28, checksum=None, retry=DEFAULT_RETRY, **download_kwargs
+            start=16, end=27, checksum=None, retry=DEFAULT_RETRY, **download_kwargs
         )
 
         # Read all remaining data.
@@ -112,11 +114,26 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
 
         reader.close()
 
+    def test_read_uses_inclusive_end_range(self):
+        # end is inclusive in download_as_bytes,
+        # so a chunk_size=N read must request end=N-1.
+        blob = mock.Mock()
+        blob.download_as_bytes = mock.Mock(return_value=b"")
+        reader = self._make_blob_reader(blob, chunk_size=64)
+        reader.read(1)
+        blob.download_as_bytes.assert_called_once()
+        _, kwargs = blob.download_as_bytes.call_args
+        self.assertEqual(kwargs["start"], 0)
+        self.assertEqual(kwargs["end"], 63)
+        reader.close()
+
     def test_read_with_raw_download(self):
         blob = mock.Mock()
 
         def read_from_fake_data(start=0, end=None, **_):
-            return TEST_BINARY_DATA[start:end]
+            # end is inclusive in download_as_bytes.
+            stop = end + 1 if end is not None else None
+            return TEST_BINARY_DATA[start:stop]
 
         blob.download_as_bytes = mock.Mock(side_effect=read_from_fake_data)
         download_kwargs = {"raw_download": True}
@@ -125,7 +142,7 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
         # Read and trigger the first download of chunk_size.
         self.assertEqual(reader.read(1), TEST_BINARY_DATA[0:1])
         blob.download_as_bytes.assert_called_once_with(
-            start=0, end=8, checksum=None, retry=DEFAULT_RETRY, raw_download=True
+            start=0, end=7, checksum=None, retry=DEFAULT_RETRY, raw_download=True
         )
 
         reader.close()
@@ -134,7 +151,9 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
         blob = mock.Mock()
 
         def read_from_fake_data(start=0, end=None, **_):
-            return TEST_BINARY_DATA[start:end]
+            # end is inclusive in download_as_bytes.
+            stop = end + 1 if end is not None else None
+            return TEST_BINARY_DATA[start:stop]
 
         blob.download_as_bytes = mock.Mock(side_effect=read_from_fake_data)
         download_kwargs = {"if_metageneration_match": 1}
@@ -145,7 +164,7 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
         # Read and trigger the first download of chunk_size.
         self.assertEqual(reader.read(1), TEST_BINARY_DATA[0:1])
         blob.download_as_bytes.assert_called_once_with(
-            start=0, end=8, checksum=None, retry=None, **download_kwargs
+            start=0, end=7, checksum=None, retry=None, **download_kwargs
         )
 
         reader.close()
@@ -163,7 +182,9 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
         blob = mock.Mock()
 
         def read_from_fake_data(start=0, end=None, **_):
-            return TEST_BINARY_DATA[start:end]
+            # end is inclusive in download_as_bytes.
+            stop = end + 1 if end is not None else None
+            return TEST_BINARY_DATA[start:stop]
 
         blob.download_as_bytes = mock.Mock(side_effect=read_from_fake_data)
         reader = self._make_blob_reader(blob, chunk_size=10)
@@ -171,14 +192,14 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
         # Read a line. With chunk_size=10, expect three chunks downloaded.
         self.assertEqual(reader.readline(), TEST_BINARY_DATA[:27])
         blob.download_as_bytes.assert_called_with(
-            start=20, end=30, checksum=None, retry=DEFAULT_RETRY
+            start=20, end=29, checksum=None, retry=DEFAULT_RETRY
         )
         self.assertEqual(blob.download_as_bytes.call_count, 3)
 
         # Read another line.
         self.assertEqual(reader.readline(), TEST_BINARY_DATA[27:])
         blob.download_as_bytes.assert_called_with(
-            start=50, end=60, checksum=None, retry=DEFAULT_RETRY
+            start=50, end=59, checksum=None, retry=DEFAULT_RETRY
         )
         self.assertEqual(blob.download_as_bytes.call_count, 6)
 
@@ -189,7 +210,7 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
         self.assertEqual(b"".join(reader.readlines()), TEST_BINARY_DATA)
         blob.download_as_bytes.assert_called_with(
             start=len(TEST_BINARY_DATA),
-            end=len(TEST_BINARY_DATA) + 10,
+            end=len(TEST_BINARY_DATA) + 9,
             checksum=None,
             retry=DEFAULT_RETRY,
         )
@@ -201,7 +222,9 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
         blob = mock.Mock()
 
         def read_from_fake_data(start=0, end=None, **_):
-            return TEST_BINARY_DATA[start:end]
+            # end is inclusive in download_as_bytes.
+            stop = end + 1 if end is not None else None
+            return TEST_BINARY_DATA[start:stop]
 
         blob.download_as_bytes = mock.Mock(side_effect=read_from_fake_data)
         blob.size = None
@@ -254,7 +277,9 @@ class TestBlobReaderBinary(unittest.TestCase, _BlobReaderBase):
         blob = mock.Mock()
 
         def read_from_fake_data(start=0, end=None, **_):
-            return TEST_BINARY_DATA[start:end] * 1024
+            # end is inclusive in download_as_bytes.
+            stop = end + 1 if end is not None else None
+            return TEST_BINARY_DATA[start:stop] * 1024
 
         blob.download_as_bytes = mock.Mock(side_effect=read_from_fake_data)
         blob.size = None
@@ -758,7 +783,9 @@ class TestBlobReaderText(unittest.TestCase, _BlobReaderBase):
         blob = mock.Mock()
 
         def read_from_fake_data(start=0, end=None, **_):
-            return TEST_TEXT_DATA.encode("utf-8")[start:end]
+            # end is inclusive in download_as_bytes.
+            stop = end + 1 if end is not None else None
+            return TEST_TEXT_DATA.encode("utf-8")[start:stop]
 
         blob.download_as_bytes = mock.Mock(side_effect=read_from_fake_data)
         blob.chunk_size = None
@@ -789,7 +816,9 @@ class TestBlobReaderText(unittest.TestCase, _BlobReaderBase):
         blob = mock.Mock()
 
         def read_from_fake_data(start=0, end=None, **_):
-            return TEST_MULTIBYTE_TEXT_DATA.encode("utf-8")[start:end]
+            # end is inclusive in download_as_bytes.
+            stop = end + 1 if end is not None else None
+            return TEST_MULTIBYTE_TEXT_DATA.encode("utf-8")[start:stop]
 
         blob.download_as_bytes = mock.Mock(side_effect=read_from_fake_data)
         blob.chunk_size = None
@@ -820,7 +849,9 @@ class TestBlobReaderText(unittest.TestCase, _BlobReaderBase):
         blob = mock.Mock()
 
         def read_from_fake_data(start=0, end=None, **_):
-            return TEST_TEXT_DATA.encode("utf-8")[start:end]
+            # end is inclusive in download_as_bytes.
+            stop = end + 1 if end is not None else None
+            return TEST_TEXT_DATA.encode("utf-8")[start:stop]
 
         blob.download_as_bytes = mock.Mock(side_effect=read_from_fake_data)
         blob.size = None
@@ -853,7 +884,9 @@ class TestBlobReaderText(unittest.TestCase, _BlobReaderBase):
         blob = mock.Mock()
 
         def read_from_fake_data(start=0, end=None, **_):
-            return TEST_MULTIBYTE_TEXT_DATA.encode("utf-8")[start:end]
+            # end is inclusive in download_as_bytes.
+            stop = end + 1 if end is not None else None
+            return TEST_MULTIBYTE_TEXT_DATA.encode("utf-8")[start:stop]
 
         blob.download_as_bytes = mock.Mock(side_effect=read_from_fake_data)
         blob.size = None
