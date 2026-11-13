@@ -498,11 +498,7 @@ class LoggingServiceV2Client(metaclass=LoggingServiceV2ClientMeta):
             self._transport = transport_init(**transport_kwargs)
 
         if "async" not in str(self._transport):
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(std_logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(std_logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 _LOGGER.debug(
                     "Created client `google.logging_v2.LoggingServiceV2Client`.",
                     extra = {

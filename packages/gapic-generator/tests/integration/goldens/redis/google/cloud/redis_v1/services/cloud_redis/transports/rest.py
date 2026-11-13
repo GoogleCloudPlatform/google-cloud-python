@@ -981,11 +981,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1032,11 +1028,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = self._interceptor.post_create_instance(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_instance_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1139,11 +1131,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1189,11 +1177,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = self._interceptor.post_delete_instance(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_instance_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1297,11 +1281,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1348,11 +1328,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = self._interceptor.post_export_instance(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_export_instance_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1456,11 +1432,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1507,11 +1479,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = self._interceptor.post_failover_instance(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_failover_instance_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -1611,11 +1579,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1663,11 +1627,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = self._interceptor.post_get_instance(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_instance_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = cloud_redis.Instance.to_json(response)
                 except:
@@ -1767,11 +1727,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1819,11 +1775,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = self._interceptor.post_get_instance_auth_string(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_instance_auth_string_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = cloud_redis.InstanceAuthString.to_json(response)
                 except:
@@ -1927,11 +1879,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1978,11 +1926,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = self._interceptor.post_import_instance(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_import_instance_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2084,11 +2028,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2136,11 +2076,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = self._interceptor.post_list_instances(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_instances_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = cloud_redis.ListInstancesResponse.to_json(response)
                 except:
@@ -2244,11 +2180,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2295,11 +2227,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = self._interceptor.post_reschedule_maintenance(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_reschedule_maintenance_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2403,11 +2331,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2454,11 +2378,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = self._interceptor.post_update_instance(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_instance_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2562,11 +2482,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2613,11 +2529,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = self._interceptor.post_upgrade_instance(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_upgrade_instance_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2808,11 +2720,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2856,11 +2764,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = locations_pb2.Location()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_location(resp)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2963,11 +2867,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3011,11 +2911,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = locations_pb2.ListLocationsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_list_locations(resp)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -3115,11 +3011,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3240,11 +3132,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3368,11 +3256,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3416,11 +3300,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = operations_pb2.Operation()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_operation(resp)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -3523,11 +3403,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3571,11 +3447,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = operations_pb2.ListOperationsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_list_operations(resp)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -3679,11 +3551,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3728,11 +3596,7 @@ class CloudRedisRestTransport(_BaseCloudRedisRestTransport):
             resp = operations_pb2.Operation()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_wait_operation(resp)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:

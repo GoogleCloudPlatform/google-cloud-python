@@ -226,11 +226,7 @@ def _get_http_options():
         rest_numeric_enums={{ rest_numeric_enums }},
     )
 
-    if (
-        CLIENT_LOGGING_SUPPORTED
-        and _LOGGER.isEnabledFor(logging.DEBUG)
-        and _LOGGER.hasHandlers()
-    ):  # pragma: NO COVER
+    if {{ debug_logging_enabled("logging") }}:  # pragma: NO COVER
         request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
         method = transcoded_request['method']
         try:
@@ -354,12 +350,13 @@ return {{ client_output_ident }}(
 {%- endmacro %}
 
 
+{% macro debug_logging_enabled(logging_expr="std_logging") -%}
+CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor({{ logging_expr }}.DEBUG) and _LOGGER.hasHandlers()
+{%- endmacro %}
+
+
 {% macro unary_request_interceptor_common(service) %}
-        logging_enabled = (
-            CLIENT_LOGGING_SUPPORTED
-            and _LOGGER.isEnabledFor(std_logging.DEBUG)
-            and _LOGGER.hasHandlers()
-        )
+        logging_enabled = {{ debug_logging_enabled() }}
         if logging_enabled:  # pragma: NO COVER
             request_metadata = client_call_details.metadata
             if isinstance(request, proto.Message):
@@ -642,11 +639,7 @@ class {{ name|make_private }}(_Base{{ service.name }}RestTransport._Base{{name}}
         resp = {{ sig.response_type }}()
         resp = json_format.Parse(content, resp)
         resp = {{ await_prefix }}self._interceptor.post_{{ name|snake_case }}(resp)
-        if (
-            CLIENT_LOGGING_SUPPORTED
-            and _LOGGER.isEnabledFor(logging.DEBUG)
-            and _LOGGER.hasHandlers()
-        ):  # pragma: NO COVER
+        if {{ debug_logging_enabled("logging") }}:  # pragma: NO COVER
             try:
                 response_payload = json_format.MessageToJson(resp)
             except:

@@ -66,11 +66,7 @@ _LOGGER = std_logging.getLogger(__name__)
 
 class _LoggingClientAIOInterceptor(grpc.aio.UnaryUnaryClientInterceptor):  # pragma: NO COVER
     async def intercept_unary_unary(self, continuation, client_call_details, request):
-        logging_enabled = (
-            CLIENT_LOGGING_SUPPORTED
-            and _LOGGER.isEnabledFor(std_logging.DEBUG)
-            and _LOGGER.hasHandlers()
-        )
+        logging_enabled = CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(std_logging.DEBUG) and _LOGGER.hasHandlers()
         if logging_enabled:  # pragma: NO COVER
             request_metadata = client_call_details.metadata
             if isinstance(request, proto.Message):

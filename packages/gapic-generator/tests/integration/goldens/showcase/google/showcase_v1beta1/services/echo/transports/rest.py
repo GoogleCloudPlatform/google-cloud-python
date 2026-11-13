@@ -909,11 +909,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -962,11 +958,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = self._interceptor.post_block(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_block_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = gs_echo.BlockResponse.to_json(response)
                 except:
@@ -1099,11 +1091,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1152,11 +1140,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = self._interceptor.post_echo(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_echo_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = gs_echo.EchoResponse.to_json(response)
                 except:
@@ -1259,11 +1243,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1312,11 +1292,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = self._interceptor.post_echo_error_details(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_echo_error_details_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = gs_echo.EchoErrorDetailsResponse.to_json(response)
                 except:
@@ -1420,11 +1396,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1470,11 +1442,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = self._interceptor.post_expand(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_expand_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 http_response = {
                 "headers":  dict(response.headers),
                 "status": response.status_code,
@@ -1573,11 +1541,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1626,11 +1590,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = self._interceptor.post_fail_echo_with_details(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_fail_echo_with_details_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = gs_echo.FailEchoWithDetailsResponse.to_json(response)
                 except:
@@ -1733,11 +1693,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1786,11 +1742,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = self._interceptor.post_paged_expand(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_paged_expand_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = gs_echo.PagedExpandResponse.to_json(response)
                 except:
@@ -1897,11 +1849,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -1950,11 +1898,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = self._interceptor.post_paged_expand_legacy(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_paged_expand_legacy_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = gs_echo.PagedExpandResponse.to_json(response)
                 except:
@@ -2056,11 +2000,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2109,11 +2049,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = self._interceptor.post_paged_expand_legacy_mapped(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_paged_expand_legacy_mapped_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = gs_echo.PagedExpandLegacyMappedResponse.to_json(response)
                 except:
@@ -2216,11 +2152,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=True,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2267,11 +2199,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = self._interceptor.post_wait(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_wait_with_metadata(resp, response_metadata)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2462,11 +2390,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2510,11 +2434,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = locations_pb2.ListLocationsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_list_locations(resp)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2617,11 +2537,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2665,11 +2581,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = locations_pb2.Location()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_location(resp)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2773,11 +2685,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2822,11 +2730,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = policy_pb2.Policy()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_set_iam_policy(resp)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -2929,11 +2833,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -2977,11 +2877,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = policy_pb2.Policy()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_iam_policy(resp)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -3085,11 +2981,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3134,11 +3026,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = iam_policy_pb2.TestIamPermissionsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_test_iam_permissions(resp)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -3241,11 +3129,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3289,11 +3173,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = operations_pb2.ListOperationsResponse()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_list_operations(resp)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -3396,11 +3276,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3444,11 +3320,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             resp = operations_pb2.Operation()
             resp = json_format.Parse(content, resp)
             resp = self._interceptor.post_get_operation(resp)
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 try:
                     response_payload = json_format.MessageToJson(resp)
                 except:
@@ -3548,11 +3420,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
@@ -3673,11 +3541,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 rest_numeric_enums=False,
             )
 
-            if (
-                CLIENT_LOGGING_SUPPORTED
-                and _LOGGER.isEnabledFor(logging.DEBUG)
-                and _LOGGER.hasHandlers()
-            ):  # pragma: NO COVER
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG) and _LOGGER.hasHandlers():  # pragma: NO COVER
                 request_url = "{host}{uri}".format(host=self._host, uri=transcoded_request['uri'])
                 method = transcoded_request['method']
                 try:
