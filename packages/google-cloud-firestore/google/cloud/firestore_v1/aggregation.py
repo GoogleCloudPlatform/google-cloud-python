@@ -129,9 +129,12 @@ class AggregationQuery(BaseAggregationQuery):
         if transaction is None:  # no snapshot-based retry inside transaction
             if retry is gapic_v1.method.DEFAULT:
                 transport = self._client._firestore_api._transport
-                gapic_callable = transport.run_aggregation_query
+                gapic_callable = transport._wrapped_methods[
+                    transport.run_aggregation_query
+                ]
                 retry = gapic_callable._retry
-            return retry._predicate(exc)
+            # retry=None turns retries off, so the error is raised as is
+            return retry is not None and retry._predicate(exc)
 
         return False
 

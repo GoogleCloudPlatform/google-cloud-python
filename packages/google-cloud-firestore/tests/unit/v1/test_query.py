@@ -768,6 +768,7 @@ def _query_stream_w_retriable_exc_helper(
     read_time=None,
 ):
     from google.api_core import exceptions, gapic_v1
+    from google.api_core import retry as retries
 
     from google.cloud.firestore_v1 import _helpers
     from google.cloud.firestore_v1.stream_generator import StreamGenerator
@@ -780,10 +781,17 @@ def _query_stream_w_retriable_exc_helper(
 
     # Create a minimal fake GAPIC.
     firestore_api = mock.Mock(spec=["run_query", "_transport"])
-    transport = firestore_api._transport = mock.Mock(spec=["run_query"])
-    stub = transport.run_query = mock.create_autospec(gapic_v1.method._GapicCallable)
-    stub._retry = mock.Mock(spec=["_predicate"])
-    stub._predicate = lambda exc: True  # pragma: NO COVER
+    transport = firestore_api._transport = mock.Mock(
+        spec=["run_query", "_wrapped_methods"]
+    )
+    # Like the real gRPC transport: ``run_query`` is the raw stub, and the
+    # default retry policy lives on the wrapped method registered for it.
+    transport.run_query = mock.Mock(spec=[])
+    wrapped_run_query = mock.create_autospec(gapic_v1.method._GapicCallable)
+    wrapped_run_query._retry = retries.Retry(
+        predicate=retries.if_exception_type(exceptions.ServiceUnavailable)
+    )
+    transport._wrapped_methods = {transport.run_query: wrapped_run_query}
 
     # Attach the fake GAPIC to a real client.
     client = make_client(database=database)
@@ -876,6 +884,11 @@ def test_query_stream_w_retriable_exc_w_retry():
     retry = mock.Mock(spec=["_predicate"])
     retry._predicate = lambda exc: False
     _query_stream_w_retriable_exc_helper(retry=retry, expect_retry=False)
+
+
+def test_query_stream_w_retriable_exc_w_retry_none():
+    # retry=None turns retries off, so the original error comes through.
+    _query_stream_w_retriable_exc_helper(retry=None, expect_retry=False)
 
 
 def test_query_stream_w_retriable_exc_w_transaction():
